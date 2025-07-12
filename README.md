@@ -141,3 +141,23 @@ To reset budget usage, delete or edit udget.json.
 Run tests with:
 
     pytest .\scripts\test_budget.py
+---
+
+## Logging Instructions
+
+All core scripts (vault_manager.py, storage_manager.py, orchestrator.py) include logging to help debug and monitor processes.
+
+- Logs are saved under:
+
+    D:\MAGIC\data\logs\
+
+- Main orchestrator logs:
+
+    orchestrator.log
+
+- Other test logs:
+
+    vault_test.log
+    storage_test.log
+
+Check these logs to trace errors, see budget usage, and monitor successful operations.
