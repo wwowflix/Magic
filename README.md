@@ -1,233 +1,223 @@
-﻿# MAGIC Project
+﻿# MAGIC 🚀
 
-## Overview
+**MAGIC** (Modular AI Generation & Integration Console) is a modular Python framework for orchestrating AI-driven workflows.  
 
-MAGIC is an orchestrator-based pipeline integrating:
-- secure vault management
-- folder storage management
-- budget enforcement
-- scraping modules
-- AI content generation
-- automated testing
+It combines:
 
-## Setup
+✅ Secure API key management  
+✅ Automated folder & storage handling  
+✅ Budget tracking and enforcement  
+✅ Data scraping  
+✅ AI content generation  
+✅ Automated testing  
+✅ GitHub integration with CI/CD
 
-1. Create virtual environment:
-    `powershell
-    python -m venv venv
-    .\venv\Scripts\Activate.ps1
-    `
+Your one-stop system for building scalable, monetized AI pipelines.
 
-2. Install dependencies:
-    `powershell
-    pip install -r requirements.txt
-    `
+---
 
-3. Run orchestrator:
-    `powershell
-    python .\scripts\orchestrator.py
-    `
+## 🚀 Quick Start
 
-4. Run tests:
-    `powershell
-    pytest .\scripts
-    `
+### 1. Create Virtual Environment
 
-## Logs
+\\\powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+\\\
 
-Logs are saved under:
+---
+
+### 2. Run the Orchestrator
+
+\\\powershell
+python .\scripts\orchestrator.py
+\\\
+
+✅ This:
+- Loads API keys securely
+- Ensures all folders exist
+- Initializes logs
+- Tracks budget
+
+---
+
+## 🔒 Vault Management
+
+All secrets (like API keys) are stored securely in a local vault file:
+
+\\\
+D:\MAGIC\vault.json
+\\\
+
+- Save secrets:
+\\\python
+from vault_manager import VaultManager
+vm = VaultManager()
+vm.save_secret("OPENAI_API_KEY", "sk-...")
+\\\
+
+- Load secrets:
+\\\python
+api_key = vm.load_secret("OPENAI_API_KEY")
+\\\
+
+Logs will confirm vault operations.
+
+---
+
+## 📂 Folder Structure
+
+MAGIC organizes files under:
+
+\\\
+data/
+  inputs/
+  outputs/
+  logs/
+  temp/
+  scraped_data/
+  ai_outputs/
+\\\
+
+✅ Created automatically by \orchestrator.py\.  
+✅ Keeps workspace neat and organized.
+
+---
+
+## 📝 Logging
+
+MAGIC logs all operations for easy debugging:
+
+\\\
 D:\MAGIC\data\logs\
-
-## Budget Tracking
-
-- Max budget is configured in orchestrator.py.
-- Budget usage tracked in budget.json.
-
-## License
-
-MIT License
-
-[![Python application](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml/badge.svg)](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml)
-
----
-
-## Logging Instructions
-
-All core scripts (vault_manager.py, storage_manager.py, orchestrator.py) include logging to help debug and monitor processes.
-
-- Logs are saved under:
-
-    D:\MAGIC\data\logs\
+\\\
 
 - Main orchestrator logs:
+  \\\
+  orchestrator.log
+  \\\
 
-    orchestrator.log
+- Test-specific logs:
+  \\\
+  vault_test.log
+  storage_test.log
+  \\\
 
-- Other test logs:
-
-    vault_test.log
-    storage_test.log
-
-Check these logs to trace errors, see budget usage, and monitor successful operations.
-
----
-
-## Folder Structure
-
-The following folders are required for the pipeline:
-
-    data/
-      inputs/
-      outputs/
-      logs/
-      temp/
-      scraped_data/
-      ai_outputs/
-
-These folders are automatically created if missing when you run:
-
-    python .\scripts\orchestrator.py
-
-All inputs, outputs, logs, and temporary data are stored under data/ to keep the workspace organized.
+Check logs for:
+- Errors
+- Budget usage
+- Process flow
 
 ---
 
-## Running Tests
+## 💰 Budget Tracking & Enforcement
 
-All test files are located under:
+MAGIC prevents accidental overspending on API calls.
 
-    D:\MAGIC\scripts\
+- Tracks cumulative costs in:
+\\\
+budget.json
+\\\
 
-### Run All Tests
+- Configure your budget:
 
-To run all tests:
+\\\python
+orch = Orchestrator(max_budget=500)
+\\\
 
-    pytest .\scripts
+✅ Exceeds budget → raises an error and halts operations.  
 
-### Run a Specific Test
+Reset budget by deleting or editing \udget.json\.
 
-Example for vault tests:
+---
 
-    pytest .\scripts\test_vault_manager.py
+## 🧪 Running Tests
+
+MAGIC uses **pytest** for automated testing.
+
+### Run All Tests:
+
+\\\powershell
+pytest .\scripts
+\\\
+
+### Run One Test:
+
+\\\powershell
+pytest .\scripts\test_vault_manager.py
+\\\
 
 ### Test Files
 
-| Test File | Purpose |
-|-----------|---------|
-| test_budget.py | Tests budget enforcement logic |
-| test_vault_manager.py | Tests saving and loading secrets in the vault |
-| test_storage_manager.py | Tests automatic folder creation |
-| test_trends_scraper.py | Tests dummy scraper returns topic list |
-| test_ai_content.py | Tests dummy AI content generation |
+| Test File                      | Purpose                                       |
+|--------------------------------|-----------------------------------------------|
+| test_budget.py                 | Tests budget enforcement logic                |
+| test_vault_manager.py          | Tests saving/loading secrets in the vault     |
+| test_storage_manager.py        | Tests automatic folder creation               |
+| test_trends_scraper.py         | Tests dummy scraper returns topics            |
+| test_ai_content.py             | Tests dummy AI content generation             |
+
+✅ All tests log results for debugging.
 
 ---
 
-## Budget Tracking and Enforcement
+## ✅ .gitignore
 
-MAGIC includes budget tracking to avoid exceeding API costs.
+To keep your repo clean, these files/folders are ignored:
 
-- The orchestrator tracks cumulative spend in a JSON file:
-
-    budget.json
-
-- You can configure your max budget in orchestrator.py:
-
-    orch = Orchestrator(max_budget=500)
-
-- If the total budget is exceeded, MAGIC raises an error and stops further operations.
-
-To reset budget usage, delete or edit udget.json.
-
-Run tests with:
-
-    pytest .\scripts\test_budget.py
----
-
-## Logging Instructions
-
-All core scripts (vault_manager.py, storage_manager.py, orchestrator.py) include logging to help debug and monitor processes.
-
-- Logs are saved under:
-
-    D:\MAGIC\data\logs\
-
-- Main orchestrator logs:
-
-    orchestrator.log
-
-- Other test logs:
-
-    vault_test.log
-    storage_test.log
-
-Check these logs to trace errors, see budget usage, and monitor successful operations.
----
-
-## Folder Structure
-
-The following folders are required for the pipeline:
-
-    data/
-      inputs/
-      outputs/
-      logs/
-      temp/
-      scraped_data/
-      ai_outputs/
-
-These folders are automatically created if missing when you run:
-
-    python .\scripts\orchestrator.py
-
-All inputs, outputs, logs, and temporary data are stored under data/ to keep the workspace organized.
----
-
-## Running Tests
-
-All test files are located under:
-
-    D:\MAGIC\scripts\
-
-### Run All Tests
-
-To run all tests:
-
-    pytest .\scripts
-
-### Run a Specific Test
-
-Example for vault tests:
-
-    pytest .\scripts\test_vault_manager.py
-
-### Test Files
-
-| Test File | Purpose |
-|-----------|---------|
-| test_budget.py | Tests budget enforcement logic |
-| test_vault_manager.py | Tests saving and loading secrets in the vault |
-| test_storage_manager.py | Tests automatic folder creation |
-| test_trends_scraper.py | Tests dummy scraper returns topic list |
-| test_ai_content.py | Tests dummy AI content generation |
+\\\
+scripts/orchestrator_backup.py
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.VENV/
+.env/
+*.log
+.DS_Store
+Thumbs.db
+\\\
 
 ---
 
-## Budget Tracking and Enforcement
+## 🤖 GitHub Actions (CI/CD)
 
-MAGIC includes budget tracking to avoid exceeding API costs.
+MAGIC runs all tests automatically on every push to GitHub.
 
-- The orchestrator tracks cumulative spend in a JSON file:
+- Workflow config:
+  \\\
+  .github/workflows/python-app.yml
+  \\\
 
-    budget.json
+- Build badge:
 
-- You can configure your max budget in orchestrator.py:
+  [![Python application](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml/badge.svg)](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml)
 
-    orch = Orchestrator(max_budget=500)
+✅ Ensures your code is always stable and production-ready.
 
-- If the total budget is exceeded, MAGIC raises an error and stops further operations.
+---
 
-To reset budget usage, delete or edit udget.json.
+## 💡 Next Steps
 
-Run tests with:
+MAGIC is fully scaffolded. Time to expand!
 
-    pytest .\scripts\test_budget.py
+✅ Add real scrapers:
+- TikTok trending hashtags
+- Reddit hot posts
+- YouTube autocomplete
+
+✅ Integrate affiliate marketing:
+- Monetize AI-generated videos
+- Insert affiliate links into content
+
+✅ Automate video generation:
+- Combine AI text, voice, and visuals
+
+Let’s make MAGIC your ultimate AI monetization engine. 🚀
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE)
