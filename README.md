@@ -210,3 +210,24 @@ Example for vault tests:
 | test_trends_scraper.py | Tests dummy scraper returns topic list |
 | test_ai_content.py | Tests dummy AI content generation |
 
+---
+
+## Budget Tracking and Enforcement
+
+MAGIC includes budget tracking to avoid exceeding API costs.
+
+- The orchestrator tracks cumulative spend in a JSON file:
+
+    budget.json
+
+- You can configure your max budget in orchestrator.py:
+
+    orch = Orchestrator(max_budget=500)
+
+- If the total budget is exceeded, MAGIC raises an error and stops further operations.
+
+To reset budget usage, delete or edit udget.json.
+
+Run tests with:
+
+    pytest .\scripts\test_budget.py
