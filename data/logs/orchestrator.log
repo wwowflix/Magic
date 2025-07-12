@@ -31,3 +31,18 @@
 2025-07-12 15:52:58,701 INFO API key loaded successfully. Starting with: sk-proj-...
 2025-07-12 15:52:58,701 ERROR Expecting value: line 1 column 1 (char 0)
 2025-07-12 15:52:58,702 INFO MAGIC Orchestrator completed.
+2025-07-12 17:29:49,784 INFO MAGIC Orchestrator started.
+2025-07-12 17:29:49,785 INFO Vault file already exists.
+2025-07-12 17:29:49,785 INFO VaultManager initialized.
+2025-07-12 17:29:49,785 INFO StorageManager initialized.
+2025-07-12 17:29:49,785 INFO Folder already exists: data\inputs
+2025-07-12 17:29:49,785 INFO Folder already exists: data\outputs
+2025-07-12 17:29:49,785 INFO Folder already exists: data\logs
+2025-07-12 17:29:49,785 INFO Folder already exists: data\temp
+2025-07-12 17:29:49,785 INFO Folder already exists: data\scraped_data
+2025-07-12 17:29:49,785 INFO Folder already exists: data\ai_outputs
+2025-07-12 17:29:49,785 INFO All required folders ensured.
+2025-07-12 17:29:49,785 INFO Secret loaded for key: OPENAI_API_KEY
+2025-07-12 17:29:49,785 INFO API key loaded successfully. Starting with: gAAAAABo...
+2025-07-12 17:29:49,785 ERROR Expecting value: line 1 column 1 (char 0)
+2025-07-12 17:29:49,786 INFO MAGIC Orchestrator completed.
