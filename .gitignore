@@ -1,1 +1,19 @@
+﻿# Ignore large backup file
 scripts/orchestrator_backup.py
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment
+venv/
+.VENV/
+.env/
+
+# Ignore logs
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
