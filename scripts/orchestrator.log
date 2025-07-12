@@ -1,0 +1,196 @@
+2025-07-11 16:09:33,192 - INFO - MAGIC Orchestrator started.
+2025-07-11 16:09:33,200 - INFO - API Key loaded: super_secret_api_key
+2025-07-11 16:11:15,558 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:11:15,561 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:13:30,846 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:13:30,849 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:14:31,901 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:14:31,904 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:20:31,419 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:20:31,422 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:27:26,002 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:27:26,004 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:28:21,363 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:28:21,366 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:29:21,518 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded existing vault key: .vault.key
+INFO:root:Encrypted a value.
+INFO:root:Decrypted a value.
+2025-07-11 16:29:21,521 - INFO - API Key loaded: super_secret_api_key
+INFO:orchestrator:API Key loaded: super_secret_api_key
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 16:40:28,717 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: ['scraped_data', 'ai_outputs']
+INFO:root:Created folder: data\scraped_data
+INFO:root:Created folder: data\ai_outputs
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 50 of 500
+2025-07-11 16:40:28,721 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 16:41:15,012 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 100 of 500
+2025-07-11 16:41:15,021 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 16:41:50,466 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 150 of 500
+2025-07-11 16:41:50,474 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 16:52:06,934 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 200 of 500
+2025-07-11 16:52:06,943 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 16:52:53,671 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 250 of 500
+2025-07-11 16:52:53,680 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 17:00:23,462 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 300 of 500
+2025-07-11 17:00:23,472 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:Loaded vault key.
+INFO:root:Encrypted a secret.
+INFO:root:Saved secret for key: OPENAI_API_KEY
+INFO:root:Decrypted a secret.
+2025-07-11 17:01:10,955 - INFO - MAGIC Orchestrator started.
+INFO:orchestrator:MAGIC Orchestrator started.
+INFO:root:Checked missing folders. Missing: []
+INFO:root:\u2705 All folders exist.
+INFO:root:Loaded vault key.
+INFO:root:Decrypted a secret.
+INFO:root:\U0001f510 Loaded OPENAI_API_KEY: sk-your-real-key-here
+INFO:root:\u2705 Budget OK. Spent: 350 of 500
+2025-07-11 17:01:10,964 - INFO - MAGIC orchestrator completed.
+INFO:orchestrator:MAGIC orchestrator completed.
+INFO:root:Checked missing folders. Missing: []

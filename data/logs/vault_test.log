@@ -1,0 +1,4 @@
+2025-07-12 16:11:30,371 INFO Vault file already exists.
+2025-07-12 16:11:30,371 INFO VaultManager initialized.
+2025-07-12 16:11:30,371 INFO Secret saved for key: TEST_KEY
+2025-07-12 16:11:30,372 INFO Secret loaded for key: TEST_KEY
