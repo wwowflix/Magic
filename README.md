@@ -180,3 +180,33 @@ These folders are automatically created if missing when you run:
     python .\scripts\orchestrator.py
 
 All inputs, outputs, logs, and temporary data are stored under data/ to keep the workspace organized.
+---
+
+## Running Tests
+
+All test files are located under:
+
+    D:\MAGIC\scripts\
+
+### Run All Tests
+
+To run all tests:
+
+    pytest .\scripts
+
+### Run a Specific Test
+
+Example for vault tests:
+
+    pytest .\scripts\test_vault_manager.py
+
+### Test Files
+
+| Test File | Purpose |
+|-----------|---------|
+| test_budget.py | Tests budget enforcement logic |
+| test_vault_manager.py | Tests saving and loading secrets in the vault |
+| test_storage_manager.py | Tests automatic folder creation |
+| test_trends_scraper.py | Tests dummy scraper returns topic list |
+| test_ai_content.py | Tests dummy AI content generation |
+
