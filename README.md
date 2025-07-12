@@ -46,3 +46,6 @@ D:\MAGIC\data\logs\
 ## License
 
 MIT License
+
+[![Python application](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml/badge.svg)](https://github.com/Diksha090587/Magic/actions/workflows/python-app.yml)
+
