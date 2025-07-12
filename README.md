@@ -161,3 +161,22 @@ All core scripts (vault_manager.py, storage_manager.py, orchestrator.py) include
     storage_test.log
 
 Check these logs to trace errors, see budget usage, and monitor successful operations.
+---
+
+## Folder Structure
+
+The following folders are required for the pipeline:
+
+    data/
+      inputs/
+      outputs/
+      logs/
+      temp/
+      scraped_data/
+      ai_outputs/
+
+These folders are automatically created if missing when you run:
+
+    python .\scripts\orchestrator.py
+
+All inputs, outputs, logs, and temporary data are stored under data/ to keep the workspace organized.
