@@ -1,3 +1,13 @@
 {
   "OPENAI_API_KEY": "gAAAAABocgpEt7uMtEQqakoDsa72Z17frx9eQ_bS7d_cWR9tgSBppnRE3msrrPgpx7gipCeSDM5pk7KB2pIDBkYQxqXsbK8vMY0t3WjZMnBsJb4ATpBGbEHU5n7bMFuFFMLAfr3zbEJMI2AYMTsugYzmBDCaOHk3MuBw_Y_D3iLvUlbdj7GnWDeqmlqp4UGhTT-nmof9OHy1P-o3cej7tAztZn0U9ohFrA7xS0gNEXTZgtBU2Ldfj0tLNvuZK6teo3q6B4SuP5_83ypmZHSwbkkqXrNNLTkR9Jymi_MzckGeLQYYfNs7XtA="
 }
+
+{
+  "reddit": {
+    "client_id": "3PkEn7ejPFyeZBlnaSM2ZA",
+    "client_secret": "8ZYQ2C5AZhCuYEs2tiY6I_cEKmzXvQ",
+    "user_agent": "MAGICZephyrScraper/0.1 by u/AffectionateRoom6084",
+    "subreddits": ["all", "technology""]
+  }
+}
+
