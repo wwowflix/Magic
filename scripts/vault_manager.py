@@ -1,35 +1,34 @@
-﻿import os
-import json
-import logging
+﻿import json
+import os
 
-VAULT_FILE = r"vault.json"
+def _vault_paths():
+    here = os.path.dirname(__file__)
+    return [
+        os.path.normpath(os.path.join(here, '..', 'data', 'vault.json')),
+        os.path.normpath(os.path.join(here, 'vault.json')),
+    ]
 
-class VaultManager:
-    def __init__(self):
-        if not os.path.exists(VAULT_FILE):
-            with open(VAULT_FILE, "w") as f:
-                json.dump({}, f)
-            logging.info("Vault file created.")
-        else:
-            logging.info("Vault file already exists.")
-        logging.info("VaultManager initialized.")
+def load_secret(key):
+    for path in _vault_paths():
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, 'r', encoding='utf-8-sig') as f:
+                data = json.load(f)
+        except (json.JSONDecodeError, IOError):
+            continue
+        if key in data:
+            return data[key]
+    raise KeyError(f"Secret '{key}' not found in any vault: {_vault_paths()}")
 
-    def save_secret(self, key, value):
-        with open(VAULT_FILE, "r") as f:
+def save_secret(key, value):
+    path = _vault_paths()[0]
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    try:
+        with open(path, 'r', encoding='utf-8-sig') as f:
             data = json.load(f)
-        data[key] = value
-        with open(VAULT_FILE, "w") as f:
-            json.dump(data, f)
-        logging.info(f"Secret saved for key: {key}")
-
-    def load_secret(self, key):
-        with open(VAULT_FILE, "r") as f:
-            data = json.load(f)
-        value = data.get(key, None)
-        if value:
-            logging.info(f"Secret loaded for key: {key}")
-        else:
-            logging.warning(f"Secret for key {key} not found in vault.")
-        return value
-
-__all__ = ["VaultManager"]
+    except:
+        data = {}
+    data[key] = value
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)

@@ -1,5 +1,5 @@
 ﻿import pytest
-from your_scraper_module import scrape_data
+from trends_scraper import scrape_data
 
 def test_scrape_empty_result(monkeypatch):
     monkeypatch.setattr('your_scraper_module.network_call', lambda: [])
@@ -18,3 +18,4 @@ def test_scrape_valid_data():
     assert isinstance(result, list), 'Result should be a list'
     assert all(isinstance(item, dict) for item in result), 'All items should be dicts'
     assert 'title' in result[0], 'Each item should have a title'
+
