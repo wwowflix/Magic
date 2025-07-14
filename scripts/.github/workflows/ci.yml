@@ -1,0 +1,28 @@
+﻿name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install pytest pandas streamlit
+      - name: Run full pipeline
+        run: |
+          PowerShell.exe -ExecutionPolicy Bypass -File .\full_pipeline.ps1
+      - name: Upload pytest report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-report
+          path: pytest-report.xml
