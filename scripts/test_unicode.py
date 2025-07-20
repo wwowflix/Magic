@@ -1,12 +1,14 @@
+
 import numpy as np
-from numpy.testing import assert_, assert_equal, assert_array_equal
+from numpy.testing import assert_, assert_array_equal, assert_equal
+
 
 def buffer_length(arr):
     if isinstance(arr, str):
         if not arr:
             charmax = 0
         else:
-            charmax = max([ord(c) for c in arr])
+            charmax = max(ord(c) for c in arr)
         if charmax < 256:
             size = 1
         elif charmax < 65536:
@@ -20,12 +22,13 @@ def buffer_length(arr):
     else:
         return np.prod(v.shape) * v.itemsize
 
+
 # In both cases below we need to make sure that the byte swapped value (as
 # UCS4) is still a valid unicode:
 # Value that can be represented in UCS2 interpreters
-ucs2_value = u'\u0900'
+ucs2_value = '\u0900'
 # Value that cannot be represented in UCS2 interpreters (but can in UCS4)
-ucs4_value = u'\U00100900'
+ucs4_value = '\U00100900'
 
 
 def test_string_cast():
@@ -33,8 +36,11 @@ def test_string_cast():
     uni_arr1 = str_arr.astype('>U')
     uni_arr2 = str_arr.astype('<U')
 
-    assert_(str_arr != uni_arr1)
-    assert_(str_arr != uni_arr2)
+    assert_array_equal(str_arr != uni_arr1, np.ones(2, dtype=bool))
+    assert_array_equal(uni_arr1 != str_arr, np.ones(2, dtype=bool))
+    assert_array_equal(str_arr == uni_arr1, np.zeros(2, dtype=bool))
+    assert_array_equal(uni_arr1 == str_arr, np.zeros(2, dtype=bool))
+
     assert_array_equal(uni_arr1, uni_arr2)
 
 
@@ -52,7 +58,7 @@ class CreateZeros:
         # Check the length of the data buffer
         assert_(buffer_length(ua) == nbytes)
         # Small check that data in array element is ok
-        assert_(ua_scalar == u'')
+        assert_(ua_scalar == '')
         # Encode to ascii and double check
         assert_(ua_scalar.encode('ascii') == b'')
         # Check buffer lengths for scalars
@@ -60,20 +66,20 @@ class CreateZeros:
 
     def test_zeros0D(self):
         # Check creation of 0-dimensional objects
-        ua = np.zeros((), dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[()], 4*self.ulen)
+        ua = np.zeros((), dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[()], 4 * self.ulen)
 
     def test_zerosSD(self):
         # Check creation of single-dimensional objects
-        ua = np.zeros((2,), dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[0], 4*self.ulen*2)
-        self.content_check(ua, ua[1], 4*self.ulen*2)
+        ua = np.zeros((2,), dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[0], 4 * self.ulen * 2)
+        self.content_check(ua, ua[1], 4 * self.ulen * 2)
 
     def test_zerosMD(self):
         # Check creation of multi-dimensional objects
-        ua = np.zeros((2, 3, 4), dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[0, 0, 0], 4*self.ulen*2*3*4)
-        self.content_check(ua, ua[-1, -1, -1], 4*self.ulen*2*3*4)
+        ua = np.zeros((2, 3, 4), dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[0, 0, 0], 4 * self.ulen * 2 * 3 * 4)
+        self.content_check(ua, ua[-1, -1, -1], 4 * self.ulen * 2 * 3 * 4)
 
 
 class TestCreateZeros_1(CreateZeros):
@@ -101,36 +107,36 @@ class CreateValues:
         # Check the length of the data buffer
         assert_(buffer_length(ua) == nbytes)
         # Small check that data in array element is ok
-        assert_(ua_scalar == self.ucs_value*self.ulen)
+        assert_(ua_scalar == self.ucs_value * self.ulen)
         # Encode to UTF-8 and double check
         assert_(ua_scalar.encode('utf-8') ==
-                        (self.ucs_value*self.ulen).encode('utf-8'))
+                        (self.ucs_value * self.ulen).encode('utf-8'))
         # Check buffer lengths for scalars
         if self.ucs_value == ucs4_value:
             # In UCS2, the \U0010FFFF will be represented using a
             # surrogate *pair*
-            assert_(buffer_length(ua_scalar) == 2*2*self.ulen)
+            assert_(buffer_length(ua_scalar) == 2 * 2 * self.ulen)
         else:
             # In UCS2, the \uFFFF will be represented using a
             # regular 2-byte word
-            assert_(buffer_length(ua_scalar) == 2*self.ulen)
+            assert_(buffer_length(ua_scalar) == 2 * self.ulen)
 
     def test_values0D(self):
         # Check creation of 0-dimensional objects with values
-        ua = np.array(self.ucs_value*self.ulen, dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[()], 4*self.ulen)
+        ua = np.array(self.ucs_value * self.ulen, dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[()], 4 * self.ulen)
 
     def test_valuesSD(self):
         # Check creation of single-dimensional objects with values
-        ua = np.array([self.ucs_value*self.ulen]*2, dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[0], 4*self.ulen*2)
-        self.content_check(ua, ua[1], 4*self.ulen*2)
+        ua = np.array([self.ucs_value * self.ulen] * 2, dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[0], 4 * self.ulen * 2)
+        self.content_check(ua, ua[1], 4 * self.ulen * 2)
 
     def test_valuesMD(self):
         # Check creation of multi-dimensional objects with values
-        ua = np.array([[[self.ucs_value*self.ulen]*2]*3]*4, dtype='U%s' % self.ulen)
-        self.content_check(ua, ua[0, 0, 0], 4*self.ulen*2*3*4)
-        self.content_check(ua, ua[-1, -1, -1], 4*self.ulen*2*3*4)
+        ua = np.array([[[self.ucs_value * self.ulen] * 2] * 3] * 4, dtype=f'U{self.ulen}')
+        self.content_check(ua, ua[0, 0, 0], 4 * self.ulen * 2 * 3 * 4)
+        self.content_check(ua, ua[-1, -1, -1], 4 * self.ulen * 2 * 3 * 4)
 
 
 class TestCreateValues_1_UCS2(CreateValues):
@@ -183,41 +189,41 @@ class AssignValues:
         # Check the length of the data buffer
         assert_(buffer_length(ua) == nbytes)
         # Small check that data in array element is ok
-        assert_(ua_scalar == self.ucs_value*self.ulen)
+        assert_(ua_scalar == self.ucs_value * self.ulen)
         # Encode to UTF-8 and double check
         assert_(ua_scalar.encode('utf-8') ==
-                        (self.ucs_value*self.ulen).encode('utf-8'))
+                        (self.ucs_value * self.ulen).encode('utf-8'))
         # Check buffer lengths for scalars
         if self.ucs_value == ucs4_value:
             # In UCS2, the \U0010FFFF will be represented using a
             # surrogate *pair*
-            assert_(buffer_length(ua_scalar) == 2*2*self.ulen)
+            assert_(buffer_length(ua_scalar) == 2 * 2 * self.ulen)
         else:
             # In UCS2, the \uFFFF will be represented using a
             # regular 2-byte word
-            assert_(buffer_length(ua_scalar) == 2*self.ulen)
+            assert_(buffer_length(ua_scalar) == 2 * self.ulen)
 
     def test_values0D(self):
         # Check assignment of 0-dimensional objects with values
-        ua = np.zeros((), dtype='U%s' % self.ulen)
-        ua[()] = self.ucs_value*self.ulen
-        self.content_check(ua, ua[()], 4*self.ulen)
+        ua = np.zeros((), dtype=f'U{self.ulen}')
+        ua[()] = self.ucs_value * self.ulen
+        self.content_check(ua, ua[()], 4 * self.ulen)
 
     def test_valuesSD(self):
         # Check assignment of single-dimensional objects with values
-        ua = np.zeros((2,), dtype='U%s' % self.ulen)
-        ua[0] = self.ucs_value*self.ulen
-        self.content_check(ua, ua[0], 4*self.ulen*2)
-        ua[1] = self.ucs_value*self.ulen
-        self.content_check(ua, ua[1], 4*self.ulen*2)
+        ua = np.zeros((2,), dtype=f'U{self.ulen}')
+        ua[0] = self.ucs_value * self.ulen
+        self.content_check(ua, ua[0], 4 * self.ulen * 2)
+        ua[1] = self.ucs_value * self.ulen
+        self.content_check(ua, ua[1], 4 * self.ulen * 2)
 
     def test_valuesMD(self):
         # Check assignment of multi-dimensional objects with values
-        ua = np.zeros((2, 3, 4), dtype='U%s' % self.ulen)
-        ua[0, 0, 0] = self.ucs_value*self.ulen
-        self.content_check(ua, ua[0, 0, 0], 4*self.ulen*2*3*4)
-        ua[-1, -1, -1] = self.ucs_value*self.ulen
-        self.content_check(ua, ua[-1, -1, -1], 4*self.ulen*2*3*4)
+        ua = np.zeros((2, 3, 4), dtype=f'U{self.ulen}')
+        ua[0, 0, 0] = self.ucs_value * self.ulen
+        self.content_check(ua, ua[0, 0, 0], 4 * self.ulen * 2 * 3 * 4)
+        ua[-1, -1, -1] = self.ucs_value * self.ulen
+        self.content_check(ua, ua[-1, -1, -1], 4 * self.ulen * 2 * 3 * 4)
 
 
 class TestAssignValues_1_UCS2(AssignValues):
@@ -265,41 +271,41 @@ class ByteorderValues:
 
     def test_values0D(self):
         # Check byteorder of 0-dimensional objects
-        ua = np.array(self.ucs_value*self.ulen, dtype='U%s' % self.ulen)
-        ua2 = ua.newbyteorder()
+        ua = np.array(self.ucs_value * self.ulen, dtype=f'U{self.ulen}')
+        ua2 = ua.view(ua.dtype.newbyteorder())
         # This changes the interpretation of the data region (but not the
         #  actual data), therefore the returned scalars are not
         #  the same (they are byte-swapped versions of each other).
         assert_(ua[()] != ua2[()])
-        ua3 = ua2.newbyteorder()
+        ua3 = ua2.view(ua2.dtype.newbyteorder())
         # Arrays must be equal after the round-trip
         assert_equal(ua, ua3)
 
     def test_valuesSD(self):
         # Check byteorder of single-dimensional objects
-        ua = np.array([self.ucs_value*self.ulen]*2, dtype='U%s' % self.ulen)
-        ua2 = ua.newbyteorder()
+        ua = np.array([self.ucs_value * self.ulen] * 2, dtype=f'U{self.ulen}')
+        ua2 = ua.view(ua.dtype.newbyteorder())
         assert_((ua != ua2).all())
         assert_(ua[-1] != ua2[-1])
-        ua3 = ua2.newbyteorder()
+        ua3 = ua2.view(ua2.dtype.newbyteorder())
         # Arrays must be equal after the round-trip
         assert_equal(ua, ua3)
 
     def test_valuesMD(self):
         # Check byteorder of multi-dimensional objects
-        ua = np.array([[[self.ucs_value*self.ulen]*2]*3]*4,
-                      dtype='U%s' % self.ulen)
-        ua2 = ua.newbyteorder()
+        ua = np.array([[[self.ucs_value * self.ulen] * 2] * 3] * 4,
+                      dtype=f'U{self.ulen}')
+        ua2 = ua.view(ua.dtype.newbyteorder())
         assert_((ua != ua2).all())
         assert_(ua[-1, -1, -1] != ua2[-1, -1, -1])
-        ua3 = ua2.newbyteorder()
+        ua3 = ua2.view(ua2.dtype.newbyteorder())
         # Arrays must be equal after the round-trip
         assert_equal(ua, ua3)
 
     def test_values_cast(self):
         # Check byteorder of when casting the array for a strided and
         # contiguous array:
-        test1 = np.array([self.ucs_value*self.ulen]*2, dtype='U%s' % self.ulen)
+        test1 = np.array([self.ucs_value * self.ulen] * 2, dtype=f'U{self.ulen}')
         test2 = np.repeat(test1, 2)[::2]
         for ua in (test1, test2):
             ua2 = ua.astype(dtype=ua.dtype.newbyteorder())
@@ -312,11 +318,11 @@ class ByteorderValues:
     def test_values_updowncast(self):
         # Check byteorder of when casting the array to a longer and shorter
         # string length for strided and contiguous arrays
-        test1 = np.array([self.ucs_value*self.ulen]*2, dtype='U%s' % self.ulen)
+        test1 = np.array([self.ucs_value * self.ulen] * 2, dtype=f'U{self.ulen}')
         test2 = np.repeat(test1, 2)[::2]
         for ua in (test1, test2):
             # Cast to a longer type with zero padding
-            longer_type = np.dtype('U%s' % (self.ulen+1)).newbyteorder()
+            longer_type = np.dtype(f'U{self.ulen + 1}').newbyteorder()
             ua2 = ua.astype(dtype=longer_type)
             assert_((ua == ua2).all())
             assert_(ua[-1] == ua2[-1])
@@ -360,3 +366,4 @@ class TestByteorder_1009_UCS4(ByteorderValues):
     """Check the byteorder in unicode (size 1009, UCS4 values)"""
     ulen = 1009
     ucs_value = ucs4_value
+

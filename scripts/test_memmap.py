@@ -1,28 +1,44 @@
-import sys
-import os
 import mmap
-import pytest
+import os
+import sys
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryFile
 
-from numpy import (
-    memmap, sum, average, product, ndarray, isscalar, add, subtract, multiply)
+import pytest
 
-from numpy import arange, allclose, asarray
+from numpy import (
+    add,
+    allclose,
+    arange,
+    asarray,
+    average,
+    isscalar,
+    memmap,
+    multiply,
+    ndarray,
+    prod,
+    subtract,
+    sum,
+)
 from numpy.testing import (
-    assert_, assert_equal, assert_array_equal, suppress_warnings, IS_PYPY,
-    break_cycles
-    )
+    IS_PYPY,
+    assert_,
+    assert_array_equal,
+    assert_equal,
+    break_cycles,
+    suppress_warnings,
+)
+
 
 class TestMemmap:
-    def setup(self):
+    def setup_method(self):
         self.tmpfp = NamedTemporaryFile(prefix='mmap')
         self.shape = (3, 4)
         self.dtype = 'float32'
         self.data = arange(12, dtype=self.dtype)
         self.data.resize(self.shape)
 
-    def teardown(self):
+    def teardown_method(self):
         self.tmpfp.close()
         self.data = None
         if IS_PYPY:
@@ -153,7 +169,7 @@ class TestMemmap:
 
         with suppress_warnings() as sup:
             sup.filter(FutureWarning, "np.average currently does not preserve")
-            for unary_op in [sum, average, product]:
+            for unary_op in [sum, average, prod]:
                 result = unary_op(fp)
                 assert_(isscalar(result))
                 assert_(result.__class__ is self.data[0, 0].__class__)
@@ -167,9 +183,9 @@ class TestMemmap:
             assert_(binary_op(fp, fp).__class__ is ndarray)
 
         fp += 1
-        assert(fp.__class__ is memmap)
+        assert fp.__class__ is memmap
         add(fp, 1, out=fp)
-        assert(fp.__class__ is memmap)
+        assert fp.__class__ is memmap
 
     def test_getitem(self):
         fp = memmap(self.tmpfp, dtype=self.dtype, shape=self.shape)
@@ -191,7 +207,7 @@ class TestMemmap:
         assert_(sum(fp, axis=0).__class__ is MemmapSubClass)
         assert_(sum(fp).__class__ is MemmapSubClass)
         assert_(fp[1:, :-1].__class__ is MemmapSubClass)
-        assert(fp[[0, 1]].__class__ is MemmapSubClass)
+        assert fp[[0, 1]].__class__ is MemmapSubClass
 
     def test_mmap_offset_greater_than_allocation_granularity(self):
         size = 5 * mmap.ALLOCATIONGRANULARITY
@@ -199,17 +215,33 @@ class TestMemmap:
         fp = memmap(self.tmpfp, shape=size, mode='w+', offset=offset)
         assert_(fp.offset == offset)
 
+    def test_empty_array_with_offset_multiple_of_allocation_granularity(self):
+        self.tmpfp.write(b'a' * mmap.ALLOCATIONGRANULARITY)
+        size = 0
+        offset = mmap.ALLOCATIONGRANULARITY
+        fp = memmap(self.tmpfp, shape=size, mode='w+', offset=offset)
+        assert_equal(fp.offset, offset)
+
     def test_no_shape(self):
-        self.tmpfp.write(b'a'*16)
+        self.tmpfp.write(b'a' * 16)
         mm = memmap(self.tmpfp, dtype='float64')
         assert_equal(mm.shape, (2,))
 
     def test_empty_array(self):
         # gh-12653
         with pytest.raises(ValueError, match='empty file'):
-            memmap(self.tmpfp, shape=(0,4), mode='w+')
+            memmap(self.tmpfp, shape=(0, 4), mode='r')
 
-        self.tmpfp.write(b'\0')
+        # gh-27723
+        # empty memmap works with mode in ('w+','r+')
+        memmap(self.tmpfp, shape=(0, 4), mode='w+')
 
         # ok now the file is not empty
-        memmap(self.tmpfp, shape=(0,4), mode='w+')
+        memmap(self.tmpfp, shape=(0, 4), mode='w+')
+
+    def test_shape_type(self):
+        memmap(self.tmpfp, shape=3, mode='w+')
+        memmap(self.tmpfp, shape=self.shape, mode='w+')
+        memmap(self.tmpfp, shape=list(self.shape), mode='w+')
+        memmap(self.tmpfp, shape=asarray(self.shape), mode='w+')
+

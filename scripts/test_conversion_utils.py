@@ -1,13 +1,13 @@
 """
-Tests for numpy/core/src/multiarray/conversion_utils.c
+Tests for numpy/_core/src/multiarray/conversion_utils.c
 """
 import re
 
+import numpy._core._multiarray_tests as mt
 import pytest
 
-import numpy as np
-import numpy.core._multiarray_tests as mt
-from numpy.testing import assert_warns
+from numpy._core.multiarray import CLIP, RAISE, WRAP
+from numpy.testing import assert_raises
 
 
 class StringConverterTestCase:
@@ -17,13 +17,13 @@ class StringConverterTestCase:
     warn = True
 
     def _check_value_error(self, val):
-        pattern = r'\(got {}\)'.format(re.escape(repr(val)))
+        pattern = fr'\(got {re.escape(repr(val))}\)'
         with pytest.raises(ValueError, match=pattern) as exc:
             self.conv(val)
 
     def _check_conv_assert_warn(self, val, expected):
         if self.warn:
-            with assert_warns(DeprecationWarning) as exc:
+            with assert_raises(ValueError) as exc:
                 assert self.conv(val) == expected
         else:
             assert self.conv(val) == expected
@@ -121,6 +121,7 @@ class TestSelectkindConverter(StringConverterTestCase):
 class TestSearchsideConverter(StringConverterTestCase):
     """ Tests of PyArray_SearchsideConverter """
     conv = mt.run_searchside_converter
+
     def test_valid(self):
         self._check('left', 'NPY_SEARCHLEFT')
         self._check('right', 'NPY_SEARCHRIGHT')
@@ -149,15 +150,16 @@ class TestOrderConverter(StringConverterTestCase):
 class TestClipmodeConverter(StringConverterTestCase):
     """ Tests of PyArray_ClipmodeConverter """
     conv = mt.run_clipmode_converter
+
     def test_valid(self):
         self._check('clip', 'NPY_CLIP')
         self._check('wrap', 'NPY_WRAP')
         self._check('raise', 'NPY_RAISE')
 
         # integer values allowed here
-        assert self.conv(np.CLIP) == 'NPY_CLIP'
-        assert self.conv(np.WRAP) == 'NPY_WRAP'
-        assert self.conv(np.RAISE) == 'NPY_RAISE'
+        assert self.conv(CLIP) == 'NPY_CLIP'
+        assert self.conv(WRAP) == 'NPY_WRAP'
+        assert self.conv(RAISE) == 'NPY_RAISE'
 
 
 class TestCastingConverter(StringConverterTestCase):
@@ -185,8 +187,7 @@ class TestIntpConverter:
         assert self.conv(()) == ()
 
     def test_none(self):
-        # once the warning expires, this will raise TypeError
-        with pytest.warns(DeprecationWarning):
+        with pytest.raises(TypeError):
             assert self.conv(None) == ()
 
     def test_float(self):
@@ -200,6 +201,7 @@ class TestIntpConverter:
             self.conv(2**64)
 
     def test_too_many_dims(self):
-        assert self.conv([1]*32) == (1,)*32
+        assert self.conv([1] * 64) == (1,) * 64
         with pytest.raises(ValueError):
-            self.conv([1]*33)
+            self.conv([1] * 65)
+

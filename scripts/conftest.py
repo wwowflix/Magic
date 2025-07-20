@@ -1,119 +1,72 @@
-"""
-Pytest configuration and fixtures for the Numpy test suite.
-"""
-import os
-import tempfile
+import itertools
 
-import hypothesis
+import numpy as np
 import pytest
-import numpy
 
-from numpy.core._multiarray_tests import get_fpu_mode
-
-
-_old_fpu_mode = None
-_collect_results = {}
-
-# Use a known and persistent tmpdir for hypothesis' caches, which
-# can be automatically cleared by the OS or user.
-hypothesis.configuration.set_hypothesis_home_dir(
-    os.path.join(tempfile.gettempdir(), ".hypothesis")
-)
-
-# We register two custom profiles for Numpy - for details see
-# https://hypothesis.readthedocs.io/en/latest/settings.html
-# The first is designed for our own CI runs; the latter also 
-# forces determinism and is designed for use via np.test()
-hypothesis.settings.register_profile(
-    name="numpy-profile", deadline=None, print_blob=True,
-)
-hypothesis.settings.register_profile(
-    name="np.test() profile",
-    deadline=None, print_blob=True, database=None, derandomize=True,
-    suppress_health_check=hypothesis.HealthCheck.all(),
-)
-# Note that the default profile is chosen based on the presence 
-# of pytest.ini, but can be overriden by passing the 
-# --hypothesis-profile=NAME argument to pytest.
-_pytest_ini = os.path.join(os.path.dirname(__file__), "..", "pytest.ini")
-hypothesis.settings.load_profile(
-    "numpy-profile" if os.path.isfile(_pytest_ini) else "np.test() profile"
+from pandas import (
+    DataFrame,
+    Series,
+    notna,
 )
 
 
-def pytest_configure(config):
-    config.addinivalue_line("markers",
-        "valgrind_error: Tests that are known to error under valgrind.")
-    config.addinivalue_line("markers",
-        "leaks_references: Tests that are known to leak references.")
-    config.addinivalue_line("markers",
-        "slow: Tests that are very slow.")
-    config.addinivalue_line("markers",
-        "slow_pypy: Tests that are very slow on pypy.")
+def create_series():
+    return [
+        Series(dtype=np.float64, name="a"),
+        Series([np.nan] * 5),
+        Series([1.0] * 5),
+        Series(range(5, 0, -1)),
+        Series(range(5)),
+        Series([np.nan, 1.0, np.nan, 1.0, 1.0]),
+        Series([np.nan, 1.0, np.nan, 2.0, 3.0]),
+        Series([np.nan, 1.0, np.nan, 3.0, 2.0]),
+    ]
 
 
-def pytest_addoption(parser):
-    parser.addoption("--available-memory", action="store", default=None,
-                     help=("Set amount of memory available for running the "
-                           "test suite. This can result to tests requiring "
-                           "especially large amounts of memory to be skipped. "
-                           "Equivalent to setting environment variable "
-                           "NPY_AVAILABLE_MEM. Default: determined"
-                           "automatically."))
+def create_dataframes():
+    return [
+        DataFrame(columns=["a", "a"]),
+        DataFrame(np.arange(15).reshape((5, 3)), columns=["a", "a", 99]),
+    ] + [DataFrame(s) for s in create_series()]
 
 
-def pytest_sessionstart(session):
-    available_mem = session.config.getoption('available_memory')
-    if available_mem is not None:
-        os.environ['NPY_AVAILABLE_MEM'] = available_mem
+def is_constant(x):
+    values = x.values.ravel("K")
+    return len(set(values[notna(values)])) == 1
 
 
-#FIXME when yield tests are gone.
-@pytest.hookimpl()
-def pytest_itemcollected(item):
+@pytest.fixture(
+    params=(
+        obj
+        for obj in itertools.chain(create_series(), create_dataframes())
+        if is_constant(obj)
+    ),
+)
+def consistent_data(request):
+    return request.param
+
+
+@pytest.fixture(params=create_series())
+def series_data(request):
+    return request.param
+
+
+@pytest.fixture(params=itertools.chain(create_series(), create_dataframes()))
+def all_data(request):
     """
-    Check FPU precision mode was not changed during test collection.
-
-    The clumsy way we do it here is mainly necessary because numpy
-    still uses yield tests, which can execute code at test collection
-    time.
+    Test:
+        - Empty Series / DataFrame
+        - All NaN
+        - All consistent value
+        - Monotonically decreasing
+        - Monotonically increasing
+        - Monotonically consistent with NaNs
+        - Monotonically increasing with NaNs
+        - Monotonically decreasing with NaNs
     """
-    global _old_fpu_mode
-
-    mode = get_fpu_mode()
-
-    if _old_fpu_mode is None:
-        _old_fpu_mode = mode
-    elif mode != _old_fpu_mode:
-        _collect_results[item] = (_old_fpu_mode, mode)
-        _old_fpu_mode = mode
+    return request.param
 
 
-@pytest.fixture(scope="function", autouse=True)
-def check_fpu_mode(request):
-    """
-    Check FPU precision mode was not changed during the test.
-    """
-    old_mode = get_fpu_mode()
-    yield
-    new_mode = get_fpu_mode()
-
-    if old_mode != new_mode:
-        raise AssertionError("FPU precision mode changed from {0:#x} to {1:#x}"
-                             " during the test".format(old_mode, new_mode))
-
-    collect_result = _collect_results.get(request.node)
-    if collect_result is not None:
-        old_mode, new_mode = collect_result
-        raise AssertionError("FPU precision mode changed from {0:#x} to {1:#x}"
-                             " when collecting the test".format(old_mode,
-                                                                new_mode))
-
-
-@pytest.fixture(autouse=True)
-def add_np(doctest_namespace):
-    doctest_namespace['np'] = numpy
-
-@pytest.fixture(autouse=True)
-def env_setup(monkeypatch):
-    monkeypatch.setenv('PYTHONHASHSEED', '0')
+@pytest.fixture(params=[0, 2])
+def min_periods(request):
+    return request.param

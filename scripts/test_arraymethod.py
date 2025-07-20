@@ -3,10 +3,13 @@ This file tests the generic aspects of ArrayMethod.  At the time of writing
 this is private API, but when added, public API may be added here.
 """
 
+import types
+from typing import Any
+
 import pytest
+from numpy._core._multiarray_umath import _get_castingimpl as get_castingimpl
 
 import numpy as np
-from numpy.core._multiarray_umath import _get_castingimpl as get_castingimpl
 
 
 class TestResolveDescriptors:
@@ -48,11 +51,35 @@ class TestSimpleStridedCall:
          ValueError),  # not 1-D
         (((np.ones(3, dtype="d"), np.ones(4, dtype="f")),),
           ValueError),  # different length
-        (((np.frombuffer(b"\0x00"*3*2, dtype="d"),
-           np.frombuffer(b"\0x00"*3, dtype="f")),),
+        (((np.frombuffer(b"\0x00" * 3 * 2, dtype="d"),
+           np.frombuffer(b"\0x00" * 3, dtype="f")),),
          ValueError),  # output not writeable
     ])
     def test_invalid_arguments(self, args, error):
         # This is private API, which may be modified freely
         with pytest.raises(error):
             self.method._simple_strided_call(*args)
+
+
+@pytest.mark.parametrize(
+    "cls", [
+        np.ndarray, np.recarray, np.char.chararray, np.matrix, np.memmap
+    ]
+)
+class TestClassGetItem:
+    def test_class_getitem(self, cls: type[np.ndarray]) -> None:
+        """Test `ndarray.__class_getitem__`."""
+        alias = cls[Any, Any]
+        assert isinstance(alias, types.GenericAlias)
+        assert alias.__origin__ is cls
+
+    @pytest.mark.parametrize("arg_len", range(4))
+    def test_subscript_tup(self, cls: type[np.ndarray], arg_len: int) -> None:
+        arg_tup = (Any,) * arg_len
+        if arg_len in (1, 2):
+            assert cls[arg_tup]
+        else:
+            match = f"Too {'few' if arg_len == 0 else 'many'} arguments"
+            with pytest.raises(TypeError, match=match):
+                cls[arg_tup]
+

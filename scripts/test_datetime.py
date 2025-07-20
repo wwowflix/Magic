@@ -1,13 +1,20 @@
+import datetime
+import pickle
+
+import pytest
 
 import numpy
 import numpy as np
-import datetime
-import pytest
 from numpy.testing import (
-    assert_, assert_equal, assert_raises, assert_warns, suppress_warnings,
-    assert_raises_regex, assert_array_equal,
-    )
-from numpy.compat import pickle
+    IS_WASM,
+    assert_,
+    assert_array_equal,
+    assert_equal,
+    assert_raises,
+    assert_raises_regex,
+    assert_warns,
+    suppress_warnings,
+)
 
 # Use pytz to test out various time zones if available
 try:
@@ -22,16 +29,37 @@ except NameError:
     RecursionError = RuntimeError  # python < 3.5
 
 
+def _assert_equal_hash(v1, v2):
+    assert v1 == v2
+    assert hash(v1) == hash(v2)
+    assert v2 in {v1}
+
+
 class TestDateTime:
+
+    def test_string(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
+        with pytest.warns(UserWarning, match=msg):
+            np.datetime64('2000-01-01T00+01')
+
+    def test_datetime(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
+        with pytest.warns(UserWarning, match=msg):
+            t0 = np.datetime64('2023-06-09T12:18:40Z', 'ns')
+
+        t0 = np.datetime64('2023-06-09T12:18:40', 'ns')
+
     def test_datetime_dtype_creation(self):
         for unit in ['Y', 'M', 'W', 'D',
                      'h', 'm', 's', 'ms', 'us',
                      'μs',  # alias for us
                      'ns', 'ps', 'fs', 'as']:
-            dt1 = np.dtype('M8[750%s]' % unit)
-            assert_(dt1 == np.dtype('datetime64[750%s]' % unit))
-            dt2 = np.dtype('m8[%s]' % unit)
-            assert_(dt2 == np.dtype('timedelta64[%s]' % unit))
+            dt1 = np.dtype(f'M8[750{unit}]')
+            assert_(dt1 == np.dtype(f'datetime64[750{unit}]'))
+            dt2 = np.dtype(f'm8[{unit}]')
+            assert_(dt2 == np.dtype(f'timedelta64[{unit}]'))
 
         # Generic units shouldn't add [] to the end
         assert_equal(str(np.dtype("M8")), "datetime64")
@@ -63,6 +91,7 @@ class TestDateTime:
         assert_raises(TypeError, np.dtype, 'm7')
         assert_raises(TypeError, np.dtype, 'M16')
         assert_raises(TypeError, np.dtype, 'm16')
+        assert_raises(TypeError, np.dtype, 'M8[3000000000ps]')
 
     def test_datetime_casting_rules(self):
         # Cannot cast safely/same_kind between timedelta and datetime
@@ -137,6 +166,42 @@ class TestDateTime:
         assert_(not np.can_cast('M8[h]', 'M8', casting='same_kind'))
         assert_(not np.can_cast('M8[h]', 'M8', casting='safe'))
 
+    def test_datetime_prefix_conversions(self):
+        # regression tests related to gh-19631;
+        # test metric prefixes from seconds down to
+        # attoseconds for bidirectional conversions
+        smaller_units = ['M8[7000ms]',
+                         'M8[2000us]',
+                         'M8[1000ns]',
+                         'M8[5000ns]',
+                         'M8[2000ps]',
+                         'M8[9000fs]',
+                         'M8[1000as]',
+                         'M8[2000000ps]',
+                         'M8[1000000as]',
+                         'M8[2000000000ps]',
+                         'M8[1000000000as]']
+        larger_units = ['M8[7s]',
+                        'M8[2ms]',
+                        'M8[us]',
+                        'M8[5us]',
+                        'M8[2ns]',
+                        'M8[9ps]',
+                        'M8[1fs]',
+                        'M8[2us]',
+                        'M8[1ps]',
+                        'M8[2ms]',
+                        'M8[1ns]']
+        for larger_unit, smaller_unit in zip(larger_units, smaller_units):
+            assert np.can_cast(larger_unit, smaller_unit, casting='safe')
+            assert np.can_cast(smaller_unit, larger_unit, casting='safe')
+
+    @pytest.mark.parametrize("unit", [
+        "s", "ms", "us", "ns", "ps", "fs", "as"])
+    def test_prohibit_negative_datetime(self, unit):
+        with assert_raises(TypeError):
+            np.array([1], dtype=f"M8[-1{unit}]")
+
     def test_compare_generic_nat(self):
         # regression tests for gh-6452
         assert_(np.datetime64('NaT') !=
@@ -152,7 +217,7 @@ class TestDateTime:
         expected = np.arange(size)
         arr = np.tile(np.datetime64('NaT'), size)
         assert_equal(np.argsort(arr, kind='mergesort'), expected)
-    
+
     @pytest.mark.parametrize("size", [
         3, 21, 217, 1000])
     def test_timedelta_nat_argsort_stability(self, size):
@@ -201,10 +266,10 @@ class TestDateTime:
         # Some basic strings and repr
         assert_equal(str(np.datetime64('NaT')), 'NaT')
         assert_equal(repr(np.datetime64('NaT')),
-                     "numpy.datetime64('NaT')")
+                     "np.datetime64('NaT')")
         assert_equal(str(np.datetime64('2011-02')), '2011-02')
         assert_equal(repr(np.datetime64('2011-02')),
-                     "numpy.datetime64('2011-02')")
+                     "np.datetime64('2011-02')")
 
         # None gets constructed as NaT
         assert_equal(np.datetime64(None), np.datetime64('NaT'))
@@ -265,11 +330,13 @@ class TestDateTime:
                      np.datetime64('1920'))
 
     def test_datetime_scalar_construction_timezone(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
         # verify that supplying an explicit timezone works, but is deprecated
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(np.datetime64('2000-01-01T00Z'),
                          np.datetime64('2000-01-01T00'))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(np.datetime64('2000-01-01T00-08'),
                          np.datetime64('2000-01-01T08'))
 
@@ -290,7 +357,7 @@ class TestDateTime:
 
         # find "supertype" for non-dates and dates
 
-        b = np.bool_(True)
+        b = np.bool(True)
         dm = np.datetime64('1970-01-01', 'M')
         d = datetime.date(1970, 1, 1)
         dt = datetime.datetime(1970, 1, 1, 12, 30, 40)
@@ -315,7 +382,7 @@ class TestDateTime:
     # "generic" to select generic unit
     ("Y"), ("M"), ("W"), ("D"), ("h"), ("m"),
     ("s"), ("ms"), ("us"), ("ns"), ("ps"),
-    ("fs"), ("as"), ("generic") ])
+    ("fs"), ("as"), ("generic")])
     def test_timedelta_np_int_construction(self, unit):
         # regression test for gh-7617
         if unit != "generic":
@@ -341,12 +408,12 @@ class TestDateTime:
         # Some basic strings and repr
         assert_equal(str(np.timedelta64('NaT')), 'NaT')
         assert_equal(repr(np.timedelta64('NaT')),
-                     "numpy.timedelta64('NaT')")
+                     "np.timedelta64('NaT')")
         assert_equal(str(np.timedelta64(3, 's')), '3 seconds')
         assert_equal(repr(np.timedelta64(-3, 's')),
-                     "numpy.timedelta64(-3,'s')")
+                     "np.timedelta64(-3,'s')")
         assert_equal(repr(np.timedelta64(12)),
-                     "numpy.timedelta64(12)")
+                     "np.timedelta64(12)")
 
         # Construction from an integer produces generic units
         assert_equal(np.timedelta64(12).dtype, np.dtype('m8'))
@@ -432,7 +499,7 @@ class TestDateTime:
 
     def test_timedelta_nat_format(self):
         # gh-17552
-        assert_equal('NaT', '{0}'.format(np.timedelta64('nat')))
+        assert_equal('NaT', f'{np.timedelta64("nat")}')
 
     def test_timedelta_scalar_construction_units(self):
         # String construction detecting units
@@ -540,67 +607,70 @@ class TestDateTime:
         assert_equal(np.datetime64(a, '[W]'), np.datetime64('NaT', '[W]'))
 
         # NaN -> NaT
-        nan = np.array([np.nan] * 8)
+        nan = np.array([np.nan] * 8 + [0])
         fnan = nan.astype('f')
         lnan = nan.astype('g')
         cnan = nan.astype('D')
         cfnan = nan.astype('F')
         clnan = nan.astype('G')
+        hnan = nan.astype(np.half)
 
-        nat = np.array([np.datetime64('NaT')] * 8)
+        nat = np.array([np.datetime64('NaT')] * 8 + [np.datetime64(0, 'D')])
         assert_equal(nan.astype('M8[ns]'), nat)
         assert_equal(fnan.astype('M8[ns]'), nat)
         assert_equal(lnan.astype('M8[ns]'), nat)
         assert_equal(cnan.astype('M8[ns]'), nat)
         assert_equal(cfnan.astype('M8[ns]'), nat)
         assert_equal(clnan.astype('M8[ns]'), nat)
+        assert_equal(hnan.astype('M8[ns]'), nat)
 
-        nat = np.array([np.timedelta64('NaT')] * 8)
+        nat = np.array([np.timedelta64('NaT')] * 8 + [np.timedelta64(0)])
         assert_equal(nan.astype('timedelta64[ns]'), nat)
         assert_equal(fnan.astype('timedelta64[ns]'), nat)
         assert_equal(lnan.astype('timedelta64[ns]'), nat)
         assert_equal(cnan.astype('timedelta64[ns]'), nat)
         assert_equal(cfnan.astype('timedelta64[ns]'), nat)
         assert_equal(clnan.astype('timedelta64[ns]'), nat)
+        assert_equal(hnan.astype('timedelta64[ns]'), nat)
 
     def test_days_creation(self):
         assert_equal(np.array('1599', dtype='M8[D]').astype('i8'),
-                (1600-1970)*365 - (1972-1600)/4 + 3 - 365)
+                (1600 - 1970) * 365 - (1972 - 1600) / 4 + 3 - 365)
         assert_equal(np.array('1600', dtype='M8[D]').astype('i8'),
-                (1600-1970)*365 - (1972-1600)/4 + 3)
+                (1600 - 1970) * 365 - (1972 - 1600) / 4 + 3)
         assert_equal(np.array('1601', dtype='M8[D]').astype('i8'),
-                (1600-1970)*365 - (1972-1600)/4 + 3 + 366)
+                (1600 - 1970) * 365 - (1972 - 1600) / 4 + 3 + 366)
         assert_equal(np.array('1900', dtype='M8[D]').astype('i8'),
-                (1900-1970)*365 - (1970-1900)//4)
+                (1900 - 1970) * 365 - (1970 - 1900) // 4)
         assert_equal(np.array('1901', dtype='M8[D]').astype('i8'),
-                (1900-1970)*365 - (1970-1900)//4 + 365)
-        assert_equal(np.array('1967', dtype='M8[D]').astype('i8'), -3*365 - 1)
-        assert_equal(np.array('1968', dtype='M8[D]').astype('i8'), -2*365 - 1)
-        assert_equal(np.array('1969', dtype='M8[D]').astype('i8'), -1*365)
-        assert_equal(np.array('1970', dtype='M8[D]').astype('i8'), 0*365)
-        assert_equal(np.array('1971', dtype='M8[D]').astype('i8'), 1*365)
-        assert_equal(np.array('1972', dtype='M8[D]').astype('i8'), 2*365)
-        assert_equal(np.array('1973', dtype='M8[D]').astype('i8'), 3*365 + 1)
-        assert_equal(np.array('1974', dtype='M8[D]').astype('i8'), 4*365 + 1)
+                (1900 - 1970) * 365 - (1970 - 1900) // 4 + 365)
+        assert_equal(np.array('1967', dtype='M8[D]').astype('i8'), -3 * 365 - 1)
+        assert_equal(np.array('1968', dtype='M8[D]').astype('i8'), -2 * 365 - 1)
+        assert_equal(np.array('1969', dtype='M8[D]').astype('i8'), -1 * 365)
+        assert_equal(np.array('1970', dtype='M8[D]').astype('i8'), 0 * 365)
+        assert_equal(np.array('1971', dtype='M8[D]').astype('i8'), 1 * 365)
+        assert_equal(np.array('1972', dtype='M8[D]').astype('i8'), 2 * 365)
+        assert_equal(np.array('1973', dtype='M8[D]').astype('i8'), 3 * 365 + 1)
+        assert_equal(np.array('1974', dtype='M8[D]').astype('i8'), 4 * 365 + 1)
         assert_equal(np.array('2000', dtype='M8[D]').astype('i8'),
-                 (2000 - 1970)*365 + (2000 - 1972)//4)
+                 (2000 - 1970) * 365 + (2000 - 1972) // 4)
         assert_equal(np.array('2001', dtype='M8[D]').astype('i8'),
-                 (2000 - 1970)*365 + (2000 - 1972)//4 + 366)
+                 (2000 - 1970) * 365 + (2000 - 1972) // 4 + 366)
         assert_equal(np.array('2400', dtype='M8[D]').astype('i8'),
-                 (2400 - 1970)*365 + (2400 - 1972)//4 - 3)
+                 (2400 - 1970) * 365 + (2400 - 1972) // 4 - 3)
         assert_equal(np.array('2401', dtype='M8[D]').astype('i8'),
-                 (2400 - 1970)*365 + (2400 - 1972)//4 - 3 + 366)
+                 (2400 - 1970) * 365 + (2400 - 1972) // 4 - 3 + 366)
 
         assert_equal(np.array('1600-02-29', dtype='M8[D]').astype('i8'),
-                (1600-1970)*365 - (1972-1600)//4 + 3 + 31 + 28)
+                (1600 - 1970) * 365 - (1972 - 1600) // 4 + 3 + 31 + 28)
         assert_equal(np.array('1600-03-01', dtype='M8[D]').astype('i8'),
-                (1600-1970)*365 - (1972-1600)//4 + 3 + 31 + 29)
+                (1600 - 1970) * 365 - (1972 - 1600) // 4 + 3 + 31 + 29)
         assert_equal(np.array('2000-02-29', dtype='M8[D]').astype('i8'),
-                 (2000 - 1970)*365 + (2000 - 1972)//4 + 31 + 28)
+                 (2000 - 1970) * 365 + (2000 - 1972) // 4 + 31 + 28)
         assert_equal(np.array('2000-03-01', dtype='M8[D]').astype('i8'),
-                 (2000 - 1970)*365 + (2000 - 1972)//4 + 31 + 29)
+                 (2000 - 1970) * 365 + (2000 - 1972) // 4 + 31 + 29)
         assert_equal(np.array('2001-03-22', dtype='M8[D]').astype('i8'),
-                 (2000 - 1970)*365 + (2000 - 1972)//4 + 366 + 31 + 28 + 21)
+                 (2000 - 1970) * 365 + (2000 - 1972) // 4 + 366 + 31 + 28 + 21)
 
     def test_days_to_pydate(self):
         assert_equal(np.array('1599', dtype='M8[D]').astype('O'),
@@ -681,8 +751,8 @@ class TestDateTime:
         assert_equal(uni_a, uni_b)
 
         # Datetime to long string - gh-9712
-        assert_equal(str_a, dt_a.astype((np.string_, 128)))
-        str_b = np.empty(str_a.shape, dtype=(np.string_, 128))
+        assert_equal(str_a, dt_a.astype((np.bytes_, 128)))
+        str_b = np.empty(str_a.shape, dtype=(np.bytes_, 128))
         str_b[...] = dt_a
         assert_equal(str_a, str_b)
 
@@ -692,7 +762,7 @@ class TestDateTime:
         times_swapped = times.astype(times.dtype.newbyteorder())
         assert_array_equal(times, times_swapped)
 
-        unswapped = times_swapped.view(np.int64).newbyteorder()
+        unswapped = times_swapped.view(np.dtype("int64").newbyteorder())
         assert_array_equal(unswapped, times.view(np.int64))
 
     @pytest.mark.parametrize(["time1", "time2"],
@@ -750,7 +820,7 @@ class TestDateTime:
         a = np.array(['2011-03-16T13:55', '1920-01-01T03:12'], dtype='M')
         assert_equal(np.array2string(a, separator=', ',
                     formatter={'datetime': lambda x:
-                            "'%s'" % np.datetime_as_string(x, timezone='UTC')}),
+                            f"'{np.datetime_as_string(x, timezone='UTC')}'"}),
                      "['2011-03-16T13:55Z', '1920-01-01T03:12Z']")
 
         # Check that one NaT doesn't corrupt subsequent entries
@@ -789,16 +859,16 @@ class TestDateTime:
                          delta)
 
         # Check that loading pickles from 1.6 works
-        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n" + \
-              b"(I4\nS'<'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'D'\np6\n" + \
+        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n"\
+              b"(I4\nS'<'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'D'\np6\n"\
               b"I7\nI1\nI1\ntp7\ntp8\ntp9\nb."
         assert_equal(pickle.loads(pkl), np.dtype('<M8[7D]'))
-        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n" + \
-              b"(I4\nS'<'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'W'\np6\n" + \
+        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n"\
+              b"(I4\nS'<'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'W'\np6\n"\
               b"I1\nI1\nI1\ntp7\ntp8\ntp9\nb."
         assert_equal(pickle.loads(pkl), np.dtype('<M8[W]'))
-        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n" + \
-              b"(I4\nS'>'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'us'\np6\n" + \
+        pkl = b"cnumpy\ndtype\np0\n(S'M8'\np1\nI0\nI1\ntp2\nRp3\n"\
+              b"(I4\nS'>'\np4\nNNNI-1\nI-1\nI0\n((dp5\n(S'us'\np6\n"\
               b"I1\nI1\nI1\ntp7\ntp8\ntp9\nb."
         assert_equal(pickle.loads(pkl), np.dtype('>M8[us]'))
 
@@ -815,23 +885,23 @@ class TestDateTime:
         # timedelta <op> timedelta computes the metadata gcd
         for mM in ['m', 'M']:
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[2Y]'), np.dtype(mM+'8[2Y]')),
-                np.dtype(mM+'8[2Y]'))
+                np.promote_types(np.dtype(mM + '8[2Y]'), np.dtype(mM + '8[2Y]')),
+                np.dtype(mM + '8[2Y]'))
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[12Y]'), np.dtype(mM+'8[15Y]')),
-                np.dtype(mM+'8[3Y]'))
+                np.promote_types(np.dtype(mM + '8[12Y]'), np.dtype(mM + '8[15Y]')),
+                np.dtype(mM + '8[3Y]'))
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[62M]'), np.dtype(mM+'8[24M]')),
-                np.dtype(mM+'8[2M]'))
+                np.promote_types(np.dtype(mM + '8[62M]'), np.dtype(mM + '8[24M]')),
+                np.dtype(mM + '8[2M]'))
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[1W]'), np.dtype(mM+'8[2D]')),
-                np.dtype(mM+'8[1D]'))
+                np.promote_types(np.dtype(mM + '8[1W]'), np.dtype(mM + '8[2D]')),
+                np.dtype(mM + '8[1D]'))
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[W]'), np.dtype(mM+'8[13s]')),
-                np.dtype(mM+'8[s]'))
+                np.promote_types(np.dtype(mM + '8[W]'), np.dtype(mM + '8[13s]')),
+                np.dtype(mM + '8[s]'))
             assert_equal(
-                np.promote_types(np.dtype(mM+'8[13W]'), np.dtype(mM+'8[49s]')),
-                np.dtype(mM+'8[7s]'))
+                np.promote_types(np.dtype(mM + '8[13W]'), np.dtype(mM + '8[49s]')),
+                np.dtype(mM + '8[7s]'))
         # timedelta <op> timedelta raises when there is no reasonable gcd
         assert_raises(TypeError, np.promote_types,
                             np.dtype('m8[Y]'), np.dtype('m8[D]'))
@@ -878,7 +948,7 @@ class TestDateTime:
             b[8] = 'NaT'
 
             assert_equal(b.astype(object).astype(unit), b,
-                            "Error roundtripping unit %s" % unit)
+                            f"Error roundtripping unit {unit}")
         # With time units
         for unit in ['M8[as]', 'M8[16fs]', 'M8[ps]', 'M8[us]',
                      'M8[300as]', 'M8[20us]']:
@@ -894,7 +964,7 @@ class TestDateTime:
             b[8] = 'NaT'
 
             assert_equal(b.astype(object).astype(unit), b,
-                            "Error roundtripping unit %s" % unit)
+                            f"Error roundtripping unit {unit}")
 
     def test_month_truncation(self):
         # Make sure that months are truncating correctly
@@ -912,9 +982,9 @@ class TestDateTime:
     def test_different_unit_comparison(self):
         # Check some years with date units
         for unit1 in ['Y', 'M', 'D']:
-            dt1 = np.dtype('M8[%s]' % unit1)
+            dt1 = np.dtype(f'M8[{unit1}]')
             for unit2 in ['Y', 'M', 'D']:
-                dt2 = np.dtype('M8[%s]' % unit2)
+                dt2 = np.dtype(f'M8[{unit2}]')
                 assert_equal(np.array('1945', dtype=dt1),
                              np.array('1945', dtype=dt2))
                 assert_equal(np.array('1970', dtype=dt1),
@@ -933,9 +1003,9 @@ class TestDateTime:
                              np.datetime64('10000-01-01', unit2))
         # Check some datetimes with time units
         for unit1 in ['6h', 'h', 'm', 's', '10ms', 'ms', 'us']:
-            dt1 = np.dtype('M8[%s]' % unit1)
+            dt1 = np.dtype(f'M8[{unit1}]')
             for unit2 in ['h', 'm', 's', 'ms', 'us']:
-                dt2 = np.dtype('M8[%s]' % unit2)
+                dt2 = np.dtype(f'M8[{unit2}]')
                 assert_equal(np.array('1945-03-12T18', dtype=dt1),
                              np.array('1945-03-12T18', dtype=dt2))
                 assert_equal(np.array('1970-03-12T18', dtype=dt1),
@@ -954,9 +1024,9 @@ class TestDateTime:
                              np.datetime64('10000-01-01T00', unit2))
         # Check some days with units that won't overflow
         for unit1 in ['D', '12h', 'h', 'm', 's', '4s', 'ms', 'us']:
-            dt1 = np.dtype('M8[%s]' % unit1)
+            dt1 = np.dtype(f'M8[{unit1}]')
             for unit2 in ['D', 'h', 'm', 's', 'ms', 'us']:
-                dt2 = np.dtype('M8[%s]' % unit2)
+                dt2 = np.dtype(f'M8[{unit2}]')
                 assert_(np.equal(np.array('1932-02-17', dtype='M').astype(dt1),
                      np.array('1932-02-17T00:00:00', dtype='M').astype(dt2),
                      casting='unsafe'))
@@ -965,12 +1035,11 @@ class TestDateTime:
                      casting='unsafe'))
 
         # Shouldn't be able to compare datetime and timedelta
-        # TODO: Changing to 'same_kind' or 'safe' casting in the ufuncs by
-        #       default is needed to properly catch this kind of thing...
         a = np.array('2012-12-21', dtype='M8[D]')
         b = np.array(3, dtype='m8[D]')
-        #assert_raises(TypeError, np.less, a, b)
-        assert_raises(TypeError, np.less, a, b, casting='same_kind')
+        assert_raises(TypeError, np.less, a, b)
+        # not even if "unsafe"
+        assert_raises(TypeError, np.less, a, b, casting='unsafe')
 
     def test_datetime_like(self):
         a = np.array([3], dtype='m8[4D]')
@@ -1033,7 +1102,7 @@ class TestDateTime:
                       np.array(['NaT'], dtype='M8[D]'),
                       np.array([3], dtype='m8[D]'),
                       np.array([11], dtype='m8[h]'),
-                      np.array([3*24 + 11], dtype='m8[h]')),
+                      np.array([3 * 24 + 11], dtype='m8[h]')),
                      # NumPy scalars
                      (np.datetime64('2012-12-21', '[D]'),
                       np.datetime64('2012-12-24', '[D]'),
@@ -1041,7 +1110,7 @@ class TestDateTime:
                       np.datetime64('NaT', '[D]'),
                       np.timedelta64(3, '[D]'),
                       np.timedelta64(11, '[h]'),
-                      np.timedelta64(3*24 + 11, '[h]'))]:
+                      np.timedelta64(3 * 24 + 11, '[h]'))]:
             # m8 + m8
             assert_equal(tda + tdb, tdc)
             assert_equal((tda + tdb).dtype, np.dtype('m8[h]'))
@@ -1049,14 +1118,14 @@ class TestDateTime:
             assert_equal(tdb + True, tdb + 1)
             assert_equal((tdb + True).dtype, np.dtype('m8[h]'))
             # m8 + int
-            assert_equal(tdb + 3*24, tdc)
-            assert_equal((tdb + 3*24).dtype, np.dtype('m8[h]'))
+            assert_equal(tdb + 3 * 24, tdc)
+            assert_equal((tdb + 3 * 24).dtype, np.dtype('m8[h]'))
             # bool + m8
             assert_equal(False + tdb, tdb)
             assert_equal((False + tdb).dtype, np.dtype('m8[h]'))
             # int + m8
-            assert_equal(3*24 + tdb, tdc)
-            assert_equal((3*24 + tdb).dtype, np.dtype('m8[h]'))
+            assert_equal(3 * 24 + tdb, tdc)
+            assert_equal((3 * 24 + tdb).dtype, np.dtype('m8[h]'))
             # M8 + bool
             assert_equal(dta + True, dta + 1)
             assert_equal(dtnat + True, dtnat)
@@ -1105,7 +1174,7 @@ class TestDateTime:
                       np.array(['NaT'], dtype='M8[D]'),
                       np.array([3], dtype='m8[D]'),
                       np.array([11], dtype='m8[h]'),
-                      np.array([3*24 - 11], dtype='m8[h]')),
+                      np.array([3 * 24 - 11], dtype='m8[h]')),
                      # NumPy scalars
                      (np.datetime64('2012-12-21', '[D]'),
                       np.datetime64('2012-12-24', '[D]'),
@@ -1115,7 +1184,7 @@ class TestDateTime:
                       np.datetime64('NaT', '[D]'),
                       np.timedelta64(3, '[D]'),
                       np.timedelta64(11, '[h]'),
-                      np.timedelta64(3*24 - 11, '[h]'))]:
+                      np.timedelta64(3 * 24 - 11, '[h]'))]:
             # m8 - m8
             assert_equal(tda - tdb, tdc)
             assert_equal((tda - tdb).dtype, np.dtype('m8[h]'))
@@ -1125,14 +1194,14 @@ class TestDateTime:
             assert_equal(tdc - True, tdc - 1)
             assert_equal((tdc - True).dtype, np.dtype('m8[h]'))
             # m8 - int
-            assert_equal(tdc - 3*24, -tdb)
-            assert_equal((tdc - 3*24).dtype, np.dtype('m8[h]'))
+            assert_equal(tdc - 3 * 24, -tdb)
+            assert_equal((tdc - 3 * 24).dtype, np.dtype('m8[h]'))
             # int - m8
             assert_equal(False - tdb, -tdb)
             assert_equal((False - tdb).dtype, np.dtype('m8[h]'))
             # int - m8
-            assert_equal(3*24 - tdb, tdc)
-            assert_equal((3*24 - tdb).dtype, np.dtype('m8[h]'))
+            assert_equal(3 * 24 - tdb, tdc)
+            assert_equal((3 * 24 - tdb).dtype, np.dtype('m8[h]'))
             # M8 - bool
             assert_equal(dtb - True, dtb - 1)
             assert_equal(dtnat - True, dtnat)
@@ -1213,6 +1282,7 @@ class TestDateTime:
         with suppress_warnings() as sup:
             sup.filter(RuntimeWarning, "invalid value encountered in multiply")
             nat = np.timedelta64('NaT')
+
             def check(a, b, res):
                 assert_equal(a * b, res)
                 assert_equal(b * a, res)
@@ -1257,6 +1327,7 @@ class TestDateTime:
     def test_timedelta_floor_divide(self, op1, op2, exp):
         assert_equal(op1 // op2, exp)
 
+    @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
     @pytest.mark.parametrize("op1, op2", [
         # div by 0
         (np.timedelta64(10, 'us'),
@@ -1332,6 +1403,15 @@ class TestDateTime:
         assert_equal(divmod(op1, op2), expected)
 
     @pytest.mark.parametrize("op1, op2", [
+        # Y and M are incompatible with all units except Y and M
+        (np.timedelta64(1, 'Y'), np.timedelta64(1, 's')),
+        (np.timedelta64(1, 'D'), np.timedelta64(1, 'M')),
+        ])
+    def test_timedelta_divmod_typeerror(self, op1, op2):
+        assert_raises(TypeError, np.divmod, op1, op2)
+
+    @pytest.mark.skipif(IS_WASM, reason="does not work in wasm")
+    @pytest.mark.parametrize("op1, op2", [
         # reuse cases from floordiv
         # div by 0
         (np.timedelta64(10, 'us'),
@@ -1373,13 +1453,13 @@ class TestDateTime:
             assert_equal(tda / 0.5, tdc)
             assert_equal((tda / 0.5).dtype, np.dtype('m8[h]'))
             # m8 / m8
-            assert_equal(tda / tdb, 6.0 / 9.0)
-            assert_equal(np.divide(tda, tdb), 6.0 / 9.0)
-            assert_equal(np.true_divide(tda, tdb), 6.0 / 9.0)
-            assert_equal(tdb / tda, 9.0 / 6.0)
+            assert_equal(tda / tdb, 6 / 9)
+            assert_equal(np.divide(tda, tdb), 6 / 9)
+            assert_equal(np.true_divide(tda, tdb), 6 / 9)
+            assert_equal(tdb / tda, 9 / 6)
             assert_equal((tda / tdb).dtype, np.dtype('f8'))
-            assert_equal(tda / tdd, 60.0)
-            assert_equal(tdd / tda, 1.0 / 60.0)
+            assert_equal(tda / tdd, 60)
+            assert_equal(tdd / tda, 1 / 60)
 
             # int / m8
             assert_raises(TypeError, np.divide, 2, tdb)
@@ -1400,7 +1480,7 @@ class TestDateTime:
 
         # NaTs
         with suppress_warnings() as sup:
-            sup.filter(RuntimeWarning,  r".*encountered in true\_divide")
+            sup.filter(RuntimeWarning,  r".*encountered in divide")
             nat = np.timedelta64('NaT')
             for tp in (int, float):
                 assert_equal(np.timedelta64(1) / tp(0), nat)
@@ -1487,7 +1567,7 @@ class TestDateTime:
 
         # Also do timedelta
         a = np.array(3, dtype='m8[h]')
-        b = np.array(3*3600 - 3, dtype='m8[s]')
+        b = np.array(3 * 3600 - 3, dtype='m8[s]')
         assert_equal(np.minimum(a, b), b)
         assert_equal(np.minimum(a, b).dtype, np.dtype('m8[s]'))
         assert_equal(np.fmin(a, b), b)
@@ -1517,7 +1597,7 @@ class TestDateTime:
 
     def test_hours(self):
         t = np.ones(3, dtype='M8[s]')
-        t[0] = 60*60*24 + 60*60*10
+        t[0] = 60 * 60 * 24 + 60 * 60 * 10
         assert_(t[0].item().hour == 10)
 
     def test_divisor_conversion_year(self):
@@ -1560,6 +1640,8 @@ class TestDateTime:
         assert_raises(ValueError, lambda: np.dtype('M8[as/10]'))
 
     def test_string_parser_variants(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
         # Allow space instead of 'T' between date and time
         assert_equal(np.array(['1980-02-29T01:02:03'], np.dtype('M8[s]')),
                      np.array(['1980-02-29 01:02:03'], np.dtype('M8[s]')))
@@ -1570,32 +1652,34 @@ class TestDateTime:
         assert_equal(np.array(['-1980-02-29T01:02:03'], np.dtype('M8[s]')),
                      np.array(['-1980-02-29 01:02:03'], np.dtype('M8[s]')))
         # UTC specifier
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(
                 np.array(['+1980-02-29T01:02:03'], np.dtype('M8[s]')),
                 np.array(['+1980-02-29 01:02:03Z'], np.dtype('M8[s]')))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(
                 np.array(['-1980-02-29T01:02:03'], np.dtype('M8[s]')),
                 np.array(['-1980-02-29 01:02:03Z'], np.dtype('M8[s]')))
         # Time zone offset
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(
                 np.array(['1980-02-29T02:02:03'], np.dtype('M8[s]')),
                 np.array(['1980-02-29 00:32:03-0130'], np.dtype('M8[s]')))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(
                 np.array(['1980-02-28T22:32:03'], np.dtype('M8[s]')),
                 np.array(['1980-02-29 00:02:03+01:30'], np.dtype('M8[s]')))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(
                 np.array(['1980-02-29T02:32:03.506'], np.dtype('M8[s]')),
                 np.array(['1980-02-29 00:32:03.506-02'], np.dtype('M8[s]')))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_equal(np.datetime64('1977-03-02T12:30-0230'),
                          np.datetime64('1977-03-02T15:00'))
 
     def test_string_parser_error_check(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
         # Arbitrary bad string
         assert_raises(ValueError, np.array, ['badvalue'], np.dtype('M8[us]'))
         # Character after year must be '-'
@@ -1662,19 +1746,19 @@ class TestDateTime:
         assert_raises(ValueError, np.array, ['1980-02-03 01:01:60'],
                                                         np.dtype('M8[us]'))
         # Timezone offset must within a reasonable range
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_raises(ValueError, np.array, ['1980-02-03 01:01:00+0661'],
                                                             np.dtype('M8[us]'))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_raises(ValueError, np.array, ['1980-02-03 01:01:00+2500'],
                                                             np.dtype('M8[us]'))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_raises(ValueError, np.array, ['1980-02-03 01:01:00-0070'],
                                                             np.dtype('M8[us]'))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_raises(ValueError, np.array, ['1980-02-03 01:01:00-3000'],
                                                             np.dtype('M8[us]'))
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             assert_raises(ValueError, np.array, ['1980-02-03 01:01:00-25:00'],
                                                             np.dtype('M8[us]'))
 
@@ -1683,10 +1767,10 @@ class TestDateTime:
         timesteps = np.array([date], dtype='datetime64[s]')[0].astype(np.int64)
         for unit in ['ms', 'us', 'ns']:
             timesteps *= 1000
-            x = np.array([date], dtype='datetime64[%s]' % unit)
+            x = np.array([date], dtype=f'datetime64[{unit}]')
 
             assert_equal(timesteps, x[0].astype(np.int64),
-                         err_msg='Datetime conversion error for unit %s' % unit)
+                         err_msg=f'Datetime conversion error for unit {unit}')
 
         assert_equal(x[0].astype(np.int64), 322689600000000000)
 
@@ -1956,6 +2040,7 @@ class TestDateTime:
         with assert_raises_regex(TypeError, "common metadata divisor"):
             val1 % val2
 
+    @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
     def test_timedelta_modulus_div_by_zero(self):
         with assert_warns(RuntimeWarning):
             actual = np.timedelta64(10, 's') % np.timedelta64(0, 's')
@@ -1991,6 +2076,27 @@ class TestDateTime:
         assert_equal(np.maximum.reduce(a).dtype, np.dtype('m8[s]'))
         assert_equal(np.maximum.reduce(a),
                      np.timedelta64(7, 's'))
+
+    def test_timedelta_correct_mean(self):
+        # test mainly because it worked only via a bug in that allowed:
+        # `timedelta.sum(dtype="f8")` to ignore the dtype request.
+        a = np.arange(1000, dtype="m8[s]")
+        assert_array_equal(a.mean(), a.sum() / len(a))
+
+    def test_datetime_no_subtract_reducelike(self):
+        # subtracting two datetime64 works, but we cannot reduce it, since
+        # the result of that subtraction will have a different dtype.
+        arr = np.array(["2021-12-02", "2019-05-12"], dtype="M8[ms]")
+        msg = r"the resolved dtypes are not compatible"
+
+        with pytest.raises(TypeError, match=msg):
+            np.subtract.reduce(arr)
+
+        with pytest.raises(TypeError, match=msg):
+            np.subtract.accumulate(arr)
+
+        with pytest.raises(TypeError, match=msg):
+            np.subtract.reduceat(arr, [0])
 
     def test_datetime_busday_offset(self):
         # First Monday in June
@@ -2269,16 +2375,23 @@ class TestDateTime:
         assert_equal(np.busday_count('2011-01-01', dates, busdaycal=bdd),
                      np.arange(366))
         # Returns negative value when reversed
+        # -1 since the '2011-01-01' is not a busday
         assert_equal(np.busday_count(dates, '2011-01-01', busdaycal=bdd),
-                     -np.arange(366))
+                     -np.arange(366) - 1)
 
+        # 2011-12-31 is a saturday
         dates = np.busday_offset('2011-12-31', -np.arange(366),
                         roll='forward', busdaycal=bdd)
+        # only the first generated date is in the future of 2011-12-31
+        expected = np.arange(366)
+        expected[0] = -1
         assert_equal(np.busday_count(dates, '2011-12-31', busdaycal=bdd),
-                     np.arange(366))
+                     expected)
         # Returns negative value when reversed
+        expected = -np.arange(366) + 1
+        expected[0] = 0
         assert_equal(np.busday_count('2011-12-31', dates, busdaycal=bdd),
-                     -np.arange(366))
+                     expected)
 
         # Can't supply both a weekmask/holidays and busdaycal
         assert_raises(ValueError, np.busday_offset, '2012-01-03', '2012-02-03',
@@ -2290,6 +2403,16 @@ class TestDateTime:
         assert_equal(np.busday_count('2011-03', '2011-04', weekmask='Mon'), 4)
         # Returns negative value when reversed
         assert_equal(np.busday_count('2011-04', '2011-03', weekmask='Mon'), -4)
+
+        sunday = np.datetime64('2023-03-05')
+        monday = sunday + 1
+        friday = sunday + 5
+        saturday = sunday + 6
+        assert_equal(np.busday_count(sunday, monday), 0)
+        assert_equal(np.busday_count(monday, sunday), -1)
+
+        assert_equal(np.busday_count(friday, saturday), 1)
+        assert_equal(np.busday_count(saturday, friday), 0)
 
     def test_datetime_is_busday(self):
         holidays = ['2011-01-01', '2011-10-10', '2011-11-11', '2011-11-24',
@@ -2309,6 +2432,8 @@ class TestDateTime:
                      np.zeros(len(holidays), dtype='?'))
 
     def test_datetime_y2038(self):
+        msg = "no explicit representation of timezones available for " \
+              "np.datetime64"
         # Test parsing on either side of the Y2038 boundary
         a = np.datetime64('2038-01-19T03:14:07')
         assert_equal(a.view(np.int64), 2**31 - 1)
@@ -2317,10 +2442,10 @@ class TestDateTime:
 
         # Test parsing on either side of the Y2038 boundary with
         # a manually specified timezone offset
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             a = np.datetime64('2038-01-19T04:14:07+0100')
             assert_equal(a.view(np.int64), 2**31 - 1)
-        with assert_warns(DeprecationWarning):
+        with pytest.warns(UserWarning, match=msg):
             a = np.datetime64('2038-01-19T04:14:08+0100')
             assert_equal(a.view(np.int64), 2**31)
 
@@ -2340,13 +2465,13 @@ class TestDateTime:
         for unit in ['Y', 'M', 'W', 'D',
                      'h', 'm', 's', 'ms', 'us',
                      'ns', 'ps', 'fs', 'as']:
-            arr = np.array([123, -321, "NaT"], dtype='<datetime64[%s]' % unit)
+            arr = np.array([123, -321, "NaT"], dtype=f'<datetime64[{unit}]')
             assert_equal(np.isnat(arr), res)
-            arr = np.array([123, -321, "NaT"], dtype='>datetime64[%s]' % unit)
+            arr = np.array([123, -321, "NaT"], dtype=f'>datetime64[{unit}]')
             assert_equal(np.isnat(arr), res)
-            arr = np.array([123, -321, "NaT"], dtype='<timedelta64[%s]' % unit)
+            arr = np.array([123, -321, "NaT"], dtype=f'<timedelta64[{unit}]')
             assert_equal(np.isnat(arr), res)
-            arr = np.array([123, -321, "NaT"], dtype='>timedelta64[%s]' % unit)
+            arr = np.array([123, -321, "NaT"], dtype=f'>timedelta64[{unit}]')
             assert_equal(np.isnat(arr), res)
 
     def test_isnat_error(self):
@@ -2372,10 +2497,10 @@ class TestDateTime:
         '''check isfinite, isinf, isnan for all units of <M, >M, <m, >m dtypes
         '''
         arr_val = [123, -321, "NaT"]
-        arr = np.array(arr_val,  dtype= dstr % unit)
-        pos = np.array([True, True,  False])
-        neg = np.array([False, False,  True])
-        false = np.array([False, False,  False])
+        arr = np.array(arr_val, dtype=(dstr % unit))
+        pos = np.array([True, True, False])
+        neg = np.array([False, False, True])
+        false = np.array([False, False, False])
         assert_equal(np.isfinite(arr), pos)
         assert_equal(np.isinf(arr), false)
         assert_equal(np.isnan(arr), neg)
@@ -2446,6 +2571,101 @@ class TestDateTime:
         limit_via_str = np.datetime64(str(limit), time_unit)
         assert limit_via_str == limit
 
+    def test_datetime_hash_nat(self):
+        nat1 = np.datetime64()
+        nat2 = np.datetime64()
+        assert nat1 is not nat2
+        assert nat1 != nat2
+        assert hash(nat1) != hash(nat2)
+
+    @pytest.mark.parametrize('unit', ('Y', 'M', 'W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_datetime_hash_weeks(self, unit):
+        dt = np.datetime64(2348, 'W')  # 2015-01-01
+        dt2 = np.datetime64(dt, unit)
+        _assert_equal_hash(dt, dt2)
+
+        dt3 = np.datetime64(int(dt2.astype(int)) + 1, unit)
+        assert hash(dt) != hash(dt3)  # doesn't collide
+
+    @pytest.mark.parametrize('unit', ('h', 'm', 's', 'ms', 'us'))
+    def test_datetime_hash_weeks_vs_pydatetime(self, unit):
+        dt = np.datetime64(2348, 'W')  # 2015-01-01
+        dt2 = np.datetime64(dt, unit)
+        pydt = dt2.astype(datetime.datetime)
+        assert isinstance(pydt, datetime.datetime)
+        _assert_equal_hash(pydt, dt2)
+
+    @pytest.mark.parametrize('unit', ('Y', 'M', 'W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_datetime_hash_big_negative(self, unit):
+        dt = np.datetime64(-102894, 'W')  # -002-01-01
+        dt2 = np.datetime64(dt, unit)
+        _assert_equal_hash(dt, dt2)
+
+    # can only go down to "fs" before integer overflow
+    @pytest.mark.parametrize('unit', ('m', 's', 'ms', 'us', 'ns', 'ps', 'fs'))
+    def test_datetime_hash_minutes(self, unit):
+        dt = np.datetime64(3, 'm')
+        dt2 = np.datetime64(dt, unit)
+        _assert_equal_hash(dt, dt2)
+
+    @pytest.mark.parametrize('unit', ('ns', 'ps', 'fs', 'as'))
+    def test_datetime_hash_ns(self, unit):
+        dt = np.datetime64(3, 'ns')
+        dt2 = np.datetime64(dt, unit)
+        _assert_equal_hash(dt, dt2)
+
+        dt3 = np.datetime64(int(dt2.astype(int)) + 1, unit)
+        assert hash(dt) != hash(dt3)  # doesn't collide
+
+    @pytest.mark.parametrize('wk', range(500000, 500010))  # 11552-09-04
+    @pytest.mark.parametrize('unit', ('W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_datetime_hash_big_positive(self, wk, unit):
+        dt = np.datetime64(wk, 'W')
+        dt2 = np.datetime64(dt, unit)
+        _assert_equal_hash(dt, dt2)
+
+    def test_timedelta_hash_generic(self):
+        assert_raises(ValueError, hash, np.timedelta64(123))  # generic
+
+    @pytest.mark.parametrize('unit', ('Y', 'M'))
+    def test_timedelta_hash_year_month(self, unit):
+        td = np.timedelta64(45, 'Y')
+        td2 = np.timedelta64(td, unit)
+        _assert_equal_hash(td, td2)
+
+    @pytest.mark.parametrize('unit', ('W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_timedelta_hash_weeks(self, unit):
+        td = np.timedelta64(10, 'W')
+        td2 = np.timedelta64(td, unit)
+        _assert_equal_hash(td, td2)
+
+        td3 = np.timedelta64(int(td2.astype(int)) + 1, unit)
+        assert hash(td) != hash(td3)  # doesn't collide
+
+    @pytest.mark.parametrize('unit', ('W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_timedelta_hash_weeks_vs_pydelta(self, unit):
+        td = np.timedelta64(10, 'W')
+        td2 = np.timedelta64(td, unit)
+        pytd = td2.astype(datetime.timedelta)
+        assert isinstance(pytd, datetime.timedelta)
+        _assert_equal_hash(pytd, td2)
+
+    @pytest.mark.parametrize('unit', ('ms', 'us', 'ns', 'ps', 'fs', 'as'))
+    def test_timedelta_hash_ms(self, unit):
+        td = np.timedelta64(3, 'ms')
+        td2 = np.timedelta64(td, unit)
+        _assert_equal_hash(td, td2)
+
+        td3 = np.timedelta64(int(td2.astype(int)) + 1, unit)
+        assert hash(td) != hash(td3)  # doesn't collide
+
+    @pytest.mark.parametrize('wk', range(500000, 500010))
+    @pytest.mark.parametrize('unit', ('W', 'D', 'h', 'm', 's', 'ms', 'us'))
+    def test_timedelta_hash_big_positive(self, wk, unit):
+        td = np.timedelta64(wk, 'W')
+        td2 = np.timedelta64(td, unit)
+        _assert_equal_hash(td, td2)
+
 
 class TestDateTimeData:
 
@@ -2468,3 +2688,24 @@ class TestDateTimeData:
 
         dt = np.datetime64('2000', '5μs')
         assert np.datetime_data(dt.dtype) == ('us', 5)
+
+
+def test_comparisons_return_not_implemented():
+    # GH#17017
+
+    class custom:
+        __array_priority__ = 10000
+
+    obj = custom()
+
+    dt = np.datetime64('2000', 'ns')
+    td = dt - dt
+
+    for item in [dt, td]:
+        assert item.__eq__(obj) is NotImplemented
+        assert item.__ne__(obj) is NotImplemented
+        assert item.__le__(obj) is NotImplemented
+        assert item.__lt__(obj) is NotImplemented
+        assert item.__ge__(obj) is NotImplemented
+        assert item.__gt__(obj) is NotImplemented
+

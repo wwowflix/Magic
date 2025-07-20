@@ -1,151 +1,201 @@
-"""
-A Simple server used to show altair graphics from a prompt or script.
+# Licensed to the Software Freedom Conservancy (SFC) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The SFC licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
 
-This is adapted from the mpld3 package; see
-https://github.com/mpld3/mpld3/blob/master/mpld3/_server.py
-"""
-
-import itertools
-import random
+import collections
+import os
+import re
+import shutil
 import socket
-import sys
-import threading
-import webbrowser
-from http import server
-from io import BytesIO as IO
+import subprocess
+import time
+import urllib
 
-JUPYTER_WARNING = """
-Note: if you're in the Jupyter notebook, Chart.serve() is not the best
-      way to view plots. Consider using Chart.display().
-You must interrupt the kernel to cancel this command.
-"""
+from selenium.webdriver.common.selenium_manager import SeleniumManager
 
 
-# Mock server used for testing
+class Server:
+    """Manage a Selenium Grid (Remote) Server in standalone mode.
 
+    This class contains functionality for downloading the server and starting/stopping it.
 
-class MockRequest:
-    def makefile(self, *args, **kwargs):
-        return IO(b"GET /")
+    For more information on Selenium Grid, see:
+        - https://www.selenium.dev/documentation/grid/getting_started/
 
-    def sendall(self, response):
-        pass
-
-
-class MockServer:
-    def __init__(self, ip_port, Handler):
-        Handler(MockRequest(), ip_port[0], self)
-
-    def serve_forever(self):
-        pass
-
-    def server_close(self):
-        pass
-
-
-def generate_handler(html, files=None):
-    if files is None:
-        files = {}
-
-    class MyHandler(server.BaseHTTPRequestHandler):
-        def do_GET(self):
-            """Respond to a GET request."""
-            if self.path == "/":
-                self.send_response(200)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(html.encode())
-            elif self.path in files:
-                content_type, content = files[self.path]
-                self.send_response(200)
-                self.send_header("Content-type", content_type)
-                self.end_headers()
-                self.wfile.write(content.encode())
-            else:
-                self.send_error(404)
-
-    return MyHandler
-
-
-def find_open_port(ip, port, n=50):
-    """Find an open port near the specified port."""
-    ports = itertools.chain(
-        (port + i for i in range(n)), (port + random.randint(-2 * n, 2 * n))
-    )
-
-    for port in ports:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        result = s.connect_ex((ip, port))
-        s.close()
-        if result != 0:
-            return port
-    msg = "no open ports found"
-    raise ValueError(msg)
-
-
-def serve(
-    html,
-    ip="127.0.0.1",
-    port=8888,
-    n_retries=50,
-    files=None,
-    jupyter_warning=True,
-    open_browser=True,
-    http_server=None,
-) -> None:
+    Parameters:
+    -----------
+    host : str
+        Hostname or IP address to bind to (determined automatically if not specified)
+    port : int or str
+        Port to listen on (4444 if not specified)
+    path : str
+        Path/filename of existing server .jar file (Selenium Manager is used if not specified)
+    version : str
+        Version of server to download (latest version if not specified)
+    log_level : str
+        Logging level to control logging output ("INFO" if not specified)
+        Available levels: "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST"
+    env: collections.abc.Mapping
+        Mapping that defines the environment variables for the server process
     """
-    Start a server serving the given HTML, and (optionally) open a browser.
 
-    Parameters
-    ----------
-    html : string
-        HTML to serve
-    ip : string (default = '127.0.0.1')
-        ip address at which the HTML will be served.
-    port : int (default = 8888)
-        the port at which to serve the HTML
-    n_retries : int (default = 50)
-        the number of nearby ports to search if the specified port is in use.
-    files : dictionary (optional)
-        dictionary of extra content to serve
-    jupyter_warning : bool (optional)
-        if True (default), then print a warning if this is used within Jupyter
-    open_browser : bool (optional)
-        if True (default), then open a web browser to the given HTML
-    http_server : class (optional)
-        optionally specify an HTTPServer class to use for showing the
-        figure. The default is Python's basic HTTPServer.
-    """
-    port = find_open_port(ip, port, n_retries)
-    Handler = generate_handler(html, files)
+    def __init__(self, host=None, port=4444, path=None, version=None, log_level="INFO", env=None):
+        if path and version:
+            raise TypeError("Not allowed to specify a version when using an existing server path")
 
-    if http_server is None:
-        srvr = server.HTTPServer((ip, port), Handler)
-    else:
-        srvr = http_server((ip, port), Handler)
+        self.host = host
+        self.port = port
+        self.path = path
+        self.version = version
+        self.log_level = log_level
+        self.env = env
+        self.process = None
 
-    if jupyter_warning:
+    @property
+    def status_url(self):
+        host = self.host if self.host is not None else "localhost"
+        return f"http://{host}:{self.port}/status"
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        if path and not os.path.exists(path):
+            raise OSError(f"Can't find server .jar located at {path}")
+        self._path = path
+
+    @property
+    def port(self):
+        return self._port
+
+    @port.setter
+    def port(self, port):
         try:
-            __IPYTHON__  # type: ignore # noqa
-        except NameError:
-            pass
+            port = int(port)
+        except ValueError:
+            raise TypeError(f"{__class__.__name__}.__init__() got an invalid port: '{port}'")
+        if not (0 <= port <= 65535):
+            raise ValueError("port must be 0-65535")
+        self._port = port
+
+    @property
+    def version(self):
+        return self._version
+
+    @version.setter
+    def version(self, version):
+        if version:
+            if not re.match(r"^\d+\.\d+\.\d+$", str(version)):
+                raise TypeError(f"{__class__.__name__}.__init__() got an invalid version: '{version}'")
+        self._version = version
+
+    @property
+    def log_level(self):
+        return self._log_level
+
+    @log_level.setter
+    def log_level(self, log_level):
+        levels = ("SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST")
+        if log_level not in levels:
+            raise TypeError(f"log_level must be one of: {', '.join(levels)}")
+        self._log_level = log_level
+
+    @property
+    def env(self):
+        return self._env
+
+    @env.setter
+    def env(self, env):
+        if env is not None and not isinstance(env, collections.abc.Mapping):
+            raise TypeError("env must be a mapping of environment variables")
+        self._env = env
+
+    def _wait_for_server(self, timeout=10):
+        start = time.time()
+        while time.time() - start < timeout:
+            try:
+                urllib.request.urlopen(self.status_url)
+                return True
+            except urllib.error.URLError:
+                time.sleep(0.2)
+        return False
+
+    def download_if_needed(self, version=None):
+        """Download the server if it doesn't already exist.
+
+        Latest version is downloaded unless specified.
+        """
+        args = ["--grid"]
+        if version is not None:
+            args.append(version)
+        return SeleniumManager().binary_paths(args)["driver_path"]
+
+    def start(self):
+        """Start the server.
+
+        Selenium Manager will detect the server location and download it if necessary,
+        unless an existing server path was specified.
+        """
+        path = self.download_if_needed(self.version) if self.path is None else self.path
+
+        java_path = shutil.which("java")
+        if java_path is None:
+            raise OSError("Can't find java on system PATH. JRE is required to run the Selenium server")
+
+        command = [
+            java_path,
+            "-jar",
+            path,
+            "standalone",
+            "--port",
+            str(self.port),
+            "--log-level",
+            self.log_level,
+            "--selenium-manager",
+            "true",
+            "--enable-managed-downloads",
+            "true",
+        ]
+        if self.host is not None:
+            command.extend(["--host", self.host])
+
+        host = self.host if self.host is not None else "localhost"
+
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                sock.connect((host, self.port))
+            raise ConnectionError(f"Selenium server is already running, or something else is using port {self.port}")
+        except ConnectionRefusedError:
+            print("Starting Selenium server...")
+            self.process = subprocess.Popen(command, env=self.env)
+            print(f"Selenium server running as process: {self.process.pid}")
+            if not self._wait_for_server():
+                raise TimeoutError(f"Timed out waiting for Selenium server at {self.status_url}")
+            print("Selenium server is ready")
+        return self.process
+
+    def stop(self):
+        """Stop the server."""
+        if self.process is None:
+            raise RuntimeError("Selenium server isn't running")
         else:
-            print(JUPYTER_WARNING)
-
-    # Start the server
-    print(f"Serving to http://{ip}:{port}/    [Ctrl-C to exit]")
-    sys.stdout.flush()
-
-    if open_browser:
-        # Use a thread to open a web browser pointing to the server
-        def b():
-            return webbrowser.open(f"http://{ip}:{port}")
-
-        threading.Thread(target=b).start()
-
-    try:
-        srvr.serve_forever()
-    except (KeyboardInterrupt, SystemExit):
-        print("\nstopping Server...")
-
-    srvr.server_close()
+            if self.process.poll() is None:
+                self.process.terminate()
+                self.process.wait()
+            self.process = None
+            print("Selenium server has been terminated")

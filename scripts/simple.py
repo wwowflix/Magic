@@ -1,165 +1,116 @@
-"""Simple expression that should pass with mypy."""
-import operator
+"""
+Interface adapters for low-level readers.
+"""
 
-import numpy as np
-from typing import Iterable  # noqa: F401
+import abc
+import io
+import itertools
+from typing import BinaryIO, List
 
-# Basic checks
-array = np.array([1, 2])
-
-
-def ndarray_func(x):
-    # type: (np.ndarray) -> np.ndarray
-    return x
+from .abc import Traversable, TraversableResources
 
 
-ndarray_func(np.array([1, 2]))
-array == 1
-array.dtype == float
+class SimpleReader(abc.ABC):
+    """
+    The minimum, low-level interface required from a resource
+    provider.
+    """
 
-# Dtype construction
-np.dtype(float)
-np.dtype(np.float64)
-np.dtype(None)
-np.dtype("float64")
-np.dtype(np.dtype(float))
-np.dtype(("U", 10))
-np.dtype((np.int32, (2, 2)))
-# Define the arguments on the previous line to prevent bidirectional
-# type inference in mypy from broadening the types.
-two_tuples_dtype = [("R", "u1"), ("G", "u1"), ("B", "u1")]
-np.dtype(two_tuples_dtype)
+    @abc.abstractproperty
+    def package(self):
+        # type: () -> str
+        """
+        The name of the package for which this reader loads resources.
+        """
 
-three_tuples_dtype = [("R", "u1", 2)]
-np.dtype(three_tuples_dtype)
+    @abc.abstractmethod
+    def children(self):
+        # type: () -> List['SimpleReader']
+        """
+        Obtain an iterable of SimpleReader for available
+        child containers (e.g. directories).
+        """
 
-mixed_tuples_dtype = [("R", "u1"), ("G", np.unicode_, 1)]
-np.dtype(mixed_tuples_dtype)
+    @abc.abstractmethod
+    def resources(self):
+        # type: () -> List[str]
+        """
+        Obtain available named resources for this virtual package.
+        """
 
-shape_tuple_dtype = [("R", "u1", (2, 2))]
-np.dtype(shape_tuple_dtype)
+    @abc.abstractmethod
+    def open_binary(self, resource):
+        # type: (str) -> BinaryIO
+        """
+        Obtain a File-like for a named resource.
+        """
 
-shape_like_dtype = [("R", "u1", (2, 2)), ("G", np.unicode_, 1)]
-np.dtype(shape_like_dtype)
-
-object_dtype = [("field1", object)]
-np.dtype(object_dtype)
-
-np.dtype((np.int32, (np.int8, 4)))
-
-# Dtype comparision
-np.dtype(float) == float
-np.dtype(float) != np.float64
-np.dtype(float) < None
-np.dtype(float) <= "float64"
-np.dtype(float) > np.dtype(float)
-np.dtype(float) >= np.dtype(("U", 10))
-
-# Iteration and indexing
-def iterable_func(x):
-    # type: (Iterable) -> Iterable
-    return x
+    @property
+    def name(self):
+        return self.package.split('.')[-1]
 
 
-iterable_func(array)
-[element for element in array]
-iter(array)
-zip(array, array)
-array[1]
-array[:]
-array[...]
-array[:] = 0
+class ResourceHandle(Traversable):
+    """
+    Handle to a named resource in a ResourceReader.
+    """
 
-array_2d = np.ones((3, 3))
-array_2d[:2, :2]
-array_2d[..., 0]
-array_2d[:2, :2] = 0
+    def __init__(self, parent, name):
+        # type: (ResourceContainer, str) -> None
+        self.parent = parent
+        self.name = name  # type: ignore
 
-# Other special methods
-len(array)
-str(array)
-array_scalar = np.array(1)
-int(array_scalar)
-float(array_scalar)
-# currently does not work due to https://github.com/python/typeshed/issues/1904
-# complex(array_scalar)
-bytes(array_scalar)
-operator.index(array_scalar)
-bool(array_scalar)
+    def is_file(self):
+        return True
 
-# comparisons
-array < 1
-array <= 1
-array == 1
-array != 1
-array > 1
-array >= 1
-1 < array
-1 <= array
-1 == array
-1 != array
-1 > array
-1 >= array
+    def is_dir(self):
+        return False
 
-# binary arithmetic
-array + 1
-1 + array
-array += 1
+    def open(self, mode='r', *args, **kwargs):
+        stream = self.parent.reader.open_binary(self.name)
+        if 'b' not in mode:
+            stream = io.TextIOWrapper(*args, **kwargs)
+        return stream
 
-array - 1
-1 - array
-array -= 1
+    def joinpath(self, name):
+        raise RuntimeError("Cannot traverse into a resource")
 
-array * 1
-1 * array
-array *= 1
 
-nonzero_array = np.array([1, 2])
-array / 1
-1 / nonzero_array
-float_array = np.array([1.0, 2.0])
-float_array /= 1
+class ResourceContainer(Traversable):
+    """
+    Traversable container for a package's resources via its reader.
+    """
 
-array // 1
-1 // nonzero_array
-array //= 1
+    def __init__(self, reader):
+        # type: (SimpleReader) -> None
+        self.reader = reader
 
-array % 1
-1 % nonzero_array
-array %= 1
+    def is_dir(self):
+        return True
 
-divmod(array, 1)
-divmod(1, nonzero_array)
+    def is_file(self):
+        return False
 
-array ** 1
-1 ** array
-array **= 1
+    def iterdir(self):
+        files = (ResourceHandle(self, name) for name in self.reader.resources)
+        dirs = map(ResourceContainer, self.reader.children())
+        return itertools.chain(files, dirs)
 
-array << 1
-1 << array
-array <<= 1
+    def open(self, *args, **kwargs):
+        raise IsADirectoryError()
 
-array >> 1
-1 >> array
-array >>= 1
+    def joinpath(self, name):
+        return next(
+            traversable for traversable in self.iterdir() if traversable.name == name
+        )
 
-array & 1
-1 & array
-array &= 1
 
-array ^ 1
-1 ^ array
-array ^= 1
+class TraversableReader(TraversableResources, SimpleReader):
+    """
+    A TraversableResources based on SimpleReader. Resource providers
+    may derive from this class to provide the TraversableResources
+    interface by supplying the SimpleReader interface.
+    """
 
-array | 1
-1 | array
-array |= 1
-
-# unary arithmetic
--array
-+array
-abs(array)
-~array
-
-# Other methods
-np.array([1, 2]).transpose()
+    def files(self):
+        return ResourceContainer(self)

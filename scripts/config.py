@@ -1,517 +1,377 @@
-# Added Fortran compiler support to config. Currently useful only for
-# try_compile call. try_run works but is untested for most of Fortran
-# compilers (they must define linker_exe first).
-# Pearu Peterson
+"""distutils.command.config
+
+Implements the Distutils 'config' command, a (mostly) empty command class
+that exists mainly to be sub-classed by specific module distributions and
+applications.  The idea is that while every "config" command is different,
+at least they're all named the same, and users always see "config" in the
+list of standard commands.  Also, this is a good place to put common
+configure-like tasks: "try to compile this C code", or "figure out where
+this header file lives".
+"""
+
 import os
-import signal
-import subprocess
-import sys
-import textwrap
-import warnings
+import re
 
-from distutils.command.config import config as old_config
-from distutils.command.config import LANG_EXT
+from distutils.core import Command
+from distutils.errors import DistutilsExecError
+from distutils.sysconfig import customize_compiler
 from distutils import log
-from distutils.file_util import copy_file
-from distutils.ccompiler import CompileError, LinkError
-import distutils
-from numpy.distutils.exec_command import filepath_from_subprocess_output
-from numpy.distutils.mingw32ccompiler import generate_manifest
-from numpy.distutils.command.autodist import (check_gcc_function_attribute,
-                                              check_gcc_function_attribute_with_intrinsics,
-                                              check_gcc_variable_attribute,
-                                              check_gcc_version_at_least,
-                                              check_inline,
-                                              check_restrict,
-                                              check_compiler_gcc)
 
-LANG_EXT['f77'] = '.f'
-LANG_EXT['f90'] = '.f90'
+LANG_EXT = {"c": ".c", "c++": ".cxx"}
 
-class config(old_config):
-    old_config.user_options += [
-        ('fcompiler=', None, "specify the Fortran compiler type"),
-        ]
+
+class config(Command):
+
+    description = "prepare to build"
+
+    user_options = [
+        ('compiler=', None, "specify the compiler type"),
+        ('cc=', None, "specify the compiler executable"),
+        ('include-dirs=', 'I', "list of directories to search for header files"),
+        ('define=', 'D', "C preprocessor macros to define"),
+        ('undef=', 'U', "C preprocessor macros to undefine"),
+        ('libraries=', 'l', "external C libraries to link with"),
+        ('library-dirs=', 'L', "directories to search for external C libraries"),
+        ('noisy', None, "show every action (compile, link, run, ...) taken"),
+        (
+            'dump-source',
+            None,
+            "dump generated source files before attempting to compile them",
+        ),
+    ]
+
+    # The three standard command methods: since the "config" command
+    # does nothing by default, these are empty.
 
     def initialize_options(self):
-        self.fcompiler = None
-        old_config.initialize_options(self)
+        self.compiler = None
+        self.cc = None
+        self.include_dirs = None
+        self.libraries = None
+        self.library_dirs = None
 
-    def _check_compiler (self):
-        old_config._check_compiler(self)
-        from numpy.distutils.fcompiler import FCompiler, new_fcompiler
+        # maximal output for now
+        self.noisy = 1
+        self.dump_source = 1
 
-        if sys.platform == 'win32' and (self.compiler.compiler_type in
-                                        ('msvc', 'intelw', 'intelemw')):
-            # XXX: hack to circumvent a python 2.6 bug with msvc9compiler:
-            # initialize call query_vcvarsall, which throws an IOError, and
-            # causes an error along the way without much information. We try to
-            # catch it here, hoping it is early enough, and print an helpful
-            # message instead of Error: None.
-            if not self.compiler.initialized:
-                try:
-                    self.compiler.initialize()
-                except IOError as e:
-                    msg = textwrap.dedent("""\
-                        Could not initialize compiler instance: do you have Visual Studio
-                        installed?  If you are trying to build with MinGW, please use "python setup.py
-                        build -c mingw32" instead.  If you have Visual Studio installed, check it is
-                        correctly installed, and the right version (VS 2008 for python 2.6, 2.7 and 3.2,
-                        VS 2010 for >= 3.3).
+        # list of temporary files generated along-the-way that we have
+        # to clean at some point
+        self.temp_files = []
 
-                        Original exception was: %s, and the Compiler class was %s
-                        ============================================================================""") \
-                        % (e, self.compiler.__class__.__name__)
-                    print(textwrap.dedent("""\
-                        ============================================================================"""))
-                    raise distutils.errors.DistutilsPlatformError(msg) from e
+    def finalize_options(self):
+        if self.include_dirs is None:
+            self.include_dirs = self.distribution.include_dirs or []
+        elif isinstance(self.include_dirs, str):
+            self.include_dirs = self.include_dirs.split(os.pathsep)
 
-            # After MSVC is initialized, add an explicit /MANIFEST to linker
-            # flags.  See issues gh-4245 and gh-4101 for details.  Also
-            # relevant are issues 4431 and 16296 on the Python bug tracker.
-            from distutils import msvc9compiler
-            if msvc9compiler.get_build_version() >= 10:
-                for ldflags in [self.compiler.ldflags_shared,
-                                self.compiler.ldflags_shared_debug]:
-                    if '/MANIFEST' not in ldflags:
-                        ldflags.append('/MANIFEST')
+        if self.libraries is None:
+            self.libraries = []
+        elif isinstance(self.libraries, str):
+            self.libraries = [self.libraries]
 
-        if not isinstance(self.fcompiler, FCompiler):
-            self.fcompiler = new_fcompiler(compiler=self.fcompiler,
-                                           dry_run=self.dry_run, force=1,
-                                           c_compiler=self.compiler)
-            if self.fcompiler is not None:
-                self.fcompiler.customize(self.distribution)
-                if self.fcompiler.get_version():
-                    self.fcompiler.customize_cmd(self)
-                    self.fcompiler.show_customization()
+        if self.library_dirs is None:
+            self.library_dirs = []
+        elif isinstance(self.library_dirs, str):
+            self.library_dirs = self.library_dirs.split(os.pathsep)
 
-    def _wrap_method(self, mth, lang, args):
+    def run(self):
+        pass
+
+    # Utility methods for actual "config" commands.  The interfaces are
+    # loosely based on Autoconf macros of similar names.  Sub-classes
+    # may use these freely.
+
+    def _check_compiler(self):
+        """Check that 'self.compiler' really is a CCompiler object;
+        if not, make it one.
+        """
+        # We do this late, and only on-demand, because this is an expensive
+        # import.
+        from distutils.ccompiler import CCompiler, new_compiler
+
+        if not isinstance(self.compiler, CCompiler):
+            self.compiler = new_compiler(
+                compiler=self.compiler, dry_run=self.dry_run, force=1
+            )
+            customize_compiler(self.compiler)
+            if self.include_dirs:
+                self.compiler.set_include_dirs(self.include_dirs)
+            if self.libraries:
+                self.compiler.set_libraries(self.libraries)
+            if self.library_dirs:
+                self.compiler.set_library_dirs(self.library_dirs)
+
+    def _gen_temp_sourcefile(self, body, headers, lang):
+        filename = "_configtest" + LANG_EXT[lang]
+        with open(filename, "w") as file:
+            if headers:
+                for header in headers:
+                    file.write("#include <%s>\n" % header)
+                file.write("\n")
+            file.write(body)
+            if body[-1] != "\n":
+                file.write("\n")
+        return filename
+
+    def _preprocess(self, body, headers, include_dirs, lang):
+        src = self._gen_temp_sourcefile(body, headers, lang)
+        out = "_configtest.i"
+        self.temp_files.extend([src, out])
+        self.compiler.preprocess(src, out, include_dirs=include_dirs)
+        return (src, out)
+
+    def _compile(self, body, headers, include_dirs, lang):
+        src = self._gen_temp_sourcefile(body, headers, lang)
+        if self.dump_source:
+            dump_file(src, "compiling '%s':" % src)
+        (obj,) = self.compiler.object_filenames([src])
+        self.temp_files.extend([src, obj])
+        self.compiler.compile([src], include_dirs=include_dirs)
+        return (src, obj)
+
+    def _link(self, body, headers, include_dirs, libraries, library_dirs, lang):
+        (src, obj) = self._compile(body, headers, include_dirs, lang)
+        prog = os.path.splitext(os.path.basename(src))[0]
+        self.compiler.link_executable(
+            [obj],
+            prog,
+            libraries=libraries,
+            library_dirs=library_dirs,
+            target_lang=lang,
+        )
+
+        if self.compiler.exe_extension is not None:
+            prog = prog + self.compiler.exe_extension
+        self.temp_files.append(prog)
+
+        return (src, obj, prog)
+
+    def _clean(self, *filenames):
+        if not filenames:
+            filenames = self.temp_files
+            self.temp_files = []
+        log.info("removing: %s", ' '.join(filenames))
+        for filename in filenames:
+            try:
+                os.remove(filename)
+            except OSError:
+                pass
+
+    # XXX these ignore the dry-run flag: what to do, what to do? even if
+    # you want a dry-run build, you still need some sort of configuration
+    # info.  My inclination is to make it up to the real config command to
+    # consult 'dry_run', and assume a default (minimal) configuration if
+    # true.  The problem with trying to do it here is that you'd have to
+    # return either true or false from all the 'try' methods, neither of
+    # which is correct.
+
+    # XXX need access to the header search path and maybe default macros.
+
+    def try_cpp(self, body=None, headers=None, include_dirs=None, lang="c"):
+        """Construct a source file from 'body' (a string containing lines
+        of C/C++ code) and 'headers' (a list of header files to include)
+        and run it through the preprocessor.  Return true if the
+        preprocessor succeeded, false if there were any errors.
+        ('body' probably isn't of much use, but what the heck.)
+        """
         from distutils.ccompiler import CompileError
-        from distutils.errors import DistutilsExecError
-        save_compiler = self.compiler
-        if lang in ['f77', 'f90']:
-            self.compiler = self.fcompiler
-        if self.compiler is None:
-            raise CompileError('%s compiler is not set' % (lang,))
+
+        self._check_compiler()
+        ok = True
         try:
-            ret = mth(*((self,)+args))
-        except (DistutilsExecError, CompileError) as e:
-            self.compiler = save_compiler
-            raise CompileError from e
-        self.compiler = save_compiler
-        return ret
+            self._preprocess(body, headers, include_dirs, lang)
+        except CompileError:
+            ok = False
 
-    def _compile (self, body, headers, include_dirs, lang):
-        src, obj = self._wrap_method(old_config._compile, lang,
-                                     (body, headers, include_dirs, lang))
-        # _compile in unixcompiler.py sometimes creates .d dependency files.
-        # Clean them up.
-        self.temp_files.append(obj + '.d')
-        return src, obj
-
-    def _link (self, body,
-               headers, include_dirs,
-               libraries, library_dirs, lang):
-        if self.compiler.compiler_type=='msvc':
-            libraries = (libraries or [])[:]
-            library_dirs = (library_dirs or [])[:]
-            if lang in ['f77', 'f90']:
-                lang = 'c' # always use system linker when using MSVC compiler
-                if self.fcompiler:
-                    for d in self.fcompiler.library_dirs or []:
-                        # correct path when compiling in Cygwin but with
-                        # normal Win Python
-                        if d.startswith('/usr/lib'):
-                            try:
-                                d = subprocess.check_output(['cygpath',
-                                                             '-w', d])
-                            except (OSError, subprocess.CalledProcessError):
-                                pass
-                            else:
-                                d = filepath_from_subprocess_output(d)
-                        library_dirs.append(d)
-                    for libname in self.fcompiler.libraries or []:
-                        if libname not in libraries:
-                            libraries.append(libname)
-            for libname in libraries:
-                if libname.startswith('msvc'): continue
-                fileexists = False
-                for libdir in library_dirs or []:
-                    libfile = os.path.join(libdir, '%s.lib' % (libname))
-                    if os.path.isfile(libfile):
-                        fileexists = True
-                        break
-                if fileexists: continue
-                # make g77-compiled static libs available to MSVC
-                fileexists = False
-                for libdir in library_dirs:
-                    libfile = os.path.join(libdir, 'lib%s.a' % (libname))
-                    if os.path.isfile(libfile):
-                        # copy libname.a file to name.lib so that MSVC linker
-                        # can find it
-                        libfile2 = os.path.join(libdir, '%s.lib' % (libname))
-                        copy_file(libfile, libfile2)
-                        self.temp_files.append(libfile2)
-                        fileexists = True
-                        break
-                if fileexists: continue
-                log.warn('could not find library %r in directories %s' \
-                         % (libname, library_dirs))
-        elif self.compiler.compiler_type == 'mingw32':
-            generate_manifest(self)
-        return self._wrap_method(old_config._link, lang,
-                                 (body, headers, include_dirs,
-                                  libraries, library_dirs, lang))
-
-    def check_header(self, header, include_dirs=None, library_dirs=None, lang='c'):
-        self._check_compiler()
-        return self.try_compile(
-                "/* we need a dummy line to make distutils happy */",
-                [header], include_dirs)
-
-    def check_decl(self, symbol,
-                   headers=None, include_dirs=None):
-        self._check_compiler()
-        body = textwrap.dedent("""
-            int main(void)
-            {
-            #ifndef %s
-                (void) %s;
-            #endif
-                ;
-                return 0;
-            }""") % (symbol, symbol)
-
-        return self.try_compile(body, headers, include_dirs)
-
-    def check_macro_true(self, symbol,
-                         headers=None, include_dirs=None):
-        self._check_compiler()
-        body = textwrap.dedent("""
-            int main(void)
-            {
-            #if %s
-            #else
-            #error false or undefined macro
-            #endif
-                ;
-                return 0;
-            }""") % (symbol,)
-
-        return self.try_compile(body, headers, include_dirs)
-
-    def check_type(self, type_name, headers=None, include_dirs=None,
-            library_dirs=None):
-        """Check type availability. Return True if the type can be compiled,
-        False otherwise"""
-        self._check_compiler()
-
-        # First check the type can be compiled
-        body = textwrap.dedent(r"""
-            int main(void) {
-              if ((%(name)s *) 0)
-                return 0;
-              if (sizeof (%(name)s))
-                return 0;
-            }
-            """) % {'name': type_name}
-
-        st = False
-        try:
-            try:
-                self._compile(body % {'type': type_name},
-                        headers, include_dirs, 'c')
-                st = True
-            except distutils.errors.CompileError:
-                st = False
-        finally:
-            self._clean()
-
-        return st
-
-    def check_type_size(self, type_name, headers=None, include_dirs=None, library_dirs=None, expected=None):
-        """Check size of a given type."""
-        self._check_compiler()
-
-        # First check the type can be compiled
-        body = textwrap.dedent(r"""
-            typedef %(type)s npy_check_sizeof_type;
-            int main (void)
-            {
-                static int test_array [1 - 2 * !(((long) (sizeof (npy_check_sizeof_type))) >= 0)];
-                test_array [0] = 0
-
-                ;
-                return 0;
-            }
-            """)
-        self._compile(body % {'type': type_name},
-                headers, include_dirs, 'c')
         self._clean()
+        return ok
 
-        if expected:
-            body = textwrap.dedent(r"""
-                typedef %(type)s npy_check_sizeof_type;
-                int main (void)
-                {
-                    static int test_array [1 - 2 * !(((long) (sizeof (npy_check_sizeof_type))) == %(size)s)];
-                    test_array [0] = 0
+    def search_cpp(self, pattern, body=None, headers=None, include_dirs=None, lang="c"):
+        """Construct a source file (just like 'try_cpp()'), run it through
+        the preprocessor, and return true if any line of the output matches
+        'pattern'.  'pattern' should either be a compiled regex object or a
+        string containing a regex.  If both 'body' and 'headers' are None,
+        preprocesses an empty file -- which can be useful to determine the
+        symbols the preprocessor and compiler set by default.
+        """
+        self._check_compiler()
+        src, out = self._preprocess(body, headers, include_dirs, lang)
 
-                    ;
-                    return 0;
-                }
-                """)
-            for size in expected:
-                try:
-                    self._compile(body % {'type': type_name, 'size': size},
-                            headers, include_dirs, 'c')
-                    self._clean()
-                    return size
-                except CompileError:
-                    pass
+        if isinstance(pattern, str):
+            pattern = re.compile(pattern)
 
-        # this fails to *compile* if size > sizeof(type)
-        body = textwrap.dedent(r"""
-            typedef %(type)s npy_check_sizeof_type;
-            int main (void)
-            {
-                static int test_array [1 - 2 * !(((long) (sizeof (npy_check_sizeof_type))) <= %(size)s)];
-                test_array [0] = 0
+        with open(out) as file:
+            match = False
+            while True:
+                line = file.readline()
+                if line == '':
+                    break
+                if pattern.search(line):
+                    match = True
+                    break
 
-                ;
-                return 0;
-            }
-            """)
+        self._clean()
+        return match
 
-        # The principle is simple: we first find low and high bounds of size
-        # for the type, where low/high are looked up on a log scale. Then, we
-        # do a binary search to find the exact size between low and high
-        low = 0
-        mid = 0
-        while True:
-            try:
-                self._compile(body % {'type': type_name, 'size': mid},
-                        headers, include_dirs, 'c')
-                self._clean()
-                break
-            except CompileError:
-                #log.info("failure to test for bound %d" % mid)
-                low = mid + 1
-                mid = 2 * mid + 1
+    def try_compile(self, body, headers=None, include_dirs=None, lang="c"):
+        """Try to compile a source file built from 'body' and 'headers'.
+        Return true on success, false otherwise.
+        """
+        from distutils.ccompiler import CompileError
 
-        high = mid
-        # Binary search:
-        while low != high:
-            mid = (high - low) // 2 + low
-            try:
-                self._compile(body % {'type': type_name, 'size': mid},
-                        headers, include_dirs, 'c')
-                self._clean()
-                high = mid
-            except CompileError:
-                low = mid + 1
-        return low
+        self._check_compiler()
+        try:
+            self._compile(body, headers, include_dirs, lang)
+            ok = True
+        except CompileError:
+            ok = False
 
-    def check_func(self, func,
-                   headers=None, include_dirs=None,
-                   libraries=None, library_dirs=None,
-                   decl=False, call=False, call_args=None):
-        # clean up distutils's config a bit: add void to main(), and
-        # return a value.
+        log.info(ok and "success!" or "failure.")
+        self._clean()
+        return ok
+
+    def try_link(
+        self,
+        body,
+        headers=None,
+        include_dirs=None,
+        libraries=None,
+        library_dirs=None,
+        lang="c",
+    ):
+        """Try to compile and link a source file, built from 'body' and
+        'headers', to executable form.  Return true on success, false
+        otherwise.
+        """
+        from distutils.ccompiler import CompileError, LinkError
+
+        self._check_compiler()
+        try:
+            self._link(body, headers, include_dirs, libraries, library_dirs, lang)
+            ok = True
+        except (CompileError, LinkError):
+            ok = False
+
+        log.info(ok and "success!" or "failure.")
+        self._clean()
+        return ok
+
+    def try_run(
+        self,
+        body,
+        headers=None,
+        include_dirs=None,
+        libraries=None,
+        library_dirs=None,
+        lang="c",
+    ):
+        """Try to compile, link to an executable, and run a program
+        built from 'body' and 'headers'.  Return true on success, false
+        otherwise.
+        """
+        from distutils.ccompiler import CompileError, LinkError
+
+        self._check_compiler()
+        try:
+            src, obj, exe = self._link(
+                body, headers, include_dirs, libraries, library_dirs, lang
+            )
+            self.spawn([exe])
+            ok = True
+        except (CompileError, LinkError, DistutilsExecError):
+            ok = False
+
+        log.info(ok and "success!" or "failure.")
+        self._clean()
+        return ok
+
+    # -- High-level methods --------------------------------------------
+    # (these are the ones that are actually likely to be useful
+    # when implementing a real-world config command!)
+
+    def check_func(
+        self,
+        func,
+        headers=None,
+        include_dirs=None,
+        libraries=None,
+        library_dirs=None,
+        decl=0,
+        call=0,
+    ):
+        """Determine if function 'func' is available by constructing a
+        source file that refers to 'func', and compiles and links it.
+        If everything succeeds, returns true; otherwise returns false.
+
+        The constructed source file starts out by including the header
+        files listed in 'headers'.  If 'decl' is true, it then declares
+        'func' (as "int func()"); you probably shouldn't supply 'headers'
+        and set 'decl' true in the same call, or you might get errors about
+        a conflicting declarations for 'func'.  Finally, the constructed
+        'main()' function either references 'func' or (if 'call' is true)
+        calls it.  'libraries' and 'library_dirs' are used when
+        linking.
+        """
         self._check_compiler()
         body = []
         if decl:
-            if type(decl) == str:
-                body.append(decl)
-            else:
-                body.append("int %s (void);" % func)
-        # Handle MSVC intrinsics: force MS compiler to make a function call.
-        # Useful to test for some functions when built with optimization on, to
-        # avoid build error because the intrinsic and our 'fake' test
-        # declaration do not match.
-        body.append("#ifdef _MSC_VER")
-        body.append("#pragma function(%s)" % func)
-        body.append("#endif")
-        body.append("int main (void) {")
+            body.append("int %s ();" % func)
+        body.append("int main () {")
         if call:
-            if call_args is None:
-                call_args = ''
-            body.append("  %s(%s);" % (func, call_args))
+            body.append("  %s();" % func)
         else:
             body.append("  %s;" % func)
-        body.append("  return 0;")
         body.append("}")
-        body = '\n'.join(body) + "\n"
+        body = "\n".join(body) + "\n"
 
-        return self.try_link(body, headers, include_dirs,
-                             libraries, library_dirs)
+        return self.try_link(body, headers, include_dirs, libraries, library_dirs)
 
-    def check_funcs_once(self, funcs,
-                   headers=None, include_dirs=None,
-                   libraries=None, library_dirs=None,
-                   decl=False, call=False, call_args=None):
-        """Check a list of functions at once.
-
-        This is useful to speed up things, since all the functions in the funcs
-        list will be put in one compilation unit.
-
-        Arguments
-        ---------
-        funcs : seq
-            list of functions to test
-        include_dirs : seq
-            list of header paths
-        libraries : seq
-            list of libraries to link the code snippet to
-        library_dirs : seq
-            list of library paths
-        decl : dict
-            for every (key, value), the declaration in the value will be
-            used for function in key. If a function is not in the
-            dictionary, no declaration will be used.
-        call : dict
-            for every item (f, value), if the value is True, a call will be
-            done to the function f.
+    def check_lib(
+        self,
+        library,
+        library_dirs=None,
+        headers=None,
+        include_dirs=None,
+        other_libraries=[],
+    ):
+        """Determine if 'library' is available to be linked against,
+        without actually checking that any particular symbols are provided
+        by it.  'headers' will be used in constructing the source file to
+        be compiled, but the only effect of this is to check if all the
+        header files listed are available.  Any libraries listed in
+        'other_libraries' will be included in the link, in case 'library'
+        has symbols that depend on other libraries.
         """
         self._check_compiler()
-        body = []
-        if decl:
-            for f, v in decl.items():
-                if v:
-                    body.append("int %s (void);" % f)
+        return self.try_link(
+            "int main (void) { }",
+            headers,
+            include_dirs,
+            [library] + other_libraries,
+            library_dirs,
+        )
 
-        # Handle MS intrinsics. See check_func for more info.
-        body.append("#ifdef _MSC_VER")
-        for func in funcs:
-            body.append("#pragma function(%s)" % func)
-        body.append("#endif")
-
-        body.append("int main (void) {")
-        if call:
-            for f in funcs:
-                if f in call and call[f]:
-                    if not (call_args and f in call_args and call_args[f]):
-                        args = ''
-                    else:
-                        args = call_args[f]
-                    body.append("  %s(%s);" % (f, args))
-                else:
-                    body.append("  %s;" % f)
-        else:
-            for f in funcs:
-                body.append("  %s;" % f)
-        body.append("  return 0;")
-        body.append("}")
-        body = '\n'.join(body) + "\n"
-
-        return self.try_link(body, headers, include_dirs,
-                             libraries, library_dirs)
-
-    def check_inline(self):
-        """Return the inline keyword recognized by the compiler, empty string
-        otherwise."""
-        return check_inline(self)
-
-    def check_restrict(self):
-        """Return the restrict keyword recognized by the compiler, empty string
-        otherwise."""
-        return check_restrict(self)
-
-    def check_compiler_gcc(self):
-        """Return True if the C compiler is gcc"""
-        return check_compiler_gcc(self)
-
-    def check_gcc_function_attribute(self, attribute, name):
-        return check_gcc_function_attribute(self, attribute, name)
-
-    def check_gcc_function_attribute_with_intrinsics(self, attribute, name,
-                                                     code, include):
-        return check_gcc_function_attribute_with_intrinsics(self, attribute,
-                                                            name, code, include)
-
-    def check_gcc_variable_attribute(self, attribute):
-        return check_gcc_variable_attribute(self, attribute)
-
-    def check_gcc_version_at_least(self, major, minor=0, patchlevel=0):
-        """Return True if the GCC version is greater than or equal to the
-        specified version."""
-        return check_gcc_version_at_least(self, major, minor, patchlevel)
-
-    def get_output(self, body, headers=None, include_dirs=None,
-                   libraries=None, library_dirs=None,
-                   lang="c", use_tee=None):
-        """Try to compile, link to an executable, and run a program
-        built from 'body' and 'headers'. Returns the exit status code
-        of the program and its output.
+    def check_header(self, header, include_dirs=None, library_dirs=None, lang="c"):
+        """Determine if the system header file named by 'header_file'
+        exists and can be found by the preprocessor; return true if so,
+        false otherwise.
         """
-        # 2008-11-16, RemoveMe
-        warnings.warn("\n+++++++++++++++++++++++++++++++++++++++++++++++++\n"
-                      "Usage of get_output is deprecated: please do not \n"
-                      "use it anymore, and avoid configuration checks \n"
-                      "involving running executable on the target machine.\n"
-                      "+++++++++++++++++++++++++++++++++++++++++++++++++\n",
-                      DeprecationWarning, stacklevel=2)
-        self._check_compiler()
-        exitcode, output = 255, ''
-        try:
-            grabber = GrabStdout()
-            try:
-                src, obj, exe = self._link(body, headers, include_dirs,
-                                           libraries, library_dirs, lang)
-                grabber.restore()
-            except Exception:
-                output = grabber.data
-                grabber.restore()
-                raise
-            exe = os.path.join('.', exe)
-            try:
-                # specify cwd arg for consistency with
-                # historic usage pattern of exec_command()
-                # also, note that exe appears to be a string,
-                # which exec_command() handled, but we now
-                # use a list for check_output() -- this assumes
-                # that exe is always a single command
-                output = subprocess.check_output([exe], cwd='.')
-            except subprocess.CalledProcessError as exc:
-                exitstatus = exc.returncode
-                output = ''
-            except OSError:
-                # preserve the EnvironmentError exit status
-                # used historically in exec_command()
-                exitstatus = 127
-                output = ''
-            else:
-                output = filepath_from_subprocess_output(output)
-            if hasattr(os, 'WEXITSTATUS'):
-                exitcode = os.WEXITSTATUS(exitstatus)
-                if os.WIFSIGNALED(exitstatus):
-                    sig = os.WTERMSIG(exitstatus)
-                    log.error('subprocess exited with signal %d' % (sig,))
-                    if sig == signal.SIGINT:
-                        # control-C
-                        raise KeyboardInterrupt
-            else:
-                exitcode = exitstatus
-            log.info("success!")
-        except (CompileError, LinkError):
-            log.info("failure.")
-        self._clean()
-        return exitcode, output
+        return self.try_cpp(
+            body="/* No body */", headers=[header], include_dirs=include_dirs
+        )
 
-class GrabStdout:
 
-    def __init__(self):
-        self.sys_stdout = sys.stdout
-        self.data = ''
-        sys.stdout = self
+def dump_file(filename, head=None):
+    """Dumps a file content into log.info.
 
-    def write (self, data):
-        self.sys_stdout.write(data)
-        self.data += data
-
-    def flush (self):
-        self.sys_stdout.flush()
-
-    def restore(self):
-        sys.stdout = self.sys_stdout
+    If head is not None, will be dumped before the file content.
+    """
+    if head is None:
+        log.info('%s', filename)
+    else:
+        log.info(head)
+    file = open(filename)
+    try:
+        log.info(file.read())
+    finally:
+        file.close()

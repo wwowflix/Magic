@@ -1,8 +1,7 @@
-"""
-Expose version
-"""
+import importlib.metadata
 
-from __future__ import annotations
 
-__version__ = "3.4.2"
-VERSION = __version__.split(".")
+try:
+	__version__ = importlib.metadata.version('snscrape')
+except importlib.metadata.PackageNotFoundError:
+	__version__ = None

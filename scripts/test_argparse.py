@@ -11,10 +11,31 @@ match exactly, and could be adjusted):
         return None
 """
 
+import threading
+
 import pytest
+from numpy._core._multiarray_tests import (
+    argparse_example_function as func,
+)
+from numpy._core._multiarray_tests import (
+    threaded_argparse_example_function as thread_func,
+)
 
 import numpy as np
-from numpy.core._multiarray_tests import argparse_example_function as func
+from numpy.testing import IS_WASM
+
+
+@pytest.mark.skipif(IS_WASM, reason="wasm doesn't have support for threads")
+def test_thread_safe_argparse_cache():
+    b = threading.Barrier(8)
+
+    def call_thread_func():
+        b.wait()
+        thread_func(arg1=3, arg2=None)
+
+    tasks = [threading.Thread(target=call_thread_func) for _ in range(8)]
+    [t.start() for t in tasks]
+    [t.join() for t in tasks]
 
 
 def test_invalid_integers():
@@ -53,10 +74,20 @@ def test_multiple_values():
 def test_string_fallbacks():
     # We can (currently?) use numpy strings to test the "slow" fallbacks
     # that should normally not be taken due to string interning.
-    arg2 = np.unicode_("arg2")
-    missing_arg = np.unicode_("missing_arg")
+    arg2 = np.str_("arg2")
+    missing_arg = np.str_("missing_arg")
     func(1, **{arg2: 3})
     with pytest.raises(TypeError,
             match="got an unexpected keyword argument 'missing_arg'"):
         func(2, **{missing_arg: 3})
+
+
+def test_too_many_arguments_method_forwarding():
+    # Not directly related to the standard argument parsing, but we sometimes
+    # forward methods to Python: arr.mean() calls np._core._methods._mean()
+    # This adds code coverage for this `npy_forward_method`.
+    arr = np.arange(3)
+    args = range(1000)
+    with pytest.raises(TypeError):
+        arr.mean(*args)
 

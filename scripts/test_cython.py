@@ -1,10 +1,13 @@
 import os
-import shutil
 import subprocess
 import sys
+import sysconfig
+from datetime import datetime
+
 import pytest
 
 import numpy as np
+from numpy.testing import IS_EDITABLE, IS_WASM, assert_array_equal
 
 # This import is copied from random.tests.test_extending
 try:
@@ -13,56 +16,71 @@ try:
 except ImportError:
     cython = None
 else:
-    from distutils.version import LooseVersion
+    from numpy._utils import _pep440
 
-    # Cython 0.29.21 is required for Python 3.9 and there are
-    # other fixes in the 0.29 series that are needed even for earlier
-    # Python versions.
     # Note: keep in sync with the one in pyproject.toml
-    required_version = LooseVersion("0.29.21")
-    if LooseVersion(cython_version) < required_version:
+    required_version = "3.0.6"
+    if _pep440.parse(cython_version) < _pep440.Version(required_version):
         # too old or wrong cython, skip the test
         cython = None
 
 pytestmark = pytest.mark.skipif(cython is None, reason="requires cython")
 
 
-@pytest.fixture
-def install_temp(request, tmp_path):
-    # Based in part on test_cython from random.tests.test_extending
-
-    here = os.path.dirname(__file__)
-    ext_dir = os.path.join(here, "examples")
-
-    cytest = str(tmp_path / "cytest")
-
-    shutil.copytree(ext_dir, cytest)
-    # build the examples and "install" them into a temporary directory
-
-    install_log = str(tmp_path / "tmp_install_log.txt")
-    subprocess.check_call(
-        [
-            sys.executable,
-            "setup.py",
-            "build",
-            "install",
-            "--prefix", str(tmp_path / "installdir"),
-            "--single-version-externally-managed",
-            "--record",
-            install_log,
-        ],
-        cwd=cytest,
+if IS_EDITABLE:
+    pytest.skip(
+        "Editable install doesn't support tests with a compile step",
+        allow_module_level=True
     )
 
-    # In order to import the built module, we need its path to sys.path
-    # so parse that out of the record
-    with open(install_log) as fid:
-        for line in fid:
-            if "checks" in line:
-                sys.path.append(os.path.dirname(line))
-                break
-        else:
-            raise RuntimeError(f'could not parse "{install_log}"')
+
+@pytest.fixture(scope='module')
+def install_temp(tmpdir_factory):
+    # Based in part on test_cython from random.tests.test_extending
+    if IS_WASM:
+        pytest.skip("No subprocess")
+
+    srcdir = os.path.join(os.path.dirname(__file__), 'examples', 'cython')
+    build_dir = tmpdir_factory.mktemp("cython_test") / "build"
+    os.makedirs(build_dir, exist_ok=True)
+    # Ensure we use the correct Python interpreter even when `meson` is
+    # installed in a different Python environment (see gh-24956)
+    native_file = str(build_dir / 'interpreter-native-file.ini')
+    with open(native_file, 'w') as f:
+        f.write("[binaries]\n")
+        f.write(f"python = '{sys.executable}'\n")
+        f.write(f"python3 = '{sys.executable}'")
+
+    try:
+        subprocess.check_call(["meson", "--version"])
+    except FileNotFoundError:
+        pytest.skip("No usable 'meson' found")
+    if sysconfig.get_platform() == "win-arm64":
+        pytest.skip("Meson unable to find MSVC linker on win-arm64")
+    if sys.platform == "win32":
+        subprocess.check_call(["meson", "setup",
+                               "--buildtype=release",
+                               "--vsenv", "--native-file", native_file,
+                               str(srcdir)],
+                              cwd=build_dir,
+                              )
+    else:
+        subprocess.check_call(["meson", "setup",
+                               "--native-file", native_file, str(srcdir)],
+                              cwd=build_dir
+                              )
+    try:
+        subprocess.check_call(["meson", "compile", "-vv"], cwd=build_dir)
+    except subprocess.CalledProcessError:
+        print("----------------")
+        print("meson build failed when doing")
+        print(f"'meson setup --native-file {native_file} {srcdir}'")
+        print("'meson compile -vv'")
+        print(f"in {build_dir}")
+        print("----------------")
+        raise
+
+    sys.path.append(str(build_dir))
 
 
 def test_is_timedelta64_object(install_temp):
@@ -132,3 +150,203 @@ def test_abstract_scalars(install_temp):
     assert checks.is_integer(1)
     assert checks.is_integer(np.int8(1))
     assert checks.is_integer(np.uint64(1))
+
+def test_default_int(install_temp):
+    import checks
+
+    assert checks.get_default_integer() is np.dtype(int)
+
+
+def test_ravel_axis(install_temp):
+    import checks
+
+    assert checks.get_ravel_axis() == np.iinfo("intc").min
+
+
+def test_convert_datetime64_to_datetimestruct(install_temp):
+    # GH#21199
+    import checks
+
+    res = checks.convert_datetime64_to_datetimestruct()
+
+    exp = {
+        "year": 2022,
+        "month": 3,
+        "day": 15,
+        "hour": 20,
+        "min": 1,
+        "sec": 55,
+        "us": 260292,
+        "ps": 0,
+        "as": 0,
+    }
+
+    assert res == exp
+
+
+class TestDatetimeStrings:
+    def test_make_iso_8601_datetime(self, install_temp):
+        # GH#21199
+        import checks
+        dt = datetime(2016, 6, 2, 10, 45, 19)
+        # uses NPY_FR_s
+        result = checks.make_iso_8601_datetime(dt)
+        assert result == b"2016-06-02T10:45:19"
+
+    def test_get_datetime_iso_8601_strlen(self, install_temp):
+        # GH#21199
+        import checks
+        # uses NPY_FR_ns
+        res = checks.get_datetime_iso_8601_strlen()
+        assert res == 48
+
+
+@pytest.mark.parametrize(
+    "arrays",
+    [
+        [np.random.rand(2)],
+        [np.random.rand(2), np.random.rand(3, 1)],
+        [np.random.rand(2), np.random.rand(2, 3, 2), np.random.rand(1, 3, 2)],
+        [np.random.rand(2, 1)] * 4 + [np.random.rand(1, 1, 1)],
+    ]
+)
+def test_multiiter_fields(install_temp, arrays):
+    import checks
+    bcast = np.broadcast(*arrays)
+
+    assert bcast.ndim == checks.get_multiiter_number_of_dims(bcast)
+    assert bcast.size == checks.get_multiiter_size(bcast)
+    assert bcast.numiter == checks.get_multiiter_num_of_iterators(bcast)
+    assert bcast.shape == checks.get_multiiter_shape(bcast)
+    assert bcast.index == checks.get_multiiter_current_index(bcast)
+    assert all(
+        x.base is y.base
+        for x, y in zip(bcast.iters, checks.get_multiiter_iters(bcast))
+    )
+
+
+def test_dtype_flags(install_temp):
+    import checks
+    dtype = np.dtype("i,O")  # dtype with somewhat interesting flags
+    assert dtype.flags == checks.get_dtype_flags(dtype)
+
+
+def test_conv_intp(install_temp):
+    import checks
+
+    class myint:
+        def __int__(self):
+            return 3
+
+    # These conversion passes via `__int__`, not `__index__`:
+    assert checks.conv_intp(3.) == 3
+    assert checks.conv_intp(myint()) == 3
+
+
+def test_npyiter_api(install_temp):
+    import checks
+    arr = np.random.rand(3, 2)
+
+    it = np.nditer(arr)
+    assert checks.get_npyiter_size(it) == it.itersize == np.prod(arr.shape)
+    assert checks.get_npyiter_ndim(it) == it.ndim == 1
+    assert checks.npyiter_has_index(it) == it.has_index == False
+
+    it = np.nditer(arr, flags=["c_index"])
+    assert checks.npyiter_has_index(it) == it.has_index == True
+    assert (
+        checks.npyiter_has_delayed_bufalloc(it)
+        == it.has_delayed_bufalloc
+        == False
+    )
+
+    it = np.nditer(arr, flags=["buffered", "delay_bufalloc"])
+    assert (
+        checks.npyiter_has_delayed_bufalloc(it)
+        == it.has_delayed_bufalloc
+        == True
+    )
+
+    it = np.nditer(arr, flags=["multi_index"])
+    assert checks.get_npyiter_size(it) == it.itersize == np.prod(arr.shape)
+    assert checks.npyiter_has_multi_index(it) == it.has_multi_index == True
+    assert checks.get_npyiter_ndim(it) == it.ndim == 2
+    assert checks.test_get_multi_index_iter_next(it, arr)
+
+    arr2 = np.random.rand(2, 1, 2)
+    it = np.nditer([arr, arr2])
+    assert checks.get_npyiter_nop(it) == it.nop == 2
+    assert checks.get_npyiter_size(it) == it.itersize == 12
+    assert checks.get_npyiter_ndim(it) == it.ndim == 3
+    assert all(
+        x is y for x, y in zip(checks.get_npyiter_operands(it), it.operands)
+    )
+    assert all(
+        np.allclose(x, y)
+        for x, y in zip(checks.get_npyiter_itviews(it), it.itviews)
+    )
+
+
+def test_fillwithbytes(install_temp):
+    import checks
+
+    arr = checks.compile_fillwithbyte()
+    assert_array_equal(arr, np.ones((1, 2)))
+
+
+def test_complex(install_temp):
+    from checks import inc2_cfloat_struct
+
+    arr = np.array([0, 10 + 10j], dtype="F")
+    inc2_cfloat_struct(arr)
+    assert arr[1] == (12 + 12j)
+
+
+def test_npystring_pack(install_temp):
+    """Check that the cython API can write to a vstring array."""
+    import checks
+
+    arr = np.array(['a', 'b', 'c'], dtype='T')
+    assert checks.npystring_pack(arr) == 0
+
+    # checks.npystring_pack writes to the beginning of the array
+    assert arr[0] == "Hello world"
+
+def test_npystring_load(install_temp):
+    """Check that the cython API can load strings from a vstring array."""
+    import checks
+
+    arr = np.array(['abcd', 'b', 'c'], dtype='T')
+    result = checks.npystring_load(arr)
+    assert result == 'abcd'
+
+
+def test_npystring_multiple_allocators(install_temp):
+    """Check that the cython API can acquire/release multiple vstring allocators."""
+    import checks
+
+    dt = np.dtypes.StringDType(na_object=None)
+    arr1 = np.array(['abcd', 'b', 'c'], dtype=dt)
+    arr2 = np.array(['a', 'b', 'c'], dtype=dt)
+
+    assert checks.npystring_pack_multiple(arr1, arr2) == 0
+    assert arr1[0] == "Hello world"
+    assert arr1[-1] is None
+    assert arr2[0] == "test this"
+
+
+def test_npystring_allocators_other_dtype(install_temp):
+    """Check that allocators for non-StringDType arrays is NULL."""
+    import checks
+
+    arr1 = np.array([1, 2, 3], dtype='i')
+    arr2 = np.array([4, 5, 6], dtype='i')
+
+    assert checks.npystring_allocators_other_types(arr1, arr2) == 0
+
+
+@pytest.mark.skipif(sysconfig.get_platform() == 'win-arm64', reason='no checks module on win-arm64')
+def test_npy_uintp_type_enum():
+    import checks
+    assert checks.check_npy_uintp_type_enum()
+

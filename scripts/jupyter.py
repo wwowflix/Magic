@@ -1,124 +1,101 @@
-import base64
-import io
-import re
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Sequence
 
-import requests
+if TYPE_CHECKING:
+    from pip._vendor.rich.console import ConsoleRenderable
 
-import fsspec
+from . import get_console
+from .segment import Segment
+from .terminal_theme import DEFAULT_TERMINAL_THEME
 
+if TYPE_CHECKING:
+    from pip._vendor.rich.console import ConsoleRenderable
 
-class JupyterFileSystem(fsspec.AbstractFileSystem):
-    """View of the files as seen by a Jupyter server (notebook or lab)"""
-
-    protocol = ("jupyter", "jlab")
-
-    def __init__(self, url, tok=None, **kwargs):
-        """
-
-        Parameters
-        ----------
-        url : str
-            Base URL of the server, like "http://127.0.0.1:8888". May include
-            token in the string, which is given by the process when starting up
-        tok : str
-            If the token is obtained separately, can be given here
-        kwargs
-        """
-        if "?" in url:
-            if tok is None:
-                try:
-                    tok = re.findall("token=([a-z0-9]+)", url)[0]
-                except IndexError as e:
-                    raise ValueError("Could not determine token") from e
-            url = url.split("?", 1)[0]
-        self.url = url.rstrip("/") + "/api/contents"
-        self.session = requests.Session()
-        if tok:
-            self.session.headers["Authorization"] = f"token {tok}"
-
-        super().__init__(**kwargs)
-
-    def ls(self, path, detail=True, **kwargs):
-        path = self._strip_protocol(path)
-        r = self.session.get(f"{self.url}/{path}")
-        if r.status_code == 404:
-            return FileNotFoundError(path)
-        r.raise_for_status()
-        out = r.json()
-
-        if out["type"] == "directory":
-            out = out["content"]
-        else:
-            out = [out]
-        for o in out:
-            o["name"] = o.pop("path")
-            o.pop("content")
-            if o["type"] == "notebook":
-                o["type"] = "file"
-        if detail:
-            return out
-        return [o["name"] for o in out]
-
-    def cat_file(self, path, start=None, end=None, **kwargs):
-        path = self._strip_protocol(path)
-        r = self.session.get(f"{self.url}/{path}")
-        if r.status_code == 404:
-            return FileNotFoundError(path)
-        r.raise_for_status()
-        out = r.json()
-        if out["format"] == "text":
-            # data should be binary
-            b = out["content"].encode()
-        else:
-            b = base64.b64decode(out["content"])
-        return b[start:end]
-
-    def pipe_file(self, path, value, **_):
-        path = self._strip_protocol(path)
-        json = {
-            "name": path.rsplit("/", 1)[-1],
-            "path": path,
-            "size": len(value),
-            "content": base64.b64encode(value).decode(),
-            "format": "base64",
-            "type": "file",
-        }
-        self.session.put(f"{self.url}/{path}", json=json)
-
-    def mkdir(self, path, create_parents=True, **kwargs):
-        path = self._strip_protocol(path)
-        if create_parents and "/" in path:
-            self.mkdir(path.rsplit("/", 1)[0], True)
-        json = {
-            "name": path.rsplit("/", 1)[-1],
-            "path": path,
-            "size": None,
-            "content": None,
-            "type": "directory",
-        }
-        self.session.put(f"{self.url}/{path}", json=json)
-
-    def _rm(self, path):
-        path = self._strip_protocol(path)
-        self.session.delete(f"{self.url}/{path}")
-
-    def _open(self, path, mode="rb", **kwargs):
-        path = self._strip_protocol(path)
-        if mode == "rb":
-            data = self.cat_file(path)
-            return io.BytesIO(data)
-        else:
-            return SimpleFileWriter(self, path, mode="wb")
+JUPYTER_HTML_FORMAT = """\
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">{code}</pre>
+"""
 
 
-class SimpleFileWriter(fsspec.spec.AbstractBufferedFile):
-    def _upload_chunk(self, final=False):
-        """Never uploads a chunk until file is done
+class JupyterRenderable:
+    """A shim to write html to Jupyter notebook."""
 
-        Not suitable for large files
-        """
-        if final is False:
-            return False
-        self.buffer.seek(0)
-        data = self.buffer.read()
-        self.fs.pipe_file(self.path, data)
+    def __init__(self, html: str, text: str) -> None:
+        self.html = html
+        self.text = text
+
+    def _repr_mimebundle_(
+        self, include: Sequence[str], exclude: Sequence[str], **kwargs: Any
+    ) -> Dict[str, str]:
+        data = {"text/plain": self.text, "text/html": self.html}
+        if include:
+            data = {k: v for (k, v) in data.items() if k in include}
+        if exclude:
+            data = {k: v for (k, v) in data.items() if k not in exclude}
+        return data
+
+
+class JupyterMixin:
+    """Add to an Rich renderable to make it render in Jupyter notebook."""
+
+    __slots__ = ()
+
+    def _repr_mimebundle_(
+        self: "ConsoleRenderable",
+        include: Sequence[str],
+        exclude: Sequence[str],
+        **kwargs: Any,
+    ) -> Dict[str, str]:
+        console = get_console()
+        segments = list(console.render(self, console.options))
+        html = _render_segments(segments)
+        text = console._render_buffer(segments)
+        data = {"text/plain": text, "text/html": html}
+        if include:
+            data = {k: v for (k, v) in data.items() if k in include}
+        if exclude:
+            data = {k: v for (k, v) in data.items() if k not in exclude}
+        return data
+
+
+def _render_segments(segments: Iterable[Segment]) -> str:
+    def escape(text: str) -> str:
+        """Escape html."""
+        return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+    fragments: List[str] = []
+    append_fragment = fragments.append
+    theme = DEFAULT_TERMINAL_THEME
+    for text, style, control in Segment.simplify(segments):
+        if control:
+            continue
+        text = escape(text)
+        if style:
+            rule = style.get_html_style(theme)
+            text = f'<span style="{rule}">{text}</span>' if rule else text
+            if style.link:
+                text = f'<a href="{style.link}" target="_blank">{text}</a>'
+        append_fragment(text)
+
+    code = "".join(fragments)
+    html = JUPYTER_HTML_FORMAT.format(code=code)
+
+    return html
+
+
+def display(segments: Iterable[Segment], text: str) -> None:
+    """Render segments to Jupyter."""
+    html = _render_segments(segments)
+    jupyter_renderable = JupyterRenderable(html, text)
+    try:
+        from IPython.display import display as ipython_display
+
+        ipython_display(jupyter_renderable)
+    except ModuleNotFoundError:
+        # Handle the case where the Console has force_jupyter=True,
+        # but IPython is not installed.
+        pass
+
+
+def print(*args: Any, **kwargs: Any) -> None:
+    """Proxy for Console print."""
+    console = get_console()
+    return console.print(*args, **kwargs)

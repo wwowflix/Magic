@@ -1,7 +1,8 @@
 import numpy as np
 from numpy.testing import (
-        assert_raises, assert_raises_regex,
-        )
+    assert_raises,
+    assert_raises_regex,
+)
 
 
 class TestIndexErrors:
@@ -33,11 +34,6 @@ class TestIndexErrors:
         assert_raises(IndexError, a.item, 20)
         a = np.empty((5, 0), dtype=object)
         assert_raises(IndexError, a.item, (0, 0))
-
-        a = np.empty(5, dtype=object)
-        assert_raises(IndexError, a.itemset, 20, 0)
-        a = np.empty((5, 0), dtype=object)
-        assert_raises(IndexError, a.itemset, (0, 0), 0)
 
     def test_put_exceptions(self):
         a = np.zeros((5, 5))
@@ -127,7 +123,4 @@ class TestIndexErrors:
 
         a = np.zeros((3, 3))
         assert_raises(IndexError, lambda: a.item(100))
-        assert_raises(IndexError, lambda: a.itemset(100, 1))
-        a = np.zeros((0, 3))
-        assert_raises(IndexError, lambda: a.item(100))
-        assert_raises(IndexError, lambda: a.itemset(100, 1))
+

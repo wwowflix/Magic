@@ -1,1182 +1,588 @@
 from __future__ import annotations
 
-from datetime import timedelta
-import operator
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Literal,
-    Sequence,
-    TypeVar,
-    overload,
+from datetime import (
+    datetime,
+    timedelta,
 )
+from typing import Hashable
+import warnings
 
 import numpy as np
 
 from pandas._libs import (
-    algos as libalgos,
+    index as libindex,
     lib,
 )
-from pandas._libs.arrays import NDArrayBacked
 from pandas._libs.tslibs import (
     BaseOffset,
     NaT,
-    NaTType,
-    Timedelta,
-    astype_overflowsafe,
-    dt64arr_to_periodarr as c_dt64arr_to_periodarr,
-    get_unit_from_dtype,
-    iNaT,
-    parsing,
-    period as libperiod,
-    to_offset,
-)
-from pandas._libs.tslibs.dtypes import FreqGroup
-from pandas._libs.tslibs.fields import isleapyear_arr
-from pandas._libs.tslibs.offsets import (
-    Tick,
-    delta_to_tick,
-)
-from pandas._libs.tslibs.period import (
-    DIFFERENT_FREQ,
-    IncompatibleFrequency,
     Period,
-    get_period_field_arr,
-    period_asfreq_arr,
+    Resolution,
+    Tick,
 )
 from pandas._typing import (
-    AnyArrayLike,
     Dtype,
-    NpDtype,
+    DtypeObj,
     npt,
 )
 from pandas.util._decorators import (
     cache_readonly,
     doc,
 )
+from pandas.util._exceptions import find_stack_level
 
 from pandas.core.dtypes.common import (
-    ensure_object,
     is_datetime64_any_dtype,
-    is_datetime64_dtype,
-    is_dtype_equal,
-    is_float_dtype,
-    is_integer_dtype,
-    is_period_dtype,
+    is_integer,
     pandas_dtype,
 )
 from pandas.core.dtypes.dtypes import PeriodDtype
-from pandas.core.dtypes.generic import (
-    ABCIndex,
-    ABCPeriodIndex,
-    ABCSeries,
-    ABCTimedeltaArray,
+from pandas.core.dtypes.missing import is_valid_na_for_dtype
+
+from pandas.core.arrays.period import (
+    PeriodArray,
+    period_array,
+    raise_on_incompatible,
+    validate_dtype_freq,
 )
-from pandas.core.dtypes.missing import isna
-
-import pandas.core.algorithms as algos
-from pandas.core.arrays import datetimelike as dtl
 import pandas.core.common as com
+import pandas.core.indexes.base as ibase
+from pandas.core.indexes.base import maybe_extract_name
+from pandas.core.indexes.datetimelike import DatetimeIndexOpsMixin
+from pandas.core.indexes.datetimes import (
+    DatetimeIndex,
+    Index,
+)
+from pandas.core.indexes.extension import inherit_names
+from pandas.core.indexes.numeric import Int64Index
 
-if TYPE_CHECKING:
-
-    from pandas._typing import (
-        NumpySorter,
-        NumpyValueArrayLike,
-    )
-
-    from pandas.core.arrays import (
-        DatetimeArray,
-        TimedeltaArray,
-    )
-    from pandas.core.arrays.base import ExtensionArray
-
-
-BaseOffsetT = TypeVar("BaseOffsetT", bound=BaseOffset)
-
-
+_index_doc_kwargs = dict(ibase._index_doc_kwargs)
+_index_doc_kwargs.update({"target_klass": "PeriodIndex or list of Periods"})
 _shared_doc_kwargs = {
     "klass": "PeriodArray",
 }
 
-
-def _field_accessor(name: str, docstring=None):
-    def f(self):
-        base = self.freq._period_dtype_code
-        result = get_period_field_arr(name, self.asi8, base)
-        return result
-
-    f.__name__ = name
-    f.__doc__ = docstring
-    return property(f)
+# --- Period index sketch
 
 
-class PeriodArray(dtl.DatelikeOps, libperiod.PeriodMixin):
+def _new_PeriodIndex(cls, **d):
+    # GH13277 for unpickling
+    values = d.pop("data")
+    if values.dtype == "int64":
+        freq = d.pop("freq", None)
+        values = PeriodArray(values, freq=freq)
+        return cls._simple_new(values, **d)
+    else:
+        return cls(values, **d)
+
+
+@inherit_names(
+    ["strftime", "start_time", "end_time"] + PeriodArray._field_ops,
+    PeriodArray,
+    wrap=True,
+)
+@inherit_names(["is_leap_year", "_format_native_types"], PeriodArray)
+class PeriodIndex(DatetimeIndexOpsMixin):
     """
-    Pandas ExtensionArray for storing Period data.
+    Immutable ndarray holding ordinal values indicating regular periods in time.
 
-    Users should use :func:`~pandas.period_array` to create new instances.
-    Alternatively, :func:`~pandas.array` can be used to create new instances
-    from a sequence of Period scalars.
+    Index keys are boxed to Period objects which carries the metadata (eg,
+    frequency information).
 
     Parameters
     ----------
-    values : Union[PeriodArray, Series[period], ndarray[int], PeriodIndex]
-        The data to store. These should be arrays that can be directly
-        converted to ordinals without inference or copy (PeriodArray,
-        ndarray[int64]), or a box around such an array (Series[period],
-        PeriodIndex).
-    dtype : PeriodDtype, optional
-        A PeriodDtype instance from which to extract a `freq`. If both
-        `freq` and `dtype` are specified, then the frequencies must match.
-    freq : str or DateOffset
-        The `freq` to use for the array. Mostly applicable when `values`
-        is an ndarray of integers, when `freq` is required. When `values`
-        is a PeriodArray (or box around), it's checked that ``values.freq``
-        matches `freq`.
-    copy : bool, default False
-        Whether to copy the ordinals before storing.
+    data : array-like (1d int np.ndarray or PeriodArray), optional
+        Optional period-like data to construct index with.
+    copy : bool
+        Make a copy of input ndarray.
+    freq : str or period object, optional
+        One of pandas period strings or corresponding objects.
+    year : int, array, or Series, default None
+    month : int, array, or Series, default None
+    quarter : int, array, or Series, default None
+    day : int, array, or Series, default None
+    hour : int, array, or Series, default None
+    minute : int, array, or Series, default None
+    second : int, array, or Series, default None
+    dtype : str or PeriodDtype, default None
 
     Attributes
     ----------
-    None
+    day
+    dayofweek
+    day_of_week
+    dayofyear
+    day_of_year
+    days_in_month
+    daysinmonth
+    end_time
+    freq
+    freqstr
+    hour
+    is_leap_year
+    minute
+    month
+    quarter
+    qyear
+    second
+    start_time
+    week
+    weekday
+    weekofyear
+    year
 
     Methods
     -------
-    None
+    asfreq
+    strftime
+    to_timestamp
 
     See Also
     --------
-    Period: Represents a period of time.
-    PeriodIndex : Immutable Index for period data.
-    period_range: Create a fixed-frequency PeriodArray.
-    array: Construct a pandas array.
-
-    Notes
-    -----
-    There are two components to a PeriodArray
-
-    - ordinals : integer ndarray
-    - freq : pd.tseries.offsets.Offset
-
-    The values are physically stored as a 1-D ndarray of integers. These are
-    called "ordinals" and represent some kind of offset from a base.
-
-    The `freq` indicates the span covered by each element of the array.
-    All elements in the PeriodArray have the same `freq`.
-    """
-
-    # array priority higher than numpy scalars
-    __array_priority__ = 1000
-    _typ = "periodarray"  # ABCPeriodArray
-    _internal_fill_value = np.int64(iNaT)
-    _recognized_scalars = (Period,)
-    _is_recognized_dtype = is_period_dtype
-    _infer_matches = ("period",)
-
-    @property
-    def _scalar_type(self) -> type[Period]:
-        return Period
-
-    # Names others delegate to us
-    _other_ops: list[str] = []
-    _bool_ops: list[str] = ["is_leap_year"]
-    _object_ops: list[str] = ["start_time", "end_time", "freq"]
-    _field_ops: list[str] = [
-        "year",
-        "month",
-        "day",
-        "hour",
-        "minute",
-        "second",
-        "weekofyear",
-        "weekday",
-        "week",
-        "dayofweek",
-        "day_of_week",
-        "dayofyear",
-        "day_of_year",
-        "quarter",
-        "qyear",
-        "days_in_month",
-        "daysinmonth",
-    ]
-    _datetimelike_ops: list[str] = _field_ops + _object_ops + _bool_ops
-    _datetimelike_methods: list[str] = ["strftime", "to_timestamp", "asfreq"]
-
-    _dtype: PeriodDtype
-
-    # --------------------------------------------------------------------
-    # Constructors
-
-    def __init__(
-        self, values, dtype: Dtype | None = None, freq=None, copy: bool = False
-    ) -> None:
-        freq = validate_dtype_freq(dtype, freq)
-
-        if freq is not None:
-            freq = Period._maybe_convert_freq(freq)
-
-        if isinstance(values, ABCSeries):
-            values = values._values
-            if not isinstance(values, type(self)):
-                raise TypeError("Incorrect dtype")
-
-        elif isinstance(values, ABCPeriodIndex):
-            values = values._values
-
-        if isinstance(values, type(self)):
-            if freq is not None and freq != values.freq:
-                raise raise_on_incompatible(values, freq)
-            values, freq = values._ndarray, values.freq
-
-        values = np.array(values, dtype="int64", copy=copy)
-        if freq is None:
-            raise ValueError("freq is not specified and cannot be inferred")
-        NDArrayBacked.__init__(self, values, PeriodDtype(freq))
-
-    # error: Signature of "_simple_new" incompatible with supertype "NDArrayBacked"
-    @classmethod
-    def _simple_new(  # type: ignore[override]
-        cls,
-        values: np.ndarray,
-        freq: BaseOffset | None = None,
-        dtype: Dtype | None = None,
-    ) -> PeriodArray:
-        # alias for PeriodArray.__init__
-        assertion_msg = "Should be numpy array of type i8"
-        assert isinstance(values, np.ndarray) and values.dtype == "i8", assertion_msg
-        return cls(values, freq=freq, dtype=dtype)
-
-    @classmethod
-    def _from_sequence(
-        cls: type[PeriodArray],
-        scalars: Sequence[Period | None] | AnyArrayLike,
-        *,
-        dtype: Dtype | None = None,
-        copy: bool = False,
-    ) -> PeriodArray:
-        if dtype and isinstance(dtype, PeriodDtype):
-            freq = dtype.freq
-        else:
-            freq = None
-
-        if isinstance(scalars, cls):
-            validate_dtype_freq(scalars.dtype, freq)
-            if copy:
-                scalars = scalars.copy()
-            return scalars
-
-        periods = np.asarray(scalars, dtype=object)
-
-        freq = freq or libperiod.extract_freq(periods)
-        ordinals = libperiod.extract_ordinals(periods, freq)
-        return cls(ordinals, freq=freq)
-
-    @classmethod
-    def _from_sequence_of_strings(
-        cls, strings, *, dtype: Dtype | None = None, copy: bool = False
-    ) -> PeriodArray:
-        return cls._from_sequence(strings, dtype=dtype, copy=copy)
-
-    @classmethod
-    def _from_datetime64(cls, data, freq, tz=None) -> PeriodArray:
-        """
-        Construct a PeriodArray from a datetime64 array
-
-        Parameters
-        ----------
-        data : ndarray[datetime64[ns], datetime64[ns, tz]]
-        freq : str or Tick
-        tz : tzinfo, optional
-
-        Returns
-        -------
-        PeriodArray[freq]
-        """
-        data, freq = dt64arr_to_periodarr(data, freq, tz)
-        return cls(data, freq=freq)
-
-    @classmethod
-    def _generate_range(cls, start, end, periods, freq, fields):
-        periods = dtl.validate_periods(periods)
-
-        if freq is not None:
-            freq = Period._maybe_convert_freq(freq)
-
-        field_count = len(fields)
-        if start is not None or end is not None:
-            if field_count > 0:
-                raise ValueError(
-                    "Can either instantiate from fields or endpoints, but not both"
-                )
-            subarr, freq = _get_ordinal_range(start, end, periods, freq)
-        elif field_count > 0:
-            subarr, freq = _range_from_fields(freq=freq, **fields)
-        else:
-            raise ValueError("Not enough parameters to construct Period range")
-
-        return subarr, freq
-
-    # -----------------------------------------------------------------
-    # DatetimeLike Interface
-
-    # error: Argument 1 of "_unbox_scalar" is incompatible with supertype
-    # "DatetimeLikeArrayMixin"; supertype defines the argument type as
-    # "Union[Union[Period, Any, Timedelta], NaTType]"
-    def _unbox_scalar(  # type: ignore[override]
-        self,
-        value: Period | NaTType,
-        setitem: bool = False,
-    ) -> np.int64:
-        if value is NaT:
-            # error: Item "Period" of "Union[Period, NaTType]" has no attribute "value"
-            return np.int64(value.value)  # type: ignore[union-attr]
-        elif isinstance(value, self._scalar_type):
-            self._check_compatible_with(value, setitem=setitem)
-            return np.int64(value.ordinal)
-        else:
-            raise ValueError(f"'value' should be a Period. Got '{value}' instead.")
-
-    def _scalar_from_string(self, value: str) -> Period:
-        return Period(value, freq=self.freq)
-
-    def _check_compatible_with(self, other, setitem: bool = False):
-        if other is NaT:
-            return
-        self._require_matching_freq(other)
-
-    # --------------------------------------------------------------------
-    # Data / Attributes
-
-    @cache_readonly
-    def dtype(self) -> PeriodDtype:
-        return self._dtype
-
-    # error: Read-only property cannot override read-write property
-    @property  # type: ignore[misc]
-    def freq(self) -> BaseOffset:
-        """
-        Return the frequency object for this PeriodArray.
-        """
-        return self.dtype.freq
-
-    def __array__(self, dtype: NpDtype | None = None) -> np.ndarray:
-        if dtype == "i8":
-            return self.asi8
-        elif dtype == bool:
-            return ~self._isnan
-
-        # This will raise TypeError for non-object dtypes
-        return np.array(list(self), dtype=object)
-
-    def __arrow_array__(self, type=None):
-        """
-        Convert myself into a pyarrow Array.
-        """
-        import pyarrow
-
-        from pandas.core.arrays.arrow.extension_types import ArrowPeriodType
-
-        if type is not None:
-            if pyarrow.types.is_integer(type):
-                return pyarrow.array(self._ndarray, mask=self.isna(), type=type)
-            elif isinstance(type, ArrowPeriodType):
-                # ensure we have the same freq
-                if self.freqstr != type.freq:
-                    raise TypeError(
-                        "Not supported to convert PeriodArray to array with different "
-                        f"'freq' ({self.freqstr} vs {type.freq})"
-                    )
-            else:
-                raise TypeError(
-                    f"Not supported to convert PeriodArray to '{type}' type"
-                )
-
-        period_type = ArrowPeriodType(self.freqstr)
-        storage_array = pyarrow.array(self._ndarray, mask=self.isna(), type="int64")
-        return pyarrow.ExtensionArray.from_storage(period_type, storage_array)
-
-    # --------------------------------------------------------------------
-    # Vectorized analogues of Period properties
-
-    year = _field_accessor(
-        "year",
-        """
-        The year of the period.
-        """,
-    )
-    month = _field_accessor(
-        "month",
-        """
-        The month as January=1, December=12.
-        """,
-    )
-    day = _field_accessor(
-        "day",
-        """
-        The days of the period.
-        """,
-    )
-    hour = _field_accessor(
-        "hour",
-        """
-        The hour of the period.
-        """,
-    )
-    minute = _field_accessor(
-        "minute",
-        """
-        The minute of the period.
-        """,
-    )
-    second = _field_accessor(
-        "second",
-        """
-        The second of the period.
-        """,
-    )
-    weekofyear = _field_accessor(
-        "week",
-        """
-        The week ordinal of the year.
-        """,
-    )
-    week = weekofyear
-    day_of_week = _field_accessor(
-        "day_of_week",
-        """
-        The day of the week with Monday=0, Sunday=6.
-        """,
-    )
-    dayofweek = day_of_week
-    weekday = dayofweek
-    dayofyear = day_of_year = _field_accessor(
-        "day_of_year",
-        """
-        The ordinal day of the year.
-        """,
-    )
-    quarter = _field_accessor(
-        "quarter",
-        """
-        The quarter of the date.
-        """,
-    )
-    qyear = _field_accessor("qyear")
-    days_in_month = _field_accessor(
-        "days_in_month",
-        """
-        The number of days in the month.
-        """,
-    )
-    daysinmonth = days_in_month
-
-    @property
-    def is_leap_year(self) -> np.ndarray:
-        """
-        Logical indicating if the date belongs to a leap year.
-        """
-        return isleapyear_arr(np.asarray(self.year))
-
-    def to_timestamp(self, freq=None, how: str = "start") -> DatetimeArray:
-        """
-        Cast to DatetimeArray/Index.
-
-        Parameters
-        ----------
-        freq : str or DateOffset, optional
-            Target frequency. The default is 'D' for week or longer,
-            'S' otherwise.
-        how : {'s', 'e', 'start', 'end'}
-            Whether to use the start or end of the time period being converted.
-
-        Returns
-        -------
-        DatetimeArray/Index
-        """
-        from pandas.core.arrays import DatetimeArray
-
-        how = libperiod.validate_end_alias(how)
-
-        end = how == "E"
-        if end:
-            if freq == "B" or self.freq == "B":
-                # roll forward to ensure we land on B date
-                adjust = Timedelta(1, "D") - Timedelta(1, "ns")
-                return self.to_timestamp(how="start") + adjust
-            else:
-                adjust = Timedelta(1, "ns")
-                return (self + self.freq).to_timestamp(how="start") - adjust
-
-        if freq is None:
-            freq = self._dtype._get_to_timestamp_base()
-            base = freq
-        else:
-            freq = Period._maybe_convert_freq(freq)
-            base = freq._period_dtype_code
-
-        new_parr = self.asfreq(freq, how=how)
-
-        new_data = libperiod.periodarr_to_dt64arr(new_parr.asi8, base)
-        dta = DatetimeArray(new_data)
-
-        if self.freq.name == "B":
-            # See if we can retain BDay instead of Day in cases where
-            #  len(self) is too small for infer_freq to distinguish between them
-            diffs = libalgos.unique_deltas(self.asi8)
-            if len(diffs) == 1:
-                diff = diffs[0]
-                if diff == self.freq.n:
-                    dta._freq = self.freq
-                elif diff == 1:
-                    dta._freq = self.freq.base
-                # TODO: other cases?
-            return dta
-        else:
-            return dta._with_freq("infer")
-
-    # --------------------------------------------------------------------
-
-    def _time_shift(self, periods: int, freq=None) -> PeriodArray:
-        """
-        Shift each value by `periods`.
-
-        Note this is different from ExtensionArray.shift, which
-        shifts the *position* of each element, padding the end with
-        missing values.
-
-        Parameters
-        ----------
-        periods : int
-            Number of periods to shift by.
-        freq : pandas.DateOffset, pandas.Timedelta, or str
-            Frequency increment to shift by.
-        """
-        if freq is not None:
-            raise TypeError(
-                "`freq` argument is not supported for "
-                f"{type(self).__name__}._time_shift"
-            )
-        return self + periods
-
-    def _box_func(self, x) -> Period | NaTType:
-        return Period._from_ordinal(ordinal=x, freq=self.freq)
-
-    @doc(**_shared_doc_kwargs, other="PeriodIndex", other_name="PeriodIndex")
-    def asfreq(self, freq=None, how: str = "E") -> PeriodArray:
-        """
-        Convert the {klass} to the specified frequency `freq`.
-
-        Equivalent to applying :meth:`pandas.Period.asfreq` with the given arguments
-        to each :class:`~pandas.Period` in this {klass}.
-
-        Parameters
-        ----------
-        freq : str
-            A frequency.
-        how : str {{'E', 'S'}}, default 'E'
-            Whether the elements should be aligned to the end
-            or start within pa period.
-
-            * 'E', 'END', or 'FINISH' for end,
-            * 'S', 'START', or 'BEGIN' for start.
-
-            January 31st ('END') vs. January 1st ('START') for example.
-
-        Returns
-        -------
-        {klass}
-            The transformed {klass} with the new frequency.
-
-        See Also
-        --------
-        {other}.asfreq: Convert each Period in a {other_name} to the given frequency.
-        Period.asfreq : Convert a :class:`~pandas.Period` object to the given frequency.
-
-        Examples
-        --------
-        >>> pidx = pd.period_range('2010-01-01', '2015-01-01', freq='A')
-        >>> pidx
-        PeriodIndex(['2010', '2011', '2012', '2013', '2014', '2015'],
-        dtype='period[A-DEC]')
-
-        >>> pidx.asfreq('M')
-        PeriodIndex(['2010-12', '2011-12', '2012-12', '2013-12', '2014-12',
-        '2015-12'], dtype='period[M]')
-
-        >>> pidx.asfreq('M', how='S')
-        PeriodIndex(['2010-01', '2011-01', '2012-01', '2013-01', '2014-01',
-        '2015-01'], dtype='period[M]')
-        """
-        how = libperiod.validate_end_alias(how)
-
-        freq = Period._maybe_convert_freq(freq)
-
-        base1 = self._dtype._dtype_code
-        base2 = freq._period_dtype_code
-
-        asi8 = self.asi8
-        # self.freq.n can't be negative or 0
-        end = how == "E"
-        if end:
-            ordinal = asi8 + self.freq.n - 1
-        else:
-            ordinal = asi8
-
-        new_data = period_asfreq_arr(ordinal, base1, base2, end)
-
-        if self._hasna:
-            new_data[self._isnan] = iNaT
-
-        return type(self)(new_data, freq=freq)
-
-    # ------------------------------------------------------------------
-    # Rendering Methods
-
-    def _formatter(self, boxed: bool = False):
-        if boxed:
-            return str
-        return "'{}'".format
-
-    @dtl.ravel_compat
-    def _format_native_types(
-        self, *, na_rep="NaT", date_format=None, **kwargs
-    ) -> npt.NDArray[np.object_]:
-        """
-        actually format my specific types
-        """
-        values = self.astype(object)
-
-        # Create the formatter function
-        if date_format:
-            formatter = lambda per: per.strftime(date_format)
-        else:
-            # Uses `_Period.str` which in turn uses `format_period`
-            formatter = lambda per: str(per)
-
-        # Apply the formatter to all values in the array, possibly with a mask
-        if self._hasna:
-            mask = self._isnan
-            values[mask] = na_rep
-            imask = ~mask
-            values[imask] = np.array([formatter(per) for per in values[imask]])
-        else:
-            values = np.array([formatter(per) for per in values])
-        return values
-
-    # ------------------------------------------------------------------
-
-    def astype(self, dtype, copy: bool = True):
-        # We handle Period[T] -> Period[U]
-        # Our parent handles everything else.
-        dtype = pandas_dtype(dtype)
-        if is_dtype_equal(dtype, self._dtype):
-            if not copy:
-                return self
-            else:
-                return self.copy()
-        if is_period_dtype(dtype):
-            return self.asfreq(dtype.freq)
-
-        if is_datetime64_any_dtype(dtype):
-            # GH#45038 match PeriodIndex behavior.
-            tz = getattr(dtype, "tz", None)
-            return self.to_timestamp().tz_localize(tz)
-
-        return super().astype(dtype, copy=copy)
-
-    def searchsorted(
-        self,
-        value: NumpyValueArrayLike | ExtensionArray,
-        side: Literal["left", "right"] = "left",
-        sorter: NumpySorter = None,
-    ) -> npt.NDArray[np.intp] | np.intp:
-        npvalue = self._validate_searchsorted_value(value).view("M8[ns]")
-
-        # Cast to M8 to get datetime-like NaT placement
-        m8arr = self._ndarray.view("M8[ns]")
-        return m8arr.searchsorted(npvalue, side=side, sorter=sorter)
-
-    def fillna(self, value=None, method=None, limit=None) -> PeriodArray:
-        if method is not None:
-            # view as dt64 so we get treated as timelike in core.missing
-            dta = self.view("M8[ns]")
-            result = dta.fillna(value=value, method=method, limit=limit)
-            # error: Incompatible return value type (got "Union[ExtensionArray,
-            # ndarray[Any, Any]]", expected "PeriodArray")
-            return result.view(self.dtype)  # type: ignore[return-value]
-        return super().fillna(value=value, method=method, limit=limit)
-
-    def _quantile(
-        self: PeriodArray,
-        qs: npt.NDArray[np.float64],
-        interpolation: str,
-    ) -> PeriodArray:
-        # dispatch to DatetimeArray implementation
-        dtres = self.view("M8[ns]")._quantile(qs, interpolation)
-        # error: Incompatible return value type (got "Union[ExtensionArray,
-        # ndarray[Any, Any]]", expected "PeriodArray")
-        return dtres.view(self.dtype)  # type: ignore[return-value]
-
-    # ------------------------------------------------------------------
-    # Arithmetic Methods
-
-    def _addsub_int_array_or_scalar(
-        self, other: np.ndarray | int, op: Callable[[Any, Any], Any]
-    ) -> PeriodArray:
-        """
-        Add or subtract array of integers; equivalent to applying
-        `_time_shift` pointwise.
-
-        Parameters
-        ----------
-        other : np.ndarray[int64] or int
-        op : {operator.add, operator.sub}
-
-        Returns
-        -------
-        result : PeriodArray
-        """
-        assert op in [operator.add, operator.sub]
-        if op is operator.sub:
-            other = -other
-        res_values = algos.checked_add_with_arr(self.asi8, other, arr_mask=self._isnan)
-        return type(self)(res_values, freq=self.freq)
-
-    def _add_offset(self, other: BaseOffset):
-        assert not isinstance(other, Tick)
-
-        self._require_matching_freq(other, base=True)
-        return self._addsub_int_array_or_scalar(other.n, operator.add)
-
-    # TODO: can we de-duplicate with Period._add_timedeltalike_scalar?
-    def _add_timedeltalike_scalar(self, other):
-        """
-        Parameters
-        ----------
-        other : timedelta, Tick, np.timedelta64
-
-        Returns
-        -------
-        PeriodArray
-        """
-        if not isinstance(self.freq, Tick):
-            # We cannot add timedelta-like to non-tick PeriodArray
-            raise raise_on_incompatible(self, other)
-
-        if isna(other):
-            # i.e. np.timedelta64("NaT")
-            return super()._add_timedeltalike_scalar(other)
-
-        td = np.asarray(Timedelta(other).asm8)
-        return self._add_timedelta_arraylike(td)
-
-    def _add_timedelta_arraylike(
-        self, other: TimedeltaArray | npt.NDArray[np.timedelta64]
-    ) -> PeriodArray:
-        """
-        Parameters
-        ----------
-        other : TimedeltaArray or ndarray[timedelta64]
-
-        Returns
-        -------
-        PeriodArray
-        """
-        freq = self.freq
-        if not isinstance(freq, Tick):
-            # We cannot add timedelta-like to non-tick PeriodArray
-            raise TypeError(
-                f"Cannot add or subtract timedelta64[ns] dtype from {self.dtype}"
-            )
-
-        dtype = np.dtype(f"m8[{freq._td64_unit}]")
-
-        try:
-            delta = astype_overflowsafe(
-                np.asarray(other), dtype=dtype, copy=False, round_ok=False
-            )
-        except ValueError as err:
-            # e.g. if we have minutes freq and try to add 30s
-            # "Cannot losslessly convert units"
-            raise IncompatibleFrequency(
-                "Cannot add/subtract timedelta-like from PeriodArray that is "
-                "not an integer multiple of the PeriodArray's freq."
-            ) from err
-
-        b_mask = np.isnat(delta)
-
-        res_values = algos.checked_add_with_arr(
-            self.asi8, delta.view("i8"), arr_mask=self._isnan, b_mask=b_mask
-        )
-        np.putmask(res_values, self._isnan | b_mask, iNaT)
-        return type(self)(res_values, freq=self.freq)
-
-    def _check_timedeltalike_freq_compat(self, other):
-        """
-        Arithmetic operations with timedelta-like scalars or array `other`
-        are only valid if `other` is an integer multiple of `self.freq`.
-        If the operation is valid, find that integer multiple.  Otherwise,
-        raise because the operation is invalid.
-
-        Parameters
-        ----------
-        other : timedelta, np.timedelta64, Tick,
-                ndarray[timedelta64], TimedeltaArray, TimedeltaIndex
-
-        Returns
-        -------
-        multiple : int or ndarray[int64]
-
-        Raises
-        ------
-        IncompatibleFrequency
-        """
-        assert isinstance(self.freq, Tick)  # checked by calling function
-
-        dtype = np.dtype(f"m8[{self.freq._td64_unit}]")
-
-        if isinstance(other, (timedelta, np.timedelta64, Tick)):
-            td = np.asarray(Timedelta(other).asm8)
-        else:
-            td = np.asarray(other)
-
-        try:
-            delta = astype_overflowsafe(td, dtype=dtype, copy=False, round_ok=False)
-        except ValueError as err:
-            raise raise_on_incompatible(self, other) from err
-
-        delta = delta.view("i8")
-        return lib.item_from_zerodim(delta)
-
-
-def raise_on_incompatible(left, right):
-    """
-    Helper function to render a consistent error message when raising
-    IncompatibleFrequency.
-
-    Parameters
-    ----------
-    left : PeriodArray
-    right : None, DateOffset, Period, ndarray, or timedelta-like
-
-    Returns
-    -------
-    IncompatibleFrequency
-        Exception to be raised by the caller.
-    """
-    # GH#24283 error message format depends on whether right is scalar
-    if isinstance(right, (np.ndarray, ABCTimedeltaArray)) or right is None:
-        other_freq = None
-    elif isinstance(right, (ABCPeriodIndex, PeriodArray, Period, BaseOffset)):
-        other_freq = right.freqstr
-    else:
-        other_freq = delta_to_tick(Timedelta(right)).freqstr
-
-    msg = DIFFERENT_FREQ.format(
-        cls=type(left).__name__, own_freq=left.freqstr, other_freq=other_freq
-    )
-    return IncompatibleFrequency(msg)
-
-
-# -------------------------------------------------------------------
-# Constructor Helpers
-
-
-def period_array(
-    data: Sequence[Period | str | None] | AnyArrayLike,
-    freq: str | Tick | None = None,
-    copy: bool = False,
-) -> PeriodArray:
-    """
-    Construct a new PeriodArray from a sequence of Period scalars.
-
-    Parameters
-    ----------
-    data : Sequence of Period objects
-        A sequence of Period objects. These are required to all have
-        the same ``freq.`` Missing values can be indicated by ``None``
-        or ``pandas.NaT``.
-    freq : str, Tick, or Offset
-        The frequency of every element of the array. This can be specified
-        to avoid inferring the `freq` from `data`.
-    copy : bool, default False
-        Whether to ensure a copy of the data is made.
-
-    Returns
-    -------
-    PeriodArray
-
-    See Also
-    --------
-    PeriodArray
-    pandas.PeriodIndex
+    Index : The base pandas Index type.
+    Period : Represents a period of time.
+    DatetimeIndex : Index with datetime64 data.
+    TimedeltaIndex : Index of timedelta64 data.
+    period_range : Create a fixed-frequency PeriodIndex.
 
     Examples
     --------
-    >>> period_array([pd.Period('2017', freq='A'),
-    ...               pd.Period('2018', freq='A')])
-    <PeriodArray>
-    ['2017', '2018']
-    Length: 2, dtype: period[A-DEC]
-
-    >>> period_array([pd.Period('2017', freq='A'),
-    ...               pd.Period('2018', freq='A'),
-    ...               pd.NaT])
-    <PeriodArray>
-    ['2017', '2018', 'NaT']
-    Length: 3, dtype: period[A-DEC]
-
-    Integers that look like years are handled
-
-    >>> period_array([2000, 2001, 2002], freq='D')
-    <PeriodArray>
-    ['2000-01-01', '2001-01-01', '2002-01-01']
-    Length: 3, dtype: period[D]
-
-    Datetime-like strings may also be passed
-
-    >>> period_array(['2000-Q1', '2000-Q2', '2000-Q3', '2000-Q4'], freq='Q')
-    <PeriodArray>
-    ['2000Q1', '2000Q2', '2000Q3', '2000Q4']
-    Length: 4, dtype: period[Q-DEC]
+    >>> idx = pd.PeriodIndex(year=[2000, 2002], quarter=[1, 3])
+    >>> idx
+    PeriodIndex(['2000Q1', '2002Q3'], dtype='period[Q-DEC]')
     """
-    data_dtype = getattr(data, "dtype", None)
 
-    if is_datetime64_dtype(data_dtype):
-        return PeriodArray._from_datetime64(data, freq)
-    if is_period_dtype(data_dtype):
-        return PeriodArray(data, freq=freq)
+    _typ = "periodindex"
 
-    # other iterable of some kind
-    if not isinstance(data, (np.ndarray, list, tuple, ABCSeries)):
-        data = list(data)
+    _data: PeriodArray
+    freq: BaseOffset
+    dtype: PeriodDtype
 
-    arrdata = np.asarray(data)
+    _data_cls = PeriodArray
+    _supports_partial_string_indexing = True
 
-    dtype: PeriodDtype | None
-    if freq:
-        dtype = PeriodDtype(freq)
-    else:
-        dtype = None
+    @property
+    def _engine_type(self) -> type[libindex.PeriodEngine]:
+        return libindex.PeriodEngine
 
-    if is_float_dtype(arrdata) and len(arrdata) > 0:
-        raise TypeError("PeriodIndex does not allow floating point in construction")
+    @cache_readonly
+    # Signature of "_resolution_obj" incompatible with supertype "DatetimeIndexOpsMixin"
+    def _resolution_obj(self) -> Resolution:  # type: ignore[override]
+        # for compat with DatetimeIndex
+        return self.dtype._resolution_obj
 
-    if is_integer_dtype(arrdata.dtype):
-        arr = arrdata.astype(np.int64, copy=False)
-        # error: Argument 2 to "from_ordinals" has incompatible type "Union[str,
-        # Tick, None]"; expected "Union[timedelta, BaseOffset, str]"
-        ordinals = libperiod.from_ordinals(arr, freq)  # type: ignore[arg-type]
-        return PeriodArray(ordinals, dtype=dtype)
+    # --------------------------------------------------------------------
+    # methods that dispatch to array and wrap result in Index
+    # These are defined here instead of via inherit_names for mypy
 
-    data = ensure_object(arrdata)
+    @doc(
+        PeriodArray.asfreq,
+        other="pandas.arrays.PeriodArray",
+        other_name="PeriodArray",
+        **_shared_doc_kwargs,
+    )
+    def asfreq(self, freq=None, how: str = "E") -> PeriodIndex:
+        arr = self._data.asfreq(freq, how)
+        return type(self)._simple_new(arr, name=self.name)
 
-    return PeriodArray._from_sequence(data, dtype=dtype)
+    @doc(PeriodArray.to_timestamp)
+    def to_timestamp(self, freq=None, how: str = "start") -> DatetimeIndex:
+        arr = self._data.to_timestamp(freq, how)
+        return DatetimeIndex._simple_new(arr, name=self.name)
 
+    # https://github.com/python/mypy/issues/1362
+    # error: Decorated property not supported
+    @property  # type: ignore[misc]
+    @doc(PeriodArray.hour.fget)
+    def hour(self) -> Int64Index:
+        return Int64Index(self._data.hour, name=self.name)
 
-@overload
-def validate_dtype_freq(dtype, freq: BaseOffsetT) -> BaseOffsetT:
-    ...
+    # https://github.com/python/mypy/issues/1362
+    # error: Decorated property not supported
+    @property  # type: ignore[misc]
+    @doc(PeriodArray.minute.fget)
+    def minute(self) -> Int64Index:
+        return Int64Index(self._data.minute, name=self.name)
 
+    # https://github.com/python/mypy/issues/1362
+    # error: Decorated property not supported
+    @property  # type: ignore[misc]
+    @doc(PeriodArray.second.fget)
+    def second(self) -> Int64Index:
+        return Int64Index(self._data.second, name=self.name)
 
-@overload
-def validate_dtype_freq(dtype, freq: timedelta | str | None) -> BaseOffset:
-    ...
+    # ------------------------------------------------------------------------
+    # Index Constructors
 
+    def __new__(
+        cls,
+        data=None,
+        ordinal=None,
+        freq=None,
+        dtype: Dtype | None = None,
+        copy: bool = False,
+        name: Hashable = None,
+        **fields,
+    ) -> PeriodIndex:
 
-def validate_dtype_freq(
-    dtype, freq: BaseOffsetT | timedelta | str | None
-) -> BaseOffsetT:
-    """
-    If both a dtype and a freq are available, ensure they match.  If only
-    dtype is available, extract the implied freq.
+        valid_field_set = {
+            "year",
+            "month",
+            "day",
+            "quarter",
+            "hour",
+            "minute",
+            "second",
+        }
 
-    Parameters
-    ----------
-    dtype : dtype
-    freq : DateOffset or None
+        if not set(fields).issubset(valid_field_set):
+            argument = list(set(fields) - valid_field_set)[0]
+            raise TypeError(f"__new__() got an unexpected keyword argument {argument}")
 
-    Returns
-    -------
-    freq : DateOffset
+        name = maybe_extract_name(name, data, cls)
 
-    Raises
-    ------
-    ValueError : non-period dtype
-    IncompatibleFrequency : mismatch between dtype and freq
-    """
-    if freq is not None:
-        # error: Incompatible types in assignment (expression has type
-        # "BaseOffset", variable has type "Union[BaseOffsetT, timedelta,
-        # str, None]")
-        freq = to_offset(freq)  # type: ignore[assignment]
+        if data is None and ordinal is None:
+            # range-based.
+            if not fields:
+                # test_pickle_compat_construction
+                raise cls._scalar_data_error(None)
 
-    if dtype is not None:
+            data, freq2 = PeriodArray._generate_range(None, None, None, freq, fields)
+            # PeriodArray._generate range does validation that fields is
+            # empty when really using the range-based constructor.
+            freq = freq2
+
+            data = PeriodArray(data, freq=freq)
+        else:
+            freq = validate_dtype_freq(dtype, freq)
+
+            # PeriodIndex allow PeriodIndex(period_index, freq=different)
+            # Let's not encourage that kind of behavior in PeriodArray.
+
+            if freq and isinstance(data, cls) and data.freq != freq:
+                # TODO: We can do some of these with no-copy / coercion?
+                # e.g. D -> 2D seems to be OK
+                data = data.asfreq(freq)
+
+            if data is None and ordinal is not None:
+                # we strangely ignore `ordinal` if data is passed.
+                ordinal = np.asarray(ordinal, dtype=np.int64)
+                data = PeriodArray(ordinal, freq=freq)
+            else:
+                # don't pass copy here, since we copy later.
+                data = period_array(data=data, freq=freq)
+
+        if copy:
+            data = data.copy()
+
+        return cls._simple_new(data, name=name)
+
+    # ------------------------------------------------------------------------
+    # Data
+
+    @property
+    def values(self) -> np.ndarray:
+        return np.asarray(self, dtype=object)
+
+    def _maybe_convert_timedelta(self, other) -> int | npt.NDArray[np.int64]:
+        """
+        Convert timedelta-like input to an integer multiple of self.freq
+
+        Parameters
+        ----------
+        other : timedelta, np.timedelta64, DateOffset, int, np.ndarray
+
+        Returns
+        -------
+        converted : int, np.ndarray[int64]
+
+        Raises
+        ------
+        IncompatibleFrequency : if the input cannot be written as a multiple
+            of self.freq.  Note IncompatibleFrequency subclasses ValueError.
+        """
+        if isinstance(other, (timedelta, np.timedelta64, Tick, np.ndarray)):
+            if isinstance(self.freq, Tick):
+                # _check_timedeltalike_freq_compat will raise if incompatible
+                delta = self._data._check_timedeltalike_freq_compat(other)
+                return delta
+        elif isinstance(other, BaseOffset):
+            if other.base == self.freq.base:
+                return other.n
+
+            raise raise_on_incompatible(self, other)
+        elif is_integer(other):
+            # integer is passed to .shift via
+            # _add_datetimelike_methods basically
+            # but ufunc may pass integer to _add_delta
+            return other
+
+        # raise when input doesn't have freq
+        raise raise_on_incompatible(self, None)
+
+    def _is_comparable_dtype(self, dtype: DtypeObj) -> bool:
+        """
+        Can we compare values of the given dtype to our own?
+        """
+        if not isinstance(dtype, PeriodDtype):
+            return False
+        # For the subset of DateOffsets that can be a dtype.freq, it
+        #  suffices (and is much faster) to compare the dtype_code rather than
+        #  the freq itself.
+        # See also: PeriodDtype.__eq__
+        freq = dtype.freq
+        own_freq = self.freq
+        return (
+            freq._period_dtype_code
+            # error: "BaseOffset" has no attribute "_period_dtype_code"
+            == own_freq._period_dtype_code  # type: ignore[attr-defined]
+            and freq.n == own_freq.n
+        )
+
+    # ------------------------------------------------------------------------
+    # Index Methods
+
+    def asof_locs(self, where: Index, mask: npt.NDArray[np.bool_]) -> np.ndarray:
+        """
+        where : array of timestamps
+        mask : np.ndarray[bool]
+            Array of booleans where data is not NA.
+        """
+        if isinstance(where, DatetimeIndex):
+            where = PeriodIndex(where._values, freq=self.freq)
+        elif not isinstance(where, PeriodIndex):
+            raise TypeError("asof_locs `where` must be DatetimeIndex or PeriodIndex")
+
+        return super().asof_locs(where, mask)
+
+    @doc(Index.astype)
+    def astype(self, dtype, copy: bool = True, how=lib.no_default):
         dtype = pandas_dtype(dtype)
-        if not is_period_dtype(dtype):
-            raise ValueError("dtype must be PeriodDtype")
-        if freq is None:
-            freq = dtype.freq
-        elif freq != dtype.freq:
-            raise IncompatibleFrequency("specified freq and dtype are different")
-    # error: Incompatible return value type (got "Union[BaseOffset, Any, None]",
-    # expected "BaseOffset")
-    return freq  # type: ignore[return-value]
+
+        if how is not lib.no_default:
+            # GH#37982
+            warnings.warn(
+                "The 'how' keyword in PeriodIndex.astype is deprecated and "
+                "will be removed in a future version. "
+                "Use index.to_timestamp(how=how) instead.",
+                FutureWarning,
+                stacklevel=find_stack_level(),
+            )
+        else:
+            how = "start"
+
+        if is_datetime64_any_dtype(dtype):
+            # 'how' is index-specific, isn't part of the EA interface.
+            # GH#45038 implement this for PeriodArray (but without "how")
+            #  once the "how" deprecation is enforced we can just dispatch
+            #  directly to PeriodArray.
+            tz = getattr(dtype, "tz", None)
+            return self.to_timestamp(how=how).tz_localize(tz)
+
+        return super().astype(dtype, copy=copy)
+
+    @property
+    def is_full(self) -> bool:
+        """
+        Returns True if this PeriodIndex is range-like in that all Periods
+        between start and end are present, in order.
+        """
+        if len(self) == 0:
+            return True
+        if not self.is_monotonic_increasing:
+            raise ValueError("Index is not monotonic")
+        values = self.asi8
+        return ((values[1:] - values[:-1]) < 2).all()
+
+    @property
+    def inferred_type(self) -> str:
+        # b/c data is represented as ints make sure we can't have ambiguous
+        # indexing
+        return "period"
+
+    # ------------------------------------------------------------------------
+    # Indexing Methods
+
+    def _convert_tolerance(self, tolerance, target):
+        # Returned tolerance must be in dtype/units so that
+        #  `|self._get_engine_target() - target._engine_target()| <= tolerance`
+        #  is meaningful.  Since PeriodIndex returns int64 for engine_target,
+        #  we may need to convert timedelta64 tolerance to int64.
+        tolerance = super()._convert_tolerance(tolerance, target)
+
+        if self.dtype == target.dtype:
+            # convert tolerance to i8
+            tolerance = self._maybe_convert_timedelta(tolerance)
+
+        return tolerance
+
+    def get_loc(self, key, method=None, tolerance=None):
+        """
+        Get integer location for requested label.
+
+        Parameters
+        ----------
+        key : Period, NaT, str, or datetime
+            String or datetime key must be parsable as Period.
+
+        Returns
+        -------
+        loc : int or ndarray[int64]
+
+        Raises
+        ------
+        KeyError
+            Key is not present in the index.
+        TypeError
+            If key is listlike or otherwise not hashable.
+        """
+        orig_key = key
+
+        self._check_indexing_error(key)
+
+        if is_valid_na_for_dtype(key, self.dtype):
+            key = NaT
+
+        elif isinstance(key, str):
+
+            try:
+                parsed, reso = self._parse_with_reso(key)
+            except ValueError as err:
+                # A string with invalid format
+                raise KeyError(f"Cannot interpret '{key}' as period") from err
+
+            if self._can_partial_date_slice(reso):
+                try:
+                    return self._partial_date_slice(reso, parsed)
+                except KeyError as err:
+                    # TODO: pass if method is not None, like DTI does?
+                    raise KeyError(key) from err
+
+            if reso == self._resolution_obj:
+                # the reso < self._resolution_obj case goes
+                #  through _get_string_slice
+                key = self._cast_partial_indexing_scalar(key)
+                loc = self.get_loc(key, method=method, tolerance=tolerance)
+                # Recursing instead of falling through matters for the exception
+                #  message in test_get_loc3 (though not clear if that really matters)
+                return loc
+            elif method is None:
+                raise KeyError(key)
+            else:
+                key = self._cast_partial_indexing_scalar(parsed)
+
+        elif isinstance(key, Period):
+            key = self._maybe_cast_for_get_loc(key)
+
+        elif isinstance(key, datetime):
+            key = self._cast_partial_indexing_scalar(key)
+
+        else:
+            # in particular integer, which Period constructor would cast to string
+            raise KeyError(key)
+
+        try:
+            return Index.get_loc(self, key, method, tolerance)
+        except KeyError as err:
+            raise KeyError(orig_key) from err
+
+    def _maybe_cast_for_get_loc(self, key: Period) -> Period:
+        # name is a misnomer, chosen for compat with DatetimeIndex
+        sfreq = self.freq
+        kfreq = key.freq
+        if not (
+            sfreq.n == kfreq.n
+            # error: "BaseOffset" has no attribute "_period_dtype_code"
+            and sfreq._period_dtype_code  # type: ignore[attr-defined]
+            # error: "BaseOffset" has no attribute "_period_dtype_code"
+            == kfreq._period_dtype_code  # type: ignore[attr-defined]
+        ):
+            # GH#42247 For the subset of DateOffsets that can be Period freqs,
+            #  checking these two attributes is sufficient to check equality,
+            #  and much more performant than `self.freq == key.freq`
+            raise KeyError(key)
+        return key
+
+    def _cast_partial_indexing_scalar(self, label):
+        try:
+            key = Period(label, freq=self.freq)
+        except ValueError as err:
+            # we cannot construct the Period
+            raise KeyError(label) from err
+        return key
+
+    @doc(DatetimeIndexOpsMixin._maybe_cast_slice_bound)
+    def _maybe_cast_slice_bound(self, label, side: str, kind=lib.no_default):
+        if isinstance(label, datetime):
+            label = self._cast_partial_indexing_scalar(label)
+
+        return super()._maybe_cast_slice_bound(label, side, kind=kind)
+
+    def _parsed_string_to_bounds(self, reso: Resolution, parsed: datetime):
+        iv = Period(parsed, freq=reso.attr_abbrev)
+        return (iv.asfreq(self.freq, how="start"), iv.asfreq(self.freq, how="end"))
 
 
-def dt64arr_to_periodarr(
-    data, freq, tz=None
-) -> tuple[npt.NDArray[np.int64], BaseOffset]:
+def period_range(
+    start=None, end=None, periods: int | None = None, freq=None, name=None
+) -> PeriodIndex:
     """
-    Convert an datetime-like array to values Period ordinals.
+    Return a fixed frequency PeriodIndex.
+
+    The day (calendar) is the default frequency.
 
     Parameters
     ----------
-    data : Union[Series[datetime64[ns]], DatetimeIndex, ndarray[datetime64ns]]
-    freq : Optional[Union[str, Tick]]
-        Must match the `freq` on the `data` if `data` is a DatetimeIndex
-        or Series.
-    tz : Optional[tzinfo]
+    start : str or period-like, default None
+        Left bound for generating periods.
+    end : str or period-like, default None
+        Right bound for generating periods.
+    periods : int, default None
+        Number of periods to generate.
+    freq : str or DateOffset, optional
+        Frequency alias. By default the freq is taken from `start` or `end`
+        if those are Period objects. Otherwise, the default is ``"D"`` for
+        daily frequency.
+    name : str, default None
+        Name of the resulting PeriodIndex.
 
     Returns
     -------
-    ordinals : ndarray[int64]
-    freq : Tick
-        The frequency extracted from the Series or DatetimeIndex if that's
-        used.
+    PeriodIndex
 
+    Notes
+    -----
+    Of the three parameters: ``start``, ``end``, and ``periods``, exactly two
+    must be specified.
+
+    To learn more about the frequency strings, please see `this link
+    <https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases>`__.
+
+    Examples
+    --------
+    >>> pd.period_range(start='2017-01-01', end='2018-01-01', freq='M')
+    PeriodIndex(['2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06',
+             '2017-07', '2017-08', '2017-09', '2017-10', '2017-11', '2017-12',
+             '2018-01'],
+            dtype='period[M]')
+
+    If ``start`` or ``end`` are ``Period`` objects, they will be used as anchor
+    endpoints for a ``PeriodIndex`` with frequency matching that of the
+    ``period_range`` constructor.
+
+    >>> pd.period_range(start=pd.Period('2017Q1', freq='Q'),
+    ...                 end=pd.Period('2017Q2', freq='Q'), freq='M')
+    PeriodIndex(['2017-03', '2017-04', '2017-05', '2017-06'],
+                dtype='period[M]')
     """
-    if not isinstance(data.dtype, np.dtype) or data.dtype.kind != "M":
-        raise ValueError(f"Wrong dtype: {data.dtype}")
-
-    if freq is None:
-        if isinstance(data, ABCIndex):
-            data, freq = data._values, data.freq
-        elif isinstance(data, ABCSeries):
-            data, freq = data._values, data.dt.freq
-
-    elif isinstance(data, (ABCIndex, ABCSeries)):
-        data = data._values
-
-    reso = get_unit_from_dtype(data.dtype)
-    freq = Period._maybe_convert_freq(freq)
-    base = freq._period_dtype_code
-    return c_dt64arr_to_periodarr(data.view("i8"), base, tz, reso=reso), freq
-
-
-def _get_ordinal_range(start, end, periods, freq, mult=1):
     if com.count_not_none(start, end, periods) != 2:
         raise ValueError(
             "Of the three parameters: start, end, and periods, "
             "exactly two must be specified"
         )
+    if freq is None and (not isinstance(start, Period) and not isinstance(end, Period)):
+        freq = "D"
 
-    if freq is not None:
-        freq = to_offset(freq)
-        mult = freq.n
-
-    if start is not None:
-        start = Period(start, freq)
-    if end is not None:
-        end = Period(end, freq)
-
-    is_start_per = isinstance(start, Period)
-    is_end_per = isinstance(end, Period)
-
-    if is_start_per and is_end_per and start.freq != end.freq:
-        raise ValueError("start and end must have same freq")
-    if start is NaT or end is NaT:
-        raise ValueError("start and end must not be NaT")
-
-    if freq is None:
-        if is_start_per:
-            freq = start.freq
-        elif is_end_per:
-            freq = end.freq
-        else:  # pragma: no cover
-            raise ValueError("Could not infer freq from start/end")
-
-    if periods is not None:
-        periods = periods * mult
-        if start is None:
-            data = np.arange(
-                end.ordinal - periods + mult, end.ordinal + 1, mult, dtype=np.int64
-            )
-        else:
-            data = np.arange(
-                start.ordinal, start.ordinal + periods, mult, dtype=np.int64
-            )
-    else:
-        data = np.arange(start.ordinal, end.ordinal + 1, mult, dtype=np.int64)
-
-    return data, freq
-
-
-def _range_from_fields(
-    year=None,
-    month=None,
-    quarter=None,
-    day=None,
-    hour=None,
-    minute=None,
-    second=None,
-    freq=None,
-) -> tuple[np.ndarray, BaseOffset]:
-    if hour is None:
-        hour = 0
-    if minute is None:
-        minute = 0
-    if second is None:
-        second = 0
-    if day is None:
-        day = 1
-
-    ordinals = []
-
-    if quarter is not None:
-        if freq is None:
-            freq = to_offset("Q")
-            base = FreqGroup.FR_QTR.value
-        else:
-            freq = to_offset(freq)
-            base = libperiod.freq_to_dtype_code(freq)
-            if base != FreqGroup.FR_QTR.value:
-                raise AssertionError("base must equal FR_QTR")
-
-        freqstr = freq.freqstr
-        year, quarter = _make_field_arrays(year, quarter)
-        for y, q in zip(year, quarter):
-            y, m = parsing.quarter_to_myear(y, q, freqstr)
-            val = libperiod.period_ordinal(y, m, 1, 1, 1, 1, 0, 0, base)
-            ordinals.append(val)
-    else:
-        freq = to_offset(freq)
-        base = libperiod.freq_to_dtype_code(freq)
-        arrays = _make_field_arrays(year, month, day, hour, minute, second)
-        for y, mth, d, h, mn, s in zip(*arrays):
-            ordinals.append(libperiod.period_ordinal(y, mth, d, h, mn, s, 0, 0, base))
-
-    return np.array(ordinals, dtype=np.int64), freq
-
-
-def _make_field_arrays(*fields) -> list[np.ndarray]:
-    length = None
-    for x in fields:
-        if isinstance(x, (list, np.ndarray, ABCSeries)):
-            if length is not None and len(x) != length:
-                raise ValueError("Mismatched Period array lengths")
-            elif length is None:
-                length = len(x)
-
-    # error: Argument 2 to "repeat" has incompatible type "Optional[int]"; expected
-    # "Union[Union[int, integer[Any]], Union[bool, bool_], ndarray, Sequence[Union[int,
-    # integer[Any]]], Sequence[Union[bool, bool_]], Sequence[Sequence[Any]]]"
-    return [
-        np.asarray(x)
-        if isinstance(x, (np.ndarray, list, ABCSeries))
-        else np.repeat(x, length)  # type: ignore[arg-type]
-        for x in fields
-    ]
+    data, freq = PeriodArray._generate_range(start, end, periods, freq, fields={})
+    data = PeriodArray(data, freq=freq)
+    return PeriodIndex(data, name=name)

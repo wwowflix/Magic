@@ -1,85 +1,64 @@
-# Copyright 2013 Google, Inc. All Rights Reserved.
+# Licensed to the Software Freedom Conservancy (SFC) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The SFC licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
 #
-# Google Author(s): Behdad Esfahbod, Roozbeh Pournader
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
 
 
-class Options(object):
-    class UnknownOptionError(Exception):
-        pass
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.options import ArgOptions
 
-    def __init__(self, **kwargs):
-        self.verbose = False
-        self.timing = False
-        self.drop_tables = []
-        self.input_file = None
-        self.output_file = "merged.ttf"
-        self.import_file = None
 
-        self.set(**kwargs)
+class Options(ArgOptions):
+    KEY = "wpe:browserOptions"
 
-    def set(self, **kwargs):
-        for k, v in kwargs.items():
-            if not hasattr(self, k):
-                raise self.UnknownOptionError("Unknown option '%s'" % k)
-            setattr(self, k, v)
+    def __init__(self) -> None:
+        super().__init__()
+        self._binary_location = ""
 
-    def parse_opts(self, argv, ignore_unknown=[]):
-        ret = []
-        opts = {}
-        for a in argv:
-            orig_a = a
-            if not a.startswith("--"):
-                ret.append(a)
-                continue
-            a = a[2:]
-            i = a.find("=")
-            op = "="
-            if i == -1:
-                if a.startswith("no-"):
-                    k = a[3:]
-                    v = False
-                else:
-                    k = a
-                    v = True
-            else:
-                k = a[:i]
-                if k[-1] in "-+":
-                    op = k[-1] + "="  # Ops is '-=' or '+=' now.
-                    k = k[:-1]
-                v = a[i + 1 :]
-            ok = k
-            k = k.replace("-", "_")
-            if not hasattr(self, k):
-                if ignore_unknown is True or ok in ignore_unknown:
-                    ret.append(orig_a)
-                    continue
-                else:
-                    raise self.UnknownOptionError("Unknown option '%s'" % a)
+    @property
+    def binary_location(self) -> str:
+        """Returns the location of the browser binary otherwise an empty
+        string."""
+        return self._binary_location
 
-            ov = getattr(self, k)
-            if isinstance(ov, bool):
-                v = bool(v)
-            elif isinstance(ov, int):
-                v = int(v)
-            elif isinstance(ov, list):
-                vv = v.split(",")
-                if vv == [""]:
-                    vv = []
-                vv = [int(x, 0) if len(x) and x[0] in "0123456789" else x for x in vv]
-                if op == "=":
-                    v = vv
-                elif op == "+=":
-                    v = ov
-                    v.extend(vv)
-                elif op == "-=":
-                    v = ov
-                    for x in vv:
-                        if x in v:
-                            v.remove(x)
-                else:
-                    assert 0
+    @binary_location.setter
+    def binary_location(self, value: str) -> None:
+        """Allows you to set the browser binary to launch.
 
-            opts[k] = v
-        self.set(**opts)
+        :Args:
+         - value : path to the browser binary
+        """
+        if not isinstance(value, str):
+            raise TypeError(self.BINARY_LOCATION_ERROR)
+        self._binary_location = value
 
-        return ret
+    def to_capabilities(self):
+        """Creates a capabilities with all the options that have been set and
+        returns a dictionary with everything."""
+        caps = self._caps
+
+        browser_options = {}
+        if self.binary_location:
+            browser_options["binary"] = self.binary_location
+        if self.arguments:
+            browser_options["args"] = self.arguments
+
+        caps[Options.KEY] = browser_options
+
+        return caps
+
+    @property
+    def default_capabilities(self) -> dict[str, str]:
+        return DesiredCapabilities.WPEWEBKIT.copy()

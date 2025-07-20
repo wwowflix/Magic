@@ -1,94 +1,134 @@
-"""
-Run commands and handle returncodes
-"""
-import os
-import subprocess
-import sys
-from typing import Callable, List, Optional, TextIO
+# Licensed to the Software Freedom Conservancy (SFC) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The SFC licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
 
-from .filesystem import pushd
-from .logging import get_logger
 
+class Command:
+    """Defines constants for the standard WebDriver commands.
 
-def do_command(
-    cmd: List[str],
-    cwd: Optional[str] = None,
-    *,
-    fd_out: Optional[TextIO] = sys.stdout,
-    pbar: Optional[Callable[[str], None]] = None,
-) -> None:
+    While these constants have no meaning in and of themselves, they are
+    used to marshal commands through a service that implements WebDriver's
+    remote wire protocol:
+
+        https://w3c.github.io/webdriver/
     """
-    Run command as subprocess, polls process output pipes and
-    either streams outputs to supplied output stream or sends
-    each line (stripped) to the supplied progress bar callback hook.
 
-    Raises ``RuntimeError`` on non-zero return code or execption ``OSError``.
+    NEW_SESSION: str = "newSession"
+    DELETE_SESSION: str = "deleteSession"
+    NEW_WINDOW: str = "newWindow"
+    CLOSE: str = "close"
+    QUIT: str = "quit"
+    GET: str = "get"
+    GO_BACK: str = "goBack"
+    GO_FORWARD: str = "goForward"
+    REFRESH: str = "refresh"
+    ADD_COOKIE: str = "addCookie"
+    GET_COOKIE: str = "getCookie"
+    GET_ALL_COOKIES: str = "getCookies"
+    DELETE_COOKIE: str = "deleteCookie"
+    DELETE_ALL_COOKIES: str = "deleteAllCookies"
+    FIND_ELEMENT: str = "findElement"
+    FIND_ELEMENTS: str = "findElements"
+    FIND_CHILD_ELEMENT: str = "findChildElement"
+    FIND_CHILD_ELEMENTS: str = "findChildElements"
+    CLEAR_ELEMENT: str = "clearElement"
+    CLICK_ELEMENT: str = "clickElement"
+    SEND_KEYS_TO_ELEMENT: str = "sendKeysToElement"
+    W3C_GET_CURRENT_WINDOW_HANDLE: str = "w3cGetCurrentWindowHandle"
+    W3C_GET_WINDOW_HANDLES: str = "w3cGetWindowHandles"
+    SET_WINDOW_RECT: str = "setWindowRect"
+    GET_WINDOW_RECT: str = "getWindowRect"
+    SWITCH_TO_WINDOW: str = "switchToWindow"
+    SWITCH_TO_FRAME: str = "switchToFrame"
+    SWITCH_TO_PARENT_FRAME: str = "switchToParentFrame"
+    W3C_GET_ACTIVE_ELEMENT: str = "w3cGetActiveElement"
+    GET_CURRENT_URL: str = "getCurrentUrl"
+    GET_PAGE_SOURCE: str = "getPageSource"
+    GET_TITLE: str = "getTitle"
+    W3C_EXECUTE_SCRIPT: str = "w3cExecuteScript"
+    W3C_EXECUTE_SCRIPT_ASYNC: str = "w3cExecuteScriptAsync"
+    GET_ELEMENT_TEXT: str = "getElementText"
+    GET_ELEMENT_TAG_NAME: str = "getElementTagName"
+    IS_ELEMENT_SELECTED: str = "isElementSelected"
+    IS_ELEMENT_ENABLED: str = "isElementEnabled"
+    GET_ELEMENT_RECT: str = "getElementRect"
+    GET_ELEMENT_ATTRIBUTE: str = "getElementAttribute"
+    GET_ELEMENT_PROPERTY: str = "getElementProperty"
+    GET_ELEMENT_VALUE_OF_CSS_PROPERTY: str = "getElementValueOfCssProperty"
+    GET_ELEMENT_ARIA_ROLE: str = "getElementAriaRole"
+    GET_ELEMENT_ARIA_LABEL: str = "getElementAriaLabel"
+    SCREENSHOT: str = "screenshot"
+    ELEMENT_SCREENSHOT: str = "elementScreenshot"
+    EXECUTE_ASYNC_SCRIPT: str = "executeAsyncScript"
+    SET_TIMEOUTS: str = "setTimeouts"
+    GET_TIMEOUTS: str = "getTimeouts"
+    W3C_MAXIMIZE_WINDOW: str = "w3cMaximizeWindow"
+    GET_LOG: str = "getLog"
+    GET_AVAILABLE_LOG_TYPES: str = "getAvailableLogTypes"
+    FULLSCREEN_WINDOW: str = "fullscreenWindow"
+    MINIMIZE_WINDOW: str = "minimizeWindow"
+    PRINT_PAGE: str = "printPage"
 
-    :param cmd: command and args.
-    :param cwd: directory in which to run command, if unspecified,
-        run command in the current working directory.
-    :param fd_out: when supplied, streams to this output stream,
-        else writes to sys.stdout.
-    :param pbar: optional callback hook to tqdm, which takes
-       single ``str`` arguent, see:
-       https://github.com/tqdm/tqdm#hooks-and-callbacks.
+    # Alerts
+    W3C_DISMISS_ALERT: str = "w3cDismissAlert"
+    W3C_ACCEPT_ALERT: str = "w3cAcceptAlert"
+    W3C_SET_ALERT_VALUE: str = "w3cSetAlertValue"
+    W3C_GET_ALERT_TEXT: str = "w3cGetAlertText"
 
-    """
-    get_logger().debug('cmd: %s\ncwd: %s', ' '.join(cmd), cwd)
-    try:
-        # NB: Using this rather than cwd arg to Popen due to windows behavior
-        with pushd(cwd if cwd is not None else '.'):
-            # TODO: replace with subprocess.run in later Python versions?
-            proc = subprocess.Popen(
-                cmd,
-                bufsize=1,
-                stdin=subprocess.DEVNULL,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,  # avoid buffer overflow
-                env=os.environ,
-                universal_newlines=True,
-            )
-            while proc.poll() is None:
-                if proc.stdout is not None:
-                    line = proc.stdout.readline()
-                    if fd_out is not None:
-                        fd_out.write(line)
-                    if pbar is not None:
-                        pbar(line.strip())
+    # Advanced user interactions
+    W3C_ACTIONS: str = "actions"
+    W3C_CLEAR_ACTIONS: str = "clearActionState"
 
-            stdout, _ = proc.communicate()
-            if stdout:
-                if len(stdout) > 0:
-                    if fd_out is not None:
-                        fd_out.write(stdout)
-                    if pbar is not None:
-                        pbar(stdout.strip())
+    # Screen Orientation
+    SET_SCREEN_ORIENTATION: str = "setScreenOrientation"
+    GET_SCREEN_ORIENTATION: str = "getScreenOrientation"
 
-            if proc.returncode != 0:  # throw RuntimeError + msg
-                serror = ''
-                try:
-                    serror = os.strerror(proc.returncode)
-                except (ArithmeticError, ValueError):
-                    pass
-                msg = 'Command {}\n\t{} {}'.format(
-                    cmd, returncode_msg(proc.returncode), serror
-                )
-                raise RuntimeError(msg)
-    except OSError as e:
-        msg = 'Command: {}\nfailed with error {}\n'.format(cmd, str(e))
-        raise RuntimeError(msg) from e
+    # Mobile
+    GET_NETWORK_CONNECTION: str = "getNetworkConnection"
+    SET_NETWORK_CONNECTION: str = "setNetworkConnection"
+    CURRENT_CONTEXT_HANDLE: str = "getCurrentContextHandle"
+    CONTEXT_HANDLES: str = "getContextHandles"
+    SWITCH_TO_CONTEXT: str = "switchToContext"
 
+    # Web Components
+    GET_SHADOW_ROOT: str = "getShadowRoot"
+    FIND_ELEMENT_FROM_SHADOW_ROOT: str = "findElementFromShadowRoot"
+    FIND_ELEMENTS_FROM_SHADOW_ROOT: str = "findElementsFromShadowRoot"
 
-def returncode_msg(retcode: int) -> str:
-    """interpret retcode"""
-    if retcode < 0:
-        sig = -1 * retcode
-        return f'terminated by signal {sig}'
-    if retcode <= 125:
-        return 'error during processing'
-    if retcode == 126:  # shouldn't happen
-        return ''
-    if retcode == 127:
-        return 'program not found'
-    sig = retcode - 128
-    return f'terminated by signal {sig}'
+    # Virtual Authenticator
+    ADD_VIRTUAL_AUTHENTICATOR: str = "addVirtualAuthenticator"
+    REMOVE_VIRTUAL_AUTHENTICATOR: str = "removeVirtualAuthenticator"
+    ADD_CREDENTIAL: str = "addCredential"
+    GET_CREDENTIALS: str = "getCredentials"
+    REMOVE_CREDENTIAL: str = "removeCredential"
+    REMOVE_ALL_CREDENTIALS: str = "removeAllCredentials"
+    SET_USER_VERIFIED: str = "setUserVerified"
+
+    # Remote File Management
+    UPLOAD_FILE: str = "uploadFile"
+    GET_DOWNLOADABLE_FILES: str = "getDownloadableFiles"
+    DOWNLOAD_FILE: str = "downloadFile"
+    DELETE_DOWNLOADABLE_FILES: str = "deleteDownloadableFiles"
+
+    # Federated Credential Management (FedCM)
+    GET_FEDCM_TITLE: str = "getFedcmTitle"
+    GET_FEDCM_DIALOG_TYPE: str = "getFedcmDialogType"
+    GET_FEDCM_ACCOUNT_LIST: str = "getFedcmAccountList"
+    SELECT_FEDCM_ACCOUNT: str = "selectFedcmAccount"
+    CLICK_FEDCM_DIALOG_BUTTON: str = "clickFedcmDialogButton"
+    CANCEL_FEDCM_DIALOG: str = "cancelFedcmDialog"
+    SET_FEDCM_DELAY: str = "setFedcmDelay"
+    RESET_FEDCM_COOLDOWN: str = "resetFedcmCooldown"
