@@ -1,94 +1,98 @@
-# SPDX-License-Identifier: MIT
+# flake8: noqa
 
-import inspect
-import platform
+import abc
 import sys
-import threading
+import pathlib
+from contextlib import suppress
 
-from collections.abc import Mapping, Sequence  # noqa: F401
-from typing import _GenericAlias
-
-
-PYPY = platform.python_implementation() == "PyPy"
-PY_3_9_PLUS = sys.version_info[:2] >= (3, 9)
-PY_3_10_PLUS = sys.version_info[:2] >= (3, 10)
-PY_3_11_PLUS = sys.version_info[:2] >= (3, 11)
-PY_3_12_PLUS = sys.version_info[:2] >= (3, 12)
-PY_3_13_PLUS = sys.version_info[:2] >= (3, 13)
-PY_3_14_PLUS = sys.version_info[:2] >= (3, 14)
-
-
-if PY_3_14_PLUS:  # pragma: no cover
-    import annotationlib
-
-    _get_annotations = annotationlib.get_annotations
-
+if sys.version_info >= (3, 10):
+    from zipfile import Path as ZipPath  # type: ignore
 else:
-
-    def _get_annotations(cls):
-        """
-        Get annotations for *cls*.
-        """
-        return cls.__dict__.get("__annotations__", {})
+    from ..zipp import Path as ZipPath  # type: ignore
 
 
-class _AnnotationExtractor:
+try:
+    from typing import runtime_checkable  # type: ignore
+except ImportError:
+
+    def runtime_checkable(cls):  # type: ignore
+        return cls
+
+
+try:
+    from typing import Protocol  # type: ignore
+except ImportError:
+    Protocol = abc.ABC  # type: ignore
+
+
+class TraversableResourcesLoader:
     """
-    Extract type annotations from a callable, returning None whenever there
-    is none.
+    Adapt loaders to provide TraversableResources and other
+    compatibility.
+
+    Used primarily for Python 3.9 and earlier where the native
+    loaders do not yet implement TraversableResources.
     """
 
-    __slots__ = ["sig"]
+    def __init__(self, spec):
+        self.spec = spec
 
-    def __init__(self, callable):
-        try:
-            self.sig = inspect.signature(callable)
-        except (ValueError, TypeError):  # inspect failed
-            self.sig = None
+    @property
+    def path(self):
+        return self.spec.origin
 
-    def get_first_param_type(self):
-        """
-        Return the type annotation of the first argument if it's not empty.
-        """
-        if not self.sig:
-            return None
+    def get_resource_reader(self, name):
+        from . import readers, _adapters
 
-        params = list(self.sig.parameters.values())
-        if params and params[0].annotation is not inspect.Parameter.empty:
-            return params[0].annotation
+        def _zip_reader(spec):
+            with suppress(AttributeError):
+                return readers.ZipReader(spec.loader, spec.name)
 
-        return None
+        def _namespace_reader(spec):
+            with suppress(AttributeError, ValueError):
+                return readers.NamespaceReader(spec.submodule_search_locations)
 
-    def get_return_type(self):
-        """
-        Return the return type if it's not empty.
-        """
-        if (
-            self.sig
-            and self.sig.return_annotation is not inspect.Signature.empty
-        ):
-            return self.sig.return_annotation
+        def _available_reader(spec):
+            with suppress(AttributeError):
+                return spec.loader.get_resource_reader(spec.name)
 
-        return None
+        def _native_reader(spec):
+            reader = _available_reader(spec)
+            return reader if hasattr(reader, 'files') else None
+
+        def _file_reader(spec):
+            try:
+                path = pathlib.Path(self.path)
+            except TypeError:
+                return None
+            if path.exists():
+                return readers.FileReader(self)
+
+        return (
+            # native reader if it supplies 'files'
+            _native_reader(self.spec)
+            or
+            # local ZipReader if a zip module
+            _zip_reader(self.spec)
+            or
+            # local NamespaceReader if a namespace module
+            _namespace_reader(self.spec)
+            or
+            # local FileReader
+            _file_reader(self.spec)
+            # fallback - adapt the spec ResourceReader to TraversableReader
+            or _adapters.CompatibilityFiles(self.spec)
+        )
 
 
-# Thread-local global to track attrs instances which are already being repr'd.
-# This is needed because there is no other (thread-safe) way to pass info
-# about the instances that are already being repr'd through the call stack
-# in order to ensure we don't perform infinite recursion.
-#
-# For instance, if an instance contains a dict which contains that instance,
-# we need to know that we're already repr'ing the outside instance from within
-# the dict's repr() call.
-#
-# This lives here rather than in _make.py so that the functions in _make.py
-# don't have a direct reference to the thread-local in their globals dict.
-# If they have such a reference, it breaks cloudpickle.
-repr_context = threading.local()
+def wrap_spec(package):
+    """
+    Construct a package spec with traversable compatibility
+    on the spec/loader/reader.
 
+    Supersedes _adapters.wrap_spec to use TraversableResourcesLoader
+    from above for older Python compatibility (<3.10).
+    """
+    from . import _adapters
 
-def get_generic_base(cl):
-    """If this is a generic class (A[str]), return the generic base for it."""
-    if cl.__class__ is _GenericAlias:
-        return cl.__origin__
-    return None
+    return _adapters.SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)

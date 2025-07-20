@@ -1,27 +1,49 @@
 import contextlib
-import sys
-import warnings
 import itertools
 import operator
 import platform
+import sys
+import warnings
+
 import pytest
-from hypothesis import given, settings, Verbosity, assume
+from hypothesis import given, settings
+from hypothesis.extra import numpy as hynp
 from hypothesis.strategies import sampled_from
+from numpy._core._rational_tests import rational
 
 import numpy as np
+from numpy._utils import _pep440
+from numpy.exceptions import ComplexWarning
 from numpy.testing import (
-    assert_, assert_equal, assert_raises, assert_almost_equal,
-    assert_array_equal, IS_PYPY, suppress_warnings, _gen_alignment_data,
-    assert_warns, assert_raises_regex,
-    )
+    IS_PYPY,
+    _gen_alignment_data,
+    assert_,
+    assert_almost_equal,
+    assert_array_equal,
+    assert_equal,
+    assert_raises,
+    check_support_sve,
+    suppress_warnings,
+)
 
-types = [np.bool_, np.byte, np.ubyte, np.short, np.ushort, np.intc, np.uintc,
+types = [np.bool, np.byte, np.ubyte, np.short, np.ushort, np.intc, np.uintc,
          np.int_, np.uint, np.longlong, np.ulonglong,
          np.single, np.double, np.longdouble, np.csingle,
          np.cdouble, np.clongdouble]
 
 floating_types = np.floating.__subclasses__()
 complex_floating_types = np.complexfloating.__subclasses__()
+
+objecty_things = [object(), None, np.array(None, dtype=object)]
+
+binary_operators_for_scalars = [
+    operator.lt, operator.le, operator.eq, operator.ne, operator.ge,
+    operator.gt, operator.add, operator.floordiv, operator.mod,
+    operator.mul, operator.pow, operator.sub, operator.truediv
+]
+binary_operators_for_scalar_ints = binary_operators_for_scalars + [
+    operator.xor, operator.or_, operator.and_
+]
 
 
 # This compares scalarmath against ufuncs.
@@ -30,7 +52,7 @@ class TestTypes:
     def test_types(self):
         for atype in types:
             a = atype(1)
-            assert_(a == 1, "error with %r: got %r" % (atype, a))
+            assert_(a == 1, f"error with {atype!r}: got {a!r}")
 
     def test_type_add(self):
         # list of types
@@ -53,7 +75,7 @@ class TestTypes:
                             (k, np.dtype(atype).char, l, np.dtype(btype).char))
 
     def test_type_create(self):
-        for k, atype in enumerate(types):
+        for atype in types:
             a = np.array([1, 2, 3], atype)
             b = atype([1, 2, 3])
             assert_equal(a, b)
@@ -65,7 +87,78 @@ class TestTypes:
             np.add(1, 1)
 
 
+def check_ufunc_scalar_equivalence(op, arr1, arr2):
+    scalar1 = arr1[()]
+    scalar2 = arr2[()]
+    assert isinstance(scalar1, np.generic)
+    assert isinstance(scalar2, np.generic)
+
+    if arr1.dtype.kind == "c" or arr2.dtype.kind == "c":
+        comp_ops = {operator.ge, operator.gt, operator.le, operator.lt}
+        if op in comp_ops and (np.isnan(scalar1) or np.isnan(scalar2)):
+            pytest.xfail("complex comp ufuncs use sort-order, scalars do not.")
+    if op == operator.pow and arr2.item() in [-1, 0, 0.5, 1, 2]:
+        # array**scalar special case can have different result dtype
+        # (Other powers may have issues also, but are not hit here.)
+        # TODO: It would be nice to resolve this issue.
+        pytest.skip("array**2 can have incorrect/weird result dtype")
+
+    # ignore fpe's since they may just mismatch for integers anyway.
+    with warnings.catch_warnings(), np.errstate(all="ignore"):
+        # Comparisons DeprecationWarnings replacing errors (2022-03):
+        warnings.simplefilter("error", DeprecationWarning)
+        try:
+            res = op(arr1, arr2)
+        except Exception as e:
+            with pytest.raises(type(e)):
+                op(scalar1, scalar2)
+        else:
+            scalar_res = op(scalar1, scalar2)
+            assert_array_equal(scalar_res, res, strict=True)
+
+
+@pytest.mark.slow
+@settings(max_examples=10000, deadline=2000)
+@given(sampled_from(binary_operators_for_scalars),
+       hynp.arrays(dtype=hynp.scalar_dtypes(), shape=()),
+       hynp.arrays(dtype=hynp.scalar_dtypes(), shape=()))
+def test_array_scalar_ufunc_equivalence(op, arr1, arr2):
+    """
+    This is a thorough test attempting to cover important promotion paths
+    and ensuring that arrays and scalars stay as aligned as possible.
+    However, if it creates troubles, it should maybe just be removed.
+    """
+    check_ufunc_scalar_equivalence(op, arr1, arr2)
+
+
+@pytest.mark.slow
+@given(sampled_from(binary_operators_for_scalars),
+       hynp.scalar_dtypes(), hynp.scalar_dtypes())
+def test_array_scalar_ufunc_dtypes(op, dt1, dt2):
+    # Same as above, but don't worry about sampling weird values so that we
+    # do not have to sample as much
+    arr1 = np.array(2, dtype=dt1)
+    arr2 = np.array(3, dtype=dt2)  # some power do weird things.
+
+    check_ufunc_scalar_equivalence(op, arr1, arr2)
+
+
+@pytest.mark.parametrize("fscalar", [np.float16, np.float32])
+def test_int_float_promotion_truediv(fscalar):
+    # Promotion for mixed int and float32/float16 must not go to float64
+    i = np.int8(1)
+    f = fscalar(1)
+    expected = np.result_type(i, f)
+    assert (i / f).dtype == expected
+    assert (f / i).dtype == expected
+    # But normal int / int true division goes to float64:
+    assert (i / i).dtype == np.dtype("float64")
+    # For int16, result has to be ast least float32 (takes ufunc path):
+    assert (np.int16(1) / f).dtype == np.dtype("float32")
+
+
 class TestBaseMath:
+    @pytest.mark.xfail(check_support_sve(), reason="gh-22982")
     def test_blocked(self):
         # test alignments offsets for simd instructions
         # alignments for vz + 2 * (vs - 1) + 1
@@ -85,11 +178,11 @@ class TestBaseMath:
 
                 inp2[...] += np.arange(inp2.size, dtype=dt) + 1
                 assert_almost_equal(np.square(inp2),
-                                    np.multiply(inp2, inp2),  err_msg=msg)
+                                    np.multiply(inp2, inp2), err_msg=msg)
                 # skip true divide for ints
                 if dt != np.int32:
                     assert_almost_equal(np.reciprocal(inp2),
-                                        np.divide(1, inp2),  err_msg=msg)
+                                        np.divide(1, inp2), err_msg=msg)
 
                 inp1[...] = np.ones_like(inp1)
                 np.add(inp1, 2, out=out)
@@ -116,13 +209,13 @@ class TestPower:
         for t in [np.int8, np.int16, np.float16]:
             a = t(3)
             b = a ** 4
-            assert_(b == 81, "error with %r: got %r" % (t, b))
+            assert_(b == 81, f"error with {t!r}: got {b!r}")
 
     def test_large_types(self):
         for t in [np.int32, np.int64, np.float32, np.float64, np.longdouble]:
             a = t(51)
             b = a ** 4
-            msg = "error with %r: got %r" % (t, b)
+            msg = f"error with {t!r}: got {b!r}"
             if np.issubdtype(t, np.integer):
                 assert_(b == 6765201, msg)
             else:
@@ -173,8 +266,7 @@ class TestPower:
                 a = t1(3)
                 b = t2(2)
                 result = a**b
-                msg = ("error with %r and %r:"
-                       "got %r, expected %r") % (t1, t2, result, 9)
+                msg = f"error with {t1!r} and {t2!r}:got {result!r}, expected {9!r}"
                 if np.issubdtype(np.dtype(result), np.integer):
                     assert_(result == 9, msg)
                 else:
@@ -212,10 +304,10 @@ class TestModulus:
                 for sg1, sg2 in itertools.product(_signs(dt1), _signs(dt2)):
                     fmt = 'op: %s, dt1: %s, dt2: %s, sg1: %s, sg2: %s'
                     msg = fmt % (op.__name__, dt1, dt2, sg1, sg2)
-                    a = np.array(sg1*71, dtype=dt1)[()]
-                    b = np.array(sg2*19, dtype=dt2)[()]
+                    a = np.array(sg1 * 71, dtype=dt1)[()]
+                    b = np.array(sg2 * 19, dtype=dt2)[()]
                     div, rem = op(a, b)
-                    assert_equal(div*b + rem, a, err_msg=msg)
+                    assert_equal(div * b + rem, a, err_msg=msg)
                     if sg2 == -1:
                         assert_(b < rem <= 0, msg)
                     else:
@@ -229,7 +321,7 @@ class TestModulus:
         dividend = nlst + [0] + plst
         divisor = nlst + plst
         arg = list(itertools.product(dividend, divisor))
-        tgt = list(divmod(*t) for t in arg)
+        tgt = [divmod(*t) for t in arg]
 
         a, b = np.array(arg, dtype=int).T
         # convert exact integer results from Python to float so that
@@ -240,11 +332,11 @@ class TestModulus:
 
         for op in [floordiv_and_mod, divmod]:
             for dt in np.typecodes['Float']:
-                msg = 'op: %s, dtype: %s' % (op.__name__, dt)
+                msg = f'op: {op.__name__}, dtype: {dt}'
                 fa = a.astype(dt)
                 fb = b.astype(dt)
                 # use list comprehension so a_ and b_ are scalars
-                div, rem = zip(*[op(a_, b_) for  a_, b_ in zip(fa, fb)])
+                div, rem = zip(*[op(a_, b_) for a_, b_ in zip(fa, fb)])
                 assert_equal(div, tgtdiv, err_msg=msg)
                 assert_equal(rem, tgtrem, err_msg=msg)
 
@@ -256,11 +348,11 @@ class TestModulus:
                 for sg1, sg2 in itertools.product((+1, -1), (+1, -1)):
                     fmt = 'op: %s, dt1: %s, dt2: %s, sg1: %s, sg2: %s'
                     msg = fmt % (op.__name__, dt1, dt2, sg1, sg2)
-                    a = np.array(sg1*78*6e-8, dtype=dt1)[()]
-                    b = np.array(sg2*6e-8, dtype=dt2)[()]
+                    a = np.array(sg1 * 78 * 6e-8, dtype=dt1)[()]
+                    b = np.array(sg2 * 6e-8, dtype=dt2)[()]
                     div, rem = op(a, b)
                     # Equal assertion should hold when fmod is used
-                    assert_equal(div*b + rem, a, err_msg=msg)
+                    assert_equal(div * b + rem, a, err_msg=msg)
                     if sg2 == -1:
                         assert_(b < rem <= 0, msg)
                     else:
@@ -272,9 +364,9 @@ class TestModulus:
             b = np.array(1.0, dtype=dt)
             a = np.nextafter(np.array(0.0, dtype=dt), -b)
             rem = operator.mod(a, b)
-            assert_(rem <= b, 'dt: %s' % dt)
+            assert_(rem <= b, f'dt: {dt}')
             rem = operator.mod(-a, -b)
-            assert_(rem >= -b, 'dt: %s' % dt)
+            assert_(rem >= -b, f'dt: {dt}')
 
         # Check nans, inf
         with suppress_warnings() as sup:
@@ -289,14 +381,14 @@ class TestModulus:
                 finf = np.array(np.inf, dtype=dt)
                 fnan = np.array(np.nan, dtype=dt)
                 rem = operator.mod(fone, fzer)
-                assert_(np.isnan(rem), 'dt: %s' % dt)
+                assert_(np.isnan(rem), f'dt: {dt}')
                 # MSVC 2008 returns NaN here, so disable the check.
                 #rem = operator.mod(fone, finf)
                 #assert_(rem == fone, 'dt: %s' % dt)
                 rem = operator.mod(fone, fnan)
-                assert_(np.isnan(rem), 'dt: %s' % dt)
+                assert_(np.isnan(rem), f'dt: {dt}')
                 rem = operator.mod(finf, fone)
-                assert_(np.isnan(rem), 'dt: %s' % dt)
+                assert_(np.isnan(rem), f'dt: {dt}')
                 for op in [floordiv_and_mod, divmod]:
                     div, mod = op(fone, fzer)
                     assert_(np.isinf(div)) and assert_(np.isnan(mod))
@@ -307,9 +399,18 @@ class TestModulus:
         # promotes to float which does not fit
         a = np.array([1, 2], np.int64)
         b = np.array([1, 2], np.uint64)
-        pattern = 'could not be coerced to provided output parameter'
-        with assert_raises_regex(TypeError, pattern):
+        with pytest.raises(TypeError,
+                match=r"Cannot cast ufunc 'floor_divide' output from"):
             a //= b
+
+class TestComparison:
+    def test_comparision_different_types(self):
+        x = np.array(1)
+        y = np.array('s')
+        eq = x == y
+        neq = x != y
+        assert eq is np.bool_(False)
+        assert neq is np.bool_(True)
 
 
 class TestComplexDivision:
@@ -318,17 +419,17 @@ class TestComplexDivision:
             for t in [np.complex64, np.complex128]:
                 a = t(0.0)
                 b = t(1.0)
-                assert_(np.isinf(b/a))
+                assert_(np.isinf(b / a))
                 b = t(complex(np.inf, np.inf))
-                assert_(np.isinf(b/a))
+                assert_(np.isinf(b / a))
                 b = t(complex(np.inf, np.nan))
-                assert_(np.isinf(b/a))
+                assert_(np.isinf(b / a))
                 b = t(complex(np.nan, np.inf))
-                assert_(np.isinf(b/a))
+                assert_(np.isinf(b / a))
                 b = t(complex(np.nan, np.nan))
-                assert_(np.isnan(b/a))
+                assert_(np.isnan(b / a))
                 b = t(0.)
-                assert_(np.isnan(b/a))
+                assert_(np.isnan(b / a))
 
     def test_signed_zeros(self):
         with np.errstate(all="ignore"):
@@ -336,14 +437,14 @@ class TestComplexDivision:
                 # tupled (numerator, denominator, expected)
                 # for testing as expected == numerator/denominator
                 data = (
-                    (( 0.0,-1.0), ( 0.0, 1.0), (-1.0,-0.0)),
-                    (( 0.0,-1.0), ( 0.0,-1.0), ( 1.0,-0.0)),
-                    (( 0.0,-1.0), (-0.0,-1.0), ( 1.0, 0.0)),
-                    (( 0.0,-1.0), (-0.0, 1.0), (-1.0, 0.0)),
-                    (( 0.0, 1.0), ( 0.0,-1.0), (-1.0, 0.0)),
-                    (( 0.0,-1.0), ( 0.0,-1.0), ( 1.0,-0.0)),
-                    ((-0.0,-1.0), ( 0.0,-1.0), ( 1.0,-0.0)),
-                    ((-0.0, 1.0), ( 0.0,-1.0), (-1.0,-0.0))
+                    (( 0.0, -1.0), ( 0.0, 1.0), (-1.0, -0.0)),
+                    (( 0.0, -1.0), ( 0.0, -1.0), ( 1.0, -0.0)),
+                    (( 0.0, -1.0), (-0.0, -1.0), ( 1.0, 0.0)),
+                    (( 0.0, -1.0), (-0.0, 1.0), (-1.0, 0.0)),
+                    (( 0.0, 1.0), ( 0.0, -1.0), (-1.0, 0.0)),
+                    (( 0.0, -1.0), ( 0.0, -1.0), ( 1.0, -0.0)),
+                    ((-0.0, -1.0), ( 0.0, -1.0), ( 1.0, -0.0)),
+                    ((-0.0, 1.0), ( 0.0, -1.0), (-1.0, -0.0))
                 )
                 for cases in data:
                     n = cases[0]
@@ -360,7 +461,7 @@ class TestComplexDivision:
             for t in [np.complex64, np.complex128]:
                 # tupled (numerator, denominator, expected)
                 # for testing as expected == numerator/denominator
-                data = list()
+                data = []
 
                 # trigger branch: real(fabs(denom)) > imag(fabs(denom))
                 # followed by else condition as neither are == 0
@@ -371,7 +472,7 @@ class TestComplexDivision:
                 # is performed in test_zero_division(), so this is skipped
 
                 # trigger else if branch: real(fabs(denom)) < imag(fabs(denom))
-                data.append((( 1.0, 2.0), ( 1.0, 2.0), (1.0, 0.0)))
+                data.append(((1.0, 2.0), (1.0, 2.0), (1.0, 0.0)))
 
                 for cases in data:
                     n = cases[0]
@@ -397,9 +498,8 @@ class TestConversion:
 
     def test_iinfo_long_values(self):
         for code in 'bBhH':
-            res = np.array(np.iinfo(code).max + 1, dtype=code)
-            tgt = np.iinfo(code).min
-            assert_(res == tgt)
+            with pytest.raises(OverflowError):
+                np.array(np.iinfo(code).max + 1, dtype=code)
 
         for code in np.typecodes['AllInteger']:
             res = np.array(np.iinfo(code).max, dtype=code)
@@ -423,7 +523,7 @@ class TestConversion:
         x = np.longdouble(np.inf)
         assert_raises(OverflowError, int, x)
         with suppress_warnings() as sup:
-            sup.record(np.ComplexWarning)
+            sup.record(ComplexWarning)
             x = np.clongdouble(np.inf)
             assert_raises(OverflowError, int, x)
             assert_equal(len(sup.log), 1)
@@ -433,7 +533,7 @@ class TestConversion:
         x = np.longdouble(np.inf)
         assert_raises(OverflowError, x.__int__)
         with suppress_warnings() as sup:
-            sup.record(np.ComplexWarning)
+            sup.record(ComplexWarning)
             x = np.clongdouble(np.inf)
             assert_raises(OverflowError, x.__int__)
             assert_equal(len(sup.log), 1)
@@ -460,58 +560,58 @@ class TestConversion:
     def test_numpy_scalar_relational_operators(self):
         # All integer
         for dt1 in np.typecodes['AllInteger']:
-            assert_(1 > np.array(0, dtype=dt1)[()], "type %s failed" % (dt1,))
-            assert_(not 1 < np.array(0, dtype=dt1)[()], "type %s failed" % (dt1,))
+            assert_(1 > np.array(0, dtype=dt1)[()], f"type {dt1} failed")
+            assert_(not 1 < np.array(0, dtype=dt1)[()], f"type {dt1} failed")
 
             for dt2 in np.typecodes['AllInteger']:
                 assert_(np.array(1, dtype=dt1)[()] > np.array(0, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
                 assert_(not np.array(1, dtype=dt1)[()] < np.array(0, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
 
-        #Unsigned integers
+        # Unsigned integers
         for dt1 in 'BHILQP':
-            assert_(-1 < np.array(1, dtype=dt1)[()], "type %s failed" % (dt1,))
-            assert_(not -1 > np.array(1, dtype=dt1)[()], "type %s failed" % (dt1,))
-            assert_(-1 != np.array(1, dtype=dt1)[()], "type %s failed" % (dt1,))
+            assert_(-1 < np.array(1, dtype=dt1)[()], f"type {dt1} failed")
+            assert_(not -1 > np.array(1, dtype=dt1)[()], f"type {dt1} failed")
+            assert_(-1 != np.array(1, dtype=dt1)[()], f"type {dt1} failed")
 
-            #unsigned vs signed
+            # unsigned vs signed
             for dt2 in 'bhilqp':
                 assert_(np.array(1, dtype=dt1)[()] > np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
                 assert_(not np.array(1, dtype=dt1)[()] < np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
                 assert_(np.array(1, dtype=dt1)[()] != np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
 
-        #Signed integers and floats
+        # Signed integers and floats
         for dt1 in 'bhlqp' + np.typecodes['Float']:
-            assert_(1 > np.array(-1, dtype=dt1)[()], "type %s failed" % (dt1,))
-            assert_(not 1 < np.array(-1, dtype=dt1)[()], "type %s failed" % (dt1,))
-            assert_(-1 == np.array(-1, dtype=dt1)[()], "type %s failed" % (dt1,))
+            assert_(1 > np.array(-1, dtype=dt1)[()], f"type {dt1} failed")
+            assert_(not 1 < np.array(-1, dtype=dt1)[()], f"type {dt1} failed")
+            assert_(-1 == np.array(-1, dtype=dt1)[()], f"type {dt1} failed")
 
             for dt2 in 'bhlqp' + np.typecodes['Float']:
                 assert_(np.array(1, dtype=dt1)[()] > np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
                 assert_(not np.array(1, dtype=dt1)[()] < np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
                 assert_(np.array(-1, dtype=dt1)[()] == np.array(-1, dtype=dt2)[()],
-                        "type %s and %s failed" % (dt1, dt2))
+                        f"type {dt1} and {dt2} failed")
 
     def test_scalar_comparison_to_none(self):
         # Scalars should just return False and not give a warnings.
         # The comparisons are flagged by pep8, ignore that.
         with warnings.catch_warnings(record=True) as w:
             warnings.filterwarnings('always', '', FutureWarning)
-            assert_(not np.float32(1) == None)
-            assert_(not np.str_('test') == None)
+            assert_(not np.float32(1) == None)  # noqa: E711
+            assert_(not np.str_('test') == None)  # noqa: E711
             # This is dubious (see below):
-            assert_(not np.datetime64('NaT') == None)
+            assert_(not np.datetime64('NaT') == None)  # noqa: E711
 
-            assert_(np.float32(1) != None)
-            assert_(np.str_('test') != None)
+            assert_(np.float32(1) != None)  # noqa: E711
+            assert_(np.str_('test') != None)  # noqa: E711
             # This is dubious (see below):
-            assert_(np.datetime64('NaT') != None)
+            assert_(np.datetime64('NaT') != None)  # noqa: E711
         assert_(len(w) == 0)
 
         # For documentation purposes, this is why the datetime is dubious.
@@ -534,18 +634,18 @@ class TestRepr:
         finfo = np.finfo(t)
         last_fraction_bit_idx = finfo.nexp + finfo.nmant
         last_exponent_bit_idx = finfo.nexp
-        storage_bytes = np.dtype(t).itemsize*8
+        storage_bytes = np.dtype(t).itemsize * 8
         # could add some more types to the list below
         for which in ['small denorm', 'small norm']:
             # Values from https://en.wikipedia.org/wiki/IEEE_754
-            constr = np.array([0x00]*storage_bytes, dtype=np.uint8)
+            constr = np.array([0x00] * storage_bytes, dtype=np.uint8)
             if which == 'small denorm':
                 byte = last_fraction_bit_idx // 8
-                bytebit = 7-(last_fraction_bit_idx % 8)
+                bytebit = 7 - (last_fraction_bit_idx % 8)
                 constr[byte] = 1 << bytebit
             elif which == 'small norm':
                 byte = last_exponent_bit_idx // 8
-                bytebit = 7-(last_exponent_bit_idx % 8)
+                bytebit = 7 - (last_exponent_bit_idx % 8)
                 constr[byte] = 1 << bytebit
             else:
                 raise ValueError('hmm')
@@ -597,12 +697,8 @@ class TestMultiply:
 
             for numpy_type in deprecated_types:
                 i = np.dtype(numpy_type).type()
-                assert_equal(
-                    assert_warns(DeprecationWarning, operator.mul, seq, i),
-                    seq * int(i))
-                assert_equal(
-                    assert_warns(DeprecationWarning, operator.mul, i, seq),
-                    int(i) * seq)
+                with assert_raises(TypeError):
+                    operator.mul(seq, i)
 
             for numpy_type in forbidden_types:
                 i = np.dtype(numpy_type).type()
@@ -616,7 +712,8 @@ class TestMultiply:
         class ArrayLike:
             def __init__(self, arr):
                 self.arr = arr
-            def __array__(self):
+
+            def __array__(self, dtype=None, copy=None):
                 return self.arr
 
         # Test for simple ArrayLike above and memoryviews (original report)
@@ -629,7 +726,7 @@ class TestMultiply:
 
 class TestNegative:
     def test_exceptions(self):
-        a = np.ones((), dtype=np.bool_)[()]
+        a = np.ones((), dtype=np.bool)[()]
         assert_raises(TypeError, operator.neg, a)
 
     def test_result(self):
@@ -638,12 +735,16 @@ class TestNegative:
             sup.filter(RuntimeWarning)
             for dt in types:
                 a = np.ones((), dtype=dt)[()]
-                assert_equal(operator.neg(a) + a, 0)
-
+                if dt in np.typecodes['UnsignedInteger']:
+                    st = np.dtype(dt).type
+                    max = st(np.iinfo(dt).max)
+                    assert_equal(operator.neg(a), max)
+                else:
+                    assert_equal(operator.neg(a) + a, 0)
 
 class TestSubtract:
     def test_exceptions(self):
-        a = np.ones((), dtype=np.bool_)[()]
+        a = np.ones((), dtype=np.bool)[()]
         assert_raises(TypeError, operator.sub, a, a)
 
     def test_result(self):
@@ -670,18 +771,40 @@ class TestAbs:
         x = test_dtype(np.finfo(test_dtype).max)
         assert_equal(absfunc(x), x.real)
 
-        x = test_dtype(np.finfo(test_dtype).tiny)
-        assert_equal(absfunc(x), x.real)
+        with suppress_warnings() as sup:
+            sup.filter(UserWarning)
+            x = test_dtype(np.finfo(test_dtype).tiny)
+            assert_equal(absfunc(x), x.real)
 
         x = test_dtype(np.finfo(test_dtype).min)
         assert_equal(absfunc(x), -x.real)
 
     @pytest.mark.parametrize("dtype", floating_types + complex_floating_types)
     def test_builtin_abs(self, dtype):
+        if (
+                sys.platform == "cygwin" and dtype == np.clongdouble and
+                (
+                    _pep440.parse(platform.release().split("-")[0])
+                    < _pep440.Version("3.3.0")
+                )
+        ):
+            pytest.xfail(
+                reason="absl is computed in double precision on cygwin < 3.3"
+            )
         self._test_abs_func(abs, dtype)
 
     @pytest.mark.parametrize("dtype", floating_types + complex_floating_types)
     def test_numpy_abs(self, dtype):
+        if (
+                sys.platform == "cygwin" and dtype == np.clongdouble and
+                (
+                    _pep440.parse(platform.release().split("-")[0])
+                    < _pep440.Version("3.3.0")
+                )
+        ):
+            pytest.xfail(
+                reason="absl is computed in double precision on cygwin < 3.3"
+            )
         self._test_abs_func(np.abs, dtype)
 
 class TestBitShifts:
@@ -690,13 +813,13 @@ class TestBitShifts:
     @pytest.mark.parametrize('op',
         [operator.rshift, operator.lshift], ids=['>>', '<<'])
     def test_shift_all_bits(self, type_code, op):
-        """ Shifts where the shift amount is the width of the type or wider """
+        """Shifts where the shift amount is the width of the type or wider """
         # gh-2449
         dt = np.dtype(type_code)
         nbits = dt.itemsize * 8
         for val in [5, -5]:
             for shift in [nbits, nbits + 4]:
-                val_scl = dt.type(val)
+                val_scl = np.array(val).astype(dt)[()]
                 shift_scl = dt.type(shift)
                 res_scl = op(val_scl, shift_scl)
                 if val_scl < 0 and op is operator.rshift:
@@ -706,8 +829,8 @@ class TestBitShifts:
                     assert_equal(res_scl, 0)
 
                 # Result on scalars should be the same as on arrays
-                val_arr = np.array([val]*32, dtype=dt)
-                shift_arr = np.array([shift]*32, dtype=dt)
+                val_arr = np.array([val_scl] * 32, dtype=dt)
+                shift_arr = np.array([shift] * 32, dtype=dt)
                 res_arr = op(val_arr, shift_arr)
                 assert_equal(res_arr, res_scl)
 
@@ -730,18 +853,17 @@ class TestHash:
             else:
                 val = float(numpy_val)
             assert val == numpy_val
-            print(repr(numpy_val), repr(val))
             assert hash(val) == hash(numpy_val)
 
         if hash(float(np.nan)) != hash(float(np.nan)):
-            # If Python distinguises different NaNs we do so too (gh-18833)
+            # If Python distinguishes different NaNs we do so too (gh-18833)
             assert hash(scalar(np.nan)) != hash(scalar(np.nan))
 
     @pytest.mark.parametrize("type_code", np.typecodes['Complex'])
     def test_complex_hashes(self, type_code):
         # Test some complex valued hashes specifically:
         scalar = np.dtype(type_code).type
-        for val in [np.pi+1j, np.inf-3j, 3j, 6.+1j]:
+        for val in [np.pi + 1j, np.inf - 3j, 3j, 6. + 1j]:
             numpy_val = scalar(val)
             assert hash(complex(numpy_val)) == hash(numpy_val)
 
@@ -756,19 +878,9 @@ def recursionlimit(n):
         sys.setrecursionlimit(o)
 
 
-objecty_things = [object(), None]
-reasonable_operators_for_scalars = [
-    operator.lt, operator.le, operator.eq, operator.ne, operator.ge,
-    operator.gt, operator.add, operator.floordiv, operator.mod,
-    operator.mul, operator.matmul, operator.pow, operator.sub,
-    operator.truediv,
-]
-
-
 @given(sampled_from(objecty_things),
-       sampled_from(reasonable_operators_for_scalars),
-       sampled_from(types))
-@settings(verbosity=Verbosity.verbose)
+       sampled_from(binary_operators_for_scalar_ints),
+       sampled_from(types + [rational]))
 def test_operator_object_left(o, op, type_):
     try:
         with recursionlimit(200):
@@ -778,8 +890,8 @@ def test_operator_object_left(o, op, type_):
 
 
 @given(sampled_from(objecty_things),
-       sampled_from(reasonable_operators_for_scalars),
-       sampled_from(types))
+       sampled_from(binary_operators_for_scalar_ints),
+       sampled_from(types + [rational]))
 def test_operator_object_right(o, op, type_):
     try:
         with recursionlimit(200):
@@ -788,7 +900,7 @@ def test_operator_object_right(o, op, type_):
         pass
 
 
-@given(sampled_from(reasonable_operators_for_scalars),
+@given(sampled_from(binary_operators_for_scalars),
        sampled_from(types),
        sampled_from(types))
 def test_operator_scalars(op, type1, type2):
@@ -798,27 +910,268 @@ def test_operator_scalars(op, type1, type2):
         pass
 
 
-@pytest.mark.parametrize("op", reasonable_operators_for_scalars)
-def test_longdouble_inf_loop(op):
+@pytest.mark.parametrize("op", binary_operators_for_scalars)
+@pytest.mark.parametrize("sctype", [np.longdouble, np.clongdouble])
+def test_longdouble_operators_with_obj(sctype, op):
+    # This is/used to be tricky, because NumPy generally falls back to
+    # using the ufunc via `np.asarray()`, this effectively might do:
+    # longdouble + None
+    #   -> asarray(longdouble) + np.array(None, dtype=object)
+    #   -> asarray(longdouble).astype(object) + np.array(None, dtype=object)
+    # And after getting the scalars in the inner loop:
+    #   -> longdouble + None
+    #
+    # That would recurse infinitely.  Other scalars return the python object
+    # on cast, so this type of things works OK.
+    #
+    # As of NumPy 2.1, this has been consolidated into the np.generic binops
+    # and now checks `.item()`.  That also allows the below path to work now.
     try:
-        op(np.longdouble(3), None)
+        op(sctype(3), None)
     except TypeError:
         pass
     try:
-        op(None, np.longdouble(3))
+        op(None, sctype(3))
     except TypeError:
         pass
 
 
-@pytest.mark.parametrize("op", reasonable_operators_for_scalars)
-def test_clongdouble_inf_loop(op):
-    if op in {operator.mod} and False:
-        pytest.xfail("The modulo operator is known to be broken")
-    try:
-        op(np.clongdouble(3), None)
-    except TypeError:
+@pytest.mark.parametrize("op", [operator.add, operator.pow, operator.sub])
+@pytest.mark.parametrize("sctype", [np.longdouble, np.clongdouble])
+def test_longdouble_with_arrlike(sctype, op):
+    # As of NumPy 2.1, longdouble behaves like other types and can coerce
+    # e.g. lists.  (Not necessarily better, but consistent.)
+    assert_array_equal(op(sctype(3), [1, 2]), op(3, np.array([1, 2])))
+    assert_array_equal(op([1, 2], sctype(3)), op(np.array([1, 2]), 3))
+
+
+@pytest.mark.parametrize("op", binary_operators_for_scalars)
+@pytest.mark.parametrize("sctype", [np.longdouble, np.clongdouble])
+@np.errstate(all="ignore")
+def test_longdouble_operators_with_large_int(sctype, op):
+    # (See `test_longdouble_operators_with_obj` for why longdouble is special)
+    # NEP 50 means that the result is clearly a (c)longdouble here:
+    if sctype == np.clongdouble and op in [operator.mod, operator.floordiv]:
+        # The above operators are not support for complex though...
+        with pytest.raises(TypeError):
+            op(sctype(3), 2**64)
+        with pytest.raises(TypeError):
+            op(sctype(3), 2**64)
+    else:
+        assert op(sctype(3), -2**64) == op(sctype(3), sctype(-2**64))
+        assert op(2**64, sctype(3)) == op(sctype(2**64), sctype(3))
+
+
+@pytest.mark.parametrize("dtype", np.typecodes["AllInteger"])
+@pytest.mark.parametrize("operation", [
+        lambda min, max: max + max,
+        lambda min, max: min - max,
+        lambda min, max: max * max], ids=["+", "-", "*"])
+def test_scalar_integer_operation_overflow(dtype, operation):
+    st = np.dtype(dtype).type
+    min = st(np.iinfo(dtype).min)
+    max = st(np.iinfo(dtype).max)
+
+    with pytest.warns(RuntimeWarning, match="overflow encountered"):
+        operation(min, max)
+
+
+@pytest.mark.parametrize("dtype", np.typecodes["Integer"])
+@pytest.mark.parametrize("operation", [
+        lambda min, neg_1: -min,
+        lambda min, neg_1: abs(min),
+        lambda min, neg_1: min * neg_1,
+        pytest.param(lambda min, neg_1: min // neg_1,
+            marks=pytest.mark.skip(reason="broken on some platforms"))],
+        ids=["neg", "abs", "*", "//"])
+def test_scalar_signed_integer_overflow(dtype, operation):
+    # The minimum signed integer can "overflow" for some additional operations
+    st = np.dtype(dtype).type
+    min = st(np.iinfo(dtype).min)
+    neg_1 = st(-1)
+
+    with pytest.warns(RuntimeWarning, match="overflow encountered"):
+        operation(min, neg_1)
+
+
+@pytest.mark.parametrize("dtype", np.typecodes["UnsignedInteger"])
+def test_scalar_unsigned_integer_overflow(dtype):
+    val = np.dtype(dtype).type(8)
+    with pytest.warns(RuntimeWarning, match="overflow encountered"):
+        -val
+
+    zero = np.dtype(dtype).type(0)
+    -zero  # does not warn
+
+@pytest.mark.parametrize("dtype", np.typecodes["AllInteger"])
+@pytest.mark.parametrize("operation", [
+        lambda val, zero: val // zero,
+        lambda val, zero: val % zero, ], ids=["//", "%"])
+def test_scalar_integer_operation_divbyzero(dtype, operation):
+    st = np.dtype(dtype).type
+    val = st(100)
+    zero = st(0)
+
+    with pytest.warns(RuntimeWarning, match="divide by zero"):
+        operation(val, zero)
+
+
+ops_with_names = [
+    ("__lt__", "__gt__", operator.lt, True),
+    ("__le__", "__ge__", operator.le, True),
+    ("__eq__", "__eq__", operator.eq, True),
+    # Note __op__ and __rop__ may be identical here:
+    ("__ne__", "__ne__", operator.ne, True),
+    ("__gt__", "__lt__", operator.gt, True),
+    ("__ge__", "__le__", operator.ge, True),
+    ("__floordiv__", "__rfloordiv__", operator.floordiv, False),
+    ("__truediv__", "__rtruediv__", operator.truediv, False),
+    ("__add__", "__radd__", operator.add, False),
+    ("__mod__", "__rmod__", operator.mod, False),
+    ("__mul__", "__rmul__", operator.mul, False),
+    ("__pow__", "__rpow__", operator.pow, False),
+    ("__sub__", "__rsub__", operator.sub, False),
+]
+
+
+@pytest.mark.parametrize(["__op__", "__rop__", "op", "cmp"], ops_with_names)
+@pytest.mark.parametrize("sctype", [np.float32, np.float64, np.longdouble])
+def test_subclass_deferral(sctype, __op__, __rop__, op, cmp):
+    """
+    This test covers scalar subclass deferral.  Note that this is exceedingly
+    complicated, especially since it tends to fall back to the array paths and
+    these additionally add the "array priority" mechanism.
+
+    The behaviour was modified subtly in 1.22 (to make it closer to how Python
+    scalars work).  Due to its complexity and the fact that subclassing NumPy
+    scalars is probably a bad idea to begin with.  There is probably room
+    for adjustments here.
+    """
+    class myf_simple1(sctype):
         pass
-    try:
-        op(None, np.longdouble(3))
-    except TypeError:
+
+    class myf_simple2(sctype):
         pass
+
+    def op_func(self, other):
+        return __op__
+
+    def rop_func(self, other):
+        return __rop__
+
+    myf_op = type("myf_op", (sctype,), {__op__: op_func, __rop__: rop_func})
+
+    # inheritance has to override, or this is correctly lost:
+    res = op(myf_simple1(1), myf_simple2(2))
+    assert type(res) == sctype or type(res) == np.bool
+    assert op(myf_simple1(1), myf_simple2(2)) == op(1, 2)  # inherited
+
+    # Two independent subclasses do not really define an order.  This could
+    # be attempted, but we do not since Python's `int` does neither:
+    assert op(myf_op(1), myf_simple1(2)) == __op__
+    assert op(myf_simple1(1), myf_op(2)) == op(1, 2)  # inherited
+
+
+def test_longdouble_complex():
+    # Simple test to check longdouble and complex combinations, since these
+    # need to go through promotion, which longdouble needs to be careful about.
+    x = np.longdouble(1)
+    assert x + 1j == 1 + 1j
+    assert 1j + x == 1 + 1j
+
+
+@pytest.mark.parametrize(["__op__", "__rop__", "op", "cmp"], ops_with_names)
+@pytest.mark.parametrize("subtype", [float, int, complex, np.float16])
+def test_pyscalar_subclasses(subtype, __op__, __rop__, op, cmp):
+    # This tests that python scalar subclasses behave like a float64 (if they
+    # don't override it).
+    # In an earlier version of NEP 50, they behaved like the Python buildins.
+    def op_func(self, other):
+        return __op__
+
+    def rop_func(self, other):
+        return __rop__
+
+    # Check that deferring is indicated using `__array_ufunc__`:
+    myt = type("myt", (subtype,),
+               {__op__: op_func, __rop__: rop_func, "__array_ufunc__": None})
+
+    # Just like normally, we should never presume we can modify the float.
+    assert op(myt(1), np.float64(2)) == __op__
+    assert op(np.float64(1), myt(2)) == __rop__
+
+    if op in {operator.mod, operator.floordiv} and subtype == complex:
+        return  # module is not support for complex.  Do not test.
+
+    if __rop__ == __op__:
+        return
+
+    # When no deferring is indicated, subclasses are handled normally.
+    myt = type("myt", (subtype,), {__rop__: rop_func})
+    behaves_like = lambda x: np.array(subtype(x))[()]
+
+    # Check for float32, as a float subclass float64 may behave differently
+    res = op(myt(1), np.float16(2))
+    expected = op(behaves_like(1), np.float16(2))
+    assert res == expected
+    assert type(res) == type(expected)
+    res = op(np.float32(2), myt(1))
+    expected = op(np.float32(2), behaves_like(1))
+    assert res == expected
+    assert type(res) == type(expected)
+
+    # Same check for longdouble (compare via dtype to accept float64 when
+    # longdouble has the identical size), which is currently not perfectly
+    # consistent.
+    res = op(myt(1), np.longdouble(2))
+    expected = op(behaves_like(1), np.longdouble(2))
+    assert res == expected
+    assert np.dtype(type(res)) == np.dtype(type(expected))
+    res = op(np.float32(2), myt(1))
+    expected = op(np.float32(2), behaves_like(1))
+    assert res == expected
+    assert np.dtype(type(res)) == np.dtype(type(expected))
+
+
+def test_truediv_int():
+    # This should work, as the result is float:
+    assert np.uint8(3) / 123454 == np.float64(3) / 123454
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("op",
+    # TODO: Power is a bit special, but here mostly bools seem to behave oddly
+    [op for op in binary_operators_for_scalars if op is not operator.pow])
+@pytest.mark.parametrize("sctype", types)
+@pytest.mark.parametrize("other_type", [float, int, complex])
+@pytest.mark.parametrize("rop", [True, False])
+def test_scalar_matches_array_op_with_pyscalar(op, sctype, other_type, rop):
+    # Check that the ufunc path matches by coercing to an array explicitly
+    val1 = sctype(2)
+    val2 = other_type(2)
+
+    if rop:
+        _op = op
+        op = lambda x, y: _op(y, x)
+
+    try:
+        res = op(val1, val2)
+    except TypeError:
+        try:
+            expected = op(np.asarray(val1), val2)
+            raise AssertionError("ufunc didn't raise.")
+        except TypeError:
+            return
+    else:
+        expected = op(np.asarray(val1), val2)
+
+    # Note that we only check dtype equivalency, as ufuncs may pick the lower
+    # dtype if they are equivalent.
+    assert res == expected
+    if isinstance(val1, float) and other_type is complex and rop:
+        # Python complex accepts float subclasses, so we don't get a chance
+        # and the result may be a Python complex (thus, the `np.array()``)
+        assert np.array(res).dtype == expected.dtype
+    else:
+        assert res.dtype == expected.dtype
+

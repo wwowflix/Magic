@@ -1,159 +1,459 @@
-from __future__ import absolute_import, division, unicode_literals
+from typing import Union
 
-from types import ModuleType
+"""
+_url.py
+websocket - WebSocket client library for Python
+
+Copyright 2024 engn33r
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+__all__ = ["NoLock", "validate_utf8", "extract_err_message", "extract_error_code"]
+
+
+class NoLock:
+    def __enter__(self) -> None:
+        pass
+
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        pass
+
 
 try:
-    from collections.abc import Mapping
+    # If wsaccel is available we use compiled routines to validate UTF-8
+    # strings.
+    from wsaccel.utf8validator import Utf8Validator
+
+    def _validate_utf8(utfbytes: Union[str, bytes]) -> bool:
+        result: bool = Utf8Validator().validate(utfbytes)[0]
+        return result
+
 except ImportError:
-    from collections import Mapping
+    # UTF-8 validator
+    # python implementation of http://bjoern.hoehrmann.de/utf-8/decoder/dfa/
 
-from six import text_type, PY3
+    _UTF8_ACCEPT = 0
+    _UTF8_REJECT = 12
 
-if PY3:
-    import xml.etree.ElementTree as default_etree
-else:
-    try:
-        import xml.etree.cElementTree as default_etree
-    except ImportError:
-        import xml.etree.ElementTree as default_etree
+    _UTF8D = [
+        # The first part of the table maps bytes to character classes that
+        # to reduce the size of the transition table and create bitmasks.
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        8,
+        8,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        10,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        3,
+        3,
+        11,
+        6,
+        6,
+        6,
+        5,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        # The second part is a transition table that maps a combination
+        # of a state of the automaton and a character class to a state.
+        0,
+        12,
+        24,
+        36,
+        60,
+        96,
+        84,
+        12,
+        12,
+        12,
+        48,
+        72,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        0,
+        12,
+        12,
+        12,
+        12,
+        12,
+        0,
+        12,
+        0,
+        12,
+        12,
+        12,
+        24,
+        12,
+        12,
+        12,
+        12,
+        12,
+        24,
+        12,
+        24,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        24,
+        12,
+        12,
+        12,
+        12,
+        12,
+        24,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        24,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        36,
+        12,
+        36,
+        12,
+        12,
+        12,
+        36,
+        12,
+        12,
+        12,
+        12,
+        12,
+        36,
+        12,
+        36,
+        12,
+        12,
+        12,
+        36,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+    ]
+
+    def _decode(state: int, codep: int, ch: int) -> tuple:
+        tp = _UTF8D[ch]
+
+        codep = (
+            (ch & 0x3F) | (codep << 6) if (state != _UTF8_ACCEPT) else (0xFF >> tp) & ch
+        )
+        state = _UTF8D[256 + state + tp]
+
+        return state, codep
+
+    def _validate_utf8(utfbytes: Union[str, bytes]) -> bool:
+        state = _UTF8_ACCEPT
+        codep = 0
+        for i in utfbytes:
+            state, codep = _decode(state, codep, int(i))
+            if state == _UTF8_REJECT:
+                return False
+
+        return True
 
 
-__all__ = ["default_etree", "MethodDispatcher", "isSurrogatePair",
-           "surrogatePairToCodepoint", "moduleFactoryFactory",
-           "supports_lone_surrogates"]
-
-
-# Platforms not supporting lone surrogates (\uD800-\uDFFF) should be
-# caught by the below test. In general this would be any platform
-# using UTF-16 as its encoding of unicode strings, such as
-# Jython. This is because UTF-16 itself is based on the use of such
-# surrogates, and there is no mechanism to further escape such
-# escapes.
-try:
-    _x = eval('"\\uD800"')  # pylint:disable=eval-used
-    if not isinstance(_x, text_type):
-        # We need this with u"" because of http://bugs.jython.org/issue2039
-        _x = eval('u"\\uD800"')  # pylint:disable=eval-used
-        assert isinstance(_x, text_type)
-except Exception:
-    supports_lone_surrogates = False
-else:
-    supports_lone_surrogates = True
-
-
-class MethodDispatcher(dict):
-    """Dict with 2 special properties:
-
-    On initiation, keys that are lists, sets or tuples are converted to
-    multiple keys so accessing any one of the items in the original
-    list-like object returns the matching value
-
-    md = MethodDispatcher({("foo", "bar"):"baz"})
-    md["foo"] == "baz"
-
-    A default value which can be set through the default attribute.
+def validate_utf8(utfbytes: Union[str, bytes]) -> bool:
     """
-
-    def __init__(self, items=()):
-        _dictEntries = []
-        for name, value in items:
-            if isinstance(name, (list, tuple, frozenset, set)):
-                for item in name:
-                    _dictEntries.append((item, value))
-            else:
-                _dictEntries.append((name, value))
-        dict.__init__(self, _dictEntries)
-        assert len(self) == len(_dictEntries)
-        self.default = None
-
-    def __getitem__(self, key):
-        return dict.get(self, key, self.default)
-
-    def __get__(self, instance, owner=None):
-        return BoundMethodDispatcher(instance, self)
+    validate utf8 byte string.
+    utfbytes: utf byte string to check.
+    return value: if valid utf8 string, return true. Otherwise, return false.
+    """
+    return _validate_utf8(utfbytes)
 
 
-class BoundMethodDispatcher(Mapping):
-    """Wraps a MethodDispatcher, binding its return values to `instance`"""
-    def __init__(self, instance, dispatcher):
-        self.instance = instance
-        self.dispatcher = dispatcher
-
-    def __getitem__(self, key):
-        # see https://docs.python.org/3/reference/datamodel.html#object.__get__
-        # on a function, __get__ is used to bind a function to an instance as a bound method
-        return self.dispatcher[key].__get__(self.instance)
-
-    def get(self, key, default):
-        if key in self.dispatcher:
-            return self[key]
-        else:
-            return default
-
-    def __iter__(self):
-        return iter(self.dispatcher)
-
-    def __len__(self):
-        return len(self.dispatcher)
-
-    def __contains__(self, key):
-        return key in self.dispatcher
+def extract_err_message(exception: Exception) -> Union[str, None]:
+    if exception.args:
+        exception_message: str = exception.args[0]
+        return exception_message
+    else:
+        return None
 
 
-# Some utility functions to deal with weirdness around UCS2 vs UCS4
-# python builds
-
-def isSurrogatePair(data):
-    return (len(data) == 2 and
-            ord(data[0]) >= 0xD800 and ord(data[0]) <= 0xDBFF and
-            ord(data[1]) >= 0xDC00 and ord(data[1]) <= 0xDFFF)
-
-
-def surrogatePairToCodepoint(data):
-    char_val = (0x10000 + (ord(data[0]) - 0xD800) * 0x400 +
-                (ord(data[1]) - 0xDC00))
-    return char_val
-
-# Module Factory Factory (no, this isn't Java, I know)
-# Here to stop this being duplicated all over the place.
-
-
-def moduleFactoryFactory(factory):
-    moduleCache = {}
-
-    def moduleFactory(baseModule, *args, **kwargs):
-        if isinstance(ModuleType.__name__, type("")):
-            name = "_%s_factory" % baseModule.__name__
-        else:
-            name = b"_%s_factory" % baseModule.__name__
-
-        kwargs_tuple = tuple(kwargs.items())
-
-        try:
-            return moduleCache[name][args][kwargs_tuple]
-        except KeyError:
-            mod = ModuleType(name)
-            objs = factory(baseModule, *args, **kwargs)
-            mod.__dict__.update(objs)
-            if "name" not in moduleCache:
-                moduleCache[name] = {}
-            if "args" not in moduleCache[name]:
-                moduleCache[name][args] = {}
-            if "kwargs" not in moduleCache[name][args]:
-                moduleCache[name][args][kwargs_tuple] = {}
-            moduleCache[name][args][kwargs_tuple] = mod
-            return mod
-
-    return moduleFactory
-
-
-def memoize(func):
-    cache = {}
-
-    def wrapped(*args, **kwargs):
-        key = (tuple(args), tuple(kwargs.items()))
-        if key not in cache:
-            cache[key] = func(*args, **kwargs)
-        return cache[key]
-
-    return wrapped
+def extract_error_code(exception: Exception) -> Union[int, None]:
+    if exception.args and len(exception.args) > 1:
+        return exception.args[0] if isinstance(exception.args[0], int) else None

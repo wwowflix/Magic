@@ -1,9 +1,18 @@
-import sys
 import itertools
+import sys
 
 import pytest
+
 import numpy as np
-from numpy.testing import assert_, assert_equal, assert_raises, IS_PYPY
+import numpy._core.numerictypes as nt
+from numpy._core.numerictypes import issctype, maximum_sctype, sctype2char, sctypes
+from numpy.testing import (
+    IS_PYPY,
+    assert_,
+    assert_equal,
+    assert_raises,
+    assert_raises_regex,
+)
 
 # This is the structure of the table used for plain objects:
 #
@@ -60,12 +69,14 @@ NbufferT = [
     # x     Info                                                color info        y                  z
     #       value y2 Info2                            name z2         Name Value
     #                name   value    y3       z3
-    ([3, 2], (6j, 6., (b'nn', [6j, 4j], [6., 4.], [1, 2]), b'NN', True), b'cc', (u'NN', 6j), [[6., 4.], [6., 4.]], 8),
-    ([4, 3], (7j, 7., (b'oo', [7j, 5j], [7., 5.], [2, 1]), b'OO', False), b'dd', (u'OO', 7j), [[7., 5.], [7., 5.]], 9),
+    ([3, 2], (6j, 6., (b'nn', [6j, 4j], [6., 4.], [1, 2]), b'NN', True),
+     b'cc', ('NN', 6j), [[6., 4.], [6., 4.]], 8),
+    ([4, 3], (7j, 7., (b'oo', [7j, 5j], [7., 5.], [2, 1]), b'OO', False),
+     b'dd', ('OO', 7j), [[7., 5.], [7., 5.]], 9),
     ]
 
 
-byteorder = {'little':'<', 'big':'>'}[sys.byteorder]
+byteorder = {'little': '<', 'big': '>'}[sys.byteorder]
 
 def normalize_descr(descr):
     "Normalize a description adding the platform byteorder."
@@ -89,8 +100,7 @@ def normalize_descr(descr):
             l = normalize_descr(dtype)
             out.append((item[0], l))
         else:
-            raise ValueError("Expected a str or list and got %s" %
-                             (type(item)))
+            raise ValueError(f"Expected a str or list and got {type(item)}")
     return out
 
 
@@ -335,29 +345,9 @@ class TestEmptyField:
         assert_(a['int'].shape == (5, 0))
         assert_(a['float'].shape == (5, 2))
 
-class TestCommonType:
-    def test_scalar_loses1(self):
-        res = np.find_common_type(['f4', 'f4', 'i2'], ['f8'])
-        assert_(res == 'f4')
-
-    def test_scalar_loses2(self):
-        res = np.find_common_type(['f4', 'f4'], ['i8'])
-        assert_(res == 'f4')
-
-    def test_scalar_wins(self):
-        res = np.find_common_type(['f4', 'f4', 'i2'], ['c8'])
-        assert_(res == 'c8')
-
-    def test_scalar_wins2(self):
-        res = np.find_common_type(['u4', 'i4', 'i4'], ['f4'])
-        assert_(res == 'f8')
-
-    def test_scalar_wins3(self):  # doesn't go up to 'f16' on purpose
-        res = np.find_common_type(['u8', 'i8', 'i8'], ['f8'])
-        assert_(res == 'f8')
 
 class TestMultipleFields:
-    def setup(self):
+    def setup_method(self):
         self.ary = np.array([(1, 2, 3, 4), (5, 6, 7, 8)], dtype='i4,f4,i2,c8')
 
     def _bad_call(self):
@@ -431,41 +421,112 @@ class TestIsSubDType:
         assert np.issubdtype(np.float32, "f")
 
 
+class TestIsDType:
+    """
+    Check correctness of `np.isdtype`. The test considers different argument
+    configurations: `np.isdtype(dtype, k1)` and `np.isdtype(dtype, (k1, k2))`
+    with concrete dtypes and dtype groups.
+    """
+    dtype_group_dict = {
+        "signed integer": sctypes["int"],
+        "unsigned integer": sctypes["uint"],
+        "integral": sctypes["int"] + sctypes["uint"],
+        "real floating": sctypes["float"],
+        "complex floating": sctypes["complex"],
+        "numeric": (
+            sctypes["int"] + sctypes["uint"] + sctypes["float"] +
+            sctypes["complex"]
+        )
+    }
+
+    @pytest.mark.parametrize(
+        "dtype,close_dtype",
+        [
+            (np.int64, np.int32), (np.uint64, np.uint32),
+            (np.float64, np.float32), (np.complex128, np.complex64)
+        ]
+    )
+    @pytest.mark.parametrize(
+        "dtype_group",
+        [
+            None, "signed integer", "unsigned integer", "integral",
+            "real floating", "complex floating", "numeric"
+        ]
+    )
+    def test_isdtype(self, dtype, close_dtype, dtype_group):
+        # First check if same dtypes return `true` and different ones
+        # give `false` (even if they're close in the dtype hierarchy!)
+        if dtype_group is None:
+            assert np.isdtype(dtype, dtype)
+            assert not np.isdtype(dtype, close_dtype)
+            assert np.isdtype(dtype, (dtype, close_dtype))
+
+        # Check that dtype and a dtype group that it belongs to
+        # return `true`, and `false` otherwise.
+        elif dtype in self.dtype_group_dict[dtype_group]:
+            assert np.isdtype(dtype, dtype_group)
+            assert np.isdtype(dtype, (close_dtype, dtype_group))
+        else:
+            assert not np.isdtype(dtype, dtype_group)
+
+    def test_isdtype_invalid_args(self):
+        with assert_raises_regex(TypeError, r".*must be a NumPy dtype.*"):
+            np.isdtype("int64", np.int64)
+        with assert_raises_regex(TypeError, r".*kind argument must.*"):
+            np.isdtype(np.int64, 1)
+        with assert_raises_regex(ValueError, r".*not a known kind name.*"):
+            np.isdtype(np.int64, "int64")
+
+    def test_sctypes_complete(self):
+        # issue 26439: int32/intc were masking each other on 32-bit builds
+        assert np.int32 in sctypes['int']
+        assert np.intc in sctypes['int']
+        assert np.int64 in sctypes['int']
+        assert np.uint32 in sctypes['uint']
+        assert np.uintc in sctypes['uint']
+        assert np.uint64 in sctypes['uint']
+
 class TestSctypeDict:
     def test_longdouble(self):
-        assert_(np.sctypeDict['f8'] is not np.longdouble)
-        assert_(np.sctypeDict['c16'] is not np.clongdouble)
+        assert_(np._core.sctypeDict['float64'] is not np.longdouble)
+        assert_(np._core.sctypeDict['complex128'] is not np.clongdouble)
+
+    def test_ulong(self):
+        assert np._core.sctypeDict['ulong'] is np.ulong
+        assert np.dtype(np.ulong) is np.dtype("ulong")
+        assert np.dtype(np.ulong).itemsize == np.dtype(np.long).itemsize
 
 
-class TestBitName:
-    def test_abstract(self):
-        assert_raises(ValueError, np.core.numerictypes.bitname, np.floating)
-
-
+@pytest.mark.filterwarnings("ignore:.*maximum_sctype.*:DeprecationWarning")
 class TestMaximumSctype:
 
     # note that parametrizing with sctype['int'] and similar would skip types
     # with the same size (gh-11923)
 
-    @pytest.mark.parametrize('t', [np.byte, np.short, np.intc, np.int_, np.longlong])
+    @pytest.mark.parametrize(
+        't', [np.byte, np.short, np.intc, np.long, np.longlong]
+    )
     def test_int(self, t):
-        assert_equal(np.maximum_sctype(t), np.sctypes['int'][-1])
+        assert_equal(maximum_sctype(t), np._core.sctypes['int'][-1])
 
-    @pytest.mark.parametrize('t', [np.ubyte, np.ushort, np.uintc, np.uint, np.ulonglong])
+    @pytest.mark.parametrize(
+        't', [np.ubyte, np.ushort, np.uintc, np.ulong, np.ulonglong]
+    )
     def test_uint(self, t):
-        assert_equal(np.maximum_sctype(t), np.sctypes['uint'][-1])
+        assert_equal(maximum_sctype(t), np._core.sctypes['uint'][-1])
 
     @pytest.mark.parametrize('t', [np.half, np.single, np.double, np.longdouble])
     def test_float(self, t):
-        assert_equal(np.maximum_sctype(t), np.sctypes['float'][-1])
+        assert_equal(maximum_sctype(t), np._core.sctypes['float'][-1])
 
     @pytest.mark.parametrize('t', [np.csingle, np.cdouble, np.clongdouble])
     def test_complex(self, t):
-        assert_equal(np.maximum_sctype(t), np.sctypes['complex'][-1])
+        assert_equal(maximum_sctype(t), np._core.sctypes['complex'][-1])
 
-    @pytest.mark.parametrize('t', [np.bool_, np.object_, np.unicode_, np.bytes_, np.void])
+    @pytest.mark.parametrize('t', [np.bool, np.object_, np.str_, np.bytes_,
+                                   np.void])
     def test_other(self, t):
-        assert_equal(np.maximum_sctype(t), t)
+        assert_equal(maximum_sctype(t), t)
 
 
 class Test_sctype2char:
@@ -473,29 +534,30 @@ class Test_sctype2char:
     # at this point.
 
     def test_scalar_type(self):
-        assert_equal(np.sctype2char(np.double), 'd')
-        assert_equal(np.sctype2char(np.int_), 'l')
-        assert_equal(np.sctype2char(np.unicode_), 'U')
-        assert_equal(np.sctype2char(np.bytes_), 'S')
+        assert_equal(sctype2char(np.double), 'd')
+        assert_equal(sctype2char(np.long), 'l')
+        assert_equal(sctype2char(np.int_), np.array(0).dtype.char)
+        assert_equal(sctype2char(np.str_), 'U')
+        assert_equal(sctype2char(np.bytes_), 'S')
 
     def test_other_type(self):
-        assert_equal(np.sctype2char(float), 'd')
-        assert_equal(np.sctype2char(list), 'O')
-        assert_equal(np.sctype2char(np.ndarray), 'O')
+        assert_equal(sctype2char(float), 'd')
+        assert_equal(sctype2char(list), 'O')
+        assert_equal(sctype2char(np.ndarray), 'O')
 
     def test_third_party_scalar_type(self):
-        from numpy.core._rational_tests import rational
-        assert_raises(KeyError, np.sctype2char, rational)
-        assert_raises(KeyError, np.sctype2char, rational(1))
+        from numpy._core._rational_tests import rational
+        assert_raises(KeyError, sctype2char, rational)
+        assert_raises(KeyError, sctype2char, rational(1))
 
     def test_array_instance(self):
-        assert_equal(np.sctype2char(np.array([1.0, 2.0])), 'd')
+        assert_equal(sctype2char(np.array([1.0, 2.0])), 'd')
 
     def test_abstract_type(self):
-        assert_raises(KeyError, np.sctype2char, np.floating)
+        assert_raises(KeyError, sctype2char, np.floating)
 
     def test_non_type(self):
-        assert_raises(ValueError, np.sctype2char, 1)
+        assert_raises(ValueError, sctype2char, 1)
 
 @pytest.mark.parametrize("rep, expected", [
     (np.int32, True),
@@ -509,7 +571,8 @@ class Test_sctype2char:
 def test_issctype(rep, expected):
     # ensure proper identification of scalar
     # data-types by issctype()
-    actual = np.issctype(rep)
+    actual = issctype(rep)
+    assert type(actual) is bool
     assert_equal(actual, expected)
 
 
@@ -529,8 +592,8 @@ class TestScalarTypeNames:
     # gh-9799
 
     numeric_types = [
-        np.byte, np.short, np.intc, np.int_, np.longlong,
-        np.ubyte, np.ushort, np.uintc, np.uint, np.ulonglong,
+        np.byte, np.short, np.intc, np.long, np.longlong,
+        np.ubyte, np.ushort, np.uintc, np.ulong, np.ulonglong,
         np.half, np.single, np.double, np.longdouble,
         np.csingle, np.cdouble, np.clongdouble,
     ]
@@ -552,3 +615,9 @@ class TestScalarTypeNames:
     def test_names_are_undersood_by_dtype(self, t):
         """ Test the dtype constructor maps names back to the type """
         assert np.dtype(t.__name__).type is t
+
+
+class TestBoolDefinition:
+    def test_bool_definition(self):
+        assert nt.bool is np.bool
+

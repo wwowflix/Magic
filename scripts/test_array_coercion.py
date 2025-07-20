@@ -1,27 +1,25 @@
 """
 Tests for array coercion, mainly through testing `np.array` results directly.
-Note that other such tests exist e.g. in `test_api.py` and many corner-cases
+Note that other such tests exist, e.g., in `test_api.py` and many corner-cases
 are tested (sometimes indirectly) elsewhere.
 """
 
+from itertools import permutations, product
+
+import numpy._core._multiarray_umath as ncu
 import pytest
+from numpy._core._rational_tests import rational
 from pytest import param
 
-from itertools import product
-
 import numpy as np
-from numpy.core._rational_tests import rational
-from numpy.core._multiarray_umath import _discover_array_parameters
-
-from numpy.testing import (
-    assert_array_equal, assert_warns, IS_PYPY)
+from numpy.testing import IS_64BIT, IS_PYPY, assert_array_equal
 
 
 def arraylikes():
     """
     Generator for functions converting an array into various array-likes.
-    If full is True (default) includes array-likes not capable of handling
-    all dtypes
+    If full is True (default) it includes array-likes not capable of handling
+    all dtypes.
     """
     # base array:
     def ndarray(a):
@@ -38,14 +36,14 @@ def arraylikes():
 
     yield subclass
 
-    class _SequenceLike():
-        # We are giving a warning that array-like's were also expected to be
-        # sequence-like in `np.array([array_like])`, this can be removed
-        # when the deprecation exired (started NumPy 1.20)
+    class _SequenceLike:
+        # Older NumPy versions, sometimes cared whether a protocol array was
+        # also _SequenceLike.  This shouldn't matter, but keep it for now
+        # for __array__ and not the others.
         def __len__(self):
             raise TypeError
 
-        def __getitem__(self):
+        def __getitem__(self, _, /):
             raise TypeError
 
     # Array-interface
@@ -53,8 +51,10 @@ def arraylikes():
         def __init__(self, a):
             self.a = a
 
-        def __array__(self, dtype=None):
-            return self.a
+        def __array__(self, dtype=None, copy=None):
+            if dtype is None:
+                return self.a
+            return self.a.astype(dtype)
 
     yield param(ArrayDunder, id="__array__")
 
@@ -62,7 +62,7 @@ def arraylikes():
     yield param(memoryview, id="memoryview")
 
     # Array-interface
-    class ArrayInterface(_SequenceLike):
+    class ArrayInterface:
         def __init__(self, a):
             self.a = a  # need to hold on to keep interface valid
             self.__array_interface__ = a.__array_interface__
@@ -70,7 +70,7 @@ def arraylikes():
     yield param(ArrayInterface, id="__array_interface__")
 
     # Array-Struct
-    class ArrayStruct(_SequenceLike):
+    class ArrayStruct:
         def __init__(self, a):
             self.a = a  # need to hold on to keep struct valid
             self.__array_struct__ = a.__array_struct__
@@ -88,15 +88,15 @@ def scalar_instances(times=True, extended_precision=True, user_dtype=True):
         yield param(np.sqrt(np.longdouble(5)), id="longdouble")
 
     # Complex:
-    yield param(np.sqrt(np.complex64(2+3j)), id="complex64")
-    yield param(np.sqrt(np.complex128(2+3j)), id="complex128")
+    yield param(np.sqrt(np.complex64(2 + 3j)), id="complex64")
+    yield param(np.sqrt(np.complex128(2 + 3j)), id="complex128")
     if extended_precision:
-        yield param(np.sqrt(np.longcomplex(2+3j)), id="clongdouble")
+        yield param(np.sqrt(np.clongdouble(2 + 3j)), id="clongdouble")
 
     # Bool:
     # XFAIL: Bool should be added, but has some bad properties when it
     # comes to strings, see also gh-9875
-    # yield param(np.bool_(0), id="bool")
+    # yield param(np.bool(0), id="bool")
 
     # Integers:
     yield param(np.int8(2), id="int8")
@@ -130,12 +130,12 @@ def scalar_instances(times=True, extended_precision=True, user_dtype=True):
 
     # Strings and unstructured void:
     yield param(np.bytes_(b"1234"), id="bytes")
-    yield param(np.unicode_("2345"), id="unicode")
+    yield param(np.str_("2345"), id="unicode")
     yield param(np.void(b"4321"), id="unstructured_void")
 
 
 def is_parametric_dtype(dtype):
-    """Returns True if the the dtype is a parametric legacy dtype (itemsize
+    """Returns True if the dtype is a parametric legacy dtype (itemsize
     is 0, or a datetime without units)
     """
     if dtype.itemsize == 0:
@@ -161,8 +161,12 @@ class TestStringDiscovery:
         # A nested array is also discovered correctly
         arr = np.array(obj, dtype="O")
         assert np.array(arr, dtype="S").dtype == expected
+        # Also if we use the dtype class
+        assert np.array(arr, dtype=type(expected)).dtype == expected
         # Check that .astype() behaves identical
         assert arr.astype("S").dtype == expected
+        # The DType class is accepted by `.astype()`
+        assert arr.astype(type(np.dtype("S"))).dtype == expected
 
     @pytest.mark.parametrize("obj",
             [object(), 1.2, 10**43, None, "string"],
@@ -209,11 +213,11 @@ class TestScalarDiscovery:
         # Check that the character special case errors correctly if the
         # array is too deep:
         nested = ["string"]  # 2 dimensions (due to string being sequence)
-        for i in range(np.MAXDIMS - 2):
+        for i in range(ncu.MAXDIMS - 2):
             nested = [nested]
 
         arr = np.array(nested, dtype='c')
-        assert arr.shape == (1,) * (np.MAXDIMS - 1) + (6,)
+        assert arr.shape == (1,) * (ncu.MAXDIMS - 1) + (6,)
         with pytest.raises(ValueError):
             np.array([nested], dtype="c")
 
@@ -257,7 +261,7 @@ class TestScalarDiscovery:
     @pytest.mark.parametrize("scalar", scalar_instances())
     def test_scalar_coercion(self, scalar):
         # This tests various scalar coercion paths, mainly for the numerical
-        # types.  It includes some paths not directly related to `np.array`
+        # types. It includes some paths not directly related to `np.array`.
         if isinstance(scalar, np.inexact):
             # Ensure we have a full-precision number if available
             scalar = type(scalar)((scalar * 2)**0.5)
@@ -284,7 +288,7 @@ class TestScalarDiscovery:
         assert_array_equal(arr, arr4)
 
     @pytest.mark.xfail(IS_PYPY, reason="`int(np.complex128(3))` fails on PyPy")
-    @pytest.mark.filterwarnings("ignore::numpy.ComplexWarning")
+    @pytest.mark.filterwarnings("ignore::numpy.exceptions.ComplexWarning")
     @pytest.mark.parametrize("cast_to", scalar_instances())
     def test_scalar_coercion_same_as_cast_and_assignment(self, cast_to):
         """
@@ -292,7 +296,7 @@ class TestScalarDiscovery:
            * `np.array(scalar, dtype=dtype)`
            * `np.empty((), dtype=dtype)[()] = scalar`
            * `np.array(scalar).astype(dtype)`
-        should behave the same.  The only exceptions are paramteric dtypes
+        should behave the same.  The only exceptions are parametric dtypes
         (mainly datetime/timedelta without unit) and void without fields.
         """
         dtype = cast_to.dtype  # use to parametrize only the target dtype
@@ -301,7 +305,7 @@ class TestScalarDiscovery:
             scalar = scalar.values[0]
 
             if dtype.type == np.void:
-               if scalar.dtype.fields is not None and dtype.fields is None:
+                if scalar.dtype.fields is not None and dtype.fields is None:
                     # Here, coercion to "V6" works, but the cast fails.
                     # Since the types are identical, SETITEM takes care of
                     # this, but has different rules than the cast.
@@ -318,18 +322,18 @@ class TestScalarDiscovery:
                 cast = np.array(scalar).astype(dtype)
             except (TypeError, ValueError, RuntimeError):
                 # coercion should also raise (error type may change)
-                with pytest.raises(Exception):
+                with pytest.raises(Exception):  # noqa: B017
                     np.array(scalar, dtype=dtype)
 
                 if (isinstance(scalar, rational) and
                         np.issubdtype(dtype, np.signedinteger)):
                     return
 
-                with pytest.raises(Exception):
+                with pytest.raises(Exception):  # noqa: B017
                     np.array([scalar], dtype=dtype)
                 # assignment should also raise
                 res = np.zeros((), dtype=dtype)
-                with pytest.raises(Exception):
+                with pytest.raises(Exception):  # noqa: B017
                     res[()] = scalar
 
                 return
@@ -342,6 +346,20 @@ class TestScalarDiscovery:
             ass[()] = scalar
             assert_array_equal(ass, cast)
 
+    @pytest.mark.parametrize("pyscalar", [10, 10.32, 10.14j, 10**100])
+    def test_pyscalar_subclasses(self, pyscalar):
+        """NumPy arrays are read/write which means that anything but invariant
+        behaviour is on thin ice.  However, we currently are happy to discover
+        subclasses of Python float, int, complex the same as the base classes.
+        This should potentially be deprecated.
+        """
+        class MyScalar(type(pyscalar)):
+            pass
+
+        res = np.array(MyScalar(pyscalar))
+        expected = np.array(pyscalar)
+        assert_array_equal(res, expected)
+
     @pytest.mark.parametrize("dtype_char", np.typecodes["All"])
     def test_default_dtype_instance(self, dtype_char):
         if dtype_char in "SU":
@@ -353,34 +371,35 @@ class TestScalarDiscovery:
         else:
             dtype = np.dtype(dtype_char)
 
-        discovered_dtype, _ = _discover_array_parameters([], type(dtype))
+        discovered_dtype, _ = ncu._discover_array_parameters([], type(dtype))
 
         assert discovered_dtype == dtype
         assert discovered_dtype.itemsize == dtype.itemsize
 
     @pytest.mark.parametrize("dtype", np.typecodes["Integer"])
-    def test_scalar_to_int_coerce_does_not_cast(self, dtype):
+    @pytest.mark.parametrize(["scalar", "error"],
+            [(np.float64(np.nan), ValueError),
+             (np.array(-1).astype(np.ulonglong)[()], OverflowError)])
+    def test_scalar_to_int_coerce_does_not_cast(self, dtype, scalar, error):
         """
         Signed integers are currently different in that they do not cast other
-        NumPy scalar, but instead use scalar.__int__(). The harcoded
+        NumPy scalar, but instead use scalar.__int__(). The hardcoded
         exception to this rule is `np.array(scalar, dtype=integer)`.
         """
         dtype = np.dtype(dtype)
-        invalid_int = np.ulonglong(-1)
 
-        float_nan = np.float64(np.nan)
-
-        for scalar in [float_nan, invalid_int]:
-            # This is a special case using casting logic and thus not failing:
+        # This is a special case using casting logic. It warns for the NaN
+        # but allows the cast (giving undefined behaviour).
+        with np.errstate(invalid="ignore"):
             coerced = np.array(scalar, dtype=dtype)
             cast = np.array(scalar).astype(dtype)
-            assert_array_equal(coerced, cast)
+        assert_array_equal(coerced, cast)
 
-            # However these fail:
-            with pytest.raises((ValueError, OverflowError)):
-                np.array([scalar], dtype=dtype)
-            with pytest.raises((ValueError, OverflowError)):
-                cast[()] = scalar
+        # However these fail:
+        with pytest.raises(error):
+            np.array([scalar], dtype=dtype)
+        with pytest.raises(error):
+            cast[()] = scalar
 
 
 class TestTimeScalars:
@@ -430,7 +449,7 @@ class TestTimeScalars:
         # never use casting.  This is because casting will error in this
         # case, and traditionally in most cases the behaviour is maintained
         # like this.  (`np.array(scalar, dtype="U6")` would have failed before)
-        # TODO: This discrepency _should_ be resolved, either by relaxing the
+        # TODO: This discrepancy _should_ be resolved, either by relaxing the
         #       cast, or by deprecating the first part.
         scalar = np.datetime64(val, unit)
         dtype = np.dtype(dtype)
@@ -447,7 +466,6 @@ class TestTimeScalars:
             # due to being handled by the string DType and not be casting
             # the explicit cast fails:
             np.array(scalar).astype(dtype)
-
 
     @pytest.mark.parametrize(["val", "unit"],
             [param(123, "s", id="[s]"), param(123, "D", id="[D]")])
@@ -467,19 +485,20 @@ class TestNested:
     def test_nested_simple(self):
         initial = [1.2]
         nested = initial
-        for i in range(np.MAXDIMS - 1):
+        for i in range(ncu.MAXDIMS - 1):
             nested = [nested]
 
         arr = np.array(nested, dtype="float64")
-        assert arr.shape == (1,) * np.MAXDIMS
+        assert arr.shape == (1,) * ncu.MAXDIMS
         with pytest.raises(ValueError):
             np.array([nested], dtype="float64")
 
-        # We discover object automatically at this time:
-        with assert_warns(np.VisibleDeprecationWarning):
-            arr = np.array([nested])
+        with pytest.raises(ValueError, match=".*would exceed the maximum"):
+            np.array([nested])  # user must ask for `object` explicitly
+
+        arr = np.array([nested], dtype=object)
         assert arr.dtype == np.dtype("O")
-        assert arr.shape == (1,) * np.MAXDIMS
+        assert arr.shape == (1,) * ncu.MAXDIMS
         assert arr.item() is initial
 
     def test_pathological_self_containing(self):
@@ -487,7 +506,7 @@ class TestNested:
         l = []
         l.append(l)
         arr = np.array([l, l, l], dtype=object)
-        assert arr.shape == (3,) + (1,) * (np.MAXDIMS - 1)
+        assert arr.shape == (3,) + (1,) * (ncu.MAXDIMS - 1)
 
         # Also check a ragged case:
         arr = np.array([l, [None], l], dtype=object)
@@ -505,10 +524,10 @@ class TestNested:
         initial = arraylike(np.ones((1, 1)))
 
         nested = initial
-        for i in range(np.MAXDIMS - 1):
+        for i in range(ncu.MAXDIMS - 1):
             nested = [nested]
 
-        with pytest.warns(DeprecationWarning):
+        with pytest.raises(ValueError, match=".*would exceed the maximum"):
             # It will refuse to assign the array into
             np.array(nested, dtype="float64")
 
@@ -516,7 +535,7 @@ class TestNested:
         # (due to running out of dimensions), this is currently supported but
         # a special case which is not ideal.
         arr = np.array(nested, dtype=object)
-        assert arr.shape == (1,) * np.MAXDIMS
+        assert arr.shape == (1,) * ncu.MAXDIMS
         assert arr.item() == np.array(initial).item()
 
     @pytest.mark.parametrize("arraylike", arraylikes())
@@ -553,11 +572,11 @@ class TestNested:
         mismatch_first_dim = np.zeros((1, 2))
         mismatch_second_dim = np.zeros((3, 3))
 
-        dtype, shape = _discover_array_parameters(
+        dtype, shape = ncu._discover_array_parameters(
             [arr, mismatch_second_dim], dtype=np.dtype("O"))
         assert shape == (2, 3)
 
-        dtype, shape = _discover_array_parameters(
+        dtype, shape = ncu._discover_array_parameters(
             [arr, mismatch_first_dim], dtype=np.dtype("O"))
         assert shape == (2,)
         # The second case is currently supported because the arrays
@@ -576,6 +595,7 @@ class TestBadSequences:
     def test_growing_list(self):
         # List to coerce, `mylist` will append to it during coercion
         obj = []
+
         class mylist(list):
             def __len__(self):
                 obj.append([1, 2])
@@ -593,6 +613,7 @@ class TestBadSequences:
     def test_mutated_list(self):
         # List to coerce, `mylist` will mutate the first element
         obj = []
+
         class mylist(list):
             def __len__(self):
                 obj[0] = [2, 3]  # replace with a different list.
@@ -600,18 +621,19 @@ class TestBadSequences:
 
         obj.append([2, 3])
         obj.append(mylist([1, 2]))
-        with pytest.raises(RuntimeError):
-            np.array(obj)
+        # Does not crash:
+        np.array(obj)
 
     def test_replace_0d_array(self):
         # List to coerce, `mylist` will mutate the first element
         obj = []
+
         class baditem:
             def __len__(self):
                 obj[0][0] = 2  # replace with a different list.
                 raise ValueError("not actually a sequence!")
 
-            def __getitem__(self):
+            def __getitem__(self, _, /):
                 pass
 
         # Runs into a corner case in the new code, the `array(2)` is cached
@@ -633,6 +655,14 @@ class TestArrayLikes:
         # But a single 0-D nested array-like never:
         res = np.array([obj], dtype=object)
         assert res[0] is obj
+
+    @pytest.mark.parametrize("arraylike", arraylikes())
+    @pytest.mark.parametrize("arr", [np.array(0.), np.arange(4)])
+    def test_object_assignment_special_case(self, arraylike, arr):
+        obj = arraylike(arr)
+        empty = np.arange(1, dtype=object)
+        empty[:] = [obj]
+        assert empty[0] is obj
 
     def test_0d_generic_special_case(self):
         class ArraySubclass(np.ndarray):
@@ -678,7 +708,7 @@ class TestArrayLikes:
             def __array_struct__(self):
                 pass
 
-            def __array__(self):
+            def __array__(self, dtype=None, copy=None):
                 pass
 
         arr = np.array(ArrayLike)
@@ -686,8 +716,7 @@ class TestArrayLikes:
         arr = np.array([ArrayLike])
         assert arr[0] is ArrayLike
 
-    @pytest.mark.skipif(
-            np.dtype(np.intp).itemsize < 8, reason="Needs 64bit platform")
+    @pytest.mark.skipif(not IS_64BIT, reason="Needs 64bit platform")
     def test_too_large_array_error_paths(self):
         """Test the error paths, including for memory leaks"""
         arr = np.array(0, dtype="uint8")
@@ -725,10 +754,159 @@ class TestArrayLikes:
         class BadSequence:
             def __len__(self):
                 raise error
-            def __getitem__(self):
+
+            def __getitem__(self, _, /):
                 # must have getitem to be a Sequence
                 return 1
 
         with pytest.raises(error):
             np.array(BadSequence())
+
+    def test_array_interface_descr_optional(self):
+        # The descr should be optional regression test for gh-27249
+        arr = np.ones(10, dtype="V10")
+        iface = arr.__array_interface__
+        iface.pop("descr")
+
+        class MyClass:
+            __array_interface__ = iface
+
+        assert_array_equal(np.asarray(MyClass), arr)
+
+
+class TestAsArray:
+    """Test expected behaviors of ``asarray``."""
+
+    def test_dtype_identity(self):
+        """Confirm the intended behavior for *dtype* kwarg.
+
+        The result of ``asarray()`` should have the dtype provided through the
+        keyword argument, when used. This forces unique array handles to be
+        produced for unique np.dtype objects, but (for equivalent dtypes), the
+        underlying data (the base object) is shared with the original array
+        object.
+
+        Ref https://github.com/numpy/numpy/issues/1468
+        """
+        int_array = np.array([1, 2, 3], dtype='i')
+        assert np.asarray(int_array) is int_array
+
+        # The character code resolves to the singleton dtype object provided
+        # by the numpy package.
+        assert np.asarray(int_array, dtype='i') is int_array
+
+        # Derive a dtype from n.dtype('i'), but add a metadata object to force
+        # the dtype to be distinct.
+        unequal_type = np.dtype('i', metadata={'spam': True})
+        annotated_int_array = np.asarray(int_array, dtype=unequal_type)
+        assert annotated_int_array is not int_array
+        assert annotated_int_array.base is int_array
+        # Create an equivalent descriptor with a new and distinct dtype
+        # instance.
+        equivalent_requirement = np.dtype('i', metadata={'spam': True})
+        annotated_int_array_alt = np.asarray(annotated_int_array,
+                                             dtype=equivalent_requirement)
+        assert unequal_type == equivalent_requirement
+        assert unequal_type is not equivalent_requirement
+        assert annotated_int_array_alt is not annotated_int_array
+        assert annotated_int_array_alt.dtype is equivalent_requirement
+
+        # Check the same logic for a pair of C types whose equivalence may vary
+        # between computing environments.
+        # Find an equivalent pair.
+        integer_type_codes = ('i', 'l', 'q')
+        integer_dtypes = [np.dtype(code) for code in integer_type_codes]
+        typeA = None
+        typeB = None
+        for typeA, typeB in permutations(integer_dtypes, r=2):
+            if typeA == typeB:
+                assert typeA is not typeB
+                break
+        assert isinstance(typeA, np.dtype) and isinstance(typeB, np.dtype)
+
+        # These ``asarray()`` calls may produce a new view or a copy,
+        # but never the same object.
+        long_int_array = np.asarray(int_array, dtype='l')
+        long_long_int_array = np.asarray(int_array, dtype='q')
+        assert long_int_array is not int_array
+        assert long_long_int_array is not int_array
+        assert np.asarray(long_int_array, dtype='q') is not long_int_array
+        array_a = np.asarray(int_array, dtype=typeA)
+        assert typeA == typeB
+        assert typeA is not typeB
+        assert array_a.dtype is typeA
+        assert array_a is not np.asarray(array_a, dtype=typeB)
+        assert np.asarray(array_a, dtype=typeB).dtype is typeB
+        assert array_a is np.asarray(array_a, dtype=typeB).base
+
+
+class TestSpecialAttributeLookupFailure:
+    # An exception was raised while fetching the attribute
+
+    class WeirdArrayLike:
+        @property
+        def __array__(self, dtype=None, copy=None):  # noqa: PLR0206
+            raise RuntimeError("oops!")
+
+    class WeirdArrayInterface:
+        @property
+        def __array_interface__(self):
+            raise RuntimeError("oops!")
+
+    def test_deprecated(self):
+        with pytest.raises(RuntimeError):
+            np.array(self.WeirdArrayLike())
+        with pytest.raises(RuntimeError):
+            np.array(self.WeirdArrayInterface())
+
+
+def test_subarray_from_array_construction():
+    # Arrays are more complex, since they "broadcast" on success:
+    arr = np.array([1, 2])
+
+    res = arr.astype("2i")
+    assert_array_equal(res, [[1, 1], [2, 2]])
+
+    res = np.array(arr, dtype="(2,)i")
+
+    assert_array_equal(res, [[1, 1], [2, 2]])
+
+    res = np.array([[(1,), (2,)], arr], dtype="2i")
+    assert_array_equal(res, [[[1, 1], [2, 2]], [[1, 1], [2, 2]]])
+
+    # Also try a multi-dimensional example:
+    arr = np.arange(5 * 2).reshape(5, 2)
+    expected = np.broadcast_to(arr[:, :, np.newaxis, np.newaxis], (5, 2, 2, 2))
+
+    res = arr.astype("(2,2)f")
+    assert_array_equal(res, expected)
+
+    res = np.array(arr, dtype="(2,2)f")
+    assert_array_equal(res, expected)
+
+
+def test_empty_string():
+    # Empty strings are unfortunately often converted to S1 and we need to
+    # make sure we are filling the S1 and not the (possibly) detected S0
+    # result.  This should likely just return S0 and if not maybe the decision
+    # to return S1 should be moved.
+    res = np.array([""] * 10, dtype="S")
+    assert_array_equal(res, np.array("\0", "S1"))
+    assert res.dtype == "S1"
+
+    arr = np.array([""] * 10, dtype=object)
+
+    res = arr.astype("S")
+    assert_array_equal(res, b"")
+    assert res.dtype == "S1"
+
+    res = np.array(arr, dtype="S")
+    assert_array_equal(res, b"")
+    # TODO: This is arguably weird/wrong, but seems old:
+    assert res.dtype == f"S{np.dtype('O').itemsize}"
+
+    res = np.array([[""] * 10, arr], dtype="S")
+    assert_array_equal(res, b"")
+    assert res.shape == (2, 10)
+    assert res.dtype == "S1"
 

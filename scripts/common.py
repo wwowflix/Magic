@@ -1,710 +1,424 @@
-"""
-Misc tools for implementing data structures
-
-Note: pandas.core.common is *not* part of the public API.
-"""
-from __future__ import annotations
-
-import builtins
-from collections import (
-    abc,
-    defaultdict,
-)
-import contextlib
-from functools import partial
-import inspect
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Collection,
-    Hashable,
-    Iterable,
-    Iterator,
-    Sequence,
-    cast,
-    overload,
-)
-import warnings
-
-import numpy as np
-
-from pandas._libs import lib
-from pandas._typing import (
-    AnyArrayLike,
-    ArrayLike,
-    NpDtype,
-    RandomState,
-    T,
-)
-from pandas.util._exceptions import find_stack_level
-
-from pandas.core.dtypes.cast import construct_1d_object_array_from_listlike
-from pandas.core.dtypes.common import (
-    is_array_like,
-    is_bool_dtype,
-    is_extension_array_dtype,
-    is_integer,
-)
-from pandas.core.dtypes.generic import (
-    ABCExtensionArray,
-    ABCIndex,
-    ABCSeries,
-)
-from pandas.core.dtypes.inference import iterable_not_string
-from pandas.core.dtypes.missing import isna
-
-if TYPE_CHECKING:
-    from pandas import Index
+# common.py
+from .core import *
+from .helpers import delimited_list, any_open_tag, any_close_tag
+from datetime import datetime
 
 
-def flatten(line):
+# some other useful expressions - using lower-case class name since we are really using this as a namespace
+class pyparsing_common:
+    """Here are some common low-level expressions that may be useful in
+    jump-starting parser development:
+
+    - numeric forms (:class:`integers<integer>`, :class:`reals<real>`,
+      :class:`scientific notation<sci_real>`)
+    - common :class:`programming identifiers<identifier>`
+    - network addresses (:class:`MAC<mac_address>`,
+      :class:`IPv4<ipv4_address>`, :class:`IPv6<ipv6_address>`)
+    - ISO8601 :class:`dates<iso8601_date>` and
+      :class:`datetime<iso8601_datetime>`
+    - :class:`UUID<uuid>`
+    - :class:`comma-separated list<comma_separated_list>`
+    - :class:`url`
+
+    Parse actions:
+
+    - :class:`convertToInteger`
+    - :class:`convertToFloat`
+    - :class:`convertToDate`
+    - :class:`convertToDatetime`
+    - :class:`stripHTMLTags`
+    - :class:`upcaseTokens`
+    - :class:`downcaseTokens`
+
+    Example::
+
+        pyparsing_common.number.runTests('''
+            # any int or real number, returned as the appropriate type
+            100
+            -100
+            +100
+            3.14159
+            6.02e23
+            1e-12
+            ''')
+
+        pyparsing_common.fnumber.runTests('''
+            # any int or real number, returned as float
+            100
+            -100
+            +100
+            3.14159
+            6.02e23
+            1e-12
+            ''')
+
+        pyparsing_common.hex_integer.runTests('''
+            # hex numbers
+            100
+            FF
+            ''')
+
+        pyparsing_common.fraction.runTests('''
+            # fractions
+            1/2
+            -3/4
+            ''')
+
+        pyparsing_common.mixed_integer.runTests('''
+            # mixed fractions
+            1
+            1/2
+            -3/4
+            1-3/4
+            ''')
+
+        import uuid
+        pyparsing_common.uuid.setParseAction(tokenMap(uuid.UUID))
+        pyparsing_common.uuid.runTests('''
+            # uuid
+            12345678-1234-5678-1234-567812345678
+            ''')
+
+    prints::
+
+        # any int or real number, returned as the appropriate type
+        100
+        [100]
+
+        -100
+        [-100]
+
+        +100
+        [100]
+
+        3.14159
+        [3.14159]
+
+        6.02e23
+        [6.02e+23]
+
+        1e-12
+        [1e-12]
+
+        # any int or real number, returned as float
+        100
+        [100.0]
+
+        -100
+        [-100.0]
+
+        +100
+        [100.0]
+
+        3.14159
+        [3.14159]
+
+        6.02e23
+        [6.02e+23]
+
+        1e-12
+        [1e-12]
+
+        # hex numbers
+        100
+        [256]
+
+        FF
+        [255]
+
+        # fractions
+        1/2
+        [0.5]
+
+        -3/4
+        [-0.75]
+
+        # mixed fractions
+        1
+        [1]
+
+        1/2
+        [0.5]
+
+        -3/4
+        [-0.75]
+
+        1-3/4
+        [1.75]
+
+        # uuid
+        12345678-1234-5678-1234-567812345678
+        [UUID('12345678-1234-5678-1234-567812345678')]
     """
-    Flatten an arbitrarily nested sequence.
 
-    Parameters
-    ----------
-    line : sequence
-        The non string sequence to flatten
-
-    Notes
-    -----
-    This doesn't consider strings sequences.
-
-    Returns
-    -------
-    flattened : generator
+    convert_to_integer = token_map(int)
     """
-    for element in line:
-        if iterable_not_string(element):
-            yield from flatten(element)
-        else:
-            yield element
-
-
-def consensus_name_attr(objs):
-    name = objs[0].name
-    for obj in objs[1:]:
-        try:
-            if obj.name != name:
-                name = None
-        except ValueError:
-            name = None
-    return name
-
-
-def is_bool_indexer(key: Any) -> bool:
+    Parse action for converting parsed integers to Python int
     """
-    Check whether `key` is a valid boolean indexer.
 
-    Parameters
-    ----------
-    key : Any
-        Only list-likes may be considered boolean indexers.
-        All other types are not considered a boolean indexer.
-        For array-like input, boolean ndarrays or ExtensionArrays
-        with ``_is_boolean`` set are considered boolean indexers.
-
-    Returns
-    -------
-    bool
-        Whether `key` is a valid boolean indexer.
-
-    Raises
-    ------
-    ValueError
-        When the array is an object-dtype ndarray or ExtensionArray
-        and contains missing values.
-
-    See Also
-    --------
-    check_array_indexer : Check that `key` is a valid array to index,
-        and convert to an ndarray.
+    convert_to_float = token_map(float)
     """
-    if isinstance(key, (ABCSeries, np.ndarray, ABCIndex)) or (
-        is_array_like(key) and is_extension_array_dtype(key.dtype)
-    ):
-        if key.dtype == np.object_:
-            key_array = np.asarray(key)
-
-            if not lib.is_bool_array(key_array):
-                na_msg = "Cannot mask with non-boolean array containing NA / NaN values"
-                if lib.infer_dtype(key_array) == "boolean" and isna(key_array).any():
-                    # Don't raise on e.g. ["A", "B", np.nan], see
-                    #  test_loc_getitem_list_of_labels_categoricalindex_with_na
-                    raise ValueError(na_msg)
-                return False
-            return True
-        elif is_bool_dtype(key.dtype):
-            return True
-    elif isinstance(key, list):
-        # check if np.array(key).dtype would be bool
-        if len(key) > 0:
-            if type(key) is not list:
-                # GH#42461 cython will raise TypeError if we pass a subclass
-                key = list(key)
-            return lib.is_bool_list(key)
-
-    return False
-
-
-def cast_scalar_indexer(val, warn_float: bool = False):
+    Parse action for converting parsed numbers to Python float
     """
-    To avoid numpy DeprecationWarnings, cast float to integer where valid.
 
-    Parameters
-    ----------
-    val : scalar
-    warn_float : bool, default False
-        If True, issue deprecation warning for a float indexer.
+    integer = Word(nums).set_name("integer").set_parse_action(convert_to_integer)
+    """expression that parses an unsigned integer, returns an int"""
 
-    Returns
-    -------
-    outval : scalar
-    """
-    # assumes lib.is_scalar(val)
-    if lib.is_float(val) and val.is_integer():
-        if warn_float:
-            warnings.warn(
-                "Indexing with a float is deprecated, and will raise an IndexError "
-                "in pandas 2.0. You can manually convert to an integer key instead.",
-                FutureWarning,
-                stacklevel=find_stack_level(),
+    hex_integer = (
+        Word(hexnums).set_name("hex integer").set_parse_action(token_map(int, 16))
+    )
+    """expression that parses a hexadecimal integer, returns an int"""
+
+    signed_integer = (
+        Regex(r"[+-]?\d+")
+        .set_name("signed integer")
+        .set_parse_action(convert_to_integer)
+    )
+    """expression that parses an integer with optional leading sign, returns an int"""
+
+    fraction = (
+        signed_integer().set_parse_action(convert_to_float)
+        + "/"
+        + signed_integer().set_parse_action(convert_to_float)
+    ).set_name("fraction")
+    """fractional expression of an integer divided by an integer, returns a float"""
+    fraction.add_parse_action(lambda tt: tt[0] / tt[-1])
+
+    mixed_integer = (
+        fraction | signed_integer + Opt(Opt("-").suppress() + fraction)
+    ).set_name("fraction or mixed integer-fraction")
+    """mixed integer of the form 'integer - fraction', with optional leading integer, returns float"""
+    mixed_integer.add_parse_action(sum)
+
+    real = (
+        Regex(r"[+-]?(?:\d+\.\d*|\.\d+)")
+        .set_name("real number")
+        .set_parse_action(convert_to_float)
+    )
+    """expression that parses a floating point number and returns a float"""
+
+    sci_real = (
+        Regex(r"[+-]?(?:\d+(?:[eE][+-]?\d+)|(?:\d+\.\d*|\.\d+)(?:[eE][+-]?\d+)?)")
+        .set_name("real number with scientific notation")
+        .set_parse_action(convert_to_float)
+    )
+    """expression that parses a floating point number with optional
+    scientific notation and returns a float"""
+
+    # streamlining this expression makes the docs nicer-looking
+    number = (sci_real | real | signed_integer).setName("number").streamline()
+    """any numeric expression, returns the corresponding Python type"""
+
+    fnumber = (
+        Regex(r"[+-]?\d+\.?\d*([eE][+-]?\d+)?")
+        .set_name("fnumber")
+        .set_parse_action(convert_to_float)
+    )
+    """any int or real number, returned as float"""
+
+    identifier = Word(identchars, identbodychars).set_name("identifier")
+    """typical code identifier (leading alpha or '_', followed by 0 or more alphas, nums, or '_')"""
+
+    ipv4_address = Regex(
+        r"(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|1?[0-9]{1,2})){3}"
+    ).set_name("IPv4 address")
+    "IPv4 address (``0.0.0.0 - 255.255.255.255``)"
+
+    _ipv6_part = Regex(r"[0-9a-fA-F]{1,4}").set_name("hex_integer")
+    _full_ipv6_address = (_ipv6_part + (":" + _ipv6_part) * 7).set_name(
+        "full IPv6 address"
+    )
+    _short_ipv6_address = (
+        Opt(_ipv6_part + (":" + _ipv6_part) * (0, 6))
+        + "::"
+        + Opt(_ipv6_part + (":" + _ipv6_part) * (0, 6))
+    ).set_name("short IPv6 address")
+    _short_ipv6_address.add_condition(
+        lambda t: sum(1 for tt in t if pyparsing_common._ipv6_part.matches(tt)) < 8
+    )
+    _mixed_ipv6_address = ("::ffff:" + ipv4_address).set_name("mixed IPv6 address")
+    ipv6_address = Combine(
+        (_full_ipv6_address | _mixed_ipv6_address | _short_ipv6_address).set_name(
+            "IPv6 address"
+        )
+    ).set_name("IPv6 address")
+    "IPv6 address (long, short, or mixed form)"
+
+    mac_address = Regex(
+        r"[0-9a-fA-F]{2}([:.-])[0-9a-fA-F]{2}(?:\1[0-9a-fA-F]{2}){4}"
+    ).set_name("MAC address")
+    "MAC address xx:xx:xx:xx:xx (may also have '-' or '.' delimiters)"
+
+    @staticmethod
+    def convert_to_date(fmt: str = "%Y-%m-%d"):
+        """
+        Helper to create a parse action for converting parsed date string to Python datetime.date
+
+        Params -
+        - fmt - format to be passed to datetime.strptime (default= ``"%Y-%m-%d"``)
+
+        Example::
+
+            date_expr = pyparsing_common.iso8601_date.copy()
+            date_expr.setParseAction(pyparsing_common.convertToDate())
+            print(date_expr.parseString("1999-12-31"))
+
+        prints::
+
+            [datetime.date(1999, 12, 31)]
+        """
+
+        def cvt_fn(ss, ll, tt):
+            try:
+                return datetime.strptime(tt[0], fmt).date()
+            except ValueError as ve:
+                raise ParseException(ss, ll, str(ve))
+
+        return cvt_fn
+
+    @staticmethod
+    def convert_to_datetime(fmt: str = "%Y-%m-%dT%H:%M:%S.%f"):
+        """Helper to create a parse action for converting parsed
+        datetime string to Python datetime.datetime
+
+        Params -
+        - fmt - format to be passed to datetime.strptime (default= ``"%Y-%m-%dT%H:%M:%S.%f"``)
+
+        Example::
+
+            dt_expr = pyparsing_common.iso8601_datetime.copy()
+            dt_expr.setParseAction(pyparsing_common.convertToDatetime())
+            print(dt_expr.parseString("1999-12-31T23:59:59.999"))
+
+        prints::
+
+            [datetime.datetime(1999, 12, 31, 23, 59, 59, 999000)]
+        """
+
+        def cvt_fn(s, l, t):
+            try:
+                return datetime.strptime(t[0], fmt)
+            except ValueError as ve:
+                raise ParseException(s, l, str(ve))
+
+        return cvt_fn
+
+    iso8601_date = Regex(
+        r"(?P<year>\d{4})(?:-(?P<month>\d\d)(?:-(?P<day>\d\d))?)?"
+    ).set_name("ISO8601 date")
+    "ISO8601 date (``yyyy-mm-dd``)"
+
+    iso8601_datetime = Regex(
+        r"(?P<year>\d{4})-(?P<month>\d\d)-(?P<day>\d\d)[T ](?P<hour>\d\d):(?P<minute>\d\d)(:(?P<second>\d\d(\.\d*)?)?)?(?P<tz>Z|[+-]\d\d:?\d\d)?"
+    ).set_name("ISO8601 datetime")
+    "ISO8601 datetime (``yyyy-mm-ddThh:mm:ss.s(Z|+-00:00)``) - trailing seconds, milliseconds, and timezone optional; accepts separating ``'T'`` or ``' '``"
+
+    uuid = Regex(r"[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}").set_name("UUID")
+    "UUID (``xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx``)"
+
+    _html_stripper = any_open_tag.suppress() | any_close_tag.suppress()
+
+    @staticmethod
+    def strip_html_tags(s: str, l: int, tokens: ParseResults):
+        """Parse action to remove HTML tags from web page HTML source
+
+        Example::
+
+            # strip HTML links from normal text
+            text = '<td>More info at the <a href="https://github.com/pyparsing/pyparsing/wiki">pyparsing</a> wiki page</td>'
+            td, td_end = makeHTMLTags("TD")
+            table_text = td + SkipTo(td_end).setParseAction(pyparsing_common.stripHTMLTags)("body") + td_end
+            print(table_text.parseString(text).body)
+
+        Prints::
+
+            More info at the pyparsing wiki page
+        """
+        return pyparsing_common._html_stripper.transform_string(tokens[0])
+
+    _commasepitem = (
+        Combine(
+            OneOrMore(
+                ~Literal(",")
+                + ~LineEnd()
+                + Word(printables, exclude_chars=",")
+                + Opt(White(" \t") + ~FollowedBy(LineEnd() | ","))
             )
-        return int(val)
-    return val
-
-
-def not_none(*args):
-    """
-    Returns a generator consisting of the arguments that are not None.
-    """
-    return (arg for arg in args if arg is not None)
-
-
-def any_none(*args) -> bool:
-    """
-    Returns a boolean indicating if any argument is None.
-    """
-    return any(arg is None for arg in args)
-
-
-def all_none(*args) -> bool:
-    """
-    Returns a boolean indicating if all arguments are None.
-    """
-    return all(arg is None for arg in args)
-
-
-def any_not_none(*args) -> bool:
-    """
-    Returns a boolean indicating if any argument is not None.
-    """
-    return any(arg is not None for arg in args)
-
-
-def all_not_none(*args) -> bool:
-    """
-    Returns a boolean indicating if all arguments are not None.
-    """
-    return all(arg is not None for arg in args)
-
-
-def count_not_none(*args) -> int:
-    """
-    Returns the count of arguments that are not None.
-    """
-    return sum(x is not None for x in args)
-
-
-@overload
-def asarray_tuplesafe(
-    values: ArrayLike | list | tuple | zip, dtype: NpDtype | None = ...
-) -> np.ndarray:
-    # ExtensionArray can only be returned when values is an Index, all other iterables
-    # will return np.ndarray. Unfortunately "all other" cannot be encoded in a type
-    # signature, so instead we special-case some common types.
-    ...
-
-
-@overload
-def asarray_tuplesafe(values: Iterable, dtype: NpDtype | None = ...) -> ArrayLike:
-    ...
-
-
-def asarray_tuplesafe(values: Iterable, dtype: NpDtype | None = None) -> ArrayLike:
-
-    if not (isinstance(values, (list, tuple)) or hasattr(values, "__array__")):
-        values = list(values)
-    elif isinstance(values, ABCIndex):
-        return values._values
-
-    if isinstance(values, list) and dtype in [np.object_, object]:
-        return construct_1d_object_array_from_listlike(values)
-
-    try:
-        with warnings.catch_warnings():
-            # Can remove warning filter once NumPy 1.24 is min version
-            warnings.simplefilter("ignore", np.VisibleDeprecationWarning)
-            result = np.asarray(values, dtype=dtype)
-    except ValueError:
-        # Using try/except since it's more performant than checking is_list_like
-        # over each element
-        # error: Argument 1 to "construct_1d_object_array_from_listlike"
-        # has incompatible type "Iterable[Any]"; expected "Sized"
-        return construct_1d_object_array_from_listlike(values)  # type: ignore[arg-type]
-
-    if issubclass(result.dtype.type, str):
-        result = np.asarray(values, dtype=object)
-
-    if result.ndim == 2:
-        # Avoid building an array of arrays:
-        values = [tuple(x) for x in values]
-        result = construct_1d_object_array_from_listlike(values)
-
-    return result
-
-
-def index_labels_to_array(
-    labels: np.ndarray | Iterable, dtype: NpDtype | None = None
-) -> np.ndarray:
-    """
-    Transform label or iterable of labels to array, for use in Index.
-
-    Parameters
-    ----------
-    dtype : dtype
-        If specified, use as dtype of the resulting array, otherwise infer.
-
-    Returns
-    -------
-    array
-    """
-    if isinstance(labels, (str, tuple)):
-        labels = [labels]
-
-    if not isinstance(labels, (list, np.ndarray)):
-        try:
-            labels = list(labels)
-        except TypeError:  # non-iterable
-            labels = [labels]
-
-    labels = asarray_tuplesafe(labels, dtype=dtype)
-
-    return labels
-
-
-def maybe_make_list(obj):
-    if obj is not None and not isinstance(obj, (tuple, list)):
-        return [obj]
-    return obj
-
-
-def maybe_iterable_to_list(obj: Iterable[T] | T) -> Collection[T] | T:
-    """
-    If obj is Iterable but not list-like, consume into list.
-    """
-    if isinstance(obj, abc.Iterable) and not isinstance(obj, abc.Sized):
-        return list(obj)
-    obj = cast(Collection, obj)
-    return obj
-
-
-def is_null_slice(obj) -> bool:
-    """
-    We have a null slice.
-    """
-    return (
-        isinstance(obj, slice)
-        and obj.start is None
-        and obj.stop is None
-        and obj.step is None
-    )
-
-
-def is_true_slices(line) -> list[bool]:
-    """
-    Find non-trivial slices in "line": return a list of booleans with same length.
-    """
-    return [isinstance(k, slice) and not is_null_slice(k) for k in line]
-
-
-# TODO: used only once in indexing; belongs elsewhere?
-def is_full_slice(obj, line: int) -> bool:
-    """
-    We have a full length slice.
-    """
-    return (
-        isinstance(obj, slice)
-        and obj.start == 0
-        and obj.stop == line
-        and obj.step is None
-    )
-
-
-def get_callable_name(obj):
-    # typical case has name
-    if hasattr(obj, "__name__"):
-        return getattr(obj, "__name__")
-    # some objects don't; could recurse
-    if isinstance(obj, partial):
-        return get_callable_name(obj.func)
-    # fall back to class name
-    if callable(obj):
-        return type(obj).__name__
-    # everything failed (probably because the argument
-    # wasn't actually callable); we return None
-    # instead of the empty string in this case to allow
-    # distinguishing between no name and a name of ''
-    return None
-
-
-def apply_if_callable(maybe_callable, obj, **kwargs):
-    """
-    Evaluate possibly callable input using obj and kwargs if it is callable,
-    otherwise return as it is.
-
-    Parameters
-    ----------
-    maybe_callable : possibly a callable
-    obj : NDFrame
-    **kwargs
-    """
-    if callable(maybe_callable):
-        return maybe_callable(obj, **kwargs)
-
-    return maybe_callable
-
-
-def standardize_mapping(into):
-    """
-    Helper function to standardize a supplied mapping.
-
-    Parameters
-    ----------
-    into : instance or subclass of collections.abc.Mapping
-        Must be a class, an initialized collections.defaultdict,
-        or an instance of a collections.abc.Mapping subclass.
-
-    Returns
-    -------
-    mapping : a collections.abc.Mapping subclass or other constructor
-        a callable object that can accept an iterator to create
-        the desired Mapping.
-
-    See Also
-    --------
-    DataFrame.to_dict
-    Series.to_dict
-    """
-    if not inspect.isclass(into):
-        if isinstance(into, defaultdict):
-            return partial(defaultdict, into.default_factory)
-        into = type(into)
-    if not issubclass(into, abc.Mapping):
-        raise TypeError(f"unsupported type: {into}")
-    elif into == defaultdict:
-        raise TypeError("to_dict() only accepts initialized defaultdicts")
-    return into
-
-
-@overload
-def random_state(state: np.random.Generator) -> np.random.Generator:
-    ...
-
-
-@overload
-def random_state(
-    state: int | ArrayLike | np.random.BitGenerator | np.random.RandomState | None,
-) -> np.random.RandomState:
-    ...
-
-
-def random_state(state: RandomState | None = None):
-    """
-    Helper function for processing random_state arguments.
-
-    Parameters
-    ----------
-    state : int, array-like, BitGenerator, Generator, np.random.RandomState, None.
-        If receives an int, array-like, or BitGenerator, passes to
-        np.random.RandomState() as seed.
-        If receives an np.random RandomState or Generator, just returns that unchanged.
-        If receives `None`, returns np.random.
-        If receives anything else, raises an informative ValueError.
-
-        .. versionchanged:: 1.1.0
-
-            array-like and BitGenerator object now passed to np.random.RandomState()
-            as seed
-
-        Default None.
-
-    Returns
-    -------
-    np.random.RandomState or np.random.Generator. If state is None, returns np.random
-
-    """
-    if (
-        is_integer(state)
-        or is_array_like(state)
-        or isinstance(state, np.random.BitGenerator)
-    ):
-        # error: Argument 1 to "RandomState" has incompatible type "Optional[Union[int,
-        # Union[ExtensionArray, ndarray[Any, Any]], Generator, RandomState]]"; expected
-        # "Union[None, Union[Union[_SupportsArray[dtype[Union[bool_, integer[Any]]]],
-        # Sequence[_SupportsArray[dtype[Union[bool_, integer[Any]]]]],
-        # Sequence[Sequence[_SupportsArray[dtype[Union[bool_, integer[Any]]]]]],
-        # Sequence[Sequence[Sequence[_SupportsArray[dtype[Union[bool_,
-        # integer[Any]]]]]]],
-        # Sequence[Sequence[Sequence[Sequence[_SupportsArray[dtype[Union[bool_,
-        # integer[Any]]]]]]]]], Union[bool, int, Sequence[Union[bool, int]],
-        # Sequence[Sequence[Union[bool, int]]], Sequence[Sequence[Sequence[Union[bool,
-        # int]]]], Sequence[Sequence[Sequence[Sequence[Union[bool, int]]]]]]],
-        # BitGenerator]"
-        return np.random.RandomState(state)  # type: ignore[arg-type]
-    elif isinstance(state, np.random.RandomState):
-        return state
-    elif isinstance(state, np.random.Generator):
-        return state
-    elif state is None:
-        return np.random
-    else:
-        raise ValueError(
-            "random_state must be an integer, array-like, a BitGenerator, Generator, "
-            "a numpy RandomState, or None"
         )
-
-
-def pipe(
-    obj, func: Callable[..., T] | tuple[Callable[..., T], str], *args, **kwargs
-) -> T:
-    """
-    Apply a function ``func`` to object ``obj`` either by passing obj as the
-    first argument to the function or, in the case that the func is a tuple,
-    interpret the first element of the tuple as a function and pass the obj to
-    that function as a keyword argument whose key is the value of the second
-    element of the tuple.
-
-    Parameters
-    ----------
-    func : callable or tuple of (callable, str)
-        Function to apply to this object or, alternatively, a
-        ``(callable, data_keyword)`` tuple where ``data_keyword`` is a
-        string indicating the keyword of ``callable`` that expects the
-        object.
-    *args : iterable, optional
-        Positional arguments passed into ``func``.
-    **kwargs : dict, optional
-        A dictionary of keyword arguments passed into ``func``.
-
-    Returns
-    -------
-    object : the return type of ``func``.
-    """
-    if isinstance(func, tuple):
-        func, target = func
-        if target in kwargs:
-            msg = f"{target} is both the pipe target and a keyword argument"
-            raise ValueError(msg)
-        kwargs[target] = obj
-        return func(*args, **kwargs)
-    else:
-        return func(obj, *args, **kwargs)
-
-
-def get_rename_function(mapper):
-    """
-    Returns a function that will map names/labels, dependent if mapper
-    is a dict, Series or just a function.
-    """
-
-    def f(x):
-        if x in mapper:
-            return mapper[x]
-        else:
-            return x
-
-    return f if isinstance(mapper, (abc.Mapping, ABCSeries)) else mapper
-
-
-def convert_to_list_like(
-    values: Hashable | Iterable | AnyArrayLike,
-) -> list | AnyArrayLike:
-    """
-    Convert list-like or scalar input to list-like. List, numpy and pandas array-like
-    inputs are returned unmodified whereas others are converted to list.
-    """
-    if isinstance(values, (list, np.ndarray, ABCIndex, ABCSeries, ABCExtensionArray)):
-        return values
-    elif isinstance(values, abc.Iterable) and not isinstance(values, str):
-        return list(values)
-
-    return [values]
-
-
-@contextlib.contextmanager
-def temp_setattr(obj, attr: str, value) -> Iterator[None]:
-    """Temporarily set attribute on an object.
-
-    Args:
-        obj: Object whose attribute will be modified.
-        attr: Attribute to modify.
-        value: Value to temporarily set attribute to.
-
-    Yields:
-        obj with modified attribute.
-    """
-    old_value = getattr(obj, attr)
-    setattr(obj, attr, value)
-    try:
-        yield obj
-    finally:
-        setattr(obj, attr, old_value)
-
-
-def require_length_match(data, index: Index) -> None:
-    """
-    Check the length of data matches the length of the index.
-    """
-    if len(data) != len(index):
-        raise ValueError(
-            "Length of values "
-            f"({len(data)}) "
-            "does not match length of index "
-            f"({len(index)})"
-        )
-
-
-# the ufuncs np.maximum.reduce and np.minimum.reduce default to axis=0,
-#  whereas np.min and np.max (which directly call obj.min and obj.max)
-#  default to axis=None.
-_builtin_table = {
-    builtins.sum: np.sum,
-    builtins.max: np.maximum.reduce,
-    builtins.min: np.minimum.reduce,
-}
-
-_cython_table = {
-    builtins.sum: "sum",
-    builtins.max: "max",
-    builtins.min: "min",
-    np.all: "all",
-    np.any: "any",
-    np.sum: "sum",
-    np.nansum: "sum",
-    np.mean: "mean",
-    np.nanmean: "mean",
-    np.prod: "prod",
-    np.nanprod: "prod",
-    np.std: "std",
-    np.nanstd: "std",
-    np.var: "var",
-    np.nanvar: "var",
-    np.median: "median",
-    np.nanmedian: "median",
-    np.max: "max",
-    np.nanmax: "max",
-    np.min: "min",
-    np.nanmin: "min",
-    np.cumprod: "cumprod",
-    np.nancumprod: "cumprod",
-    np.cumsum: "cumsum",
-    np.nancumsum: "cumsum",
-}
-
-
-def get_cython_func(arg: Callable) -> str | None:
-    """
-    if we define an internal function for this argument, return it
-    """
-    return _cython_table.get(arg)
-
-
-def is_builtin_func(arg):
-    """
-    if we define a builtin function for this argument, return it,
-    otherwise return the arg
-    """
-    return _builtin_table.get(arg, arg)
-
-
-def fill_missing_names(names: Sequence[Hashable | None]) -> list[Hashable]:
-    """
-    If a name is missing then replace it by level_n, where n is the count
-
-    .. versionadded:: 1.4.0
-
-    Parameters
-    ----------
-    names : list-like
-        list of column names or None values.
-
-    Returns
-    -------
-    list
-        list of column names with the None values replaced.
-    """
-    return [f"level_{i}" if name is None else name for i, name in enumerate(names)]
-
-
-def resolve_numeric_only(numeric_only: bool | None | lib.NoDefault) -> bool:
-    """Determine the Boolean value of numeric_only.
-
-    See GH#46560 for details on the deprecation.
-
-    Parameters
-    ----------
-    numeric_only : bool, None, or lib.no_default
-        Value passed to the method.
-
-    Returns
-    -------
-    Resolved value of numeric_only.
-    """
-    if numeric_only is lib.no_default:
-        # Methods that behave like numeric_only=True and only got the numeric_only
-        # arg in 1.5.0 default to lib.no_default
-        result = True
-    elif numeric_only is None:
-        # Methods that had the numeric_only arg prior to 1.5.0 and try all columns
-        # first default to None
-        result = False
-    else:
-        result = numeric_only
-    return result
-
-
-def deprecate_numeric_only_default(
-    cls: type, name: str, deprecate_none: bool = False
-) -> None:
-    """Emit FutureWarning message for deprecation of numeric_only.
-
-    See GH#46560 for details on the deprecation.
-
-    Parameters
-    ----------
-    cls : type
-        pandas type that is generating the warning.
-    name : str
-        Name of the method that is generating the warning.
-    deprecate_none : bool, default False
-        Whether to also warn about the deprecation of specifying ``numeric_only=None``.
-    """
-    if name in ["all", "any"]:
-        arg_name = "bool_only"
-    else:
-        arg_name = "numeric_only"
-
-    msg = (
-        f"The default value of {arg_name} in {cls.__name__}.{name} is "
-        "deprecated. In a future version, it will default to False. "
+        .streamline()
+        .set_name("commaItem")
     )
-    if deprecate_none:
-        msg += f"In addition, specifying '{arg_name}=None' is deprecated. "
-    msg += (
-        f"Select only valid columns or specify the value of {arg_name} to silence "
-        "this warning."
-    )
+    comma_separated_list = delimited_list(
+        Opt(quoted_string.copy() | _commasepitem, default="")
+    ).set_name("comma separated list")
+    """Predefined expression of 1 or more printable words or quoted strings, separated by commas."""
 
-    warnings.warn(msg, FutureWarning, stacklevel=find_stack_level())
+    upcase_tokens = staticmethod(token_map(lambda t: t.upper()))
+    """Parse action to convert tokens to upper case."""
+
+    downcase_tokens = staticmethod(token_map(lambda t: t.lower()))
+    """Parse action to convert tokens to lower case."""
+
+    # fmt: off
+    url = Regex(
+        # https://mathiasbynens.be/demo/url-regex
+        # https://gist.github.com/dperini/729294
+        r"^" +
+        # protocol identifier (optional)
+        # short syntax // still required
+        r"(?:(?:(?P<scheme>https?|ftp):)?\/\/)" +
+        # user:pass BasicAuth (optional)
+        r"(?:(?P<auth>\S+(?::\S*)?)@)?" +
+        r"(?P<host>" +
+        # IP address exclusion
+        # private & local networks
+        r"(?!(?:10|127)(?:\.\d{1,3}){3})" +
+        r"(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})" +
+        r"(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})" +
+        # IP address dotted notation octets
+        # excludes loopback network 0.0.0.0
+        # excludes reserved space >= 224.0.0.0
+        # excludes network & broadcast addresses
+        # (first & last IP address of each class)
+        r"(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])" +
+        r"(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}" +
+        r"(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))" +
+        r"|" +
+        # host & domain names, may end with dot
+        # can be replaced by a shortest alternative
+        # (?![-_])(?:[-\w\u00a1-\uffff]{0,63}[^-_]\.)+
+        r"(?:" +
+        r"(?:" +
+        r"[a-z0-9\u00a1-\uffff]" +
+        r"[a-z0-9\u00a1-\uffff_-]{0,62}" +
+        r")?" +
+        r"[a-z0-9\u00a1-\uffff]\." +
+        r")+" +
+        # TLD identifier name, may end with dot
+        r"(?:[a-z\u00a1-\uffff]{2,}\.?)" +
+        r")" +
+        # port number (optional)
+        r"(:(?P<port>\d{2,5}))?" +
+        # resource path (optional)
+        r"(?P<path>\/[^?# ]*)?" +
+        # query string (optional)
+        r"(\?(?P<query>[^#]*))?" +
+        # fragment (optional)
+        r"(#(?P<fragment>\S*))?" +
+        r"$"
+    ).set_name("url")
+    # fmt: on
+
+    # pre-PEP8 compatibility names
+    convertToInteger = convert_to_integer
+    convertToFloat = convert_to_float
+    convertToDate = convert_to_date
+    convertToDatetime = convert_to_datetime
+    stripHTMLTags = strip_html_tags
+    upcaseTokens = upcase_tokens
+    downcaseTokens = downcase_tokens
+
+
+_builtin_exprs = [
+    v for v in vars(pyparsing_common).values() if isinstance(v, ParserElement)
+]

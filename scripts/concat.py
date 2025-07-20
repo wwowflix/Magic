@@ -1,365 +1,820 @@
 """
-Utility functions related to concat.
+Concat routines.
 """
 from __future__ import annotations
 
+from collections import abc
 from typing import (
     TYPE_CHECKING,
+    Callable,
+    Hashable,
+    Iterable,
+    Literal,
+    Mapping,
     cast,
+    overload,
 )
 import warnings
 
 import numpy as np
 
 from pandas._typing import (
-    ArrayLike,
-    DtypeObj,
+    Axis,
+    HashableT,
+)
+from pandas.util._decorators import (
+    cache_readonly,
+    deprecate_nonkeyword_arguments,
 )
 from pandas.util._exceptions import find_stack_level
 
-from pandas.core.dtypes.astype import astype_array
-from pandas.core.dtypes.cast import (
-    common_dtype_categorical_compat,
-    find_common_type,
-)
-from pandas.core.dtypes.common import (
-    is_dtype_equal,
-    is_sparse,
-)
-from pandas.core.dtypes.dtypes import (
-    DatetimeTZDtype,
-    ExtensionDtype,
-)
+from pandas.core.dtypes.concat import concat_compat
 from pandas.core.dtypes.generic import (
-    ABCCategoricalIndex,
-    ABCExtensionArray,
+    ABCDataFrame,
     ABCSeries,
 )
+from pandas.core.dtypes.inference import is_bool
+from pandas.core.dtypes.missing import isna
+
+from pandas.core.arrays.categorical import (
+    factorize_from_iterable,
+    factorize_from_iterables,
+)
+import pandas.core.common as com
+from pandas.core.indexes.api import (
+    Index,
+    MultiIndex,
+    all_indexes_same,
+    default_index,
+    ensure_index,
+    get_objs_combined_axis,
+    get_unanimous_names,
+)
+from pandas.core.internals import concatenate_managers
 
 if TYPE_CHECKING:
-    from pandas.core.arrays import Categorical
-    from pandas.core.arrays.sparse import SparseArray
+    from pandas import (
+        DataFrame,
+        Series,
+    )
+    from pandas.core.generic import NDFrame
+
+# ---------------------------------------------------------------------
+# Concatenate DataFrame objects
 
 
-def cast_to_common_type(arr: ArrayLike, dtype: DtypeObj) -> ArrayLike:
+@overload
+def concat(
+    objs: Iterable[DataFrame] | Mapping[HashableT, DataFrame],
+    axis: Literal[0, "index"] = ...,
+    join: str = ...,
+    ignore_index: bool = ...,
+    keys=...,
+    levels=...,
+    names=...,
+    verify_integrity: bool = ...,
+    sort: bool = ...,
+    copy: bool = ...,
+) -> DataFrame:
+    ...
+
+
+@overload
+def concat(
+    objs: Iterable[Series] | Mapping[HashableT, Series],
+    axis: Literal[0, "index"] = ...,
+    join: str = ...,
+    ignore_index: bool = ...,
+    keys=...,
+    levels=...,
+    names=...,
+    verify_integrity: bool = ...,
+    sort: bool = ...,
+    copy: bool = ...,
+) -> Series:
+    ...
+
+
+@overload
+def concat(
+    objs: Iterable[NDFrame] | Mapping[HashableT, NDFrame],
+    axis: Literal[0, "index"] = ...,
+    join: str = ...,
+    ignore_index: bool = ...,
+    keys=...,
+    levels=...,
+    names=...,
+    verify_integrity: bool = ...,
+    sort: bool = ...,
+    copy: bool = ...,
+) -> DataFrame | Series:
+    ...
+
+
+@overload
+def concat(
+    objs: Iterable[NDFrame] | Mapping[HashableT, NDFrame],
+    axis: Literal[1, "columns"],
+    join: str = ...,
+    ignore_index: bool = ...,
+    keys=...,
+    levels=...,
+    names=...,
+    verify_integrity: bool = ...,
+    sort: bool = ...,
+    copy: bool = ...,
+) -> DataFrame:
+    ...
+
+
+@overload
+def concat(
+    objs: Iterable[NDFrame] | Mapping[HashableT, NDFrame],
+    axis: Axis = ...,
+    join: str = ...,
+    ignore_index: bool = ...,
+    keys=...,
+    levels=...,
+    names=...,
+    verify_integrity: bool = ...,
+    sort: bool = ...,
+    copy: bool = ...,
+) -> DataFrame | Series:
+    ...
+
+
+@deprecate_nonkeyword_arguments(version=None, allowed_args=["objs"])
+def concat(
+    objs: Iterable[NDFrame] | Mapping[HashableT, NDFrame],
+    axis: Axis = 0,
+    join: str = "outer",
+    ignore_index: bool = False,
+    keys=None,
+    levels=None,
+    names=None,
+    verify_integrity: bool = False,
+    sort: bool = False,
+    copy: bool = True,
+) -> DataFrame | Series:
     """
-    Helper function for `arr.astype(common_dtype)` but handling all special
-    cases.
-    """
-    if is_dtype_equal(arr.dtype, dtype):
-        return arr
+    Concatenate pandas objects along a particular axis.
 
-    if is_sparse(arr) and not is_sparse(dtype):
-        # TODO(2.0): remove special case once SparseArray.astype deprecation
-        #  is enforced.
-        # problem case: SparseArray.astype(dtype) doesn't follow the specified
-        # dtype exactly, but converts this to Sparse[dtype] -> first manually
-        # convert to dense array
+    Allows optional set logic along the other axes.
 
-        # error: Argument 1 to "astype" of "_ArrayOrScalarCommon" has incompatible type
-        # "Union[dtype[Any], ExtensionDtype]"; expected "Union[dtype[Any], None, type, _
-        # SupportsDType[dtype[Any]], str, Union[Tuple[Any, int], Tuple[Any,
-        # Union[SupportsIndex, Sequence[SupportsIndex]]], List[Any], _DTypeDict,
-        # Tuple[Any, Any]]]"  [arg-type]
-        arr = cast("SparseArray", arr)
-        return arr.to_dense().astype(dtype, copy=False)  # type: ignore[arg-type]
-
-    # astype_array includes ensure_wrapped_if_datetimelike
-    return astype_array(arr, dtype=dtype, copy=False)
-
-
-def concat_compat(to_concat, axis: int = 0, ea_compat_axis: bool = False):
-    """
-    provide concatenation of an array of arrays each of which is a single
-    'normalized' dtypes (in that for example, if it's object, then it is a
-    non-datetimelike and provide a combined dtype for the resulting array that
-    preserves the overall dtype if possible)
+    Can also add a layer of hierarchical indexing on the concatenation axis,
+    which may be useful if the labels are the same (or overlapping) on
+    the passed axis number.
 
     Parameters
     ----------
-    to_concat : array of arrays
-    axis : axis to provide concatenation
-    ea_compat_axis : bool, default False
-        For ExtensionArray compat, behave as if axis == 1 when determining
-        whether to drop empty arrays.
+    objs : a sequence or mapping of Series or DataFrame objects
+        If a mapping is passed, the sorted keys will be used as the `keys`
+        argument, unless it is passed, in which case the values will be
+        selected (see below). Any None objects will be dropped silently unless
+        they are all None in which case a ValueError will be raised.
+    axis : {0/'index', 1/'columns'}, default 0
+        The axis to concatenate along.
+    join : {'inner', 'outer'}, default 'outer'
+        How to handle indexes on other axis (or axes).
+    ignore_index : bool, default False
+        If True, do not use the index values along the concatenation axis. The
+        resulting axis will be labeled 0, ..., n - 1. This is useful if you are
+        concatenating objects where the concatenation axis does not have
+        meaningful indexing information. Note the index values on the other
+        axes are still respected in the join.
+    keys : sequence, default None
+        If multiple levels passed, should contain tuples. Construct
+        hierarchical index using the passed keys as the outermost level.
+    levels : list of sequences, default None
+        Specific levels (unique values) to use for constructing a
+        MultiIndex. Otherwise they will be inferred from the keys.
+    names : list, default None
+        Names for the levels in the resulting hierarchical index.
+    verify_integrity : bool, default False
+        Check whether the new concatenated axis contains duplicates. This can
+        be very expensive relative to the actual data concatenation.
+    sort : bool, default False
+        Sort non-concatenation axis if it is not already aligned when `join`
+        is 'outer'.
+        This has no effect when ``join='inner'``, which already preserves
+        the order of the non-concatenation axis.
+
+        .. versionchanged:: 1.0.0
+
+           Changed to not sort by default.
+
+    copy : bool, default True
+        If False, do not copy data unnecessarily.
 
     Returns
     -------
-    a single array, preserving the combined dtypes
-    """
-    # filter empty arrays
-    # 1-d dtypes always are included here
-    def is_nonempty(x) -> bool:
-        if x.ndim <= axis:
-            return True
-        return x.shape[axis] > 0
+    object, type of objs
+        When concatenating all ``Series`` along the index (axis=0), a
+        ``Series`` is returned. When ``objs`` contains at least one
+        ``DataFrame``, a ``DataFrame`` is returned. When concatenating along
+        the columns (axis=1), a ``DataFrame`` is returned.
 
-    # If all arrays are empty, there's nothing to convert, just short-cut to
-    # the concatenation, #3121.
-    #
-    # Creating an empty array directly is tempting, but the winnings would be
-    # marginal given that it would still require shape & dtype calculation and
-    # np.concatenate which has them both implemented is compiled.
-    non_empties = [x for x in to_concat if is_nonempty(x)]
-    if non_empties and axis == 0 and not ea_compat_axis:
-        # ea_compat_axis see GH#39574
-        to_concat = non_empties
-
-    dtypes = {obj.dtype for obj in to_concat}
-    kinds = {obj.dtype.kind for obj in to_concat}
-    contains_datetime = any(
-        isinstance(dtype, (np.dtype, DatetimeTZDtype)) and dtype.kind in ["m", "M"]
-        for dtype in dtypes
-    ) or any(isinstance(obj, ABCExtensionArray) and obj.ndim > 1 for obj in to_concat)
-
-    all_empty = not len(non_empties)
-    single_dtype = len({x.dtype for x in to_concat}) == 1
-    any_ea = any(isinstance(x.dtype, ExtensionDtype) for x in to_concat)
-
-    if contains_datetime:
-        return _concat_datetime(to_concat, axis=axis)
-
-    if any_ea:
-        # we ignore axis here, as internally concatting with EAs is always
-        # for axis=0
-        if not single_dtype:
-            target_dtype = find_common_type([x.dtype for x in to_concat])
-            target_dtype = common_dtype_categorical_compat(to_concat, target_dtype)
-            to_concat = [cast_to_common_type(arr, target_dtype) for arr in to_concat]
-
-        if isinstance(to_concat[0], ABCExtensionArray):
-            # TODO: what about EA-backed Index?
-            cls = type(to_concat[0])
-            return cls._concat_same_type(to_concat)
-        else:
-            return np.concatenate(to_concat)
-
-    elif all_empty:
-        # we have all empties, but may need to coerce the result dtype to
-        # object if we have non-numeric type operands (numpy would otherwise
-        # cast this to float)
-        if len(kinds) != 1:
-
-            if not len(kinds - {"i", "u", "f"}) or not len(kinds - {"b", "i", "u"}):
-                # let numpy coerce
-                pass
-            else:
-                # coerce to object
-                to_concat = [x.astype("object") for x in to_concat]
-                kinds = {"o"}
-
-    result = np.concatenate(to_concat, axis=axis)
-    if "b" in kinds and result.dtype.kind in ["i", "u", "f"]:
-        # GH#39817
-        warnings.warn(
-            "Behavior when concatenating bool-dtype and numeric-dtype arrays is "
-            "deprecated; in a future version these will cast to object dtype "
-            "(instead of coercing bools to numeric values). To retain the old "
-            "behavior, explicitly cast bool-dtype arrays to numeric dtype.",
-            FutureWarning,
-            stacklevel=find_stack_level(),
-        )
-    return result
-
-
-def union_categoricals(
-    to_union, sort_categories: bool = False, ignore_order: bool = False
-) -> Categorical:
-    """
-    Combine list-like of Categorical-like, unioning categories.
-
-    All categories must have the same dtype.
-
-    Parameters
-    ----------
-    to_union : list-like
-        Categorical, CategoricalIndex, or Series with dtype='category'.
-    sort_categories : bool, default False
-        If true, resulting categories will be lexsorted, otherwise
-        they will be ordered as they appear in the data.
-    ignore_order : bool, default False
-        If true, the ordered attribute of the Categoricals will be ignored.
-        Results in an unordered categorical.
-
-    Returns
-    -------
-    Categorical
-
-    Raises
-    ------
-    TypeError
-        - all inputs do not have the same dtype
-        - all inputs do not have the same ordered property
-        - all inputs are ordered and their categories are not identical
-        - sort_categories=True and Categoricals are ordered
-    ValueError
-        Empty list of categoricals passed
+    See Also
+    --------
+    DataFrame.join : Join DataFrames using indexes.
+    DataFrame.merge : Merge DataFrames by indexes or columns.
 
     Notes
     -----
-    To learn more about categories, see `link
-    <https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html#unioning>`__
+    The keys, levels, and names arguments are all optional.
+
+    A walkthrough of how this method fits in with other tools for combining
+    pandas objects can be found `here
+    <https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html>`__.
+
+    It is not recommended to build DataFrames by adding single rows in a
+    for loop. Build a list of rows and make a DataFrame in a single concat.
 
     Examples
     --------
-    If you want to combine categoricals that do not necessarily have
-    the same categories, `union_categoricals` will combine a list-like
-    of categoricals. The new categories will be the union of the
-    categories being combined.
+    Combine two ``Series``.
 
-    >>> a = pd.Categorical(["b", "c"])
-    >>> b = pd.Categorical(["a", "b"])
-    >>> pd.api.types.union_categoricals([a, b])
-    ['b', 'c', 'a', 'b']
-    Categories (3, object): ['b', 'c', 'a']
+    >>> s1 = pd.Series(['a', 'b'])
+    >>> s2 = pd.Series(['c', 'd'])
+    >>> pd.concat([s1, s2])
+    0    a
+    1    b
+    0    c
+    1    d
+    dtype: object
 
-    By default, the resulting categories will be ordered as they appear
-    in the `categories` of the data. If you want the categories to be
-    lexsorted, use `sort_categories=True` argument.
+    Clear the existing index and reset it in the result
+    by setting the ``ignore_index`` option to ``True``.
 
-    >>> pd.api.types.union_categoricals([a, b], sort_categories=True)
-    ['b', 'c', 'a', 'b']
-    Categories (3, object): ['a', 'b', 'c']
+    >>> pd.concat([s1, s2], ignore_index=True)
+    0    a
+    1    b
+    2    c
+    3    d
+    dtype: object
 
-    `union_categoricals` also works with the case of combining two
-    categoricals of the same categories and order information (e.g. what
-    you could also `append` for).
+    Add a hierarchical index at the outermost level of
+    the data with the ``keys`` option.
 
-    >>> a = pd.Categorical(["a", "b"], ordered=True)
-    >>> b = pd.Categorical(["a", "b", "a"], ordered=True)
-    >>> pd.api.types.union_categoricals([a, b])
-    ['a', 'b', 'a', 'b', 'a']
-    Categories (2, object): ['a' < 'b']
+    >>> pd.concat([s1, s2], keys=['s1', 's2'])
+    s1  0    a
+        1    b
+    s2  0    c
+        1    d
+    dtype: object
 
-    Raises `TypeError` because the categories are ordered and not identical.
+    Label the index keys you create with the ``names`` option.
 
-    >>> a = pd.Categorical(["a", "b"], ordered=True)
-    >>> b = pd.Categorical(["a", "b", "c"], ordered=True)
-    >>> pd.api.types.union_categoricals([a, b])
+    >>> pd.concat([s1, s2], keys=['s1', 's2'],
+    ...           names=['Series name', 'Row ID'])
+    Series name  Row ID
+    s1           0         a
+                 1         b
+    s2           0         c
+                 1         d
+    dtype: object
+
+    Combine two ``DataFrame`` objects with identical columns.
+
+    >>> df1 = pd.DataFrame([['a', 1], ['b', 2]],
+    ...                    columns=['letter', 'number'])
+    >>> df1
+      letter  number
+    0      a       1
+    1      b       2
+    >>> df2 = pd.DataFrame([['c', 3], ['d', 4]],
+    ...                    columns=['letter', 'number'])
+    >>> df2
+      letter  number
+    0      c       3
+    1      d       4
+    >>> pd.concat([df1, df2])
+      letter  number
+    0      a       1
+    1      b       2
+    0      c       3
+    1      d       4
+
+    Combine ``DataFrame`` objects with overlapping columns
+    and return everything. Columns outside the intersection will
+    be filled with ``NaN`` values.
+
+    >>> df3 = pd.DataFrame([['c', 3, 'cat'], ['d', 4, 'dog']],
+    ...                    columns=['letter', 'number', 'animal'])
+    >>> df3
+      letter  number animal
+    0      c       3    cat
+    1      d       4    dog
+    >>> pd.concat([df1, df3], sort=False)
+      letter  number animal
+    0      a       1    NaN
+    1      b       2    NaN
+    0      c       3    cat
+    1      d       4    dog
+
+    Combine ``DataFrame`` objects with overlapping columns
+    and return only those that are shared by passing ``inner`` to
+    the ``join`` keyword argument.
+
+    >>> pd.concat([df1, df3], join="inner")
+      letter  number
+    0      a       1
+    1      b       2
+    0      c       3
+    1      d       4
+
+    Combine ``DataFrame`` objects horizontally along the x axis by
+    passing in ``axis=1``.
+
+    >>> df4 = pd.DataFrame([['bird', 'polly'], ['monkey', 'george']],
+    ...                    columns=['animal', 'name'])
+    >>> pd.concat([df1, df4], axis=1)
+      letter  number  animal    name
+    0      a       1    bird   polly
+    1      b       2  monkey  george
+
+    Prevent the result from including duplicate index values with the
+    ``verify_integrity`` option.
+
+    >>> df5 = pd.DataFrame([1], index=['a'])
+    >>> df5
+       0
+    a  1
+    >>> df6 = pd.DataFrame([2], index=['a'])
+    >>> df6
+       0
+    a  2
+    >>> pd.concat([df5, df6], verify_integrity=True)
     Traceback (most recent call last):
         ...
-    TypeError: to union ordered Categoricals, all categories must be the same
+    ValueError: Indexes have overlapping values: ['a']
 
-    New in version 0.20.0
+    Append a single row to the end of a ``DataFrame`` object.
 
-    Ordered categoricals with different categories or orderings can be
-    combined by using the `ignore_ordered=True` argument.
-
-    >>> a = pd.Categorical(["a", "b", "c"], ordered=True)
-    >>> b = pd.Categorical(["c", "b", "a"], ordered=True)
-    >>> pd.api.types.union_categoricals([a, b], ignore_order=True)
-    ['a', 'b', 'c', 'c', 'b', 'a']
-    Categories (3, object): ['a', 'b', 'c']
-
-    `union_categoricals` also works with a `CategoricalIndex`, or `Series`
-    containing categorical data, but note that the resulting array will
-    always be a plain `Categorical`
-
-    >>> a = pd.Series(["b", "c"], dtype='category')
-    >>> b = pd.Series(["a", "b"], dtype='category')
-    >>> pd.api.types.union_categoricals([a, b])
-    ['b', 'c', 'a', 'b']
-    Categories (3, object): ['b', 'c', 'a']
+    >>> df7 = pd.DataFrame({'a': 1, 'b': 2}, index=[0])
+    >>> df7
+        a   b
+    0   1   2
+    >>> new_row = pd.Series({'a': 3, 'b': 4})
+    >>> new_row
+    a    3
+    b    4
+    dtype: int64
+    >>> pd.concat([df7, new_row.to_frame().T], ignore_index=True)
+        a   b
+    0   1   2
+    1   3   4
     """
-    from pandas import Categorical
-    from pandas.core.arrays.categorical import recode_for_categories
+    op = _Concatenator(
+        objs,
+        axis=axis,
+        ignore_index=ignore_index,
+        join=join,
+        keys=keys,
+        levels=levels,
+        names=names,
+        verify_integrity=verify_integrity,
+        copy=copy,
+        sort=sort,
+    )
 
-    if len(to_union) == 0:
-        raise ValueError("No Categoricals to union")
+    return op.get_result()
 
-    def _maybe_unwrap(x):
-        if isinstance(x, (ABCCategoricalIndex, ABCSeries)):
-            return x._values
-        elif isinstance(x, Categorical):
-            return x
+
+class _Concatenator:
+    """
+    Orchestrates a concatenation operation for BlockManagers
+    """
+
+    def __init__(
+        self,
+        objs: Iterable[NDFrame] | Mapping[HashableT, NDFrame],
+        axis=0,
+        join: str = "outer",
+        keys=None,
+        levels=None,
+        names=None,
+        ignore_index: bool = False,
+        verify_integrity: bool = False,
+        copy: bool = True,
+        sort=False,
+    ) -> None:
+        if isinstance(objs, (ABCSeries, ABCDataFrame, str)):
+            raise TypeError(
+                "first argument must be an iterable of pandas "
+                f'objects, you passed an object of type "{type(objs).__name__}"'
+            )
+
+        if join == "outer":
+            self.intersect = False
+        elif join == "inner":
+            self.intersect = True
+        else:  # pragma: no cover
+            raise ValueError(
+                "Only can inner (intersect) or outer (union) join the other axis"
+            )
+
+        if isinstance(objs, abc.Mapping):
+            if keys is None:
+                keys = list(objs.keys())
+            objs = [objs[k] for k in keys]
         else:
-            raise TypeError("all components to combine must be Categorical")
+            objs = list(objs)
 
-    to_union = [_maybe_unwrap(x) for x in to_union]
-    first = to_union[0]
+        if len(objs) == 0:
+            raise ValueError("No objects to concatenate")
 
-    if not all(
-        is_dtype_equal(other.categories.dtype, first.categories.dtype)
-        for other in to_union[1:]
-    ):
-        raise TypeError("dtype of categories must be the same")
+        if keys is None:
+            objs = list(com.not_none(*objs))
+        else:
+            # #1649
+            clean_keys = []
+            clean_objs = []
+            for k, v in zip(keys, objs):
+                if v is None:
+                    continue
+                clean_keys.append(k)
+                clean_objs.append(v)
+            objs = clean_objs
 
-    ordered = False
-    if all(first._categories_match_up_to_permutation(other) for other in to_union[1:]):
-        # identical categories - fastpath
-        categories = first.categories
-        ordered = first.ordered
+            if isinstance(keys, MultiIndex):
+                # TODO: retain levels?
+                keys = type(keys).from_tuples(clean_keys, names=keys.names)
+            else:
+                name = getattr(keys, "name", None)
+                keys = Index(clean_keys, name=name)
 
-        all_codes = [first._encode_with_my_categories(x)._codes for x in to_union]
-        new_codes = np.concatenate(all_codes)
+        if len(objs) == 0:
+            raise ValueError("All objects passed were None")
 
-        if sort_categories and not ignore_order and ordered:
-            raise TypeError("Cannot use sort_categories=True with ordered Categoricals")
+        # figure out what our result ndim is going to be
+        ndims = set()
+        for obj in objs:
+            if not isinstance(obj, (ABCSeries, ABCDataFrame)):
+                msg = (
+                    f"cannot concatenate object of type '{type(obj)}'; "
+                    "only Series and DataFrame objs are valid"
+                )
+                raise TypeError(msg)
 
-        if sort_categories and not categories.is_monotonic_increasing:
-            categories = categories.sort_values()
-            indexer = categories.get_indexer(first.categories)
+            ndims.add(obj.ndim)
 
-            from pandas.core.algorithms import take_nd
+        # get the sample
+        # want the highest ndim that we have, and must be non-empty
+        # unless all objs are empty
+        sample: NDFrame | None = None
+        if len(ndims) > 1:
+            max_ndim = max(ndims)
+            for obj in objs:
+                if obj.ndim == max_ndim and np.sum(obj.shape):
+                    sample = obj
+                    break
 
-            new_codes = take_nd(indexer, new_codes, fill_value=-1)
-    elif ignore_order or all(not c.ordered for c in to_union):
-        # different categories - union and recode
-        cats = first.categories.append([c.categories for c in to_union[1:]])
-        categories = cats.unique()
-        if sort_categories:
-            categories = categories.sort_values()
+        else:
+            # filter out the empties if we have not multi-index possibilities
+            # note to keep empty Series as it affect to result columns / name
+            non_empties = [
+                obj for obj in objs if sum(obj.shape) > 0 or isinstance(obj, ABCSeries)
+            ]
 
-        new_codes = [
-            recode_for_categories(c.codes, c.categories, categories) for c in to_union
+            if len(non_empties) and (
+                keys is None and names is None and levels is None and not self.intersect
+            ):
+                objs = non_empties
+                sample = objs[0]
+
+        if sample is None:
+            sample = objs[0]
+        self.objs = objs
+
+        # Standardize axis parameter to int
+        if isinstance(sample, ABCSeries):
+            from pandas import DataFrame
+
+            axis = DataFrame._get_axis_number(axis)
+        else:
+            axis = sample._get_axis_number(axis)
+
+        # Need to flip BlockManager axis in the DataFrame special case
+        self._is_frame = isinstance(sample, ABCDataFrame)
+        if self._is_frame:
+            axis = sample._get_block_manager_axis(axis)
+
+        self._is_series = isinstance(sample, ABCSeries)
+        if not 0 <= axis <= sample.ndim:
+            raise AssertionError(
+                f"axis must be between 0 and {sample.ndim}, input was {axis}"
+            )
+
+        # if we have mixed ndims, then convert to highest ndim
+        # creating column numbers as needed
+        if len(ndims) > 1:
+            current_column = 0
+            max_ndim = sample.ndim
+            self.objs, objs = [], self.objs
+            for obj in objs:
+
+                ndim = obj.ndim
+                if ndim == max_ndim:
+                    pass
+
+                elif ndim != max_ndim - 1:
+                    raise ValueError(
+                        "cannot concatenate unaligned mixed "
+                        "dimensional NDFrame objects"
+                    )
+
+                else:
+                    name = getattr(obj, "name", None)
+                    if ignore_index or name is None:
+                        name = current_column
+                        current_column += 1
+
+                    # doing a row-wise concatenation so need everything
+                    # to line up
+                    if self._is_frame and axis == 1:
+                        name = 0
+                    # mypy needs to know sample is not an NDFrame
+                    sample = cast("DataFrame | Series", sample)
+                    obj = sample._constructor({name: obj})
+
+                self.objs.append(obj)
+
+        # note: this is the BlockManager axis (since DataFrame is transposed)
+        self.bm_axis = axis
+        self.axis = 1 - self.bm_axis if self._is_frame else 0
+        self.keys = keys
+        self.names = names or getattr(keys, "names", None)
+        self.levels = levels
+
+        if not is_bool(sort):
+            warnings.warn(
+                "Passing non boolean values for sort is deprecated and "
+                "will error in a future version!",
+                FutureWarning,
+                stacklevel=find_stack_level(),
+            )
+        self.sort = sort
+
+        self.ignore_index = ignore_index
+        self.verify_integrity = verify_integrity
+        self.copy = copy
+
+        self.new_axes = self._get_new_axes()
+
+    def get_result(self):
+        cons: Callable[..., DataFrame | Series]
+        sample: DataFrame | Series
+
+        # series only
+        if self._is_series:
+            sample = cast("Series", self.objs[0])
+
+            # stack blocks
+            if self.bm_axis == 0:
+                name = com.consensus_name_attr(self.objs)
+                cons = sample._constructor
+
+                arrs = [ser._values for ser in self.objs]
+
+                res = concat_compat(arrs, axis=0)
+                result = cons(res, index=self.new_axes[0], name=name, dtype=res.dtype)
+                return result.__finalize__(self, method="concat")
+
+            # combine as columns in a frame
+            else:
+                data = dict(zip(range(len(self.objs)), self.objs))
+
+                # GH28330 Preserves subclassed objects through concat
+                cons = sample._constructor_expanddim
+
+                index, columns = self.new_axes
+                df = cons(data, index=index, copy=self.copy)
+                df.columns = columns
+                return df.__finalize__(self, method="concat")
+
+        # combine block managers
+        else:
+            sample = cast("DataFrame", self.objs[0])
+
+            mgrs_indexers = []
+            for obj in self.objs:
+                indexers = {}
+                for ax, new_labels in enumerate(self.new_axes):
+                    # ::-1 to convert BlockManager ax to DataFrame ax
+                    if ax == self.bm_axis:
+                        # Suppress reindexing on concat axis
+                        continue
+
+                    # 1-ax to convert BlockManager axis to DataFrame axis
+                    obj_labels = obj.axes[1 - ax]
+                    if not new_labels.equals(obj_labels):
+                        indexers[ax] = obj_labels.get_indexer(new_labels)
+
+                mgrs_indexers.append((obj._mgr, indexers))
+
+            new_data = concatenate_managers(
+                mgrs_indexers, self.new_axes, concat_axis=self.bm_axis, copy=self.copy
+            )
+            if not self.copy:
+                new_data._consolidate_inplace()
+
+            cons = sample._constructor
+            return cons(new_data).__finalize__(self, method="concat")
+
+    def _get_result_dim(self) -> int:
+        if self._is_series and self.bm_axis == 1:
+            return 2
+        else:
+            return self.objs[0].ndim
+
+    def _get_new_axes(self) -> list[Index]:
+        ndim = self._get_result_dim()
+        return [
+            self._get_concat_axis if i == self.bm_axis else self._get_comb_axis(i)
+            for i in range(ndim)
         ]
-        new_codes = np.concatenate(new_codes)
-    else:
-        # ordered - to show a proper error message
-        if all(c.ordered for c in to_union):
-            msg = "to union ordered Categoricals, all categories must be the same"
-            raise TypeError(msg)
+
+    def _get_comb_axis(self, i: int) -> Index:
+        data_axis = self.objs[0]._get_block_manager_axis(i)
+        return get_objs_combined_axis(
+            self.objs,
+            axis=data_axis,
+            intersect=self.intersect,
+            sort=self.sort,
+            copy=self.copy,
+        )
+
+    @cache_readonly
+    def _get_concat_axis(self) -> Index:
+        """
+        Return index to be used along concatenation axis.
+        """
+        if self._is_series:
+            if self.bm_axis == 0:
+                indexes = [x.index for x in self.objs]
+            elif self.ignore_index:
+                idx = default_index(len(self.objs))
+                return idx
+            elif self.keys is None:
+                names: list[Hashable] = [None] * len(self.objs)
+                num = 0
+                has_names = False
+                for i, x in enumerate(self.objs):
+                    if not isinstance(x, ABCSeries):
+                        raise TypeError(
+                            f"Cannot concatenate type 'Series' with "
+                            f"object of type '{type(x).__name__}'"
+                        )
+                    if x.name is not None:
+                        names[i] = x.name
+                        has_names = True
+                    else:
+                        names[i] = num
+                        num += 1
+                if has_names:
+                    return Index(names)
+                else:
+                    return default_index(len(self.objs))
+            else:
+                return ensure_index(self.keys).set_names(self.names)
         else:
-            raise TypeError("Categorical.ordered must be the same")
+            indexes = [x.axes[self.axis] for x in self.objs]
 
-    if ignore_order:
-        ordered = False
+        if self.ignore_index:
+            idx = default_index(sum(len(i) for i in indexes))
+            return idx
 
-    return Categorical(new_codes, categories=categories, ordered=ordered, fastpath=True)
+        if self.keys is None:
+            if self.levels is not None:
+                raise ValueError("levels supported only when keys is not None")
+            concat_axis = _concat_indexes(indexes)
+        else:
+            concat_axis = _make_concat_multiindex(
+                indexes, self.keys, self.levels, self.names
+            )
+
+        self._maybe_check_integrity(concat_axis)
+
+        return concat_axis
+
+    def _maybe_check_integrity(self, concat_index: Index):
+        if self.verify_integrity:
+            if not concat_index.is_unique:
+                overlap = concat_index[concat_index.duplicated()].unique()
+                raise ValueError(f"Indexes have overlapping values: {overlap}")
 
 
-def _concatenate_2d(to_concat, axis: int):
-    # coerce to 2d if needed & concatenate
-    if axis == 1:
-        to_concat = [np.atleast_2d(x) for x in to_concat]
-    return np.concatenate(to_concat, axis=axis)
+def _concat_indexes(indexes) -> Index:
+    return indexes[0].append(indexes[1:])
 
 
-def _concat_datetime(to_concat, axis=0):
-    """
-    provide concatenation of an datetimelike array of arrays each of which is a
-    single M8[ns], datetime64[ns, tz] or m8[ns] dtype
+def _make_concat_multiindex(indexes, keys, levels=None, names=None) -> MultiIndex:
 
-    Parameters
-    ----------
-    to_concat : array of arrays
-    axis : axis to provide concatenation
+    if (levels is None and isinstance(keys[0], tuple)) or (
+        levels is not None and len(levels) > 1
+    ):
+        zipped = list(zip(*keys))
+        if names is None:
+            names = [None] * len(zipped)
 
-    Returns
-    -------
-    a single array, preserving the combined dtypes
-    """
-    from pandas.core.construction import ensure_wrapped_if_datetimelike
+        if levels is None:
+            _, levels = factorize_from_iterables(zipped)
+        else:
+            levels = [ensure_index(x) for x in levels]
+    else:
+        zipped = [keys]
+        if names is None:
+            names = [None]
 
-    to_concat = [ensure_wrapped_if_datetimelike(x) for x in to_concat]
+        if levels is None:
+            levels = [ensure_index(keys).unique()]
+        else:
+            levels = [ensure_index(x) for x in levels]
 
-    single_dtype = len({x.dtype for x in to_concat}) == 1
+    for level in levels:
+        if not level.is_unique:
+            raise ValueError(f"Level values not unique: {level.tolist()}")
 
-    # multiple types, need to coerce to object
-    if not single_dtype:
-        # ensure_wrapped_if_datetimelike ensures that astype(object) wraps
-        #  in Timestamp/Timedelta
-        return _concatenate_2d([x.astype(object) for x in to_concat], axis=axis)
+    if not all_indexes_same(indexes) or not all(level.is_unique for level in levels):
+        codes_list = []
 
-    result = type(to_concat[0])._concat_same_type(to_concat, axis=axis)
-    return result
+        # things are potentially different sizes, so compute the exact codes
+        # for each level and pass those to MultiIndex.from_arrays
+
+        for hlevel, level in zip(zipped, levels):
+            to_concat = []
+            for key, index in zip(hlevel, indexes):
+                # Find matching codes, include matching nan values as equal.
+                mask = (isna(level) & isna(key)) | (level == key)
+                if not mask.any():
+                    raise ValueError(f"Key {key} not in level {level}")
+                i = np.nonzero(mask)[0][0]
+
+                to_concat.append(np.repeat(i, len(index)))
+            codes_list.append(np.concatenate(to_concat))
+
+        concat_index = _concat_indexes(indexes)
+
+        # these go at the end
+        if isinstance(concat_index, MultiIndex):
+            levels.extend(concat_index.levels)
+            codes_list.extend(concat_index.codes)
+        else:
+            codes, categories = factorize_from_iterable(concat_index)
+            levels.append(categories)
+            codes_list.append(codes)
+
+        if len(names) == len(levels):
+            names = list(names)
+        else:
+            # make sure that all of the passed indices have the same nlevels
+            if not len({idx.nlevels for idx in indexes}) == 1:
+                raise AssertionError(
+                    "Cannot concat indices that do not have the same number of levels"
+                )
+
+            # also copies
+            names = list(names) + list(get_unanimous_names(*indexes))
+
+        return MultiIndex(
+            levels=levels, codes=codes_list, names=names, verify_integrity=False
+        )
+
+    new_index = indexes[0]
+    n = len(new_index)
+    kpieces = len(indexes)
+
+    # also copies
+    new_names = list(names)
+    new_levels = list(levels)
+
+    # construct codes
+    new_codes = []
+
+    # do something a bit more speedy
+
+    for hlevel, level in zip(zipped, levels):
+        hlevel = ensure_index(hlevel)
+        mapped = level.get_indexer(hlevel)
+
+        mask = mapped == -1
+        if mask.any():
+            raise ValueError(f"Values not found in passed level: {hlevel[mask]!s}")
+
+        new_codes.append(np.repeat(mapped, n))
+
+    if isinstance(new_index, MultiIndex):
+        new_levels.extend(new_index.levels)
+        new_codes.extend([np.tile(lab, kpieces) for lab in new_index.codes])
+    else:
+        new_levels.append(new_index.unique())
+        single_codes = new_index.unique().get_indexer(new_index)
+        new_codes.append(np.tile(single_codes, kpieces))
+
+    if len(new_names) < len(new_levels):
+        new_names.extend(new_index.names)
+
+    return MultiIndex(
+        levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False
+    )

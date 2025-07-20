@@ -1,161 +1,87 @@
-from __future__ import annotations
+"""
+This namespace represents low-level functionality not intended for daily use,
+but useful for extending Trio's functionality.
+"""
 
-import enum
-from dataclasses import dataclass
-from typing import Any, Generic, Literal, TypeVar, overload
-from weakref import WeakKeyDictionary
+# imports are renamed with leading underscores to indicate they are not part of the public API
 
-from ._core._eventloop import get_async_backend
+import select as _select
 
-T = TypeVar("T")
-D = TypeVar("D")
+# static checkers don't understand if importing this as _sys, so it's deleted later
+import sys
+import typing as _t
 
+# Generally available symbols
+from ._core import (
+    Abort as Abort,
+    ParkingLot as ParkingLot,
+    ParkingLotStatistics as ParkingLotStatistics,
+    RaiseCancelT as RaiseCancelT,
+    RunStatistics as RunStatistics,
+    RunVar as RunVar,
+    RunVarToken as RunVarToken,
+    Task as Task,
+    TrioToken as TrioToken,
+    UnboundedQueue as UnboundedQueue,
+    UnboundedQueueStatistics as UnboundedQueueStatistics,
+    add_instrument as add_instrument,
+    add_parking_lot_breaker as add_parking_lot_breaker,
+    cancel_shielded_checkpoint as cancel_shielded_checkpoint,
+    checkpoint as checkpoint,
+    checkpoint_if_cancelled as checkpoint_if_cancelled,
+    current_clock as current_clock,
+    current_root_task as current_root_task,
+    current_statistics as current_statistics,
+    current_task as current_task,
+    current_trio_token as current_trio_token,
+    currently_ki_protected as currently_ki_protected,
+    disable_ki_protection as disable_ki_protection,
+    enable_ki_protection as enable_ki_protection,
+    in_trio_run as in_trio_run,
+    in_trio_task as in_trio_task,
+    notify_closing as notify_closing,
+    permanently_detach_coroutine_object as permanently_detach_coroutine_object,
+    reattach_detached_coroutine_object as reattach_detached_coroutine_object,
+    remove_instrument as remove_instrument,
+    remove_parking_lot_breaker as remove_parking_lot_breaker,
+    reschedule as reschedule,
+    spawn_system_task as spawn_system_task,
+    start_guest_run as start_guest_run,
+    start_thread_soon as start_thread_soon,
+    temporarily_detach_coroutine_object as temporarily_detach_coroutine_object,
+    wait_readable as wait_readable,
+    wait_task_rescheduled as wait_task_rescheduled,
+    wait_writable as wait_writable,
+)
+from ._subprocess import open_process as open_process
 
-async def checkpoint() -> None:
-    """
-    Check for cancellation and allow the scheduler to switch to another task.
+# This is the union of a subset of trio/_core/ and some things from trio/*.py.
+# See comments in trio/__init__.py for details.
 
-    Equivalent to (but more efficient than)::
-
-        await checkpoint_if_cancelled()
-        await cancel_shielded_checkpoint()
-
-
-    .. versionadded:: 3.0
-
-    """
-    await get_async_backend().checkpoint()
-
-
-async def checkpoint_if_cancelled() -> None:
-    """
-    Enter a checkpoint if the enclosing cancel scope has been cancelled.
-
-    This does not allow the scheduler to switch to a different task.
-
-    .. versionadded:: 3.0
-
-    """
-    await get_async_backend().checkpoint_if_cancelled()
-
-
-async def cancel_shielded_checkpoint() -> None:
-    """
-    Allow the scheduler to switch to another task but without checking for cancellation.
-
-    Equivalent to (but potentially more efficient than)::
-
-        with CancelScope(shield=True):
-            await checkpoint()
-
-
-    .. versionadded:: 3.0
-
-    """
-    await get_async_backend().cancel_shielded_checkpoint()
-
-
-def current_token() -> object:
-    """
-    Return a backend specific token object that can be used to get back to the event
-    loop.
-
-    """
-    return get_async_backend().current_token()
+# Uses `from x import y as y` for compatibility with `pyright --verifytypes` (#2625)
 
 
-_run_vars: WeakKeyDictionary[Any, dict[str, Any]] = WeakKeyDictionary()
-_token_wrappers: dict[Any, _TokenWrapper] = {}
+if sys.platform == "win32":
+    # Windows symbols
+    from ._core import (
+        current_iocp as current_iocp,
+        monitor_completion_key as monitor_completion_key,
+        readinto_overlapped as readinto_overlapped,
+        register_with_iocp as register_with_iocp,
+        wait_overlapped as wait_overlapped,
+        write_overlapped as write_overlapped,
+    )
+    from ._wait_for_object import WaitForSingleObject as WaitForSingleObject
+else:
+    # Unix symbols
+    from ._unix_pipes import FdStream as FdStream
 
-
-@dataclass(frozen=True)
-class _TokenWrapper:
-    __slots__ = "_token", "__weakref__"
-    _token: object
-
-
-class _NoValueSet(enum.Enum):
-    NO_VALUE_SET = enum.auto()
-
-
-class RunvarToken(Generic[T]):
-    __slots__ = "_var", "_value", "_redeemed"
-
-    def __init__(self, var: RunVar[T], value: T | Literal[_NoValueSet.NO_VALUE_SET]):
-        self._var = var
-        self._value: T | Literal[_NoValueSet.NO_VALUE_SET] = value
-        self._redeemed = False
-
-
-class RunVar(Generic[T]):
-    """
-    Like a :class:`~contextvars.ContextVar`, except scoped to the running event loop.
-    """
-
-    __slots__ = "_name", "_default"
-
-    NO_VALUE_SET: Literal[_NoValueSet.NO_VALUE_SET] = _NoValueSet.NO_VALUE_SET
-
-    _token_wrappers: set[_TokenWrapper] = set()
-
-    def __init__(
-        self, name: str, default: T | Literal[_NoValueSet.NO_VALUE_SET] = NO_VALUE_SET
-    ):
-        self._name = name
-        self._default = default
-
-    @property
-    def _current_vars(self) -> dict[str, T]:
-        token = current_token()
-        try:
-            return _run_vars[token]
-        except KeyError:
-            run_vars = _run_vars[token] = {}
-            return run_vars
-
-    @overload
-    def get(self, default: D) -> T | D: ...
-
-    @overload
-    def get(self) -> T: ...
-
-    def get(
-        self, default: D | Literal[_NoValueSet.NO_VALUE_SET] = NO_VALUE_SET
-    ) -> T | D:
-        try:
-            return self._current_vars[self._name]
-        except KeyError:
-            if default is not RunVar.NO_VALUE_SET:
-                return default
-            elif self._default is not RunVar.NO_VALUE_SET:
-                return self._default
-
-        raise LookupError(
-            f'Run variable "{self._name}" has no value and no default set'
+    # Kqueue-specific symbols
+    if sys.platform != "linux" and (_t.TYPE_CHECKING or not hasattr(_select, "epoll")):
+        from ._core import (
+            current_kqueue as current_kqueue,
+            monitor_kevent as monitor_kevent,
+            wait_kevent as wait_kevent,
         )
 
-    def set(self, value: T) -> RunvarToken[T]:
-        current_vars = self._current_vars
-        token = RunvarToken(self, current_vars.get(self._name, RunVar.NO_VALUE_SET))
-        current_vars[self._name] = value
-        return token
-
-    def reset(self, token: RunvarToken[T]) -> None:
-        if token._var is not self:
-            raise ValueError("This token does not belong to this RunVar")
-
-        if token._redeemed:
-            raise ValueError("This token has already been used")
-
-        if token._value is _NoValueSet.NO_VALUE_SET:
-            try:
-                del self._current_vars[self._name]
-            except KeyError:
-                pass
-        else:
-            self._current_vars[self._name] = token._value
-
-        token._redeemed = True
-
-    def __repr__(self) -> str:
-        return f"<RunVar name={self._name!r}>"
+del sys

@@ -1,236 +1,153 @@
-"""
-Utilities for interacting with the filesystem on multiple platforms
-"""
-import contextlib
+import fnmatch
 import os
-import platform
-import re
-import shutil
-import tempfile
-from typing import Any, Iterator, List, Mapping, Optional, Tuple, Union
+import os.path
+import random
+import sys
+from contextlib import contextmanager
+from tempfile import NamedTemporaryFile
+from typing import Any, BinaryIO, Generator, List, Union, cast
 
-from cmdstanpy import _TMPDIR
+from pip._vendor.tenacity import retry, stop_after_delay, wait_fixed
 
-from .json import write_stan_json
-from .logging import get_logger
-
-EXTENSION = '.exe' if platform.system() == 'Windows' else ''
-
-
-def windows_short_path(path: str) -> str:
-    """
-    Gets the short path name of a given long path.
-    http://stackoverflow.com/a/23598461/200291
-
-    On non-Windows platforms, returns the path
-
-    If (base)path does not exist, function raises RuntimeError
-    """
-    if platform.system() != 'Windows':
-        return path
-
-    if os.path.isfile(path) or (
-        not os.path.isdir(path) and os.path.splitext(path)[1] != ''
-    ):
-        base_path, file_name = os.path.split(path)
-    else:
-        base_path, file_name = path, ''
-
-    if not os.path.exists(base_path):
-        raise RuntimeError(
-            'Windows short path function needs a valid directory. '
-            'Base directory does not exist: "{}"'.format(base_path)
-        )
-
-    import ctypes
-    from ctypes import wintypes
-
-    # pylint: disable=invalid-name
-    _GetShortPathNameW = (
-        ctypes.windll.kernel32.GetShortPathNameW  # type: ignore
-    )
-
-    _GetShortPathNameW.argtypes = [
-        wintypes.LPCWSTR,
-        wintypes.LPWSTR,
-        wintypes.DWORD,
-    ]
-    _GetShortPathNameW.restype = wintypes.DWORD
-
-    output_buf_size = 0
-    while True:
-        output_buf = ctypes.create_unicode_buffer(output_buf_size)
-        needed = _GetShortPathNameW(base_path, output_buf, output_buf_size)
-        if output_buf_size >= needed:
-            short_base_path = output_buf.value
-            break
-        else:
-            output_buf_size = needed
-
-    short_path = (
-        os.path.join(short_base_path, file_name)
-        if file_name
-        else short_base_path
-    )
-    return short_path
+from pip._internal.utils.compat import get_path_uid
+from pip._internal.utils.misc import format_size
 
 
-def create_named_text_file(
-    dir: str, prefix: str, suffix: str, name_only: bool = False
-) -> str:
-    """
-    Create a named unique file, return filename.
-    Flag 'name_only' will create then delete the tmp file;
-    this lets us create filename args for commands which
-    disallow overwriting existing files (e.g., 'stansummary').
-    """
-    fd = tempfile.NamedTemporaryFile(
-        mode='w+', prefix=prefix, suffix=suffix, dir=dir, delete=name_only
-    )
-    path = fd.name
-    fd.close()
-    return path
+def check_path_owner(path: str) -> bool:
+    # If we don't have a way to check the effective uid of this process, then
+    # we'll just assume that we own the directory.
+    if sys.platform == "win32" or not hasattr(os, "geteuid"):
+        return True
 
+    assert os.path.isabs(path)
 
-@contextlib.contextmanager
-def pushd(new_dir: str) -> Iterator[None]:
-    """Acts like pushd/popd."""
-    previous_dir = os.getcwd()
-    os.chdir(new_dir)
-    try:
-        yield
-    finally:
-        os.chdir(previous_dir)
-
-
-def _temp_single_json(
-    data: Union[str, os.PathLike, Mapping[str, Any], None]
-) -> Iterator[Optional[str]]:
-    """Context manager for json files."""
-    if data is None:
-        yield None
-        return
-    if isinstance(data, (str, os.PathLike)):
-        yield str(data)
-        return
-
-    data_file = create_named_text_file(dir=_TMPDIR, prefix='', suffix='.json')
-    get_logger().debug('input tempfile: %s', data_file)
-    write_stan_json(data_file, data)
-    try:
-        yield data_file
-    finally:
-        with contextlib.suppress(PermissionError):
-            os.remove(data_file)
-
-
-temp_single_json = contextlib.contextmanager(_temp_single_json)
-
-
-def _temp_multiinput(
-    input: Union[str, os.PathLike, Mapping[str, Any], List[Any], None],
-    base: int = 1,
-) -> Iterator[Optional[str]]:
-    if isinstance(input, list):
-        # most complicated case: list of inits
-        # for multiple chains, we need to create multiple files
-        # which look like somename_{i}.json and then pass somename.json
-        # to CmdStan
-
-        mother_file = create_named_text_file(
-            dir=_TMPDIR, prefix='', suffix='.json', name_only=True
-        )
-        new_files = [
-            os.path.splitext(mother_file)[0] + f'_{i+base}.json'
-            for i in range(len(input))
-        ]
-        for init, file in zip(input, new_files):
-            if isinstance(init, dict):
-                write_stan_json(file, init)
-            elif isinstance(init, str):
-                shutil.copy(init, file)
+    previous = None
+    while path != previous:
+        if os.path.lexists(path):
+            # Check if path is writable by current user.
+            if os.geteuid() == 0:
+                # Special handling for root user in order to handle properly
+                # cases where users use sudo without -H flag.
+                try:
+                    path_uid = get_path_uid(path)
+                except OSError:
+                    return False
+                return path_uid == 0
             else:
-                raise ValueError(
-                    'A list of inits must contain dicts or strings, not'
-                    + str(type(init))
-                )
-        try:
-            yield mother_file
-        finally:
-            for file in new_files:
-                with contextlib.suppress(PermissionError):
-                    os.remove(file)
-    else:
-        yield from _temp_single_json(input)
-
-
-@contextlib.contextmanager
-def temp_inits(
-    inits: Union[
-        str, os.PathLike, Mapping[str, Any], float, int, List[Any], None
-    ],
-    *,
-    allow_multiple: bool = True,
-    id: int = 1,
-) -> Iterator[Union[str, float, int, None]]:
-    if isinstance(inits, (float, int)):
-        yield inits
-        return
-    if allow_multiple:
-        yield from _temp_multiinput(inits, base=id)
-    else:
-        if isinstance(inits, list):
-            raise ValueError('Expected single initialization, got list')
-        yield from _temp_single_json(inits)
-
-
-class SanitizedOrTmpFilePath:
-    """
-    Context manager for tmpfiles, handles special characters in filepath.
-    """
-
-    UNIXISH_PATTERN = re.compile(r"[\s~]")
-    WINDOWS_PATTERN = re.compile(r"\s")
-
-    @classmethod
-    def _has_special_chars(cls, file_path: str) -> bool:
-        if platform.system() == "Windows":
-            return bool(cls.WINDOWS_PATTERN.search(file_path))
-        return bool(cls.UNIXISH_PATTERN.search(file_path))
-
-    def __init__(self, file_path: str):
-        self._tmpdir = None
-
-        if self._has_special_chars(os.path.abspath(file_path)):
-            base_path, file_name = os.path.split(os.path.abspath(file_path))
-            os.makedirs(base_path, exist_ok=True)
-            try:
-                short_base_path = windows_short_path(base_path)
-                if os.path.exists(short_base_path):
-                    file_path = os.path.join(short_base_path, file_name)
-            except RuntimeError:
-                pass
-
-        if self._has_special_chars(os.path.abspath(file_path)):
-            tmpdir = tempfile.mkdtemp()
-            if self._has_special_chars(tmpdir):
-                raise RuntimeError(
-                    'Unable to generate temporary path without spaces or '
-                    'special characters! \n Please move your stan file to a '
-                    'location without spaces or special characters.'
-                )
-
-            _, path = tempfile.mkstemp(suffix='.stan', dir=tmpdir)
-
-            shutil.copy(file_path, path)
-            self._path = path
-            self._tmpdir = tmpdir
+                return os.access(path, os.W_OK)
         else:
-            self._path = file_path
+            previous, path = path, os.path.dirname(path)
+    return False  # assume we don't own the path
 
-    def __enter__(self) -> Tuple[str, bool]:
-        return self._path, self._tmpdir is not None
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:  # type: ignore
-        if self._tmpdir:
-            shutil.rmtree(self._tmpdir, ignore_errors=True)
+@contextmanager
+def adjacent_tmp_file(path: str, **kwargs: Any) -> Generator[BinaryIO, None, None]:
+    """Return a file-like object pointing to a tmp file next to path.
+
+    The file is created securely and is ensured to be written to disk
+    after the context reaches its end.
+
+    kwargs will be passed to tempfile.NamedTemporaryFile to control
+    the way the temporary file will be opened.
+    """
+    with NamedTemporaryFile(
+        delete=False,
+        dir=os.path.dirname(path),
+        prefix=os.path.basename(path),
+        suffix=".tmp",
+        **kwargs,
+    ) as f:
+        result = cast(BinaryIO, f)
+        try:
+            yield result
+        finally:
+            result.flush()
+            os.fsync(result.fileno())
+
+
+# Tenacity raises RetryError by default, explicitly raise the original exception
+_replace_retry = retry(reraise=True, stop=stop_after_delay(1), wait=wait_fixed(0.25))
+
+replace = _replace_retry(os.replace)
+
+
+# test_writable_dir and _test_writable_dir_win are copied from Flit,
+# with the author's agreement to also place them under pip's license.
+def test_writable_dir(path: str) -> bool:
+    """Check if a directory is writable.
+
+    Uses os.access() on POSIX, tries creating files on Windows.
+    """
+    # If the directory doesn't exist, find the closest parent that does.
+    while not os.path.isdir(path):
+        parent = os.path.dirname(path)
+        if parent == path:
+            break  # Should never get here, but infinite loops are bad
+        path = parent
+
+    if os.name == "posix":
+        return os.access(path, os.W_OK)
+
+    return _test_writable_dir_win(path)
+
+
+def _test_writable_dir_win(path: str) -> bool:
+    # os.access doesn't work on Windows: http://bugs.python.org/issue2528
+    # and we can't use tempfile: http://bugs.python.org/issue22107
+    basename = "accesstest_deleteme_fishfingers_custard_"
+    alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
+    for _ in range(10):
+        name = basename + "".join(random.choice(alphabet) for _ in range(6))
+        file = os.path.join(path, name)
+        try:
+            fd = os.open(file, os.O_RDWR | os.O_CREAT | os.O_EXCL)
+        except FileExistsError:
+            pass
+        except PermissionError:
+            # This could be because there's a directory with the same name.
+            # But it's highly unlikely there's a directory called that,
+            # so we'll assume it's because the parent dir is not writable.
+            # This could as well be because the parent dir is not readable,
+            # due to non-privileged user access.
+            return False
+        else:
+            os.close(fd)
+            os.unlink(file)
+            return True
+
+    # This should never be reached
+    raise OSError("Unexpected condition testing for writable directory")
+
+
+def find_files(path: str, pattern: str) -> List[str]:
+    """Returns a list of absolute paths of files beneath path, recursively,
+    with filenames which match the UNIX-style shell glob pattern."""
+    result: List[str] = []
+    for root, _, files in os.walk(path):
+        matches = fnmatch.filter(files, pattern)
+        result.extend(os.path.join(root, f) for f in matches)
+    return result
+
+
+def file_size(path: str) -> Union[int, float]:
+    # If it's a symlink, return 0.
+    if os.path.islink(path):
+        return 0
+    return os.path.getsize(path)
+
+
+def format_file_size(path: str) -> str:
+    return format_size(file_size(path))
+
+
+def directory_size(path: str) -> Union[int, float]:
+    size = 0.0
+    for root, _dirs, files in os.walk(path):
+        for filename in files:
+            file_path = os.path.join(root, filename)
+            size += file_size(file_path)
+    return size
+
+
+def format_directory_size(path: str) -> str:
+    return format_size(directory_size(path))
