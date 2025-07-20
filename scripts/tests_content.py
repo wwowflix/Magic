@@ -1,4 +1,5 @@
-﻿import pytest
+# -*- coding: utf-8 -*-
+import pytest
 import json
 import os
 
@@ -16,3 +17,6 @@ def test_json_structure_valid():
     assert isinstance(data, dict), 'Content JSON root should be an object'
     assert 'title' in data, 'Content JSON must have a title field'
     assert 'body' in data, 'Content JSON must have a body field'
+
+
+

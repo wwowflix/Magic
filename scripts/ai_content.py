@@ -1,4 +1,5 @@
-﻿import logging
+# -*- coding: utf-8 -*-
+import logging
 
 class AIContentGenerator:
     def generate(self, prompt):
@@ -8,3 +9,6 @@ class AIContentGenerator:
         return f"AI Response for: {prompt}"
 
 __all__ = ["AIContentGenerator"]
+
+
+

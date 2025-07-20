@@ -1,0 +1,39 @@
+﻿from tenacity import retry, stop_after_attempt, wait_fixed
+
+#!/usr/bin/env python3
+import os
+import sqlite3
+import pandas as pd
+
+def main():
+    db_path = "zephyr_trends.db"
+    conn = sqlite3.connect(db_path)
+
+    for filename in os.listdir("outputs"):
+        path = os.path.join("outputs", filename)
+        table = os.path.splitext(filename)[0]
+
+        try:
+            df = pd.read_csv(path)
+        except pd.errors.EmptyDataError:
+            print(f"[WARN] Skipping empty CSV: {path}")
+            continue
+
+        # Load into DB
+        process_file(path, table, conn)
+        # Deduplicate
+        conn.execute(f"""
+            DELETE FROM {table}
+             WHERE rowid NOT IN (
+               SELECT MIN(rowid)
+                 FROM {table}
+                GROUP BY date,keyword,metric,platform,author
+             );
+        """)
+        conn.commit()
+        print(f"[OK] Loaded and deduplicated {path} into {table}")
+
+    conn.close()
+
+if __name__ == "__main__":
+    main()

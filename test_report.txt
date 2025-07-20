@@ -1,0 +1,9 @@
+﻿=== Environment Test Report ===
+Python: Python 3.10.11
+Pandas: 1.5.3
+Numpy: 1.23.5
+Scripts Tested:
+.\scripts\twitter_scraper_clean.py : ✅
+.\scripts\twitter_scraper_simple.py : ✅
+.\scripts\zephyr\twitter_api.py : ✅
+.\scripts\zephyr\twitter_scraper.py : ✅

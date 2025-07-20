@@ -1,4 +1,5 @@
-﻿import praw
+# -*- coding: utf-8 -*-
+import praw
 from vault_manager import load_secret
 
 client_id = load_secret("REDDIT_CLIENT_ID")
@@ -11,7 +12,10 @@ reddit = praw.Reddit(
     user_agent=user_agent
 )
 
-print("ðŸ”Ž Reddit read_only:", reddit.read_only)
+print("🔎 Reddit read_only:", reddit.read_only)
 
 for submission in reddit.subreddit("python").hot(limit=3):
-    print(f"âœ… {submission.title} | Score: {submission.score}")
+    print(f"✅ {submission.title} | Score: {submission.score}")
+
+
+

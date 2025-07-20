@@ -1,4 +1,5 @@
-﻿import pandas as pd
+# -*- coding: utf-8 -*-
+import pandas as pd
 import numpy as np
 import plotly.express as px
 
@@ -29,3 +30,6 @@ fig.add_scatter(
 )
 
 fig.show()
+
+
+

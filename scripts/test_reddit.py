@@ -1,25 +1,13 @@
-﻿import sys
-sys.path.append(r'D:\MAGIC\scripts')
-
-from load_api_key import load_api_key
+# -*- coding: utf-8 -*-
 import praw
 
-# Load credentials from vault
-client_id = load_api_key("REDDIT_CLIENT_ID")
-client_secret = load_api_key("REDDIT_CLIENT_SECRET")
-user_agent = load_api_key("REDDIT_USER_AGENT")
-
-print("Using CLIENT_ID:", client_id)
-print("Using USER_AGENT:", user_agent)
-
-# Initialize Reddit API client
 reddit = praw.Reddit(
-    client_id=client_id,
-    client_secret=client_secret,
-    user_agent=user_agent
+    client_id="OBhDPCPwu_CJkw813LQwng",
+    client_secret="zjl6-I2sU9i3cNOBRx76tnpLCyPCBg",
+    user_agent="MAGICZephyrScraper/0.1 by u/AffectionateRoom6084",
+    username="AffectionateRoom6084",
+    password="Hpdv2000"
 )
 
-# Test: fetch top 3 posts from r/python
-print("Fetching top posts from r/python...")
-for submission in reddit.subreddit("python").top(limit=3):
-    print(f"- {submission.title} | Score: {submission.score}")
+print(reddit.user.me())
+
