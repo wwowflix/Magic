@@ -1,4 +1,5 @@
-﻿import pytest
+# -*- coding: utf-8 -*-
+import pytest
 import json
 
 # Example AI content generator stub
@@ -25,3 +26,6 @@ def test_ai_output_no_offensive_content():
     text = example_ai_generator()
     offensive_words = ['badword1', 'badword2']
     assert not any(word in text.lower() for word in offensive_words), 'AI output contains offensive words'
+
+
+

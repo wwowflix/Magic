@@ -1,4 +1,5 @@
-﻿import praw
+# -*- coding: utf-8 -*-
+import praw
 import sys
 
 try:
@@ -8,10 +9,13 @@ try:
         user_agent="MAGICZephyrBot/1.0 by u/yourusername"
     )
     # Minimal API call
-    print("🔎 Reddit read_only:", reddit.read_only)
+    print("?? Reddit read_only:", reddit.read_only)
     for submission in reddit.subreddit("python").hot(limit=1):
-        print("✅ TEST OK:", submission.title, submission.score)
+        print("[OK] TEST OK:", submission.title, submission.score)
 
 except Exception as e:
-    print("❌ Reddit API Error:", e)
+    print("? Reddit API Error:", e)
     sys.exit(1)
+
+
+

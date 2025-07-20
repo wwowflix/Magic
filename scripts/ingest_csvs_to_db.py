@@ -1,54 +1,31 @@
-﻿import sqlite3
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+
 import pandas as pd
+import sqlite3
 import os
 
-db_path = r'D:\MAGIC\outputs\zephyr_trends.db'
+DB_PATH = r"D:\MAGIC\outputs\mydata.db"
+OUTPUT_DIR = r"D:\MAGIC\outputs"
 
-csv_files = {
-    'google_trends': r'D:\MAGIC\scripts\google_trends_output.csv',
-    'reddit': r'D:\MAGIC\outputs\reddit_scrape.csv',
-    'youtube': r'D:\MAGIC\outputs\youtube_scrape.csv',
-    'tiktok': r'D:\MAGIC\outputs\tiktok_scrape.csv'
+TABLES = {
+    "google_trends.csv": "google_trends",
+    "reddit_scrape.csv": "reddit",
+    "youtube_scrape.csv": "youtube",
 }
 
-conn = sqlite3.connect(db_path)
-cursor = conn.cursor()
+def ingest():
+    conn = sqlite3.connect(DB_PATH)
+    for csv_name, table in TABLES.items():
+        csv_path = os.path.join(OUTPUT_DIR, csv_name)
+        if os.path.exists(csv_path):
+            print(f"Ingesting {csv_name} into table {table}...")
+            df = pd.read_csv(csv_path)
+            df.to_sql(table, conn, if_exists="replace", index=False)
+        else:
+            print(f"File not found: {csv_path}")
+    conn.close()
+    print("? All CSVs ingested successfully.")
 
-cursor.execute('DROP TABLE IF EXISTS trends')
-cursor.execute('''
-CREATE TABLE trends (
-    date TEXT,
-    keyword TEXT,
-    metric REAL,
-    platform TEXT,
-    author TEXT
-)
-''')
-
-for platform, path in csv_files.items():
-    if not os.path.exists(path):
-        print(f"⚠️ File not found: {path}")
-        continue
-
-    print(f"✅ Loading {path}...")
-
-    df = pd.read_csv(path)
-
-    if "author" not in df.columns:
-        df["author"] = "N/A"
-
-    if "platform" not in df.columns:
-        df["platform"] = platform
-
-    cols = ['date', 'keyword', 'metric', 'platform', 'author']
-    for col in cols:
-        if col not in df.columns:
-            df[col] = "N/A"
-
-    df = df[cols]
-
-    print(f"Loaded {len(df)} rows from {path}")
-    df.to_sql("trends", conn, if_exists="append", index=False)
-
-conn.close()
-print("✅ All CSVs successfully ingested into SQLite database.")
+if __name__ == "__main__":
+    ingest()

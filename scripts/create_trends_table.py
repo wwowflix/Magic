@@ -1,4 +1,5 @@
-﻿import sqlite3
+# -*- coding: utf-8 -*-
+import sqlite3
 import os
 
 # Define DB path
@@ -25,4 +26,7 @@ CREATE TABLE IF NOT EXISTS trends (
 conn.commit()
 conn.close()
 
-print("✅ Trends table created successfully at:", db_path)
+print("[OK] Trends table created successfully at:", db_path)
+
+
+
