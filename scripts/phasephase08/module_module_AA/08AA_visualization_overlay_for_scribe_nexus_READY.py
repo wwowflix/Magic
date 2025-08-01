@@ -1,2 +1,0 @@
-# Auto-generated placeholder for 08AA_visualization_overlay_for_scribe_nexus_READY.py
-print('08AA_visualization_overlay_for_scribe_nexus_READY.py placeholder running')

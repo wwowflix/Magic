@@ -1,2 +1,0 @@
-# Auto-generated placeholder for 08P_tag_high_performance_traits_to_agent_db_READY.py
-print('08P_tag_high_performance_traits_to_agent_db_READY.py placeholder running')
