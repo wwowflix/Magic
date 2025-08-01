@@ -1,2 +1,0 @@
-# Auto-generated placeholder for 08S_rewrite_triggers_based_on_decay_patterns_READY.py
-print('08S_rewrite_triggers_based_on_decay_patterns_READY.py placeholder running')

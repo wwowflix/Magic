@@ -1,2 +1,0 @@
-# Auto-generated placeholder for 13I_affiliate_performance_anomaly_detector_READY.py
-print('13I_affiliate_performance_anomaly_detector_READY.py placeholder running')

@@ -1,2 +1,0 @@
-# Auto-generated placeholder for 08T_cross_platform_format_effectiveness_map_READY.py
-print('08T_cross_platform_format_effectiveness_map_READY.py placeholder running')
