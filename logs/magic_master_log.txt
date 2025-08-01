@@ -1,0 +1,138 @@
+[2025-07-29 17:15:39] ❌ Target script not found: scripts\phase11\module_l\11l_rate_limit_guard_READY.py
+[2025-07-29 17:16:48] ❌ Target script not found: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:19:28] ❌ Target script not found: D:\MAGIC\scripts\phase11\module_l\11l_rate_limit_guard_READY.py
+2025-07-29 17:20:12 ? Target script not found: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:22:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:02] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:34] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:35] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:36] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:37] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:38] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:39] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:40] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:40] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:40] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:23:40] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 17:57:28] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 18:00:52] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 18:01:17] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 18:02:54] 🆕 Created: D:\MAGIC\scripts\phase06\module_A\06A_test_script_FAIL.py
+[2025-07-29 18:03:00] ✅ Checked & ensured script exists: D:\MAGIC\scripts\phase11\module_l\11L_rate_limit_guard_READY.py
+[2025-07-29 18:03:19] ❌ Deleted: D:\MAGIC\scripts\phase06\module_A\06A_test_script_FAIL.py
+[2025-07-29 18:18:35] 🆕 Created: D:\MAGIC\inbox\06A_testfile1_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\06A_testfile1_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\06A_testfile1_READY.py
+[2025-07-29 18:18:35] 🆕 Created: D:\MAGIC\inbox\06A_testfile2_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\06A_testfile2_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\06A_testfile2_READY.py
+[2025-07-29 18:18:35] 🆕 Created: D:\MAGIC\inbox\07B_testfile1_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\07B_testfile1_READY.py
+[2025-07-29 18:18:35] 🆕 Created: D:\MAGIC\inbox\08C_testfile1_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\08C_testfile1_READY.py
+[2025-07-29 18:18:35] ✏️ Modified: D:\MAGIC\inbox\08C_testfile1_READY.py
+[2025-07-29 18:22:25] 🆕 Created: D:\MAGIC\scripts\ phase
+[2025-07-29 18:22:25] 🆕 Created: D:\MAGIC\scripts\ phase
+[2025-07-29 18:22:25] 🆕 Created: D:\MAGIC\scripts\ phase\module_
+[2025-07-29 19:18:39] 🆕 Created: D:\MAGIC\scripts\ phase0
+[2025-07-29 19:18:39] 🆕 Created: D:\MAGIC\scripts\ phase\module_A
+[2025-07-29 19:18:39] 🆕 Created: D:\MAGIC\scripts\ phase\module_A
+[2025-07-29 19:21:12] 🆕 Created: D:\MAGIC\scripts\ phase0\New folder
+[2025-07-29 19:21:12] 🆕 Created: D:\MAGIC\scripts\ phase0\New folder
+[2025-07-29 19:21:25] 📂 Moved: D:\MAGIC\scripts\ phase0\New folder -> D:\MAGIC\scripts\ phase0\module_A
+[2025-07-29 19:24:38] ❌ Deleted: D:\MAGIC\scripts\ phase\module_A
+[2025-07-29 19:25:28] 📂 Moved: D:\MAGIC\scripts\ phase\module_ -> D:\MAGIC\scripts\ phase\module_A
+[2025-07-29 19:26:40] 🆕 Created: D:\MAGIC\scripts\ phase\module_B
+[2025-07-29 19:26:42] 🆕 Created: D:\MAGIC\scripts\ phase\module_C
+[2025-07-29 19:26:43] 🆕 Created: D:\MAGIC\scripts\ phase\module_D
+[2025-07-29 19:26:43] 🆕 Created: D:\MAGIC\scripts\ phase\module_D
+[2025-07-29 19:26:45] 🆕 Created: D:\MAGIC\scripts\ phase\module_E
+[2025-07-29 19:26:45] 🆕 Created: D:\MAGIC\scripts\ phase\module_E
+[2025-07-29 19:26:47] 🆕 Created: D:\MAGIC\scripts\ phase\module_F
+[2025-07-29 19:27:24] ❌ Deleted: D:\MAGIC\scripts\phase
+[2025-07-29 19:27:24] ❌ Deleted: D:\MAGIC\scripts\phase

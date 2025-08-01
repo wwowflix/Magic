@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""
+17C_auto_recover_agent_READY.py
+Purpose: Detect missing or placeholder scripts and auto-recover them from /backups or /placeholders.
+"""
+
+import os
+import shutil
+from datetime import datetime
+
+# Directories
+PROJECT_ROOT = "D:/MAGIC"
+SCRIPTS_DIR = os.path.join(PROJECT_ROOT, "scripts")
+BACKUP_DIR = os.path.join(PROJECT_ROOT, "backups")
+PLACEHOLDER_DIR = os.path.join(PROJECT_ROOT, "placeholders")
+LOG_FILE = os.path.join(PROJECT_ROOT, "logs", "auto_recover_log.txt")
+
+# Ensure log folder exists
+os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+
+def log_action(message):
+    timestamp = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+    with open(LOG_FILE, "a", encoding="utf-8") as log:
+        log.write(f"{timestamp} {message}\n")
+    print(message)
+
+def scan_and_recover():
+    log_action("🔍 Starting Auto-Recover Scan...")
+    for root, _, files in os.walk(SCRIPTS_DIR):
+        for file in files:
+            if file.endswith("_TEST.py"):
+                target_file = file.replace("_TEST", "_READY")
+                target_path = os.path.join(root, target_file)
+
+                # If missing READY script, try to recover
+                if not os.path.exists(target_path):
+                    recovered = False
+
+                    # 1. Try from backups
+                    backup_path = os.path.join(BACKUP_DIR, target_file)
+                    if os.path.exists(backup_path):
+                        shutil.copy2(backup_path, target_path)
+                        log_action(f"✅ Recovered from backup: {target_file}")
+                        recovered = True
+
+                    # 2. Try from placeholders
+                    placeholder_path = os.path.join(PLACEHOLDER_DIR, target_file)
+                    if not recovered and os.path.exists(placeholder_path):
+                        shutil.copy2(placeholder_path, target_path)
+                        log_action(f"⚠️ Used placeholder for: {target_file}")
+                        recovered = True
+
+                    # 3. If no source, create blank file
+                    if not recovered:
+                        with open(target_path, "w", encoding="utf-8") as f:
+                            f.write("# Auto-created empty recovery script\n")
+                        log_action(f"❌ No source found. Created blank: {target_file}")
+                else:
+                    log_action(f"ℹ️ READY script already exists: {target_file}")
+
+    log_action("✅ Auto-Recover Scan Completed.")
+
+if __name__ == "__main__":
+    scan_and_recover()
