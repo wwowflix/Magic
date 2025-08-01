@@ -1,0 +1,69 @@
+{
+  "name": "FileRouter_Magic",
+  "actions": [
+    {
+      "type": "ReadCsvFile",
+      "inputs": {
+        "filePath": "D:\\Fulfinal_File_CLEANED.csv",
+        "outputVariable": "CSVTable"
+      }
+    },
+    {
+      "type": "ForEach",
+      "inputs": {
+        "input": "%CSVTable%",
+        "currentItem": "CurrentItem"
+      },
+      "actions": [
+        {
+          "type": "SetVariable",
+          "inputs": {
+            "name": "PhaseNumber",
+            "value": "%CurrentItem.Phase%"
+          }
+        },
+        {
+          "type": "SetVariable",
+          "inputs": {
+            "name": "ModuleName",
+            "value": "%CurrentItem.Module%"
+          }
+        },
+        {
+          "type": "SetVariable",
+          "inputs": {
+            "name": "OriginalPath",
+            "value": "%CurrentItem.Original Path%"
+          }
+        },
+        {
+          "type": "SetVariable",
+          "inputs": {
+            "name": "FileName",
+            "value": "%CurrentItem.Filename%"
+          }
+        },
+        {
+          "type": "CreateFolder",
+          "inputs": {
+            "folderPath": "D:\\MAGIC\\scripts\\phase%PhaseNumber%"
+          }
+        },
+        {
+          "type": "CreateFolder",
+          "inputs": {
+            "folderPath": "D:\\MAGIC\\scripts\\phase%PhaseNumber%\\module_%ModuleName%"
+          }
+        },
+        {
+          "type": "MoveFile",
+          "inputs": {
+            "sourceFilePath": "%OriginalPath%",
+            "destinationFilePath": "D:\\MAGIC\\scripts\\phase%PhaseNumber%\\module_%ModuleName%\\%FileName%",
+            "overwrite": true
+          }
+        }
+      ]
+    }
+  ]
+}
