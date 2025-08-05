@@ -1,0 +1,9 @@
+﻿{
+    "phases": ["phase11"],
+    "phase11": {
+        "module_A": [
+            "scripts/phase11/module_A/11A_file_watchdog_READY.py",
+            "scripts/phase11/module_A/11A_anomaly_log_writer_READY.py"
+        ]
+    }
+}

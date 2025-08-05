@@ -1,0 +1,5 @@
+Script	Status
+11O_placeholder_READY.py	PASS
+11O_real_time_log_streamer_READY.py	PASS
+11O_telemetry_exporter_READY.py	PASS
+11O_unified_log_aggregator_READY.py	PASS

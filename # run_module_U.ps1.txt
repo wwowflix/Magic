@@ -1,0 +1,17 @@
+# run_module_U.ps1
+# Phase 11 - Module U: Multi-Agent Conflict Resolution
+# Executes all U-series READY scripts sequentially
+
+$files = @(
+    "11U_conflict_detector_between_agents_READY.py",
+    "11U_agent_voting_system_READY.py",
+    "11U_chain_of_responsibility_resolver_READY.py"
+)
+
+$modulePath = "scripts\phase11\module_U"
+
+foreach ($file in $files) {
+    $fullPath = Join-Path $modulePath $file
+    Write-Host "`n▶️ Running: $file"
+    python $fullPath
+}

@@ -1,0 +1,8 @@
+Script	Status
+13B_auto_cta_replacement_engine_READY.py	PASS
+13B_a_b_funnel_variant_manager_READY.py	PASS
+13B_cta_performance_scorer_READY.py	PASS
+13B_high_performer_rewriter_READY.py	PASS
+13B_placeholder_READY.py	PASS
+13B_product_cta_matching_engine_READY.py	PASS
+13B_smart_cta_split_tester_READY.py	PASS

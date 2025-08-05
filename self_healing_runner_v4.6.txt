@@ -1,0 +1,75 @@
+import json
+import subprocess
+import time
+import os
+import datetime
+import sys
+
+if len(sys.argv) < 2:
+    print("Usage: python self_healing_runner_v4.6.py <manifest.json>")
+    sys.exit(1)
+
+manifest_path = sys.argv[1]
+
+# Load manifest
+with open(manifest_path, "r", encoding="utf-8-sig") as f:
+    manifest = json.load(f)
+
+timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+summary_path = f"outputs/summaries/self_healing_summary_{timestamp}.tsv"
+
+summary_lines = []
+max_retries = 3
+
+print(f"\n🔹 Starting Self-Healing Runner v4.6 on {len(manifest)} scripts...\n")
+
+for script_path in manifest:
+    script_name = os.path.basename(script_path)
+    relative = os.path.relpath(script_path, start="scripts")
+    parts = relative.split(os.sep)
+    phase_name = parts[0] if len(parts) > 0 else "unknown_phase"
+    module_name = parts[1] if len(parts) > 1 else "unknown_module"
+
+    log_dir = os.path.join("outputs", "logs", phase_name, module_name)
+    os.makedirs(log_dir, exist_ok=True)
+    log_file = os.path.join(log_dir, f"{script_name}_{timestamp}.log")
+
+    success = False
+    error_msg = ""
+    attempt = 0
+
+    while attempt < max_retries:
+        attempt += 1
+        print(f"▶ Running {script_name} (Attempt {attempt}/{max_retries}) ...")
+        start_time = time.perf_counter()
+
+        process = subprocess.Popen(
+            ["python", script_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        stdout, stderr = process.communicate()
+        elapsed = round(time.perf_counter() - start_time, 2)
+
+        with open(log_file, "a", encoding="utf-8") as log:
+            log.write(f"=== Attempt {attempt} | Time: {elapsed}s ===\n")
+            log.write(stdout)
+            log.write(stderr)
+
+        if process.returncode == 0:
+            print(f"✅ {script_name} completed successfully in {elapsed}s.")
+            success = True
+            break
+        else:
+            print(f"⚠️ {script_name} failed (Attempt {attempt}). Retrying..." if attempt < max_retries else f"❌ {script_name} failed after {max_retries} attempts.")
+            error_msg = stderr.splitlines()[0] if stderr else "Unknown error"
+            time.sleep(1)
+
+    status = "PASS" if success else "FAIL"
+    summary_lines.append(f"{script_name}\t{status}\t{error_msg}\t{log_file}")
+
+with open(summary_path, "w", encoding="utf-8") as summary:
+    summary.write("\n".join(summary_lines))
+
+print(f"\n✅ Completed {len(manifest)} scripts. Summary saved to {summary_path}")

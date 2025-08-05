@@ -1,0 +1,6 @@
+Script	Status
+02G_dashboard_trend_router_READY.py	PASS
+02G_sqlite_trend_inserter_READY.py	PASS
+02G_trends_output_csv_writer_READY.py	PASS
+02G_trend_json_exporter_for_api__READY.py	PASS
+02G_visual_tags_for_dashboard_READY.py	PASS

@@ -1,0 +1,5 @@
+Script	Status
+01D_central_logging_system_READY.py	PASS
+01D_error_logging_sink_READY.py	PASS
+01D_log_rotation_archiver_READY.py	PASS
+01D_log_visualizer_cli_READY.py	PASS

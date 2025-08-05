@@ -1,0 +1,72 @@
+<#
+.SYNOPSIS
+    Checks PowerShell (.ps1) and Python (.py) scripts for syntax errors.
+
+.DESCRIPTION
+    This script scans the specified file and reports basic syntax issues.
+    - For .ps1 files: Uses PowerShell's parser to validate syntax.
+    - For .py files: Uses Python's built-in compiler module to detect errors.
+
+.PARAMETER FilePath
+    The path of the script file to validate.
+
+.EXAMPLE
+    .\tools\check_script_clean.ps1 .\tools\generate_manifest_and_placeholders.ps1
+#>
+
+param (
+    [Parameter(Mandatory = $true)]
+    [string]$FilePath
+)
+
+if (-not (Test-Path $FilePath)) {
+    Write-Host "❌ File not found: $FilePath" -ForegroundColor Red
+    exit 1
+}
+
+$extension = [System.IO.Path]::GetExtension($FilePath).ToLower()
+
+switch ($extension) {
+    ".ps1" {
+        Write-Host "🔍 Checking PowerShell script syntax: $FilePath"
+        try {
+            $errors = $null
+            [System.Management.Automation.PSParser]::Tokenize((Get-Content $FilePath -Raw), [ref]$errors) | Out-Null
+
+            if ($errors.Count -eq 0) {
+                Write-Host "✅ No syntax errors detected in PowerShell script." -ForegroundColor Green
+            }
+            else {
+                Write-Host "⚠️  Found $($errors.Count) syntax issue(s):" -ForegroundColor Yellow
+                $errors | ForEach-Object { Write-Host "   → $($_.Message) [Line: $($_.StartLine)]" -ForegroundColor Red }
+                exit 1
+            }
+        }
+        catch {
+            Write-Host "❌ Error while checking PowerShell script: $_" -ForegroundColor Red
+            exit 1
+        }
+    }
+    ".py" {
+        Write-Host "🔍 Checking Python script syntax: $FilePath"
+        try {
+            $result = & python -m py_compile $FilePath 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "✅ No syntax errors detected in Python script." -ForegroundColor Green
+            }
+            else {
+                Write-Host "⚠️  Python syntax errors found:" -ForegroundColor Yellow
+                Write-Host $result
+                exit 1
+            }
+        }
+        catch {
+            Write-Host "❌ Error while checking Python script: $_" -ForegroundColor Red
+            exit 1
+        }
+    }
+    default {
+        Write-Host "⚠️ Unsupported file type: $extension" -ForegroundColor Yellow
+        exit 1
+    }
+}

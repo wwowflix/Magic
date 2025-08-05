@@ -1,0 +1,4 @@
+Script	Status
+09I_api_gateway_access_handler_READY.py	PASS
+09I_remote_trigger_listener_READY.py	PASS
+09I_slack_discord_notifications_READY.py	PASS

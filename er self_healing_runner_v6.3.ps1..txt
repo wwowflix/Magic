@@ -1,0 +1,105 @@
+powershell -NoProfile -ExecutionPolicy Bypass -Command "
+# 1️⃣ Write out a clean v6.3 runner
+\$script = @'
+param(
+    [string]\$ManifestPath = 'phase_manifest.json',
+    [int]\$MaxRetries     = 2
+)
+Write-Host '=== Starting Self-Healing Runner v6.3 ==='
+
+# prepare outputs
+\$logRoot = 'outputs\\logs';  \$sumRoot = 'outputs\\summaries'
+New-Item -ItemType Directory -Force -Path \$logRoot | Out-Null
+New-Item -ItemType Directory -Force -Path \$sumRoot | Out-Null
+
+# summary file
+\$ts = Get-Date -Format 'yyyyMMdd_HHmmss'
+\$summaryFile = Join-Path \$sumRoot \"runner_summary_\$ts.txt\"
+
+# load manifest
+\$manifest = Get-Content \$ManifestPath -Raw | ConvertFrom-Json
+
+function Apply-Remediation {
+    param(\$err, \$scriptPath)
+    \$fixed = \$false
+    if (\$err -match 'FileNotFoundError') {
+        'placeholder' | Out-File (Join-Path (Split-Path \$scriptPath) 'dummy_input.txt') -Encoding UTF8
+        \$fixed = \$true
+    }
+    elseif (\$err -match 'UnicodeEncodeError') {
+        (Get-Content \$scriptPath) -replace '[^\x00-\x7F]', '' | Set-Content \$scriptPath
+        \$fixed = \$true
+    }
+    elseif (\$err -match 'ImportError') {
+        pip install -r requirements.txt
+        \$fixed = \$true
+    }
+    return \$fixed
+}
+
+# main loop
+foreach (\$entry in \$manifest) {
+    \$script = \$entry.FinalFilename
+    \$phase  = \$entry.PhaseNumber
+    \$mod    = \$entry.Module
+    \$dir    = Join-Path \$logRoot \"phase\${phase}_module_\${mod}\"
+    New-Item -ItemType Directory -Force -Path \$dir | Out-Null
+    \$logf   = Join-Path \$dir ((Split-Path \$script -Leaf) + '.log')
+
+    Write-Host \"`n>>> Running \$script\"
+    \$attempt = 1; \$success = \$false
+
+    while (\$attempt -le \$MaxRetries -and -not \$success) {
+        try {
+            python \$script *>&1 | Tee-Object -FilePath \$logf
+            if (\$LASTEXITCODE -eq 0) {
+                Write-Host \"✔ Success on attempt \$attempt\"
+                \"\$phase`t\$mod`t\$(Split-Path \$script -Leaf)`tSuccess\" | Add-Content \$summaryFile
+                \$success = \$true
+            } else {
+                throw \"Exit code \$LASTEXITCODE\"
+            }
+        } catch {
+            \$err = \$.Exception.Message
+            Write-Host (\"✖ Error on attempt {0}: {1}\" -f \$attempt, \$err)
+            if (Apply-Remediation \$err \$script) {
+                Write-Host '…remediated, retrying'
+            } else {
+                Write-Host 'No auto-fix available'
+                \"\$phase`t\$mod`t\$(Split-Path \$script -Leaf)`tFailure:\$err\" | Add-Content \$summaryFile
+                break
+            }
+        }
+        \$attempt++
+    }
+    if (-not \$success) {
+        Write-Host \"❌ Final failure: \$script\"
+    }
+}
+
+Write-Host '`n=== Runner complete ==='
+Write-Host (\"Logs in: {0}\" -f \$logRoot)
+Write-Host (\"Summary in: {0}\" -f \$summaryFile)
+'@
+
+# save and execute
+\$script | Set-Content D:\MAGIC\self_healing_runner_v6.3.ps1 -Encoding UTF8
+Write-Host '`n▶ Executing v6.3…' -ForegroundColor Cyan
+powershell -ExecutionPolicy Bypass -File D:\MAGIC\self_healing_runner_v6.3.ps1
+
+# show top 3 log dirs
+Write-Host '`n--- Recent log folders ---' -ForegroundColor Yellow
+Get-ChildItem D:\MAGIC\outputs\logs -Directory |
+  Sort-Object LastWriteTime -Descending |
+  Select-Object -First 3 | Format-Table Name,LastWriteTime
+
+# show latest summary
+Write-Host '`n--- Latest Summary ---' -ForegroundColor Green
+Get-ChildItem D:\MAGIC\outputs\summaries\runner_summary_* -File |
+  Sort-Object LastWriteTime -Descending |
+  Select-Object -First 1 |
+  ForEach-Object {
+    Write-Host \"`n=== \$($_.Name) ===`n\"
+    Get-Content \$_.FullName | Out-Host
+  }
+"
