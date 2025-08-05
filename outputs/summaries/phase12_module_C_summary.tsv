@@ -1,0 +1,7 @@
+Script	Status
+12C_auto_comment_generator_READY.py	PASS
+12C_auto_response_to_comments_READY.py	PASS
+12C_dm_response_recommender_READY.py	PASS
+12C_placeholder_READY.py	PASS
+12C_repost_remix_detection_READY.py	PASS
+12C_user_request_detector_READY.py	PASS

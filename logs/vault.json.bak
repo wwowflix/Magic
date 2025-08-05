@@ -1,6 +1,0 @@
-﻿{
-    "REDDIT_CLIENT_ID":  "your_real_client_id_here",
-    "OPENAI_API_KEY":  "sk-your-real-key",
-    "REDDIT_CLIENT_SECRET":  "your_real_client_secret_here",
-    "REDDIT_USER_AGENT":  "MAGICZephyrBot/1.0 by u/yourusername"
-}

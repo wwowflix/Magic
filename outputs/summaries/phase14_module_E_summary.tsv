@@ -1,0 +1,10 @@
+Script	Status
+14E_autonomous_theme_selector_READY.py	PASS
+14E_content_lifecycle_advisor_READY.py	PASS
+14E_cta_heatmap_visualizer_READY.py	PASS
+14E_evergreen_identifier_READY.py	PASS
+14E_failed_content_analyzer_READY.py	PASS
+14E_placeholder_READY.py	PASS
+14E_retention_drop_off_analyzer_READY.py	PASS
+14E_thumbnail_hook_tester_READY.py	PASS
+14E_title_rewrite_recommender_READY.py	PASS

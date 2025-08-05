@@ -1,0 +1,5 @@
+Script	Status
+06H_error_recovery_republishing_READY.py	PASS
+06H_last_successful_upload_marker_READY.py	PASS
+06H_post_log_syncer_READY.py	PASS
+06H_upload_backup_archiver_READY.py	PASS
