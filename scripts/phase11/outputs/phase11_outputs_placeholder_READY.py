@@ -1,1 +1,5 @@
-﻿# Placeholder script for phase11 outputs
+﻿def main():
+    pass
+
+if __name__ == "__main__":
+    main()

@@ -1412,8 +1412,8 @@ phase8_module_Y	8Y_placeholder_READY.py	PASS
 phase8_module_Z	8Z_placeholder_READY.py	PASS
 phase99_module_ZZ	99ZZ_dummy_script_v2_READY.py	PASS
 phase99_module_ZZ	99Z_file_not_found_test_READY.py	PASS
-phase99_module_ZZ	99Z_import_error_test_READY.py	FAIL
-phase99_module_ZZ	99Z_unicode_error_test_READY.py	FAIL
+phase99_module_ZZ	99Z_import_error_test_READY.py	PASS
+phase99_module_ZZ	99Z_unicode_error_test_READY.py	PASS
 phase9_module_A	9A_placeholder_READY.py	PASS
 phase9_module_B	9B_placeholder_READY.py	PASS
 phase9_module_C	9C_placeholder_READY.py	PASS

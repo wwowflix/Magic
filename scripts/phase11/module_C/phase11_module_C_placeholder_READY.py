@@ -1,1 +1,5 @@
-﻿# Placeholder script for phase11 module_C
+﻿def main():
+    pass
+
+if __name__ == "__main__":
+    main()

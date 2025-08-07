@@ -1,2 +1,5 @@
-﻿# Placeholder script for Phase 11 Module C
-print('Phase 11 Module C placeholder executed')
+﻿def main():
+    pass
+
+if __name__ == "__main__":
+    main()
