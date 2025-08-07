@@ -1,1 +1,5 @@
-﻿print('Hello from Phase 11 Module A')
+﻿def main():
+    pass
+
+if __name__ == "__main__":
+    main()
