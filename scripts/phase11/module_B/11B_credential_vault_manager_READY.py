@@ -1,4 +1,4 @@
-import os
+﻿import os
 from dotenv import dotenv_values
 
 # CONFIG
@@ -35,7 +35,7 @@ for key in env_data.keys():
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if not missing and not empty:
-        f.write("✅ All required keys are present and non-empty.\n")
+        f.write("[PASS] All required keys are present and non-empty.\n")
     else:
         if missing:
             f.write("❌ Missing keys:\n")
@@ -51,3 +51,4 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
             f.write(f" - {key}\n")
 
 print(f"🔐 Vault check complete. See: {LOG_FILE}")
+

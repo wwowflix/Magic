@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Phase 11 - Module A
 Script: Script Health Verifier
@@ -38,7 +38,7 @@ def main():
                                     log.write(f"⚠️ Missing main(): {file}\n")
 
             if not bad_scripts:
-                log.write("✅ All scripts passed health check.\n")
+                log.write("[PASS] All scripts passed health check.\n")
 
         print("PASS")
     except Exception as e:
@@ -48,3 +48,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

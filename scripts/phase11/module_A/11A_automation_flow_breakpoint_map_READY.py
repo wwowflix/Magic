@@ -24,7 +24,7 @@ def main():
                 elif len(files) < 3:
                     log.write(f"⚠️ Potential issue: {module} has only {len(files)} scripts.\n")
                 else:
-                    log.write(f"✅ Module {module} looks okay ({len(files)} scripts).\n")
+                    log.write(f"[PASS] Module {module} looks okay ({len(files)} scripts).\n")
 
         print("PASS")
     except Exception as e:
@@ -34,3 +34,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
