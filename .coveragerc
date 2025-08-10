@@ -1,0 +1,14 @@
+﻿[run]
+source = tools
+omit =
+    venv/*
+    outputs/*
+    logs/*
+    docs/*
+    tests/*
+    scripts/*     # remove this line if you want to include scripts/
+disable_warnings = couldnt-parse
+
+[report]
+skip_covered = True
+show_missing = True
