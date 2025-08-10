@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-MAGIC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Build Live Dashboard (Week 8 Ãƒâ€šÃ‚Â· Step 8.2)
+MAGIC ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Build Live Dashboard (Week 8 ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Step 8.2)
 
 Inputs (defaults; override with CLI flags):
   --summary       outputs/summaries/phase_master_summary.tsv
@@ -191,7 +191,7 @@ def build_dashboard(
     summary_path: str,
     metrics_glob: Optional[str],
     outdir: str,
-    title: str = "MAGIC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Runner Dashboard",
+    title: str = "MAGIC ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Runner Dashboard",
     restrict_phase: Optional[int] = None,
     no_html: bool = False
 ) -> dict:
@@ -338,7 +338,7 @@ def build_dashboard(
             "</style>",
             f"<h1>{title}</h1>",
             f"<p class='meta'>Generated at: <b>{summary['generated_at']}</b>"
-            + (f" Ãƒâ€šÃ‚Â· Phase filter: <b>{restrict_phase}</b>" if restrict_phase is not None else "")
+            + (f" ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Phase filter: <b>{restrict_phase}</b>" if restrict_phase is not None else "")
             + "</p>",
             "<section><h2>Status Breakdown</h2>",
             f"<img src='{images['status_breakdown']}' alt='Status breakdown' />",
@@ -363,7 +363,7 @@ def build_dashboard(
         with open(os.path.join(outdir, "index.html"), "w", encoding="utf-8") as f:
             f.write("\n".join(parts))
 
-    print(f"ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Dashboard built in: {outdir}")
+    print(f"ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Dashboard built in: {outdir}")
     return summary
 
 # --------------------------- CLI ---------------------------
@@ -373,7 +373,7 @@ def main():
     ap.add_argument("--summary", default="outputs/summaries/phase_master_summary.tsv")
     ap.add_argument("--metrics_glob", default="outputs/logs/agent_metrics/*.json")
     ap.add_argument("--outdir", default="outputs/dashboard")
-    ap.add_argument("--title", default="MAGIC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Runner Dashboard")
+    ap.add_argument("--title", default="MAGIC ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ Runner Dashboard")
     ap.add_argument("--restrict_phase", type=int, default=None,
                     help="Only include rows that belong to this Phase number (e.g., 11).")
     ap.add_argument("--no-html", action="store_true", help="Do not emit index.html")
