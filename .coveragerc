@@ -6,7 +6,6 @@ omit =
     logs/*
     docs/*
     tests/*
-    scripts/*     # remove this line if you want to include scripts/
 disable_warnings = couldnt-parse
 
 [report]
