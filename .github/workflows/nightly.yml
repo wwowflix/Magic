@@ -1,0 +1,20 @@
+﻿name: nightly
+on:
+  schedule:
+    - cron: "0 18 * * *"   # 03:00 JST
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: "pip" }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+          pip install pandas matplotlib
+      - run: python tools/build_dashboard.py --summary outputs/summaries/phase_master_summary.tsv --metrics_glob "outputs/logs/agent_metrics/*.json" --outdir outputs/dashboard --restrict_phase 11
+      - run: python tools/e2e_smoketest.py --phase 11
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: nightly-dashboard, path: outputs/dashboard/** }
