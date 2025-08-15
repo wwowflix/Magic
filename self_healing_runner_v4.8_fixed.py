@@ -1,111 +1,91 @@
-#!/usr/bin/env python3
-"""
-Self-Healing Runner v5
-
-Usage:
-  python self_healing_runner_v5.py \
-    --manifest phase_manifest.json \
-    [--phases 1 2 3] \
-    [--modules A B] \
-    [--dry-run]
-
-This script loads a JSON manifest of scripts, filters by phase and/or module,
-executes each script, captures stdout/stderr, and writes per-script logs.
-"""
+import json
 import argparse
 import subprocess
-import json
-import os
-import sys
-from datetime import datetime
 
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="Self-Healing Runner v5")
-    parser.add_argument('-m', '--manifest', required=True,
-                        help='Path to JSON manifest file')
-    parser.add_argument('--phases', nargs='+', type=int,
-                        help='List of phase numbers to run')
-    parser.add_argument('--modules', nargs='+',
-                        help='List of module identifiers to run')
-    parser.add_argument('--dry-run', action='store_true',
-                        help='Print scripts without executing')
-    return parser.parse_args()
-
-
-def load_manifest(path):
+# Function to load and debug the manifest file
+def load_manifest(filename):
     try:
-        with open(path, 'r', encoding='utf-8-sig') as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"ERROR loading manifest: {e}")
-        sys.exit(1)
+        with open(filename, 'r') as file:
+            manifest = json.load(file)
+            print("Loaded manifest:")
+            print(json.dumps(manifest, indent=2))  # Pretty print the JSON
+            return manifest
+    except FileNotFoundError:
+        print("Error: The specified manifest file was not found!")
+        return []
+    except json.JSONDecodeError:
+        print("Error: Failed to decode the manifest JSON!")
+        return []
 
-
+# Function to filter the manifest based on provided phases and modules
 def filter_manifest(manifest, phases, modules):
     filtered = []
     for entry in manifest:
-        # support multiple key names
-        entry_phase = entry.get('Phase') or entry.get('PhaseNumber') or entry.get('phase')
-        entry_module = entry.get('Module') or entry.get('module')
-        # cast phase
-        try:
-            entry_phase_int = int(entry_phase)
-        except:
-            continue
-        if phases and entry_phase_int not in phases:
-            continue
-        if modules and entry_module not in modules:
-            continue
-        # locate script path
-        script_path = entry.get('Path') or entry.get('ScriptPath') or entry.get('FinalFilename') or entry.get('filename')
-        if not script_path:
-            continue
-        filtered.append(script_path)
+        print(f"Processing entry: {entry}")  # Debugging line to show each entry being processed
+
+        # If the entry is a string, attempt to parse it as a JSON object
+        if isinstance(entry, str):
+            try:
+                entry = json.loads(entry)  # Try to parse string to JSON
+                print(f"Successfully parsed string: {entry}")  # Debug parsed entry
+            except json.JSONDecodeError:
+                print(f"Error decoding string entry: {entry}")
+                continue  # Skip invalid JSON strings
+
+        if isinstance(entry, dict):
+            entry_phase = entry.get('Phase') or entry.get('PhaseNumber') or entry.get('phase')
+            entry_module = entry.get('Module') or entry.get('module')
+            print(f"Entry Phase: {entry_phase}, Entry Module: {entry_module}")  # Debug output
+
+            if entry_phase in phases and entry_module in modules:
+                filtered.append(entry)
+        else:
+            print(f"Skipping non-dictionary entry: {entry}")
+    
     return filtered
 
-
-def run_scripts(scripts, dry_run):
-    for script in scripts:
-        print(f"\n▶ Running: {script}")
-        if dry_run:
-            continue
-        # ensure path exists
-        if not os.path.isfile(script):
-            print(f"  ✗ Script not found: {script}")
-            continue
-        proc = subprocess.Popen(
-            ['python', script],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-        out, err = proc.communicate()
-        status = 'PASS' if proc.returncode == 0 else 'FAIL'
-        # prepare log folder
-        base = os.path.splitext(os.path.basename(script))[0]
-        log_dir = os.path.join('outputs', 'logs', base)
-        os.makedirs(log_dir, exist_ok=True)
-        # write logs
-        with open(os.path.join(log_dir, 'stdout.log'), 'w', encoding='utf-8') as f:
-            f.write(out)
-        with open(os.path.join(log_dir, 'stderr.log'), 'w', encoding='utf-8') as f:
-            f.write(err)
-        with open(os.path.join(log_dir, 'summary.txt'), 'w', encoding='utf-8') as f:
-            f.write(status)
-        print(f"  {status}: returncode={proc.returncode}")
-
-
+# Main function to handle the manifest processing
 def main():
-    args = parse_args()
+    # Argument parsing setup
+    parser = argparse.ArgumentParser(description="Process a phase manifest.")
+    parser.add_argument('--manifest', required=True, help="Path to the manifest JSON file")
+    parser.add_argument('--phases', required=True, nargs='+', help="List of phases to filter by")
+    parser.add_argument('--modules', required=True, nargs='+', help="List of modules to filter by")
+    parser.add_argument('--dry-run', action='store_true', help="Dry run without making changes")
+    
+    args = parser.parse_args()
+
+    # Load the manifest from the provided file
     manifest = load_manifest(args.manifest)
-    scripts = filter_manifest(manifest, args.phases, args.modules)
-    if not scripts:
-        print("No matching entries found in manifest. Nothing to run.")
-        sys.exit(0)
-    print(f"Found {len(scripts)} script(s) to execute.")
-    run_scripts(scripts, args.dry_run)
 
+    # Get the phases and modules from the arguments
+    phases = args.phases
+    modules = args.modules
 
-if __name__ == '__main__':
+    # If dry-run is specified, just print the filtered scripts
+    if args.dry_run:
+        print(f"Dry run enabled. Filtering the manifest based on phases {phases} and modules {modules}.")
+        filtered_scripts = filter_manifest(manifest, phases, modules)
+        print(f"Filtered scripts: {filtered_scripts}")
+    else:
+        # Process and execute the necessary actions on the filtered scripts
+        filtered_scripts = filter_manifest(manifest, phases, modules)
+        
+        if not filtered_scripts:
+            print("No matching entries found in manifest. Nothing to run.")
+        else:
+            print(f"Filtered scripts: {filtered_scripts}")
+            for script in filtered_scripts:
+                print(f"Executing {script['Filename']}...")
+                # Add your execution logic here (e.g., running scripts or handling files)
+                # Example:
+                try:
+                    # Example: Run each Python script (you can adapt this part based on your needs)
+                    result = subprocess.run(['python', script['Filename']], check=True)
+                    print(f"Script {script['Filename']} executed successfully!")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error executing script {script['Filename']}: {e}")
+
+# Run the script if this is the main module
+if __name__ == "__main__":
     main()
