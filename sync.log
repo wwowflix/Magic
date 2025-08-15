@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\MAGIC\agents\meta\notion_sync_agent.py", line 122, in <module>
+    sync_to_notion()
+    ~~~~~~~~~~~~~~^^
+  File "D:\MAGIC\agents\meta\notion_sync_agent.py", line 101, in sync_to_notion
+    summary_files = read_latest_summary_files()
+  File "D:\MAGIC\agents\meta\notion_sync_agent.py", line 24, in read_latest_summary_files
+    files = [f for f in os.listdir(SUMMARY_DIR)
+                        ~~~~~~~~~~^^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'outputs\\summaries'

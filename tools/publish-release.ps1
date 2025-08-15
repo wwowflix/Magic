@@ -70,7 +70,11 @@ $me = Invoke-RestMethod https://api.github.com/user -Headers $H
 Write-Host "Authenticated as $($me.login)"
 
 # body
-$Body = (Test-Path -LiteralPath $NotesPath) ? (Get-Content $NotesPath -Raw) : ""
+if (Test-Path -LiteralPath $NotesPath) {
+  $Body = Get-Content $NotesPath -Raw
+} else {
+  $Body = ""
+}
 
 # get or create the release
 try {
@@ -88,3 +92,4 @@ try {
 foreach ($p in $Assets) { Upload-ReleaseAsset -Rel $Rel -Path $p -Headers $H -Org $Org -Repo $Repo }
 
 Write-Host "Release page: $($Rel.html_url)"
+

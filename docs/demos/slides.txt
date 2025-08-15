@@ -1,0 +1,5 @@
+ffconcat version 1.0
+file 'D:\MAGIC\outputs\dashboard\status_breakdown.png'
+duration 5
+file 'D:\MAGIC\outputs\dashboard\passing_per_module.png'
+duration 5

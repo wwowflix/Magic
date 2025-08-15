@@ -1,1 +1,1 @@
-✅ No missing files. All expected scripts are present.
+[PASS] No missing files. All expected scripts are present.
