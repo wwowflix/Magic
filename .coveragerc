@@ -1,13 +1,7 @@
 [run]
 source = tools
-omit =
-    venv/*
-    outputs/*
-    logs/*
-    docs/*
-    tests/*
-disable_warnings = couldnt-parse
+branch = True
 
 [report]
-skip_covered = True
-show_missing = True
+include =
+    tools/phase11_sanity_runner.py
