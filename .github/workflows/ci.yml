@@ -1,33 +1,36 @@
-﻿name: CI
-
+name: CI
 on:
   push:
   pull_request:
-
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        py: ["3.11", "3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.py }}
+      - run: python -m pip install --upgrade pip
 
-      - name: Install deps
-        run: |
-          python -m pip install -U pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # dev deps (pytest, coverage)
-          pip install pytest pytest-cov
+      - name: Install project deps (if present)
+        if: hashFiles('requirements.txt') != ''
+        run: pip install -r requirements.txt
 
-      - name: Run tests with coverage (80% gate)
-        run: |
-          pytest -o addopts="--cov --cov-report=term --cov-report=html --cov-fail-under=80" -q
+      - name: Install dev deps (if present)
+        if: hashFiles('requirements-dev.txt') != ''
+        run: pip install -r requirements-dev.txt
 
-      - name: Upload coverage html
+      - run: pip install pytest pytest-cov
+
+      - name: Run tests
+        run: pytest -q --maxfail=1 --disable-warnings --cov=tools --cov-branch --cov-report=xml --cov-fail-under=90
+
+      - uses: codecov/codecov-action@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: coverage-html
-          path: htmlcov
+          files: ./coverage.xml
+          fail_ci_if_error: false
