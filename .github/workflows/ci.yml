@@ -5,6 +5,7 @@ on:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         py: ["3.11", "3.12", "3.13"]
@@ -14,6 +15,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.py }}
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-py${{ matrix.py }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-py${{ matrix.py }}-pip-
+
       - run: python -m pip install --upgrade pip
 
       - name: Install project deps (if present)
@@ -33,4 +42,5 @@ jobs:
         if: always()
         with:
           files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
