@@ -1,5 +1,0 @@
-Script	Status	Error	LogFile
-99ZZ_dummy_script_v2_READY.py	PASS		outputs\logs\phase99\module_ZZ\99ZZ_dummy_script_v2_READY.py_17-39-08.log
-99Z_file_not_found_test_READY.py	FAIL	Traceback (most recent call last):	outputs\logs\phase99\module_ZZ\99Z_file_not_found_test_READY.py_17-39-08.log
-99Z_import_error_test_READY.py	FAIL	Traceback (most recent call last):	outputs\logs\phase99\module_ZZ\99Z_import_error_test_READY.py_17-39-08.log
-99Z_unicode_error_test_READY.py	FAIL	Traceback (most recent call last):	outputs\logs\phase99\module_ZZ\99Z_unicode_error_test_READY.py_17-39-08.log
