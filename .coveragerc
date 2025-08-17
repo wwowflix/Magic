@@ -4,4 +4,5 @@ branch = True
 
 [report]
 include =
+    tools/create_manifest.py
     tools/phase11_sanity_runner.py
