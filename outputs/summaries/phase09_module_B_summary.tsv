@@ -1,6 +1,0 @@
-Script	Status
-09B_api_quota_guard_READY.py	PASS
-09B_budget_enforcement_system_READY.py	PASS
-09B_daily_weekly_cost_cap_enforcer_READY.py	PASS
-09B_rate_limiting_adapter_READY.py	PASS
-09B_rolling_cost_caps_READY.py	PASS

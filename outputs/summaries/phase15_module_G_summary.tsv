@@ -1,7 +1,0 @@
-Script	Status
-15G_negative_feedback_blocker_READY.py	PASS
-15G_performance_based_self_retuner_READY.py	PASS
-15G_placeholder_READY.py	PASS
-15G_post_trend_deactivation_signaler_READY.py	PASS
-15G_real_time_a_b_variation_switcher_READY.py	PASS
-15G_real_time_engagement_delta_tracker_READY.py	PASS

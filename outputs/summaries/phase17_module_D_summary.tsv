@@ -1,6 +1,0 @@
-Script	Status
-17D_age_restricted_content_filter_READY.py	PASS
-17D_copyright_takedown_watcher_READY.py	PASS
-17D_placeholder_READY.py	PASS
-17D_policy_violation_auto_flagger_READY.py	PASS
-17D_shadowban_detection_radar_READY.py	PASS
