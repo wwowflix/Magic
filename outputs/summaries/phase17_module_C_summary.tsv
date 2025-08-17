@@ -1,8 +1,0 @@
-Script	Status
-17C_automation_self_healing_layer_READY.py	PASS
-17C_auto_recover_agent_READY.py	PASS
-17C_backup_configuration_sync_READY.py	PASS
-17C_diagnostic_snapshot_exporter_READY.py	PASS
-17C_escalation_notifier_READY.py	PASS
-17C_extra_missing_READY.py	PASS
-17C_placeholder_READY.py	PASS

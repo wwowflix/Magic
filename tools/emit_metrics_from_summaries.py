@@ -1,44 +1,54 @@
-# tools/emit_metrics_from_summaries.py
-import os, time, json, glob
+﻿#!/usr/bin/env python3
+import csv, json
+from pathlib import Path
+from collections import defaultdict, Counter
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-SUM_DIR = os.path.join(ROOT, "outputs", "summaries")
-OUT_DIR = os.path.join(ROOT, "outputs", "metrics")
+__all__ = ["emit_metrics", "main"]
 
-def parse_tsv(path):
-    pass_count = fail_count = 0
-    with open(path, "r", encoding="utf-8") as f:
-        for i, line in enumerate(f):
-            if i == 0:  # header
-                continue
-            cols = [c.strip() for c in line.split("\t")]
-            if len(cols) >= 2:
-                status = cols[1].upper()
-                if status == "PASS": pass_count += 1
-                elif status == "FAIL": fail_count += 1
-    return pass_count, fail_count
+def emit_metrics(summaries_dir: str, out_dir: str) -> str:
+    """
+    Read all *.tsv files in `summaries_dir` (tab-delimited with 'Status' and 'Phase' columns,
+    but we will also work if only 'Status' is present), aggregate counts, and write JSON to
+    `out_dir/agent_metrics.json`. Returns the output file path as a string.
+    """
+    sdir = Path(summaries_dir)
+    odir = Path(out_dir)
+    odir.mkdir(parents=True, exist_ok=True)
 
-def main():
-    os.makedirs(OUT_DIR, exist_ok=True)
-    summaries = glob.glob(os.path.join(SUM_DIR, "phase*_module_*_summary.tsv"))
-    total_pass = total_fail = 0
-    modules = {}
-    for p in summaries:
-        mod = os.path.splitext(os.path.basename(p))[0]
-        p_count, f_count = parse_tsv(p)
-        modules[mod] = {"pass": p_count, "fail": f_count}
-        total_pass += p_count
-        total_fail += f_count
+    totals = Counter()
+    by_phase = defaultdict(lambda: Counter())
 
-    metrics = {
-        "timestamp": int(time.time()),
-        "modules": modules,
-        "totals": {"pass": total_pass, "fail": total_fail}
+    for tsv in sdir.glob("*.tsv"):
+        with tsv.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f, delimiter="\t")
+            for row in reader:
+                status = str(row.get("Status", "")).strip()
+                phase  = str(row.get("Phase", "")).strip()
+                if not status:
+                    continue
+                totals[status] += 1
+                if phase:
+                    by_phase[phase][status] += 1
+
+    payload = {
+        "totals": dict(totals),
+        "by_phase": {k: dict(v) for k, v in by_phase.items()},
     }
-    out = os.path.join(OUT_DIR, f"run_{int(time.time())}.json")
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(metrics, f, indent=2)
-    print(f"Wrote metrics: {out}")
+
+    out_path = odir / "agent_metrics.json"
+    out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return str(out_path)
+
+def main(argv=None) -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
+    # ✨ defaults changed to what the test expects
+    ap.add_argument("--summaries", default="outputs/summaries")
+    ap.add_argument("--out",        default="outputs/metrics")
+    ns = ap.parse_args(argv)
+    p = emit_metrics(ns.summaries, ns.out)
+    print(f"[emit_metrics] wrote {p}")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

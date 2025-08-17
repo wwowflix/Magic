@@ -1,5 +1,0 @@
-﻿✅ 11A_file_watchdog_READY.py
-✅ 11A_anomaly_log_writer_READY.py
-✅ 11B_api_key_leak_checker_READY.py
-✅ 11B_credential_vault_manager_READY.py
-✅ 11C_script_integrity_checker_READY.py

@@ -17,3 +17,14 @@ logs/**
 
 # demos (track the mp4, ignore temp audio)
 docs/demos/*.wav
+
+# coverage / pytest
+coverage.xml
+.pytest_cache/
+# Python
+# local outputs
+phase_manifest.json
+# editor/OS
+.DS_Store
+# local backups
+tools/*.bak*

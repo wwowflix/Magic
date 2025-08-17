@@ -1,9 +1,0 @@
-Script	Status
-05C_accessibility_metadata_READY.py	PASS
-05C_brand_visual_style_enforcer_READY.py	PASS
-05C_caption_subtitle_generator_READY.py	PASS
-05C_dynamic_text_overlay_generator_READY.py	PASS
-05C_hero_blog_image_generator_READY.py	PASS
-05C_inline_blog_visuals_READY.py	PASS
-05C_intro_outro_auto_adder_READY.py	PASS
-05C_thumbnail_generator_READY.py	PASS
