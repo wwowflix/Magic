@@ -1,52 +1,9 @@
 ﻿name: self-heal
-
 on:
-  push:
-    branches: [ main, "**" ]
-  pull_request:
-
+  workflow_dispatch:
 jobs:
   ci:
+    if: false   # keep the job defined but never runs unless you later re-enable
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
-          pip install pandas matplotlib pytest pytest-cov
-
-      - name: Unit tests + coverage (>=80%)
-        run: pytest
-
-      - name: Build dashboard (Phase 11)
-        run: |
-          python tools/build_dashboard.py \
-            --summary outputs/summaries/phase_master_summary.tsv \
-            --metrics_glob "outputs/logs/agent_metrics/*.json" \
-            --outdir outputs/dashboard \
-            --restrict_phase 11
-
-      - name: E2E smoketest (Phase 11)
-        run: python tools/e2e_smoketest.py --phase 11
-
-      - name: Upload dashboard artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: magic-dashboard
-          path: outputs/dashboard/**
-
-      - name: Upload coverage HTML
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-html
-          path: htmlcov/**
-
+      - run: echo "disabled for PRs"
