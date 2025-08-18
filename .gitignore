@@ -28,3 +28,19 @@ phase_manifest.json
 .DS_Store
 # local backups
 tools/*.bak*
+# Local/binary artifacts
+*.zip
+*.log
+*.bak
+*.bak_*
+# Python caches
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+# Envs / IDE
+.venv/
+venv/
+.vscode/
+.idea/
