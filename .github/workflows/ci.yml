@@ -24,10 +24,16 @@ jobs:
         run: pre-commit run --all-files
       - name: Tests with coverage
         run: pytest -q --maxfail=1 --disable-warnings --cov=tools --cov-branch --cov-report=xml:coverage.xml --cov-report=term-missing --cov-fail-under=90
-     - name: Upload coverage to Codecov
-  uses: codecov/codecov-action@v4
+     - name: Debug coverage file
+  run: |
+    ls -la
+    [ -f coverage.xml ] && echo "coverage.xml present" || (echo "coverage.xml MISSING"; exit 1)
+    head -n 20 coverage.xml || true
+
+
   with:
     files: coverage.xml
     verbose: true
     fail_ci_if_error: true
+
 
