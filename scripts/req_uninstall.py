@@ -17,9 +17,7 @@ from pip._internal.utils.temp_dir import AdjacentTempDirectory, TempDirectory
 logger = getLogger(__name__)
 
 
-def _script_names(
-    bin_dir: str, script_name: str, is_gui: bool
-) -> Generator[str, None, None]:
+def _script_names(bin_dir: str, script_name: str, is_gui: bool) -> Generator[str, None, None]:
     """Create the fully qualified name of the files created by
     {console,gui}_scripts for the given ``dist``.
     Returns the list of file names
@@ -37,7 +35,7 @@ def _script_names(
 
 
 def _unique(
-    fn: Callable[..., Generator[Any, None, None]]
+    fn: Callable[..., Generator[Any, None, None]],
 ) -> Callable[..., Generator[Any, None, None]]:
     @functools.wraps(fn)
     def unique(*args: Any, **kw: Any) -> Generator[Any, None, None]:
@@ -185,10 +183,7 @@ def compress_for_output_listing(paths: Iterable[str]) -> Tuple[Set[str], Set[str
                     continue
 
                 file_ = os.path.join(dirpath, fname)
-                if (
-                    os.path.isfile(file_)
-                    and os.path.normcase(file_) not in _normcased_files
-                ):
+                if os.path.isfile(file_) and os.path.normcase(file_) not in _normcased_files:
                     # We are skipping this file. Add it to the set.
                     will_skip.add(file_)
 
@@ -445,9 +440,7 @@ class UninstallPathSet:
             return cls(dist)
 
         if normalized_dist_location in {
-            p
-            for p in {sysconfig.get_path("stdlib"), sysconfig.get_path("platstdlib")}
-            if p
+            p for p in {sysconfig.get_path("stdlib"), sysconfig.get_path("platstdlib")} if p
         }:
             logger.info(
                 "Not uninstalling %s at %s, as it is in the standard library.",
@@ -532,16 +525,12 @@ class UninstallPathSet:
             with open(develop_egg_link) as fh:
                 link_pointer = os.path.normcase(fh.readline().strip())
                 normalized_link_pointer = normalize_path(link_pointer)
-            assert os.path.samefile(
-                normalized_link_pointer, normalized_dist_location
-            ), (
+            assert os.path.samefile(normalized_link_pointer, normalized_dist_location), (
                 f"Egg-link {link_pointer} does not match installed location of "
                 f"{dist.raw_name} (at {dist_location})"
             )
             paths_to_remove.add(develop_egg_link)
-            easy_install_pth = os.path.join(
-                os.path.dirname(develop_egg_link), "easy-install.pth"
-            )
+            easy_install_pth = os.path.join(os.path.dirname(develop_egg_link), "easy-install.pth")
             paths_to_remove.add_pth(easy_install_pth, dist_location)
 
         else:

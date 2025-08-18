@@ -577,8 +577,7 @@ def period_range(
     """
     if com.count_not_none(start, end, periods) != 2:
         raise ValueError(
-            "Of the three parameters: start, end, and periods, "
-            "exactly two must be specified"
+            "Of the three parameters: start, end, and periods, " "exactly two must be specified"
         )
     if freq is None and (not isinstance(start, Period) and not isinstance(end, Period)):
         freq = "D"

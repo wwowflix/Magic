@@ -26,9 +26,7 @@ def install(cwd: bool = False, path: Optional[AnyStr] = None, no_ssl: bool = Fal
     if "PATH" not in os.environ:
         os.environ["PATH"] = chromedriver_dir
     elif chromedriver_dir not in os.environ["PATH"]:
-        os.environ["PATH"] = (
-            chromedriver_dir + utils.get_variable_separator() + os.environ["PATH"]
-        )
+        os.environ["PATH"] = chromedriver_dir + utils.get_variable_separator() + os.environ["PATH"]
     return chromedriver_filepath
 
 

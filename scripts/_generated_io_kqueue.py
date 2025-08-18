@@ -66,9 +66,7 @@ async def wait_kevent(
     <https://github.com/python-trio/trio/issues/26>`__.
     """
     try:
-        return await GLOBAL_RUN_CONTEXT.runner.io_manager.wait_kevent(
-            ident, filter, abort_func
-        )
+        return await GLOBAL_RUN_CONTEXT.runner.io_manager.wait_kevent(ident, filter, abort_func)
     except AttributeError:
         raise RuntimeError("must be called from async context") from None
 

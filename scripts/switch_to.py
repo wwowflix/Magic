@@ -17,7 +17,11 @@
 
 from typing import Optional, Union
 
-from selenium.common.exceptions import NoSuchElementException, NoSuchFrameException, NoSuchWindowException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    NoSuchFrameException,
+    NoSuchWindowException,
+)
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement

@@ -8,9 +8,7 @@ PACKAGE = "praw"
 
 
 def mock_response(response, latest_version="5.0.0"):
-    response.json = mock.Mock(
-        return_value={"releases": {"0.0.1": [], latest_version: []}}
-    )
+    response.json = mock.Mock(return_value={"releases": {"0.0.1": [], latest_version: []}})
     response.status_code = 200
 
 
@@ -74,4 +72,3 @@ def test_update_check__unsuccessful(mock_get, capsys):
     mock_get.side_effect = requests.exceptions.RequestException
     update_check(PACKAGE, "0.0.1", bypass_cache=True)
     assert "" == capsys.readouterr().err
-

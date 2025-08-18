@@ -73,9 +73,7 @@ class DatabricksFileSystem(AbstractFileSystem):
         out = self._ls_from_cache(path)
         if not out:
             try:
-                r = self._send_to_api(
-                    method="get", endpoint="list", json={"path": path}
-                )
+                r = self._send_to_api(method="get", endpoint="list", json={"path": path})
             except DatabricksException as e:
                 if e.error_code == "RESOURCE_DOES_NOT_EXIST":
                     raise FileNotFoundError(e.message) from e
@@ -112,9 +110,7 @@ class DatabricksFileSystem(AbstractFileSystem):
         if not exist_ok:
             try:
                 # If the following succeeds, the path is already present
-                self._send_to_api(
-                    method="get", endpoint="get-status", json={"path": path}
-                )
+                self._send_to_api(method="get", endpoint="get-status", json={"path": path})
                 raise FileExistsError(f"Path {path} already exists")
             except DatabricksException as e:
                 if e.error_code == "RESOURCE_DOES_NOT_EXIST":
@@ -175,9 +171,7 @@ class DatabricksFileSystem(AbstractFileSystem):
             raise
         self.invalidate_cache(self._parent(path))
 
-    def mv(
-        self, source_path, destination_path, recursive=False, maxdepth=None, **kwargs
-    ):
+    def mv(self, source_path, destination_path, recursive=False, maxdepth=None, **kwargs):
         """
         Move a source to a destination path.
 
@@ -413,9 +407,9 @@ class DatabricksFile(AbstractBufferedFile):
         if block_size is None or block_size == "default":
             block_size = self.DEFAULT_BLOCK_SIZE
 
-        assert block_size == self.DEFAULT_BLOCK_SIZE, (
-            f"Only the default block size is allowed, not {block_size}"
-        )
+        assert (
+            block_size == self.DEFAULT_BLOCK_SIZE
+        ), f"Only the default block size is allowed, not {block_size}"
 
         super().__init__(
             fs,
@@ -437,9 +431,7 @@ class DatabricksFile(AbstractBufferedFile):
         self.buffer.seek(0)
         data = self.buffer.getvalue()
 
-        data_chunks = [
-            data[start:end] for start, end in self._to_sized_blocks(len(data))
-        ]
+        data_chunks = [data[start:end] for start, end in self._to_sized_blocks(len(data))]
 
         for data_chunk in data_chunks:
             self.fs._add_data(handle=self.handle, data=data_chunk)
@@ -453,9 +445,7 @@ class DatabricksFile(AbstractBufferedFile):
         return_buffer = b""
         length = end - start
         for chunk_start, chunk_end in self._to_sized_blocks(length, start):
-            return_buffer += self.fs._get_data(
-                path=self.path, start=chunk_start, end=chunk_end
-            )
+            return_buffer += self.fs._get_data(path=self.path, start=chunk_start, end=chunk_end)
 
         return return_buffer
 

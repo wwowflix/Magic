@@ -9,6 +9,7 @@ If you need to make sure options are available even before a certain
 module is imported, register them here rather than in the module.
 
 """
+
 from __future__ import annotations
 
 import os
@@ -81,12 +82,8 @@ with cf.config_prefix("compute"):
         validator=is_bool,
         cb=use_bottleneck_cb,
     )
-    cf.register_option(
-        "use_numexpr", True, use_numexpr_doc, validator=is_bool, cb=use_numexpr_cb
-    )
-    cf.register_option(
-        "use_numba", False, use_numba_doc, validator=is_bool, cb=use_numba_cb
-    )
+    cf.register_option("use_numexpr", True, use_numexpr_doc, validator=is_bool, cb=use_numexpr_cb)
+    cf.register_option("use_numba", False, use_numba_doc, validator=is_bool, cb=use_numba_cb)
 #
 # options from the "display" namespace
 
@@ -412,9 +409,7 @@ with cf.config_prefix("display"):
         max_cols = 0  # automatically determine optimal number of columns
     else:
         max_cols = 20  # cannot determine optimal number of columns
-    cf.register_option(
-        "max_columns", max_cols, pc_max_cols_doc, validator=is_nonnegative_int
-    )
+    cf.register_option("max_columns", max_cols, pc_max_cols_doc, validator=is_nonnegative_int)
     cf.register_option(
         "large_repr",
         "truncate",
@@ -422,9 +417,7 @@ with cf.config_prefix("display"):
         validator=is_one_of_factory(["truncate", "info"]),
     )
     cf.register_option("max_info_columns", 100, pc_max_info_cols_doc, validator=is_int)
-    cf.register_option(
-        "colheader_justify", "right", colheader_justify_doc, validator=is_text
-    )
+    cf.register_option("colheader_justify", "right", colheader_justify_doc, validator=is_text)
     cf.register_option("notebook_repr_html", True, pc_nb_repr_h_doc, validator=is_bool)
     cf.register_option("pprint_nest_depth", 3, pc_pprint_nest_depth, validator=is_int)
     cf.register_option("multi_sparse", True, pc_multi_sparse_doc, validator=is_bool)
@@ -437,9 +430,7 @@ with cf.config_prefix("display"):
     )
     cf.register_option("chop_threshold", None, pc_chop_threshold_doc)
     cf.register_option("max_seq_items", 100, pc_max_seq_items)
-    cf.register_option(
-        "width", 80, pc_width_doc, validator=is_instance_factory([type(None), int])
-    )
+    cf.register_option("width", 80, pc_width_doc, validator=is_instance_factory([type(None), int]))
     cf.register_option(
         "memory_usage",
         True,
@@ -455,12 +446,8 @@ with cf.config_prefix("display"):
     cf.register_option("latex.repr", False, pc_latex_repr_doc, validator=is_bool)
     cf.register_option("latex.escape", True, pc_latex_escape, validator=is_bool)
     cf.register_option("latex.longtable", False, pc_latex_longtable, validator=is_bool)
-    cf.register_option(
-        "latex.multicolumn", True, pc_latex_multicolumn, validator=is_bool
-    )
-    cf.register_option(
-        "latex.multicolumn_format", "l", pc_latex_multicolumn, validator=is_text
-    )
+    cf.register_option("latex.multicolumn", True, pc_latex_multicolumn, validator=is_bool)
+    cf.register_option("latex.multicolumn_format", "l", pc_latex_multicolumn, validator=is_text)
     cf.register_option("latex.multirow", False, pc_latex_multirow, validator=is_bool)
     cf.register_option(
         "html.table_schema",
@@ -470,12 +457,8 @@ with cf.config_prefix("display"):
         cb=table_schema_cb,
     )
     cf.register_option("html.border", 1, pc_html_border_doc, validator=is_int)
-    cf.register_option(
-        "html.use_mathjax", True, pc_html_use_mathjax_doc, validator=is_bool
-    )
-    cf.register_option(
-        "max_dir_items", 100, pc_max_dir_items, validator=is_nonnegative_int
-    )
+    cf.register_option("html.use_mathjax", True, pc_html_use_mathjax_doc, validator=is_bool)
+    cf.register_option("max_dir_items", 100, pc_max_dir_items, validator=is_nonnegative_int)
 
 tc_sim_interactive_doc = """
 : boolean
@@ -510,14 +493,10 @@ def use_inf_as_na_cb(key) -> None:
 
 with cf.config_prefix("mode"):
     cf.register_option("use_inf_as_na", False, use_inf_as_na_doc, cb=use_inf_as_na_cb)
-    cf.register_option(
-        "use_inf_as_null", False, use_inf_as_null_doc, cb=use_inf_as_na_cb
-    )
+    cf.register_option("use_inf_as_null", False, use_inf_as_null_doc, cb=use_inf_as_na_cb)
 
 
-cf.deprecate_option(
-    "mode.use_inf_as_null", msg=use_inf_as_null_doc, rkey="mode.use_inf_as_na"
-)
+cf.deprecate_option("mode.use_inf_as_null", msg=use_inf_as_null_doc, rkey="mode.use_inf_as_na")
 
 
 data_manager_doc = """
@@ -895,9 +874,7 @@ styler_mathjax = """
 with cf.config_prefix("styler"):
     cf.register_option("sparse.index", True, styler_sparse_index_doc, validator=is_bool)
 
-    cf.register_option(
-        "sparse.columns", True, styler_sparse_columns_doc, validator=is_bool
-    )
+    cf.register_option("sparse.columns", True, styler_sparse_columns_doc, validator=is_bool)
 
     cf.register_option(
         "render.repr",
@@ -931,9 +908,7 @@ with cf.config_prefix("styler"):
 
     cf.register_option("format.decimal", ".", styler_decimal, validator=is_str)
 
-    cf.register_option(
-        "format.precision", 6, styler_precision, validator=is_nonnegative_int
-    )
+    cf.register_option("format.precision", 6, styler_precision, validator=is_nonnegative_int)
 
     cf.register_option(
         "format.thousands",

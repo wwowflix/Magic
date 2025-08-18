@@ -111,9 +111,7 @@ class Factory:
         self._link_candidate_cache: Cache[LinkCandidate] = {}
         self._editable_candidate_cache: Cache[EditableCandidate] = {}
         self._installed_candidate_cache: Dict[str, AlreadyInstalledCandidate] = {}
-        self._extras_candidate_cache: Dict[
-            Tuple[int, FrozenSet[str]], ExtrasCandidate
-        ] = {}
+        self._extras_candidate_cache: Dict[Tuple[int, FrozenSet[str]], ExtrasCandidate] = {}
 
         if not ignore_installed:
             env = get_default_environment()
@@ -499,9 +497,7 @@ class Factory:
                 collected.requirements.append(req)
         return collected
 
-    def make_requirement_from_candidate(
-        self, candidate: Candidate
-    ) -> ExplicitRequirement:
+    def make_requirement_from_candidate(self, candidate: Candidate) -> ExplicitRequirement:
         return ExplicitRequirement(candidate)
 
     def make_requirement_from_spec(
@@ -524,9 +520,7 @@ class Factory:
             return None
         return RequiresPythonRequirement(specifier, self._python_candidate)
 
-    def get_wheel_cache_entry(
-        self, link: Link, name: Optional[str]
-    ) -> Optional[CacheEntry]:
+    def get_wheel_cache_entry(self, link: Link, name: Optional[str]) -> Optional[CacheEntry]:
         """Look up the link in the wheel cache.
 
         If ``preparer.require_hashes`` is True, don't use the wheel cache,
@@ -607,13 +601,11 @@ class Factory:
 
         if skipped_by_requires_python:
             logger.critical(
-                "Ignored the following versions that require a different python "
-                "version: %s",
+                "Ignored the following versions that require a different python " "version: %s",
                 "; ".join(skipped_by_requires_python) or "none",
             )
         logger.critical(
-            "Could not find a version that satisfies the requirement %s "
-            "(from versions: %s)",
+            "Could not find a version that satisfies the requirement %s " "(from versions: %s)",
             req_disp,
             ", ".join(versions) or "none",
         )

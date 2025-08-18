@@ -1,5 +1,4 @@
-"""Logic that powers autocompletion installed by ``pip completion``.
-"""
+"""Logic that powers autocompletion installed by ``pip completion``."""
 
 import optparse
 import os
@@ -50,8 +49,7 @@ def autocomplete() -> None:
             installed = [
                 dist.canonical_name
                 for dist in env.iter_installed_distributions(local_only=True)
-                if dist.canonical_name.startswith(lc)
-                and dist.canonical_name not in cwords[1:]
+                if dist.canonical_name.startswith(lc) and dist.canonical_name not in cwords[1:]
             ]
             # if there are no dists installed, fall back to option completion
             if installed:
@@ -59,9 +57,7 @@ def autocomplete() -> None:
                     print(dist)
                 sys.exit(1)
 
-        should_list_installables = (
-            not current.startswith("-") and subcommand_name == "install"
-        )
+        should_list_installables = not current.startswith("-") and subcommand_name == "install"
         if should_list_installables:
             for path in auto_complete_paths(current, "path"):
                 print(path)
@@ -116,9 +112,7 @@ def autocomplete() -> None:
     sys.exit(1)
 
 
-def get_path_completion_type(
-    cwords: List[str], cword: int, opts: Iterable[Any]
-) -> Optional[str]:
+def get_path_completion_type(cwords: List[str], cword: int, opts: Iterable[Any]) -> Optional[str]:
     """Get the type of path completion (``file``, ``dir``, ``path`` or None)
 
     :param cwords: same as the environmental variable ``COMP_WORDS``
@@ -156,9 +150,7 @@ def auto_complete_paths(current: str, completion_type: str) -> Iterable[str]:
         return
     filename = os.path.normcase(filename)
     # list all files that start with ``filename``
-    file_list = (
-        x for x in os.listdir(current_path) if os.path.normcase(x).startswith(filename)
-    )
+    file_list = (x for x in os.listdir(current_path) if os.path.normcase(x).startswith(filename))
     for f in file_list:
         opt = os.path.join(current_path, f)
         comp_file = os.path.normcase(os.path.join(directory, f))

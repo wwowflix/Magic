@@ -66,10 +66,7 @@ class WheelDistribution(importlib.metadata.Distribution):
             for name in zf.namelist()
             if name.startswith(f"{info_dir}/")
         )
-        files = {
-            relpath: read_wheel_metadata_file(zf, fullpath)
-            for fullpath, relpath in paths
-        }
+        files = {relpath: read_wheel_metadata_file(zf, fullpath) for fullpath, relpath in paths}
         info_location = pathlib.PurePosixPath(location, info_dir)
         return cls(files, info_location)
 
@@ -118,9 +115,7 @@ class Distribution(BaseDistribution):
         project_name: str,
     ) -> BaseDistribution:
         # Generate temp dir to contain the metadata file, and write the file contents.
-        temp_dir = pathlib.Path(
-            TempDirectory(kind="metadata", globally_managed=True).path
-        )
+        temp_dir = pathlib.Path(TempDirectory(kind="metadata", globally_managed=True).path)
         metadata_path = temp_dir / "METADATA"
         metadata_path.write_bytes(metadata_contents)
         # Construct dist pointing to the newly created directory.
@@ -208,9 +203,7 @@ class Distribution(BaseDistribution):
         return cast(email.message.Message, self._dist.metadata)
 
     def iter_provided_extras(self) -> Iterable[str]:
-        return (
-            safe_extra(extra) for extra in self.metadata.get_all("Provides-Extra", [])
-        )
+        return (safe_extra(extra) for extra in self.metadata.get_all("Provides-Extra", []))
 
     def iter_dependencies(self, extras: Collection[str] = ()) -> Iterable[Requirement]:
         contexts: Sequence[Dict[str, str]] = [{"extra": safe_extra(e)} for e in extras]

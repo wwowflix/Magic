@@ -27,9 +27,7 @@ def test_map_str(data, categories, ordered, na_action):
     # GH 31202 - override base class since we want to maintain categorical/ordered
     cat = Categorical(data, categories=categories, ordered=ordered)
     result = cat.map(str, na_action=na_action)
-    expected = Categorical(
-        map(str, data), categories=map(str, categories), ordered=ordered
-    )
+    expected = Categorical(map(str, data), categories=map(str, categories), ordered=ordered)
     tm.assert_categorical_equal(result, expected)
 
 
@@ -152,4 +150,3 @@ def test_map_na_action_no_default_deprecated():
     )
     with tm.assert_produces_warning(FutureWarning, match=msg):
         cat.map(lambda x: x)
-

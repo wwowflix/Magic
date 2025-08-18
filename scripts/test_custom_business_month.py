@@ -4,6 +4,7 @@ Tests for the following offsets:
 - CustomBusinessMonthBegin
 - CustomBusinessMonthEnd
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -236,9 +237,7 @@ class TestCustomBusinessMonthBegin:
                 },
             ),
             (
-                CBMonthBegin(
-                    n=1, holidays=["2021-04-01", "2021-04-02"], offset=timedelta(days=1)
-                ),
+                CBMonthBegin(n=1, holidays=["2021-04-01", "2021-04-02"], offset=timedelta(days=1)),
                 {
                     datetime(2021, 3, 2): datetime(2021, 4, 5) + timedelta(days=1),
                 },
@@ -435,4 +434,3 @@ class TestCustomBusinessMonthEnd:
         offset, cases = case
         for base, expected in cases.items():
             assert_offset_equal(offset, base, expected)
-

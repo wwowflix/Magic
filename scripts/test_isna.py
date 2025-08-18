@@ -1,6 +1,7 @@
 """
 We also test Series.notna in this file.
 """
+
 import numpy as np
 
 from pandas import (
@@ -33,4 +34,3 @@ class TestIsna:
         expected = Series([False, False, True])
         tm.assert_series_equal(ser.isna(), expected)
         tm.assert_series_equal(ser.notna(), ~expected)
-

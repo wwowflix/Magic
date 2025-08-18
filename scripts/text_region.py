@@ -164,8 +164,7 @@ class Paragraph:  # pylint: disable=function-redefined
             align=self.text_align or self._region.text_align or Align.L,
             wrapmode=self.wrapmode,
             line_height=self.line_height,
-            skip_leading_spaces=self.skip_leading_spaces
-            or self._region.skip_leading_spaces,
+            skip_leading_spaces=self.skip_leading_spaces or self._region.skip_leading_spaces,
         )
         bullet_text_line = bullet_line_break.get_line()
         return bullet_fragments, bullet_text_line
@@ -190,8 +189,7 @@ class Paragraph:  # pylint: disable=function-redefined
             print_sh=print_sh,
             wrapmode=self.wrapmode,
             line_height=self.line_height,
-            skip_leading_spaces=self.skip_leading_spaces
-            or self._region.skip_leading_spaces,
+            skip_leading_spaces=self.skip_leading_spaces or self._region.skip_leading_spaces,
         )
         self._text_fragments = []
         text_line = multi_line_break.get_line()
@@ -202,9 +200,7 @@ class Paragraph:  # pylint: disable=function-redefined
             text_line = multi_line_break.get_line()
         if text_lines:
             last = text_lines[-1]
-            last = LineWrapper(
-                last.line, self, first_line=last.first_line, last_line=True
-            )
+            last = LineWrapper(last.line, self, first_line=last.first_line, last_line=True)
             text_lines[-1] = last
         return text_lines
 
@@ -248,16 +244,12 @@ class ImageParagraph:
     def build_line(self):
         # We do double duty as a "text line wrapper" here, since all the necessary
         # information is already in the ImageParagraph object.
-        self.name, self.img, self.info = preload_image(
-            self.region.pdf.image_cache, self.name
-        )
+        self.name, self.img, self.info = preload_image(self.region.pdf.image_cache, self.name)
         return self
 
     def render(self, col_left, col_width, max_height):
         if not self.img:
-            raise RuntimeError(
-                "ImageParagraph.build_line() must be called before render()."
-            )
+            raise RuntimeError("ImageParagraph.build_line() must be called before render().")
         is_svg = isinstance(self.info, VectorImageInfo)
 
         # pylint: disable=possibly-used-before-assignment
@@ -541,9 +533,7 @@ class TextRegion(ParagraphCollectorMixin):
                     self.pdf.x = col_left
                 self.pdf.x += cur_paragraph.indent
                 if cur_bullet and not cur_bullet.rendered_flag:
-                    bullet_indent_shift = (
-                        cur_bullet.get_fragments_width() + cur_bullet.r_margin
-                    )
+                    bullet_indent_shift = cur_bullet.get_fragments_width() + cur_bullet.r_margin
                     self.pdf.x -= bullet_indent_shift
                     self.pdf._render_styled_text_line(
                         cur_bullet.text_line,

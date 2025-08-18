@@ -1,4 +1,5 @@
-""" test scalar indexing, including at and iat """
+"""test scalar indexing, including at and iat"""
+
 from datetime import (
     datetime,
     timedelta,
@@ -188,9 +189,7 @@ class TestAtAndiAT:
 
     def test_mixed_index_at_iat_loc_iloc_dataframe(self):
         # GH 19860
-        df = DataFrame(
-            [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], columns=["a", "b", "c", 1, 2]
-        )
+        df = DataFrame([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]], columns=["a", "b", "c", 1, 2])
         for rowIdx, row in df.iterrows():
             for el, item in row.items():
                 assert df.at[rowIdx, el] == df.loc[rowIdx, el] == item
@@ -301,4 +300,3 @@ class TestMultiIndexScalar:
         s2 = Series((0, 1), index=[[False, True]])
         result = s2.at[False]
         assert result == 0
-

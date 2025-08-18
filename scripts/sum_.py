@@ -6,6 +6,7 @@ Numba 1D sum kernels that can be shared by
 
 Mirrors pandas/_libs/window/aggregation.pyx
 """
+
 from __future__ import annotations
 
 import numba
@@ -65,9 +66,7 @@ def sliding_sum(
     compensation_add = 0.0
     compensation_remove = 0.0
 
-    is_monotonic_increasing_bounds = is_monotonic_increasing(
-        start
-    ) and is_monotonic_increasing(end)
+    is_monotonic_increasing_bounds = is_monotonic_increasing(start) and is_monotonic_increasing(end)
 
     output = np.empty(N, dtype=np.float64)
 
@@ -97,9 +96,7 @@ def sliding_sum(
         else:
             for j in range(start[i - 1], s):
                 val = values[j]
-                nobs, sum_x, compensation_remove = remove_sum(
-                    val, nobs, sum_x, compensation_remove
-                )
+                nobs, sum_x, compensation_remove = remove_sum(val, nobs, sum_x, compensation_remove)
 
             for j in range(end[i - 1], e):
                 val = values[j]

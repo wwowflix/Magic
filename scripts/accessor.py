@@ -111,9 +111,7 @@ def forbid_nonstring_types(
     # deal with None
     forbidden = [] if forbidden is None else forbidden
 
-    allowed_types = {"string", "empty", "bytes", "mixed", "mixed-integer"} - set(
-        forbidden
-    )
+    allowed_types = {"string", "empty", "bytes", "mixed", "mixed-integer"} - set(forbidden)
 
     def _forbid_nonstring_types(func: F) -> F:
         func_name = func.__name__ if name is None else name
@@ -218,9 +216,7 @@ class StringMethods(NoNewAttributesMixin):
         dtype : inferred dtype of data
         """
         if isinstance(data, ABCMultiIndex):
-            raise AttributeError(
-                "Can only use .str accessor with Index, not MultiIndex"
-            )
+            raise AttributeError("Can only use .str accessor with Index, not MultiIndex")
 
         # see _libs/lib.pyx for list of inferred types
         allowed_types = ["string", "empty", "bytes", "mixed", "mixed-integer"]
@@ -281,11 +277,7 @@ class StringMethods(NoNewAttributesMixin):
             # infer from ndim if expand is not specified
             expand = result.ndim != 1
 
-        elif (
-            expand is True
-            and is_object_dtype(result)
-            and not isinstance(self._orig, ABCIndex)
-        ):
+        elif expand is True and is_object_dtype(result) and not isinstance(self._orig, ABCIndex):
             # required when expand=True is explicitly specified
             # not needed when inferred
 
@@ -299,9 +291,7 @@ class StringMethods(NoNewAttributesMixin):
             if result and not self._is_string:
                 # propagate nan values to match longest sequence (GH 18450)
                 max_len = max(len(x) for x in result)
-                result = [
-                    x * max_len if len(x) == 0 or x[0] is np.nan else x for x in result
-                ]
+                result = [x * max_len if len(x) == 0 or x[0] is np.nan else x for x in result]
 
         if not isinstance(expand, bool):
             raise ValueError("expand must be True or False")
@@ -405,8 +395,7 @@ class StringMethods(NoNewAttributesMixin):
             # in case of list-like `others`, all elements must be
             # either Series/Index/np.ndarray (1-dim)...
             if all(
-                isinstance(x, (ABCSeries, ABCIndex))
-                or (isinstance(x, np.ndarray) and x.ndim == 1)
+                isinstance(x, (ABCSeries, ABCIndex)) or (isinstance(x, np.ndarray) and x.ndim == 1)
                 for x in others
             ):
                 los: list[Series] = []
@@ -424,9 +413,7 @@ class StringMethods(NoNewAttributesMixin):
         )
 
     @forbid_nonstring_types(["bytes", "mixed", "mixed-integer"])
-    def cat(
-        self, others=None, sep=None, na_rep=None, join="left"
-    ) -> str | Series | Index:
+    def cat(self, others=None, sep=None, na_rep=None, join="left") -> str | Series | Index:
         """
         Concatenate strings in the Series/Index with given separator.
 
@@ -628,9 +615,7 @@ class StringMethods(NoNewAttributesMixin):
             result[not_masked] = cat_safe([x[not_masked] for x in all_cols], sep)
         elif na_rep is not None and union_mask.any():
             # fill NaNs with na_rep in case there are actually any NaNs
-            all_cols = [
-                np.where(nm, na_rep, col) for nm, col in zip(na_masks, all_cols)
-            ]
+            all_cols = [np.where(nm, na_rep, col) for nm, col in zip(na_masks, all_cols)]
             result = cat_safe(all_cols, sep)
         else:
             # no NaNs - can just concatenate
@@ -647,9 +632,7 @@ class StringMethods(NoNewAttributesMixin):
                 dtype = None
             else:
                 dtype = self._orig.dtype
-            res_ser = Series(
-                result, dtype=dtype, index=data.index, name=self._orig.name
-            )
+            res_ser = Series(result, dtype=dtype, index=data.index, name=self._orig.name)
             out = res_ser.__finalize__(self._orig, method="str_cat")
         return out
 
@@ -858,9 +841,7 @@ class StringMethods(NoNewAttributesMixin):
         regex: bool | None = None,
     ):
         if regex is False and is_re(pat):
-            raise ValueError(
-                "Cannot use a compiled regex as replacement pattern with regex=False"
-            )
+            raise ValueError("Cannot use a compiled regex as replacement pattern with regex=False")
         if is_re(pat):
             regex = True
         result = self._data.array._str_split(pat, n, expand, regex)
@@ -971,8 +952,7 @@ class StringMethods(NoNewAttributesMixin):
         _shared_docs["str_partition"]
         % {
             "side": "first",
-            "return": "3 elements containing the string itself, followed by two "
-            "empty strings",
+            "return": "3 elements containing the string itself, followed by two " "empty strings",
             "also": "rpartition : Split the string at the last occurrence of `sep`.",
         }
     )
@@ -985,8 +965,7 @@ class StringMethods(NoNewAttributesMixin):
         _shared_docs["str_partition"]
         % {
             "side": "last",
-            "return": "3 elements containing two empty strings, followed by the "
-            "string itself",
+            "return": "3 elements containing two empty strings, followed by the " "string itself",
             "also": "partition : Split the string at the first occurrence of `sep`.",
         }
     )
@@ -1475,14 +1454,10 @@ class StringMethods(NoNewAttributesMixin):
         is_compiled_re = is_re(pat)
         if regex or regex is None:
             if is_compiled_re and (case is not None or flags != 0):
-                raise ValueError(
-                    "case and flags cannot be set when pat is a compiled regex"
-                )
+                raise ValueError("case and flags cannot be set when pat is a compiled regex")
 
         elif is_compiled_re:
-            raise ValueError(
-                "Cannot use a compiled regex as replacement pattern with regex=False"
-            )
+            raise ValueError("Cannot use a compiled regex as replacement pattern with regex=False")
         elif callable(repl):
             raise ValueError("Cannot use a callable replacement when regex=False")
 
@@ -1497,9 +1472,7 @@ class StringMethods(NoNewAttributesMixin):
         if case is None:
             case = True
 
-        result = self._data.array._str_replace(
-            pat, repl, n=n, case=case, flags=flags, regex=regex
-        )
+        result = self._data.array._str_replace(pat, repl, n=n, case=case, flags=flags, regex=regex)
         return self._wrap_result(result)
 
     @forbid_nonstring_types(["bytes"])
@@ -2005,8 +1978,7 @@ class StringMethods(NoNewAttributesMixin):
         return self._wrap_result(result)
 
     @Appender(
-        _shared_docs["str_strip"]
-        % {"side": "left side", "method": "lstrip", "position": "leading"}
+        _shared_docs["str_strip"] % {"side": "left side", "method": "lstrip", "position": "leading"}
     )
     @forbid_nonstring_types(["bytes"])
     def lstrip(self, to_strip=None):
@@ -2070,17 +2042,13 @@ class StringMethods(NoNewAttributesMixin):
     dtype: object
     """
 
-    @Appender(
-        _shared_docs["str_removefix"] % {"side": "prefix", "other_side": "suffix"}
-    )
+    @Appender(_shared_docs["str_removefix"] % {"side": "prefix", "other_side": "suffix"})
     @forbid_nonstring_types(["bytes"])
     def removeprefix(self, prefix):
         result = self._data.array._str_removeprefix(prefix)
         return self._wrap_result(result)
 
-    @Appender(
-        _shared_docs["str_removefix"] % {"side": "suffix", "other_side": "prefix"}
-    )
+    @Appender(_shared_docs["str_removefix"] % {"side": "suffix", "other_side": "prefix"})
     @forbid_nonstring_types(["bytes"])
     def removesuffix(self, suffix):
         result = self._data.array._str_removesuffix(suffix)
@@ -2283,9 +2251,7 @@ class StringMethods(NoNewAttributesMixin):
         return self._wrap_result(result, returns_string=False)
 
     @forbid_nonstring_types(["bytes"])
-    def startswith(
-        self, pat: str | tuple[str, ...], na: Scalar | None = None
-    ) -> Series | Index:
+    def startswith(self, pat: str | tuple[str, ...], na: Scalar | None = None) -> Series | Index:
         """
         Test if the start of each string element matches a pattern.
 
@@ -2353,9 +2319,7 @@ class StringMethods(NoNewAttributesMixin):
         return self._wrap_result(result, returns_string=False)
 
     @forbid_nonstring_types(["bytes"])
-    def endswith(
-        self, pat: str | tuple[str, ...], na: Scalar | None = None
-    ) -> Series | Index:
+    def endswith(self, pat: str | tuple[str, ...], na: Scalar | None = None) -> Series | Index:
         """
         Test if the end of each string element matches a pattern.
 
@@ -2516,9 +2480,7 @@ class StringMethods(NoNewAttributesMixin):
         return self._wrap_result(result, returns_string=False)
 
     @forbid_nonstring_types(["bytes"])
-    def extract(
-        self, pat: str, flags: int = 0, expand: bool = True
-    ) -> DataFrame | Series | Index:
+    def extract(self, pat: str, flags: int = 0, expand: bool = True) -> DataFrame | Series | Index:
         r"""
         Extract capture groups in the regex `pat` as columns in a DataFrame.
 
@@ -2624,9 +2586,7 @@ class StringMethods(NoNewAttributesMixin):
                 result = DataFrame(columns=columns, dtype=result_dtype)
 
             else:
-                result_list = self._data.array._str_extract(
-                    pat, flags=flags, expand=returns_df
-                )
+                result_list = self._data.array._str_extract(pat, flags=flags, expand=returns_df)
 
                 result_index: Index | None
                 if isinstance(obj, ABCSeries):
@@ -3199,27 +3159,13 @@ class StringMethods(NoNewAttributesMixin):
     _doc_args["isdecimal"] = {"type": "decimal", "method": "isdecimal"}
     # force _noarg_wrapper return type with dtype=np.dtype(bool) (GH 29624)
 
-    isalnum = _map_and_wrap(
-        "isalnum", docstring=_shared_docs["ismethods"] % _doc_args["isalnum"]
-    )
-    isalpha = _map_and_wrap(
-        "isalpha", docstring=_shared_docs["ismethods"] % _doc_args["isalpha"]
-    )
-    isdigit = _map_and_wrap(
-        "isdigit", docstring=_shared_docs["ismethods"] % _doc_args["isdigit"]
-    )
-    isspace = _map_and_wrap(
-        "isspace", docstring=_shared_docs["ismethods"] % _doc_args["isspace"]
-    )
-    islower = _map_and_wrap(
-        "islower", docstring=_shared_docs["ismethods"] % _doc_args["islower"]
-    )
-    isupper = _map_and_wrap(
-        "isupper", docstring=_shared_docs["ismethods"] % _doc_args["isupper"]
-    )
-    istitle = _map_and_wrap(
-        "istitle", docstring=_shared_docs["ismethods"] % _doc_args["istitle"]
-    )
+    isalnum = _map_and_wrap("isalnum", docstring=_shared_docs["ismethods"] % _doc_args["isalnum"])
+    isalpha = _map_and_wrap("isalpha", docstring=_shared_docs["ismethods"] % _doc_args["isalpha"])
+    isdigit = _map_and_wrap("isdigit", docstring=_shared_docs["ismethods"] % _doc_args["isdigit"])
+    isspace = _map_and_wrap("isspace", docstring=_shared_docs["ismethods"] % _doc_args["isspace"])
+    islower = _map_and_wrap("islower", docstring=_shared_docs["ismethods"] % _doc_args["islower"])
+    isupper = _map_and_wrap("isupper", docstring=_shared_docs["ismethods"] % _doc_args["isupper"])
+    istitle = _map_and_wrap("istitle", docstring=_shared_docs["ismethods"] % _doc_args["istitle"])
     isnumeric = _map_and_wrap(
         "isnumeric", docstring=_shared_docs["ismethods"] % _doc_args["isnumeric"]
     )
@@ -3361,7 +3307,5 @@ def str_extractall(arr, pat, flags=0):
     index = MultiIndex.from_tuples(index_list, names=arr.index.names + ["match"])
     dtype = _result_dtype(arr)
 
-    result = arr._constructor_expanddim(
-        match_list, index=index, columns=columns, dtype=dtype
-    )
+    result = arr._constructor_expanddim(match_list, index=index, columns=columns, dtype=dtype)
     return result

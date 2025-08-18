@@ -134,9 +134,7 @@ class ArrowDtype(StorageExtensionDtype):
             e.g. int64[pyarrow]
         """
         if not isinstance(string, str):
-            raise TypeError(
-                f"'construct_from_string' expects a string, got {type(string)}"
-            )
+            raise TypeError(f"'construct_from_string' expects a string, got {type(string)}")
         if not string.endswith("[pyarrow]"):
             raise TypeError(f"'{string}' must end with '[pyarrow]'")
         if string == "string[pyarrow]":
@@ -183,10 +181,7 @@ class ArrowDtype(StorageExtensionDtype):
         from pandas.core.dtypes.cast import find_common_type
 
         new_dtype = find_common_type(
-            [
-                dtype.numpy_dtype if isinstance(dtype, ArrowDtype) else dtype
-                for dtype in dtypes
-            ]
+            [dtype.numpy_dtype if isinstance(dtype, ArrowDtype) else dtype for dtype in dtypes]
         )
         if not isinstance(new_dtype, np.dtype):
             return None

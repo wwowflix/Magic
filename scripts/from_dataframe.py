@@ -193,9 +193,7 @@ def categorical_column_to_series(col: Column) -> tuple[pd.Series, Any]:
     # out-of-bounds sentinel values in `codes`
     values = categories[codes % len(categories)]
 
-    cat = pd.Categorical(
-        values, categories=categories, ordered=categorical["is_ordered"]
-    )
+    cat = pd.Categorical(values, categories=categories, ordered=categorical["is_ordered"])
     data = pd.Series(cat)
 
     data = set_nulls(data, col, buffers["validity"])
@@ -223,9 +221,7 @@ def string_column_to_ndarray(col: Column) -> tuple[np.ndarray, Any]:
         ColumnNullType.USE_BITMASK,
         ColumnNullType.USE_BYTEMASK,
     ):
-        raise NotImplementedError(
-            f"{null_kind} null kind is not yet supported for string columns."
-        )
+        raise NotImplementedError(f"{null_kind} null kind is not yet supported for string columns.")
 
     buffers = col.get_buffers()
 
@@ -252,9 +248,7 @@ def string_column_to_ndarray(col: Column) -> tuple[np.ndarray, Any]:
     # Offsets buffer contains start-stop positions of strings in the data buffer,
     # meaning that it has more elements than in the data buffer, do `col.size() + 1`
     # here to pass a proper offsets buffer size
-    offsets = buffer_to_ndarray(
-        offset_buff, offset_dtype, col.offset, length=col.size() + 1
-    )
+    offsets = buffer_to_ndarray(offset_buff, offset_dtype, col.offset, length=col.size() + 1)
 
     null_pos = None
     if null_kind in (ColumnNullType.USE_BITMASK, ColumnNullType.USE_BYTEMASK):
@@ -398,18 +392,14 @@ def buffer_to_ndarray(
     # and size in the buffer plus the dtype on the column. Use DLPack as NumPy supports
     # it since https://github.com/numpy/numpy/pull/19083
     ctypes_type = np.ctypeslib.as_ctypes_type(column_dtype)
-    data_pointer = ctypes.cast(
-        buffer.ptr + (offset * bit_width // 8), ctypes.POINTER(ctypes_type)
-    )
+    data_pointer = ctypes.cast(buffer.ptr + (offset * bit_width // 8), ctypes.POINTER(ctypes_type))
 
     if bit_width == 1:
         assert length is not None, "`length` must be specified for a bit-mask buffer."
         arr = np.ctypeslib.as_array(data_pointer, shape=(buffer.bufsize,))
         return bitmask_to_bool_ndarray(arr, length, first_byte_offset=offset % 8)
     else:
-        return np.ctypeslib.as_array(
-            data_pointer, shape=(buffer.bufsize // (bit_width // 8),)
-        )
+        return np.ctypeslib.as_array(data_pointer, shape=(buffer.bufsize // (bit_width // 8),))
 
 
 def bitmask_to_bool_ndarray(

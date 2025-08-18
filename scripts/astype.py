@@ -2,6 +2,7 @@
 Functions for implementing 'astype' methods according to pandas conventions,
 particularly ones that differ from numpy.
 """
+
 from __future__ import annotations
 
 import inspect
@@ -54,15 +55,13 @@ _dtype_obj = np.dtype(object)
 @overload
 def astype_nansafe(
     arr: np.ndarray, dtype: np.dtype, copy: bool = ..., skipna: bool = ...
-) -> np.ndarray:
-    ...
+) -> np.ndarray: ...
 
 
 @overload
 def astype_nansafe(
     arr: np.ndarray, dtype: ExtensionDtype, copy: bool = ..., skipna: bool = ...
-) -> ExtensionArray:
-    ...
+) -> ExtensionArray: ...
 
 
 def astype_nansafe(
@@ -97,9 +96,7 @@ def astype_nansafe(
     elif not isinstance(dtype, np.dtype):  # pragma: no cover
         raise ValueError("dtype must be np.dtype or ExtensionDtype")
 
-    if arr.dtype.kind in ["m", "M"] and (
-        issubclass(dtype.type, str) or dtype == _dtype_obj
-    ):
+    if arr.dtype.kind in ["m", "M"] and (issubclass(dtype.type, str) or dtype == _dtype_obj):
         from pandas.core.construction import ensure_wrapped_if_datetimelike
 
         arr = ensure_wrapped_if_datetimelike(arr)
@@ -109,9 +106,7 @@ def astype_nansafe(
         shape = arr.shape
         if arr.ndim > 1:
             arr = arr.ravel()
-        return lib.ensure_string_array(
-            arr, skipna=skipna, convert_na_value=False
-        ).reshape(shape)
+        return lib.ensure_string_array(arr, skipna=skipna, convert_na_value=False).reshape(shape)
 
     elif is_datetime64_dtype(arr.dtype):
         if dtype == np.int64:
@@ -160,8 +155,7 @@ def astype_nansafe(
 
     if dtype.name in ("datetime64", "timedelta64"):
         msg = (
-            f"The '{dtype.name}' dtype has no unit. Please pass in "
-            f"'{dtype.name}[ns]' instead."
+            f"The '{dtype.name}' dtype has no unit. Please pass in " f"'{dtype.name}[ns]' instead."
         )
         raise ValueError(msg)
 
@@ -172,16 +166,12 @@ def astype_nansafe(
     return arr.astype(dtype, copy=copy)
 
 
-def _astype_float_to_int_nansafe(
-    values: np.ndarray, dtype: np.dtype, copy: bool
-) -> np.ndarray:
+def _astype_float_to_int_nansafe(values: np.ndarray, dtype: np.dtype, copy: bool) -> np.ndarray:
     """
     astype with a check preventing converting NaN to an meaningless integer value.
     """
     if not np.isfinite(values).all():
-        raise IntCastingNaNError(
-            "Cannot convert non-finite values (NA or inf) to integer"
-        )
+        raise IntCastingNaNError("Cannot convert non-finite values (NA or inf) to integer")
     if dtype.kind == "u":
         # GH#45151
         if not (values >= 0).all():
@@ -308,9 +298,7 @@ def astype_array_safe(
     return new_values
 
 
-def astype_td64_unit_conversion(
-    values: np.ndarray, dtype: np.dtype, copy: bool
-) -> np.ndarray:
+def astype_td64_unit_conversion(values: np.ndarray, dtype: np.dtype, copy: bool) -> np.ndarray:
     """
     By pandas convention, converting to non-nano timedelta64
     returns an int64-dtyped array with ints representing multiples

@@ -33,9 +33,11 @@ class TestGetNumericData:
             [
                 np.dtype("float64"),
                 np.dtype("int64"),
-                np.dtype(objectname)
-                if not using_infer_string
-                else pd.StringDtype(na_value=np.nan),
+                (
+                    np.dtype(objectname)
+                    if not using_infer_string
+                    else pd.StringDtype(na_value=np.nan)
+                ),
                 np.dtype(datetime64name),
             ],
             index=["a", "b", "c", "f"],
@@ -102,4 +104,3 @@ class TestGetNumericData:
         result = df._get_numeric_data()
         expected = df.loc[:, ["A", "C"]]
         tm.assert_frame_equal(result, expected)
-

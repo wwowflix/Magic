@@ -234,9 +234,7 @@ class Block(PandasObject):
         return new_block(values, placement=placement, ndim=self.ndim)
 
     @final
-    def make_block_same_class(
-        self, values, placement: BlockPlacement | None = None
-    ) -> Block:
+    def make_block_same_class(self, values, placement: BlockPlacement | None = None) -> Block:
         """Wrap given values in a block of same type as self."""
         if placement is None:
             placement = self._mgr_locs
@@ -299,9 +297,7 @@ class Block(PandasObject):
         return type(self)(new_values, new_mgr_locs, self.ndim)
 
     @final
-    def getitem_block_columns(
-        self, slicer: slice, new_mgr_locs: BlockPlacement
-    ) -> Block:
+    def getitem_block_columns(self, slicer: slice, new_mgr_locs: BlockPlacement) -> Block:
         """
         Perform __getitem__-like, return result as block.
 
@@ -460,9 +456,7 @@ class Block(PandasObject):
             #  but ATM it breaks too much existing code.
             # split and convert the blocks
 
-            return extend_blocks(
-                [blk.convert(datetime=True, numeric=False) for blk in blocks]
-            )
+            return extend_blocks([blk.convert(datetime=True, numeric=False) for blk in blocks])
 
         if downcast is None:
             return blocks
@@ -502,9 +496,7 @@ class Block(PandasObject):
         return self.values.dtype
 
     @final
-    def astype(
-        self, dtype: DtypeObj, copy: bool = False, errors: IgnoreRaise = "raise"
-    ) -> Block:
+    def astype(self, dtype: DtypeObj, copy: bool = False, errors: IgnoreRaise = "raise") -> Block:
         """
         Coerce to the new dtype.
 
@@ -689,9 +681,7 @@ class Block(PandasObject):
         values = self.values
 
         # Exclude anything that we know we won't contain
-        pairs = [
-            (x, y) for x, y in zip(src_list, dest_list) if self._can_hold_element(x)
-        ]
+        pairs = [(x, y) for x, y in zip(src_list, dest_list) if self._can_hold_element(x)]
         if not len(pairs):
             # shortcut, nothing to replace
             return [self] if inplace else [self.copy()]
@@ -702,10 +692,7 @@ class Block(PandasObject):
             # Calculate the mask once, prior to the call of comp
             # in order to avoid repeating the same computations
             mask = ~isna(values)
-            masks = [
-                compare_or_regex_search(values, s[0], regex=regex, mask=mask)
-                for s in pairs
-            ]
+            masks = [compare_or_regex_search(values, s[0], regex=regex, mask=mask) for s in pairs]
         else:
             # GH#38086 faster if we know we dont need to check for regex
             masks = [missing.mask_missing(values, s[0]) for s in pairs]
@@ -743,9 +730,7 @@ class Block(PandasObject):
                 )
                 if convert and blk.is_object and not all(x is None for x in dest_list):
                     # GH#44498 avoid unwanted cast-back
-                    result = extend_blocks(
-                        [b.convert(numeric=False, copy=True) for b in result]
-                    )
+                    result = extend_blocks([b.convert(numeric=False, copy=True) for b in result])
                 new_rb.extend(result)
             rb = new_rb
         return rb
@@ -798,9 +783,7 @@ class Block(PandasObject):
                     putmask_inplace(nb.values, mask, value)
                     return [nb]
                 return [self] if inplace else [self.copy()]
-            return self.replace(
-                to_replace=to_replace, value=value, inplace=inplace, mask=mask
-            )
+            return self.replace(to_replace=to_replace, value=value, inplace=inplace, mask=mask)
 
     # ---------------------------------------------------------------------
     # 2D Methods - Shared by NumpyBlock and NDArrayBackedExtensionBlock
@@ -833,9 +816,7 @@ class Block(PandasObject):
         # "Union[int, integer[Any]]"
         return self.values[i]  # type: ignore[index]
 
-    def _slice(
-        self, slicer: slice | npt.NDArray[np.bool_] | npt.NDArray[np.intp]
-    ) -> ArrayLike:
+    def _slice(self, slicer: slice | npt.NDArray[np.bool_] | npt.NDArray[np.intp]) -> ArrayLike:
         """return a slice of my values"""
 
         return self.values[slicer]
@@ -918,9 +899,7 @@ class Block(PandasObject):
         mask : array-like of bool
             The mask of columns of `blocks` we should keep.
         """
-        new_values, mask = unstacker.get_new_values(
-            self.values.T, fill_value=fill_value
-        )
+        new_values, mask = unstacker.get_new_values(self.values.T, fill_value=fill_value)
 
         mask = mask.any(0)
         # TODO: in all tests we have mask.all(); can we rely on that?
@@ -1202,9 +1181,7 @@ class Block(PandasObject):
         # Note: blk._maybe_downcast vs self._maybe_downcast(nbs)
         #  makes a difference bc blk may have object dtype, which has
         #  different behavior in _maybe_downcast.
-        return extend_blocks(
-            [blk._maybe_downcast([blk], downcast=downcast) for blk in nbs]
-        )
+        return extend_blocks([blk._maybe_downcast([blk], downcast=downcast) for blk in nbs])
 
     def interpolate(
         self,
@@ -1295,9 +1272,7 @@ class Block(PandasObject):
         try:
             # error: Argument 1 to "np_can_hold_element" has incompatible type
             # "Union[dtype[Any], ExtensionDtype]"; expected "dtype[Any]"
-            casted = np_can_hold_element(
-                self.dtype, fill_value  # type: ignore[arg-type]
-            )
+            casted = np_can_hold_element(self.dtype, fill_value)  # type: ignore[arg-type]
         except LossySetitemError:
             nb = self.coerce_to_target_dtype(fill_value)
             return nb.shift(periods, axis=axis, fill_value=fill_value)
@@ -1308,9 +1283,7 @@ class Block(PandasObject):
             return [self.make_block(new_values)]
 
     @final
-    def quantile(
-        self, qs: Float64Index, interpolation="linear", axis: int = 0
-    ) -> Block:
+    def quantile(self, qs: Float64Index, interpolation="linear", axis: int = 0) -> Block:
         """
         compute the quantiles of the
 
@@ -1685,10 +1658,7 @@ class ExtensionBlock(libinternals.Block, EABackedBlock):
         If necessary, squeeze a (N, 1) ndarray to (N,)
         """
         # e.g. if we are passed a 2D mask for putmask
-        if (
-            isinstance(arg, (np.ndarray, ExtensionArray))
-            and arg.ndim == self.values.ndim + 1
-        ):
+        if isinstance(arg, (np.ndarray, ExtensionArray)) and arg.ndim == self.values.ndim + 1:
             # TODO(EA2D): unnecessary with 2D EAs
             assert arg.shape[1] == 1
             # error: No overload variant of "__getitem__" of "ExtensionArray"
@@ -1720,9 +1690,7 @@ class ExtensionBlock(libinternals.Block, EABackedBlock):
                 if all(isinstance(x, np.ndarray) and x.ndim == 2 for x in indexer):
                     # GH#44703 went through indexing.maybe_convert_ix
                     first, second = indexer
-                    if not (
-                        second.size == 1 and (second == 0).all() and first.shape[1] == 1
-                    ):
+                    if not (second.size == 1 and (second == 0).all() and first.shape[1] == 1):
                         raise NotImplementedError(
                             "This should not be reached. Please report a bug at "
                             "github.com/pandas-dev/pandas/"
@@ -1806,18 +1774,14 @@ class ExtensionBlock(libinternals.Block, EABackedBlock):
             # TODO(EA2D): won't be necessary with 2D EAs
 
             if not isinstance(slicer, slice):
-                raise AssertionError(
-                    "invalid slicing for a 1-ndim ExtensionArray", slicer
-                )
+                raise AssertionError("invalid slicing for a 1-ndim ExtensionArray", slicer)
             # GH#32959 only full-slicers along fake-dim0 are valid
             # TODO(EA2D): won't be necessary with 2D EAs
             # range(1) instead of self._mgr_locs to avoid exception on [::-1]
             #  see test_iloc_getitem_slice_negative_step_ea_block
             new_locs = range(1)[slicer]
             if not len(new_locs):
-                raise AssertionError(
-                    "invalid slicing for a 1-ndim ExtensionArray", slicer
-                )
+                raise AssertionError("invalid slicing for a 1-ndim ExtensionArray", slicer)
             slicer = slice(None)
 
         return self.values[slicer]
@@ -1886,9 +1850,7 @@ class ExtensionBlock(libinternals.Block, EABackedBlock):
         blocks = [
             # TODO: could cast to object depending on fill_value?
             type(self)(
-                self.values.take(
-                    indices, allow_fill=needs_masking[i], fill_value=fill_value
-                ),
+                self.values.take(indices, allow_fill=needs_masking[i], fill_value=fill_value),
                 BlockPlacement(place),
                 ndim=2,
             )
@@ -2204,16 +2166,14 @@ def check_ndim(values, placement: BlockPlacement, ndim: int) -> None:
     if values.ndim > ndim:
         # Check for both np.ndarray and ExtensionArray
         raise ValueError(
-            "Wrong number of dimensions. "
-            f"values.ndim > ndim [{values.ndim} > {ndim}]"
+            "Wrong number of dimensions. " f"values.ndim > ndim [{values.ndim} > {ndim}]"
         )
 
     elif not is_1d_only_ea_dtype(values.dtype):
         # TODO(EA2D): special case not needed with 2D EAs
         if values.ndim != ndim:
             raise ValueError(
-                "Wrong number of dimensions. "
-                f"values.ndim != ndim [{values.ndim} != {ndim}]"
+                "Wrong number of dimensions. " f"values.ndim != ndim [{values.ndim} != {ndim}]"
             )
         if len(placement) != len(values):
             raise ValueError(

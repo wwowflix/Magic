@@ -60,9 +60,7 @@ def test_bool_raise_length(indexer):
         check_array_indexer(arr, indexer)
 
 
-@pytest.mark.parametrize(
-    "indexer", [[0, 1, None], pd.array([0, 1, pd.NA], dtype="Int64")]
-)
+@pytest.mark.parametrize("indexer", [[0, 1, None], pd.array([0, 1, pd.NA], dtype="Int64")])
 def test_int_raise_missing_values(indexer):
     arr = np.array([1, 2, 3])
 
@@ -103,4 +101,3 @@ def test_pass_through_non_array_likes(indexer):
 
     result = check_array_indexer(arr, indexer)
     assert result == indexer
-

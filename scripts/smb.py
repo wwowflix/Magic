@@ -136,9 +136,7 @@ class SMBFileSystem(AbstractFileSystem):
         self.share_access = share_access
         self.register_session_retries = register_session_retries
         if register_session_retry_wait < 0:
-            raise ValueError(
-                "register_session_retry_wait must be a non-negative integer"
-            )
+            raise ValueError("register_session_retry_wait must be a non-negative integer")
         self.register_session_retry_wait = register_session_retry_wait
         if register_session_retry_factor < 1:
             raise ValueError(
@@ -162,18 +160,14 @@ class SMBFileSystem(AbstractFileSystem):
         retried_errors = []
 
         wait_time = self.register_session_retry_wait
-        n_waits = (
-            self.register_session_retries - 1
-        )  # -1 = No wait time after the last retry
+        n_waits = self.register_session_retries - 1  # -1 = No wait time after the last retry
         factor = self.register_session_retry_factor
 
         # Generate wait times for each retry attempt.
         # Wait times are calculated using exponential function. For factor=1 all wait times
         # will be equal to `wait`. For any number of retries the last wait time will be
         # equal to `wait` and for retries>2 the first wait time will be equal to `wait / factor`.
-        wait_times = iter(
-            factor ** (n / n_waits - 1) * wait_time for n in range(0, n_waits + 1)
-        )
+        wait_times = iter(factor ** (n / n_waits - 1) * wait_time for n in range(0, n_waits + 1))
 
         for attempt in range(self.register_session_retries + 1):
             try:
@@ -310,9 +304,7 @@ class SMBFileSystem(AbstractFileSystem):
         share_access = kwargs.pop("share_access", self.share_access)
         if "w" in mode and autocommit is False:
             temp = _as_temp_path(self.host, path, self.temppath)
-            return SMBFileOpener(
-                wpath, temp, mode, port=self._port, block_size=bls, **kwargs
-            )
+            return SMBFileOpener(wpath, temp, mode, port=self._port, block_size=bls, **kwargs)
         return smbclient.open_file(
             wpath,
             mode,

@@ -189,10 +189,7 @@ class LinearizedOutputProducer(OutputProducer):
         # Re-assigning IDs of all PDF objects in the 1st xref table:
         first_xref.start_obj_id = self.obj_id + 1
         for pdf_obj in first_xref_pdf_objs:
-            if (
-                not isinstance(pdf_obj, ContentWithoutID)
-                and pdf_obj is not hint_stream_obj
-            ):
+            if not isinstance(pdf_obj, ContentWithoutID) and pdf_obj is not hint_stream_obj:
                 self.obj_id += 1
                 pdf_obj.obj_id = self.obj_id
         # The hint streams shall be assigned the last object numbers in the file:

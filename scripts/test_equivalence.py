@@ -162,9 +162,7 @@ def test_equals_multi(idx):
     major_codes = np.array([0, 0, 1, 2, 2, 3])
     minor_codes = np.array([0, 1, 0, 0, 1, 0])
 
-    index = MultiIndex(
-        levels=[major_axis, minor_axis], codes=[major_codes, minor_codes]
-    )
+    index = MultiIndex(levels=[major_axis, minor_axis], codes=[major_codes, minor_codes])
     assert not idx.equals(index)
     assert not idx.equal_levels(index)
 
@@ -175,9 +173,7 @@ def test_equals_multi(idx):
     major_codes = np.array([0, 0, 2, 2, 3, 3])
     minor_codes = np.array([0, 1, 0, 1, 0, 1])
 
-    index = MultiIndex(
-        levels=[major_axis, minor_axis], codes=[major_codes, minor_codes]
-    )
+    index = MultiIndex(levels=[major_axis, minor_axis], codes=[major_codes, minor_codes])
     assert not idx.equals(index)
 
 
@@ -282,4 +278,3 @@ def test_equals_ea_int_regular_int():
     mi2 = MultiIndex.from_arrays([[1, 2], [3, 4]])
     assert not mi1.equals(mi2)
     assert not mi2.equals(mi1)
-

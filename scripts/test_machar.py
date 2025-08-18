@@ -3,6 +3,7 @@ Test machar. Given recent changes to hardcode type data, we might want to get
 rid of both MachAr and this test at some point.
 
 """
+
 import numpy._core.numerictypes as ntypes
 from numpy import array, errstate
 from numpy._core._machar import MachAr
@@ -22,10 +23,9 @@ class TestMachAr:
     def test_underlow(self):
         # Regression test for #759:
         # instantiating MachAr for dtype = np.float96 raises spurious warning.
-        with errstate(all='raise'):
+        with errstate(all="raise"):
             try:
                 self._run_machar_highprec()
             except FloatingPointError as e:
                 msg = f"Caught {e} exception, should not have been raised."
                 raise AssertionError(msg)
-

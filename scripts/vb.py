@@ -24,20 +24,20 @@ class CmdStanVB:
         """Initialize object."""
         if not runset.method == Method.VARIATIONAL:
             raise ValueError(
-                'Wrong runset method, expecting variational inference, '
-                'found method {}'.format(runset.method)
+                "Wrong runset method, expecting variational inference, "
+                "found method {}".format(runset.method)
             )
         self.runset = runset
         self._set_variational_attrs(runset.csv_files[0])
 
     def __repr__(self) -> str:
-        repr = 'CmdStanVB: model={}{}'.format(
+        repr = "CmdStanVB: model={}{}".format(
             self.runset.model, self.runset._args.method_args.compose(0, cmd=[])
         )
-        repr = '{}\n csv_file:\n\t{}\n output_file:\n\t{}'.format(
+        repr = "{}\n csv_file:\n\t{}\n output_file:\n\t{}".format(
             repr,
-            '\n\t'.join(self.runset.csv_files),
-            '\n\t'.join(self.runset.stdout_files),
+            "\n\t".join(self.runset.csv_files),
+            "\n\t".join(self.runset.stdout_files),
         )
         # TODO - diagnostic, profiling files
         return repr
@@ -56,10 +56,10 @@ class CmdStanVB:
         meta = scan_variational_csv(sample_csv_0)
         self._metadata = InferenceMetadata(meta)
         # these three assignments don't grant type information
-        self._column_names: Tuple[str, ...] = meta['column_names']
-        self._eta: float = meta['eta']
-        self._variational_mean: np.ndarray = meta['variational_mean']
-        self._variational_sample: np.ndarray = meta['variational_sample']
+        self._column_names: Tuple[str, ...] = meta["column_names"]
+        self._eta: float = meta["eta"]
+        self._variational_mean: np.ndarray = meta["variational_mean"]
+        self._variational_sample: np.ndarray = meta["variational_sample"]
 
     @property
     def columns(self) -> int:
@@ -114,9 +114,7 @@ class CmdStanVB:
         """
         return self._metadata
 
-    def stan_variable(
-        self, var: str, *, mean: Optional[bool] = None
-    ) -> Union[np.ndarray, float]:
+    def stan_variable(self, var: str, *, mean: Optional[bool] = None) -> Union[np.ndarray, float]:
         """
         Return a numpy.ndarray which contains the estimates for the
         for the named Stan program variable where the dimensions of the
@@ -167,9 +165,7 @@ class CmdStanVB:
             draws = self._variational_sample
 
         try:
-            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(
-                draws
-            )
+            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(draws)
             # TODO(2.0): remove
             if out.shape == () or out.shape == (1,):
                 if mean:
@@ -184,14 +180,11 @@ class CmdStanVB:
         except KeyError:
             # pylint: disable=raise-missing-from
             raise ValueError(
-                f'Unknown variable name: {var}\n'
-                'Available variables are '
-                + ", ".join(self._metadata.stan_vars.keys())
+                f"Unknown variable name: {var}\n"
+                "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
-    def stan_variables(
-        self, *, mean: Optional[bool] = None
-    ) -> Dict[str, Union[np.ndarray, float]]:
+    def stan_variables(self, *, mean: Optional[bool] = None) -> Dict[str, Union[np.ndarray, float]]:
         """
         Return a dictionary mapping Stan program variables names
         to the corresponding numpy.ndarray containing the inferred values.

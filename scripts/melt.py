@@ -66,17 +66,14 @@ def melt(
         if not is_list_like(id_vars):
             id_vars = [id_vars]
         elif isinstance(frame.columns, MultiIndex) and not isinstance(id_vars, list):
-            raise ValueError(
-                "id_vars must be a list of tuples when columns are a MultiIndex"
-            )
+            raise ValueError("id_vars must be a list of tuples when columns are a MultiIndex")
         else:
             # Check that `id_vars` are in frame
             id_vars = list(id_vars)
             missing = Index(com.flatten(id_vars)).difference(cols)
             if not missing.empty:
                 raise KeyError(
-                    "The following 'id_vars' are not present "
-                    f"in the DataFrame: {list(missing)}"
+                    "The following 'id_vars' are not present " f"in the DataFrame: {list(missing)}"
                 )
     else:
         id_vars = []
@@ -85,9 +82,7 @@ def melt(
         if not is_list_like(value_vars):
             value_vars = [value_vars]
         elif isinstance(frame.columns, MultiIndex) and not isinstance(value_vars, list):
-            raise ValueError(
-                "value_vars must be a list of tuples when columns are a MultiIndex"
-            )
+            raise ValueError("value_vars must be a list of tuples when columns are a MultiIndex")
         else:
             value_vars = list(value_vars)
             # Check that `value_vars` are in frame
@@ -98,9 +93,7 @@ def melt(
                     f"the DataFrame: {list(missing)}"
                 )
         if col_level is not None:
-            idx = frame.columns.get_level_values(col_level).get_indexer(
-                id_vars + value_vars
-            )
+            idx = frame.columns.get_level_values(col_level).get_indexer(id_vars + value_vars)
         else:
             idx = algos.unique(frame.columns.get_indexer_for(id_vars + value_vars))
         frame = frame.iloc[:, idx]
@@ -118,9 +111,7 @@ def melt(
             else:
                 var_name = [f"variable_{i}" for i in range(len(frame.columns.names))]
         else:
-            var_name = [
-                frame.columns.name if frame.columns.name is not None else "variable"
-            ]
+            var_name = [frame.columns.name if frame.columns.name is not None else "variable"]
     if isinstance(var_name, str):
         var_name = [var_name]
 
@@ -259,9 +250,7 @@ def lreshape(data: DataFrame, groups, dropna: bool = True, label=None) -> DataFr
     return data._constructor(mdata, columns=id_cols + pivot_cols)
 
 
-def wide_to_long(
-    df: DataFrame, stubnames, i, j, sep: str = "", suffix: str = r"\d+"
-) -> DataFrame:
+def wide_to_long(df: DataFrame, stubnames, i, j, sep: str = "", suffix: str = r"\d+") -> DataFrame:
     r"""
     Unpivot a DataFrame from wide to long format.
 

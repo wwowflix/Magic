@@ -59,9 +59,7 @@ def format_date_labels(ax: Axes, rot) -> None:
     maybe_adjust_figure(fig, bottom=0.2)
 
 
-def table(
-    ax, data: DataFrame | Series, rowLabels=None, colLabels=None, **kwargs
-) -> Table:
+def table(ax, data: DataFrame | Series, rowLabels=None, colLabels=None, **kwargs) -> Table:
     if isinstance(data, ABCSeries):
         data = data.to_frame()
     elif isinstance(data, ABCDataFrame):
@@ -247,8 +245,7 @@ def create_subplots(
                 return fig, ax
             else:
                 raise ValueError(
-                    f"The number of passed axes must be {naxes}, the "
-                    "same as the output plot"
+                    f"The number of passed axes must be {naxes}, the " "same as the output plot"
                 )
 
         fig = ax.get_figure()
@@ -367,9 +364,7 @@ def _has_externally_shared_axis(ax1: Axes, compare_axis: str) -> bool:
     elif compare_axis == "y":
         axes = ax1.get_shared_y_axes()
     else:
-        raise ValueError(
-            "_has_externally_shared_axis() needs 'x' or 'y' as a second parameter"
-        )
+        raise ValueError("_has_externally_shared_axis() needs 'x' or 'y' as a second parameter")
 
     axes = axes.get_siblings(ax1)
 

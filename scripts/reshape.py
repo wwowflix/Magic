@@ -216,9 +216,7 @@ class _Unstacker:
         columns = self.get_new_columns(value_columns)
         index = self.new_index
 
-        return self.constructor(
-            values, index=index, columns=columns, dtype=values.dtype
-        )
+        return self.constructor(values, index=index, columns=columns, dtype=values.dtype)
 
     def get_new_values(self, values, fill_value=None):
 
@@ -241,9 +239,7 @@ class _Unstacker:
             #  matching values?  When that holds, we can slice instead
             #  of take (in particular for EAs)
             new_values = (
-                sorted_values.reshape(length, width, stride)
-                .swapaxes(1, 2)
-                .reshape(result_shape)
+                sorted_values.reshape(length, width, stride).swapaxes(1, 2).reshape(result_shape)
             )
             new_mask = np.ones(result_shape, dtype=bool)
             return new_values, new_mask
@@ -480,18 +476,12 @@ def unstack(obj: Series | DataFrame, level, fill_value=None):
         # GH 36113
         # Give nicer error messages when unstack a Series whose
         # Index is not a MultiIndex.
-        raise ValueError(
-            f"index must be a MultiIndex to unstack, {type(obj.index)} was passed"
-        )
+        raise ValueError(f"index must be a MultiIndex to unstack, {type(obj.index)} was passed")
     else:
         if is_1d_only_ea_dtype(obj.dtype):
             return _unstack_extension_series(obj, level, fill_value)
-        unstacker = _Unstacker(
-            obj.index, level=level, constructor=obj._constructor_expanddim
-        )
-        return unstacker.get_result(
-            obj._values, value_columns=None, fill_value=fill_value
-        )
+        unstacker = _Unstacker(obj.index, level=level, constructor=obj._constructor_expanddim)
+        return unstacker.get_result(obj._values, value_columns=None, fill_value=fill_value)
 
 
 def _unstack_frame(obj: DataFrame, level, fill_value=None):
@@ -502,9 +492,7 @@ def _unstack_frame(obj: DataFrame, level, fill_value=None):
         mgr = obj._mgr.unstack(unstacker, fill_value=fill_value)
         return obj._constructor(mgr)
     else:
-        return unstacker.get_result(
-            obj._values, value_columns=obj.columns, fill_value=fill_value
-        )
+        return unstacker.get_result(obj._values, value_columns=obj.columns, fill_value=fill_value)
 
 
 def _unstack_extension_series(series: Series, level, fill_value) -> DataFrame:
@@ -594,9 +582,7 @@ def stack(frame: DataFrame, level=-1, dropna: bool = True):
 
         if is_extension_array_dtype(dtype):
             arr = dtype.construct_array_type()
-            new_values = arr._concat_same_type(
-                [col._values for _, col in frame.items()]
-            )
+            new_values = arr._concat_same_type([col._values for _, col in frame.items()])
             new_values = _reorder_for_extension_array_stack(new_values, N, K)
         else:
             # homogeneous, non-EA
@@ -682,9 +668,7 @@ def _stack_multi_column_index(columns: MultiIndex) -> MultiIndex:
     )
 
 
-def _stack_multi_columns(
-    frame: DataFrame, level_num: int = -1, dropna: bool = True
-) -> DataFrame:
+def _stack_multi_columns(frame: DataFrame, level_num: int = -1, dropna: bool = True) -> DataFrame:
     def _convert_level_number(level_num: int, columns: Index):
         """
         Logic for converting the level number to something we can safely pass
@@ -754,9 +738,7 @@ def _stack_multi_columns(
             chunk.columns = level_vals_nan.take(chunk.columns.codes[-1])
             value_slice = chunk.reindex(columns=level_vals_used).values
         else:
-            if frame._is_homogeneous_type and is_extension_array_dtype(
-                frame.dtypes.iloc[0]
-            ):
+            if frame._is_homogeneous_type and is_extension_array_dtype(frame.dtypes.iloc[0]):
                 # TODO(EA2D): won't need special case, can go through .values
                 #  paths below (might change to ._values)
                 dtype = this[this.columns[loc]].dtypes.iloc[0]

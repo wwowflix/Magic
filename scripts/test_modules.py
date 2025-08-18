@@ -10,13 +10,12 @@ from . import util
 @pytest.mark.slow
 class TestModuleFilterPublicEntities(util.F2PyTest):
     sources = [
-        util.getpath(
-            "tests", "src", "modules", "gh26920",
-            "two_mods_with_one_public_routine.f90"
-        )
+        util.getpath("tests", "src", "modules", "gh26920", "two_mods_with_one_public_routine.f90")
     ]
     # we filter the only public function mod2
-    only = ["mod1_func1", ]
+    only = [
+        "mod1_func1",
+    ]
 
     def test_gh26920(self):
         # if it compiles and can be loaded, things are fine
@@ -26,12 +25,11 @@ class TestModuleFilterPublicEntities(util.F2PyTest):
 @pytest.mark.slow
 class TestModuleWithoutPublicEntities(util.F2PyTest):
     sources = [
-        util.getpath(
-            "tests", "src", "modules", "gh26920",
-            "two_mods_with_no_public_entities.f90"
-        )
+        util.getpath("tests", "src", "modules", "gh26920", "two_mods_with_no_public_entities.f90")
     ]
-    only = ["mod1_func1", ]
+    only = [
+        "mod1_func1",
+    ]
 
     def test_gh26920(self):
         # if it compiles and can be loaded, things are fine
@@ -81,4 +79,3 @@ class TestUsedModule(util.F2PyTest):
         assert self.module.useops.sum_and_double(3, 7) == 20
         assert "mathops" in compiled_mods
         assert self.module.mathops.add(3, 7) == 10
-

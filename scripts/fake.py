@@ -8,9 +8,7 @@ from fake_useragent.log import logger
 from fake_useragent.utils import BrowserUserAgentData, load
 
 
-def _ensure_iterable(
-    *, default: Iterable[str], **kwarg: Optional[Iterable[str]]
-) -> list[str]:
+def _ensure_iterable(*, default: Iterable[str], **kwarg: Optional[Iterable[str]]) -> list[str]:
     """Ensure the given value is an Iterable and convert it to a list.
 
     Args:
@@ -186,9 +184,7 @@ class FakeUserAgent:
         safe_attrs = _ensure_iterable(safe_attrs=safe_attrs, default=set())
         str_safe_attrs = [isinstance(attr, str) for attr in safe_attrs]
         if not all(str_safe_attrs):
-            bad_indices = [
-                idx for idx, is_str in enumerate(str_safe_attrs) if not is_str
-            ]
+            bad_indices = [idx for idx, is_str in enumerate(str_safe_attrs) if not is_str]
             msg = f"safe_attrs must be an iterable of str but indices {bad_indices} are not."
             raise TypeError(msg)
         self.safe_attrs = set(safe_attrs)
@@ -277,9 +273,7 @@ class FakeUserAgent:
                 browsers_to_filter = [browsers_to_filter]
 
             filtered_useragents = list(
-                filter(
-                    lambda x: x["browser"] in browsers_to_filter, filtered_useragents
-                )
+                filter(lambda x: x["browser"] in browsers_to_filter, filtered_useragents)
             )
 
         return filtered_useragents

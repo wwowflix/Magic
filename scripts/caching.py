@@ -207,9 +207,7 @@ class MMapCache(BaseCache):
 
             # Fetch bytes (could be multiple consecutive blocks)
             self.total_requested_bytes += send - sstart
-            logger.debug(
-                f"MMap get blocks {_blocks[0]}-{_blocks[-1]} ({sstart}-{send})"
-            )
+            logger.debug(f"MMap get blocks {_blocks[0]}-{_blocks[-1]} ({sstart}-{send})")
             ranges.append((sstart, send))
 
             # Update set of cached blocks
@@ -362,9 +360,7 @@ class BlockCache(BaseCache):
 
     name = "blockcache"
 
-    def __init__(
-        self, blocksize: int, fetcher: Fetcher, size: int, maxblocks: int = 32
-    ) -> None:
+    def __init__(self, blocksize: int, fetcher: Fetcher, size: int, maxblocks: int = 32) -> None:
         super().__init__(blocksize, fetcher, size)
         self.nblocks = math.ceil(size / blocksize)
         self.maxblocks = maxblocks
@@ -388,9 +384,7 @@ class BlockCache(BaseCache):
 
     def __setstate__(self, state: dict[str, Any]) -> None:
         self.__dict__.update(state)
-        self._fetch_block_cached = functools.lru_cache(state["maxblocks"])(
-            self._fetch_block
-        )
+        self._fetch_block_cached = functools.lru_cache(state["maxblocks"])(self._fetch_block)
 
     def _fetch(self, start: int | None, end: int | None) -> bytes:
         if start is None:
@@ -489,9 +483,7 @@ class BytesCache(BaseCache):
 
     name: ClassVar[str] = "bytes"
 
-    def __init__(
-        self, blocksize: int, fetcher: Fetcher, size: int, trim: bool = True
-    ) -> None:
+    def __init__(self, blocksize: int, fetcher: Fetcher, size: int, trim: bool = True) -> None:
         super().__init__(blocksize, fetcher, size)
         self.cache = b""
         self.start: int | None = None
@@ -526,9 +518,7 @@ class BytesCache(BaseCache):
         if bend == start or start > self.size:
             return b""
 
-        if (self.start is None or start < self.start) and (
-            self.end is None or end > self.end
-        ):
+        if (self.start is None or start < self.start) and (self.end is None or end > self.end):
             # First read, or extending both before and after
             self.total_requested_bytes += bend - start
             self.miss_count += 1
@@ -788,9 +778,7 @@ class BackgroundBlockCache(BaseCache):
 
     name: ClassVar[str] = "background"
 
-    def __init__(
-        self, blocksize: int, fetcher: Fetcher, size: int, maxblocks: int = 32
-    ) -> None:
+    def __init__(self, blocksize: int, fetcher: Fetcher, size: int, maxblocks: int = 32) -> None:
         super().__init__(blocksize, fetcher, size)
         self.nblocks = math.ceil(size / blocksize)
         self.maxblocks = maxblocks
@@ -858,9 +846,7 @@ class BackgroundBlockCache(BaseCache):
                 else:
                     # Must join if we need the block for the current fetch
                     must_join = bool(
-                        start_block_number
-                        <= self._fetch_future_block_number
-                        <= end_block_number
+                        start_block_number <= self._fetch_future_block_number <= end_block_number
                     )
                     if must_join:
                         # Copy to the local variables to release lock
@@ -876,9 +862,7 @@ class BackgroundBlockCache(BaseCache):
         if fetch_future is not None:
             logger.info("BlockCache waiting for background fetch.")
             # Wait until result and put it in cache
-            self._fetch_block_cached.add_key(
-                fetch_future.result(), fetch_future_block_number
-            )
+            self._fetch_block_cached.add_key(fetch_future.result(), fetch_future_block_number)
 
         # these are cached, so safe to do multiple calls for the same start and end.
         for block_number in range(start_block_number, end_block_number + 1):

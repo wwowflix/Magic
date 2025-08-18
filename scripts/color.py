@@ -30,9 +30,7 @@ else:
     ParseableInt = Any
 
 RGB_PATTERN = r"^\s*rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)\s*$"
-RGB_PCT_PATTERN = (
-    r"^\s*rgb\(\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,\s*(\d{1,3}|\d{1,2}\.\d+)%\s*\)\s*$"
-)
+RGB_PCT_PATTERN = r"^\s*rgb\(\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,\s*(\d{1,3}|\d{1,2}\.\d+)%\s*\)\s*$"
 RGBA_PATTERN = r"^\s*rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0\.\d+)\s*\)\s*$"
 RGBA_PCT_PATTERN = (
     r"^\s*rgba\(\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,\s*(\d{1,3}|\d{1,2}\.\d+)%\s*,"
@@ -41,7 +39,9 @@ RGBA_PCT_PATTERN = (
 HEX_PATTERN = r"#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})"
 HEX3_PATTERN = r"#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])"
 HSL_PATTERN = r"^\s*hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)\s*$"
-HSLA_PATTERN = r"^\s*hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(0|1|0\.\d+)\s*\)\s*$"
+HSLA_PATTERN = (
+    r"^\s*hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(0|1|0\.\d+)\s*\)\s*$"
+)
 
 
 class Color:
@@ -101,7 +101,13 @@ class Color:
         raise ValueError("Could not convert %s into color" % str_)
 
     @classmethod
-    def _from_hsl(cls, h: ParseableFloat, s: ParseableFloat, light: ParseableFloat, a: ParseableFloat = 1) -> Color:
+    def _from_hsl(
+        cls,
+        h: ParseableFloat,
+        s: ParseableFloat,
+        light: ParseableFloat,
+        a: ParseableFloat = 1,
+    ) -> Color:
         h = float(h) / 360
         s = float(s) / 100
         _l = float(light) / 100
@@ -134,7 +140,13 @@ class Color:
 
         return cls(round(r * 255), round(g * 255), round(b * 255), a)
 
-    def __init__(self, red: ParseableInt, green: ParseableInt, blue: ParseableInt, alpha: ParseableFloat = 1) -> None:
+    def __init__(
+        self,
+        red: ParseableInt,
+        green: ParseableInt,
+        blue: ParseableInt,
+        alpha: ParseableFloat = 1,
+    ) -> None:
         self.red = int(red)
         self.green = int(green)
         self.blue = int(blue)

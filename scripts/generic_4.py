@@ -104,9 +104,7 @@ def rsync(
     ]
     logger.debug(f"{len(dirs)} directories to create")
     if dirs:
-        fs.make_many_dirs(
-            [dirn.replace(source, destination) for dirn in dirs], exist_ok=True
-        )
+        fs.make_many_dirs([dirn.replace(source, destination) for dirn in dirs], exist_ok=True)
     allfiles = {a: v for a, v in allfiles.items() if v["type"] == "file"}
     logger.debug(f"{len(allfiles)} files to consider for copy")
     to_delete = [
@@ -189,13 +187,9 @@ class GenericFileSystem(AsyncFileSystem):
     async def _find(self, path, maxdepth=None, withdirs=False, detail=False, **kwargs):
         fs = _resolve_fs(path, self.method, storage_options=self.st_opts)
         if fs.async_impl:
-            out = await fs._find(
-                path, maxdepth=maxdepth, withdirs=withdirs, detail=True, **kwargs
-            )
+            out = await fs._find(path, maxdepth=maxdepth, withdirs=withdirs, detail=True, **kwargs)
         else:
-            out = fs.find(
-                path, maxdepth=maxdepth, withdirs=withdirs, detail=True, **kwargs
-            )
+            out = fs.find(path, maxdepth=maxdepth, withdirs=withdirs, detail=True, **kwargs)
         result = {}
         for k, v in out.items():
             v = v.copy()  # don't corrupt target FS dircache
@@ -340,14 +334,10 @@ class GenericFileSystem(AsyncFileSystem):
             else:
                 return fs.copy(path1, path2, **kwargs)
 
-        await copy_file_op(
-            fs, path1, fs2, path2, tempdir, batch_size, on_error=on_error
-        )
+        await copy_file_op(fs, path1, fs2, path2, tempdir, batch_size, on_error=on_error)
 
 
-async def copy_file_op(
-    fs1, url1, fs2, url2, tempdir=None, batch_size=20, on_error="ignore"
-):
+async def copy_file_op(fs1, url1, fs2, url2, tempdir=None, batch_size=20, on_error="ignore"):
     import tempfile
 
     tempdir = tempdir or tempfile.mkdtemp()
@@ -362,9 +352,7 @@ async def copy_file_op(
             )
             for u1, u2 in zip(url1, url2)
         ]
-        out = await _run_coros_in_chunks(
-            coros, batch_size=batch_size, return_exceptions=True
-        )
+        out = await _run_coros_in_chunks(coros, batch_size=batch_size, return_exceptions=True)
     finally:
         shutil.rmtree(tempdir)
     if on_error == "return":

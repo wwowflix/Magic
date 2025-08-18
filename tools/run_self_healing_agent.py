@@ -1,7 +1,5 @@
 ﻿import os
 import shutil
-import csv
-import time
 from dotenv import load_dotenv
 
 # 🌱 Load .env for Notion Token
@@ -13,6 +11,7 @@ SCRIPTS_DIR = "scripts"
 BACKUP_DIR = "backups"
 LOGS_DIR = "logs"
 PATCH_CSV = "outputs/notion_export/magic_patch.csv"
+
 
 # 🧠 Self-Healing Actions
 def restore_missing_scripts():
@@ -33,6 +32,7 @@ def restore_missing_scripts():
     else:
         print(f"✅ {restored} scripts restored.")
 
+
 def clean_logs():
     print("🧹 Cleaning logs...")
     if not os.path.exists(LOGS_DIR):
@@ -45,16 +45,20 @@ def clean_logs():
             print(f"🗑 Deleted: {file}")
     print("✅ Logs cleaned.")
 
+
 def notion_sync():
     print("🔁 (Placeholder) Sync to Notion... ✅")
+
 
 def run_all():
     restore_missing_scripts()
     clean_logs()
     notion_sync()
 
+
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action="store_true", help="Dry run only")
     parser.add_argument("--restore", action="store_true", help="Only restore missing scripts")

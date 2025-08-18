@@ -36,4 +36,3 @@ def test_lazy_load():
         if old_numpy:
             sys.modules["numpy"] = old_numpy
             sys.modules.update(numpy_modules)
-

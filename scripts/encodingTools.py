@@ -1,7 +1,4 @@
-"""fontTools.misc.encodingTools.py -- tools for working with OpenType encodings.
-"""
-
-import fontTools.encodings.codecs
+"""fontTools.misc.encodingTools.py -- tools for working with OpenType encodings."""
 
 # Map keyed by platformID, then platEncID, then possibly langID
 _encodingMap = {

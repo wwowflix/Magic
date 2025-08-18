@@ -22,9 +22,7 @@ pytestmark = pytest.mark.parametrize("ext,", [".xls"])
 
 def test_excel_raise_error_on_multiindex_columns_and_no_index(ext):
     # MultiIndex as columns is not yet implemented 9794
-    cols = MultiIndex.from_tuples(
-        [("site", ""), ("2014", "height"), ("2014", "weight")]
-    )
+    cols = MultiIndex.from_tuples([("site", ""), ("2014", "height"), ("2014", "weight")])
     df = DataFrame(np.random.randn(10, 3), columns=cols)
 
     msg = (
@@ -37,9 +35,7 @@ def test_excel_raise_error_on_multiindex_columns_and_no_index(ext):
 
 
 def test_excel_multiindex_columns_and_index_true(ext):
-    cols = MultiIndex.from_tuples(
-        [("site", ""), ("2014", "height"), ("2014", "weight")]
-    )
+    cols = MultiIndex.from_tuples([("site", ""), ("2014", "height"), ("2014", "weight")])
     df = DataFrame(np.random.randn(10, 3), columns=cols)
     with tm.ensure_clean(ext) as path:
         df.to_excel(path, index=True)
@@ -47,9 +43,7 @@ def test_excel_multiindex_columns_and_index_true(ext):
 
 def test_excel_multiindex_index(ext):
     # MultiIndex as index works so assert no error #9794
-    cols = MultiIndex.from_tuples(
-        [("site", ""), ("2014", "height"), ("2014", "weight")]
-    )
+    cols = MultiIndex.from_tuples([("site", ""), ("2014", "height"), ("2014", "weight")])
     df = DataFrame(np.random.randn(3, 10), index=cols)
     with tm.ensure_clean(ext) as path:
         df.to_excel(path, index=False)
@@ -109,9 +103,7 @@ def test_kwargs(ext, style_compression):
         msg = re.escape("Use of **kwargs is deprecated")
         with tm.assert_produces_warning(FutureWarning, match=msg):
             with ExcelWriter(f, engine="xlwt", **kwargs) as writer:
-                assert (
-                    writer.book._Workbook__styles.style_compression == style_compression
-                )
+                assert writer.book._Workbook__styles.style_compression == style_compression
                 # xlwt won't allow us to close without writing something
                 DataFrame().to_excel(writer)
 

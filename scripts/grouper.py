@@ -2,6 +2,7 @@
 Provide user facing operators for doing the split part of the
 split-apply-combine paradigm.
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -365,9 +366,7 @@ class Grouper:
         if self.key is not None:
             key = self.key
             # The 'on' is already defined
-            if getattr(self._gpr_index, "name", None) == key and isinstance(
-                obj, Series
-            ):
+            if getattr(self._gpr_index, "name", None) == key and isinstance(obj, Series):
                 # Sometimes self._grouper will have been resorted while
                 # obj has not. In this case there is a mismatch when we
                 # call self._grouper.take(obj.index) so we need to undo the sorting
@@ -403,9 +402,7 @@ class Grouper:
         if (self.sort or sort) and not ax.is_monotonic_increasing:
             # use stable sort to support first, last, nth
             # TODO: why does putting na_position="first" fix datetimelike cases?
-            indexer = self.indexer = ax.array.argsort(
-                kind="mergesort", na_position="first"
-            )
+            indexer = self.indexer = ax.array.argsort(kind="mergesort", na_position="first")
             ax = ax.take(indexer)
             obj = obj.take(indexer, axis=self.axis)
 
@@ -511,9 +508,7 @@ class Grouping:
             # check again as we have by this point converted these
             # to an actual value (rather than a pd.Grouper)
             assert self.obj is not None  # for mypy
-            _, newgrouper, newobj = self.grouping_vector._get_grouper(
-                self.obj, validate=False
-            )
+            _, newgrouper, newobj = self.grouping_vector._get_grouper(self.obj, validate=False)
             self.obj = newobj
 
             ng = newgrouper._get_grouper()
@@ -533,9 +528,7 @@ class Grouping:
                 self.grouping_vector, sort, observed
             )
 
-        elif not isinstance(
-            self.grouping_vector, (Series, Index, ExtensionArray, np.ndarray)
-        ):
+        elif not isinstance(self.grouping_vector, (Series, Index, ExtensionArray, np.ndarray)):
             # no level passed
             if getattr(self.grouping_vector, "ndim", 1) != 1:
                 t = self.name or str(type(self.grouping_vector))
@@ -544,14 +537,10 @@ class Grouping:
             self.grouping_vector = index.map(self.grouping_vector)
 
             if not (
-                hasattr(self.grouping_vector, "__len__")
-                and len(self.grouping_vector) == len(index)
+                hasattr(self.grouping_vector, "__len__") and len(self.grouping_vector) == len(index)
             ):
                 grper = pprint_thing(self.grouping_vector)
-                errmsg = (
-                    "Grouper result violates len(labels) == "
-                    f"len(data)\nresult: {grper}"
-                )
+                errmsg = "Grouper result violates len(labels) == " f"len(data)\nresult: {grper}"
                 self.grouping_vector = None  # Try for sanity
                 raise AssertionError(errmsg)
 
@@ -682,9 +671,7 @@ class Grouping:
             codes = self.grouping_vector.codes_info
             # error: Incompatible types in assignment (expression has type "Union
             # [ExtensionArray, ndarray[Any, Any]]", variable has type "Categorical")
-            uniques = (
-                self.grouping_vector.result_index._values  # type: ignore[assignment]
-            )
+            uniques = self.grouping_vector.result_index._values  # type: ignore[assignment]
         else:
             # GH35667, replace dropna=False with use_na_sentinel=False
             # error: Incompatible types in assignment (expression has type "Union[
@@ -770,8 +757,7 @@ def get_grouper(
             if isinstance(level, str):
                 if obj._get_axis(axis).name != level:
                     raise ValueError(
-                        f"level name {level} is not the name "
-                        f"of the {obj._get_axis_name(axis)}"
+                        f"level name {level} is not the name " f"of the {obj._get_axis_name(axis)}"
                     )
             elif level > 0 or level < -1:
                 raise ValueError("level > 0 or level < -1 only valid with MultiIndex")
@@ -803,9 +789,7 @@ def get_grouper(
     # what are we after, exactly?
     any_callable = any(callable(g) or isinstance(g, dict) for g in keys)
     any_groupers = any(isinstance(g, (Grouper, Grouping)) for g in keys)
-    any_arraylike = any(
-        isinstance(g, (list, tuple, Series, Index, np.ndarray)) for g in keys
-    )
+    any_arraylike = any(isinstance(g, (list, tuple, Series, Index, np.ndarray)) for g in keys)
 
     # is this an index replacement?
     if (
@@ -816,9 +800,7 @@ def get_grouper(
         and level is None
     ):
         if isinstance(obj, DataFrame):
-            all_in_columns_index = all(
-                g in obj.columns or g in obj.index.names for g in keys
-            )
+            all_in_columns_index = all(g in obj.columns or g in obj.index.names for g in keys)
         else:
             assert isinstance(obj, Series)
             all_in_columns_index = all(g in obj.index.names for g in keys)
@@ -918,9 +900,7 @@ def get_grouper(
         groupings.append(Grouping(Index([], dtype="int"), np.array([], dtype=np.intp)))
 
     # create the internals grouper
-    grouper = ops.BaseGrouper(
-        group_axis, groupings, sort=sort, mutated=mutated, dropna=dropna
-    )
+    grouper = ops.BaseGrouper(group_axis, groupings, sort=sort, mutated=mutated, dropna=dropna)
     return grouper, frozenset(exclusions), obj
 
 

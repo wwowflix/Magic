@@ -228,13 +228,9 @@ class TestConfig:
 
         msg = "Value must be a nonnegative integer or None"
         with pytest.raises(ValueError, match=msg):
-            self.cf.register_option(
-                "a.b.c.d3", "NO", "doc", validator=self.cf.is_nonnegative_int
-            )
+            self.cf.register_option("a.b.c.d3", "NO", "doc", validator=self.cf.is_nonnegative_int)
         with pytest.raises(ValueError, match=msg):
-            self.cf.register_option(
-                "a.b.c.d3", -2, "doc", validator=self.cf.is_nonnegative_int
-            )
+            self.cf.register_option("a.b.c.d3", -2, "doc", validator=self.cf.is_nonnegative_int)
 
         msg = r"Value must be an instance of <class 'str'>\|<class 'bytes'>"
         with pytest.raises(ValueError, match=msg):

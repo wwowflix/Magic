@@ -8,7 +8,9 @@ in non-backward-compatible ways.
 
 from html.parser import HTMLParser
 from string import ascii_lowercase, ascii_uppercase
-import logging, re, warnings
+import logging
+import re
+import warnings
 
 from .deprecation import get_stack_level
 from .drawing import color_from_hex_string, convert_to_device_color
@@ -49,24 +51,12 @@ DEFAULT_TAG_STYLES = {
         t_margin=6,
         l_margin="Center",
     ),
-    "h1": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=24, t_margin=5 + 834 / 900
-    ),
-    "h2": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=18, t_margin=5 + 453 / 900
-    ),
-    "h3": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=14, t_margin=5 + 199 / 900
-    ),
-    "h4": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=12, t_margin=5 + 72 / 900
-    ),
-    "h5": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=10, t_margin=5 - 55 / 900
-    ),
-    "h6": TextStyle(
-        color="#960000", b_margin=0.4, font_size_pt=8, t_margin=5 - 182 / 900
-    ),
+    "h1": TextStyle(color="#960000", b_margin=0.4, font_size_pt=24, t_margin=5 + 834 / 900),
+    "h2": TextStyle(color="#960000", b_margin=0.4, font_size_pt=18, t_margin=5 + 453 / 900),
+    "h3": TextStyle(color="#960000", b_margin=0.4, font_size_pt=14, t_margin=5 + 199 / 900),
+    "h4": TextStyle(color="#960000", b_margin=0.4, font_size_pt=12, t_margin=5 + 72 / 900),
+    "h5": TextStyle(color="#960000", b_margin=0.4, font_size_pt=10, t_margin=5 - 55 / 900),
+    "h6": TextStyle(color="#960000", b_margin=0.4, font_size_pt=8, t_margin=5 - 182 / 900),
     "li": TextStyle(l_margin=5, t_margin=2),
     "p": TextStyle(),
     "pre": TextStyle(t_margin=4 + 7 / 30, font_family="Courier"),
@@ -420,9 +410,7 @@ class HTML2FPDF(HTMLParser):
                 # pylint: disable=redefined-loop-name
                 tag_style = TextStyle(
                     font_family=tag_style.family,
-                    font_style=(
-                        "" if not tag_style.emphasis else tag_style.emphasis.style
-                    ),
+                    font_style=("" if not tag_style.emphasis else tag_style.emphasis.style),
                     font_size_pt=tag_style.size_pt,
                     color=tag_style.color,
                     fill_color=tag_style.fill_color,
@@ -454,12 +442,8 @@ class HTML2FPDF(HTMLParser):
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
-            self.tag_styles["code"] = self.tag_styles["code"].replace(
-                family=pre_code_font
-            )
-            self.tag_styles["pre"] = self.tag_styles["pre"].replace(
-                font_family=pre_code_font
-            )
+            self.tag_styles["code"] = self.tag_styles["code"].replace(family=pre_code_font)
+            self.tag_styles["pre"] = self.tag_styles["pre"].replace(font_family=pre_code_font)
         if dd_tag_indent is not None:
             warnings.warn(
                 (
@@ -470,9 +454,7 @@ class HTML2FPDF(HTMLParser):
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
-            self.tag_styles["dd"] = self.tag_styles["dd"].replace(
-                l_margin=dd_tag_indent
-            )
+            self.tag_styles["dd"] = self.tag_styles["dd"].replace(l_margin=dd_tag_indent)
         if li_tag_indent is not None:
             warnings.warn(
                 (
@@ -483,9 +465,7 @@ class HTML2FPDF(HTMLParser):
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
-            self.tag_styles["li"] = self.tag_styles["li"].replace(
-                l_margin=li_tag_indent
-            )
+            self.tag_styles["li"] = self.tag_styles["li"].replace(l_margin=li_tag_indent)
         if tag_indents:
             warnings.warn(
                 (
@@ -606,9 +586,7 @@ class HTML2FPDF(HTMLParser):
             align = self.td_th.get("align", self.tr.get("align"))
             if align:
                 align = align.upper()
-            bgcolor = color_as_decimal(
-                self.td_th.get("bgcolor", self.tr.get("bgcolor", None))
-            )
+            bgcolor = color_as_decimal(self.td_th.get("bgcolor", self.tr.get("bgcolor", None)))
             colspan = int(self.td_th.get("colspan", "1"))
             rowspan = int(self.td_th.get("rowspan", "1"))
             emphasis = 0
@@ -718,7 +696,7 @@ class HTML2FPDF(HTMLParser):
             align = None
             if "align" in attrs:
                 align = attrs.get("align")[0].upper()
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             line_height = css_style.get("line-height", attrs.get("line-height"))
             # "line-height" attributes are not valid in HTML,
@@ -752,7 +730,7 @@ class HTML2FPDF(HTMLParser):
             hsize = (tag_style.size_pt or self.font_size_pt) / self.pdf.k
             if attrs:
                 align = attrs.get("align")
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             else:
                 align = None
@@ -816,18 +794,14 @@ class HTML2FPDF(HTMLParser):
                     self.follows_heading = True
                 self._new_paragraph(
                     align="C" if tag == "center" else None,
-                    line_height=(
-                        self.line_height_stack[-1] if self.line_height_stack else None
-                    ),
+                    line_height=(self.line_height_stack[-1] if self.line_height_stack else None),
                     top_margin=tag_style.t_margin,
                     bottom_margin=tag_style.b_margin,
                     indent=tag_style.l_margin,
                 )
         if tag == "ul":
             self.indent += 1
-            bullet_char = (
-                ul_prefix(attrs["type"]) if "type" in attrs else self.ul_bullet_char
-            )
+            bullet_char = ul_prefix(attrs["type"]) if "type" in attrs else self.ul_bullet_char
             self.bullet.append(bullet_char)
             line_height = css_style.get("line-height", attrs.get("line-height"))
             # "line-height" attributes are not valid in HTML,
@@ -894,9 +868,7 @@ class HTML2FPDF(HTMLParser):
             tag_style = self.tag_styles[tag]
             self._ln(tag_style.t_margin)
             self._new_paragraph(
-                line_height=(
-                    self.line_height_stack[-1] if self.line_height_stack else None
-                ),
+                line_height=(self.line_height_stack[-1] if self.line_height_stack else None),
                 indent=tag_style.l_margin * self.indent,
                 bottom_margin=tag_style.b_margin,
                 bullet=bullet,
@@ -928,14 +900,10 @@ class HTML2FPDF(HTMLParser):
                     width = int(width) / self.pdf.k
             if "border" not in attrs:  # default borders
                 borders_layout = (
-                    "HORIZONTAL_LINES"
-                    if self.table_line_separators
-                    else "SINGLE_TOP_LINE"
+                    "HORIZONTAL_LINES" if self.table_line_separators else "SINGLE_TOP_LINE"
                 )
             elif int(attrs["border"]):  # explicitly enabled borders
-                borders_layout = (
-                    "ALL" if self.table_line_separators else "NO_HORIZONTAL_LINES"
-                )
+                borders_layout = "ALL" if self.table_line_separators else "NO_HORIZONTAL_LINES"
             else:  # explicitly disabled borders
                 borders_layout = "NONE"
             align = attrs.get("align", "center").upper()
@@ -998,9 +966,7 @@ class HTML2FPDF(HTMLParser):
             height = int(attrs.get("height", 0)) / self.pdf.k
             if self.table_row:  # => <img> in a <table>
                 if width or height:
-                    LOGGER.warning(
-                        'Ignoring unsupported "width" / "height" set on <img> element'
-                    )
+                    LOGGER.warning('Ignoring unsupported "width" / "height" set on <img> element')
                 if self.align:
                     LOGGER.warning("Ignoring unsupported <img> alignment")
                 self.table_row.cell(img=attrs["src"], img_fill_width=True)
@@ -1009,14 +975,10 @@ class HTML2FPDF(HTMLParser):
             x = self.pdf.get_x()
             if self.align and self.align[0].upper() == "C":
                 x = Align.C
-            self.pdf.image(
-                self.image_map(attrs["src"]), x=x, w=width, h=height, link=self.href
-            )
+            self.pdf.image(self.image_map(attrs["src"]), x=x, w=width, h=height, link=self.href)
         if tag == "toc":
             self._end_paragraph()
-            self.pdf.insert_toc_placeholder(
-                self.render_toc, pages=int(attrs.get("pages", 1))
-            )
+            self.pdf.insert_toc_placeholder(self.render_toc, pages=int(attrs.get("pages", 1)))
         if tag == "sup":
             self.pdf.char_vpos = "SUP"
         if tag == "sub":
@@ -1040,9 +1002,7 @@ class HTML2FPDF(HTMLParser):
             self._tags_stack.pop()
         if not self._tags_stack:
             if self.warn_on_tags_not_matching:
-                LOGGER.warning(
-                    "Unexpected HTML end tag </%s>, start tag may be missing?", tag
-                )
+                LOGGER.warning("Unexpected HTML end tag </%s>, start tag may be missing?", tag)
         elif tag == self._tags_stack[-1]:
             self._tags_stack.pop()
         elif self.warn_on_tags_not_matching:
@@ -1114,15 +1074,11 @@ class HTML2FPDF(HTMLParser):
         if tag in ("td", "th"):
             if "inserted" not in self.td_th:
                 # handle_data() was not called => we call it to produce an empty cell:
-                bgcolor = color_as_decimal(
-                    self.td_th.get("bgcolor", self.tr.get("bgcolor", None))
-                )
+                bgcolor = color_as_decimal(self.td_th.get("bgcolor", self.tr.get("bgcolor", None)))
                 style = FontFace(fill_color=bgcolor) if bgcolor else None
                 colspan = int(self.td_th.get("colspan", "1"))
                 rowspan = int(self.td_th.get("rowspan", "1"))
-                self.table_row.cell(
-                    text="", style=style, colspan=colspan, rowspan=rowspan
-                )
+                self.table_row.cell(text="", style=style, colspan=colspan, rowspan=rowspan)
             self.td_th = None
         if tag == "font":
             if self.style_stack:

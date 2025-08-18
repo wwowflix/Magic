@@ -1,5 +1,4 @@
-"""Orchestrator for building wheels from InstallRequirements.
-"""
+"""Orchestrator for building wheels from InstallRequirements."""
 
 import logging
 import os.path
@@ -109,9 +108,7 @@ def should_build_for_install_command(
     req: InstallRequirement,
     check_bdist_wheel_allowed: BdistWheelAllowedPredicate,
 ) -> bool:
-    return _should_build(
-        req, need_wheel=False, check_bdist_wheel=check_bdist_wheel_allowed
-    )
+    return _should_build(req, need_wheel=False, check_bdist_wheel=check_bdist_wheel_allowed)
 
 
 def _should_cache(
@@ -187,8 +184,7 @@ def _verify_one(req: InstallRequirement, wheel_path: str) -> None:
         raise UnsupportedWheel(msg)
     if metadata_version >= Version("1.2") and not isinstance(dist.version, Version):
         raise UnsupportedWheel(
-            "Metadata 1.2 mandates PEP 440 version, "
-            "but {!r} is not".format(dist_verstr)
+            "Metadata 1.2 mandates PEP 440 version, " "but {!r} is not".format(dist_verstr)
         )
 
 
@@ -218,9 +214,7 @@ def _build_one(
 
     # Install build deps into temporary directory (PEP 518)
     with req.build_env:
-        wheel_path = _build_one_inside_env(
-            req, output_dir, build_options, global_options, editable
-        )
+        wheel_path = _build_one_inside_env(req, output_dir, build_options, global_options, editable)
     if wheel_path and verify:
         try:
             _verify_one(req, wheel_path)
@@ -243,13 +237,9 @@ def _build_one_inside_env(
             assert req.metadata_directory
             assert req.pep517_backend
             if global_options:
-                logger.warning(
-                    "Ignoring --global-option when building %s using PEP 517", req.name
-                )
+                logger.warning("Ignoring --global-option when building %s using PEP 517", req.name)
             if build_options:
-                logger.warning(
-                    "Ignoring --build-option when building %s using PEP 517", req.name
-                )
+                logger.warning("Ignoring --build-option when building %s using PEP 517", req.name)
             if editable:
                 wheel_path = build_wheel_editable(
                     name=req.name,
@@ -309,9 +299,7 @@ def _clean_one_legacy(req: InstallRequirement, global_options: List[str]) -> boo
 
     logger.info("Running setup.py clean for %s", req.name)
     try:
-        call_subprocess(
-            clean_args, command_desc="python setup.py clean", cwd=req.source_dir
-        )
+        call_subprocess(clean_args, command_desc="python setup.py clean", cwd=req.source_dir)
         return True
     except Exception:
         logger.error("Failed cleaning build dir for %s", req.name)

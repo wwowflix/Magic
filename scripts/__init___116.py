@@ -1,6 +1,7 @@
 """
 Utility functions
 """
+
 import os
 import platform
 import sys
@@ -74,13 +75,13 @@ def show_versions(output: bool = True) -> str:
         pass
 
     try:
-        deps_info.append(('cmdstan_folder', cmdstan_path()))
-        deps_info.append(('cmdstan', str(cmdstan_version())))
+        deps_info.append(("cmdstan_folder", cmdstan_path()))
+        deps_info.append(("cmdstan", str(cmdstan_version())))
     # pylint: disable=broad-except
     except Exception:
-        deps_info.append(('cmdstan', 'NOT FOUND'))
+        deps_info.append(("cmdstan", "NOT FOUND"))
 
-    deps = ['cmdstanpy', 'pandas', 'xarray', 'tqdm', 'numpy']
+    deps = ["cmdstanpy", "pandas", "xarray", "tqdm", "numpy"]
     for module in deps:
         try:
             if module in sys.modules:
@@ -98,9 +99,9 @@ def show_versions(output: bool = True) -> str:
             except Exception:
                 deps_info.append((module, "installed"))
 
-    out = 'INSTALLED VERSIONS\n---------------------\n'
+    out = "INSTALLED VERSIONS\n---------------------\n"
     for k, info in deps_info:
-        out += f'{k}: {info}\n'
+        out += f"{k}: {info}\n"
     if output:
         print(out)
         return " "
@@ -109,39 +110,39 @@ def show_versions(output: bool = True) -> str:
 
 
 __all__ = [
-    'EXTENSION',
-    'SanitizedOrTmpFilePath',
-    'build_xarray_data',
-    'check_sampler_csv',
-    'cmdstan_path',
-    'cmdstan_version',
-    'cmdstan_version_before',
-    'create_named_text_file',
-    'cxx_toolchain_path',
-    'do_command',
-    'flatten_chains',
-    'get_latest_cmdstan',
-    'get_logger',
-    'install_cmdstan',
-    'parse_rdump_value',
-    'pushd',
-    'read_metric',
-    'returncode_msg',
-    'rload',
-    'scan_column_names',
-    'scan_config',
-    'scan_hmc_params',
-    'scan_optimize_csv',
-    'scan_sampler_csv',
-    'scan_sampling_iters',
-    'scan_variational_csv',
-    'scan_warmup_iters',
-    'set_cmdstan_path',
-    'set_make_env',
-    'show_versions',
-    'validate_cmdstan_path',
-    'validate_dir',
-    'windows_short_path',
-    'wrap_url_progress_hook',
-    'write_stan_json',
+    "EXTENSION",
+    "SanitizedOrTmpFilePath",
+    "build_xarray_data",
+    "check_sampler_csv",
+    "cmdstan_path",
+    "cmdstan_version",
+    "cmdstan_version_before",
+    "create_named_text_file",
+    "cxx_toolchain_path",
+    "do_command",
+    "flatten_chains",
+    "get_latest_cmdstan",
+    "get_logger",
+    "install_cmdstan",
+    "parse_rdump_value",
+    "pushd",
+    "read_metric",
+    "returncode_msg",
+    "rload",
+    "scan_column_names",
+    "scan_config",
+    "scan_hmc_params",
+    "scan_optimize_csv",
+    "scan_sampler_csv",
+    "scan_sampling_iters",
+    "scan_variational_csv",
+    "scan_warmup_iters",
+    "set_cmdstan_path",
+    "set_make_env",
+    "show_versions",
+    "validate_cmdstan_path",
+    "validate_dir",
+    "windows_short_path",
+    "wrap_url_progress_hook",
+    "write_stan_json",
 ]

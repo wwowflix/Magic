@@ -29,10 +29,7 @@ BernsteinPolynomial = tuple(
 )
 
 BezierCurve = tuple(
-    tuple(
-        sum(P[i][j] * bernstein for i, bernstein in enumerate(bernsteins))
-        for j in range(2)
-    )
+    tuple(sum(P[i][j] * bernstein for i, bernstein in enumerate(bernsteins)) for j in range(2))
     for n, bernsteins in enumerate(BernsteinPolynomial)
 )
 BezierCurveC = tuple(
@@ -66,7 +63,7 @@ class GreenPen(BasePen):
     @classmethod
     def _getGreenBezierFuncs(celf, func):
         funcstr = str(func)
-        if not funcstr in celf._BezierFuncs:
+        if funcstr not in celf._BezierFuncs:
             celf._BezierFuncs[funcstr] = _BezierFuncsLazy(func)
         return celf._BezierFuncs[funcstr]
 

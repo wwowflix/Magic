@@ -4,23 +4,24 @@ import json
 from datetime import datetime
 
 # Load manifest with utf-8-sig encoding
-with open('phase_manifest.json', 'r', encoding='utf-8-sig') as f:
+with open("phase_manifest.json", "r", encoding="utf-8-sig") as f:
     manifest = json.load(f)
 
-LOGS_BASE = os.path.join('outputs', 'logs')
+LOGS_BASE = os.path.join("outputs", "logs")
 os.makedirs(LOGS_BASE, exist_ok=True)
 
 MAX_RETRIES = 2
 
+
 def run_script(phase, module, script_path):
-    log_folder = os.path.join(LOGS_BASE, f'phase{phase}_module_{module}')
+    log_folder = os.path.join(LOGS_BASE, f"phase{phase}_module_{module}")
     os.makedirs(log_folder, exist_ok=True)
 
     script_name = os.path.basename(script_path)
-    log_file = os.path.join(log_folder, script_name.replace('.py', '.log'))
+    log_file = os.path.join(log_folder, script_name.replace(".py", ".log"))
 
     for attempt in range(1, MAX_RETRIES + 1):
-        with open(log_file, 'a', encoding='utf-8') as log:  # Append logs for retries
+        with open(log_file, "a", encoding="utf-8") as log:  # Append logs for retries
             log.write(f"=== Run Started: {datetime.now()} (Attempt {attempt}) ===\n")
             log.write(f"Running script: {script_path}\n\n")
             try:
@@ -29,7 +30,7 @@ def run_script(phase, module, script_path):
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True,
-                    timeout=300
+                    timeout=300,
                 )
                 log.write("--- STDOUT ---\n")
                 log.write(result.stdout + "\n")
@@ -52,6 +53,7 @@ def run_script(phase, module, script_path):
 
     return 1  # Failure after max retries
 
+
 def main():
     print(f"\n▶ Starting Self-Healing Runner v4.5 with retry logic on {len(manifest)} scripts...\n")
 
@@ -66,8 +68,8 @@ def main():
             failed += 1
             continue
 
-        phase = parts[-3].replace('phase', '')
-        module = parts[-2].replace('module_', '')
+        phase = parts[-3].replace("phase", "")
+        module = parts[-2].replace("module_", "")
 
         if not os.path.exists(script_path):
             print(f"⚠️ Missing script: {script_path}")
@@ -84,11 +86,12 @@ def main():
         else:
             failed += 1
 
-    print(f"\n=== SUMMARY ===")
+    print("\n=== SUMMARY ===")
     print(f"Total scripts: {total}")
     print(f"Passed: {passed}")
     print(f"Failed: {failed}")
     print(f"Logs saved to: {LOGS_BASE}\n")
+
 
 if __name__ == "__main__":
     main()

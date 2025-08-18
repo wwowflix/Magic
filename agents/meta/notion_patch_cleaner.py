@@ -13,6 +13,7 @@ if not NOTION_TOKEN or not NOTION_DATABASE_ID:
 
 notion = Client(auth=NOTION_TOKEN)
 
+
 def fetch_database_rows():
     print("🔍 Fetching entries from Notion...")
     results = []
@@ -20,9 +21,7 @@ def fetch_database_rows():
 
     while True:
         response = notion.databases.query(
-            database_id=NOTION_DATABASE_ID,
-            start_cursor=next_cursor,
-            page_size=100
+            database_id=NOTION_DATABASE_ID, start_cursor=next_cursor, page_size=100
         )
         results.extend(response["results"])
         next_cursor = response.get("next_cursor")
@@ -30,17 +29,18 @@ def fetch_database_rows():
             break
     return results
 
+
 def delete_duplicates(rows):
     filename_map = defaultdict(list)
 
     for row in rows:
         props = row.get("properties", {})
         title_obj = props.get("Filename", {}).get("title", [])
-        
+
         # Safely skip if title is missing or malformed
         if not title_obj or "text" not in title_obj[0]:
             continue
-        
+
         filename = title_obj[0]["text"].get("content", None)
         if not filename:
             continue
@@ -60,6 +60,7 @@ def delete_duplicates(rows):
         for page_id in ids[1:]:
             notion.pages.update(page_id=page_id, archived=True)
             print(f"🗑️ Archived duplicate: {filename} → {page_id}")
+
 
 if __name__ == "__main__":
     rows = fetch_database_rows()

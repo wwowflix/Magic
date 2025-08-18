@@ -66,8 +66,7 @@ class PandasDataFrameXchg(DataFrameXchg):
 
     def get_columns(self) -> list[PandasColumn]:
         return [
-            PandasColumn(self._df[name], allow_copy=self._allow_copy)
-            for name in self._df.columns
+            PandasColumn(self._df[name], allow_copy=self._allow_copy) for name in self._df.columns
         ]
 
     def select_columns(self, indices) -> PandasDataFrameXchg:
@@ -76,9 +75,7 @@ class PandasDataFrameXchg(DataFrameXchg):
         if not isinstance(indices, list):
             indices = list(indices)
 
-        return PandasDataFrameXchg(
-            self._df.iloc[:, indices], self._nan_as_null, self._allow_copy
-        )
+        return PandasDataFrameXchg(self._df.iloc[:, indices], self._nan_as_null, self._allow_copy)
 
     def select_columns_by_name(self, names) -> PandasDataFrameXchg:
         if not isinstance(names, abc.Sequence):
@@ -86,9 +83,7 @@ class PandasDataFrameXchg(DataFrameXchg):
         if not isinstance(names, list):
             names = list(names)
 
-        return PandasDataFrameXchg(
-            self._df.loc[:, names], self._nan_as_null, self._allow_copy
-        )
+        return PandasDataFrameXchg(self._df.loc[:, names], self._nan_as_null, self._allow_copy)
 
     def get_chunks(self, n_chunks=None):
         """

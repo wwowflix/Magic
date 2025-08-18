@@ -74,9 +74,7 @@ def test_dir_matches_wrapped(
     # all supported attrs in wrapped should be available in async_file
     assert all(attr in dir(async_file) for attr in attrs if attr in dir(wrapped))
     # all supported attrs not in wrapped should not be available in async_file
-    assert not any(
-        attr in dir(async_file) for attr in attrs if attr not in dir(wrapped)
-    )
+    assert not any(attr in dir(async_file) for attr in attrs if attr not in dir(wrapped))
 
 
 def test_unsupported_not_forwarded() -> None:

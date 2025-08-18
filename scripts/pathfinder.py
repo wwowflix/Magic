@@ -22,8 +22,8 @@ class CmdStanPathfinder:
         """Initialize object."""
         if not runset.method == Method.PATHFINDER:
             raise ValueError(
-                'Wrong runset method, expecting Pathfinder runset, '
-                'found method {}'.format(runset.method)
+                "Wrong runset method, expecting Pathfinder runset, "
+                "found method {}".format(runset.method)
             )
         self._runset = runset
 
@@ -53,8 +53,7 @@ class CmdStanPathfinder:
         if chains == 1:
             draw = self._draws[idxs[0]]
             return {
-                name: var.extract_reshape(draw)
-                for name, var in self._metadata.stan_vars.items()
+                name: var.extract_reshape(draw) for name, var in self._metadata.stan_vars.items()
             }
         else:
             return [
@@ -66,14 +65,14 @@ class CmdStanPathfinder:
             ]
 
     def __repr__(self) -> str:
-        rep = 'CmdStanPathfinder: model={}{}'.format(
+        rep = "CmdStanPathfinder: model={}{}".format(
             self._runset.model,
             self._runset._args.method_args.compose(0, cmd=[]),
         )
-        rep = '{}\n csv_files:\n\t{}\n output_files:\n\t{}'.format(
+        rep = "{}\n csv_files:\n\t{}\n output_files:\n\t{}".format(
             rep,
-            '\n\t'.join(self._runset.csv_files),
-            '\n\t'.join(self._runset.stdout_files),
+            "\n\t".join(self._runset.csv_files),
+            "\n\t".join(self._runset.stdout_files),
         )
         return rep
 
@@ -82,14 +81,14 @@ class CmdStanPathfinder:
         if self._draws.shape != (0,):
             return
 
-        with open(self._runset.csv_files[0], 'r') as fd:
+        with open(self._runset.csv_files[0], "r") as fd:
             while (fd.readline()).startswith("#"):
                 pass
             self._draws = np.loadtxt(
                 fd,
                 dtype=float,
                 ndmin=2,
-                delimiter=',',
+                delimiter=",",
                 comments="#",
             )
 
@@ -115,16 +114,13 @@ class CmdStanPathfinder:
         """
         self._assemble_draws()
         try:
-            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(
-                self._draws
-            )
+            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(self._draws)
             return out
         except KeyError:
             # pylint: disable=raise-missing-from
             raise ValueError(
-                f'Unknown variable name: {var}\n'
-                'Available variables are '
-                + ", ".join(self._metadata.stan_vars.keys())
+                f"Unknown variable name: {var}\n"
+                "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
     def stan_variables(self) -> Dict[str, np.ndarray]:
@@ -204,7 +200,7 @@ class CmdStanPathfinder:
         and quantities of interest. Corresponds to Stan CSV file header row,
         with names munged to array notation, e.g. `beta[1]` not `beta.1`.
         """
-        return self._metadata.cmdstan_config['column_names']  # type: ignore
+        return self._metadata.cmdstan_config["column_names"]  # type: ignore
 
     @property
     def is_resampled(self) -> bool:
@@ -214,10 +210,8 @@ class CmdStanPathfinder:
         """
         return (  # type: ignore
             self._metadata.cmdstan_config.get("num_paths", 4) > 1
-            and self._metadata.cmdstan_config.get('psis_resample', 1)
-            in (1, 'true')
-            and self._metadata.cmdstan_config.get('calculate_lp', 1)
-            in (1, 'true')
+            and self._metadata.cmdstan_config.get("psis_resample", 1) in (1, "true")
+            and self._metadata.cmdstan_config.get("calculate_lp", 1) in (1, "true")
         )
 
     def save_csvfiles(self, dir: Optional[str] = None) -> None:

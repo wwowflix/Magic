@@ -36,9 +36,7 @@ def parse_uri(uri):
 class CacheController(object):
     """An interface to see if request should cached or not."""
 
-    def __init__(
-        self, cache=None, cache_etags=True, serializer=None, status_codes=None
-    ):
+    def __init__(self, cache=None, cache_etags=True, serializer=None, status_codes=None):
         self.cache = DictCache() if cache is None else cache
         self.cache_etags = cache_etags
         self.serializer = serializer or Serializer()
@@ -215,9 +213,7 @@ class CacheController(object):
         # request. Note, this overrides what was in the response.
         if "max-age" in cc:
             freshness_lifetime = cc["max-age"]
-            logger.debug(
-                "Freshness lifetime from request max-age: %i", freshness_lifetime
-            )
+            logger.debug("Freshness lifetime from request max-age: %i", freshness_lifetime)
 
         if "min-fresh" in cc:
             min_fresh = cc["min-fresh"]
@@ -285,9 +281,7 @@ class CacheController(object):
         #                handle byte range requests
         cacheable_status_codes = status_codes or self.cacheable_status_codes
         if response.status not in cacheable_status_codes:
-            logger.debug(
-                "Status code %s not in %s", response.status, cacheable_status_codes
-            )
+            logger.debug("Status code %s not in %s", response.status, cacheable_status_codes)
             return
 
         response_headers = CaseInsensitiveDict(response.headers)
@@ -386,9 +380,7 @@ class CacheController(object):
                         expires_time = None
 
                     logger.debug(
-                        "Caching b/c of expires header. expires in {0} seconds".format(
-                            expires_time
-                        )
+                        "Caching b/c of expires header. expires in {0} seconds".format(expires_time)
                     )
                     self._cache_set(
                         cache_url,
@@ -423,11 +415,7 @@ class CacheController(object):
         excluded_headers = ["content-length"]
 
         cached_response.headers.update(
-            dict(
-                (k, v)
-                for k, v in response.headers.items()
-                if k.lower() not in excluded_headers
-            )
+            dict((k, v) for k, v in response.headers.items() if k.lower() not in excluded_headers)
         )
 
         # we want a 200 b/c we have content via the cache

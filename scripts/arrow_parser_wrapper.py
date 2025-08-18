@@ -32,14 +32,10 @@ class ArrowParserWrapper(ParserBase):
         encoding: str | None = self.kwds.get("encoding")
         self.encoding = "utf-8" if encoding is None else encoding
 
-        self.usecols, self.usecols_dtype = self._validate_usecols_arg(
-            self.kwds["usecols"]
-        )
+        self.usecols, self.usecols_dtype = self._validate_usecols_arg(self.kwds["usecols"])
         na_values = self.kwds["na_values"]
         if isinstance(na_values, dict):
-            raise ValueError(
-                "The pyarrow engine doesn't support passing a dict for na_values"
-            )
+            raise ValueError("The pyarrow engine doesn't support passing a dict for na_values")
         self.na_values = list(self.kwds["na_values"])
 
     def _get_pyarrow_options(self):
@@ -60,21 +56,17 @@ class ArrowParserWrapper(ParserBase):
             option_name: option_value
             for option_name, option_value in self.kwds.items()
             if option_value is not None
-            and option_name
-            in ("delimiter", "quote_char", "escape_char", "ignore_empty_lines")
+            and option_name in ("delimiter", "quote_char", "escape_char", "ignore_empty_lines")
         }
         self.convert_options = {
             option_name: option_value
             for option_name, option_value in self.kwds.items()
             if option_value is not None
-            and option_name
-            in ("include_columns", "null_values", "true_values", "false_values")
+            and option_name in ("include_columns", "null_values", "true_values", "false_values")
         }
         self.read_options = {
             "autogenerate_column_names": self.header is None,
-            "skip_rows": self.header
-            if self.header is not None
-            else self.kwds["skiprows"],
+            "skip_rows": (self.header if self.header is not None else self.kwds["skiprows"]),
         }
 
     def _finalize_output(self, frame: DataFrame) -> DataFrame:

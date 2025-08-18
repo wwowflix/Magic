@@ -1,14 +1,13 @@
 import os
 import random
-import time
 
 # CONFIG
 LOG_FILE = "outputs/logs/budget_burn_log.txt"
 CATEGORIES = {
-    'API Calls': 1200,
-    'Compute Time': 85,  # % CPU
-    'Disk I/O': 300,     # MB/s
-    'Memory Use': 75     # % RAM
+    "API Calls": 1200,
+    "Compute Time": 85,  # % CPU
+    "Disk I/O": 300,  # MB/s
+    "Memory Use": 75,  # % RAM
 }
 
 # Simulate monitoring

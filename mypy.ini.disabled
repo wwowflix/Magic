@@ -1,0 +1,9 @@
+[mypy]
+python_version = 3.13
+ignore_missing_imports = True
+# Skip archives, outputs, legacy demo scripts and anything with _BACKUP_ in the path
+exclude = '(^backups/|^outputs/|^scripts/|.*_BACKUP_.*)'
+
+# Optional: if anything under backups still sneaks in, silence it
+[mypy-backups.*]
+ignore_errors = True

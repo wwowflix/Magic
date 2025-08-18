@@ -108,7 +108,5 @@ class AsyncFileSystemWrapper(AsyncFileSystem):
                 sync_fs = sync_fs_class(*args, **kwargs)
                 super().__init__(sync_fs)
 
-        GeneratedAsyncFileSystemWrapper.__name__ = (
-            f"Async{sync_fs_class.__name__}Wrapper"
-        )
+        GeneratedAsyncFileSystemWrapper.__name__ = f"Async{sync_fs_class.__name__}Wrapper"
         return GeneratedAsyncFileSystemWrapper

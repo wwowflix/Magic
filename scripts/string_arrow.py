@@ -117,9 +117,7 @@ class ArrowStringArray(ArrowExtensionArray, BaseStringArray, ObjectStringArrayMi
         self._dtype = StringDtype(storage="pyarrow")
 
         if not pa.types.is_string(self._data.type):
-            raise ValueError(
-                "ArrowStringArray requires a PyArrow (chunked) array of string type"
-            )
+            raise ValueError("ArrowStringArray requires a PyArrow (chunked) array of string type")
 
     @classmethod
     def _from_sequence(cls, scalars, dtype: Dtype | None = None, copy: bool = False):
@@ -144,9 +142,7 @@ class ArrowStringArray(ArrowExtensionArray, BaseStringArray, ObjectStringArrayMi
         return cls(pa.array(result, type=pa.string(), from_pandas=True))
 
     @classmethod
-    def _from_sequence_of_strings(
-        cls, strings, dtype: Dtype | None = None, copy: bool = False
-    ):
+    def _from_sequence_of_strings(cls, strings, dtype: Dtype | None = None, copy: bool = False):
         return cls._from_sequence(strings, dtype=dtype, copy=copy)
 
     @property
@@ -249,9 +245,7 @@ class ArrowStringArray(ArrowExtensionArray, BaseStringArray, ObjectStringArrayMi
     # base class "ObjectStringArrayMixin" defined the type as "float")
     _str_na_value = libmissing.NA  # type: ignore[assignment]
 
-    def _str_map(
-        self, f, na_value=None, dtype: Dtype | None = None, convert: bool = True
-    ):
+    def _str_map(self, f, na_value=None, dtype: Dtype | None = None, convert: bool = True):
         # TODO: de-duplicate with StringArray method. This method is moreless copy and
         # paste.
 
@@ -369,9 +363,7 @@ class ArrowStringArray(ArrowExtensionArray, BaseStringArray, ObjectStringArrayMi
         result = func(self._data, pattern=pat, replacement=repl, max_replacements=n)
         return type(self)(result)
 
-    def _str_match(
-        self, pat: str, case: bool = True, flags: int = 0, na: Scalar | None = None
-    ):
+    def _str_match(self, pat: str, case: bool = True, flags: int = 0, na: Scalar | None = None):
         if pa_version_under4p0:
             fallback_performancewarning(version="4")
             return super()._str_match(pat, case, flags, na)
@@ -380,9 +372,7 @@ class ArrowStringArray(ArrowExtensionArray, BaseStringArray, ObjectStringArrayMi
             pat = "^" + pat
         return self._str_contains(pat, case, flags, na, regex=True)
 
-    def _str_fullmatch(
-        self, pat, case: bool = True, flags: int = 0, na: Scalar | None = None
-    ):
+    def _str_fullmatch(self, pat, case: bool = True, flags: int = 0, na: Scalar | None = None):
         if pa_version_under4p0:
             fallback_performancewarning(version="4")
             return super()._str_fullmatch(pat, case, flags, na)

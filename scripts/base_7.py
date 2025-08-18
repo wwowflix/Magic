@@ -3,6 +3,7 @@ Provide basic components for groupby. These definitions
 hold the allowlist of methods that are exposed on the
 SeriesGroupBy and the DataFrameGroupBy objects.
 """
+
 from __future__ import annotations
 
 import dataclasses
@@ -43,9 +44,7 @@ common_apply_allowlist = (
 
 series_apply_allowlist: frozenset[str] = (
     common_apply_allowlist
-    | frozenset(
-        {"nlargest", "nsmallest", "is_monotonic_increasing", "is_monotonic_decreasing"}
-    )
+    | frozenset({"nlargest", "nsmallest", "is_monotonic_increasing", "is_monotonic_decreasing"})
 ) | frozenset(["dtype", "unique"])
 
 dataframe_apply_allowlist: frozenset[str] = common_apply_allowlist | frozenset(

@@ -3,7 +3,8 @@ import shutil
 import sys
 from datetime import datetime
 
-BACKUP_BASE = 'backups'
+BACKUP_BASE = "backups"
+
 
 def backup_file(file_path):
     if not os.path.isfile(file_path):
@@ -15,7 +16,7 @@ def backup_file(file_path):
 
     # Normalize paths for consistent folder structure inside backups
     abs_file_path = os.path.abspath(file_path)
-    base_dir = os.path.abspath('scripts')  # Root of scripts folder
+    base_dir = os.path.abspath("scripts")  # Root of scripts folder
     try:
         rel_path = os.path.relpath(abs_file_path, base_dir)
     except ValueError:
@@ -27,7 +28,7 @@ def backup_file(file_path):
     os.makedirs(dest_folder, exist_ok=True)
 
     # Create timestamped backup filename
-    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     base_name = os.path.basename(file_path)
     backup_name = f"{base_name}_{timestamp}.bak"
     backup_path = os.path.join(dest_folder, backup_name)
@@ -37,7 +38,8 @@ def backup_file(file_path):
     print(f"✅ Backed up {file_path} to {backup_path}")
     return True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python backup_agent.py <file_path_to_backup>")
         sys.exit(1)

@@ -1,9 +1,8 @@
-import os
 import json
-import pytest
 import vault_manager
 
 from vault_manager import VaultManager
+
 
 def test_vault_save_and_load(tmp_path):
     # Patch VAULT_FILE in the vault_manager module
@@ -18,6 +17,3 @@ def test_vault_save_and_load(tmp_path):
     with open(vault_manager.VAULT_FILE, "r") as f:
         data = json.load(f)
     assert data["TEST_KEY"] == "TEST_VALUE"
-
-
-

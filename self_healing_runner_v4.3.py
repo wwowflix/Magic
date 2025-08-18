@@ -2,7 +2,6 @@
 import subprocess
 import sys
 from pathlib import Path
-from datetime import datetime
 
 # --- Load Manifest ---
 manifest_file = sys.argv[1] if len(sys.argv) > 1 else "phase_manifest.json"
@@ -25,12 +24,7 @@ for script in scripts:
     print(f"▶ Running {script}")
 
     try:
-        proc = subprocess.run(
-            ["python", script],
-            capture_output=True,
-            text=True,
-            timeout=30
-        )
+        proc = subprocess.run(["python", script], capture_output=True, text=True, timeout=30)
         with open(log_path, "w", encoding="utf-8") as log:
             log.write(proc.stdout)
             log.write(proc.stderr)
@@ -38,7 +32,13 @@ for script in scripts:
         if proc.returncode == 0:
             results.append((script, "PASS", ""))
         else:
-            results.append((script, "FAIL", proc.stderr.strip().splitlines()[-1] if proc.stderr else "Unknown Error"))
+            results.append(
+                (
+                    script,
+                    "FAIL",
+                    (proc.stderr.strip().splitlines()[-1] if proc.stderr else "Unknown Error"),
+                )
+            )
 
     except subprocess.TimeoutExpired:
         results.append((script, "FAIL", "Timeout"))

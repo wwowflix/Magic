@@ -15,6 +15,7 @@ This module provides a set of commonly used default arguments for functions and
 methods that are spread throughout the codebase. This module will make it
 easier to adjust to future upstream changes in the analogous numpy signatures.
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -64,9 +65,7 @@ class CompatValidator:
         if args or kwargs:
             fname = self.fname if fname is None else fname
             max_fname_arg_count = (
-                self.max_fname_arg_count
-                if max_fname_arg_count is None
-                else max_fname_arg_count
+                self.max_fname_arg_count if max_fname_arg_count is None else max_fname_arg_count
             )
             method = self.method if method is None else method
 
@@ -75,9 +74,7 @@ class CompatValidator:
             elif method == "kwargs":
                 validate_kwargs(fname, kwargs, self.defaults)
             elif method == "both":
-                validate_args_and_kwargs(
-                    fname, args, kwargs, max_fname_arg_count, self.defaults
-                )
+                validate_args_and_kwargs(fname, args, kwargs, max_fname_arg_count, self.defaults)
             else:
                 raise ValueError(f"invalid validation method '{method}'")
 
@@ -161,24 +158,18 @@ def validate_argsort_with_ascending(ascending: bool | int | None, args, kwargs) 
 
 
 CLIP_DEFAULTS: dict[str, Any] = {"out": None}
-validate_clip = CompatValidator(
-    CLIP_DEFAULTS, fname="clip", method="both", max_fname_arg_count=3
-)
+validate_clip = CompatValidator(CLIP_DEFAULTS, fname="clip", method="both", max_fname_arg_count=3)
 
 
 @overload
-def validate_clip_with_axis(axis: ndarray, args, kwargs) -> None:
-    ...
+def validate_clip_with_axis(axis: ndarray, args, kwargs) -> None: ...
 
 
 @overload
-def validate_clip_with_axis(axis: AxisNoneT, args, kwargs) -> AxisNoneT:
-    ...
+def validate_clip_with_axis(axis: AxisNoneT, args, kwargs) -> AxisNoneT: ...
 
 
-def validate_clip_with_axis(
-    axis: ndarray | AxisNoneT, args, kwargs
-) -> AxisNoneT | None:
+def validate_clip_with_axis(axis: ndarray | AxisNoneT, args, kwargs) -> AxisNoneT | None:
     """
     If 'NDFrame.clip' is called via the numpy library, the third parameter in
     its signature is 'out', which can takes an ndarray, so check if the 'axis'
@@ -200,9 +191,7 @@ def validate_clip_with_axis(
 CUM_FUNC_DEFAULTS: dict[str, Any] = {}
 CUM_FUNC_DEFAULTS["dtype"] = None
 CUM_FUNC_DEFAULTS["out"] = None
-validate_cum_func = CompatValidator(
-    CUM_FUNC_DEFAULTS, method="both", max_fname_arg_count=1
-)
+validate_cum_func = CompatValidator(CUM_FUNC_DEFAULTS, method="both", max_fname_arg_count=1)
 validate_cumsum = CompatValidator(
     CUM_FUNC_DEFAULTS, fname="cumsum", method="both", max_fname_arg_count=1
 )
@@ -227,23 +216,15 @@ ALLANY_DEFAULTS["dtype"] = None
 ALLANY_DEFAULTS["out"] = None
 ALLANY_DEFAULTS["keepdims"] = False
 ALLANY_DEFAULTS["axis"] = None
-validate_all = CompatValidator(
-    ALLANY_DEFAULTS, fname="all", method="both", max_fname_arg_count=1
-)
-validate_any = CompatValidator(
-    ALLANY_DEFAULTS, fname="any", method="both", max_fname_arg_count=1
-)
+validate_all = CompatValidator(ALLANY_DEFAULTS, fname="all", method="both", max_fname_arg_count=1)
+validate_any = CompatValidator(ALLANY_DEFAULTS, fname="any", method="both", max_fname_arg_count=1)
 
 LOGICAL_FUNC_DEFAULTS = {"out": None, "keepdims": False}
 validate_logical_func = CompatValidator(LOGICAL_FUNC_DEFAULTS, method="kwargs")
 
 MINMAX_DEFAULTS = {"axis": None, "out": None, "keepdims": False}
-validate_min = CompatValidator(
-    MINMAX_DEFAULTS, fname="min", method="both", max_fname_arg_count=1
-)
-validate_max = CompatValidator(
-    MINMAX_DEFAULTS, fname="max", method="both", max_fname_arg_count=1
-)
+validate_min = CompatValidator(MINMAX_DEFAULTS, fname="min", method="both", max_fname_arg_count=1)
+validate_max = CompatValidator(MINMAX_DEFAULTS, fname="max", method="both", max_fname_arg_count=1)
 
 RESHAPE_DEFAULTS: dict[str, str] = {"order": "C"}
 validate_reshape = CompatValidator(
@@ -287,12 +268,8 @@ MEDIAN_DEFAULTS["keepdims"] = False
 STAT_FUNC_DEFAULTS["keepdims"] = False
 
 validate_stat_func = CompatValidator(STAT_FUNC_DEFAULTS, method="kwargs")
-validate_sum = CompatValidator(
-    SUM_DEFAULTS, fname="sum", method="both", max_fname_arg_count=1
-)
-validate_prod = CompatValidator(
-    PROD_DEFAULTS, fname="prod", method="both", max_fname_arg_count=1
-)
+validate_sum = CompatValidator(SUM_DEFAULTS, fname="sum", method="both", max_fname_arg_count=1)
+validate_prod = CompatValidator(PROD_DEFAULTS, fname="prod", method="both", max_fname_arg_count=1)
 validate_mean = CompatValidator(
     STAT_FUNC_DEFAULTS, fname="mean", method="both", max_fname_arg_count=1
 )
@@ -334,10 +311,7 @@ validate_transpose = CompatValidator(
 
 def validate_window_func(name, args, kwargs) -> None:
     numpy_args = ("axis", "dtype", "out")
-    msg = (
-        f"numpy operations are not valid with window objects. "
-        f"Use .{name}() directly instead "
-    )
+    msg = f"numpy operations are not valid with window objects. " f"Use .{name}() directly instead "
 
     if len(args) > 0:
         raise UnsupportedFunctionCall(msg)
@@ -390,8 +364,7 @@ def validate_groupby_func(name, args, kwargs, allowed=None) -> None:
 
     if len(args) + len(kwargs) > 0:
         raise UnsupportedFunctionCall(
-            "numpy operations are not valid with groupby. "
-            f"Use .groupby(...).{name}() instead"
+            "numpy operations are not valid with groupby. " f"Use .groupby(...).{name}() instead"
         )
 
 

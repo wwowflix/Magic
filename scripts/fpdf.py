@@ -36,9 +36,7 @@ except ImportError:
 try:
     from PIL.Image import Image
 except ImportError:
-    warnings.warn(
-        "Pillow could not be imported - fpdf2 will not be able to add any image"
-    )
+    warnings.warn("Pillow could not be imported - fpdf2 will not be able to add any image")
 
     class Image:
         # The class must exist for some isinstance checks below
@@ -341,7 +339,9 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         self.font_stretching = 100  # current font stretching
         self.char_spacing = 0  # current character spacing
         self.current_font = None  # None or an instance of CoreFont or TTFFont
-        self.current_font_is_set_on_page = False  # current font and size are already added to current page contents with _out
+        self.current_font_is_set_on_page = (
+            False  # current font and size are already added to current page contents with _out
+        )
         self.draw_color = self.DEFAULT_DRAW_COLOR
         self.fill_color = self.DEFAULT_FILL_COLOR
         self.text_color = self.DEFAULT_TEXT_COLOR
@@ -509,9 +509,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 readable description of profile
         """
         if subtype.value in self._output_intents:
-            raise ValueError(
-                "add_output_intent: subtype '" + subtype.value + "' already exists."
-            )
+            raise ValueError("add_output_intent: subtype '" + subtype.value + "' already exists.")
         self._output_intents[subtype.value] = OutputIntentDictionary(
             subtype,
             output_condition_identifier,
@@ -708,9 +706,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         #
 
         if features and not isinstance(features, dict):
-            raise FPDFException(
-                "Features must be a dictionary. See text shaping documentation"
-            )
+            raise FPDFException("Features must be a dictionary. See text shaping documentation")
         if not features:
             features = {}
 
@@ -850,9 +846,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 
     def set_xmp_metadata(self, xmp_metadata):
         if "<?xpacket" in xmp_metadata[:50]:
-            raise ValueError(
-                "fpdf2 already performs XMP metadata wrapping in a <?xpacket> tag"
-            )
+            raise ValueError("fpdf2 already performs XMP metadata wrapping in a <?xpacket> tag")
         self.xmp_metadata = xmp_metadata
         if xmp_metadata:
             self._set_min_pdf_version("1.4")
@@ -948,9 +942,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 ):
                     label_start = current_page_label.get_start()
             label_style = (
-                PageLabelStyle.coerce(label_style, case_sensitive=True)
-                if label_style
-                else None
+                PageLabelStyle.coerce(label_style, case_sensitive=True) if label_style else None
             )
             new_page_label = PDFPageLabel(label_style, label_prefix, label_start)
         self.pages[self.page].set_page_label(current_page_label, new_page_label)
@@ -1025,15 +1017,11 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             # Page footer
             self._render_footer()
 
-        current_page_label = (
-            None if self.page == 0 else self.pages[self.page].get_page_label()
-        )
+        current_page_label = None if self.page == 0 else self.pages[self.page].get_page_label()
         new_page_label = None
         if label_style or label_prefix or label_start:
             label_style = (
-                PageLabelStyle.coerce(label_style, case_sensitive=True)
-                if label_style
-                else None
+                PageLabelStyle.coerce(label_style, case_sensitive=True) if label_style else None
             )
             new_page_label = PDFPageLabel(label_style, label_prefix, label_start)
 
@@ -1116,9 +1104,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             self._pop_local_stack()
         self.in_footer = False
 
-    def _beginpage(
-        self, orientation, format, same, duration, transition, new_page=True
-    ):
+    def _beginpage(self, orientation, format, same, duration, transition, new_page=True):
         self.page += 1
         if self.in_toc_rendering and self._toc_allow_page_insertion:
             self._toc_inserted_pages += 1
@@ -1284,9 +1270,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 or a RGB tuple representing a color to fill the background with or `None` to remove the background
         """
 
-        if isinstance(
-            background, (str, io.BytesIO, Image, DeviceRGB, tuple, type(None))
-        ):
+        if isinstance(background, (str, io.BytesIO, Image, DeviceRGB, tuple, type(None))):
             if isinstance(background, DeviceRGB):
                 self.page_background = background.colors255
             else:
@@ -1313,9 +1297,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
 
         if self._current_draw_context is not None:
-            raise FPDFException(
-                "cannot create a drawing context while one is already open"
-            )
+            raise FPDFException("cannot create a drawing context while one is already open")
 
         context = DrawingContext()
         self._current_draw_context = context
@@ -1339,14 +1321,10 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             rendered = context.render(*render_args)
 
         for match in self._GS_REGEX.finditer(rendered):
-            self._resource_catalog.add(
-                PDFResourceType.EXT_G_STATE, match.group(1), self.page
-            )
+            self._resource_catalog.add(PDFResourceType.EXT_G_STATE, match.group(1), self.page)
         # Registering raster images embedded in the vector graphics:
         for match in self._IMG_REGEX.finditer(rendered):
-            self._resource_catalog.add(
-                PDFResourceType.X_OBJECT, int(match.group(1)), self.page
-            )
+            self._resource_catalog.add(PDFResourceType.X_OBJECT, int(match.group(1)), self.page)
         # Once we handle text-rendering SVG tags (cf. PR #1029),
         # we should also detect fonts used and add them to the resource catalog
 
@@ -1362,9 +1340,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
         self._resource_catalog.add(PDFResourceType.SHADDING, shading, self.page)
         pattern = shading.get_pattern()
-        pattern_name = self._resource_catalog.add(
-            PDFResourceType.PATTERN, pattern, self.page
-        )
+        pattern_name = self._resource_catalog.add(PDFResourceType.PATTERN, pattern, self.page)
         self._out(f"/Pattern cs /{pattern_name} scn")
         try:
             yield
@@ -1513,14 +1489,10 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         else:
             style = RenderStyle.coerce(style)
             if fill and style == RenderStyle.D:
-                raise ValueError(
-                    f"Conflicting values provided: fill={fill} & style={style}"
-                )
+                raise ValueError(f"Conflicting values provided: fill={fill} & style={style}")
         operator = "m"
         for point in point_list:
-            self._out(
-                f"{point[0] * self.k:.2f} {(self.h - point[1]) * self.k:.2f} {operator}"
-            )
+            self._out(f"{point[0] * self.k:.2f} {(self.h - point[1]) * self.k:.2f} {operator}")
             operator = "l"
         if polygon:
             self._out(" h")
@@ -1920,19 +1892,13 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         # Move to the start point
         if start_from_center:
             self._out(f"{cx * self.k:.2f} {(self.h - cy) * self.k:.2f} m")
-            self._out(
-                f"{start_point[0] * self.k:.2f} {(self.h - start_point[1]) * self.k:.2f} l"
-            )
+            self._out(f"{start_point[0] * self.k:.2f} {(self.h - start_point[1]) * self.k:.2f} l")
         else:
-            self._out(
-                f"{start_point[0] * self.k:.2f} {(self.h - start_point[1]) * self.k:.2f} m"
-            )
+            self._out(f"{start_point[0] * self.k:.2f} {(self.h - start_point[1]) * self.k:.2f} m")
 
         # Number of curves to use, maximal segment angle is 2*PI/max_curves
         max_curves = 4
-        n = min(
-            max_curves, math.ceil(abs(end_eta - start_eta) / (2 * math.pi / max_curves))
-        )
+        n = min(max_curves, math.ceil(abs(end_eta - start_eta) / (2 * math.pi / max_curves)))
         d_eta = (end_eta - start_eta) / n
 
         alpha = math.sin(d_eta) * (math.sqrt(4 + 3 * math.tan(d_eta / 2) ** 2) - 1) / 3
@@ -1968,9 +1934,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             if start_from_center:
                 self._out(f"h {style.operator}")
             else:
-                self._out(
-                    f"{cx * self.k:.2f} {(self.h - cy) * self.k:.2f} l {style.operator}"
-                )
+                self._out(f"{cx * self.k:.2f} {(self.h - cy) * self.k:.2f} l {style.operator}")
 
     def solid_arc(
         self,
@@ -2109,19 +2073,14 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 
         if uni != "DEPRECATED":
             warnings.warn(
-                (
-                    '"uni" parameter is deprecated since v2.5.1, '
-                    "unused and will soon be removed"
-                ),
+                ('"uni" parameter is deprecated since v2.5.1, ' "unused and will soon be removed"),
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
 
         style = "".join(sorted(style.upper()))
         if any(letter not in "BI" for letter in style):
-            raise ValueError(
-                f"Unknown style provided (only B & I letters are allowed): {style}"
-            )
+            raise ValueError(f"Unknown style provided (only B & I letters are allowed): {style}")
 
         for parent in (".", FPDF_FONT_DIR):
             if not parent:
@@ -2181,9 +2140,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             style = style.style
         style = "".join(sorted(style.upper()))
         if any(letter not in "BISU" for letter in style):
-            raise ValueError(
-                f"Unknown style provided (only B/I/S/U letters are allowed): {style}"
-            )
+            raise ValueError(f"Unknown style provided (only B/I/S/U letters are allowed): {style}")
         if "U" in style:
             self.underline = True
             style = style.replace("U", "")
@@ -2205,8 +2162,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             family = self.font_aliases[family]
         elif family in ("symbol", "zapfdingbats") and style:
             warnings.warn(
-                f"Built-in font {family} only has a single 'style' "
-                "and can't be bold or italic",
+                f"Built-in font {family} only has a single 'style' " "and can't be bold or italic",
                 stacklevel=get_stack_level(),
             )
             style = ""
@@ -2402,9 +2358,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 ), f"Link with an invalid index: {link} (doc #links={len(self.links)})"
                 dest = self.links[link]
                 if not dest.page_number:
-                    raise ValueError(
-                        f"Cannot insert link {link} with no page number assigned"
-                    )
+                    raise ValueError(f"Cannot insert link {link} with no page number assigned")
         link_annot = AnnotationDict(
             "Link",
             x=x * self.k,
@@ -2462,12 +2416,8 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             if not bytes:
                 raise ValueError("'bytes' is required if 'file_path' is not provided")
             if not basename:
-                raise ValueError(
-                    "'basename' is required if 'file_path' is not provided"
-                )
-        already_embedded_basenames = set(
-            file.basename() for file in self.embedded_files
-        )
+                raise ValueError("'basename' is required if 'file_path' is not provided")
+        already_embedded_basenames = set(file.basename() for file in self.embedded_files)
         if basename in already_embedded_basenames:
             raise ValueError(f"{basename} has already been embedded in this file")
         embedded_file = PDFEmbeddedFile(
@@ -2624,9 +2574,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         return annotation
 
     @contextmanager
-    def highlight(
-        self, text, type="Highlight", color=(1, 1, 0), modification_time=None, **kwargs
-    ):
+    def highlight(self, text, type="Highlight", color=(1, 1, 0), modification_time=None, **kwargs):
         """
         Context manager that adds a single highlight annotation based on the text lines inserted
         inside its indented block.
@@ -2721,9 +2669,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         return annotation
 
     @check_page
-    def ink_annotation(
-        self, coords, text="", color=(1, 1, 0), border_width=1, **kwargs
-    ):
+    def ink_annotation(self, coords, text="", color=(1, 1, 0), border_width=1, **kwargs):
         """
         Adds add an ink annotation on the page.
 
@@ -2785,9 +2731,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         if self.text_mode != TextMode.FILL:
             sl.append(f" {self.text_mode} Tr {self.line_width:.2f} w")
         sl.append(f"{self.current_font.encode_text(text)} ET")
-        if (
-            text != "" and (self.underline or self.strikethrough)
-        ) or self._record_text_quad_points:
+        if (text != "" and (self.underline or self.strikethrough)) or self._record_text_quad_points:
             w = self.get_string_width(text, normalized=True, markdown=False)
             if text != "":
                 if self.underline:
@@ -2910,8 +2854,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         cx, cy = x * self.k, (self.h - y) * self.k
         with self.local_context():
             self._out(
-                f"1 {ay:.5f} {ax:.5f} 1 {cx:.2f} {cy:.2f} cm "
-                f"1 0 0 1 -{cx:.2f} -{cy:.2f} cm"
+                f"1 {ay:.5f} {ax:.5f} 1 {cx:.2f} {cy:.2f} cm " f"1 0 0 1 -{cx:.2f} -{cy:.2f} cm"
             )
             yield
 
@@ -3003,9 +2946,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             **kwargs: key-values settings to set at the beginning of this context.
         """
         if self._in_unbreakable:
-            raise FPDFException(
-                "cannot create a local context inside an unbreakable() code block"
-            )
+            raise FPDFException("cannot create a local context inside an unbreakable() code block")
         self._push_local_stack()
         self._start_local_context(**kwargs)
         yield
@@ -3084,11 +3025,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         else:
             self._out("q")
         # All the following calls to .set*() methods invoke .out() and write to the stream buffer:
-        if (
-            font_family is not None
-            or font_style is not None
-            or font_size_pt is not None
-        ):
+        if font_family is not None or font_style is not None or font_size_pt is not None:
             self.set_font(
                 font_family or self.font_family,
                 # Beware: font_style='' must be handled distinctly from font_style=None
@@ -3213,8 +3150,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 new_y = YPos.NEXT
             else:
                 raise ValueError(
-                    f'Invalid value for parameter "ln" ({ln}),'
-                    " must be an int between 0 and 2."
+                    f'Invalid value for parameter "ln" ({ln}),' " must be an int between 0 and 2."
                 )
             warnings.warn(
                 (
@@ -3432,9 +3368,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                         current_font_size_pt = frag.font_size_pt
                         current_font_style = frag.font_style
                         sl.append(f"/F{current_font.i} {current_font_size_pt:.2f} Tf")
-                        self._resource_catalog.add(
-                            PDFResourceType.FONT, current_font.i, self.page
-                        )
+                        self._resource_catalog.add(PDFResourceType.FONT, current_font.i, self.page)
                         current_char_vpos = frag.char_vpos
                     else:
                         # This is "global" to the page,
@@ -3474,10 +3408,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                     # Use text rise operator:
                     sl.append(f"{lift:.2f} Ts")
                     current_lift = lift
-                if (
-                    frag.text_mode != TextMode.FILL
-                    or frag.text_mode != current_text_mode
-                ):
+                if frag.text_mode != TextMode.FILL or frag.text_mode != current_text_mode:
                     current_text_mode = frag.text_mode
                     sl.append(f"{frag.text_mode} Tr {frag.line_width:.2f} w")
 
@@ -3676,9 +3607,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
         emphasis = TextEmphasis.coerce(style)
         fonts_with_char = [
-            font_id
-            for font_id in self._fallback_font_ids
-            if ord(char) in self.fonts[font_id].cmap
+            font_id for font_id in self._fallback_font_ids if ord(char) in self.fonts[font_id].cmap
         ]
         if not fonts_with_char:
             return None
@@ -3696,9 +3625,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         "Split text into fragments"
         if not markdown and not self.text_shaping and not self._fallback_font_ids:
             if self.str_alias_nb_pages:
-                for seq, fragment_text in enumerate(
-                    text.split(self.str_alias_nb_pages)
-                ):
+                for seq, fragment_text in enumerate(text.split(self.str_alias_nb_pages)):
                     if seq > 0:
                         yield TotalPagesSubstitutionFragment(
                             self.str_alias_nb_pages,
@@ -3706,9 +3633,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                             self.k,
                         )
                     if fragment_text:
-                        yield Fragment(
-                            fragment_text, self._get_current_graphics_state(), self.k
-                        )
+                        yield Fragment(fragment_text, self._get_current_graphics_state(), self.k)
                 return
 
             yield Fragment(text, self._get_current_graphics_state(), self.k)
@@ -3726,18 +3651,12 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         def frag():
             nonlocal txt_frag, current_fallback_font, current_text_script
             gstate = self._get_current_graphics_state()
-            gstate["font_style"] = ("B" if in_bold else "") + (
-                "I" if in_italics else ""
-            )
+            gstate["font_style"] = ("B" if in_bold else "") + ("I" if in_italics else "")
             gstate["strikethrough"] = in_strikethrough
             gstate["underline"] = in_underline
             if current_fallback_font:
-                gstate["font_family"] = "".join(
-                    c for c in current_fallback_font if c.islower()
-                )
-                gstate["font_style"] = "".join(
-                    c for c in current_fallback_font if c.isupper()
-                )
+                gstate["font_family"] = "".join(c for c in current_fallback_font if c.islower())
+                gstate["font_style"] = "".join(c for c in current_fallback_font if c.isupper())
                 gstate["current_font"] = self.fonts[current_fallback_font]
                 current_fallback_font = None
                 current_text_script = None
@@ -3778,9 +3697,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                     if txt_frag:
                         yield frag()
                     gstate = self._get_current_graphics_state()
-                    gstate["font_style"] = ("B" if in_bold else "") + (
-                        "I" if in_italics else ""
-                    )
+                    gstate["font_style"] = ("B" if in_bold else "") + ("I" if in_italics else "")
                     gstate["strikethrough"] = in_strikethrough
                     gstate["underline"] = in_underline
                     yield TotalPagesSubstitutionFragment(
@@ -3817,9 +3734,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                         text = text[2:]
                         continue
                 num_escape_chars = (
-                    num_escape_chars + 1
-                    if text[0] == self.MARKDOWN_ESCAPE_CHARACTER
-                    else 0
+                    num_escape_chars + 1 if text[0] == self.MARKDOWN_ESCAPE_CHARACTER else 0
                 )
                 is_link = self.MARKDOWN_LINK_REGEX.match(text)
                 if is_link:
@@ -3842,7 +3757,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                         link=link_dest,
                     )
                     continue
-            if self.is_ttf_font and text[0] != "\n" and not ord(text[0]) in font_glyphs:
+            if self.is_ttf_font and text[0] != "\n" and ord(text[0]) not in font_glyphs:
                 style = ("B" if in_bold else "") + ("I" if in_italics else "")
                 fallback_font = self.get_fallback_font(text[0], style)
                 if fallback_font:
@@ -4097,8 +4012,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 new_y = YPos.TOP
             else:
                 raise ValueError(
-                    f'Invalid value for parameter "ln" ({ln}),'
-                    " must be an int between 0 and 3."
+                    f'Invalid value for parameter "ln" ({ln}),' " must be an int between 0 and 3."
                 )
             warnings.warn(
                 (
@@ -4138,9 +4052,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 
         # Center overrides padding
         if center:
-            self.x = (
-                self.w / 2 if align == Align.X else self.l_margin + (self.epw - w) / 2
-            )
+            self.x = self.w / 2 if align == Align.X else self.l_margin + (self.epw - w) / 2
             prev_x = self.x
 
         # Calculate text length
@@ -4204,9 +4116,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 lines_before_break = int((self.h - top_gap - bottom_gap) // line_height)
                 # check how many cells should be rendered
                 num_lines = min(lines_before_break, len(text_lines) - text_line_index)
-                box_height = max(
-                    h - text_line_index * line_height, num_lines * line_height
-                )
+                box_height = max(h - text_line_index * line_height, num_lines * line_height)
                 # render the box
                 x = self.x - (w / 2 if align == Align.X else 0)
                 draw_box_borders(
@@ -4492,10 +4402,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
         if type:
             warnings.warn(
-                (
-                    '"type" parameter is deprecated since v2.2.0, '
-                    "unused and will soon be removed"
-                ),
+                ('"type" parameter is deprecated since v2.2.0, ' "unused and will soon be removed"),
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
@@ -4605,16 +4512,8 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             svg.viewbox = 0, 0, svg.width, svg.height
         if w == 0 and h == 0:
             if svg.width and svg.height:
-                w = (
-                    svg.width * self.epw / 100
-                    if isinstance(svg.width, Percent)
-                    else svg.width
-                )
-                h = (
-                    svg.height * self.eph / 100
-                    if isinstance(svg.height, Percent)
-                    else svg.height
-                )
+                w = svg.width * self.epw / 100 if isinstance(svg.width, Percent) else svg.width
+                h = svg.height * self.eph / 100 if isinstance(svg.height, Percent) else svg.height
             elif svg.viewbox:
                 _, _, w, h = svg.viewbox
             else:
@@ -4680,8 +4579,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             and info["h"] > height_in_pt * self.oversized_images_ratio
         ):
             factor = (
-                min(info["w"] / width_in_pt, info["h"] / height_in_pt)
-                / self.oversized_images_ratio
+                min(info["w"] / width_in_pt, info["h"] / height_in_pt) / self.oversized_images_ratio
             )
             if self.oversized_images.lower().startswith("warn"):
                 LOGGER.warning(
@@ -4776,9 +4674,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         of the PDF spec: iD, a, c, r, lang, e, actualText
         """
         mcid = self.struct_builder.next_mcid_for_page(self.page)
-        struct_elem = self._add_marked_content(
-            struct_type="/Figure", mcid=mcid, **kwargs
-        )
+        struct_elem = self._add_marked_content(struct_type="/Figure", mcid=mcid, **kwargs)
         start_page = self.page
         self._out(f"/P <</MCID {mcid}>> BDC")
         yield struct_elem
@@ -4791,9 +4687,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         Can receive as named arguments any of the entries described in section 14.7.2 'Structure Hierarchy'
         of the PDF spec: iD, a, c, r, lang, e, actualText
         """
-        struct_elem, spid = self.struct_builder.add_marked_content(
-            page_number=self.page, **kwargs
-        )
+        struct_elem, spid = self.struct_builder.add_marked_content(page_number=self.page, **kwargs)
         self.pages[self.page].struct_parents = spid
         self._set_min_pdf_version("1.4")  # due to using /MarkInfo
         return struct_elem
@@ -4836,9 +4730,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
     def get_y(self):
         """Returns the ordinate of the current position."""
         if self._in_unbreakable:
-            raise FPDFException(
-                "Using get_y() inside an unbreakable() code block is error-prone"
-            )
+            raise FPDFException("Using get_y() inside an unbreakable() code block is error-prone")
         return self.y
 
     def set_y(self, y):
@@ -4909,9 +4801,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 "endesive.signer not available - PDF cannot be signed - Try: pip install endesive"
             )
         with open(pkcs_filepath, "rb") as pkcs_file:
-            key, cert, extra_certs = pkcs12.load_key_and_certificates(
-                pkcs_file.read(), password
-            )
+            key, cert, extra_certs = pkcs12.load_key_and_certificates(pkcs_file.read(), password)
         self.sign(
             key=key,
             cert=cert,
@@ -5002,14 +4892,10 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             self._render_footer()
             # We need to reorder the pages, because some new pages have been inserted in the ToC,
             # but they have been inserted at the end of self.pages:
-            new_pages = [
-                self.pages.pop(len(self.pages)) for _ in range(self._toc_inserted_pages)
-            ]
+            new_pages = [self.pages.pop(len(self.pages)) for _ in range(self._toc_inserted_pages)]
             new_pages = list(reversed(new_pages))
             indices_remap = {}
-            for page_index in range(
-                tocp.start_page + 1, self.pages_count + len(new_pages) + 1
-            ):
+            for page_index in range(tocp.start_page + 1, self.pages_count + len(new_pages) + 1):
                 if page_index in self.pages:
                     new_pages.append(self.pages.pop(page_index))
                 page = self.pages[page_index] = new_pages.pop(0)
@@ -5148,9 +5034,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 raise RuntimeError(f'Char "{char_space}" invalid for I25: ')
 
             # create a wide/narrow-seq (first digit=bars, second digit=spaces)
-            seq = "".join(
-                f"{cb}{cs}" for cb, cs in zip(bar_char[char_bar], bar_char[char_space])
-            )
+            seq = "".join(f"{cb}{cs}" for cb, cs in zip(bar_char[char_bar], bar_char[char_space]))
 
             for bar_index, char in enumerate(seq):
                 # set line_width depending on value
@@ -5360,9 +5244,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             reset_page_indices (bool): Whether to reset the pages indices after the ToC. Default to True.
         """
         if pages < 1:
-            raise ValueError(
-                f"'pages' parameter must be equal or greater than 1: {pages}"
-            )
+            raise ValueError(f"'pages' parameter must be equal or greater than 1: {pages}")
         if not callable(render_toc_function):
             raise TypeError(
                 f"The first argument must be a callable, got: {type(render_toc_function)}"
@@ -5409,9 +5291,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
         for level in (level0, level1, level2, level3, level4, level5, level6):
             if level and not isinstance(level, TextStyle):
-                raise TypeError(
-                    f"Arguments must all be TextStyle instances, got: {type(level)}"
-                )
+                raise TypeError(f"Arguments must all be TextStyle instances, got: {type(level)}")
         self.section_title_styles = {
             0: level0,
             1: level1,
@@ -5465,9 +5345,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 padding=Padding(
                     top=text_style.t_margin or 0,
                     left=(
-                        text_style.l_margin
-                        if isinstance(text_style.l_margin, (int, float))
-                        else 0
+                        text_style.l_margin if isinstance(text_style.l_margin, (int, float)) else 0
                     ),
                     bottom=text_style.b_margin or 0,
                 ),
@@ -5489,9 +5367,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                         new_y=YPos.NEXT,
                         center=text_style.l_margin == Align.C,
                     )
-        self._outline.append(
-            OutlineSection(name, level, self.page, dest, outline_struct_elem)
-        )
+        self._outline.append(OutlineSection(name, level, self.page, dest, outline_struct_elem))
 
     @contextmanager
     def use_text_style(self, text_style: TextStyle):
@@ -5536,11 +5412,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         prev_font = (self.font_family, self.font_style, self.font_size_pt)
         self.set_font(
             font_face.family or self.font_family,
-            (
-                font_face.emphasis.style
-                if font_face.emphasis is not None
-                else self.font_style
-            ),
+            (font_face.emphasis.style if font_face.emphasis is not None else self.font_style),
             font_face.size_pt or self.font_size_pt,
         )
         self.current_font_is_set_on_page = False
@@ -5601,9 +5473,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         yield table
         table.render()
 
-    def output(
-        self, name="", dest="", linearize=False, output_producer_class=OutputProducer
-    ):
+    def output(self, name="", dest="", linearize=False, output_producer_class=OutputProducer):
         """
         Output PDF to some destination.
         The method first calls [close](close.md) if necessary to terminate the document.
@@ -5619,10 +5489,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         """
         if dest:
             warnings.warn(
-                (
-                    '"dest" parameter is deprecated since v2.2.0, '
-                    "unused and will soon be removed"
-                ),
+                ('"dest" parameter is deprecated since v2.2.0, ' "unused and will soon be removed"),
                 DeprecationWarning,
                 stacklevel=get_stack_level(),
             )
@@ -5641,9 +5508,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 for page in self.pages.values():
                     for substitution_item in page.get_text_substitutions():
                         page.contents = page.contents.replace(
-                            substitution_item.get_placeholder_string().encode(
-                                "latin-1"
-                            ),
+                            substitution_item.get_placeholder_string().encode("latin-1"),
                             substitution_item.render_text_substitution(
                                 str(self.pages_count)
                             ).encode("latin-1"),

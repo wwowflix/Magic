@@ -2,6 +2,7 @@
 masked_reductions.py is for reduction algorithms using a mask-based approach
 for missing values.
 """
+
 from __future__ import annotations
 
 from typing import Callable
@@ -63,9 +64,7 @@ def sum(
     min_count: int = 0,
     axis: int | None = None,
 ):
-    return _sumprod(
-        np.sum, values=values, mask=mask, skipna=skipna, min_count=min_count, axis=axis
-    )
+    return _sumprod(np.sum, values=values, mask=mask, skipna=skipna, min_count=min_count, axis=axis)
 
 
 def prod(

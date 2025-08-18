@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
-import re
 
 # Read saved HTML
 with open("outputs/page_source.html", "r", encoding="utf-8") as f:
@@ -28,4 +27,3 @@ for span in spans:
     text = span.get_text(strip=True)
     if text:
         print("SPAN:", text)
-

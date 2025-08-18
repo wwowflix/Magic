@@ -11,7 +11,7 @@ for root, _, files in os.walk(SCRIPTS_DIR):
         if file.endswith("_READY.py"):
             path = os.path.join(root, file)
             try:
-                compile(open(path, encoding="utf-8").read(), path, 'exec')
+                compile(open(path, encoding="utf-8").read(), path, "exec")
             except Exception as e:
                 broken_scripts.append(f"{file} → ❌ {e}")
 

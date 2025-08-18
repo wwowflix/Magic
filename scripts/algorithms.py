@@ -2,6 +2,7 @@
 Generic data algorithms. This module is experimental at the moment and not
 intended for public consumption
 """
+
 from __future__ import annotations
 
 import inspect
@@ -194,9 +195,7 @@ def _ensure_data(values: ArrayLike) -> np.ndarray:
     return ensure_object(values)
 
 
-def _reconstruct_data(
-    values: ArrayLike, dtype: DtypeObj, original: AnyArrayLike
-) -> ArrayLike:
+def _reconstruct_data(values: ArrayLike, dtype: DtypeObj, original: AnyArrayLike) -> ArrayLike:
     """
     reverse of _ensure_data
 
@@ -465,11 +464,7 @@ def isin(comps: AnyArrayLike, values: AnyArrayLike) -> npt.NDArray[np.bool_]:
         orig_values = values
         values = _ensure_arraylike(list(values))
 
-        if (
-            len(values) > 0
-            and is_numeric_dtype(values)
-            and not is_signed_integer_dtype(comps)
-        ):
+        if len(values) > 0 and is_numeric_dtype(values) and not is_signed_integer_dtype(comps):
             # GH#46485 Use object to avoid upcast to float64 later
             # TODO: Share with _find_common_type_compat
             values = construct_1d_object_array_from_listlike(list(orig_values))
@@ -503,11 +498,7 @@ def isin(comps: AnyArrayLike, values: AnyArrayLike) -> npt.NDArray[np.bool_]:
     # Ensure np.in1d doesn't get object types or it *may* throw an exception
     # Albeit hashmap has O(1) look-up (vs. O(logn) in sorted array),
     # in1d is faster for small sizes
-    if (
-        len(comps_array) > 1_000_000
-        and len(values) <= 26
-        and not is_object_dtype(comps_array)
-    ):
+    if len(comps_array) > 1_000_000 and len(values) <= 26 and not is_object_dtype(comps_array):
         # If the values include nan we need to check for nan explicitly
         # since np.nan it not equal to np.nan
         if isna(values).any():
@@ -771,19 +762,16 @@ def factorize(
     # of values, assign na_sentinel=-1 to replace code value for NaN.
     dropna = na_sentinel is not None
 
-    if (
-        isinstance(values, (ABCDatetimeArray, ABCTimedeltaArray))
-        and values.freq is not None
-    ):
+    if isinstance(values, (ABCDatetimeArray, ABCTimedeltaArray)) and values.freq is not None:
         # The presence of 'freq' means we can fast-path sorting and know there
         #  aren't NAs
         codes, uniques = values.factorize(sort=sort)
         return _re_wrap_factorize(original, uniques, codes)
 
     elif not isinstance(values.dtype, np.dtype):
-        if (
-            na_sentinel == -1 or na_sentinel is None
-        ) and "use_na_sentinel" in inspect.signature(values.factorize).parameters:
+        if (na_sentinel == -1 or na_sentinel is None) and "use_na_sentinel" in inspect.signature(
+            values.factorize
+        ).parameters:
             # Avoid using catch_warnings when possible
             # GH#46910 - TimelikeOps has deprecated signature
             codes, uniques = values.factorize(  # type: ignore[call-arg]
@@ -1287,9 +1275,9 @@ class SelectN:
         Helper function to determine if dtype is valid for
         nsmallest/nlargest methods
         """
-        return (
-            is_numeric_dtype(dtype) and not is_complex_dtype(dtype)
-        ) or needs_i8_conversion(dtype)
+        return (is_numeric_dtype(dtype) and not is_complex_dtype(dtype)) or needs_i8_conversion(
+            dtype
+        )
 
 
 class SelectNSeries(SelectN):
@@ -1436,9 +1424,7 @@ class SelectNFrame(SelectN):
             # value in the column to keep.
             series = cur_frame[column]
             is_last_column = len(columns) - 1 == i
-            values = getattr(series, method)(
-                cur_n, keep=self.keep if is_last_column else "all"
-            )
+            values = getattr(series, method)(cur_n, keep=self.keep if is_last_column else "all")
 
             if is_last_column or len(values) <= cur_n:
                 indexer = get_indexer(indexer, values.index)
@@ -1569,9 +1555,7 @@ def take(
     if allow_fill:
         # Pandas style, -1 means NA
         validate_indices(indices, arr.shape[axis])
-        result = take_nd(
-            arr, indices, axis=axis, allow_fill=True, fill_value=fill_value
-        )
+        result = take_nd(arr, indices, axis=axis, allow_fill=True, fill_value=fill_value)
     else:
         # NumPy style
         result = arr.take(indices, axis=axis)
@@ -1789,6 +1773,7 @@ def diff(arr, n: int, axis: int = 0):
 # --------------------------------------------------------------------
 # Helper functions
 
+
 # Note: safe_sort is in algorithms.py instead of sorting.py because it is
 #  low-dependency, is used in this module, and used private methods from
 #  this module.
@@ -1842,9 +1827,7 @@ def safe_sort(
         * If ``codes`` is not None and ``values`` contain duplicates.
     """
     if not is_list_like(values):
-        raise TypeError(
-            "Only list-like objects are allowed to be passed to safe_sort as values"
-        )
+        raise TypeError("Only list-like objects are allowed to be passed to safe_sort as values")
     original_values = values
     is_mi = isinstance(original_values, ABCMultiIndex)
 
@@ -1889,8 +1872,7 @@ def safe_sort(
 
     if not is_list_like(codes):
         raise TypeError(
-            "Only list-like objects or None are allowed to "
-            "be passed to safe_sort as codes"
+            "Only list-like objects or None are allowed to " "be passed to safe_sort as codes"
         )
     codes = ensure_platform_int(np.asarray(codes))
 
@@ -1935,19 +1917,15 @@ def _sort_mixed(values) -> np.ndarray:
     none_pos = np.array([x is None for x in values], dtype=bool)
     nums = np.sort(values[~str_pos & ~none_pos])
     strs = np.sort(values[str_pos])
-    return np.concatenate(
-        [nums, np.asarray(strs, dtype=object), np.array(values[none_pos])]
-    )
+    return np.concatenate([nums, np.asarray(strs, dtype=object), np.array(values[none_pos])])
 
 
 @overload
-def _sort_tuples(values: np.ndarray, original_values: np.ndarray) -> np.ndarray:
-    ...
+def _sort_tuples(values: np.ndarray, original_values: np.ndarray) -> np.ndarray: ...
 
 
 @overload
-def _sort_tuples(values: np.ndarray, original_values: MultiIndex) -> MultiIndex:
-    ...
+def _sort_tuples(values: np.ndarray, original_values: MultiIndex) -> MultiIndex: ...
 
 
 def _sort_tuples(

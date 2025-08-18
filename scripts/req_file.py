@@ -143,9 +143,7 @@ def parse_requirements(
     parser = RequirementsFileParser(session, line_parser)
 
     for parsed_line in parser.parse(filename, constraint):
-        parsed_req = handle_line(
-            parsed_line, options=options, finder=finder, session=session
-        )
+        parsed_req = handle_line(parsed_line, options=options, finder=finder, session=session)
         if parsed_req is not None:
             yield parsed_req
 
@@ -320,9 +318,7 @@ class RequirementsFileParser:
         self._session = session
         self._line_parser = line_parser
 
-    def parse(
-        self, filename: str, constraint: bool
-    ) -> Generator[ParsedLine, None, None]:
+    def parse(self, filename: str, constraint: bool) -> Generator[ParsedLine, None, None]:
         """Parse a given file, yielding parsed lines."""
         yield from self._parse_and_recurse(filename, constraint)
 
@@ -330,9 +326,7 @@ class RequirementsFileParser:
         self, filename: str, constraint: bool
     ) -> Generator[ParsedLine, None, None]:
         for line in self._parse_file(filename, constraint):
-            if not line.is_requirement and (
-                line.opts.requirements or line.opts.constraints
-            ):
+            if not line.is_requirement and (line.opts.requirements or line.opts.constraints):
                 # parse a nested requirements file
                 if line.opts.requirements:
                     req_path = line.opts.requirements[0]
@@ -357,9 +351,7 @@ class RequirementsFileParser:
             else:
                 yield line
 
-    def _parse_file(
-        self, filename: str, constraint: bool
-    ) -> Generator[ParsedLine, None, None]:
+    def _parse_file(self, filename: str, constraint: bool) -> Generator[ParsedLine, None, None]:
         _, content = get_file_content(filename, self._session)
 
         lines_enum = preprocess(content)

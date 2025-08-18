@@ -132,11 +132,7 @@ class Apply(metaclass=abc.ABCMeta):
         self.result_type = result_type
 
         # curry if needed
-        if (
-            (kwargs or args)
-            and not isinstance(func, (np.ufunc, str))
-            and not is_list_like(func)
-        ):
+        if (kwargs or args) and not isinstance(func, (np.ufunc, str)) and not is_list_like(func):
 
             def f(x):
                 return func(x, *args, **kwargs)
@@ -240,11 +236,7 @@ class Apply(metaclass=abc.ABCMeta):
 
         # Functions that transform may return empty Series/DataFrame
         # when the dtype is not appropriate
-        if (
-            isinstance(result, (ABCSeries, ABCDataFrame))
-            and result.empty
-            and not obj.empty
-        ):
+        if isinstance(result, (ABCSeries, ABCDataFrame)) and result.empty and not obj.empty:
             raise ValueError("Transform function failed")
         # error: Argument 1 to "__get__" of "AxisProperty" has incompatible type
         # "Union[Series, DataFrame, GroupBy[Any], SeriesGroupBy,
@@ -453,9 +445,7 @@ class Apply(metaclass=abc.ABCMeta):
 
             result = Series(results, index=keys, name=obj.name)
             if is_nested_object(result):
-                raise ValueError(
-                    "cannot combine transform and aggregation operations"
-                ) from err
+                raise ValueError("cannot combine transform and aggregation operations") from err
             return result
         else:
             # Concat uses the first index to determine the final indexing order.
@@ -501,9 +491,7 @@ class Apply(metaclass=abc.ABCMeta):
             results = {key: colg.agg(how) for key, how in arg.items()}
         else:
             # key used for column selection and output
-            results = {
-                key: obj._gotitem(key, ndim=1).agg(how) for key, how in arg.items()
-            }
+            results = {key: obj._gotitem(key, ndim=1).agg(how) for key, how in arg.items()}
 
         # set the final keys
         keys = list(arg.keys())
@@ -524,15 +512,11 @@ class Apply(metaclass=abc.ABCMeta):
                 keys_to_use = ktu
 
             axis = 0 if isinstance(obj, ABCSeries) else 1
-            result = concat(
-                {k: results[k] for k in keys_to_use}, axis=axis, keys=keys_to_use
-            )
+            result = concat({k: results[k] for k in keys_to_use}, axis=axis, keys=keys_to_use)
         elif any(is_ndframe):
             # There is a mix of NDFrames and scalars
             raise ValueError(
-                "cannot perform both aggregation "
-                "and transformation operations "
-                "simultaneously"
+                "cannot perform both aggregation " "and transformation operations " "simultaneously"
             )
         else:
             from pandas import Series
@@ -569,9 +553,7 @@ class Apply(metaclass=abc.ABCMeta):
         if callable(func):
             sig = inspect.getfullargspec(func)
             arg_names = (*sig.args, *sig.kwonlyargs)
-            if self.axis != 0 and (
-                "axis" not in arg_names or f in ("corrwith", "mad", "skew")
-            ):
+            if self.axis != 0 and ("axis" not in arg_names or f in ("corrwith", "mad", "skew")):
                 raise ValueError(f"Operation {f} does not support axis=1")
             elif "axis" in arg_names:
                 self.kwargs["axis"] = self.axis
@@ -659,9 +641,7 @@ class Apply(metaclass=abc.ABCMeta):
             # in particular exclude Window
             return f(obj, *args, **kwargs)
 
-        raise AttributeError(
-            f"'{arg}' is not a valid function for '{type(obj).__name__}' object"
-        )
+        raise AttributeError(f"'{arg}' is not a valid function for '{type(obj).__name__}' object")
 
 
 class NDFrameApply(Apply):
@@ -705,9 +685,7 @@ class FrameApply(NDFrameApply):
         pass
 
     @abc.abstractmethod
-    def wrap_results_for_axis(
-        self, results: ResType, res_index: Index
-    ) -> DataFrame | Series:
+    def wrap_results_for_axis(self, results: ResType, res_index: Index) -> DataFrame | Series:
         pass
 
     # ---------------------------------------------------------------
@@ -776,8 +754,7 @@ class FrameApply(NDFrameApply):
             result = super().agg()
         except TypeError as err:
             exc = TypeError(
-                "DataFrame constructor called with "
-                f"incompatible data and dtype: {err}"
+                "DataFrame constructor called with " f"incompatible data and dtype: {err}"
             )
             raise exc from err
         finally:
@@ -882,9 +859,7 @@ class FrameApply(NDFrameApply):
             result_values[:, i] = res
 
         # we *always* preserve the original index / columns
-        result = self.obj._constructor(
-            result_values, index=target.index, columns=target.columns
-        )
+        result = self.obj._constructor(result_values, index=target.index, columns=target.columns)
         return result
 
     def apply_standard(self):
@@ -926,9 +901,7 @@ class FrameApply(NDFrameApply):
         # float64 even if it's an empty Series.
         constructor_sliced = self.obj._constructor_sliced
         if constructor_sliced is Series:
-            result = create_series_with_explicit_dtype(
-                results, dtype_if_empty=np.float64
-            )
+            result = create_series_with_explicit_dtype(results, dtype_if_empty=np.float64)
         else:
             result = constructor_sliced(results)
         result.index = res_index
@@ -964,9 +937,7 @@ class FrameRowApply(FrameApply):
     def result_columns(self) -> Index:
         return self.index
 
-    def wrap_results_for_axis(
-        self, results: ResType, res_index: Index
-    ) -> DataFrame | Series:
+    def wrap_results_for_axis(self, results: ResType, res_index: Index) -> DataFrame | Series:
         """return the results for the rows"""
 
         if self.result_type == "reduce":
@@ -975,9 +946,7 @@ class FrameRowApply(FrameApply):
             res.index = res_index
             return res
 
-        elif self.result_type is None and all(
-            isinstance(x, dict) for x in results.values()
-        ):
+        elif self.result_type is None and all(isinstance(x, dict) for x in results.values()):
             # Our operation was a to_dict op e.g.
             #  test_apply_dict GH#8735, test_apply_reduce_to_dict GH#25196 #37544
             res = self.obj._constructor_sliced(results)
@@ -1032,7 +1001,7 @@ class FrameColumnApply(FrameApply):
                 yield obj._ixs(i, axis=0)
 
         else:
-            for (arr, name) in zip(values, self.index):
+            for arr, name in zip(values, self.index):
                 # GH#35462 re-pin mgr in case setitem changed it
                 ser._mgr = mgr
                 mgr.set_values(arr)
@@ -1047,9 +1016,7 @@ class FrameColumnApply(FrameApply):
     def result_columns(self) -> Index:
         return self.columns
 
-    def wrap_results_for_axis(
-        self, results: ResType, res_index: Index
-    ) -> DataFrame | Series:
+    def wrap_results_for_axis(self, results: ResType, res_index: Index) -> DataFrame | Series:
         """return the results for the columns"""
         result: DataFrame | Series
 
@@ -1152,9 +1119,7 @@ class SeriesApply(NDFrameApply):
 
     def apply_empty_result(self) -> Series:
         obj = self.obj
-        return obj._constructor(dtype=obj.dtype, index=obj.index).__finalize__(
-            obj, method="apply"
-        )
+        return obj._constructor(dtype=obj.dtype, index=obj.index).__finalize__(obj, method="apply")
 
     def apply_standard(self) -> DataFrame | Series:
         # caller is responsible for ensuring that f is Callable
@@ -1182,9 +1147,7 @@ class SeriesApply(NDFrameApply):
             #  See also GH#25959 regarding EA support
             return obj._constructor_expanddim(list(mapped), index=obj.index)
         else:
-            return obj._constructor(mapped, index=obj.index).__finalize__(
-                obj, method="apply"
-            )
+            return obj._constructor(mapped, index=obj.index).__finalize__(obj, method="apply")
 
 
 class GroupByApply(Apply):
@@ -1289,8 +1252,7 @@ def reconstruct_func(
             # GH 28426 will raise error if duplicated function names are used and
             # there is no reassigned name
             raise SpecificationError(
-                "Function names must be unique if there is no new column names "
-                "assigned"
+                "Function names must be unique if there is no new column names " "assigned"
             )
         elif func is None:
             # nicer error message
@@ -1323,9 +1285,7 @@ def is_multi_agg_with_relabel(**kwargs) -> bool:
     >>> is_multi_agg_with_relabel()
     False
     """
-    return all(isinstance(v, tuple) and len(v) == 2 for v in kwargs.values()) and (
-        len(kwargs) > 0
-    )
+    return all(isinstance(v, tuple) and len(v) == 2 for v in kwargs.values()) and (len(kwargs) > 0)
 
 
 def normalize_keyword_aggregation(
@@ -1388,7 +1348,7 @@ def normalize_keyword_aggregation(
 
 
 def _make_unique_kwarg_list(
-    seq: Sequence[tuple[Any, Any]]
+    seq: Sequence[tuple[Any, Any]],
 ) -> Sequence[tuple[Any, Any]]:
     """
     Uniquify aggfunc name of the pairs in the order list
@@ -1400,9 +1360,7 @@ def _make_unique_kwarg_list(
     [('a', '<lambda>_0'), ('a', '<lambda>_1'), ('b', '<lambda>')]
     """
     return [
-        (pair[0], "_".join([pair[1], str(seq[:i].count(pair))]))
-        if seq.count(pair) > 1
-        else pair
+        ((pair[0], "_".join([pair[1], str(seq[:i].count(pair))])) if seq.count(pair) > 1 else pair)
         for i, pair in enumerate(seq)
     ]
 
@@ -1438,9 +1396,7 @@ def relabel_result(
     """
     from pandas.core.indexes.base import Index
 
-    reordered_indexes = [
-        pair[0] for pair in sorted(zip(columns, order), key=lambda t: t[1])
-    ]
+    reordered_indexes = [pair[0] for pair in sorted(zip(columns, order), key=lambda t: t[1])]
     reordered_result_in_dict: dict[Hashable, Series] = {}
     idx = 0
 
@@ -1469,9 +1425,7 @@ def relabel_result(
         # mean  1.5
         # mean  1.5
         if reorder_mask:
-            fun = [
-                com.get_callable_name(f) if not isinstance(f, str) else f for f in fun
-            ]
+            fun = [com.get_callable_name(f) if not isinstance(f, str) else f for f in fun]
             col_idx_order = Index(s.index).get_indexer(fun)
             s = s[col_idx_order]
 

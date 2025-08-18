@@ -28,28 +28,14 @@ np.swapaxes(A, 1, [0])  # E: Argument 3 to "swapaxes" has incompatible type
 np.transpose(A, axes=1.0)  # E: Argument "axes" to "transpose" has incompatible type
 
 np.partition(a, None)  # E: Argument 2 to "partition" has incompatible type
-np.partition(
-    a, 0, axis="bob"  # E: Argument "axis" to "partition" has incompatible type
-)
-np.partition(
-    A, 0, kind="bob"  # E: Argument "kind" to "partition" has incompatible type
-)
-np.partition(
-    A, 0, order=range(5)  # E: Argument "order" to "partition" has incompatible type
-)
+np.partition(a, 0, axis="bob")  # E: Argument "axis" to "partition" has incompatible type
+np.partition(A, 0, kind="bob")  # E: Argument "kind" to "partition" has incompatible type
+np.partition(A, 0, order=range(5))  # E: Argument "order" to "partition" has incompatible type
 
-np.argpartition(
-    a, None  # E: incompatible type
-)
-np.argpartition(
-    a, 0, axis="bob"  # E: incompatible type
-)
-np.argpartition(
-    A, 0, kind="bob"  # E: incompatible type
-)
-np.argpartition(
-    A, 0, order=range(5)  # E: Argument "order" to "argpartition" has incompatible type
-)
+np.argpartition(a, None)  # E: incompatible type
+np.argpartition(a, 0, axis="bob")  # E: incompatible type
+np.argpartition(A, 0, kind="bob")  # E: incompatible type
+np.argpartition(A, 0, order=range(5))  # E: Argument "order" to "argpartition" has incompatible type
 
 np.sort(A, axis="bob")  # E: Argument "axis" to "sort" has incompatible type
 np.sort(A, kind="bob")  # E: Argument "kind" to "sort" has incompatible type
@@ -86,9 +72,7 @@ np.trace(A, axis2=[])  # E: Argument "axis2" to "trace" has incompatible type
 
 np.ravel(a, order="bob")  # E: Argument "order" to "ravel" has incompatible type
 
-np.compress(
-    [True], A, axis=1.0  # E: Argument "axis" to "compress" has incompatible type
-)
+np.compress([True], A, axis=1.0)  # E: Argument "axis" to "compress" has incompatible type
 
 np.clip(a, 1, 2, out=1)  # E: No overload variant of "clip" matches argument type
 np.clip(1, None, None)  # E: No overload variant of "clip" matches argument type
@@ -145,10 +129,10 @@ np.mean(a, keepdims=1.0)  # E: incompatible type
 
 np.std(a, axis=1.0)  # E: incompatible type
 np.std(a, out=False)  # E: incompatible type
-np.std(a, ddof='test')  # E: incompatible type
+np.std(a, ddof="test")  # E: incompatible type
 np.std(a, keepdims=1.0)  # E: incompatible type
 
 np.var(a, axis=1.0)  # E: incompatible type
 np.var(a, out=False)  # E: incompatible type
-np.var(a, ddof='test')  # E: incompatible type
+np.var(a, ddof="test")  # E: incompatible type
 np.var(a, keepdims=1.0)  # E: incompatible type

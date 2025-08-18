@@ -1,11 +1,14 @@
 from __future__ import annotations
-import argparse, json, sys
+import argparse
+import json
+import sys
 from pathlib import Path
 
 # Legacy constant some tests import
-SCRIPTS_ROOT = (Path(__file__).resolve().parents[1] / "scripts")
+SCRIPTS_ROOT = Path(__file__).resolve().parents[1] / "scripts"
 
 # ---------------- Core discovery ----------------
+
 
 def _iter_ready_files(base: Path):
     if not base.exists():
@@ -13,12 +16,13 @@ def _iter_ready_files(base: Path):
     for p in base.rglob("*_READY.py"):
         yield p
 
+
 def _entry_raw_from_path(p: Path) -> dict:
     """Modern entry: keep phase/module as strings, e.g. 'phase11', 'module_B'."""
     parts = p.parts
     try:
         idx = parts.index("scripts")
-        phase_name  = parts[idx + 1] if len(parts) > idx + 1 else "unknown"
+        phase_name = parts[idx + 1] if len(parts) > idx + 1 else "unknown"
         module_name = parts[idx + 2] if len(parts) > idx + 2 else "unknown"
     except ValueError:
         phase_name, module_name = "unknown", "unknown"
@@ -28,6 +32,7 @@ def _entry_raw_from_path(p: Path) -> dict:
         "path": str(p.as_posix()),
         "filename": p.name,
     }
+
 
 def _normalize_phase_module(phase_name: str, module_name: str) -> tuple[int, str]:
     # phaseX -> int(X), else -1
@@ -46,12 +51,13 @@ def _normalize_phase_module(phase_name: str, module_name: str) -> tuple[int, str
         m = (suf or "unknown").lower()
     return p, m
 
+
 def _entry_norm_from_path(p: Path) -> dict:
     """Legacy entry: normalize to phase:int, module:token."""
     parts = p.parts
     try:
         idx = parts.index("scripts")
-        phase_name  = parts[idx + 1] if len(parts) > idx + 1 else "unknown"
+        phase_name = parts[idx + 1] if len(parts) > idx + 1 else "unknown"
         module_name = parts[idx + 2] if len(parts) > idx + 2 else "unknown"
     except ValueError:
         phase_name, module_name = "unknown", "unknown"
@@ -63,13 +69,16 @@ def _entry_norm_from_path(p: Path) -> dict:
         "filename": p.name,
     }
 
+
 def generate_manifest(scripts_root: Path) -> list[dict]:
     """Modern: return entries with phase/module as strings."""
     files = sorted(_iter_ready_files(scripts_root))
     entries = [_entry_raw_from_path(p) for p in files]
     return sorted(entries, key=lambda x: (x["phase"], x["module"], x["filename"]))
 
+
 # ---------------- CLI ----------------
+
 
 def main(argv: list[str] | None = None) -> int:
     """
@@ -84,10 +93,12 @@ def main(argv: list[str] | None = None) -> int:
     """
     parser = argparse.ArgumentParser(prog="create_manifest")
     parser.add_argument("--scripts-root", default=str(Path.cwd() / "scripts"))
-    parser.add_argument("--out",          default=str(Path.cwd() / "phase_manifest.json"))
+    parser.add_argument("--out", default=str(Path.cwd() / "phase_manifest.json"))
     parser.add_argument("scripts_root_pos", nargs="?", help="Optional positional scripts_root")
-    parser.add_argument("out_pos",         nargs="?", help="Optional positional output path")
-    parser.add_argument("--compact", action="store_true", help="Write compact JSON (no pretty indent)")
+    parser.add_argument("out_pos", nargs="?", help="Optional positional output path")
+    parser.add_argument(
+        "--compact", action="store_true", help="Write compact JSON (no pretty indent)"
+    )
 
     # tolerate unknown args (pytest adds its own)
     args, _unknown = parser.parse_known_args(argv)
@@ -96,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     use_positional = bool(args.scripts_root_pos and args.out_pos)
 
     scripts_root = Path(args.scripts_root_pos if use_positional else args.scripts_root).resolve()
-    out_path     = Path(args.out_pos         if use_positional else args.out).resolve()
+    out_path = Path(args.out_pos if use_positional else args.out).resolve()
 
     manifest = generate_manifest(scripts_root)
 
@@ -110,13 +121,16 @@ def main(argv: list[str] | None = None) -> int:
     print(f"[create_manifest] Wrote {len(manifest)} entries to {out_path}")
     return 0
 
+
 # ---------------- Legacy compatibility shims ----------------
+
 
 def discover(root: Path | str) -> list[Path]:
     """Return *_READY.py paths under <root>/scripts if it exists, otherwise under <root>."""
     base = Path(root)
     base = base / "scripts" if (base / "scripts").exists() else base
     return sorted(_iter_ready_files(base)) if base.exists() else []
+
 
 def build(*args) -> list[dict]:
     """
@@ -134,6 +148,7 @@ def build(*args) -> list[dict]:
     entries = [_entry_norm_from_path(Path(f)) for f in files]
     return sorted(entries, key=lambda x: (x["phase"], x["module"], x["filename"]))
 
+
 def build_manifest(*args) -> dict:
     """
     Accepts:
@@ -143,6 +158,7 @@ def build_manifest(*args) -> dict:
     """
     entries = build(*args)
     return {"count": len(entries), "entries": entries}
+
 
 if __name__ == "__main__":  # pragma: no cover
     sys.exit(main())

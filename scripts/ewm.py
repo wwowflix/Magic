@@ -130,9 +130,7 @@ def _calculate_deltas(
     # attribute "view"
     # error: Item "None" of "Union[str, ndarray, NDFrameT, None]" has no
     # attribute "view"
-    _times = np.asarray(
-        times.view(np.int64), dtype=np.float64  # type: ignore[union-attr]
-    )
+    _times = np.asarray(times.view(np.int64), dtype=np.float64)  # type: ignore[union-attr]
     _halflife = float(Timedelta(halflife).value)
     return np.diff(_times) / _halflife
 
@@ -415,13 +413,10 @@ class ExponentialMovingWindow(BaseWindow):
                 self.halflife, (str, datetime.timedelta, np.timedelta64)
             ):
                 raise ValueError(
-                    "halflife can only be a timedelta convertible argument if "
-                    "times is not None."
+                    "halflife can only be a timedelta convertible argument if " "times is not None."
                 )
             # Without times, points are equally spaced
-            self._deltas = np.ones(
-                max(self.obj.shape[self.axis] - 1, 0), dtype=np.float64
-            )
+            self._deltas = np.ones(max(self.obj.shape[self.axis] - 1, 0), dtype=np.float64)
             self._com = get_center_of_mass(
                 # error: Argument 3 to "get_center_of_mass" has incompatible type
                 # "Union[float, Any, None, timedelta64, signedinteger[_64Bit]]";
@@ -432,9 +427,7 @@ class ExponentialMovingWindow(BaseWindow):
                 self.alpha,
             )
 
-    def _check_window_bounds(
-        self, start: np.ndarray, end: np.ndarray, num_vals: int
-    ) -> None:
+    def _check_window_bounds(self, start: np.ndarray, end: np.ndarray, num_vals: int) -> None:
         # emw algorithms are iterative with each point
         # ExponentialMovingWindowIndexer "bounds" are the entire window
         pass
@@ -445,9 +438,7 @@ class ExponentialMovingWindow(BaseWindow):
         """
         return ExponentialMovingWindowIndexer()
 
-    def online(
-        self, engine="numba", engine_kwargs=None
-    ) -> OnlineExponentialMovingWindow:
+    def online(self, engine="numba", engine_kwargs=None) -> OnlineExponentialMovingWindow:
         """
         Return an ``OnlineExponentialMovingWindow`` object to calculate
         exponentially moving window aggregations in an online method.
@@ -671,17 +662,12 @@ class ExponentialMovingWindow(BaseWindow):
             and not is_numeric_dtype(self._selected_obj.dtype)
         ):
             # Raise directly so error message says std instead of var
-            raise NotImplementedError(
-                f"{type(self).__name__}.std does not implement numeric_only"
-            )
+            raise NotImplementedError(f"{type(self).__name__}.std does not implement numeric_only")
         return zsqrt(self.var(bias=bias, numeric_only=numeric_only, **kwargs))
 
     def vol(self, bias: bool = False, *args, **kwargs):
         warnings.warn(
-            (
-                "vol is deprecated will be removed in a future version. "
-                "Use std instead."
-            ),
+            ("vol is deprecated will be removed in a future version. " "Use std instead."),
             FutureWarning,
             stacklevel=find_stack_level(),
         )
@@ -771,9 +757,7 @@ class ExponentialMovingWindow(BaseWindow):
             y_array = self._prep_values(y)
             window_indexer = self._get_window_indexer()
             min_periods = (
-                self.min_periods
-                if self.min_periods is not None
-                else window_indexer.window_size
+                self.min_periods if self.min_periods is not None else window_indexer.window_size
             )
             start, end = window_indexer.get_window_bounds(
                 num_values=len(x_array),
@@ -797,9 +781,7 @@ class ExponentialMovingWindow(BaseWindow):
             )
             return Series(result, index=x.index, name=x.name)
 
-        return self._apply_pairwise(
-            self._selected_obj, other, pairwise, cov_func, numeric_only
-        )
+        return self._apply_pairwise(self._selected_obj, other, pairwise, cov_func, numeric_only)
 
     @doc(
         template_header,
@@ -845,9 +827,7 @@ class ExponentialMovingWindow(BaseWindow):
             y_array = self._prep_values(y)
             window_indexer = self._get_window_indexer()
             min_periods = (
-                self.min_periods
-                if self.min_periods is not None
-                else window_indexer.window_size
+                self.min_periods if self.min_periods is not None else window_indexer.window_size
             )
             start, end = window_indexer.get_window_bounds(
                 num_values=len(x_array),
@@ -877,9 +857,7 @@ class ExponentialMovingWindow(BaseWindow):
                 result = cov / zsqrt(x_var * y_var)
             return Series(result, index=x.index, name=x.name)
 
-        return self._apply_pairwise(
-            self._selected_obj, other, pairwise, cov_func, numeric_only
-        )
+        return self._apply_pairwise(self._selected_obj, other, pairwise, cov_func, numeric_only)
 
 
 class ExponentialMovingWindowGroupby(BaseWindowGroupby, ExponentialMovingWindow):
@@ -934,9 +912,7 @@ class OnlineExponentialMovingWindow(ExponentialMovingWindow):
         selection=None,
     ) -> None:
         if times is not None:
-            raise NotImplementedError(
-                "times is not implemented with online operations."
-            )
+            raise NotImplementedError("times is not implemented with online operations.")
         super().__init__(
             obj=obj,
             com=com,
@@ -950,9 +926,7 @@ class OnlineExponentialMovingWindow(ExponentialMovingWindow):
             times=times,
             selection=selection,
         )
-        self._mean = EWMMeanState(
-            self._com, self.adjust, self.ignore_na, self.axis, obj.shape
-        )
+        self._mean = EWMMeanState(self._com, self.adjust, self.ignore_na, self.axis, obj.shape)
         if maybe_use_numba(engine):
             self.engine = engine
             self.engine_kwargs = engine_kwargs
@@ -1047,9 +1021,7 @@ class OnlineExponentialMovingWindow(ExponentialMovingWindow):
             )
         if update is not None:
             if self._mean.last_ewm is None:
-                raise ValueError(
-                    "Must call mean with update=None first before passing update"
-                )
+                raise ValueError("Must call mean with update=None first before passing update")
             result_from = 1
             result_kwargs["index"] = update.index
             if is_frame:
@@ -1067,9 +1039,7 @@ class OnlineExponentialMovingWindow(ExponentialMovingWindow):
             else:
                 result_kwargs["name"] = self._selected_obj.name
             np_array = self._selected_obj.astype(np.float64).to_numpy()
-        ewma_func = generate_online_numba_ewma_func(
-            **get_jit_arguments(self.engine_kwargs)
-        )
+        ewma_func = generate_online_numba_ewma_func(**get_jit_arguments(self.engine_kwargs))
         result = self._mean.run_ewm(
             np_array if is_frame else np_array[:, np.newaxis],
             update_deltas,

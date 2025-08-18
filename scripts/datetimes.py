@@ -173,9 +173,7 @@ def should_cache(
         else:
             check_count = 500
     else:
-        assert (
-            0 <= check_count <= len(arg)
-        ), "check_count must be in next bounds: [0; len(arg)]"
+        assert 0 <= check_count <= len(arg), "check_count must be in next bounds: [0; len(arg)]"
         if check_count == 0:
             return False
 
@@ -238,9 +236,7 @@ def _maybe_cache(
     return cache_array
 
 
-def _box_as_indexlike(
-    dt_array: ArrayLike, utc: bool | None = None, name: Hashable = None
-) -> Index:
+def _box_as_indexlike(dt_array: ArrayLike, utc: bool | None = None, name: Hashable = None) -> Index:
     """
     Properly boxes the ndarray of datetimes to DatetimeIndex
     if it is possible or to generic Index instead
@@ -392,9 +388,7 @@ def _convert_listlike_datetimes(
             raise ValueError("cannot specify both format and unit")
         return _to_datetime_with_unit(arg, unit, name, tz, errors)
     elif getattr(arg, "ndim", 1) > 1:
-        raise TypeError(
-            "arg must be a string, datetime, list, tuple, 1-d array, or Series"
-        )
+        raise TypeError("arg must be a string, datetime, list, tuple, 1-d array, or Series")
 
     # warn if passing timedelta64, raise for PeriodDtype
     # NB: this must come after unit transformation
@@ -527,17 +521,13 @@ def _to_datetime_with_format(
             # may return None without raising
             result = _attempt_YYYYMMDD(orig_arg, errors=errors)
         except (ValueError, TypeError, OutOfBoundsDatetime) as err:
-            raise ValueError(
-                "cannot convert the input to '%Y%m%d' date format"
-            ) from err
+            raise ValueError("cannot convert the input to '%Y%m%d' date format") from err
         if result is not None:
             utc = tz == "utc"
             return _box_as_indexlike(result, utc=utc, name=name)
 
     # fallback
-    res = _array_strptime_with_fallback(
-        arg, name, tz, fmt, exact, errors, infer_datetime_format
-    )
+    res = _array_strptime_with_fallback(arg, name, tz, fmt, exact, errors, infer_datetime_format)
     return res
 
 
@@ -604,17 +594,13 @@ def _adjust_to_origin(arg, origin, unit):
         try:
             arg = arg - j0
         except TypeError as err:
-            raise ValueError(
-                "incompatible 'arg' type for given 'origin'='julian'"
-            ) from err
+            raise ValueError("incompatible 'arg' type for given 'origin'='julian'") from err
 
         # preemptively check this for a nice range
         j_max = Timestamp.max.to_julian_date() - j0
         j_min = Timestamp.min.to_julian_date() - j0
         if np.any(arg > j_max) or np.any(arg < j_min):
-            raise OutOfBoundsDatetime(
-                f"{original} is Out of Bounds for origin='julian'"
-            )
+            raise OutOfBoundsDatetime(f"{original} is Out of Bounds for origin='julian'")
     else:
         # arg must be numeric
         if not (
@@ -632,9 +618,7 @@ def _adjust_to_origin(arg, origin, unit):
         except OutOfBoundsDatetime as err:
             raise OutOfBoundsDatetime(f"origin {origin} is Out of Bounds") from err
         except ValueError as err:
-            raise ValueError(
-                f"origin {origin} cannot be converted to a Timestamp"
-            ) from err
+            raise ValueError(f"origin {origin} cannot be converted to a Timestamp") from err
 
         if offset.tz is not None:
             raise ValueError(f"origin offset {offset} must be tz-naive")
@@ -664,8 +648,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> Timestamp:
-    ...
+) -> Timestamp: ...
 
 
 @overload
@@ -681,8 +664,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> Series:
-    ...
+) -> Series: ...
 
 
 @overload
@@ -698,8 +680,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> DatetimeIndex:
-    ...
+) -> DatetimeIndex: ...
 
 
 def to_datetime(
@@ -1081,9 +1062,7 @@ def to_datetime(
             # "Union[float, str, datetime, List[Any], Tuple[Any, ...], ExtensionArray,
             # ndarray[Any, Any], Series]"; expected "Union[List[Any], Tuple[Any, ...],
             # Union[Union[ExtensionArray, ndarray[Any, Any]], Index, Series], Series]"
-            argc = cast(
-                Union[list, tuple, ExtensionArray, np.ndarray, "Series", Index], arg
-            )
+            argc = cast(Union[list, tuple, ExtensionArray, np.ndarray, "Series", Index], arg)
             cache_array = _maybe_cache(argc, format, cache, convert_listlike)
         except OutOfBoundsDatetime:
             # caching attempts to create a DatetimeIndex, which may raise
@@ -1192,9 +1171,7 @@ def _assemble_from_unit_mappings(arg, errors: DateTimeErrorChoices, tz):
     excess = sorted(set(unit_rev.keys()) - set(_unit_map.values()))
     if len(excess):
         _excess = ",".join(excess)
-        raise ValueError(
-            f"extra keys have been passed to the datetime assemblage: [{_excess}]"
-        )
+        raise ValueError(f"extra keys have been passed to the datetime assemblage: [{_excess}]")
 
     def coerce(values):
         # we allow coercion to if errors allows
@@ -1222,9 +1199,7 @@ def _assemble_from_unit_mappings(arg, errors: DateTimeErrorChoices, tz):
             try:
                 values += to_timedelta(coerce(arg[value]), unit=u, errors=errors)
             except (TypeError, ValueError) as err:
-                raise ValueError(
-                    f"cannot assemble the datetimes [{value}]: {err}"
-                ) from err
+                raise ValueError(f"cannot assemble the datetimes [{value}]: {err}") from err
     return values
 
 
@@ -1243,9 +1218,7 @@ def _attempt_YYYYMMDD(arg: npt.NDArray[np.object_], errors: str) -> np.ndarray |
     def calc(carg):
         # calculate the actual result
         carg = carg.astype(object, copy=False)
-        parsed = parsing.try_parse_year_month_day(
-            carg / 10000, carg / 100 % 100, carg % 100
-        )
+        parsed = parsing.try_parse_year_month_day(carg / 10000, carg / 100 % 100, carg % 100)
         return tslib.array_to_datetime(parsed, errors=errors)[0]
 
     def calc_with_mask(carg, mask):

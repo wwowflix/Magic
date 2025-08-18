@@ -382,14 +382,10 @@ class AsyncFileSystem(AbstractFileSystem):
             paths2 = path2
         else:
             source_is_str = isinstance(path1, str)
-            paths1 = await self._expand_path(
-                path1, maxdepth=maxdepth, recursive=recursive
-            )
+            paths1 = await self._expand_path(path1, maxdepth=maxdepth, recursive=recursive)
             if source_is_str and (not recursive or maxdepth is not None):
                 # Non-recursive glob does not copy directories
-                paths1 = [
-                    p for p in paths1 if not (trailing_sep(p) or await self._isdir(p))
-                ]
+                paths1 = [p for p in paths1 if not (trailing_sep(p) or await self._isdir(p))]
                 if not paths1:
                     return
 
@@ -462,9 +458,7 @@ class AsyncFileSystem(AbstractFileSystem):
     async def _cat_file(self, path, start=None, end=None, **kwargs):
         raise NotImplementedError
 
-    async def _cat(
-        self, path, recursive=False, on_error="raise", batch_size=None, **kwargs
-    ):
+    async def _cat(self, path, recursive=False, on_error="raise", batch_size=None, **kwargs):
         paths = await self._expand_path(path, recursive=recursive)
         coros = [self._cat_file(path, **kwargs) for path in paths]
         batch_size = batch_size or self.batch_size
@@ -475,16 +469,8 @@ class AsyncFileSystem(AbstractFileSystem):
             ex = next(filter(is_exception, out), False)
             if ex:
                 raise ex
-        if (
-            len(paths) > 1
-            or isinstance(path, list)
-            or paths[0] != self._strip_protocol(path)
-        ):
-            return {
-                k: v
-                for k, v in zip(paths, out)
-                if on_error != "omit" or not is_exception(v)
-            }
+        if len(paths) > 1 or isinstance(path, list) or paths[0] != self._strip_protocol(path):
+            return {k: v for k, v in zip(paths, out) if on_error != "omit" or not is_exception(v)}
         else:
             return out[0]
 
@@ -521,8 +507,7 @@ class AsyncFileSystem(AbstractFileSystem):
         if len(starts) != len(paths) or len(ends) != len(paths):
             raise ValueError
         coros = [
-            self._cat_file(p, start=s, end=e, **kwargs)
-            for p, s, e in zip(paths, starts, ends)
+            self._cat_file(p, start=s, end=e, **kwargs) for p, s, e in zip(paths, starts, ends)
         ]
         batch_size = batch_size or self.batch_size
         return await _run_coros_in_chunks(
@@ -602,9 +587,7 @@ class AsyncFileSystem(AbstractFileSystem):
             put_file = callback.branch_coro(self._put_file)
             coros.append(put_file(lfile, rfile, **kwargs))
 
-        return await _run_coros_in_chunks(
-            coros, batch_size=batch_size, callback=callback
-        )
+        return await _run_coros_in_chunks(coros, batch_size=batch_size, callback=callback)
 
     async def _get_file(self, rpath, lpath, **kwargs):
         raise NotImplementedError
@@ -642,14 +625,10 @@ class AsyncFileSystem(AbstractFileSystem):
             # First check for rpath trailing slash as _strip_protocol removes it.
             source_not_trailing_sep = source_is_str and not trailing_sep(rpath)
             rpath = self._strip_protocol(rpath)
-            rpaths = await self._expand_path(
-                rpath, recursive=recursive, maxdepth=maxdepth
-            )
+            rpaths = await self._expand_path(rpath, recursive=recursive, maxdepth=maxdepth)
             if source_is_str and (not recursive or maxdepth is not None):
                 # Non-recursive glob does not copy directories
-                rpaths = [
-                    p for p in rpaths if not (trailing_sep(p) or await self._isdir(p))
-                ]
+                rpaths = [p for p in rpaths if not (trailing_sep(p) or await self._isdir(p))]
                 if not rpaths:
                     return
 
@@ -678,9 +657,7 @@ class AsyncFileSystem(AbstractFileSystem):
         for lpath, rpath in zip(lpaths, rpaths):
             get_file = callback.branch_coro(self._get_file)
             coros.append(get_file(rpath, lpath, **kwargs))
-        return await _run_coros_in_chunks(
-            coros, batch_size=batch_size, callback=callback
-        )
+        return await _run_coros_in_chunks(coros, batch_size=batch_size, callback=callback)
 
     async def _isfile(self, path):
         try:
@@ -699,9 +676,7 @@ class AsyncFileSystem(AbstractFileSystem):
 
     async def _sizes(self, paths, batch_size=None):
         batch_size = batch_size or self.batch_size
-        return await _run_coros_in_chunks(
-            [self._size(p) for p in paths], batch_size=batch_size
-        )
+        return await _run_coros_in_chunks([self._size(p) for p in paths], batch_size=batch_size)
 
     async def _exists(self, path, **kwargs):
         try:
@@ -765,9 +740,7 @@ class AsyncFileSystem(AbstractFileSystem):
                 return
 
         for d in dirs:
-            async for _ in self._walk(
-                full_dirs[d], maxdepth=maxdepth, detail=detail, **kwargs
-            ):
+            async for _ in self._walk(full_dirs[d], maxdepth=maxdepth, detail=detail, **kwargs):
                 yield _
 
     async def _glob(self, path, maxdepth=None, **kwargs):
@@ -779,9 +752,7 @@ class AsyncFileSystem(AbstractFileSystem):
         seps = (os.path.sep, os.path.altsep) if os.path.altsep else (os.path.sep,)
         ends_with_sep = path.endswith(seps)  # _strip_protocol strips trailing slash
         path = self._strip_protocol(path)
-        append_slash_to_dirname = ends_with_sep or path.endswith(
-            tuple(sep + "**" for sep in seps)
-        )
+        append_slash_to_dirname = ends_with_sep or path.endswith(tuple(sep + "**" for sep in seps))
         idx_star = path.find("*") if path.find("*") >= 0 else len(path)
         idx_qmark = path.find("?") if path.find("?") >= 0 else len(path)
         idx_brace = path.find("[") if path.find("[") >= 0 else len(path)
@@ -817,9 +788,7 @@ class AsyncFileSystem(AbstractFileSystem):
             else:
                 depth = None
 
-        allpaths = await self._find(
-            root, maxdepth=depth, withdirs=True, detail=True, **kwargs
-        )
+        allpaths = await self._find(root, maxdepth=depth, withdirs=True, detail=True, **kwargs)
 
         pattern = glob_translate(path + ("/" if ends_with_sep else ""))
         pattern = re.compile(pattern)
@@ -828,9 +797,7 @@ class AsyncFileSystem(AbstractFileSystem):
             p: info
             for p, info in sorted(allpaths.items())
             if pattern.match(
-                p + "/"
-                if append_slash_to_dirname and info["type"] == "directory"
-                else p
+                p + "/" if append_slash_to_dirname and info["type"] == "directory" else p
             )
         }
 
@@ -951,18 +918,14 @@ def mirror_sync_methods(obj):
                 mth = sync_wrapper(getattr(obj, method), obj=obj)
                 setattr(obj, smethod, mth)
                 if not mth.__doc__:
-                    mth.__doc__ = getattr(
-                        getattr(AbstractFileSystem, smethod, None), "__doc__", ""
-                    )
+                    mth.__doc__ = getattr(getattr(AbstractFileSystem, smethod, None), "__doc__", "")
 
 
 class FSSpecCoroutineCancel(Exception):
     pass
 
 
-def _dump_running_tasks(
-    printout=True, cancel=True, exc=FSSpecCoroutineCancel, with_task=False
-):
+def _dump_running_tasks(printout=True, cancel=True, exc=FSSpecCoroutineCancel, with_task=False):
     import traceback
 
     tasks = [t for t in asyncio.tasks.all_tasks(loop[0]) if not t.done()]

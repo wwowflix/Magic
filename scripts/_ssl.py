@@ -701,8 +701,7 @@ class SSLStream(Stream, Generic[T_Stream]):
                 # SSLSyscallError instead of SSLEOFError (e.g. on my linux
                 # laptop, but not on appveyor). Thanks openssl.
                 if self._https_compatible and (
-                    isinstance(exc.__cause__, _stdlib_ssl.SSLSyscallError)
-                    or _is_eof(exc.__cause__)
+                    isinstance(exc.__cause__, _stdlib_ssl.SSLSyscallError) or _is_eof(exc.__cause__)
                 ):
                     await trio.lowlevel.checkpoint()
                     return b""

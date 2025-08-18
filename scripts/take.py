@@ -39,8 +39,7 @@ def take_nd(
     axis: int = ...,
     fill_value=...,
     allow_fill: bool = ...,
-) -> np.ndarray:
-    ...
+) -> np.ndarray: ...
 
 
 @overload
@@ -50,8 +49,7 @@ def take_nd(
     axis: int = ...,
     fill_value=...,
     allow_fill: bool = ...,
-) -> ArrayLike:
-    ...
+) -> ArrayLike: ...
 
 
 def take_nd(
@@ -61,7 +59,6 @@ def take_nd(
     fill_value=lib.no_default,
     allow_fill: bool = True,
 ) -> ArrayLike:
-
     """
     Specialized Cython take which sets NaN values in one pass
 
@@ -107,9 +104,7 @@ def take_nd(
         if not is_1d_only_ea_obj(arr):
             # i.e. DatetimeArray, TimedeltaArray
             arr = cast("NDArrayBackedExtensionArray", arr)
-            return arr.take(
-                indexer, fill_value=fill_value, allow_fill=allow_fill, axis=axis
-            )
+            return arr.take(indexer, fill_value=fill_value, allow_fill=allow_fill, axis=axis)
 
         return arr.take(indexer, fill_value=fill_value, allow_fill=allow_fill)
 
@@ -157,9 +152,7 @@ def _take_nd_ndarray(
     else:
         out = np.empty(out_shape, dtype=dtype)
 
-    func = _get_take_nd_function(
-        arr.ndim, arr.dtype, out.dtype, axis=axis, mask_info=mask_info
-    )
+    func = _get_take_nd_function(arr.ndim, arr.dtype, out.dtype, axis=axis, mask_info=mask_info)
     func(arr, indexer, out, fill_value)
 
     if flip_order:
@@ -217,9 +210,7 @@ def take_1d(
     # and the fill_value
     out = np.empty(indexer.shape, dtype=dtype)
 
-    func = _get_take_nd_function(
-        arr.ndim, arr.dtype, out.dtype, axis=0, mask_info=mask_info
-    )
+    func = _get_take_nd_function(arr.ndim, arr.dtype, out.dtype, axis=0, mask_info=mask_info)
     func(arr, indexer, out, fill_value)
 
     return out
@@ -278,17 +269,13 @@ def take_2d_multi(
         func(arr, indexer, out=out, fill_value=fill_value)
     else:
         # test_reindex_multi
-        _take_2d_multi_object(
-            arr, indexer, out, fill_value=fill_value, mask_info=mask_info
-        )
+        _take_2d_multi_object(arr, indexer, out, fill_value=fill_value, mask_info=mask_info)
 
     return out
 
 
 @functools.lru_cache(maxsize=128)
-def _get_take_nd_function_cached(
-    ndim: int, arr_dtype: np.dtype, out_dtype: np.dtype, axis: int
-):
+def _get_take_nd_function_cached(ndim: int, arr_dtype: np.dtype, out_dtype: np.dtype, axis: int):
     """
     Part of _get_take_nd_function below that doesn't need `mask_info` and thus
     can be cached (mask_info potentially contains a numpy ndarray which is not
@@ -347,9 +334,7 @@ def _get_take_nd_function(
 
 
 def _view_wrapper(f, arr_dtype=None, out_dtype=None, fill_wrap=None):
-    def wrapper(
-        arr: np.ndarray, indexer: np.ndarray, out: np.ndarray, fill_value=np.nan
-    ):
+    def wrapper(arr: np.ndarray, indexer: np.ndarray, out: np.ndarray, fill_value=np.nan):
         if arr_dtype is not None:
             arr = arr.view(arr_dtype)
         if out_dtype is not None:
@@ -362,9 +347,7 @@ def _view_wrapper(f, arr_dtype=None, out_dtype=None, fill_wrap=None):
 
 
 def _convert_wrapper(f, conv_dtype):
-    def wrapper(
-        arr: np.ndarray, indexer: np.ndarray, out: np.ndarray, fill_value=np.nan
-    ):
+    def wrapper(arr: np.ndarray, indexer: np.ndarray, out: np.ndarray, fill_value=np.nan):
         if conv_dtype == object:
             # GH#39755 avoid casting dt64/td64 to integers
             arr = ensure_wrapped_if_datetimelike(arr)
@@ -420,12 +403,8 @@ _take_2d_axis0_dict = {
     ("float32", "float64"): libalgos.take_2d_axis0_float32_float64,
     ("float64", "float64"): libalgos.take_2d_axis0_float64_float64,
     ("object", "object"): libalgos.take_2d_axis0_object_object,
-    ("bool", "bool"): _view_wrapper(
-        libalgos.take_2d_axis0_bool_bool, np.uint8, np.uint8
-    ),
-    ("bool", "object"): _view_wrapper(
-        libalgos.take_2d_axis0_bool_object, np.uint8, None
-    ),
+    ("bool", "bool"): _view_wrapper(libalgos.take_2d_axis0_bool_bool, np.uint8, np.uint8),
+    ("bool", "object"): _view_wrapper(libalgos.take_2d_axis0_bool_object, np.uint8, None),
     ("datetime64[ns]", "datetime64[ns]"): _view_wrapper(
         libalgos.take_2d_axis0_int64_int64, np.int64, np.int64, fill_wrap=np.int64
     ),
@@ -452,12 +431,8 @@ _take_2d_axis1_dict = {
     ("float32", "float64"): libalgos.take_2d_axis1_float32_float64,
     ("float64", "float64"): libalgos.take_2d_axis1_float64_float64,
     ("object", "object"): libalgos.take_2d_axis1_object_object,
-    ("bool", "bool"): _view_wrapper(
-        libalgos.take_2d_axis1_bool_bool, np.uint8, np.uint8
-    ),
-    ("bool", "object"): _view_wrapper(
-        libalgos.take_2d_axis1_bool_object, np.uint8, None
-    ),
+    ("bool", "bool"): _view_wrapper(libalgos.take_2d_axis1_bool_bool, np.uint8, np.uint8),
+    ("bool", "object"): _view_wrapper(libalgos.take_2d_axis1_bool_object, np.uint8, None),
     ("datetime64[ns]", "datetime64[ns]"): _view_wrapper(
         libalgos.take_2d_axis1_int64_int64, np.int64, np.int64, fill_wrap=np.int64
     ),
@@ -484,12 +459,8 @@ _take_2d_multi_dict = {
     ("float32", "float64"): libalgos.take_2d_multi_float32_float64,
     ("float64", "float64"): libalgos.take_2d_multi_float64_float64,
     ("object", "object"): libalgos.take_2d_multi_object_object,
-    ("bool", "bool"): _view_wrapper(
-        libalgos.take_2d_multi_bool_bool, np.uint8, np.uint8
-    ),
-    ("bool", "object"): _view_wrapper(
-        libalgos.take_2d_multi_bool_object, np.uint8, None
-    ),
+    ("bool", "bool"): _view_wrapper(libalgos.take_2d_multi_bool_bool, np.uint8, np.uint8),
+    ("bool", "object"): _view_wrapper(libalgos.take_2d_multi_bool_object, np.uint8, None),
     ("datetime64[ns]", "datetime64[ns]"): _view_wrapper(
         libalgos.take_2d_multi_int64_int64, np.int64, np.int64, fill_wrap=np.int64
     ),

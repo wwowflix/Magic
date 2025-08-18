@@ -6,6 +6,7 @@ Numba 1D mean kernels that can be shared by
 
 Mirrors pandas/_libs/window/aggregation.pyx
 """
+
 from __future__ import annotations
 
 import numba
@@ -71,9 +72,7 @@ def sliding_mean(
     compensation_add = 0.0
     compensation_remove = 0.0
 
-    is_monotonic_increasing_bounds = is_monotonic_increasing(
-        start
-    ) and is_monotonic_increasing(end)
+    is_monotonic_increasing_bounds = is_monotonic_increasing(start) and is_monotonic_increasing(end)
 
     output = np.empty(N, dtype=np.float64)
 

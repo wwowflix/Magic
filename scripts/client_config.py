@@ -105,7 +105,11 @@ class ClientConfig:
         self.extra_headers = extra_headers
 
         self.ca_certs = (
-            (os.getenv("REQUESTS_CA_BUNDLE") if "REQUESTS_CA_BUNDLE" in os.environ else certifi.where())
+            (
+                os.getenv("REQUESTS_CA_BUNDLE")
+                if "REQUESTS_CA_BUNDLE" in os.environ
+                else certifi.where()
+            )
             if ca_certs is None
             else ca_certs
         )
@@ -132,11 +136,19 @@ class ClientConfig:
                     if n_url.path in remote_add.netloc:
                         return None
             return os.environ.get(
-                "https_proxy" if self.remote_server_addr.startswith("https://") else "http_proxy",
-                os.environ.get("HTTPS_PROXY" if self.remote_server_addr.startswith("https://") else "HTTP_PROXY"),
+                ("https_proxy" if self.remote_server_addr.startswith("https://") else "http_proxy"),
+                os.environ.get(
+                    "HTTPS_PROXY"
+                    if self.remote_server_addr.startswith("https://")
+                    else "HTTP_PROXY"
+                ),
             )
         if proxy_type is ProxyType.MANUAL:
-            return self.proxy.sslProxy if self.remote_server_addr.startswith("https://") else self.proxy.http_proxy
+            return (
+                self.proxy.sslProxy
+                if self.remote_server_addr.startswith("https://")
+                else self.proxy.http_proxy
+            )
         return None
 
     def get_auth_header(self) -> Optional[dict]:

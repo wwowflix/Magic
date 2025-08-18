@@ -270,15 +270,13 @@ class NDArrayBackedExtensionArray(NDArrayBacked, ExtensionArray):
         return value
 
     @overload
-    def __getitem__(self, key: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, key: ScalarIndexer) -> Any: ...
 
     @overload
     def __getitem__(
         self: NDArrayBackedExtensionArrayT,
         key: SequenceIndexer | PositionalIndexerTuple,
-    ) -> NDArrayBackedExtensionArrayT:
-        ...
+    ) -> NDArrayBackedExtensionArrayT: ...
 
     def __getitem__(
         self: NDArrayBackedExtensionArrayT,
@@ -302,9 +300,7 @@ class NDArrayBackedExtensionArray(NDArrayBacked, ExtensionArray):
         result = self._from_backing_data(result)
         return result
 
-    def _fill_mask_inplace(
-        self, method: str, limit, mask: npt.NDArray[np.bool_]
-    ) -> None:
+    def _fill_mask_inplace(self, method: str, limit, mask: npt.NDArray[np.bool_]) -> None:
         # (for now) when self.ndim == 2, we assume axis=0
         func = missing.get_fill_func(method, ndim=self.ndim)
         func(self._ndarray.T, limit=limit, mask=mask.T)
@@ -314,16 +310,12 @@ class NDArrayBackedExtensionArray(NDArrayBacked, ExtensionArray):
     def fillna(
         self: NDArrayBackedExtensionArrayT, value=None, method=None, limit=None
     ) -> NDArrayBackedExtensionArrayT:
-        value, method = validate_fillna_kwargs(
-            value, method, validate_scalar_dict_value=False
-        )
+        value, method = validate_fillna_kwargs(value, method, validate_scalar_dict_value=False)
 
         mask = self.isna()
         # error: Argument 2 to "check_value_size" has incompatible type
         # "ExtensionArray"; expected "ndarray"
-        value = missing.check_value_size(
-            value, mask, len(self)  # type: ignore[arg-type]
-        )
+        value = missing.check_value_size(value, mask, len(self))  # type: ignore[arg-type]
 
         if mask.any():
             if method is not None:
@@ -401,9 +393,7 @@ class NDArrayBackedExtensionArray(NDArrayBacked, ExtensionArray):
     # ------------------------------------------------------------------------
     # Index compat methods
 
-    def insert(
-        self: NDArrayBackedExtensionArrayT, loc: int, item
-    ) -> NDArrayBackedExtensionArrayT:
+    def insert(self: NDArrayBackedExtensionArrayT, loc: int, item) -> NDArrayBackedExtensionArrayT:
         """
         Make new ExtensionArray inserting new item at location. Follows
         Python list.append semantics for negative values.

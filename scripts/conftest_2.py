@@ -103,9 +103,7 @@ def pytest_addoption(parser) -> None:
     parser.addoption("--skip-slow", action="store_true", help="skip slow tests")
     parser.addoption("--skip-network", action="store_true", help="skip network tests")
     parser.addoption("--skip-db", action="store_true", help="skip db tests")
-    parser.addoption(
-        "--run-high-memory", action="store_true", help="run high memory tests"
-    )
+    parser.addoption("--run-high-memory", action="store_true", help="run high memory tests")
     parser.addoption("--only-slow", action="store_true", help="run only slow tests")
     parser.addoption(
         "--strict-data-files",
@@ -177,7 +175,7 @@ def pytest_collection_modifyitems(items, config):
             item.add_marker(pytest.mark.arraymanager)
         item.add_marker(suppress_npdev_promotion_warning)
 
-        for (mark, kwd, skip_if_found, arg_name) in marks:
+        for mark, kwd, skip_if_found, arg_name in marks:
             if kwd in item.keywords:
                 # If we're skipping, no need to actually add the marker or look for
                 # other markers
@@ -210,9 +208,7 @@ hypothesis.settings.load_profile("ci")
 # which is use for offsets in tests/tseries/offsets/test_offsets_properties.py
 for name in "MonthBegin MonthEnd BMonthBegin BMonthEnd".split():
     cls = getattr(pd.tseries.offsets, name)
-    st.register_type_strategy(
-        cls, st.builds(cls, n=st.integers(-99, 99), normalize=st.booleans())
-    )
+    st.register_type_strategy(cls, st.builds(cls, n=st.integers(-99, 99), normalize=st.booleans()))
 
 for name in "YearBegin YearEnd BYearBegin BYearEnd".split():
     cls = getattr(pd.tseries.offsets, name)
@@ -447,9 +443,7 @@ def frame_or_series(request):
 
 
 # error: List item 0 has incompatible type "Type[Index]"; expected "Type[IndexOpsMixin]"
-@pytest.fixture(
-    params=[Index, Series], ids=["index", "series"]  # type: ignore[list-item]
-)
+@pytest.fixture(params=[Index, Series], ids=["index", "series"])  # type: ignore[list-item]
 def index_or_series(request):
     """
     Fixture to parametrize over Index and Series, made necessary by a mypy
@@ -654,9 +648,7 @@ index_fixture2 = index
 
 
 @pytest.fixture(
-    params=[
-        key for key in indices_dict if not isinstance(indices_dict[key], MultiIndex)
-    ]
+    params=[key for key in indices_dict if not isinstance(indices_dict[key], MultiIndex)]
 )
 def index_flat(request):
     """
@@ -1115,9 +1107,7 @@ def compare_operators_no_eq_ne(request):
     return request.param
 
 
-@pytest.fixture(
-    params=["__and__", "__rand__", "__or__", "__ror__", "__xor__", "__rxor__"]
-)
+@pytest.fixture(params=["__and__", "__rand__", "__or__", "__ror__", "__xor__", "__rxor__"])
 def all_logical_operators(request):
     """
     Fixture for dunder names for common logical operations
@@ -1165,9 +1155,7 @@ def datapath(strict_data_files: str) -> Callable[..., str]:
         path = os.path.join(BASE_PATH, *args)
         if not os.path.exists(path):
             if strict_data_files:
-                raise ValueError(
-                    f"Could not find file {path} and --strict-data-files is set."
-                )
+                raise ValueError(f"Could not find file {path} and --strict-data-files is set.")
             else:
                 pytest.skip(f"Could not find {path}.")
         return path
@@ -1267,9 +1255,7 @@ def string_dtype(request):
 @pytest.fixture(
     params=[
         "string[python]",
-        pytest.param(
-            "string[pyarrow]", marks=td.skip_if_no("pyarrow", min_version="1.0.0")
-        ),
+        pytest.param("string[pyarrow]", marks=td.skip_if_no("pyarrow", min_version="1.0.0")),
     ]
 )
 def nullable_string_dtype(request):
@@ -1328,9 +1314,7 @@ def object_dtype(request):
     params=[
         "object",
         "string[python]",
-        pytest.param(
-            "string[pyarrow]", marks=td.skip_if_no("pyarrow", min_version="1.0.0")
-        ),
+        pytest.param("string[pyarrow]", marks=td.skip_if_no("pyarrow", min_version="1.0.0")),
     ]
 )
 def any_string_dtype(request):
@@ -1370,9 +1354,7 @@ def fixed_now_ts() -> Timestamp:
     """
     Fixture emits fixed Timestamp.now()
     """
-    return Timestamp(
-        year=2021, month=1, day=1, hour=12, minute=4, second=13, microsecond=22
-    )
+    return Timestamp(year=2021, month=1, day=1, hour=12, minute=4, second=13, microsecond=22)
 
 
 @pytest.fixture(params=tm.FLOAT_NUMPY_DTYPES)
@@ -1604,10 +1586,7 @@ def any_numpy_dtype(request):
 
 
 @pytest.fixture(
-    params=tm.ALL_REAL_NUMPY_DTYPES
-    + tm.COMPLEX_DTYPES
-    + tm.ALL_INT_EA_DTYPES
-    + tm.FLOAT_EA_DTYPES
+    params=tm.ALL_REAL_NUMPY_DTYPES + tm.COMPLEX_DTYPES + tm.ALL_INT_EA_DTYPES + tm.FLOAT_EA_DTYPES
 )
 def any_numeric_dtype(request):
     """

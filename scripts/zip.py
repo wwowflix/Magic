@@ -54,9 +54,7 @@ class ZipFileSystem(AbstractArchiveFileSystem):
                 m = "r+b"
             else:
                 m = mode + "b"
-            fo = fsspec.open(
-                fo, mode=m, protocol=target_protocol, **(target_options or {})
-            )
+            fo = fsspec.open(fo, mode=m, protocol=target_protocol, **(target_options or {}))
         self.force_zip_64 = allowZip64
         self.of = fo
         self.fo = fo.__enter__()  # the whole instance is a context
@@ -171,7 +169,5 @@ class ZipFileSystem(AbstractArchiveFileSystem):
 
         if maxdepth:
             path_depth = path.count("/")
-            result = {
-                k: v for k, v in result.items() if k.count("/") - path_depth < maxdepth
-            }
+            result = {k: v for k, v in result.items() if k.count("/") - path_depth < maxdepth}
         return result if detail else sorted(result)

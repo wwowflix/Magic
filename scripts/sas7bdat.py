@@ -13,6 +13,7 @@ Partial documentation of the file format:
 Reference for binary data compression:
   http://collaboration.cmc.ec.gc.ca/science/rpn/biblio/ddj/Website/articles/CUJ/1992/9210/ross/ross.htm
 """
+
 from __future__ import annotations
 
 from collections import abc
@@ -197,9 +198,7 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         self._current_row_on_page_index = 0
         self._current_row_in_file_index = 0
 
-        self.handles = get_handle(
-            path_or_buf, "rb", is_text=False, compression=compression
-        )
+        self.handles = get_handle(path_or_buf, "rb", is_text=False, compression=compression)
 
         self._path_or_buf = self.handles.handle
 
@@ -278,9 +277,7 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         else:
             self.platform = "unknown"
 
-        self.name = self._read_and_convert_header_text(
-            const.dataset_offset, const.dataset_length
-        )
+        self.name = self._read_and_convert_header_text(const.dataset_offset, const.dataset_length)
 
         self.file_type = self._read_and_convert_header_text(
             const.file_type_offset, const.file_type_length
@@ -288,13 +285,9 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
 
         # Timestamp is epoch 01/01/1960
         epoch = datetime(1960, 1, 1)
-        x = self._read_float(
-            const.date_created_offset + align1, const.date_created_length
-        )
+        x = self._read_float(const.date_created_offset + align1, const.date_created_length)
         self.date_created = epoch + pd.to_timedelta(x, unit="s")
-        x = self._read_float(
-            const.date_modified_offset + align1, const.date_modified_length
-        )
+        x = self._read_float(const.date_modified_offset + align1, const.date_modified_length)
         self.date_modified = epoch + pd.to_timedelta(x, unit="s")
 
         self.header_length = self._read_int(
@@ -309,12 +302,8 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         if len(self._cached_page) != self.header_length:  # type: ignore[arg-type]
             raise ValueError("The SAS7BDAT file appears to be truncated.")
 
-        self._page_length = self._read_int(
-            const.page_size_offset + align1, const.page_size_length
-        )
-        self._page_count = self._read_int(
-            const.page_count_offset + align1, const.page_count_length
-        )
+        self._page_length = self._read_int(const.page_size_offset + align1, const.page_size_length)
+        self._page_count = self._read_int(const.page_count_offset + align1, const.page_count_length)
 
         self.sas_release_offset = self._read_and_convert_header_text(
             const.sas_release_offset + total_align, const.sas_release_length
@@ -378,9 +367,7 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
             return self._cached_page[offset : offset + length]
 
     def _read_and_convert_header_text(self, offset: int, length: int) -> str | bytes:
-        return self._convert_header_text(
-            self._read_bytes(offset, length).rstrip(b"\x00 ")
-        )
+        return self._convert_header_text(self._read_bytes(offset, length).rstrip(b"\x00 "))
 
     def _parse_metadata(self) -> None:
         done = False
@@ -399,24 +386,16 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
             self._process_page_metadata()
         is_data_page = self._current_page_type == const.page_data_type
         is_mix_page = self._current_page_type == const.page_mix_type
-        return bool(
-            is_data_page
-            or is_mix_page
-            or self._current_page_data_subheader_pointers != []
-        )
+        return bool(is_data_page or is_mix_page or self._current_page_data_subheader_pointers != [])
 
     def _read_page_header(self):
         bit_offset = self._page_bit_offset
         tx = const.page_type_offset + bit_offset
-        self._current_page_type = (
-            self._read_int(tx, const.page_type_length) & const.page_type_mask2
-        )
+        self._current_page_type = self._read_int(tx, const.page_type_length) & const.page_type_mask2
         tx = const.block_count_offset + bit_offset
         self._current_page_block_count = self._read_int(tx, const.block_count_length)
         tx = const.subheader_count_offset + bit_offset
-        self._current_page_subheaders_count = self._read_int(
-            tx, const.subheader_count_length
-        )
+        self._current_page_subheaders_count = self._read_int(tx, const.subheader_count_length)
 
     def _process_page_metadata(self) -> None:
         bit_offset = self._page_bit_offset
@@ -476,9 +455,7 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         subheader_signature = self._read_bytes(offset, self._int_length)
         return subheader_signature
 
-    def _process_subheader(
-        self, subheader_index: int, pointer: _SubheaderPointer
-    ) -> None:
+    def _process_subheader(self, subheader_index: int, pointer: _SubheaderPointer) -> None:
         offset = pointer.offset
         length = pointer.length
 
@@ -616,12 +593,8 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
                 + const.column_name_length_offset
             )
 
-            idx = self._read_int(
-                text_subheader, const.column_name_text_subheader_length
-            )
-            col_offset = self._read_int(
-                col_name_offset, const.column_name_offset_length
-            )
+            idx = self._read_int(text_subheader, const.column_name_text_subheader_length)
+            col_offset = self._read_int(col_name_offset, const.column_name_offset_length)
             col_len = self._read_int(col_name_length, const.column_name_length_length)
 
             name_raw = self.column_names_raw[idx]
@@ -632,18 +605,11 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         int_len = self._int_length
         column_attributes_vectors_count = (length - 2 * int_len - 12) // (int_len + 8)
         for i in range(column_attributes_vectors_count):
-            col_data_offset = (
-                offset + int_len + const.column_data_offset_offset + i * (int_len + 8)
-            )
+            col_data_offset = offset + int_len + const.column_data_offset_offset + i * (int_len + 8)
             col_data_len = (
-                offset
-                + 2 * int_len
-                + const.column_data_length_offset
-                + i * (int_len + 8)
+                offset + 2 * int_len + const.column_data_length_offset + i * (int_len + 8)
             )
-            col_types = (
-                offset + 2 * int_len + const.column_type_offset + i * (int_len + 8)
-            )
+            col_types = offset + 2 * int_len + const.column_type_offset + i * (int_len + 8)
 
             x = self._read_int(col_data_offset, int_len)
             self._column_data_offsets.append(x)
@@ -665,20 +631,14 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         )
         col_format_offset = offset + const.column_format_offset_offset + 3 * int_len
         col_format_len = offset + const.column_format_length_offset + 3 * int_len
-        text_subheader_label = (
-            offset + const.column_label_text_subheader_index_offset + 3 * int_len
-        )
+        text_subheader_label = offset + const.column_label_text_subheader_index_offset + 3 * int_len
         col_label_offset = offset + const.column_label_offset_offset + 3 * int_len
         col_label_len = offset + const.column_label_length_offset + 3 * int_len
 
-        x = self._read_int(
-            text_subheader_format, const.column_format_text_subheader_index_length
-        )
+        x = self._read_int(text_subheader_format, const.column_format_text_subheader_index_length)
         format_idx = min(x, len(self.column_names_raw) - 1)
 
-        format_start = self._read_int(
-            col_format_offset, const.column_format_offset_length
-        )
+        format_start = self._read_int(col_format_offset, const.column_format_offset_length)
         format_len = self._read_int(col_format_len, const.column_format_length_length)
 
         label_idx = self._read_int(
@@ -690,9 +650,7 @@ class SAS7BDATReader(ReaderBase, abc.Iterator):
         label_len = self._read_int(col_label_len, const.column_label_length_length)
 
         label_names = self.column_names_raw[label_idx]
-        column_label = self._convert_header_text(
-            label_names[label_start : label_start + label_len]
-        )
+        column_label = self._convert_header_text(label_names[label_start : label_start + label_len])
         format_names = self.column_names_raw[format_idx]
         column_format = self._convert_header_text(
             format_names[format_start : format_start + format_len]

@@ -4,6 +4,7 @@ Methods that can be shared by many array-like classes or subclasses:
     Index
     ExtensionArray
 """
+
 from __future__ import annotations
 
 import operator
@@ -204,9 +205,7 @@ def _maybe_fallback(ufunc: np.ufunc, method: str, *inputs: Any, **kwargs: Any):
         first_frame = next(x for x in inputs if isinstance(x, DataFrame))
 
         # check if the objects are aligned or not
-        non_aligned = sum(
-            not _is_aligned(first_frame, x) for x in inputs if isinstance(x, NDFrame)
-        )
+        non_aligned = sum(not _is_aligned(first_frame, x) for x in inputs if isinstance(x, NDFrame))
 
         # if at least one is not aligned -> warn and fallback to array behaviour
         if non_aligned:
@@ -300,8 +299,7 @@ def array_ufunc(self, ufunc: np.ufunc, method: str, *inputs: Any, **kwargs: Any)
             # well. Previously this raised an internal ValueError. We might
             # support it someday, so raise a NotImplementedError.
             raise NotImplementedError(
-                "Cannot apply ufunc {} to mixed DataFrame and Series "
-                "inputs.".format(ufunc)
+                "Cannot apply ufunc {} to mixed DataFrame and Series " "inputs.".format(ufunc)
             )
         axes = self.axes
         for obj in alignable[1:]:
@@ -347,9 +345,7 @@ def array_ufunc(self, ufunc: np.ufunc, method: str, *inputs: Any, **kwargs: Any)
                         "Consider explicitly converting the DataFrame "
                         "to an array with '.to_numpy()' first."
                     )
-                    warnings.warn(
-                        msg.format(ufunc), FutureWarning, stacklevel=find_stack_level()
-                    )
+                    warnings.warn(msg.format(ufunc), FutureWarning, stacklevel=find_stack_level())
                     return result
                 raise NotImplementedError
             return result
@@ -358,9 +354,7 @@ def array_ufunc(self, ufunc: np.ufunc, method: str, *inputs: Any, **kwargs: Any)
             result = self._constructor(result, **reconstruct_kwargs, copy=False)
         else:
             # we converted an array, lost our axes
-            result = self._constructor(
-                result, **reconstruct_axes, **reconstruct_kwargs, copy=False
-            )
+            result = self._constructor(result, **reconstruct_axes, **reconstruct_kwargs, copy=False)
         # TODO: When we support multiple values in __finalize__, this
         # should pass alignable to `__finalize__` instead of self.
         # Then `np.add(a, b)` would consider attrs from both a and b

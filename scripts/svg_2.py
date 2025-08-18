@@ -6,7 +6,10 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import logging, math, re, warnings
+import logging
+import math
+import re
+import warnings
 from numbers import Number
 from typing import NamedTuple
 
@@ -129,9 +132,7 @@ def resolve_length(length_str, default_unit="pt"):
         return float(value) * absolute_length_units[unit]
     except KeyError:
         if unit in relative_length_units:
-            raise ValueError(
-                f"{length_str} uses unsupported relative length {unit}"
-            ) from None
+            raise ValueError(f"{length_str} uses unsupported relative length {unit}") from None
 
         raise ValueError(f"{length_str} contains unrecognized unit {unit}") from None
 
@@ -181,9 +182,7 @@ def without_ns(qualified_tag):
     return qualified_tag
 
 
-shape_tags = xmlns_lookup(
-    "svg", "rect", "circle", "ellipse", "line", "polyline", "polygon"
-)
+shape_tags = xmlns_lookup("svg", "rect", "circle", "ellipse", "line", "polyline", "polygon")
 
 
 @force_nodocument
@@ -273,9 +272,7 @@ svg_attr_map = {
     # https://www.w3.org/TR/SVG11/painting.html#StrokeDasharrayProperty
     "stroke-dasharray": lambda dasharray: (
         "stroke_dash_pattern",
-        optional(
-            dasharray, lambda da: [float(item) for item in NUMBER_SPLIT.split(da)]
-        ),
+        optional(dasharray, lambda da: [float(item) for item in NUMBER_SPLIT.split(da)]),
     ),
     # stroke-dashoffset may be a percentage, which we don't support currently
     # https://www.w3.org/TR/SVG11/painting.html#StrokeDashoffsetProperty
@@ -479,9 +476,7 @@ def convert_transforms(tfstr):
                 if len(about) == 2:
                     rotation = rotation.about(float(about[0]), float(about[1]))
                 else:
-                    raise ValueError(
-                        f"rotation transform {tf_type}({args}) is malformed"
-                    )
+                    raise ValueError(f"rotation transform {tf_type}({args}) is malformed")
 
             transform = rotation @ transform
 
@@ -519,14 +514,10 @@ def convert_transforms(tfstr):
             transform = Transform.shearing(x=math.tan(sx), y=math.tan(sy)) @ transform
 
         elif tf_type == "skewX":
-            transform = (
-                Transform.shearing(x=math.tan(resolve_angle(args)), y=0) @ transform
-            )
+            transform = Transform.shearing(x=math.tan(resolve_angle(args)), y=0) @ transform
 
         elif tf_type == "skewY":
-            transform = (
-                Transform.shearing(x=0, y=math.tan(resolve_angle(args))) @ transform
-            )
+            transform = Transform.shearing(x=0, y=math.tan(resolve_angle(args))) @ transform
 
         elif tf_type == "translate":
             # if y is not provided, it takes a value equal to 0
@@ -571,9 +562,7 @@ class PathPen(BasePen):
             self.first_is_move = False
 
     def _curveToOne(self, pt1, pt2, pt3):
-        self.pdf_path.curve_to(
-            x1=pt1[0], y1=pt1[1], x2=pt2[0], y2=pt2[1], x3=pt3[0], y3=pt3[1]
-        )
+        self.pdf_path.curve_to(x1=pt1[0], y1=pt1[1], x2=pt2[0], y2=pt2[1], x3=pt3[0], y3=pt3[1])
         self.last_was_line_to = False
         if self.first_is_move is None:
             self.first_is_move = False
@@ -762,9 +751,7 @@ class SVGObject:
             vp_width = width
         elif isinstance(self.width, Percent):
             if not width:
-                raise ValueError(
-                    'SVG "width" is a percentage, hence a viewport width is required'
-                )
+                raise ValueError('SVG "width" is a percentage, hence a viewport width is required')
             vp_width = self.width * width / 100
         else:
             vp_width = self.width or width
@@ -887,9 +874,7 @@ class SVGObject:
         try:
             pdf_group.add_item(self.cross_references[ref])
         except KeyError:
-            raise ValueError(
-                f"use {xref} references nonexistent ref id {ref}"
-            ) from None
+            raise ValueError(f"use {xref} references nonexistent ref id {ref}") from None
 
         if "x" in xref.attrib or "y" in xref.attrib:
             # Quoting the SVG spec - 5.6.2. Layout of re-used graphics:
@@ -908,9 +893,7 @@ class SVGObject:
             apply_styles(pdf_group, group)
 
         # handle defs before anything else
-        for child in [
-            child for child in group if child.tag in xmlns_lookup("svg", "defs")
-        ]:
+        for child in [child for child in group if child.tag in xmlns_lookup("svg", "defs")]:
             self.handle_defs(child)
 
         for child in group:
@@ -1069,9 +1052,7 @@ class SVGImage(NamedTuple):
         return stream_content, last_item, initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, _pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, _pfx):
         stream_content, last_item, initial_point = self.render(
             gsd_registry, style, last_item, initial_point
         )

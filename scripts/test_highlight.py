@@ -15,9 +15,7 @@ from pandas.io.formats.style import Styler
 @pytest.fixture(params=[(None, "float64"), (NA, "Int64")])
 def df(request):
     # GH 45804
-    return DataFrame(
-        {"A": [0, np.nan, 10], "B": [1, request.param[0], 2]}, dtype=request.param[1]
-    )
+    return DataFrame({"A": [0, np.nan, 10], "B": [1, request.param[0], 2]}, dtype=request.param[1])
 
 
 @pytest.fixture
@@ -216,4 +214,3 @@ def test_all_highlight_dtypes(f, kwargs, df):
     expected = {(1, 0): [("background-color", "yellow")]}
     result = getattr(df.style, f)(**kwargs)._compute().ctx
     assert result == expected
-

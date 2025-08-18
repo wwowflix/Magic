@@ -1,4 +1,7 @@
-import base64, hashlib, io, zlib
+import base64
+import hashlib
+import io
+import zlib
 from dataclasses import dataclass
 from io import BytesIO
 from math import ceil
@@ -316,9 +319,7 @@ def get_img_info(filename, img=None, image_filter="AUTO", dims=None):
             if photo == 0:
                 inverted = True
             elif photo != 1:
-                raise ValueError(
-                    f"unsupported photometric interpretation for g4 tiff: {photo}"
-                )
+                raise ValueError(f"unsupported photometric interpretation for g4 tiff: {photo}")
             offset, length = ccitt_payload_location_from_pil(img)
             img_raw_data.seek(offset)
             ccittrawdata = img_raw_data.read(length)
@@ -475,9 +476,7 @@ def ccitt_payload_location_from_pil(img):
     # A test ~10 GPixel image was still encoded as a single strip. Just to be
     # safe check throw an error if there is more than one offset.
     if len(strip_offsets) != 1 or len(strip_bytes) != 1:
-        raise NotImplementedError(
-            "Transcoding multiple strips not supported by the PDF format"
-        )
+        raise NotImplementedError("Transcoding multiple strips not supported by the PDF format")
 
     (offset,), (length,) = strip_offsets, strip_bytes
 
@@ -522,9 +521,7 @@ def transcode_monochrome(img):
             }
             return overrides.get(tag, pillow__getitem__(self, tag))
 
-        with temp_attr(
-            TiffImagePlugin.ImageFileDirectory_v2, "__getitem__", __getitem__
-        ):
+        with temp_attr(TiffImagePlugin.ImageFileDirectory_v2, "__getitem__", __getitem__):
             img2.save(newimgio, format="TIFF", compression="group4")
 
     # Open new image in memory

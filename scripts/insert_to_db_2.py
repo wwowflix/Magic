@@ -1,4 +1,4 @@
-﻿""" 
+﻿"""
 insert_to_db.py 🔽
 Part of Zephyr – Phase 2, Module G (G.2.45)
 
@@ -18,6 +18,7 @@ import sqlite3
 import pandas as pd
 
 DB_PATH = "outputs/mydata.db"
+
 
 def insert_to_db(data, table_name="trend_data"):
     """Insert trend data into SQLite database."""

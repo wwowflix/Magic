@@ -463,10 +463,7 @@ class CancelStatus:
         todo = [self]
         while todo:
             current = todo.pop()
-            new_state = (
-                current._scope.cancel_called
-                or current.parent_cancellation_is_visible_to_us
-            )
+            new_state = current._scope.cancel_called or current.parent_cancellation_is_visible_to_us
             if new_state != current.effectively_cancelled:
                 current.effectively_cancelled = new_state
                 if new_state:
@@ -2442,9 +2439,7 @@ def start_guest_run(  # type: ignore[explicit-any]
     *args: object,
     run_sync_soon_threadsafe: Callable[[Callable[[], object]], object],
     done_callback: Callable[[outcome.Outcome[RetT]], object],
-    run_sync_soon_not_threadsafe: (
-        Callable[[Callable[[], object]], object] | None
-    ) = None,
+    run_sync_soon_not_threadsafe: Callable[[Callable[[], object]], object] | None = None,
     host_uses_signal_set_wakeup_fd: bool = False,
     clock: Clock | None = None,
     instruments: Sequence[Instrument] = (),
@@ -2583,8 +2578,7 @@ def start_guest_run(  # type: ignore[explicit-any]
     else:  # pragma: no cover
         guest_state.unrolled_run_gen.throw(
             TrioInternalError(
-                "Guest runner yielded too many times before "
-                "system nursery was initialized",
+                "Guest runner yielded too many times before " "system nursery was initialized",
             ),
         )
 

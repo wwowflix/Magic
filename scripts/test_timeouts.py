@@ -264,9 +264,7 @@ async def test_invalid_access_unentered(mock_clock: _core.MockClock) -> None:
 
     cs = move_on_at(5)
 
-    match_str = (
-        "^unentered non-relative cancel scope does not have a relative deadline$"
-    )
+    match_str = "^unentered non-relative cancel scope does not have a relative deadline$"
     with pytest.raises(RuntimeError, match=match_str):
         assert cs.relative_deadline
     with pytest.raises(RuntimeError, match=match_str):

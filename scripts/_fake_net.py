@@ -227,9 +227,9 @@ class FakeSocket(trio.socket.SocketType, metaclass=NoPublicConstructor):
 
         self._closed = False
 
-        self._packet_sender, self._packet_receiver = trio.open_memory_channel[
-            UDPPacket
-        ](float("inf"))
+        self._packet_sender, self._packet_receiver = trio.open_memory_channel[UDPPacket](
+            float("inf")
+        )
 
         # This is the source-of-truth for what port etc. this socket is bound to
         self._binding: UDPBinding | None = None
@@ -345,9 +345,7 @@ class FakeSocket(trio.socket.SocketType, metaclass=NoPublicConstructor):
 
         return len(payload)
 
-    if sys.platform != "win32" or (
-        not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")
-    ):
+    if sys.platform != "win32" or (not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")):
         sendmsg = _sendmsg
 
     async def _recvmsg_into(
@@ -386,9 +384,7 @@ class FakeSocket(trio.socket.SocketType, metaclass=NoPublicConstructor):
             msg_flags |= trio.socket.MSG_TRUNC
         return written, ancdata, msg_flags, address
 
-    if sys.platform != "win32" or (
-        not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")
-    ):
+    if sys.platform != "win32" or (not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")):
         recvmsg_into = _recvmsg_into
 
     ################################################################
@@ -564,9 +560,7 @@ class FakeSocket(trio.socket.SocketType, metaclass=NoPublicConstructor):
         )
         return (bytes(buf[:got_nbytes]), ancdata, msg_flags, address)
 
-    if sys.platform != "win32" or (
-        not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")
-    ):
+    if sys.platform != "win32" or (not TYPE_CHECKING and hasattr(socket.socket, "sendmsg")):
         recvmsg = _recvmsg
 
     def fileno(self) -> int:
@@ -582,9 +576,7 @@ class FakeSocket(trio.socket.SocketType, metaclass=NoPublicConstructor):
         if inheritable:
             raise NotImplementedError("FakeNet can't make inheritable sockets")
 
-    if sys.platform == "win32" or (
-        not TYPE_CHECKING and hasattr(socket.socket, "share")
-    ):
+    if sys.platform == "win32" or (not TYPE_CHECKING and hasattr(socket.socket, "share")):
 
         def share(self, process_id: int) -> bytes:
             raise NotImplementedError("FakeNet can't share sockets")

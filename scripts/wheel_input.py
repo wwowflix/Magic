@@ -58,7 +58,9 @@ class WheelInput(InputDevice):
     def encode(self) -> dict:
         return {"type": self.type, "id": self.name, "actions": self.actions}
 
-    def create_scroll(self, x: int, y: int, delta_x: int, delta_y: int, duration: int, origin) -> None:
+    def create_scroll(
+        self, x: int, y: int, delta_x: int, delta_y: int, duration: int, origin
+    ) -> None:
         if isinstance(origin, WebElement):
             origin = {"element-6066-11e4-a52e-4f735466cecf": origin.id}
         self.add_action(

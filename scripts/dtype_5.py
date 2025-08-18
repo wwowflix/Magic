@@ -1,4 +1,5 @@
 """Sparse Dtype"""
+
 from __future__ import annotations
 
 import re
@@ -150,9 +151,7 @@ class SparseDtype(ExtensionDtype):
 
     def _check_fill_value(self):
         if not is_scalar(self._fill_value):
-            raise ValueError(
-                f"fill_value must be a scalar. Got {self._fill_value} instead"
-            )
+            raise ValueError(f"fill_value must be a scalar. Got {self._fill_value} instead")
         # TODO: Right now we can use Sparse boolean array
         #       with any fill_value. Here was an attempt
         #       to allow only 3 value: True, False or nan
@@ -241,9 +240,7 @@ class SparseDtype(ExtensionDtype):
         SparseDtype
         """
         if not isinstance(string, str):
-            raise TypeError(
-                f"'construct_from_string' expects a string, got {type(string)}"
-            )
+            raise TypeError(f"'construct_from_string' expects a string, got {type(string)}")
         msg = f"Cannot construct a 'SparseDtype' from '{string}'"
         if string.startswith("Sparse"):
             try:
@@ -392,10 +389,7 @@ class SparseDtype(ExtensionDtype):
     def _get_common_dtype(self, dtypes: list[DtypeObj]) -> DtypeObj | None:
         # TODO for now only handle SparseDtypes and numpy dtypes => extend
         # with other compatible extension dtypes
-        if any(
-            isinstance(x, ExtensionDtype) and not isinstance(x, SparseDtype)
-            for x in dtypes
-        ):
+        if any(isinstance(x, ExtensionDtype) and not isinstance(x, SparseDtype) for x in dtypes):
             return None
 
         fill_values = [x.fill_value for x in dtypes if isinstance(x, SparseDtype)]

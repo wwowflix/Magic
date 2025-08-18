@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from playwright.sync_api import sync_playwright
 
+
 def login_and_save_cookies():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=500)
@@ -16,6 +17,6 @@ def login_and_save_cookies():
 
         browser.close()
 
+
 if __name__ == "__main__":
     login_and_save_cookies()
-

@@ -46,9 +46,7 @@ class TestDataFrameCount:
         with tm.assert_produces_warning(FutureWarning):
             result = df.count(level=0)
         expected = (
-            DataFrame(
-                index=ser.index.levels[0].set_names(["first"]), columns=df.columns
-            )
+            DataFrame(index=ser.index.levels[0].set_names(["first"]), columns=df.columns)
             .fillna(0)
             .astype(np.int64)
         )

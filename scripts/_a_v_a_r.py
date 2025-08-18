@@ -1,18 +1,14 @@
-from fontTools.misc import sstruct
 from fontTools.misc.fixedTools import (
     fixedToFloat as fi2fl,
     floatToFixed as fl2fi,
     floatToFixedToStr as fl2str,
     strToFixedToFloat as str2fl,
 )
-from fontTools.misc.textTools import bytesjoin, safeEval
+from fontTools.misc.textTools import safeEval
 from fontTools.misc.roundTools import otRound
 from fontTools.varLib.models import piecewiseLinearMap
-from fontTools.varLib.varStore import VarStoreInstancer, NO_VARIATION_INDEX
-from fontTools.ttLib import TTLibError
-from . import DefaultTable
+from fontTools.varLib.varStore import VarStoreInstancer
 from . import otTables
-import struct
 import logging
 
 
@@ -136,9 +132,7 @@ class table__a_v_a_r(BaseTTXConverter):
                         fromValue = str2fl(elementAttrs["from"], 14)
                         toValue = str2fl(elementAttrs["to"], 14)
                         if fromValue in segment:
-                            log.warning(
-                                "duplicate entry for %s in axis '%s'", fromValue, axis
-                            )
+                            log.warning("duplicate entry for %s in axis '%s'", fromValue, axis)
                         segment[fromValue] = toValue
         else:
             super().fromXML(name, attrs, content, ttFont)
@@ -184,8 +178,6 @@ class table__a_v_a_r(BaseTTXConverter):
 
             out.append(v)
 
-        mappedLocation = {
-            axis.axisTag: fi2fl(v, 14) for v, axis in zip(out, axes) if v != 0
-        }
+        mappedLocation = {axis.axisTag: fi2fl(v, 14) for v, axis in zip(out, axes) if v != 0}
 
         return mappedLocation

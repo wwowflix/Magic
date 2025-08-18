@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+
 # Copyright (c) 2010-2015 openpyxl
 
 """Implements the lxml.etree.xmlfile API using the standard library xml.etree"""
@@ -20,6 +21,7 @@ class LxmlSyntaxError(Exception):
 
 class _IncrementalFileWriter(object):
     """Replacement for _IncrementalFileWriter of lxml"""
+
     def __init__(self, output_file):
         self._element_stack = []
         self._file = output_file
@@ -34,9 +36,7 @@ class _IncrementalFileWriter(object):
             # Normalise None prefix (lxml's default namespace prefix) -> "", as
             # required for incremental_tree
             if "" in nsmap and nsmap[""] != nsmap[None]:
-                raise ValueError(
-                    'Found None and "" as default nsmap prefixes with different URIs'
-                )
+                raise ValueError('Found None and "" as default nsmap prefixes with different URIs')
             nsmap = nsmap.copy()
             nsmap[""] = nsmap.pop(None)
 
@@ -45,8 +45,8 @@ class _IncrementalFileWriter(object):
         if attrib is None:
             attrib = {}
         elem = Element(tag, attrib=attrib, **_extra)
-        elem.text = ''
-        elem.tail = ''
+        elem.text = ""
+        elem.tail = ""
         if self._element_stack:
             is_root = False
             (
@@ -140,6 +140,7 @@ class _IncrementalFileWriter(object):
 
 class xmlfile(object):
     """Context manager that can replace lxml.etree.xmlfile."""
+
     def __init__(self, output_file, buffered=False, encoding="utf-8", close=False):
         self._file = output_file
         self._close = close

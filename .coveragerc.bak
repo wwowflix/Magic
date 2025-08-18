@@ -1,0 +1,18 @@
+[run]
+branch = True
+source =
+    tools
+
+[report]
+show_missing = True
+omit =
+    tools/backup_failed_scripts.py
+    tools/ensure_placeholders.py
+    tools/run_self_healing_agent.py
+    tools/self_heal_agents.py
+    tools/self_healing_runner_v5_parallel.py
+
+omit =
+    tools/build_dashboard.py
+show_missing = True
+

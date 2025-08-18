@@ -5,6 +5,7 @@ classes that hold the groupby interfaces (and some implementations).
 These are user facing as the result of the ``df.groupby(...)`` operations,
 which here returns a DataFrameGroupBy object.
 """
+
 from __future__ import annotations
 
 from collections import abc
@@ -134,9 +135,7 @@ def generate_property(name: str, klass: type[DataFrame | Series]):
     return property(prop)
 
 
-def pin_allowlisted_properties(
-    klass: type[DataFrame | Series], allowlist: frozenset[str]
-):
+def pin_allowlisted_properties(klass: type[DataFrame | Series], allowlist: frozenset[str]):
     """
     Create GroupBy member defs for DataFrame/Series names in a allowlist.
 
@@ -246,9 +245,7 @@ class SeriesGroupBy(GroupBy[Series]):
     )
 
     @Appender(
-        _apply_docs["template"].format(
-            input="series", examples=_apply_docs["series_examples"]
-        )
+        _apply_docs["template"].format(input="series", examples=_apply_docs["series_examples"])
     )
     def apply(self, func, *args, **kwargs) -> Series:
         return super().apply(func, *args, **kwargs)
@@ -302,9 +299,7 @@ class SeriesGroupBy(GroupBy[Series]):
 
                 # result is a dict whose keys are the elements of result_index
                 index = self.grouper.result_index
-                return create_series_with_explicit_dtype(
-                    result, index=index, dtype_if_empty=object
-                )
+                return create_series_with_explicit_dtype(result, index=index, dtype_if_empty=object)
 
     agg = aggregate
 
@@ -338,9 +333,7 @@ class SeriesGroupBy(GroupBy[Series]):
         if any(isinstance(x, DataFrame) for x in results.values()):
             from pandas import concat
 
-            res_df = concat(
-                results.values(), axis=1, keys=[key.label for key in results.keys()]
-            )
+            res_df = concat(results.values(), axis=1, keys=[key.label for key in results.keys()])
             return res_df
 
         indexed_output = {key.position: val for key, val in results.items()}
@@ -350,9 +343,7 @@ class SeriesGroupBy(GroupBy[Series]):
         output = self._reindex_output(output)
         return output
 
-    def _indexed_output_to_ndframe(
-        self, output: Mapping[base.OutputKey, ArrayLike]
-    ) -> Series:
+    def _indexed_output_to_ndframe(self, output: Mapping[base.OutputKey, ArrayLike]) -> Series:
         """
         Wrap the dict result of a GroupBy aggregation into a Series.
         """
@@ -443,21 +434,15 @@ class SeriesGroupBy(GroupBy[Series]):
     @Substitution(klass="Series")
     @Appender(_transform_template)
     def transform(self, func, *args, engine=None, engine_kwargs=None, **kwargs):
-        return self._transform(
-            func, *args, engine=engine, engine_kwargs=engine_kwargs, **kwargs
-        )
+        return self._transform(func, *args, engine=engine, engine_kwargs=engine_kwargs, **kwargs)
 
-    def _cython_transform(
-        self, how: str, numeric_only: bool = True, axis: int = 0, **kwargs
-    ):
+    def _cython_transform(self, how: str, numeric_only: bool = True, axis: int = 0, **kwargs):
         assert axis == 0  # handled by caller
 
         obj = self._selected_obj
 
         try:
-            result = self.grouper._cython_operation(
-                "transform", obj._values, how, axis, **kwargs
-            )
+            result = self.grouper._cython_operation("transform", obj._values, how, axis, **kwargs)
         except NotImplementedError as err:
             raise TypeError(f"{how} is not supported for {obj.dtype} dtype") from err
 
@@ -471,9 +456,7 @@ class SeriesGroupBy(GroupBy[Series]):
         klass = type(self.obj)
 
         results = []
-        for name, group in self.grouper.get_iterator(
-            self._selected_obj, axis=self.axis
-        ):
+        for name, group in self.grouper.get_iterator(self._selected_obj, axis=self.axis):
             # this setattr is needed for test_transform_lambda_with_datetimetz
             object.__setattr__(group, "name", name)
             res = func(group, *args, **kwargs)
@@ -538,9 +521,7 @@ class SeriesGroupBy(GroupBy[Series]):
             return b and notna(b)
 
         try:
-            indices = [
-                self._get_index(name) for name, group in self if true_and_notna(group)
-            ]
+            indices = [self._get_index(name) for name, group in self if true_and_notna(group)]
         except (ValueError, TypeError) as err:
             raise TypeError("the filter must return a boolean result") from err
 
@@ -621,9 +602,7 @@ class SeriesGroupBy(GroupBy[Series]):
 
         names = self.grouper.names + [self.obj.name]
 
-        if is_categorical_dtype(val.dtype) or (
-            bins is not None and not np.iterable(bins)
-        ):
+        if is_categorical_dtype(val.dtype) or (bins is not None and not np.iterable(bins)):
             # scalar bins cannot be done at top level
             # in a backward compatible way
             # GH38672 relates to categorical dtype
@@ -694,9 +673,9 @@ class SeriesGroupBy(GroupBy[Series]):
         # error: Incompatible types in assignment (expression has type
         # "List[ndarray[Any, dtype[_SCT]]]",
         # variable has type "List[ndarray[Any, dtype[signedinteger[Any]]]]")
-        codes = [  # type: ignore[assignment]
-            rep(level_codes) for level_codes in codes
-        ] + [llab(lab, inc)]
+        codes = [rep(level_codes) for level_codes in codes] + [  # type: ignore[assignment]
+            llab(lab, inc)
+        ]
         # error: List item 0 has incompatible type "Union[ndarray[Any, Any], Index]";
         # expected "Index"
         levels = [ping.group_index for ping in self.grouper.groupings] + [
@@ -1021,9 +1000,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
     ):
 
         if len(values) == 0:
-            result = self.obj._constructor(
-                index=self.grouper.result_index, columns=data.columns
-            )
+            result = self.obj._constructor(index=self.grouper.result_index, columns=data.columns)
             result = result.astype(data.dtypes, copy=False)
             return result
 
@@ -1047,9 +1024,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
             #  fall through to the outer else clause
             # TODO: sure this is right?  we used to do this
             #  after raising AttributeError above
-            return self.obj._constructor_sliced(
-                values, index=key_index, name=self._selection
-            )
+            return self.obj._constructor_sliced(values, index=key_index, name=self._selection)
         elif not isinstance(first_not_none, Series):
             # values are not series or array-like but scalars
             # self._selection not passed through to Series as the
@@ -1171,9 +1146,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
             mgr = mgr.get_numeric_data(copy=False)
 
         def arr_func(bvalues: ArrayLike) -> ArrayLike:
-            return self.grouper._cython_operation(
-                "transform", bvalues, how, 1, **kwargs
-            )
+            return self.grouper._cython_operation("transform", bvalues, how, 1, **kwargs)
 
         # We could use `mgr.apply` here and not have to set_axis, but
         #  we would have to do shape gymnastics for ArrayManager compat
@@ -1223,11 +1196,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                 continue
             object.__setattr__(group, "name", name)
             res = path(group)
-            if (
-                not emit_alignment_warning
-                and res.ndim == 2
-                and not res.index.equals(group.index)
-            ):
+            if not emit_alignment_warning and res.ndim == 2 and not res.index.equals(group.index):
                 emit_alignment_warning = True
 
             res = _wrap_transform_general_frame(self.obj, group, res)
@@ -1253,9 +1222,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
     @Substitution(klass="DataFrame")
     @Appender(_transform_template)
     def transform(self, func, *args, engine=None, engine_kwargs=None, **kwargs):
-        return self._transform(
-            func, *args, engine=engine, engine_kwargs=engine_kwargs, **kwargs
-        )
+        return self._transform(func, *args, engine=engine, engine_kwargs=engine_kwargs, **kwargs)
 
     def _define_paths(self, func, *args, **kwargs):
         if isinstance(func, str):
@@ -1484,9 +1451,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
             if in_axis and name not in columns:
                 result.insert(0, name, lev)
 
-    def _indexed_output_to_ndframe(
-        self, output: Mapping[base.OutputKey, ArrayLike]
-    ) -> DataFrame:
+    def _indexed_output_to_ndframe(self, output: Mapping[base.OutputKey, ArrayLike]) -> DataFrame:
         """
         Wrap the dict result of a GroupBy aggregation into a DataFrame.
         """
@@ -1534,9 +1499,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
         from pandas.core.reshape.concat import concat
 
         columns = obj.columns
-        results = [
-            func(col_groupby) for _, col_groupby in self._iterate_column_groupbys(obj)
-        ]
+        results = [func(col_groupby) for _, col_groupby in self._iterate_column_groupbys(obj)]
 
         if not len(results):
             # concat would raise
@@ -1594,9 +1557,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
             return self._python_agg_general(lambda sgb: sgb.nunique(dropna))
 
         obj = self._obj_with_exclusions
-        results = self._apply_to_column_groupbys(
-            lambda sgb: sgb.nunique(dropna), obj=obj
-        )
+        results = self._apply_to_column_groupbys(lambda sgb: sgb.nunique(dropna), obj=obj)
 
         if not self.as_index:
             results.index = Index(range(len(results)))
@@ -1639,9 +1600,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                 return df._constructor_sliced(result, index=res.index)
 
         func.__name__ = "idxmax"
-        result = self._python_apply_general(
-            func, self._obj_with_exclusions, not_indexed_same=True
-        )
+        result = self._python_apply_general(func, self._obj_with_exclusions, not_indexed_same=True)
         self._maybe_warn_numeric_only_depr("idxmax", result, numeric_only)
         return result
 
@@ -1680,9 +1639,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                 return df._constructor_sliced(result, index=res.index)
 
         func.__name__ = "idxmin"
-        result = self._python_apply_general(
-            func, self._obj_with_exclusions, not_indexed_same=True
-        )
+        result = self._python_apply_general(func, self._obj_with_exclusions, not_indexed_same=True)
         self._maybe_warn_numeric_only_depr("idxmin", result, numeric_only)
         return result
 
@@ -1800,9 +1757,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
         4    male    medium      FR        0.25
         """
         if self.axis == 1:
-            raise NotImplementedError(
-                "DataFrameGroupBy.value_counts only handles axis=0"
-            )
+            raise NotImplementedError("DataFrameGroupBy.value_counts only handles axis=0")
 
         with self._group_selection_context():
             df = self.obj
@@ -1820,14 +1775,12 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                     clashing = subsetted & set(in_axis_names)
                     if clashing:
                         raise ValueError(
-                            f"Keys {clashing} in subset cannot be in "
-                            "the groupby column keys."
+                            f"Keys {clashing} in subset cannot be in " "the groupby column keys."
                         )
                     doesnt_exist = subsetted - unique_cols
                     if doesnt_exist:
                         raise ValueError(
-                            f"Keys {doesnt_exist} in subset do not "
-                            f"exist in the DataFrame."
+                            f"Keys {doesnt_exist} in subset do not " f"exist in the DataFrame."
                         )
                 else:
                     subsetted = unique_cols
@@ -1877,9 +1830,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                 # Normalize the results by dividing by the original group sizes.
                 # We are guaranteed to have the first N levels be the
                 # user-requested grouping.
-                levels = list(
-                    range(len(self.grouper.groupings), result_series.index.nlevels)
-                )
+                levels = list(range(len(self.grouper.groupings), result_series.index.nlevels))
                 indexed_group_size = result_series.groupby(
                     result_series.index.droplevel(levels),
                     sort=self.sort,
@@ -1893,9 +1844,9 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
             if sort:
                 # Sort the values and then resort by the main grouping
                 index_level = range(len(self.grouper.groupings))
-                result_series = result_series.sort_values(
-                    ascending=ascending
-                ).sort_index(level=index_level, sort_remaining=False)
+                result_series = result_series.sort_values(ascending=ascending).sort_index(
+                    level=index_level, sort_remaining=False
+                )
 
             result: Series | DataFrame
             if self.as_index:
@@ -1906,9 +1857,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
                 index = result_series.index
                 columns = com.fill_missing_names(index.names)
                 if name in columns:
-                    raise ValueError(
-                        f"Column label '{name}' is duplicate of result column"
-                    )
+                    raise ValueError(f"Column label '{name}' is duplicate of result column")
                 result_series.name = name
                 result_series.index = index.set_names(range(len(columns)))
                 result_frame = result_series.reset_index()

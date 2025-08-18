@@ -101,7 +101,9 @@ class Server:
     def version(self, version):
         if version:
             if not re.match(r"^\d+\.\d+\.\d+$", str(version)):
-                raise TypeError(f"{__class__.__name__}.__init__() got an invalid version: '{version}'")
+                raise TypeError(
+                    f"{__class__.__name__}.__init__() got an invalid version: '{version}'"
+                )
         self._version = version
 
     @property
@@ -155,7 +157,9 @@ class Server:
 
         java_path = shutil.which("java")
         if java_path is None:
-            raise OSError("Can't find java on system PATH. JRE is required to run the Selenium server")
+            raise OSError(
+                "Can't find java on system PATH. JRE is required to run the Selenium server"
+            )
 
         command = [
             java_path,
@@ -179,7 +183,9 @@ class Server:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.connect((host, self.port))
-            raise ConnectionError(f"Selenium server is already running, or something else is using port {self.port}")
+            raise ConnectionError(
+                f"Selenium server is already running, or something else is using port {self.port}"
+            )
         except ConnectionRefusedError:
             print("Starting Selenium server...")
             self.process = subprocess.Popen(command, env=self.env)

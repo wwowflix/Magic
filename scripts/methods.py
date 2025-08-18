@@ -135,9 +135,7 @@ class BaseMethodsTests(BaseExtensionTests):
             ("argmin", False, -1),
         ],
     )
-    def test_argreduce_series(
-        self, data_missing_for_sorting, op_name, skipna, expected
-    ):
+    def test_argreduce_series(self, data_missing_for_sorting, op_name, skipna, expected):
         # data_missing_for_sorting -> [B, NA, A] with A < B and NA missing.
         ser = pd.Series(data_missing_for_sorting)
         result = getattr(ser, op_name)(skipna=skipna)
@@ -180,9 +178,7 @@ class BaseMethodsTests(BaseExtensionTests):
         self.assert_series_equal(result, expected)
 
     @pytest.mark.parametrize("ascending", [True, False])
-    def test_sort_values_missing(
-        self, data_missing_for_sorting, ascending, sort_by_key
-    ):
+    def test_sort_values_missing(self, data_missing_for_sorting, ascending, sort_by_key):
         ser = pd.Series(data_missing_for_sorting)
         result = ser.sort_values(ascending=ascending, key=sort_by_key)
         if ascending:
@@ -219,9 +215,7 @@ class BaseMethodsTests(BaseExtensionTests):
             msg = "Specifying the specific value to use for `na_sentinel` is deprecated"
         with tm.assert_produces_warning(FutureWarning, match=msg):
             codes, uniques = pd.factorize(data_for_grouping, na_sentinel=na_sentinel)
-        expected_codes = np.array(
-            [0, 0, na_sentinel, na_sentinel, 1, 1, 0, 2], dtype=np.intp
-        )
+        expected_codes = np.array([0, 0, na_sentinel, na_sentinel, 1, 1, 0, 2], dtype=np.intp)
         expected_uniques = data_for_grouping.take([0, 4, 7])
 
         tm.assert_numpy_array_equal(codes, expected_codes)
@@ -234,9 +228,7 @@ class BaseMethodsTests(BaseExtensionTests):
         else:
             msg = "Specifying the specific value to use for `na_sentinel` is deprecated"
         with tm.assert_produces_warning(FutureWarning, match=msg):
-            codes_1, uniques_1 = pd.factorize(
-                data_for_grouping, na_sentinel=na_sentinel
-            )
+            codes_1, uniques_1 = pd.factorize(data_for_grouping, na_sentinel=na_sentinel)
             codes_2, uniques_2 = data_for_grouping.factorize(na_sentinel=na_sentinel)
 
         tm.assert_numpy_array_equal(codes_1, codes_2)
@@ -283,9 +275,7 @@ class BaseMethodsTests(BaseExtensionTests):
         s1 = pd.Series(orig_data1)
         s2 = pd.Series(orig_data2)
         result = s1.combine(s2, lambda x1, x2: x1 <= x2)
-        expected = pd.Series(
-            [a <= b for (a, b) in zip(list(orig_data1), list(orig_data2))]
-        )
+        expected = pd.Series([a <= b for (a, b) in zip(list(orig_data1), list(orig_data2))])
         self.assert_series_equal(result, expected)
 
         val = s1.iloc[0]
@@ -309,9 +299,7 @@ class BaseMethodsTests(BaseExtensionTests):
 
         val = s1.iloc[0]
         result = s1.combine(val, lambda x1, x2: x1 + x2)
-        expected = pd.Series(
-            orig_data1._from_sequence([a + val for a in list(orig_data1)])
-        )
+        expected = pd.Series(orig_data1._from_sequence([a + val for a in list(orig_data1)]))
         self.assert_series_equal(result, expected)
 
     def test_combine_first(self, data):
@@ -335,9 +323,7 @@ class BaseMethodsTests(BaseExtensionTests):
 
         if frame:
             result = data.to_frame(name="A").assign(B=1).shift(periods)
-            expected = pd.concat(
-                [expected, pd.Series([1] * 5, name="B").shift(periods)], axis=1
-            )
+            expected = pd.concat([expected, pd.Series([1] * 5, name="B").shift(periods)], axis=1)
             compare = self.assert_frame_equal
         else:
             result = data.shift(periods)
@@ -468,9 +454,7 @@ class BaseMethodsTests(BaseExtensionTests):
             cond = cond.reshape(-1, 1)
 
         result = ser.where(cond)
-        expected = pd.Series(
-            cls._from_sequence([a, a, na_value, na_value], dtype=data.dtype)
-        )
+        expected = pd.Series(cls._from_sequence([a, a, na_value, na_value], dtype=data.dtype))
 
         if as_frame:
             expected = expected.to_frame(name="a")

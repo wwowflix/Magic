@@ -33,4 +33,3 @@ def test_identity_hashtable(key_length, length):
     keys_vals[0] = new_key
     with pytest.raises(RuntimeError):
         identityhash_tester(key_length, keys_vals)
-

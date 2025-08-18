@@ -1,5 +1,4 @@
-"""Prepares a distribution for installation
-"""
+"""Prepares a distribution for installation"""
 
 # The following comment should be removed at some point in the future.
 # mypy: strict-optional=False
@@ -66,9 +65,7 @@ def _get_prepared_distribution(
     """Prepare a distribution for installation."""
     abstract_dist = make_distribution_for_install_requirement(req)
     with build_tracker.track(req):
-        abstract_dist.prepare_distribution_metadata(
-            finder, build_isolation, check_build_deps
-        )
+        abstract_dist.prepare_distribution_metadata(finder, build_isolation, check_build_deps)
     return abstract_dist.get_metadata_distribution()
 
 
@@ -178,9 +175,7 @@ def unpack_url(
     return file
 
 
-def _check_download_dir(
-    link: Link, download_dir: str, hashes: Optional[Hashes]
-) -> Optional[str]:
+def _check_download_dir(link: Link, download_dir: str, hashes: Optional[Hashes]) -> Optional[str]:
     """Check download_dir for previously downloaded file with correct hash
     If a correct file is found return its path else None
     """
@@ -278,9 +273,7 @@ class RequirementPreparer:
             with indent_log():
                 logger.info("Using cached %s", req.link.filename)
 
-    def _ensure_link_req_src_dir(
-        self, req: InstallRequirement, parallel_builds: bool
-    ) -> None:
+    def _ensure_link_req_src_dir(self, req: InstallRequirement, parallel_builds: bool) -> None:
         """Ensure source_dir of a linked InstallRequirement."""
         # Since source_dir is only set for editable requirements.
         if req.link.is_wheel:
@@ -397,9 +390,7 @@ class RequirementPreparer:
         #     the Name: field is not present, but it's noted in the raw_name docstring
         #     that that should NEVER happen anyway.
         if metadata_dist.raw_name != req.req.name:
-            raise MetadataInconsistent(
-                req, "Name", req.req.name, metadata_dist.raw_name
-            )
+            raise MetadataInconsistent(req, "Name", req.req.name, metadata_dist.raw_name)
         return metadata_dist
 
     def _fetch_metadata_using_lazy_wheel(
@@ -594,8 +585,7 @@ class RequirementPreparer:
 
         if link.is_existing_dir():
             logger.debug(
-                "Not copying link to destination directory "
-                "since it is a directory: %s",
+                "Not copying link to destination directory " "since it is a directory: %s",
                 link,
             )
             return
@@ -649,13 +639,12 @@ class RequirementPreparer:
     ) -> BaseDistribution:
         """Prepare an already-installed requirement."""
         assert req.satisfied_by, "req should have been satisfied but isn't"
-        assert skip_reason is not None, (
-            "did not get skip reason skipped but req.satisfied_by "
-            "is set to {}".format(req.satisfied_by)
+        assert (
+            skip_reason is not None
+        ), "did not get skip reason skipped but req.satisfied_by " "is set to {}".format(
+            req.satisfied_by
         )
-        logger.info(
-            "Requirement %s: %s (%s)", skip_reason, req, req.satisfied_by.version
-        )
+        logger.info("Requirement %s: %s (%s)", skip_reason, req, req.satisfied_by.version)
         with indent_log():
             if self.require_hashes:
                 logger.debug(

@@ -1,6 +1,7 @@
 """
 SparseArray data structure
 """
+
 from __future__ import annotations
 
 from collections import abc
@@ -154,9 +155,7 @@ def _get_fill(arr: SparseArray) -> np.ndarray:
         return np.asarray(arr.fill_value)
 
 
-def _sparse_array_op(
-    left: SparseArray, right: SparseArray, op: Callable, name: str
-) -> SparseArray:
+def _sparse_array_op(left: SparseArray, right: SparseArray, op: Callable, name: str) -> SparseArray:
     """
     Perform a binary operation between two arrays.
 
@@ -225,11 +224,7 @@ def _sparse_array_op(
             left_sp_values = left.sp_values
             right_sp_values = right.sp_values
 
-        if (
-            name in ["floordiv", "mod"]
-            and (right == 0).any()
-            and left.dtype.kind in ["i", "u"]
-        ):
+        if name in ["floordiv", "mod"] and (right == 0).any() and left.dtype.kind in ["i", "u"]:
             # Match the non-Sparse Series behavior
             opname = f"sparse_{name}_float64"
             left_sp_values = left_sp_values.astype("float64")
@@ -280,9 +275,7 @@ def _wrap_result(
     if is_bool_dtype(dtype):
         # fill_value may be np.bool_
         fill_value = bool(fill_value)
-    return SparseArray(
-        data, sparse_index=sparse_index, fill_value=fill_value, dtype=dtype
-    )
+    return SparseArray(data, sparse_index=sparse_index, fill_value=fill_value, dtype=dtype)
 
 
 class SparseArray(OpsMixin, PandasObject, ExtensionArray):
@@ -480,9 +473,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
             # "Union[dtype[Any], None, type, _SupportsDType, str, Union[Tuple[Any, int],
             # Tuple[Any, Union[int, Sequence[int]]], List[Any], _DTypeDict, Tuple[Any,
             # Any]]]"
-            sparse_values = np.asarray(
-                data.sp_values, dtype=dtype  # type: ignore[arg-type]
-            )
+            sparse_values = np.asarray(data.sp_values, dtype=dtype)  # type: ignore[arg-type]
         elif sparse_index is None:
             data = extract_array(data, extract_numpy=True)
             if not isinstance(data, np.ndarray):
@@ -770,9 +761,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
         When ``self.fill_value`` is not NA, the result dtype will be
         ``self.dtype``. Again, this preserves the amount of memory used.
         """
-        if (method is None and value is None) or (
-            method is not None and value is not None
-        ):
+        if (method is None and value is None) or (method is not None and value is not None):
             raise ValueError("Must specify one of 'method' or 'value'.")
 
         elif method is not None:
@@ -814,9 +803,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
         else:
             arr = self
 
-        empty = self._from_sequence(
-            [fill_value] * min(abs(periods), len(self)), dtype=arr.dtype
-        )
+        empty = self._from_sequence([fill_value] * min(abs(periods), len(self)), dtype=arr.dtype)
 
         if periods > 0:
             a = empty
@@ -952,15 +939,13 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
     # Indexing
     # --------
     @overload
-    def __getitem__(self, key: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, key: ScalarIndexer) -> Any: ...
 
     @overload
     def __getitem__(
         self: SparseArrayT,
         key: SequenceIndexer | tuple[int | ellipsis, ...],
-    ) -> SparseArrayT:
-        ...
+    ) -> SparseArrayT: ...
 
     def __getitem__(
         self: SparseArrayT,
@@ -1089,9 +1074,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
         else:
             return self._take_without_fill(indices)
 
-        return type(self)(
-            result, fill_value=self.fill_value, kind=self.kind, dtype=dtype
-        )
+        return type(self)(result, fill_value=self.fill_value, kind=self.kind, dtype=dtype)
 
     def _take_with_fill(self, indices, fill_value=None) -> np.ndarray:
         if fill_value is None:
@@ -1099,8 +1082,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
 
         if indices.min() < -1:
             raise ValueError(
-                "Invalid value in 'indices'. Must be between -1 "
-                "and the length of the array."
+                "Invalid value in 'indices'. Must be between -1 " "and the length of the array."
             )
 
         if indices.max() >= len(self):
@@ -1125,9 +1107,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
 
         if self.sp_index.npoints == 0 and old_fill_indices.all():
             # We've looked up all valid points on an all-sparse array.
-            taken = np.full(
-                sp_indexer.shape, fill_value=self.fill_value, dtype=self.dtype.subtype
-            )
+            taken = np.full(sp_indexer.shape, fill_value=self.fill_value, dtype=self.dtype.subtype)
 
         elif self.sp_index.npoints == 0:
             # Avoid taking from the empty self.sp_values
@@ -1339,9 +1319,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
 
         # error: Argument 1 to "_simple_new" of "SparseArray" has incompatible type
         # "ExtensionArray"; expected "ndarray"
-        return self._simple_new(
-            sp_values, self.sp_index, dtype  # type: ignore[arg-type]
-        )
+        return self._simple_new(sp_values, self.sp_index, dtype)  # type: ignore[arg-type]
 
     def map(self: SparseArrayT, mapper) -> SparseArrayT:
         """
@@ -1709,23 +1687,17 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
                 return NotImplemented
 
         # for binary ops, use our custom dunder methods
-        result = ops.maybe_dispatch_ufunc_to_dunder_op(
-            self, ufunc, method, *inputs, **kwargs
-        )
+        result = ops.maybe_dispatch_ufunc_to_dunder_op(self, ufunc, method, *inputs, **kwargs)
         if result is not NotImplemented:
             return result
 
         if "out" in kwargs:
             # e.g. tests.arrays.sparse.test_arithmetics.test_ndarray_inplace
-            res = arraylike.dispatch_ufunc_with_out(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            res = arraylike.dispatch_ufunc_with_out(self, ufunc, method, *inputs, **kwargs)
             return res
 
         if method == "reduce":
-            result = arraylike.dispatch_reduction_ufunc(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            result = arraylike.dispatch_reduction_ufunc(self, ufunc, method, *inputs, **kwargs)
             if result is not NotImplemented:
                 # e.g. tests.series.test_ufunc.TestNumpyReductions
                 return result
@@ -1738,9 +1710,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
             if ufunc.nout > 1:
                 # multiple outputs. e.g. modf
                 arrays = tuple(
-                    self._simple_new(
-                        sp_value, self.sp_index, SparseDtype(sp_value.dtype, fv)
-                    )
+                    self._simple_new(sp_value, self.sp_index, SparseDtype(sp_value.dtype, fv))
                     for sp_value, fv in zip(sp_values, fill_value)
                 )
                 return arrays
@@ -1796,9 +1766,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
             other = np.asarray(other)
             with np.errstate(all="ignore"):
                 if len(self) != len(other):
-                    raise AssertionError(
-                        f"length mismatch: {len(self)} vs. {len(other)}"
-                    )
+                    raise AssertionError(f"length mismatch: {len(self)} vs. {len(other)}")
                 if not isinstance(other, SparseArray):
                     dtype = getattr(other, "dtype", None)
                     other = SparseArray(other, fill_value=self.fill_value, dtype=dtype)
@@ -1815,9 +1783,7 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
 
         if isinstance(other, SparseArray):
             if len(self) != len(other):
-                raise ValueError(
-                    f"operands have mismatched length {len(self)} and {len(other)}"
-                )
+                raise ValueError(f"operands have mismatched length {len(self)} and {len(other)}")
 
             op_name = op.__name__.strip("_")
             return _sparse_array_op(self, other, op, op_name)
@@ -1930,21 +1896,17 @@ def make_sparse(
     if dtype is not None:
         # error: Argument "dtype" to "astype_nansafe" has incompatible type "Union[str,
         # dtype[Any]]"; expected "Union[dtype[Any], ExtensionDtype]"
-        sparsified_values = astype_nansafe(
-            sparsified_values, dtype=dtype  # type: ignore[arg-type]
-        )
+        sparsified_values = astype_nansafe(sparsified_values, dtype=dtype)  # type: ignore[arg-type]
     # TODO: copy
     return sparsified_values, index, fill_value
 
 
 @overload
-def make_sparse_index(length: int, indices, kind: Literal["block"]) -> BlockIndex:
-    ...
+def make_sparse_index(length: int, indices, kind: Literal["block"]) -> BlockIndex: ...
 
 
 @overload
-def make_sparse_index(length: int, indices, kind: Literal["integer"]) -> IntIndex:
-    ...
+def make_sparse_index(length: int, indices, kind: Literal["integer"]) -> IntIndex: ...
 
 
 def make_sparse_index(length: int, indices, kind: SparseIndexKind) -> SparseIndex:

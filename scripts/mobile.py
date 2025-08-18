@@ -61,7 +61,8 @@ class Mobile:
         mode = network.mask if isinstance(network, self.ConnectionType) else network
         return self.ConnectionType(
             self._driver.execute(
-                Command.SET_NETWORK_CONNECTION, {"name": "network_connection", "parameters": {"type": mode}}
+                Command.SET_NETWORK_CONNECTION,
+                {"name": "network_connection", "parameters": {"type": mode}},
             )["value"]
         )
 

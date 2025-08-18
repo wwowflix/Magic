@@ -13,6 +13,7 @@ classes (if they are relevant for the extension interface for all dtypes), or
 be added to the array-specific tests in `pandas/tests/arrays/`.
 
 """
+
 import numpy as np
 import pytest
 
@@ -192,9 +193,7 @@ class TestNumericReduce(base.BaseNumericReduceTests):
         if not skipna and s.isna().any():
             expected = pd.NA
         else:
-            expected = getattr(s.dropna().astype(s.dtype.numpy_dtype), op_name)(
-                skipna=skipna
-            )
+            expected = getattr(s.dropna().astype(s.dtype.numpy_dtype), op_name)(skipna=skipna)
         tm.assert_almost_equal(result, expected)
 
 

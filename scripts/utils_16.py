@@ -66,10 +66,7 @@ def infer_storage_options(
     "url_query": "q=1", "extra": "value"}
     """
     # Handle Windows paths including disk name in this special case
-    if (
-        re.match(r"^[a-zA-Z]:[\\/]", urlpath)
-        or re.match(r"^[a-zA-Z0-9]+://", urlpath) is None
-    ):
+    if re.match(r"^[a-zA-Z]:[\\/]", urlpath) or re.match(r"^[a-zA-Z0-9]+://", urlpath) is None:
         return {"protocol": "file", "path": urlpath}
 
     parsed_path = urlsplit(urlpath)
@@ -130,8 +127,7 @@ def update_storage_options(
         for collision in collisions:
             if options.get(collision) != inherited.get(collision):
                 raise KeyError(
-                    f"Collision between inferred and specified storage "
-                    f"option:\n{collision}"
+                    f"Collision between inferred and specified storage " f"option:\n{collision}"
                 )
     options.update(inherited)
 
@@ -358,9 +354,7 @@ def stringify_path(filepath: str | os.PathLike[str] | pathlib.Path) -> str:
         return filepath  # type: ignore[return-value]
 
 
-def make_instance(
-    cls: Callable[..., T], args: Sequence[Any], kwargs: dict[str, Any]
-) -> T:
+def make_instance(cls: Callable[..., T], args: Sequence[Any], kwargs: dict[str, Any]) -> T:
     inst = cls(*args, **kwargs)
     inst._determine_worker()  # type: ignore[attr-defined]
     return inst
@@ -502,9 +496,7 @@ def _unstrip_protocol(name: str, fs: AbstractFileSystem) -> str:
     return fs.unstrip_protocol(name)
 
 
-def mirror_from(
-    origin_name: str, methods: Iterable[str]
-) -> Callable[[type[T]], type[T]]:
+def mirror_from(origin_name: str, methods: Iterable[str]) -> Callable[[type[T]], type[T]]:
     """Mirror attributes and methods from the given
     origin_name attribute of the instance to the
     decorated class"""
@@ -613,9 +605,7 @@ def atomic_write(path: str, mode: str = "wb"):
     replaces `path` with the temporary file, thereby updating `path`
     atomically.
     """
-    fd, fn = tempfile.mkstemp(
-        dir=os.path.dirname(path), prefix=os.path.basename(path) + "-"
-    )
+    fd, fn = tempfile.mkstemp(dir=os.path.dirname(path), prefix=os.path.basename(path) + "-")
     try:
         with open(fd, mode) as fp:
             yield fp
@@ -677,9 +667,7 @@ def _translate(pat, STAR, QUESTION_MARK):
                             del chunks[k]
                     # Escape backslashes and hyphens for set difference (--).
                     # Hyphens that create ranges shouldn't be escaped.
-                    stuff = "-".join(
-                        s.replace("\\", r"\\").replace("-", r"\-") for s in chunks
-                    )
+                    stuff = "-".join(s.replace("\\", r"\\").replace("-", r"\-") for s in chunks)
                 # Escape set operations (&&, ~~ and ||).
                 stuff = re.sub(r"([&~|])", r"\\\1", stuff)
                 i = j + 1
@@ -728,9 +716,7 @@ def glob_translate(pat):
             results.append(any_segments if idx < last_part_idx else any_last_segments)
             continue
         elif "**" in part:
-            raise ValueError(
-                "Invalid pattern: '**' can only be an entire path component"
-            )
+            raise ValueError("Invalid pattern: '**' can only be an entire path component")
         if part:
             results.extend(_translate(part, f"{not_sep}*", not_sep))
         if idx < last_part_idx:

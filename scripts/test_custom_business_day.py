@@ -1,6 +1,7 @@
 """
 Tests for offsets.CustomBusinessDay / CDay
 """
+
 from datetime import (
     datetime,
     timedelta,
@@ -96,4 +97,3 @@ class TestCustomBusinessDay:
         cday0_14_1 = read_pickle(pth)
         cday = CDay(holidays=hdays)
         assert cday == cday0_14_1
-

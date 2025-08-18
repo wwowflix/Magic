@@ -2,6 +2,7 @@
 Tests for the following offsets:
 - Easter
 """
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -31,4 +32,3 @@ class TestEaster:
     )
     def test_offset(self, offset, date, expected):
         assert_offset_equal(offset, date, expected)
-

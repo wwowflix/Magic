@@ -1,10 +1,14 @@
 ﻿#!/usr/bin/env python3
-import argparse, csv, json, re
+import argparse
+import csv
+import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 LOG_FOLDER_RE = re.compile(r"scripts/(phase\d+)/(module_[^/]+)/", re.IGNORECASE)
+
 
 def _derive_log_path(logs_root: Path, folder_field: str, filename: str) -> Path:
     """
@@ -21,25 +25,30 @@ def _derive_log_path(logs_root: Path, folder_field: str, filename: str) -> Path:
     log_name = filename.replace(".py", ".log")
     return logs_root / log_dir / log_name
 
+
 def _read_rows(summary_path: Path) -> List[Dict[str, str]]:
     with summary_path.open("r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f, delimiter="\t")
         return [dict(row) for row in reader]
+
 
 def _filter_rows(rows: List[Dict[str, str]], phase: Optional[int]) -> List[Dict[str, str]]:
     if phase is None:
         return rows
     return [r for r in rows if str(r.get("Phase", "")).strip() == str(phase)]
 
-def _summarize(rows: List[Dict[str, str]], logs_root: Path) -> Tuple[Dict[str, int], List[Dict[str, object]], bool]:
-    totals = Counter()
-    checked: List[Dict[str, object]] = []
+
+def _summarize(
+    rows: List[Dict[str, str]], logs_root: Path
+) -> Tuple[Dict[str, int], list[dict[str, str]], bool]:
+    totals: dict[str, int] = Counter()
+    checked: list[dict[str, str]] = []
     ok = True
 
     for r in rows:
         status = str(r.get("Status", "")).strip()
         filename = str(r.get("Filename", "")).strip()
-        folder   = str(r.get("Folder", "")).strip()
+        folder = str(r.get("Folder", "")).strip()
         if not status:
             continue
 
@@ -55,23 +64,29 @@ def _summarize(rows: List[Dict[str, str]], logs_root: Path) -> Tuple[Dict[str, i
         if status.upper() == "FAIL":
             log_path = _derive_log_path(logs_root, folder, filename)
             found = log_path.exists()
-            entry["log_found"] = found
+            entry["log_found"] = found  # type: ignore[assignment]
             entry["log_path"] = str(log_path)
             if not found:
-                ok = False
+                ok = False  # type: ignore[assignment]
 
         checked.append(entry)
 
     # if there were simply no rows to check, that's OK
     return dict(totals), checked, ok
 
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="E2E smoketest for MAGIC runner outputs")
     ap.add_argument("--summary", required=True, help="Path to phase_master_summary.tsv")
     ap.add_argument("--logs_root", required=True, help="Root of outputs/logs")
     ap.add_argument("--report", required=True, help="Where to write JSON report")
-    # 🔧 make --phase optional; aggregate if omitted
-    ap.add_argument("--phase", type=int, default=None, help="Phase number to check; omit to aggregate all")
+    # ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â§ make --phase optional; aggregate if omitted
+    ap.add_argument(
+        "--phase",
+        type=int,
+        default=None,
+        help="Phase number to check; omit to aggregate all",
+    )
     ns = ap.parse_args(argv)
 
     summary_path = Path(ns.summary)
@@ -80,7 +95,11 @@ def main(argv=None) -> int:
 
     if not summary_path.exists():
         # Write a small report with ok=False so callers can read diagnostics
-        payload = {"ok": False, "error": "summary_not_found", "summary": str(summary_path)}
+        payload = {
+            "ok": False,
+            "error": "summary_not_found",
+            "summary": str(summary_path),
+        }
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         return 0
@@ -98,6 +117,7 @@ def main(argv=None) -> int:
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -7,7 +7,8 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import re, warnings
+import re
+import warnings
 import logging
 
 from bisect import bisect_left
@@ -65,16 +66,12 @@ class FontFace:
     color: Optional[Union[DeviceGray, DeviceRGB]]
     fill_color: Optional[Union[DeviceGray, DeviceRGB]]
 
-    def __init__(
-        self, family=None, emphasis=None, size_pt=None, color=None, fill_color=None
-    ):
+    def __init__(self, family=None, emphasis=None, size_pt=None, color=None, fill_color=None):
         self.family = family
         self.emphasis = None if emphasis is None else TextEmphasis.coerce(emphasis)
         self.size_pt = size_pt
         self.color = None if color is None else convert_to_device_color(color)
-        self.fill_color = (
-            None if fill_color is None else convert_to_device_color(fill_color)
-        )
+        self.fill_color = None if fill_color is None else convert_to_device_color(fill_color)
 
     replace = replace
     """
@@ -112,9 +109,7 @@ class FontFace:
             ),
             size_pt=FontFace._override(default_style.size_pt, override_style.size_pt),
             color=FontFace._override(default_style.color, override_style.color),
-            fill_color=FontFace._override(
-                default_style.fill_color, override_style.fill_color
-            ),
+            fill_color=FontFace._override(default_style.fill_color, override_style.fill_color),
         )
 
 
@@ -275,9 +270,7 @@ class TTFFont:
 
         # recalcTimestamp=False means that it doesn't modify the "modified" timestamp in head table
         # if we leave recalcTimestamp=True the tests will break every time
-        self.ttfont = ttLib.TTFont(
-            self.ttffile, recalcTimestamp=False, fontNumber=0, lazy=True
-        )
+        self.ttfont = ttLib.TTFont(self.ttffile, recalcTimestamp=False, fontNumber=0, lazy=True)
 
         self.scale = 1000 / self.ttfont["head"].unitsPerEm
 
@@ -407,9 +400,7 @@ class TTFFont:
         This method will invoke harfbuzz to perform the text shaping and return the sum of "x_advance"
         and "x_offset" for each glyph. This method works for "left to right" or "right to left" texts.
         """
-        _, glyph_positions = self.perform_harfbuzz_shaping(
-            text, font_size_pt, text_shaping_params
-        )
+        _, glyph_positions = self.perform_harfbuzz_shaping(text, font_size_pt, text_shaping_params)
 
         # If there is nothing to render (harfbuzz returns None), we return 0 text width
         if glyph_positions is None:
@@ -417,9 +408,7 @@ class TTFFont:
 
         text_width = 0
         for pos in glyph_positions:
-            text_width += (
-                round(self.scale * pos.x_advance + 0.001) * font_size_pt * 0.001
-            )
+            text_width += round(self.scale * pos.x_advance + 0.001) * font_size_pt * 0.001
         return (len(glyph_positions), text_width)
 
     # Disabling this check - looks like cython confuses pylint:
@@ -630,9 +619,7 @@ class SubsetMap:
 
     # pylint: disable=method-cache-max-size-none
     @lru_cache(maxsize=None)
-    def get_glyph(
-        self, glyph=None, unicode=None, glyph_name=None, glyph_width=None
-    ) -> Glyph:
+    def get_glyph(self, glyph=None, unicode=None, glyph_name=None, glyph_width=None) -> Glyph:
         if glyph:
             return Glyph(glyph, tuple(unicode), glyph_name, glyph_width)
         glyph_id = self.font.glyph_ids.get(unicode)

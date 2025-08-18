@@ -1,6 +1,7 @@
 """
 Experimental manager based on storing a collection of 1D arrays
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -372,9 +373,7 @@ class BaseArrayManager(DataManager):
             # TODO column-wise shift
             raise NotImplementedError
 
-        return self.apply_with_block(
-            "shift", periods=periods, axis=axis, fill_value=fill_value
-        )
+        return self.apply_with_block("shift", periods=periods, axis=axis, fill_value=fill_value)
 
     def fillna(self: T, value, limit, inplace: bool, downcast) -> T:
 
@@ -420,9 +419,7 @@ class BaseArrayManager(DataManager):
         assert np.ndim(value) == 0, value
         # TODO "replace" is right now implemented on the blocks, we should move
         # it to general array algos so it can be reused here
-        return self.apply_with_block(
-            "replace", value=value, to_replace=to_replace, inplace=inplace
-        )
+        return self.apply_with_block("replace", value=value, to_replace=to_replace, inplace=inplace)
 
     def replace_list(
         self: T,
@@ -500,8 +497,7 @@ class BaseArrayManager(DataManager):
             Whether to copy the blocks
         """
         return self._get_data_subset(
-            lambda arr: is_numeric_dtype(arr.dtype)
-            or getattr(arr.dtype, "_is_numeric", False)
+            lambda arr: is_numeric_dtype(arr.dtype) or getattr(arr.dtype, "_is_numeric", False)
         )
 
     def copy(self: T, deep=True) -> T:
@@ -612,9 +608,7 @@ class BaseArrayManager(DataManager):
             new_arrays = []
             for i in indexer:
                 if i == -1:
-                    arr = self._make_na_array(
-                        fill_value=fill_value, use_na_proxy=use_na_proxy
-                    )
+                    arr = self._make_na_array(fill_value=fill_value, use_na_proxy=use_na_proxy)
                 else:
                     arr = self.arrays[i]
                     if copy:
@@ -814,9 +808,7 @@ class ArrayManager(BaseArrayManager):
 
         return [np.asarray(arr) for arr in self.arrays]
 
-    def iset(
-        self, loc: int | slice | np.ndarray, value: ArrayLike, inplace: bool = False
-    ) -> None:
+    def iset(self, loc: int | slice | np.ndarray, value: ArrayLike, inplace: bool = False) -> None:
         """
         Set new column(s).
 
@@ -914,9 +906,7 @@ class ArrayManager(BaseArrayManager):
                 # matches argument type "Tuple[int, slice]"
                 value = value[0, :]  # type: ignore[call-overload]
             else:
-                raise ValueError(
-                    f"Expected a 1D array, got an array with shape {value.shape}"
-                )
+                raise ValueError(f"Expected a 1D array, got an array with shape {value.shape}")
         value = maybe_coerce_values(value)
 
         # TODO self.arrays can be empty
@@ -992,9 +982,7 @@ class ArrayManager(BaseArrayManager):
         # expected "List[Union[ndarray, ExtensionArray]]"
         return type(self)(result_arrays, [index, columns])  # type: ignore[arg-type]
 
-    def reduce(
-        self: T, func: Callable, ignore_failures: bool = False
-    ) -> tuple[T, np.ndarray]:
+    def reduce(self: T, func: Callable, ignore_failures: bool = False) -> tuple[T, np.ndarray]:
         """
         Apply reduction function column-wise, returning a single-row ArrayManager.
 
@@ -1027,9 +1015,7 @@ class ArrayManager(BaseArrayManager):
                 else:
                     # error: Argument 1 to "append" of "list" has incompatible type
                     # "ExtensionArray"; expected "ndarray"
-                    result_arrays.append(
-                        sanitize_array([res], None)  # type: ignore[arg-type]
-                    )
+                    result_arrays.append(sanitize_array([res], None))  # type: ignore[arg-type]
                 result_indices.append(i)
 
         index = Index._simple_new(np.array([None], dtype=object))  # placeholder
@@ -1052,9 +1038,7 @@ class ArrayManager(BaseArrayManager):
         # TODO what if `other` is BlockManager ?
         left_arrays = self.arrays
         right_arrays = other.arrays
-        result_arrays = [
-            array_op(left, right) for left, right in zip(left_arrays, right_arrays)
-        ]
+        result_arrays = [array_op(left, right) for left, right in zip(left_arrays, right_arrays)]
         return type(self)(result_arrays, self._axes)
 
     def quantile(
@@ -1068,9 +1052,7 @@ class ArrayManager(BaseArrayManager):
 
         arrs = [ensure_block_shape(x, 2) for x in self.arrays]
         assert axis == 1
-        new_arrs = [
-            quantile_compat(x, np.asarray(qs._values), interpolation) for x in arrs
-        ]
+        new_arrs = [quantile_compat(x, np.asarray(qs._values), interpolation) for x in arrs]
         for i, arr in enumerate(new_arrs):
             if arr.ndim == 2:
                 assert arr.shape[0] == 1, arr.shape

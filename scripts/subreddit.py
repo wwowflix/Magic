@@ -73,4 +73,3 @@ class SubredditListingMixin(BaseListingMixin, GildedListingMixin, RisingListingM
 
         """
         super().__init__(reddit, _data=_data)
-

@@ -99,12 +99,8 @@ CONFIG = _cleanup(
         },
         "SIMD Extensions": {
             "baseline": __cpu_baseline__,
-            "found": [
-                feature for feature in __cpu_dispatch__ if __cpu_features__[feature]
-            ],
-            "not found": [
-                feature for feature in __cpu_dispatch__ if not __cpu_features__[feature]
-            ],
+            "found": [feature for feature in __cpu_dispatch__ if __cpu_features__[feature]],
+            "not found": [feature for feature in __cpu_dispatch__ if not __cpu_features__[feature]],
         },
     }
 )
@@ -169,4 +165,3 @@ def show_config(mode=DisplayModes.stdout.value):
 
 show_config.__doc__ = show.__doc__
 show_config.__module__ = "numpy"
-

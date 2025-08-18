@@ -23,10 +23,7 @@ class Router:
 
         self.routes = routes
         if "key" in kwargs:
-            st.warning(
-                "No need for a key for initialization,"
-                " this is not a rendered component."
-            )
+            st.warning("No need for a key for initialization," " this is not a rendered component.")
         if not does_support_session_state():
             raise Exception(
                 "Streamlit installation doesn't support session state."
@@ -61,10 +58,7 @@ class Router:
         return route
 
     def get_url_route(self):
-        if (
-            "stx_router_route" in st.session_state
-            and st.session_state.stx_router_route is not None
-        ):
+        if "stx_router_route" in st.session_state and st.session_state.stx_router_route is not None:
             return st.session_state.stx_router_route
 
         route = self.get_nav_query_param()

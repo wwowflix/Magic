@@ -218,9 +218,7 @@ class LocalFileSystem(AbstractFileSystem):
 
     def created(self, path):
         info = self.info(path=path)
-        return datetime.datetime.fromtimestamp(
-            info["created"], tz=datetime.timezone.utc
-        )
+        return datetime.datetime.fromtimestamp(info["created"], tz=datetime.timezone.utc)
 
     def modified(self, path):
         info = self.info(path=path)
@@ -369,9 +367,7 @@ def get_umask(mask: int = 0o666) -> int:
 
 
 class LocalFileOpener(io.IOBase):
-    def __init__(
-        self, path, mode, autocommit=True, fs=None, compression=None, **kwargs
-    ):
+    def __init__(self, path, mode, autocommit=True, fs=None, compression=None, **kwargs):
         logger.debug("open file: %s", path)
         self.path = path
         self.mode = mode

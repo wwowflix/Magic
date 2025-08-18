@@ -28,7 +28,7 @@ FLOAT_RE = re.compile(
     r")"
 )
 BOOL_RE = re.compile("^[01]")
-SEPARATOR_RE = re.compile(f"[, \t]")
+SEPARATOR_RE = re.compile("[, \t]")
 
 
 def _tokenize_path(pathdef):
@@ -310,9 +310,7 @@ def parse_path(pathdef, pen, current_pos=(0, 0), arc_class=EllipticalArc):
                     (end.real, end.imag),
                 )
             else:
-                arc = arc_class(
-                    current_pos, rx, ry, rotation, arc_large, arc_sweep, end
-                )
+                arc = arc_class(current_pos, rx, ry, rotation, arc_large, arc_sweep, end)
                 arc.draw(pen)
 
             current_pos = end

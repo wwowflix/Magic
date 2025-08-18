@@ -69,9 +69,7 @@ def _invert(d: dict[Any, Any]) -> dict[Any, Any]:
 
 
 _LXMLParser: TypeAlias = Union[etree.XMLParser, etree.HTMLParser]
-_ParserOrParserClass: TypeAlias = Union[
-    _LXMLParser, Type[etree.XMLParser], Type[etree.HTMLParser]
-]
+_ParserOrParserClass: TypeAlias = Union[_LXMLParser, Type[etree.XMLParser], Type[etree.HTMLParser]]
 
 
 class LXMLTreeBuilderForXML(TreeBuilder):
@@ -204,9 +202,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         user_specified_encoding: Optional[_Encoding] = None,
         document_declared_encoding: Optional[_Encoding] = None,
         exclude_encodings: Optional[_Encodings] = None,
-    ) -> Iterable[
-        Tuple[Union[str, bytes], Optional[_Encoding], Optional[_Encoding], bool]
-    ]:
+    ) -> Iterable[Tuple[Union[str, bytes], Optional[_Encoding], Optional[_Encoding], bool]]:
         """Run any preliminary steps necessary to make incoming markup
         acceptable to the parser.
 
@@ -328,9 +324,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         # need a mutable dict--lxml might send us an immutable
         # dictproxy. Third, so we can handle namespaced attribute
         # names by converting the keys to NamespacedAttributes.
-        new_attrs: Dict[Union[str, NamespacedAttribute], str] = (
-            self.attribute_dict_class()
-        )
+        new_attrs: Dict[Union[str, NamespacedAttribute], str] = self.attribute_dict_class()
         for k, v in attrs.items():
             assert isinstance(k, str)
             assert isinstance(v, str)
@@ -371,9 +365,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
             # Also treat the namespace mapping as a set of attributes on the
             # tag, so we can recreate it later.
             for prefix, namespace in list(nsmap.items()):
-                attribute = NamespacedAttribute(
-                    "xmlns", prefix, "http://www.w3.org/2000/xmlns/"
-                )
+                attribute = NamespacedAttribute("xmlns", prefix, "http://www.w3.org/2000/xmlns/")
                 new_attrs[attribute] = namespace
 
         # Namespaces are in play. Find any attributes that came in

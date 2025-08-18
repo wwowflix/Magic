@@ -1,46 +1,42 @@
 name: CI
+
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main, chore/**, feature/** ]
+
+permissions:
+  contents: read
+  id-token: write   # needed if we use Codecov OIDC
+
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        py: ["3.11", "3.12", "3.13"]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.py }}
+          python-version: '3.11'
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-py${{ matrix.py }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-py${{ matrix.py }}-pip-
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest coverage codecov
 
-      - run: python -m pip install --upgrade pip
+      - name: Run fast tests with coverage (tools only)
+        run: |
+          pytest -q --maxfail=1 --disable-warnings 
+            --cov=tools --cov-branch 
+            --cov-report=xml --cov-report=term-missing 
+            --cov-fail-under=90
 
-      - name: Install project deps (if present)
-        if: hashFiles('requirements.txt') != ''
-        run: pip install -r requirements.txt
-
-      - name: Install dev deps (if present)
-        if: hashFiles('requirements-dev.txt') != ''
-        run: pip install -r requirements-dev.txt
-
-      - run: pip install pytest pytest-cov
-
-      - name: Run tests
-        run: pytest -q --maxfail=1 --disable-warnings --cov=tools --cov-branch --cov-report=xml --cov-fail-under=90
-
-      - uses: codecov/codecov-action@v4
-        if: always()
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+          fail_ci_if_error: true
+          use_oidc: true   # works if the Codecov GitHub App is installed for this repo

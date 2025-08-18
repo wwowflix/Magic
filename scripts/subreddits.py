@@ -33,9 +33,7 @@ class Subreddits(PRAWBase):
         :class:`.ListingGenerator`.
 
         """
-        return ListingGenerator(
-            self._reddit, API_PATH["subreddits_default"], **generator_kwargs
-        )
+        return ListingGenerator(self._reddit, API_PATH["subreddits_default"], **generator_kwargs)
 
     def gold(self, **generator_kwargs: Any) -> Iterator[praw.models.Subreddit]:
         """Alias for :meth:`.premium` to maintain backwards compatibility."""
@@ -55,9 +53,7 @@ class Subreddits(PRAWBase):
         :class:`.ListingGenerator`.
 
         """
-        return ListingGenerator(
-            self._reddit, API_PATH["subreddits_new"], **generator_kwargs
-        )
+        return ListingGenerator(self._reddit, API_PATH["subreddits_new"], **generator_kwargs)
 
     def popular(
         self, **generator_kwargs: str | int | dict[str, str]
@@ -68,9 +64,7 @@ class Subreddits(PRAWBase):
         :class:`.ListingGenerator`.
 
         """
-        return ListingGenerator(
-            self._reddit, API_PATH["subreddits_popular"], **generator_kwargs
-        )
+        return ListingGenerator(self._reddit, API_PATH["subreddits_popular"], **generator_kwargs)
 
     def premium(
         self, **generator_kwargs: str | int | dict[str, str]
@@ -81,9 +75,7 @@ class Subreddits(PRAWBase):
         :class:`.ListingGenerator`.
 
         """
-        return ListingGenerator(
-            self._reddit, API_PATH["subreddits_gold"], **generator_kwargs
-        )
+        return ListingGenerator(self._reddit, API_PATH["subreddits_gold"], **generator_kwargs)
 
     def recommended(
         self,
@@ -108,8 +100,7 @@ class Subreddits(PRAWBase):
         params = {"omit": self._to_list(omit_subreddits or [])}
         url = API_PATH["sub_recommended"].format(subreddits=self._to_list(subreddits))
         return [
-            Subreddit(self._reddit, sub["sr_name"])
-            for sub in self._reddit.get(url, params=params)
+            Subreddit(self._reddit, sub["sr_name"]) for sub in self._reddit.get(url, params=params)
         ]
 
     def search(
@@ -130,9 +121,7 @@ class Subreddits(PRAWBase):
 
         """
         self._safely_add_arguments(arguments=generator_kwargs, key="params", q=query)
-        return ListingGenerator(
-            self._reddit, API_PATH["subreddits_search"], **generator_kwargs
-        )
+        return ListingGenerator(self._reddit, API_PATH["subreddits_search"], **generator_kwargs)
 
     @_deprecate_args("query", "include_nsfw", "exact")
     def search_by_name(
@@ -165,9 +154,7 @@ class Subreddits(PRAWBase):
             As of 09/01/2020, this endpoint always returns 404.
 
         """
-        result = self._reddit.get(
-            API_PATH["subreddits_by_topic"], params={"query": query}
-        )
+        result = self._reddit.get(API_PATH["subreddits_by_topic"], params={"query": query})
         return [self._reddit.subreddit(x["name"]) for x in result if x.get("name")]
 
     def stream(
@@ -182,4 +169,3 @@ class Subreddits(PRAWBase):
 
         """
         return stream_generator(self.new, **stream_options)
-

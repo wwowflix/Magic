@@ -183,10 +183,7 @@ class TestTake:
 
     def test_2d_datetime64(self):
         # 2005/01/01 - 2006/01/01
-        arr = (
-            np.random.default_rng(2).integers(11_045_376, 11_360_736, (5, 3))
-            * 100_000_000_000
-        )
+        arr = np.random.default_rng(2).integers(11_045_376, 11_360_736, (5, 3)) * 100_000_000_000
         arr = arr.view(dtype="datetime64[ns]")
         indexer = [0, 2, -1, 1, -1]
 
@@ -305,4 +302,3 @@ class TestExtensionTake:
             result = algos.take(arr, [0, 0])
         expected = np.array([1, 1])
         tm.assert_numpy_array_equal(result, expected)
-

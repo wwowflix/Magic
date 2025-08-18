@@ -14,12 +14,7 @@ def test_dataframe_arrow_interface(using_infer_string):
     df = pd.DataFrame({"a": [1, 2, 3], "b": ["a", "b", "c"]})
 
     capsule = df.__arrow_c_stream__()
-    assert (
-        ctypes.pythonapi.PyCapsule_IsValid(
-            ctypes.py_object(capsule), b"arrow_array_stream"
-        )
-        == 1
-    )
+    assert ctypes.pythonapi.PyCapsule_IsValid(ctypes.py_object(capsule), b"arrow_array_stream") == 1
 
     table = pa.table(df)
     string_type = pa.large_string() if using_infer_string else pa.string()
@@ -45,4 +40,3 @@ def test_dataframe_to_arrow(using_infer_string):
     table = pa.RecordBatchReader.from_stream(df, schema=schema).read_all()
     expected = expected.cast(schema)
     assert table.equals(expected)
-

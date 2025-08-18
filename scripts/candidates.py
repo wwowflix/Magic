@@ -50,9 +50,7 @@ def as_base_candidate(candidate: Candidate) -> Optional[BaseCandidate]:
     return None
 
 
-def make_install_req_from_link(
-    link: Link, template: InstallRequirement
-) -> InstallRequirement:
+def make_install_req_from_link(link: Link, template: InstallRequirement) -> InstallRequirement:
     assert not template.editable, "template is editable"
     if template.req:
         line = str(template.req)
@@ -77,9 +75,7 @@ def make_install_req_from_link(
     return ireq
 
 
-def make_install_req_from_editable(
-    link: Link, template: InstallRequirement
-) -> InstallRequirement:
+def make_install_req_from_editable(link: Link, template: InstallRequirement) -> InstallRequirement:
     assert template.editable, "template not editable"
     return install_req_from_editable(
         link.url,
@@ -465,9 +461,7 @@ class ExtrasCandidate(Candidate):
         return self.base.version
 
     def format_for_error(self) -> str:
-        return "{} [{}]".format(
-            self.base.format_for_error(), ", ".join(sorted(self.extras))
-        )
+        return "{} [{}]".format(self.base.format_for_error(), ", ".join(sorted(self.extras)))
 
     @property
     def is_installed(self) -> bool:
@@ -503,9 +497,7 @@ class ExtrasCandidate(Candidate):
             )
 
         for r in self.base.dist.iter_dependencies(valid_extras):
-            requirement = factory.make_requirement_from_spec(
-                str(r), self.base._ireq, valid_extras
-            )
+            requirement = factory.make_requirement_from_spec(str(r), self.base._ireq, valid_extras)
             if requirement:
                 yield requirement
 

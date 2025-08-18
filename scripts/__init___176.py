@@ -31,7 +31,6 @@ from fontTools.misc.textTools import Tag, tostr
 from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables._f_v_a_r import Axis, NamedInstance
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates, dropImpliedOnCurvePoints
-from fontTools.ttLib.tables.ttProgram import Program
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables import otTables as ot
 from fontTools.ttLib.tables.otBase import OTTableWriter
@@ -43,8 +42,6 @@ from fontTools.varLib.featureVars import addFeatureVariations
 from fontTools.designspaceLib import DesignSpaceDocument, InstanceDescriptor
 from fontTools.designspaceLib.split import splitInterpolable, splitVariableFonts
 from fontTools.varLib.stat import buildVFStatTable
-from fontTools.colorLib.builder import buildColrV1
-from fontTools.colorLib.unbuilder import unbuildColrV1
 from functools import partial
 from collections import OrderedDict, defaultdict, namedtuple
 import os.path
@@ -52,7 +49,7 @@ import logging
 from copy import deepcopy
 from pprint import pformat
 from re import fullmatch
-from .errors import VarLibError, VarLibValidationError
+from .errors import VarLibValidationError
 
 log = logging.getLogger("fontTools.varLib")
 
@@ -113,9 +110,7 @@ def _add_fvar(font, axes, instances: List[InstanceDescriptor]):
 
     for instance in instances:
         # Filter out discrete axis locations
-        coordinates = {
-            name: value for name, value in instance.location.items() if name in axes
-        }
+        coordinates = {name: value for name, value in instance.location.items() if name in axes}
 
         if "en" not in instance.localisedStyleName:
             if not instance.styleName:
@@ -132,9 +127,7 @@ def _add_fvar(font, axes, instances: List[InstanceDescriptor]):
         psname = instance.postScriptFontName
 
         inst = NamedInstance()
-        inst.coordinates = {
-            axes[k].tag: axes[k].map_backward(v) for k, v in coordinates.items()
-        }
+        inst.coordinates = {axes[k].tag: axes[k].map_backward(v) for k, v in coordinates.items()}
 
         subfamilyNameID = nameTable.findMultilingualName(
             localisedStyleName, windows=True, mac=macNames
@@ -329,9 +322,7 @@ def _add_gvar(font, masterModel, master_ttfs, tolerance=0.5, optimize=True):
     defaultMasterIndex = masterModel.reverseMapping[0]
 
     master_datas = [
-        _MasterData(
-            m["glyf"], m["hmtx"].metrics, getattr(m.get("vmtx"), "metrics", None)
-        )
+        _MasterData(m["glyf"], m["hmtx"].metrics, getattr(m.get("vmtx"), "metrics", None))
         for m in master_ttfs
     ]
 
@@ -339,17 +330,13 @@ def _add_gvar(font, masterModel, master_ttfs, tolerance=0.5, optimize=True):
         log.debug("building gvar for glyph '%s'", glyph)
 
         allData = [
-            m.glyf._getCoordinatesAndControls(glyph, m.hMetrics, m.vMetrics)
-            for m in master_datas
+            m.glyf._getCoordinatesAndControls(glyph, m.hMetrics, m.vMetrics) for m in master_datas
         ]
 
         if allData[defaultMasterIndex][1].numberOfContours != 0:
             # If the default master is not empty, interpret empty non-default masters
             # as missing glyphs from a sparse master
-            allData = [
-                d if d is not None and d[1].numberOfContours != 0 else None
-                for d in allData
-            ]
+            allData = [d if d is not None and d[1].numberOfContours != 0 else None for d in allData]
 
         model, allData = masterModel.getSubModel(allData)
 
@@ -363,9 +350,7 @@ def _add_gvar(font, masterModel, master_ttfs, tolerance=0.5, optimize=True):
 
         # Update gvar
         gvar.variations[glyph] = []
-        deltas = model.getDeltas(
-            allCoords, round=partial(GlyphCoordinates.__round__, round=round)
-        )
+        deltas = model.getDeltas(allCoords, round=partial(GlyphCoordinates.__round__, round=round))
         supports = model.supports
         assert len(deltas) == len(supports)
 
@@ -378,9 +363,7 @@ def _add_gvar(font, masterModel, master_ttfs, tolerance=0.5, optimize=True):
                 continue
             var = TupleVariation(support, delta)
             if optimize:
-                delta_opt = iup_delta_optimize(
-                    delta, origCoords, endPts, tolerance=tolerance
-                )
+                delta_opt = iup_delta_optimize(delta, origCoords, endPts, tolerance=tolerance)
 
                 if None in delta_opt:
                     # Use "optimized" version only if smaller...
@@ -433,9 +416,7 @@ def _merge_TTHinting(font, masterModel, master_ttfs):
             continue
         font_pgm = getattr(font.get(tag), "program", None)
         if any(pgm != font_pgm for pgm in all_pgms):
-            log.warning(
-                "Masters have incompatible %s tables, hinting is discarded." % tag
-            )
+            log.warning("Masters have incompatible %s tables, hinting is discarded." % tag)
             _remove_TTHinting(font)
             return
 
@@ -552,9 +533,7 @@ def _add_VHVAR(font, axisTags, tableFields, getAdvanceMetrics):
     if vOrigDeltasAndSupports:
         singleModel = False
     else:
-        singleModel = models.allEqual(
-            id(v[1]) for v in vhAdvanceDeltasAndSupports.values()
-        )
+        singleModel = models.allEqual(id(v[1]) for v in vhAdvanceDeltasAndSupports.values())
 
     directStore = None
     if singleModel:
@@ -673,9 +652,7 @@ def _get_advance_metrics(font, masterModel, master_ttfs, axisTags, tableFields):
                 metrics[glyph] if glyph in metrics else defaultVOrig
                 for metrics, defaultVOrig in vOrigMetricses
             ]
-            vOrigDeltasAndSupports[glyph] = masterModel.getDeltasAndSupports(
-                vOrigs, round=round
-            )
+            vOrigDeltasAndSupports[glyph] = masterModel.getDeltasAndSupports(vOrigs, round=round)
 
     return vhAdvanceDeltasAndSupports, vOrigDeltasAndSupports
 
@@ -808,9 +785,7 @@ def _merge_OTL(font, model, master_fonts, axisTags):
         font["GPOS"].table.remap_device_varidxes(varidx_map)
 
 
-def _add_GSUB_feature_variations(
-    font, axes, internal_axis_supports, rules, featureTags
-):
+def _add_GSUB_feature_variations(font, axes, internal_axis_supports, rules, featureTags):
     def normalize(name, value):
         return models.normalizeLocation({name: value}, internal_axis_supports)[name]
 
@@ -876,9 +851,7 @@ def _add_CFF2(varFont, model, master_fonts):
 
 
 def _add_COLR(font, model, master_fonts, axisTags, colr_layer_reuse=True):
-    merger = COLRVariationMerger(
-        model, axisTags, font, allowLayerReuse=colr_layer_reuse
-    )
+    merger = COLRVariationMerger(model, axisTags, font, allowLayerReuse=colr_layer_reuse)
     merger.mergeTables(font, master_fonts)
     store = merger.store_builder.finish()
 
@@ -916,7 +889,7 @@ def load_designspace(designspace, log_enabled=True, *, require_sources=True):
 
     # Setup axes
     if not ds.axes:
-        raise VarLibValidationError(f"Designspace must have at least one axis.")
+        raise VarLibValidationError("Designspace must have at least one axis.")
 
     axes = OrderedDict()
     for axis_index, axis in enumerate(ds.axes):
@@ -951,9 +924,7 @@ def load_designspace(designspace, log_enabled=True, *, require_sources=True):
         loc = obj.getFullDesignLocation(ds)
         obj.designLocation = loc
         if loc is None:
-            raise VarLibValidationError(
-                f"Source or instance '{obj_name}' has no location."
-            )
+            raise VarLibValidationError(f"Source or instance '{obj_name}' has no location.")
         for axis_name in loc.keys():
             if axis_name not in axes:
                 raise VarLibValidationError(
@@ -984,8 +955,7 @@ def load_designspace(designspace, log_enabled=True, *, require_sources=True):
         log.info("Internal axis supports:\n%s", pformat(internal_axis_supports))
 
     normalized_master_locs = [
-        models.normalizeLocation(m, internal_axis_supports)
-        for m in internal_master_locs
+        models.normalizeLocation(m, internal_axis_supports) for m in internal_master_locs
     ]
     if log_enabled:
         log.info("Normalized master locations:\n%s", pformat(normalized_master_locs))
@@ -995,14 +965,10 @@ def load_designspace(designspace, log_enabled=True, *, require_sources=True):
     for i, m in enumerate(normalized_master_locs):
         if all(v == 0 for v in m.values()):
             if base_idx is not None:
-                raise VarLibValidationError(
-                    "More than one base master found in Designspace."
-                )
+                raise VarLibValidationError("More than one base master found in Designspace.")
             base_idx = i
     if require_sources and base_idx is None:
-        raise VarLibValidationError(
-            "Base master not found; no master at default location?"
-        )
+        raise VarLibValidationError("Base master not found; no master at default location?")
     if log_enabled:
         log.info("Index of base master: %s", base_idx)
 
@@ -1240,9 +1206,7 @@ def build(
         _merge_TTHinting(vf, model, master_fonts)
     if "GSUB" not in exclude and ds.rules:
         featureTags = _feature_variations_tags(ds)
-        _add_GSUB_feature_variations(
-            vf, ds.axes, ds.internal_axis_supports, ds.rules, featureTags
-        )
+        _add_GSUB_feature_variations(vf, ds.axes, ds.internal_axis_supports, ds.rules, featureTags)
     if "CFF2" not in exclude and ("CFF " in vf or "CFF2" in vf):
         _add_CFF2(vf, model, master_fonts)
         if "post" in vf:
@@ -1359,9 +1323,7 @@ def addGSUBFeatureVariations(vf, designspace, featureTags=(), *, log_enabled=Fal
         return
     if not featureTags:
         featureTags = _feature_variations_tags(ds)
-    _add_GSUB_feature_variations(
-        vf, ds.axes, ds.internal_axis_supports, ds.rules, featureTags
-    )
+    _add_GSUB_feature_variations(vf, ds.axes, ds.internal_axis_supports, ds.rules, featureTags)
 
 
 def main(args=None):
@@ -1439,17 +1401,11 @@ def main(args=None):
         ),
     )
     logging_group = parser.add_mutually_exclusive_group(required=False)
-    logging_group.add_argument(
-        "-v", "--verbose", action="store_true", help="Run more verbosely."
-    )
-    logging_group.add_argument(
-        "-q", "--quiet", action="store_true", help="Turn verbosity off."
-    )
+    logging_group.add_argument("-v", "--verbose", action="store_true", help="Run more verbosely.")
+    logging_group.add_argument("-q", "--quiet", action="store_true", help="Turn verbosity off.")
     options = parser.parse_args(args)
 
-    configLogger(
-        level=("DEBUG" if options.verbose else "ERROR" if options.quiet else "INFO")
-    )
+    configLogger(level=("DEBUG" if options.verbose else "ERROR" if options.quiet else "INFO"))
 
     designspace_filename = options.designspace
     designspace = DesignSpaceDocument.fromfile(designspace_filename)

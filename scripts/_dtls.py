@@ -132,10 +132,7 @@ def part_of_handshake_untrusted(packet: bytes) -> bool:
 # Cannot fail
 def is_client_hello_untrusted(packet: bytes) -> bool:
     try:
-        return (
-            packet[0] == ContentType.handshake
-            and packet[13] == HandshakeType.client_hello
-        )
+        return packet[0] == ContentType.handshake and packet[13] == HandshakeType.client_hello
     except IndexError:
         # Invalid DTLS record
         return False
@@ -401,9 +398,9 @@ def decode_volley_trusted(
             assert msg.msg_seq == fragment.msg_seq
             assert len(msg.body) == fragment.msg_len
 
-            msg.body[
-                fragment.frag_offset : fragment.frag_offset + fragment.frag_len
-            ] = fragment.frag
+            msg.body[fragment.frag_offset : fragment.frag_offset + fragment.frag_len] = (
+                fragment.frag
+            )
 
     return messages
 
@@ -450,12 +447,7 @@ class RecordEncoder:
                 # If message.body is empty, then we still want to encode it in one
                 # fragment, not zero.
                 while frag_offset < len(message.body) or not frags_encoded:
-                    space = (
-                        mtu
-                        - len(packet)
-                        - RECORD_HEADER.size
-                        - HANDSHAKE_MESSAGE_HEADER.size
-                    )
+                    space = mtu - len(packet) - RECORD_HEADER.size - HANDSHAKE_MESSAGE_HEADER.size
                     if space <= 0:
                         packets.append(packet)
                         packet = bytearray()
@@ -1219,9 +1211,7 @@ class DTLSEndpoint:
         # as a peer provides a valid cookie, we can immediately tear down the
         # old connection.
         # {remote address: DTLSChannel}
-        self._streams: WeakValueDictionary[AddressFormat, DTLSChannel] = (
-            WeakValueDictionary()
-        )
+        self._streams: WeakValueDictionary[AddressFormat, DTLSChannel] = WeakValueDictionary()
         self._listening_context: SSL.Context | None = None
         self._listening_key: bytes | None = None
         self._incoming_connections_q = _Queue[DTLSChannel](float("inf"))

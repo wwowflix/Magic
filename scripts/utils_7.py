@@ -1,6 +1,7 @@
 """
 Low-dependency indexing utilities.
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -56,11 +57,7 @@ def is_valid_positional_slice(slc: slice) -> bool:
     def is_int_or_none(val):
         return val is None or is_integer(val)
 
-    return (
-        is_int_or_none(slc.start)
-        and is_int_or_none(slc.stop)
-        and is_int_or_none(slc.step)
-    )
+    return is_int_or_none(slc.start) and is_int_or_none(slc.stop) and is_int_or_none(slc.step)
 
 
 def is_list_like_indexer(key) -> bool:
@@ -179,8 +176,7 @@ def check_setitem_lengths(indexer, value, values) -> bool:
             if len(value) != length_of_indexer(indexer, values) and values.ndim == 1:
                 # In case of two dimensional value is used row-wise and broadcasted
                 raise ValueError(
-                    "cannot set using a slice indexer with a "
-                    "different length than the value"
+                    "cannot set using a slice indexer with a " "different length than the value"
                 )
             if not len(value):
                 no_op = True
@@ -550,16 +546,13 @@ def check_array_indexer(array: AnyArrayLike, indexer: Any) -> Any:
         # GH26658
         if len(indexer) != len(array):
             raise IndexError(
-                f"Boolean index has wrong length: "
-                f"{len(indexer)} instead of {len(array)}"
+                f"Boolean index has wrong length: " f"{len(indexer)} instead of {len(array)}"
             )
     elif is_integer_dtype(dtype):
         try:
             indexer = np.asarray(indexer, dtype=np.intp)
         except ValueError as err:
-            raise ValueError(
-                "Cannot index with an integer indexer containing NA values"
-            ) from err
+            raise ValueError("Cannot index with an integer indexer containing NA values") from err
     else:
         raise IndexError("arrays used as indices must be of integer or boolean type")
 

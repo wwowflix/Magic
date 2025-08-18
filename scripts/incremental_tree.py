@@ -45,9 +45,7 @@ import xml.etree.ElementTree as ET
 
 
 def current_global_nsmap():
-    return {
-        prefix: uri for uri, prefix in ET._namespace_map.items()
-    }
+    return {prefix: uri for uri, prefix in ET._namespace_map.items()}
 
 
 class IncrementalTree(ET.ElementTree):
@@ -140,7 +138,7 @@ class IncrementalTree(ET.ElementTree):
                 if nsmap:
                     if None in nsmap:
                         raise ValueError(
-                            'Found None as default nsmap prefix in nsmap. '
+                            "Found None as default nsmap prefix in nsmap. "
                             'Use "" as the default namespace prefix.'
                         )
                     new_nsmap = nsmap.copy()
@@ -164,12 +162,10 @@ class IncrementalTree(ET.ElementTree):
                             new_nsmap.update(nsmap)
                         if default_namespace:
                             new_nsmap[""] = default_namespace
-                global_nsmap = {
-                    prefix: uri for uri, prefix in ET._namespace_map.items()
-                }
+                global_nsmap = {prefix: uri for uri, prefix in ET._namespace_map.items()}
                 if None in global_nsmap:
                     raise ValueError(
-                        'Found None as default nsmap prefix in nsmap registered with '
+                        "Found None as default nsmap prefix in nsmap registered with "
                         'register_namespace. Use "" for the default namespace prefix.'
                     )
                 nsmap_scope = {}
@@ -202,9 +198,7 @@ def _make_new_ns_prefix(
         if (
             prefix not in nsmap_scope
             and prefix not in global_prefixes
-            and (
-                not local_nsmap or prefix not in local_nsmap
-            )
+            and (not local_nsmap or prefix not in local_nsmap)
         ):
             return prefix
         i += 1
@@ -499,9 +493,7 @@ def write_elem_start(
                     else:
                         tag = uri_and_name[1]
                 elif "" in nsmap_scope:
-                    raise ValueError(
-                        "cannot use non-qualified names with default_namespace option"
-                    )
+                    raise ValueError("cannot use non-qualified names with default_namespace option")
             except TypeError:
                 ET._raise_serialization_error(tag)
 
@@ -656,11 +648,7 @@ def _qnames_iter(elem):
             if tag not in seen_el_qnames:
                 seen_el_qnames.add(tag)
                 yield tag, True
-        elif (
-            tag is not None
-            and tag is not ET.ProcessingInstruction
-            and tag is not ET.Comment
-        ):
+        elif tag is not None and tag is not ET.ProcessingInstruction and tag is not ET.Comment:
             ET._raise_serialization_error(tag)
 
         for key, value in this_elem.items():
@@ -750,9 +738,7 @@ def _namespaces(
 
     if "" in out_nsmap and has_unqual_el:
         # FIXME: can this be handled in XML 1.0?
-        raise ValueError(
-            "cannot use non-qualified names with default_namespace option"
-        )
+        raise ValueError("cannot use non-qualified names with default_namespace option")
 
     # The xml prefix doesn't need to be declared but may have been used to
     # prefix names. Let's remove it if it has been used
@@ -865,6 +851,7 @@ def compat_tostring(
 # --------------------------------------------------------------------
 # serialization support
 
+
 @contextlib.contextmanager
 def _get_writer(file_or_filename, encoding):
     # Copied from Python 3.12
@@ -875,8 +862,7 @@ def _get_writer(file_or_filename, encoding):
         # file_or_filename is a file name
         if encoding.lower() == "unicode":
             encoding = "utf-8"
-        with open(file_or_filename, "w", encoding=encoding,
-                  errors="xmlcharrefreplace") as file:
+        with open(file_or_filename, "w", encoding=encoding, errors="xmlcharrefreplace") as file:
             yield file.write, encoding
     else:
         # file_or_filename is a file-like object
@@ -907,10 +893,9 @@ def _get_writer(file_or_filename, encoding):
                         file.tell = file_or_filename.tell
                     except AttributeError:
                         pass
-                file = io.TextIOWrapper(file,
-                                        encoding=encoding,
-                                        errors="xmlcharrefreplace",
-                                        newline="\n")
+                file = io.TextIOWrapper(
+                    file, encoding=encoding, errors="xmlcharrefreplace", newline="\n"
+                )
                 # Keep the original file open when the TextIOWrapper is
                 # destroyed
                 stack.callback(file.detach)

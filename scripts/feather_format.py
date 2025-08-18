@@ -1,4 +1,5 @@
-""" feather-format compat """
+"""feather-format compat"""
+
 from __future__ import annotations
 
 from typing import (
@@ -76,9 +77,7 @@ def to_feather(
         )
 
     if df.index.name is not None:
-        raise ValueError(
-            "feather does not serialize index meta-data on a default index"
-        )
+        raise ValueError("feather does not serialize index meta-data on a default index")
 
     # validate columns
     # ----------------
@@ -87,9 +86,7 @@ def to_feather(
     if df.columns.inferred_type not in valid_types:
         raise ValueError("feather must have string column names")
 
-    with get_handle(
-        path, "wb", storage_options=storage_options, is_text=False
-    ) as handles:
+    with get_handle(path, "wb", storage_options=storage_options, is_text=False) as handles:
         feather.write_feather(df, handles.handle, **kwargs)
 
 
@@ -125,10 +122,6 @@ def read_feather(
     import_optional_dependency("pyarrow")
     from pyarrow import feather
 
-    with get_handle(
-        path, "rb", storage_options=storage_options, is_text=False
-    ) as handles:
+    with get_handle(path, "rb", storage_options=storage_options, is_text=False) as handles:
 
-        return feather.read_feather(
-            handles.handle, columns=columns, use_threads=bool(use_threads)
-        )
+        return feather.read_feather(handles.handle, columns=columns, use_threads=bool(use_threads))

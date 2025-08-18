@@ -1,6 +1,7 @@
 """
 data hash pandas / numpy objects
 """
+
 from __future__ import annotations
 
 import itertools
@@ -47,9 +48,7 @@ if TYPE_CHECKING:
 _default_hash_key = "0123456789123456"
 
 
-def combine_hash_arrays(
-    arrays: Iterator[np.ndarray], num_items: int
-) -> npt.NDArray[np.uint64]:
+def combine_hash_arrays(arrays: Iterator[np.ndarray], num_items: int) -> npt.NDArray[np.uint64]:
     """
     Parameters
     ----------
@@ -117,15 +116,11 @@ def hash_pandas_object(
         return Series(hash_tuples(obj, encoding, hash_key), dtype="uint64", copy=False)
 
     elif isinstance(obj, ABCIndex):
-        h = hash_array(obj._values, encoding, hash_key, categorize).astype(
-            "uint64", copy=False
-        )
+        h = hash_array(obj._values, encoding, hash_key, categorize).astype("uint64", copy=False)
         ser = Series(h, index=obj, dtype="uint64", copy=False)
 
     elif isinstance(obj, ABCSeries):
-        h = hash_array(obj._values, encoding, hash_key, categorize).astype(
-            "uint64", copy=False
-        )
+        h = hash_array(obj._values, encoding, hash_key, categorize).astype("uint64", copy=False)
         if index:
             index_iter = (
                 hash_pandas_object(
@@ -144,8 +139,7 @@ def hash_pandas_object(
 
     elif isinstance(obj, ABCDataFrame):
         hashes = (
-            hash_array(series._values, encoding, hash_key, categorize)
-            for _, series in obj.items()
+            hash_array(series._values, encoding, hash_key, categorize) for _, series in obj.items()
         )
         num_items = len(obj.columns)
         if index:
@@ -211,17 +205,13 @@ def hash_tuples(
     ]
 
     # hash the list-of-ndarrays
-    hashes = (
-        _hash_categorical(cat, encoding=encoding, hash_key=hash_key) for cat in cat_vals
-    )
+    hashes = (_hash_categorical(cat, encoding=encoding, hash_key=hash_key) for cat in cat_vals)
     h = combine_hash_arrays(hashes, len(cat_vals))
 
     return h
 
 
-def _hash_categorical(
-    cat: Categorical, encoding: str, hash_key: str
-) -> npt.NDArray[np.uint64]:
+def _hash_categorical(cat: Categorical, encoding: str, hash_key: str) -> npt.NDArray[np.uint64]:
     """
     Hash a Categorical by hashing its categories, and then mapping the codes
     to the hashes
@@ -344,18 +334,14 @@ def _hash_ndarray(
             )
 
             codes, categories = factorize(vals, sort=False)
-            cat = Categorical(
-                codes, Index._with_infer(categories), ordered=False, fastpath=True
-            )
+            cat = Categorical(codes, Index._with_infer(categories), ordered=False, fastpath=True)
             return _hash_categorical(cat, encoding, hash_key)
 
         try:
             vals = hash_object_array(vals, hash_key, encoding)
         except TypeError:
             # we have mixed types
-            vals = hash_object_array(
-                vals.astype(str).astype(object), hash_key, encoding
-            )
+            vals = hash_object_array(vals.astype(str).astype(object), hash_key, encoding)
 
     # Then, redistribute these 64-bit ints within the space of 64-bit ints
     vals ^= vals >> 30

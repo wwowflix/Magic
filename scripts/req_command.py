@@ -69,7 +69,6 @@ def _create_truststore_ssl_context() -> Optional["SSLContext"]:
 
 
 class SessionCommandMixin(CommandContextMixIn):
-
     """
     A class mixin for command classes needing _build_session().
     """
@@ -156,7 +155,6 @@ class SessionCommandMixin(CommandContextMixIn):
 
 
 class IndexGroupCommand(Command, SessionCommandMixin):
-
     """
     Abstract base class for commands with the index_group options.
 
@@ -236,9 +234,7 @@ def with_cleanup(func: Any) -> Any:
         for t in KEEPABLE_TEMPDIR_TYPES:
             registry.set_delete(t, False)
 
-    def wrapper(
-        self: RequirementCommand, options: Values, args: List[Any]
-    ) -> Optional[int]:
+    def wrapper(self: RequirementCommand, options: Values, args: List[Any]) -> Optional[int]:
         assert self.tempdir_registry is not None
         if options.no_clean:
             configure_tempdir_registry(self.tempdir_registry)
@@ -301,9 +297,7 @@ class RequirementCommand(IndexGroupCommand):
         else:
             lazy_wheel = False
             if "fast-deps" in options.features_enabled:
-                logger.warning(
-                    "fast-deps has no effect when used with the legacy resolver."
-                )
+                logger.warning("fast-deps has no effect when used with the legacy resolver.")
 
         return RequirementPreparer(
             build_dir=temp_build_dir_path,

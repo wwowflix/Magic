@@ -108,9 +108,7 @@ class BaseGetitemTests(BaseExtensionTests):
         result = df.loc[2]
         self.assert_series_equal(result, expected)
 
-        expected = pd.Series(
-            [data[-1]], index=["A"], name=len(data) - 1, dtype=data.dtype
-        )
+        expected = pd.Series([data[-1]], index=["A"], name=len(data) - 1, dtype=data.dtype)
         result = df.iloc[-1]
         self.assert_series_equal(result, expected)
 
@@ -385,9 +383,7 @@ class BaseGetitemTests(BaseExtensionTests):
         fill_value = data_missing[1]  # valid
         na = data_missing[0]
 
-        arr = data_missing._from_sequence(
-            [na, fill_value, na], dtype=data_missing.dtype
-        )
+        arr = data_missing._from_sequence([na, fill_value, na], dtype=data_missing.dtype)
         result = arr.take([-1, 1], fill_value=fill_value, allow_fill=True)
         expected = arr.take([1, 1])
         self.assert_extension_array_equal(result, expected)

@@ -21,9 +21,7 @@ def test_astype(using_infer_string):
 
     result = arr.astype("str")
     if using_infer_string:
-        expected = pd.array(
-            ["True", "False", None], dtype=pd.StringDtype(na_value=np.nan)
-        )
+        expected = pd.array(["True", "False", None], dtype=pd.StringDtype(na_value=np.nan))
         tm.assert_extension_array_equal(result, expected)
     else:
         expected = np.array(["True", "False", "<NA>"], dtype=f"{tm.ENDIAN}U5")
@@ -57,4 +55,3 @@ def test_astype_to_integer_array():
     result = arr.astype("Int64")
     expected = pd.array([1, 0, None], dtype="Int64")
     tm.assert_extension_array_equal(result, expected)
-

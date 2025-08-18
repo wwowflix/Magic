@@ -106,14 +106,11 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
     _truthy_value = Scalar  # bool(_truthy_value) = True
     _falsey_value = Scalar  # bool(_falsey_value) = False
 
-    def __init__(
-        self, values: np.ndarray, mask: npt.NDArray[np.bool_], copy: bool = False
-    ) -> None:
+    def __init__(self, values: np.ndarray, mask: npt.NDArray[np.bool_], copy: bool = False) -> None:
         # values is supposed to already be validated in the subclass
         if not (isinstance(mask, np.ndarray) and mask.dtype == np.bool_):
             raise TypeError(
-                "mask should be boolean numpy array. Use "
-                "the 'pd.array' function instead"
+                "mask should be boolean numpy array. Use " "the 'pd.array' function instead"
             )
         if values.shape != mask.shape:
             raise ValueError("values.shape must match mask.shape")
@@ -137,16 +134,12 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         raise AbstractMethodError(self)
 
     @overload
-    def __getitem__(self, item: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, item: ScalarIndexer) -> Any: ...
 
     @overload
-    def __getitem__(self: BaseMaskedArrayT, item: SequenceIndexer) -> BaseMaskedArrayT:
-        ...
+    def __getitem__(self: BaseMaskedArrayT, item: SequenceIndexer) -> BaseMaskedArrayT: ...
 
-    def __getitem__(
-        self: BaseMaskedArrayT, item: PositionalIndexer
-    ) -> BaseMaskedArrayT | Any:
+    def __getitem__(self: BaseMaskedArrayT, item: PositionalIndexer) -> BaseMaskedArrayT | Any:
         item = check_array_indexer(self, item)
 
         newmask = self._mask[item]
@@ -159,9 +152,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         return type(self)(self._data[item], newmask)
 
     @doc(ExtensionArray.fillna)
-    def fillna(
-        self: BaseMaskedArrayT, value=None, method=None, limit=None
-    ) -> BaseMaskedArrayT:
+    def fillna(self: BaseMaskedArrayT, value=None, method=None, limit=None) -> BaseMaskedArrayT:
         value, method = validate_fillna_kwargs(value, method)
 
         mask = self._mask
@@ -422,16 +413,13 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         return data
 
     @overload
-    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray:
-        ...
+    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray: ...
 
     @overload
-    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray:
-        ...
+    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray: ...
 
     @overload
-    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike:
-        ...
+    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike: ...
 
     def astype(self, dtype: AstypeArg, copy: bool = True) -> ArrayLike:
         dtype = pandas_dtype(dtype)
@@ -502,22 +490,16 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
                 return NotImplemented
 
         # for binary ops, use our custom dunder methods
-        result = ops.maybe_dispatch_ufunc_to_dunder_op(
-            self, ufunc, method, *inputs, **kwargs
-        )
+        result = ops.maybe_dispatch_ufunc_to_dunder_op(self, ufunc, method, *inputs, **kwargs)
         if result is not NotImplemented:
             return result
 
         if "out" in kwargs:
             # e.g. test_ufunc_with_out
-            return arraylike.dispatch_ufunc_with_out(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            return arraylike.dispatch_ufunc_with_out(self, ufunc, method, *inputs, **kwargs)
 
         if method == "reduce":
-            result = arraylike.dispatch_reduction_ufunc(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            result = arraylike.dispatch_reduction_ufunc(self, ufunc, method, *inputs, **kwargs)
             if result is not NotImplemented:
                 return result
 
@@ -585,9 +567,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         # error: Incompatible return value type (got "bool_", expected "bool")
         return self._mask.any()  # type: ignore[return-value]
 
-    def _propagate_mask(
-        self, mask: npt.NDArray[np.bool_] | None, other
-    ) -> npt.NDArray[np.bool_]:
+    def _propagate_mask(self, mask: npt.NDArray[np.bool_] | None, other) -> npt.NDArray[np.bool_]:
         if mask is None:
             mask = self._mask.copy()  # TODO: need test for BooleanArray needing a copy
             if other is libmissing.NA:
@@ -807,9 +787,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
             axis=axis,
         )
 
-        mask = take(
-            self._mask, indexer, fill_value=True, allow_fill=allow_fill, axis=axis
-        )
+        mask = take(self._mask, indexer, fill_value=True, allow_fill=allow_fill, axis=axis)
 
         # if we are filling
         # we only fill where the indexer is null
@@ -871,8 +849,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
     ) -> npt.NDArray[np.intp] | np.intp:
         if self._hasna:
             raise ValueError(
-                "searchsorted requires array to be sorted, which is impossible "
-                "with NAs present."
+                "searchsorted requires array to be sorted, which is impossible " "with NAs present."
             )
         if isinstance(value, ExtensionArray):
             value = value.astype(object)
@@ -949,9 +926,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         from pandas.arrays import IntegerArray
 
         if dropna:
-            keys, counts = algos.value_counts_arraylike(
-                self._data, dropna=True, mask=self._mask
-            )
+            keys, counts = algos.value_counts_arraylike(self._data, dropna=True, mask=self._mask)
             res = Series(counts, index=keys)
             res.index = res.index.astype(self.dtype)
             res = res.astype("Int64")
@@ -996,9 +971,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         right = other._data[~other._mask]
         return array_equivalent(left, right, dtype_equal=True)
 
-    def _quantile(
-        self, qs: npt.NDArray[np.float64], interpolation: str
-    ) -> BaseMaskedArray:
+    def _quantile(self, qs: npt.NDArray[np.float64], interpolation: str) -> BaseMaskedArray:
         """
         Dispatch to quantile_with_mask, needed because we do not have
         _from_factorized.
@@ -1095,9 +1068,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
             min_count=min_count,
             axis=axis,
         )
-        return self._wrap_reduction_result(
-            "sum", result, skipna=skipna, axis=axis, **kwargs
-        )
+        return self._wrap_reduction_result("sum", result, skipna=skipna, axis=axis, **kwargs)
 
     def prod(self, *, skipna=True, min_count=0, axis: int | None = 0, **kwargs):
         nv.validate_prod((), kwargs)
@@ -1108,9 +1079,7 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
             min_count=min_count,
             axis=axis,
         )
-        return self._wrap_reduction_result(
-            "prod", result, skipna=skipna, axis=axis, **kwargs
-        )
+        return self._wrap_reduction_result("prod", result, skipna=skipna, axis=axis, **kwargs)
 
     def min(self, *, skipna=True, axis: int | None = 0, **kwargs):
         nv.validate_min((), kwargs)

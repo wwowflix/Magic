@@ -12,13 +12,14 @@ for phase in args.phases.split(","):
     for module in args.modules.split(","):
         folder = os.path.join(base_path, f"phase{phase}", f"module_{module}")
         os.makedirs(folder, exist_ok=True)
-        
+
         placeholder_filename = f"{phase}{module}_placeholder_READY.py"
         placeholder_path = os.path.join(folder, placeholder_filename)
-        
+
         if not os.path.exists(placeholder_path):
             with open(placeholder_path, "w", encoding="utf-8") as f:
-                f.write(f"""# Auto-generated placeholder
+                f.write(
+                    f"""# Auto-generated placeholder
 print("Phase {phase} Module {module} placeholder executed")
 
 def main():
@@ -26,7 +27,8 @@ def main():
 
 if __name__ == "__main__":
     main()
-""")
+"""
+                )
             print(f"✅ Created: {placeholder_path}")
         else:
             print(f"⚠️ Already exists: {placeholder_path}")
