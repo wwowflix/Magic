@@ -28,3 +28,6 @@ phase_manifest.json
 .DS_Store
 # local backups
 tools/*.bak*
+
+*.bak_*
+ci_*_logs.zip
