@@ -11,13 +11,12 @@ Most contains basic functions that are used by several submodules and are
 useful to have in the main name-space.
 
 """
+
 import math
 
-from numpy.version import version as __version__
 
 # Public submodules
 # Note: recfunctions and (maybe) format are public too, but not imported
-from . import mixins
 from . import scimath as emath
 
 # Private submodules
@@ -40,7 +39,7 @@ from .arraypad import *
 from ._version import *
 from numpy.core._multiarray_umath import tracemalloc_domain
 
-__all__ = ['emath', 'math', 'tracemalloc_domain', 'Arrayterator']
+__all__ = ["emath", "math", "tracemalloc_domain", "Arrayterator"]
 __all__ += type_check.__all__
 __all__ += index_tricks.__all__
 __all__ += function_base.__all__
@@ -57,5 +56,6 @@ __all__ += nanfunctions.__all__
 __all__ += histograms.__all__
 
 from numpy._pytesttester import PytestTester
+
 test = PytestTester(__name__)
 del PytestTester

@@ -36,27 +36,28 @@ BASE_DIR = os.path.abspath(os.path.join(script_dir, ".."))
 
 # 5) Define your move rules
 action_rules = [
-    (lambda fn: fn.endswith('.py'),
-        os.path.join(BASE_DIR, 'scripts')),
-    (lambda fn: fn.endswith('.md'),
-        os.path.join(BASE_DIR, 'docs')),
-    (lambda fn: fn.lower().endswith('.csv') and 'reddit' in fn.lower(),
-        os.path.join(BASE_DIR, 'outputs', 'trends')),
-    (lambda fn: fn.lower().endswith('.csv'),
-        os.path.join(BASE_DIR, 'outputs', 'data')),
-    (lambda fn: fn.lower().endswith('.log'),
-        os.path.join(BASE_DIR, 'logs', 'archive')),
+    (lambda fn: fn.endswith(".py"), os.path.join(BASE_DIR, "scripts")),
+    (lambda fn: fn.endswith(".md"), os.path.join(BASE_DIR, "docs")),
+    (
+        lambda fn: fn.lower().endswith(".csv") and "reddit" in fn.lower(),
+        os.path.join(BASE_DIR, "outputs", "trends"),
+    ),
+    (lambda fn: fn.lower().endswith(".csv"), os.path.join(BASE_DIR, "outputs", "data")),
+    (lambda fn: fn.lower().endswith(".log"), os.path.join(BASE_DIR, "logs", "archive")),
 ]
+
 
 def should_skip(path: str) -> bool:
     """Skip virtualenv, git metadata, and already-organized folders."""
     exclude = [
-        'venv', '.git',
-        os.path.join('outputs', 'data'),
-        os.path.join('outputs', 'trends'),
-        os.path.join('logs', 'archive'),
+        "venv",
+        ".git",
+        os.path.join("outputs", "data"),
+        os.path.join("outputs", "trends"),
+        os.path.join("logs", "archive"),
     ]
     return any(seg in path for seg in exclude)
+
 
 def organize():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -77,6 +78,7 @@ def organize():
                     logging.info(f"Moved {src} → {dst}")
                     break
     logging.info("Done.")
+
 
 if __name__ == "__main__":
     organize()

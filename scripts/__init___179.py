@@ -15,7 +15,8 @@ Gives direct access to some classes defined in submodules:
 * `fpdf.template.FlexTemplate`
 """
 
-import warnings, sys
+import warnings
+import sys
 
 from .deprecation import WarnOnDeprecatedModuleAttributes
 from .enums import Align, TextMode, XPos, YPos

@@ -172,9 +172,7 @@ class NoNewAttributesMixin:
         # 1.) getattr is false for attributes that raise errors
         # 2.) cls.__dict__ doesn't traverse into base classes
         if getattr(self, "__frozen", False) and not (
-            key == "_cache"
-            or key in type(self).__dict__
-            or getattr(self, key, None) is not None
+            key == "_cache" or key in type(self).__dict__ or getattr(self, key, None) is not None
         ):
             raise AttributeError(f"You cannot add any new attribute '{key}'")
         object.__setattr__(self, key, value)
@@ -195,9 +193,7 @@ class SelectionMixin(Generic[NDFrameT]):
     @final
     @property
     def _selection_list(self):
-        if not isinstance(
-            self._selection, (list, tuple, ABCSeries, ABCIndex, np.ndarray)
-        ):
+        if not isinstance(self._selection, (list, tuple, ABCSeries, ABCIndex, np.ndarray)):
             return [self._selection]
         return self._selection
 
@@ -528,9 +524,7 @@ class IndexOpsMixin(OpsMixin):
             return self.array.to_numpy(dtype, copy=copy, na_value=na_value, **kwargs)
         elif kwargs:
             bad_keys = list(kwargs.keys())[0]
-            raise TypeError(
-                f"to_numpy() got an unexpected keyword argument '{bad_keys}'"
-            )
+            raise TypeError(f"to_numpy() got an unexpected keyword argument '{bad_keys}'")
 
         result = np.asarray(self._values, dtype=dtype)
         # TODO(GH-24345): Avoid potential double copy
@@ -652,9 +646,7 @@ class IndexOpsMixin(OpsMixin):
         else:
             # error: Incompatible return value type (got "Union[int, ndarray]", expected
             # "int")
-            return nanops.nanargmax(  # type: ignore[return-value]
-                delegate, skipna=skipna
-            )
+            return nanops.nanargmax(delegate, skipna=skipna)  # type: ignore[return-value]
 
     def min(self, axis=None, skipna: bool = True, *args, **kwargs):
         """
@@ -714,9 +706,7 @@ class IndexOpsMixin(OpsMixin):
         else:
             # error: Incompatible return value type (got "Union[int, ndarray]", expected
             # "int")
-            return nanops.nanargmin(  # type: ignore[return-value]
-                delegate, skipna=skipna
-            )
+            return nanops.nanargmin(delegate, skipna=skipna)  # type: ignore[return-value]
 
     def tolist(self):
         """
@@ -788,9 +778,7 @@ class IndexOpsMixin(OpsMixin):
         """
         func = getattr(self, name, None)
         if func is None:
-            raise TypeError(
-                f"{type(self).__name__} cannot perform the operation {name}"
-            )
+            raise TypeError(f"{type(self).__name__} cannot perform the operation {name}")
         return func(skipna=skipna, **kwds)
 
     @final
@@ -833,16 +821,11 @@ class IndexOpsMixin(OpsMixin):
                 # expected to be pd.Series(np.nan, ...). As np.nan is
                 # of dtype float64 the return value of this method should
                 # be float64 as well
-                mapper = create_series_with_explicit_dtype(
-                    mapper, dtype_if_empty=np.float64
-                )
+                mapper = create_series_with_explicit_dtype(mapper, dtype_if_empty=np.float64)
 
         if isinstance(mapper, ABCSeries):
             if na_action not in (None, "ignore"):
-                msg = (
-                    "na_action must either be 'ignore' or None, "
-                    f"{na_action} was passed"
-                )
+                msg = "na_action must either be 'ignore' or None, " f"{na_action} was passed"
                 raise ValueError(msg)
 
             if na_action == "ignore":
@@ -874,16 +857,11 @@ class IndexOpsMixin(OpsMixin):
         else:
             values = self._values.astype(object)
             if na_action == "ignore":
-                map_f = lambda values, f: lib.map_infer_mask(
-                    values, f, isna(values).view(np.uint8)
-                )
+                map_f = lambda values, f: lib.map_infer_mask(values, f, isna(values).view(np.uint8))
             elif na_action is None:
                 map_f = lib.map_infer
             else:
-                msg = (
-                    "na_action must either be 'ignore' or None, "
-                    f"{na_action} was passed"
-                )
+                msg = "na_action must either be 'ignore' or None, " f"{na_action} was passed"
                 raise ValueError(msg)
 
         # mapper is a function
@@ -991,9 +969,9 @@ class IndexOpsMixin(OpsMixin):
 
         if not isinstance(values, np.ndarray):
             result: ArrayLike = values.unique()
-            if (
-                isinstance(self.dtype, np.dtype) and self.dtype.kind in ["m", "M"]
-            ) and isinstance(self, ABCSeries):
+            if (isinstance(self.dtype, np.dtype) and self.dtype.kind in ["m", "M"]) and isinstance(
+                self, ABCSeries
+            ):
                 # GH#31182 Series._values returns EA
                 # unpack numpy datetime for backward-compat
                 result = np.asarray(result)
@@ -1270,8 +1248,7 @@ class IndexOpsMixin(OpsMixin):
         value: ScalarLike_co,
         side: Literal["left", "right"] = ...,
         sorter: NumpySorter = ...,
-    ) -> np.intp:
-        ...
+    ) -> np.intp: ...
 
     @overload
     def searchsorted(
@@ -1279,8 +1256,7 @@ class IndexOpsMixin(OpsMixin):
         value: npt.ArrayLike | ExtensionArray,
         side: Literal["left", "right"] = ...,
         sorter: NumpySorter = ...,
-    ) -> npt.NDArray[np.intp]:
-        ...
+    ) -> npt.NDArray[np.intp]: ...
 
     @doc(_shared_docs["searchsorted"], klass="Index")
     def searchsorted(
@@ -1308,9 +1284,7 @@ class IndexOpsMixin(OpsMixin):
         return self[~duplicated]  # type: ignore[index]
 
     @final
-    def _duplicated(
-        self, keep: Literal["first", "last", False] = "first"
-    ) -> npt.NDArray[np.bool_]:
+    def _duplicated(self, keep: Literal["first", "last", False] = "first") -> npt.NDArray[np.bool_]:
         return duplicated(self._values, keep=keep)
 
     def _arith_method(self, other, op):

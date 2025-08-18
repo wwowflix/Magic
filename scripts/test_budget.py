@@ -1,10 +1,9 @@
 import pytest
-import os
-import json
 from orchestrator import Orchestrator
 
+
 def test_budget_blocking(tmp_path):
-    budget_file = tmp_path / 'budget.json'
+    budget_file = tmp_path / "budget.json"
     budget_file.write_text('{"spent": 0}')
     orch = Orchestrator(max_budget=500)
 
@@ -14,6 +13,3 @@ def test_budget_blocking(tmp_path):
     # Spending over budget should raise Exception
     with pytest.raises(Exception):
         orch.track_budget(500, budget_file=str(budget_file))
-
-
-

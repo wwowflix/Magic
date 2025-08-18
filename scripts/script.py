@@ -315,7 +315,10 @@ class Script:
         target = {"context": browsing_context_id}
 
         result = self._call_function(
-            function_declaration=script, await_promise=True, target=target, arguments=arguments if arguments else None
+            function_declaration=script,
+            await_promise=True,
+            target=target,
+            arguments=arguments if arguments else None,
         )
 
         if result.type == "success":
@@ -351,7 +354,9 @@ class Script:
                     return {"type": "number", "value": "-0"}
 
             JS_MAX_SAFE_INTEGER = 9007199254740991
-            if isinstance(value, int) and (value > JS_MAX_SAFE_INTEGER or value < -JS_MAX_SAFE_INTEGER):
+            if isinstance(value, int) and (
+                value > JS_MAX_SAFE_INTEGER or value < -JS_MAX_SAFE_INTEGER
+            ):
                 return {"type": "bigint", "value": str(value)}
 
             return {"type": "number", "value": value}
@@ -360,20 +365,32 @@ class Script:
             return {"type": "string", "value": value}
         elif isinstance(value, datetime.datetime):
             # Convert Python datetime to JavaScript Date (ISO 8601 format)
-            return {"type": "date", "value": value.isoformat() + "Z" if value.tzinfo is None else value.isoformat()}
+            return {
+                "type": "date",
+                "value": (value.isoformat() + "Z" if value.tzinfo is None else value.isoformat()),
+            }
         elif isinstance(value, datetime.date):
             # Convert Python date to JavaScript Date
-            dt = datetime.datetime.combine(value, datetime.time.min).replace(tzinfo=datetime.timezone.utc)
+            dt = datetime.datetime.combine(value, datetime.time.min).replace(
+                tzinfo=datetime.timezone.utc
+            )
             return {"type": "date", "value": dt.isoformat()}
         elif isinstance(value, set):
-            return {"type": "set", "value": [self.__convert_to_local_value(item) for item in value]}
+            return {
+                "type": "set",
+                "value": [self.__convert_to_local_value(item) for item in value],
+            }
         elif isinstance(value, (list, tuple)):
-            return {"type": "array", "value": [self.__convert_to_local_value(item) for item in value]}
+            return {
+                "type": "array",
+                "value": [self.__convert_to_local_value(item) for item in value],
+            }
         elif isinstance(value, dict):
             return {
                 "type": "object",
                 "value": [
-                    [self.__convert_to_local_value(k), self.__convert_to_local_value(v)] for k, v in value.items()
+                    [self.__convert_to_local_value(k), self.__convert_to_local_value(v)]
+                    for k, v in value.items()
                 ],
             }
         else:

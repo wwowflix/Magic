@@ -119,9 +119,7 @@ def test_to_offset_whitespace(freqstr, expected):
     assert result == expected
 
 
-@pytest.mark.parametrize(
-    "freqstr,expected", [("00h 00min 01s", 1), ("-00h 03min 14s", -194)]
-)
+@pytest.mark.parametrize("freqstr,expected", [("00h 00min 01s", 1), ("-00h 03min 14s", -194)])
 def test_to_offset_leading_zero(freqstr, expected):
     result = to_offset(freqstr)
     assert result.n == expected
@@ -217,4 +215,3 @@ def test_to_offset_uppercase_frequency_deprecated(freq_depr):
 
     with pytest.raises(FutureWarning, match=depr_msg):
         to_offset(freq_depr)
-

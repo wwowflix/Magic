@@ -754,7 +754,10 @@ class BrowsingContext:
         event = BrowsingContextEvent(event_name)
 
         def _callback(event_data):
-            if event_name == self.EVENTS["context_created"] or event_name == self.EVENTS["context_destroyed"]:
+            if (
+                event_name == self.EVENTS["context_created"]
+                or event_name == self.EVENTS["context_destroyed"]
+            ):
                 info = BrowsingContextInfo.from_json(event_data.params)
                 callback(info)
             elif event_name == self.EVENTS["download_will_begin"]:
@@ -783,7 +786,9 @@ class BrowsingContext:
 
         return callback_id
 
-    def add_event_handler(self, event: str, callback: Callable, contexts: Optional[list[str]] = None) -> int:
+    def add_event_handler(
+        self, event: str, callback: Callable, contexts: Optional[list[str]] = None
+    ) -> int:
         """Add an event handler to the browsing context.
 
         Parameters:

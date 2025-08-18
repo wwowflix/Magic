@@ -106,12 +106,8 @@ def test_nans(sp_func, roll_func):
 @pytest.mark.parametrize("minp", [0, 99, 100])
 @pytest.mark.parametrize("roll_func", ["kurt", "skew"])
 def test_min_periods(series, minp, roll_func, step):
-    result = getattr(
-        series.rolling(len(series) + 1, min_periods=minp, step=step), roll_func
-    )()
-    expected = getattr(
-        series.rolling(len(series), min_periods=minp, step=step), roll_func
-    )()
+    result = getattr(series.rolling(len(series) + 1, min_periods=minp, step=step), roll_func)()
+    expected = getattr(series.rolling(len(series), min_periods=minp, step=step), roll_func)()
     nan_mask = isna(result)
     tm.assert_series_equal(nan_mask, isna(expected))
 
@@ -225,4 +221,3 @@ def test_rolling_kurt_eq_value_fperr(step):
     a = Series([1.1] * 15).rolling(window=10, step=step).kurt()
     assert (a[a.index >= 9] == -3).all()
     assert a[a.index < 9].isna().all()
-

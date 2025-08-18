@@ -45,9 +45,7 @@ def test_numba_vs_python_string_index():
     func = lambda x: x
     result = df.apply(func, engine="numba", axis=0)
     expected = df.apply(func, engine="python", axis=0)
-    tm.assert_frame_equal(
-        result, expected, check_column_type=False, check_index_type=False
-    )
+    tm.assert_frame_equal(result, expected, check_column_type=False, check_index_type=False)
 
 
 def test_numba_vs_python_indexing():
@@ -80,9 +78,7 @@ def test_numba_vs_python_reductions(reduction, apply_axis):
 @pytest.mark.parametrize("colnames", [[1, 2, 3], [1.0, 2.0, 3.0]])
 def test_numba_numeric_colnames(colnames):
     # Check that numeric column names lower properly and can be indxed on
-    df = DataFrame(
-        np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=np.int64), columns=colnames
-    )
+    df = DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=np.int64), columns=colnames)
     first_col = colnames[0]
     f = lambda x: x[first_col]  # Get the first column
     result = df.apply(f, engine="numba", axis=1)
@@ -127,4 +123,3 @@ def test_numba_unsupported_dtypes(apply_axis):
         "which is not supported by the numba engine.",
     ):
         df["c"].to_frame().apply(f, engine="numba", axis=apply_axis)
-

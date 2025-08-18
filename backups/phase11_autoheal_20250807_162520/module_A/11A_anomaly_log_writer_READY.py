@@ -4,6 +4,7 @@ from datetime import datetime
 ANOMALY_LOG_PATH = r"D:\MAGIC\logs\anomaly_flags.log"
 SCRIPTS_FOLDER = r"D:\MAGIC\scripts\phase11"
 
+
 def check_for_missing_scripts():
     missing = []
     # Example: Check for expected placeholder scripts existence
@@ -13,10 +14,13 @@ def check_for_missing_scripts():
         # Add all critical scripts expected in Phase 11
     ]
     for script in expected_scripts:
-        script_path = os.path.join(SCRIPTS_FOLDER, "module_A", script)  # adjust module path as needed
+        script_path = os.path.join(
+            SCRIPTS_FOLDER, "module_A", script
+        )  # adjust module path as needed
         if not os.path.exists(script_path):
             missing.append(script)
     return missing
+
 
 def log_anomalies(anomalies):
     if not anomalies:
@@ -26,9 +30,11 @@ def log_anomalies(anomalies):
             f.write(f"{datetime.now()} | MISSING SCRIPT | {anomaly}\n")
     print(f"Anomalies logged: {len(anomalies)}")
 
+
 def main():
     anomalies = check_for_missing_scripts()
     log_anomalies(anomalies)
+
 
 if __name__ == "__main__":
     main()

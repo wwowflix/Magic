@@ -11,4 +11,3 @@ for t in tables:
     print("-", t[0])
 
 conn.close()
-

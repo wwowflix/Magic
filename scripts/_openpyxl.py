@@ -485,14 +485,10 @@ class OpenpyxlWriter(ExcelWriter):
 
         if validate_freeze_panes(freeze_panes):
             freeze_panes = cast(Tuple[int, int], freeze_panes)
-            wks.freeze_panes = wks.cell(
-                row=freeze_panes[0] + 1, column=freeze_panes[1] + 1
-            )
+            wks.freeze_panes = wks.cell(row=freeze_panes[0] + 1, column=freeze_panes[1] + 1)
 
         for cell in cells:
-            xcell = wks.cell(
-                row=startrow + cell.row + 1, column=startcol + cell.col + 1
-            )
+            xcell = wks.cell(row=startrow + cell.row + 1, column=startcol + cell.col + 1)
             xcell.value, fmt = self._value_with_fmt(cell.val)
             if fmt:
                 xcell.number_format = fmt
@@ -565,9 +561,7 @@ class OpenpyxlReader(BaseExcelReader):
     def load_workbook(self, filepath_or_buffer: FilePath | ReadBuffer[bytes]):
         from openpyxl import load_workbook
 
-        return load_workbook(
-            filepath_or_buffer, read_only=True, data_only=True, keep_links=False
-        )
+        return load_workbook(filepath_or_buffer, read_only=True, data_only=True, keep_links=False)
 
     @property
     def sheet_names(self) -> list[str]:
@@ -631,9 +625,6 @@ class OpenpyxlReader(BaseExcelReader):
             max_width = max(len(data_row) for data_row in data)
             if min(len(data_row) for data_row in data) < max_width:
                 empty_cell: list[Scalar] = [""]
-                data = [
-                    data_row + (max_width - len(data_row)) * empty_cell
-                    for data_row in data
-                ]
+                data = [data_row + (max_width - len(data_row)) * empty_cell for data_row in data]
 
         return data

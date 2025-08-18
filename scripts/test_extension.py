@@ -1,6 +1,7 @@
 """
 Tests for behavior if an author does *not* implement EA methods.
 """
+
 import numpy as np
 import pytest
 
@@ -24,4 +25,3 @@ class TestExtensionArray:
         op_name = all_arithmetic_operators
         with pytest.raises(AttributeError):
             getattr(data, op_name)
-

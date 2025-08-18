@@ -122,9 +122,19 @@ class FirefoxBinary:
 
     def _find_exe_in_registry(self):
         try:
-            from _winreg import HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, OpenKey, QueryValue
+            from _winreg import (
+                HKEY_CURRENT_USER,
+                HKEY_LOCAL_MACHINE,
+                OpenKey,
+                QueryValue,
+            )
         except ImportError:
-            from winreg import HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, OpenKey, QueryValue
+            from winreg import (
+                HKEY_CURRENT_USER,
+                HKEY_LOCAL_MACHINE,
+                OpenKey,
+                QueryValue,
+            )
         import shlex
 
         keys = (
@@ -211,7 +221,10 @@ class FirefoxBinary:
                 os.makedirs(library_path)
             import shutil
 
-            shutil.copy(os.path.join(os.path.dirname(__file__), path, self.NO_FOCUS_LIBRARY_NAME), library_path)
+            shutil.copy(
+                os.path.join(os.path.dirname(__file__), path, self.NO_FOCUS_LIBRARY_NAME),
+                library_path,
+            )
             built_path += library_path + ":"
 
         return built_path

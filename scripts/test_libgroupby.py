@@ -25,9 +25,9 @@ class GroupVarTestMixin:
         values = 10 * prng.random((15, 1)).astype(self.dtype)
         labels = np.tile(np.arange(5), (3,)).astype("intp")
 
-        expected_out = (
-            np.squeeze(values).reshape((5, 3), order="F").std(axis=1, ddof=1) ** 2
-        )[:, np.newaxis]
+        expected_out = (np.squeeze(values).reshape((5, 3), order="F").std(axis=1, ddof=1) ** 2)[
+            :, np.newaxis
+        ]
         expected_counts = counts + 3
 
         self.algo(out, counts, values, labels)
@@ -329,4 +329,3 @@ def test_cython_group_sum_Inf_at_begining_and_end(values, out):
         actual,
         expected,
     )
-

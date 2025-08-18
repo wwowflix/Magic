@@ -2,10 +2,10 @@ import os
 
 # CONFIG
 CHECKLIST = [
-    ('.env', '🔐 .env file'),
-    ('venv', '🐍 Python virtual environment'),
-    ('requirements.txt', '📦 requirements.txt'),
-    ('scripts', '📁 scripts directory')
+    (".env", "🔐 .env file"),
+    ("venv", "🐍 Python virtual environment"),
+    ("requirements.txt", "📦 requirements.txt"),
+    ("scripts", "📁 scripts directory"),
 ]
 
 missing = []
@@ -23,9 +23,7 @@ for i in range(18):
         PHASES_OK = False
         print(f"❌ Missing: {phase_folder}")
     else:
-        has_ready = any(
-            f.endswith('_READY.py') for f in os.listdir(phase_folder)
-        )
+        has_ready = any(f.endswith("_READY.py") for f in os.listdir(phase_folder))
         if not has_ready:
             PHASES_OK = False
             print(f"⚠️  No _READY scripts in {phase_folder}")

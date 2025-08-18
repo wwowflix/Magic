@@ -5,7 +5,6 @@ from fontTools.misc.textTools import Tag, byteord, tostr
 from fontTools.misc.loggingTools import deprecateArgument
 from fontTools.ttLib import TTLibError
 from fontTools.ttLib.ttGlyphSet import (
-    _TTGlyph,
     _TTGlyphSetCFF,
     _TTGlyphSetGlyf,
     _TTGlyphSetVARC,
@@ -255,18 +254,14 @@ class TTFont(object):
         """Internal function, to be shared by save() and TTCollection.save()"""
 
         if self.recalcTimestamp and "head" in self:
-            self[
-                "head"
-            ]  # make sure 'head' is loaded so the recalculation is actually done
+            self["head"]  # make sure 'head' is loaded so the recalculation is actually done
 
         tags = list(self.keys())
         if "GlyphOrder" in tags:
             tags.remove("GlyphOrder")
         numTables = len(tags)
         # write to a temporary stream to allow saving to unseekable streams
-        writer = SFNTWriter(
-            file, numTables, self.sfntVersion, self.flavor, self.flavorData
-        )
+        writer = SFNTWriter(file, numTables, self.sfntVersion, self.flavor, self.flavorData)
 
         done = []
         for tag in tags:
@@ -341,9 +336,7 @@ class TTFont(object):
             tag = tables[i]
             if splitTables:
                 tablePath = path + "." + tagToIdentifier(tag) + ext
-                tableWriter = xmlWriter.XMLWriter(
-                    tablePath, newlinestr=writer.newlinestr
-                )
+                tableWriter = xmlWriter.XMLWriter(tablePath, newlinestr=writer.newlinestr)
                 tableWriter.begintag("ttFont", ttLibVersion=version)
                 tableWriter.newline()
                 tableWriter.newline()
@@ -484,9 +477,7 @@ class TTFont(object):
             if not self.ignoreDecompileErrors:
                 raise
             # fall back to DefaultTable, retaining the binary table data
-            log.exception(
-                "An exception occurred during the decompilation of the '%s' table", tag
-            )
+            log.exception("An exception occurred during the decompilation of the '%s' table", tag)
             from .tables.DefaultTable import DefaultTable
 
             file = StringIO()
@@ -747,9 +738,7 @@ class TTFont(object):
         else:
             raise KeyError(tag)
 
-    def getGlyphSet(
-        self, preferCFF=True, location=None, normalized=False, recalcBounds=True
-    ):
+    def getGlyphSet(self, preferCFF=True, location=None, normalized=False, recalcBounds=True):
         """Return a generic GlyphSet, which is a dict-like object
         mapping glyph names to glyph objects. The returned glyph objects
         have a ``.draw()`` method that supports the Pen protocol, and will
@@ -862,9 +851,7 @@ class GlyphOrder(object):
 
     def toXML(self, writer, ttFont):
         glyphOrder = ttFont.getGlyphOrder()
-        writer.comment(
-            "The 'id' attribute is only for humans; " "it is ignored when parsed."
-        )
+        writer.comment("The 'id' attribute is only for humans; " "it is ignored when parsed.")
         writer.newline()
         for i in range(len(glyphOrder)):
             glyphName = glyphOrder[i]

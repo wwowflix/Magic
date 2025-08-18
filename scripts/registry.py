@@ -38,8 +38,7 @@ def register_implementation(name, cls, clobber=False, errtxt=None):
         if name in known_implementations and clobber is False:
             if cls != known_implementations[name]["class"]:
                 raise ValueError(
-                    f"Name ({name}) already in the known_implementations and clobber "
-                    f"is False"
+                    f"Name ({name}) already in the known_implementations and clobber " f"is False"
                 )
         else:
             known_implementations[name] = {
@@ -50,9 +49,7 @@ def register_implementation(name, cls, clobber=False, errtxt=None):
     else:
         if name in registry and clobber is False:
             if _registry[name] is not cls:
-                raise ValueError(
-                    f"Name ({name}) already in the registry and clobber is False"
-                )
+                raise ValueError(f"Name ({name}) already in the registry and clobber is False")
         else:
             _registry[name] = cls
 
@@ -229,9 +226,7 @@ known_implementations = {
     "zip": {"class": "fsspec.implementations.zip.ZipFileSystem"},
 }
 
-assert list(known_implementations) == sorted(known_implementations), (
-    "Not in alphabetical order"
-)
+assert list(known_implementations) == sorted(known_implementations), "Not in alphabetical order"
 
 
 def get_filesystem_class(protocol):

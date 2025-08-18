@@ -181,9 +181,7 @@ class TestComparison:
         tm.assert_equal(result, expected)
 
         # different endpoints
-        other = interval_constructor(
-            interval_array.left[::-1], interval_array.right[::-1]
-        )
+        other = interval_constructor(interval_array.left[::-1], interval_array.right[::-1])
         result = op(interval_array, other)
         expected = self.elementwise_comparison(op, interval_array, other)
         tm.assert_equal(result, expected)
@@ -304,4 +302,3 @@ class TestComparison:
         s = Series([Interval(0, 1), Interval(1, 2)], dtype="interval")
         result = s == scalars
         tm.assert_series_equal(result, expected)
-

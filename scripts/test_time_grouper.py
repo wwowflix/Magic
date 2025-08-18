@@ -355,9 +355,7 @@ def test_groupby_resample_interpolate():
         )
 
     volume = [50] * 15 + [60]
-    week_starting = list(date_range("2018-01-07", "2018-01-21")) + [
-        Timestamp("2018-01-14")
-    ]
+    week_starting = list(date_range("2018-01-07", "2018-01-21")) + [Timestamp("2018-01-14")]
     expected_ind = pd.MultiIndex.from_arrays(
         [volume, week_starting],
         names=["volume", "week_starting"],
@@ -388,4 +386,3 @@ def test_groupby_resample_interpolate():
         index=expected_ind,
     )
     tm.assert_frame_equal(result, expected)
-

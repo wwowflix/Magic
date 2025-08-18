@@ -142,7 +142,9 @@ class WebElement(BaseWebElement):
         try:
             self._parent.execute_script(script, self)
         except JavascriptException as exc:
-            raise WebDriverException("To submit an element, it must be nested inside a form element") from exc
+            raise WebDriverException(
+                "To submit an element, it must be nested inside a form element"
+            ) from exc
 
     def clear(self) -> None:
         """Clears the text if it's a text entry element.
@@ -230,7 +232,9 @@ class WebElement(BaseWebElement):
         if getAttribute_js is None:
             _load_js()
         attribute_value = self.parent.execute_script(
-            f"/* getAttribute */return ({getAttribute_js}).apply(null, arguments);", self, name
+            f"/* getAttribute */return ({getAttribute_js}).apply(null, arguments);",
+            self,
+            name,
         )
         return attribute_value
 
@@ -302,7 +306,8 @@ class WebElement(BaseWebElement):
                 value = tuple("\n".join(remote_files))
 
         self._execute(
-            Command.SEND_KEYS_TO_ELEMENT, {"text": "".join(keys_to_typing(value)), "value": keys_to_typing(value)}
+            Command.SEND_KEYS_TO_ELEMENT,
+            {"text": "".join(keys_to_typing(value)), "value": keys_to_typing(value)},
         )
 
     @property
@@ -338,7 +343,9 @@ class WebElement(BaseWebElement):
         # Only go into this conditional for browsers that don't use the atom themselves
         if isDisplayed_js is None:
             _load_js()
-        return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+        return self.parent.execute_script(
+            f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self
+        )
 
     @property
     def location_once_scrolled_into_view(self) -> dict:
@@ -396,7 +403,9 @@ class WebElement(BaseWebElement):
         --------
         >>> value = element.value_of_css_property("color")
         """
-        return self._execute(Command.GET_ELEMENT_VALUE_OF_CSS_PROPERTY, {"propertyName": property_name})["value"]
+        return self._execute(
+            Command.GET_ELEMENT_VALUE_OF_CSS_PROPERTY, {"propertyName": property_name}
+        )["value"]
 
     @property
     def location(self) -> dict:

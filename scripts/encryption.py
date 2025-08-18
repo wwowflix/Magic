@@ -130,9 +130,7 @@ class StandardSecurityHandler:
         * Set the access permissions on the document
     """
 
-    DEFAULT_PADDING = (
-        b"(\xbfN^Nu\x8aAd\x00NV\xff\xfa\x01\x08..\x00\xb6\xd0h>\x80/\x0c\xa9\xfedSiz"
-    )
+    DEFAULT_PADDING = b"(\xbfN^Nu\x8aAd\x00NV\xff\xfa\x01\x08..\x00\xb6\xd0h>\x80/\x0c\xa9\xfedSiz"
 
     def __init__(
         self,
@@ -207,9 +205,7 @@ class StandardSecurityHandler:
         """Return an encryption dictionary"""
         return EncryptionDictionary(self)
 
-    def encrypt(
-        self, text: Union[str, bytearray, bytes], obj_id: int
-    ) -> Union[str, bytes]:
+    def encrypt(self, text: Union[str, bytearray, bytes], obj_id: int) -> Union[str, bytes]:
         """Method invoked by PDFObject and PDFContentStream to encrypt strings and streams"""
         LOGGER.debug("Encrypting %s", text)
         return (
@@ -247,12 +243,8 @@ class StandardSecurityHandler:
         """
         h = hashlib.new("md5", usedforsecurity=False)
         h.update(self.k)
-        h.update(
-            (obj_id & 0xFFFFFF).to_bytes(3, byteorder="little", signed=False)
-        )  # object id
-        h.update(
-            (0 & 0xFFFF).to_bytes(2, byteorder="little", signed=False)
-        )  # generation id
+        h.update((obj_id & 0xFFFFFF).to_bytes(3, byteorder="little", signed=False))  # object id
+        h.update((0 & 0xFFFF).to_bytes(2, byteorder="little", signed=False))  # generation id
         if self.is_aes_algorithm():
             h.update(bytes([0x73, 0x41, 0x6C, 0x54]))  # add salt (sAlT) for AES
         key = h.digest()
@@ -328,20 +320,14 @@ class StandardSecurityHandler:
                 or stringprep.in_table_c4(char)  # Non-character code points
                 or stringprep.in_table_c5(char)  # Surrogate codes
                 or stringprep.in_table_c6(char)  # Inappropriate for plain text
-                or stringprep.in_table_c7(
-                    char
-                )  # Inappropriate for canonical representation
-                or stringprep.in_table_c8(
-                    char
-                )  # Change display properties or are deprecated
+                or stringprep.in_table_c7(char)  # Inappropriate for canonical representation
+                or stringprep.in_table_c8(char)  # Change display properties or are deprecated
                 or stringprep.in_table_c9(char)  # Tagging characters
             )
 
         for char in prepared_string:
             if is_prohibited(char):
-                raise FPDFException(
-                    f"The password {string} contains prohibited characters"
-                )
+                raise FPDFException(f"The password {string} contains prohibited characters")
 
         # Bidirectional characters
         def has_character(string: str, fun: Callable) -> bool:
@@ -537,9 +523,7 @@ class StandardSecurityHandler:
         m.update(self.padded_password(self.user_password))
         m.update(bytes.fromhex(self.o))
         m.update(
-            (self.access_permission & 0xFFFFFFFF).to_bytes(
-                4, byteorder="little", signed=False
-            )
+            (self.access_permission & 0xFFFFFFFF).to_bytes(4, byteorder="little", signed=False)
         )
         m.update(bytes.fromhex(self.info_id))
         if self.encrypt_metadata is False and self.version == 4:

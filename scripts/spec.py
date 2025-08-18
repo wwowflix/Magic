@@ -64,12 +64,8 @@ class _Cached(type):
 
     def __call__(cls, *args, **kwargs):
         kwargs = apply_config(cls, kwargs)
-        extra_tokens = tuple(
-            getattr(cls, attr, None) for attr in cls._extra_tokenize_attributes
-        )
-        token = tokenize(
-            cls, cls._pid, threading.get_ident(), *args, *extra_tokens, **kwargs
-        )
+        extra_tokens = tuple(getattr(cls, attr, None) for attr in cls._extra_tokenize_attributes)
+        token = tokenize(cls, cls._pid, threading.get_ident(), *args, *extra_tokens, **kwargs)
         skip = kwargs.pop("skip_instance_cache", False)
         if os.getpid() != cls._pid:
             cls._cache.clear()
@@ -371,8 +367,7 @@ class AbstractFileSystem(metaclass=_Cached):
             files = [
                 f
                 for f in self.dircache[parent]
-                if f["name"] == path
-                or (f["name"] == path.rstrip("/") and f["type"] == "directory")
+                if f["name"] == path or (f["name"] == path.rstrip("/") and f["type"] == "directory")
             ]
             if len(files) == 0:
                 # parent dir was listed but did not contain this file
@@ -596,9 +591,7 @@ class AbstractFileSystem(metaclass=_Cached):
         seps = (os.path.sep, os.path.altsep) if os.path.altsep else (os.path.sep,)
         ends_with_sep = path.endswith(seps)  # _strip_protocol strips trailing slash
         path = self._strip_protocol(path)
-        append_slash_to_dirname = ends_with_sep or path.endswith(
-            tuple(sep + "**" for sep in seps)
-        )
+        append_slash_to_dirname = ends_with_sep or path.endswith(tuple(sep + "**" for sep in seps))
         idx_star = path.find("*") if path.find("*") >= 0 else len(path)
         idx_qmark = path.find("?") if path.find("?") >= 0 else len(path)
         idx_brace = path.find("[") if path.find("[") >= 0 else len(path)
@@ -643,9 +636,7 @@ class AbstractFileSystem(metaclass=_Cached):
             p: info
             for p, info in sorted(allpaths.items())
             if pattern.match(
-                p + "/"
-                if append_slash_to_dirname and info["type"] == "directory"
-                else p
+                p + "/" if append_slash_to_dirname and info["type"] == "directory" else p
             )
         }
 
@@ -756,9 +747,7 @@ class AbstractFileSystem(metaclass=_Cached):
         ) as f:
             return f.read()
 
-    def write_text(
-        self, path, value, encoding=None, errors=None, newline=None, **kwargs
-    ):
+    def write_text(self, path, value, encoding=None, errors=None, newline=None, **kwargs):
         """Write the text to the given file.
 
         An existing file will be overwritten.
@@ -837,9 +826,7 @@ class AbstractFileSystem(metaclass=_Cached):
         else:
             raise ValueError("path must be str or dict")
 
-    def cat_ranges(
-        self, paths, starts, ends, max_gap=None, on_error="return", **kwargs
-    ):
+    def cat_ranges(self, paths, starts, ends, max_gap=None, on_error="return", **kwargs):
         """Get the contents of byte ranges from one or more files
 
         Parameters
@@ -893,11 +880,7 @@ class AbstractFileSystem(metaclass=_Cached):
         or the path has been otherwise expanded
         """
         paths = self.expand_path(path, recursive=recursive)
-        if (
-            len(paths) > 1
-            or isinstance(path, list)
-            or paths[0] != self._strip_protocol(path)
-        ):
+        if len(paths) > 1 or isinstance(path, list) or paths[0] != self._strip_protocol(path):
             out = {}
             for path in paths:
                 try:
@@ -1003,9 +986,7 @@ class AbstractFileSystem(metaclass=_Cached):
             with callback.branched(rpath, lpath) as child:
                 self.get_file(rpath, lpath, callback=child, **kwargs)
 
-    def put_file(
-        self, lpath, rpath, callback=DEFAULT_CALLBACK, mode="overwrite", **kwargs
-    ):
+    def put_file(self, lpath, rpath, callback=DEFAULT_CALLBACK, mode="overwrite", **kwargs):
         """Copy single file to remote"""
         if mode == "create" and self.exists(rpath):
             raise FileExistsError
@@ -1068,9 +1049,7 @@ class AbstractFileSystem(metaclass=_Cached):
                     return
 
             source_is_file = len(lpaths) == 1
-            dest_is_dir = isinstance(rpath, str) and (
-                trailing_sep(rpath) or self.isdir(rpath)
-            )
+            dest_is_dir = isinstance(rpath, str) and (trailing_sep(rpath) or self.isdir(rpath))
 
             rpath = (
                 self._strip_protocol(rpath)
@@ -1107,9 +1086,7 @@ class AbstractFileSystem(metaclass=_Cached):
     def cp_file(self, path1, path2, **kwargs):
         raise NotImplementedError
 
-    def copy(
-        self, path1, path2, recursive=False, maxdepth=None, on_error=None, **kwargs
-    ):
+    def copy(self, path1, path2, recursive=False, maxdepth=None, on_error=None, **kwargs):
         """Copy within two locations in the filesystem
 
         on_error : "raise", "ignore"
@@ -1139,9 +1116,7 @@ class AbstractFileSystem(metaclass=_Cached):
                     return
 
             source_is_file = len(paths1) == 1
-            dest_is_dir = isinstance(path2, str) and (
-                trailing_sep(path2) or self.isdir(path2)
-            )
+            dest_is_dir = isinstance(path2, str) and (trailing_sep(path2) or self.isdir(path2))
 
             exists = source_is_str and (
                 (has_magic(path1) and source_is_file)
@@ -1197,9 +1172,7 @@ class AbstractFileSystem(metaclass=_Cached):
                     continue
                 elif recursive:
                     rec = set(
-                        self.find(
-                            p, maxdepth=maxdepth, withdirs=True, detail=False, **kwargs
-                        )
+                        self.find(p, maxdepth=maxdepth, withdirs=True, detail=False, **kwargs)
                     )
                     out |= rec
                 if p not in out and (recursive is False or self.exists(p)):
@@ -1215,9 +1188,7 @@ class AbstractFileSystem(metaclass=_Cached):
             logger.debug("%s mv: The paths are the same, so no files were moved.", self)
         else:
             # explicitly raise exception to prevent data corruption
-            self.copy(
-                path1, path2, recursive=recursive, maxdepth=maxdepth, onerror="raise"
-            )
+            self.copy(path1, path2, recursive=recursive, maxdepth=maxdepth, onerror="raise")
             self.rm(path1, recursive=recursive)
 
     def rm_file(self, path):
@@ -1318,9 +1289,7 @@ class AbstractFileSystem(metaclass=_Cached):
             mode = mode.replace("t", "") + "b"
 
             text_kwargs = {
-                k: kwargs.pop(k)
-                for k in ["encoding", "errors", "newline"]
-                if k in kwargs
+                k: kwargs.pop(k) for k in ["encoding", "errors", "newline"] if k in kwargs
             }
             return io.TextIOWrapper(
                 self.open(
@@ -1663,9 +1632,7 @@ class AbstractFileSystem(metaclass=_Cached):
         if recursion_limit:
             indent = " " * indent_size
             contents = self.ls(path, detail=True)
-            contents.sort(
-                key=lambda x: (x.get("type") != "directory", x.get("name", ""))
-            )
+            contents.sort(key=lambda x: (x.get("type") != "directory", x.get("name", "")))
 
             if max_display is not None and len(contents) > max_display:
                 displayed_contents = contents[:max_display]
@@ -1675,9 +1642,7 @@ class AbstractFileSystem(metaclass=_Cached):
                 remaining_count = 0
 
             for i, item in enumerate(displayed_contents):
-                is_last_item = (i == len(displayed_contents) - 1) and (
-                    remaining_count == 0
-                )
+                is_last_item = (i == len(displayed_contents) - 1) and (remaining_count == 0)
 
                 branch = (
                     "└" + ("─" * (indent_size - 2))
@@ -1685,9 +1650,7 @@ class AbstractFileSystem(metaclass=_Cached):
                     else "├" + ("─" * (indent_size - 2))
                 )
                 branch += " "
-                new_prefix = prefix + (
-                    indent if is_last_item else "│" + " " * (indent_size - 1)
-                )
+                new_prefix = prefix + (indent if is_last_item else "│" + " " * (indent_size - 1))
 
                 name = os.path.basename(item.get("name", ""))
 
@@ -1697,9 +1660,7 @@ class AbstractFileSystem(metaclass=_Cached):
                         1 for sub_item in sub_contents if sub_item.get("type") == "file"
                     )
                     num_folders = sum(
-                        1
-                        for sub_item in sub_contents
-                        if sub_item.get("type") == "directory"
+                        1 for sub_item in sub_contents if sub_item.get("type") == "directory"
                     )
 
                     if num_files == 0 and num_folders == 0:
@@ -1733,9 +1694,7 @@ class AbstractFileSystem(metaclass=_Cached):
 
             if remaining_count > 0:
                 more_message = f"{remaining_count} more item(s) not displayed."
-                result.append(
-                    f"{prefix}{'└' + ('─' * (indent_size - 2))} {more_message}"
-                )
+                result.append(f"{prefix}{'└' + ('─' * (indent_size - 2))} {more_message}")
 
         return "\n".join(_ for _ in result if _)
 
@@ -1881,9 +1840,7 @@ class AbstractBufferedFile(io.IOBase):
         self.path = path
         self.fs = fs
         self.mode = mode
-        self.blocksize = (
-            self.DEFAULT_BLOCK_SIZE if block_size in ["default", None] else block_size
-        )
+        self.blocksize = self.DEFAULT_BLOCK_SIZE if block_size in ["default", None] else block_size
         self.loc = 0
         self.autocommit = autocommit
         self.end = None

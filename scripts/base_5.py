@@ -6,6 +6,7 @@ An interface for extending pandas with custom arrays.
    This is an experimental API and subject to breaking changes
    without warning.
 """
+
 from __future__ import annotations
 
 import inspect
@@ -269,9 +270,7 @@ class ExtensionArray:
         raise AbstractMethodError(cls)
 
     @classmethod
-    def _from_sequence_of_strings(
-        cls, strings, *, dtype: Dtype | None = None, copy=False
-    ):
+    def _from_sequence_of_strings(cls, strings, *, dtype: Dtype | None = None, copy=False):
         """
         Construct a new ExtensionArray from a sequence of strings.
 
@@ -315,16 +314,12 @@ class ExtensionArray:
     # Must be a Sequence
     # ------------------------------------------------------------------------
     @overload
-    def __getitem__(self, item: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, item: ScalarIndexer) -> Any: ...
 
     @overload
-    def __getitem__(self: ExtensionArrayT, item: SequenceIndexer) -> ExtensionArrayT:
-        ...
+    def __getitem__(self: ExtensionArrayT, item: SequenceIndexer) -> ExtensionArrayT: ...
 
-    def __getitem__(
-        self: ExtensionArrayT, item: PositionalIndexer
-    ) -> ExtensionArrayT | Any:
+    def __getitem__(self: ExtensionArrayT, item: PositionalIndexer) -> ExtensionArrayT | Any:
         """
         Select a subset of self.
 
@@ -565,16 +560,13 @@ class ExtensionArray:
     # ------------------------------------------------------------------------
 
     @overload
-    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray:
-        ...
+    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray: ...
 
     @overload
-    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray:
-        ...
+    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray: ...
 
     @overload
-    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike:
-        ...
+    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike: ...
 
     def astype(self, dtype: AstypeArg, copy: bool = True) -> ArrayLike:
         """
@@ -809,9 +801,7 @@ class ExtensionArray:
         mask = self.isna()
         # error: Argument 2 to "check_value_size" has incompatible type
         # "ExtensionArray"; expected "ndarray"
-        value = missing.check_value_size(
-            value, mask, len(self)  # type: ignore[arg-type]
-        )
+        value = missing.check_value_size(value, mask, len(self))  # type: ignore[arg-type]
 
         if mask.any():
             if method is not None:
@@ -877,9 +867,7 @@ class ExtensionArray:
         if isna(fill_value):
             fill_value = self.dtype.na_value
 
-        empty = self._from_sequence(
-            [fill_value] * min(abs(periods), len(self)), dtype=self.dtype
-        )
+        empty = self._from_sequence([fill_value] * min(abs(periods), len(self)), dtype=self.dtype)
         if periods > 0:
             a = empty
             b = self[:-periods]
@@ -1085,9 +1073,7 @@ class ExtensionArray:
         resolved_na_sentinel = resolve_na_sentinel(na_sentinel, use_na_sentinel)
         arr, na_value = self._values_for_factorize()
 
-        codes, uniques = factorize_array(
-            arr, na_sentinel=resolved_na_sentinel, na_value=na_value
-        )
+        codes, uniques = factorize_array(arr, na_sentinel=resolved_na_sentinel, na_value=na_value)
 
         uniques_ea = self._from_factorized(uniques, self)
         return codes, uniques_ea
@@ -1289,9 +1275,7 @@ class ExtensionArray:
         # the short repr has no trailing newline, while the truncated
         # repr does. So we include a newline in our template, and strip
         # any trailing newlines from format_object_summary
-        data = format_object_summary(
-            self, self._formatter(), indent_for_name=False
-        ).rstrip(", \n")
+        data = format_object_summary(self, self._formatter(), indent_for_name=False).rstrip(", \n")
         class_name = f"<{type(self).__name__}>\n"
         return f"{class_name}{data}\nLength: {len(self)}, dtype: {self.dtype}"
 
@@ -1302,9 +1286,7 @@ class ExtensionArray:
         # repr does. So we include a newline in our template, and strip
         # any trailing newlines from format_object_summary
         lines = [
-            format_object_summary(x, self._formatter(), indent_for_name=False).rstrip(
-                ", \n"
-            )
+            format_object_summary(x, self._formatter(), indent_for_name=False).rstrip(", \n")
             for x in self
         ]
         data = ",\n".join(lines)
@@ -1522,9 +1504,7 @@ class ExtensionArray:
 
         self[mask] = val
 
-    def _where(
-        self: ExtensionArrayT, mask: npt.NDArray[np.bool_], value
-    ) -> ExtensionArrayT:
+    def _where(self: ExtensionArrayT, mask: npt.NDArray[np.bool_], value) -> ExtensionArrayT:
         """
         Analogue to np.where(mask, self, value)
 
@@ -1547,9 +1527,7 @@ class ExtensionArray:
         result[~mask] = val
         return result
 
-    def _fill_mask_inplace(
-        self, method: str, limit, mask: npt.NDArray[np.bool_]
-    ) -> None:
+    def _fill_mask_inplace(self, method: str, limit, mask: npt.NDArray[np.bool_]) -> None:
         """
         Replace values in locations specified by 'mask' using pad or backfill.
 
@@ -1658,26 +1636,18 @@ class ExtensionArray:
         return mode(self, dropna=dropna)  # type: ignore[return-value]
 
     def __array_ufunc__(self, ufunc: np.ufunc, method: str, *inputs, **kwargs):
-        if any(
-            isinstance(other, (ABCSeries, ABCIndex, ABCDataFrame)) for other in inputs
-        ):
+        if any(isinstance(other, (ABCSeries, ABCIndex, ABCDataFrame)) for other in inputs):
             return NotImplemented
 
-        result = arraylike.maybe_dispatch_ufunc_to_dunder_op(
-            self, ufunc, method, *inputs, **kwargs
-        )
+        result = arraylike.maybe_dispatch_ufunc_to_dunder_op(self, ufunc, method, *inputs, **kwargs)
         if result is not NotImplemented:
             return result
 
         if "out" in kwargs:
-            return arraylike.dispatch_ufunc_with_out(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            return arraylike.dispatch_ufunc_with_out(self, ufunc, method, *inputs, **kwargs)
 
         if method == "reduce":
-            result = arraylike.dispatch_reduction_ufunc(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            result = arraylike.dispatch_reduction_ufunc(self, ufunc, method, *inputs, **kwargs)
             if result is not NotImplemented:
                 return result
 
@@ -1712,9 +1682,7 @@ class ExtensionOpsMixin:
         setattr(cls, "__mod__", cls._create_arithmetic_method(operator.mod))
         setattr(cls, "__rmod__", cls._create_arithmetic_method(roperator.rmod))
         setattr(cls, "__floordiv__", cls._create_arithmetic_method(operator.floordiv))
-        setattr(
-            cls, "__rfloordiv__", cls._create_arithmetic_method(roperator.rfloordiv)
-        )
+        setattr(cls, "__rfloordiv__", cls._create_arithmetic_method(roperator.rfloordiv))
         setattr(cls, "__truediv__", cls._create_arithmetic_method(operator.truediv))
         setattr(cls, "__rtruediv__", cls._create_arithmetic_method(roperator.rtruediv))
         setattr(cls, "__divmod__", cls._create_arithmetic_method(divmod))

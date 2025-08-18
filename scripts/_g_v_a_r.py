@@ -1,5 +1,4 @@
 from collections import deque
-from functools import partial
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import safeEval
 from fontTools.misc.lazyTools import LazyDict
@@ -9,7 +8,6 @@ from . import DefaultTable
 import array
 import itertools
 import logging
-import struct
 import sys
 import fontTools.ttLib.tables.TupleVariation as tv
 
@@ -66,9 +64,7 @@ class table__g_v_a_r(DefaultTable.DefaultTable):
     def compile(self, ttFont):
 
         axisTags = [axis.axisTag for axis in ttFont["fvar"].axes]
-        sharedTuples = tv.compileSharedTuples(
-            axisTags, itertools.chain(*self.variations.values())
-        )
+        sharedTuples = tv.compileSharedTuples(axisTags, itertools.chain(*self.variations.values()))
         sharedTupleIndices = {coord: i for i, coord in enumerate(sharedTuples)}
         sharedTupleSize = sum([len(c) for c in sharedTuples])
         compiledGlyphs = self.compileGlyphs_(ttFont, axisTags, sharedTupleIndices)
@@ -88,9 +84,7 @@ class table__g_v_a_r(DefaultTable.DefaultTable):
         header["sharedTupleCount"] = len(sharedTuples)
         header["offsetToSharedTuples"] = GVAR_HEADER_SIZE + len(compiledOffsets)
         header["flags"] = tableFormat
-        header["offsetToGlyphVariationData"] = (
-            header["offsetToSharedTuples"] + sharedTupleSize
-        )
+        header["offsetToGlyphVariationData"] = header["offsetToSharedTuples"] + sharedTupleSize
 
         result = [
             sstruct.pack(GVAR_HEADER_FORMAT_HEAD, header),

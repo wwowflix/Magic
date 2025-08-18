@@ -241,7 +241,9 @@ class CdpBase:
         return receiver
 
     @asynccontextmanager
-    async def wait_for(self, event_type: type[T], buffer_size=10) -> AsyncGenerator[CmEventProxy, None]:
+    async def wait_for(
+        self, event_type: type[T], buffer_size=10
+    ) -> AsyncGenerator[CmEventProxy, None]:
         """Wait for an event of the given type and return it.
 
         This is an async context manager, so you should open it inside
@@ -448,7 +450,13 @@ class CdpConnection(CdpBase, trio.abc.AsyncResource):
             try:
                 data = json.loads(message)
             except json.JSONDecodeError:
-                raise BrowserError({"code": -32700, "message": "Client received invalid JSON", "data": message})
+                raise BrowserError(
+                    {
+                        "code": -32700,
+                        "message": "Client received invalid JSON",
+                        "data": message,
+                    }
+                )
             logger.debug("Received message %r", data)
             if "sessionId" in data:
                 session_id = devtools.target.SessionID(data["sessionId"])

@@ -86,11 +86,16 @@ class SeleniumManager:
 
             arch = platform.machine() if sys.platform in ("linux", "freebsd", "openbsd") else "any"
             if sys.platform in ["freebsd", "openbsd"]:
-                logger.warning("Selenium Manager binary may not be compatible with %s; verify settings", sys.platform)
+                logger.warning(
+                    "Selenium Manager binary may not be compatible with %s; verify settings",
+                    sys.platform,
+                )
 
             location = allowed.get((sys.platform, arch))
             if location is None:
-                raise WebDriverException(f"Unsupported platform/architecture combination: {sys.platform}/{arch}")
+                raise WebDriverException(
+                    f"Unsupported platform/architecture combination: {sys.platform}/{arch}"
+                )
 
             path = Path(__file__).parent.joinpath(location)
 
@@ -113,7 +118,9 @@ class SeleniumManager:
         logger.debug("Executing process: %s", command)
         try:
             if sys.platform == "win32":
-                completed_proc = subprocess.run(args, capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                completed_proc = subprocess.run(
+                    args, capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW
+                )
             else:
                 completed_proc = subprocess.run(args, capture_output=True)
             stdout = completed_proc.stdout.decode("utf-8").rstrip("\n")

@@ -1,4 +1,3 @@
-
 import os
 import json
 import subprocess
@@ -11,7 +10,7 @@ if len(sys.argv) < 2:
 
 manifest_path = sys.argv[1]
 
-with open(manifest_path, 'r', encoding='utf-8-sig') as f:
+with open(manifest_path, "r", encoding="utf-8-sig") as f:
     manifest = json.load(f)
 
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -37,10 +36,15 @@ for script_path in manifest:
     success = False
     for attempt in range(1, 4):
         print(f"▶ Running {script_name} (attempt {attempt}) ...")
-        process = subprocess.Popen(["python", script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        process = subprocess.Popen(
+            ["python", script_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
         stdout, stderr = process.communicate()
 
-        with open(log_file, 'a', encoding='utf-8') as log:
+        with open(log_file, "a", encoding="utf-8") as log:
             log.write(f"\n===== Attempt {attempt} =====\n")
             log.write(stdout)
             log.write(stderr)
@@ -60,7 +64,7 @@ for script_path in manifest:
                     dir_path = os.path.dirname(missing_file)
                     if dir_path:
                         os.makedirs(dir_path, exist_ok=True)
-                    with open(missing_file, 'w', encoding='utf-8') as f:
+                    with open(missing_file, "w", encoding="utf-8") as f:
                         f.write("AUTO-CREATED BY SELF-HEALING RUNNER")
                     print(f"🔧 Auto-fixing: creating missing file {missing_file}")
                 except Exception as e:

@@ -37,9 +37,7 @@ class TestEWM:
     @pytest.mark.parametrize(
         "obj", [DataFrame({"a": range(5), "b": range(5)}), Series(range(5), name="foo")]
     )
-    def test_online_vs_non_online_mean(
-        self, obj, nogil, parallel, nopython, adjust, ignore_na
-    ):
+    def test_online_vs_non_online_mean(self, obj, nogil, parallel, nopython, adjust, ignore_na):
         expected = obj.ewm(0.5, adjust=adjust, ignore_na=ignore_na).mean()
         engine_kwargs = {"nogil": nogil, "parallel": parallel, "nopython": nopython}
 
@@ -110,4 +108,3 @@ class TestEWM:
 
         with pytest.raises(NotImplementedError, match=".* is not implemented."):
             getattr(ser.ewm(1).online(), method)(**kwargs)
-

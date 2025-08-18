@@ -759,9 +759,7 @@ async def test_renegotiation_randomized(
 
 
 async def test_resource_busy_errors(client_ctx: SSLContext) -> None:
-    S: TypeAlias = trio.SSLStream[
-        trio.StapledStream[trio.abc.SendStream, trio.abc.ReceiveStream]
-    ]
+    S: TypeAlias = trio.SSLStream[trio.StapledStream[trio.abc.SendStream, trio.abc.ReceiveStream]]
 
     async def do_send_all(s: S) -> None:
         with assert_checkpoints():

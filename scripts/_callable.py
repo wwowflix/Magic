@@ -22,8 +22,6 @@ from typing import (
 )
 
 from numpy import (
-    ndarray,
-    dtype,
     generic,
     bool_,
     timedelta64,
@@ -43,15 +41,14 @@ from ._scalars import (
     _BoolLike_co,
     _IntLike_co,
     _FloatLike_co,
-    _ComplexLike_co,
     _NumberLike_co,
 )
 from . import NBitBase
-from ._array_like import ArrayLike
 from ._generic_alias import NDArray
 
 if sys.version_info >= (3, 8):
     from typing import Protocol
+
     HAVE_PROTOCOL = True
 else:
     try:
@@ -167,9 +164,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> unsignedinteger[_NBit1]: ...
         @overload
-        def __call__(
-            self, __other: Union[int, signedinteger[Any]]
-        ) -> Any: ...
+        def __call__(self, __other: Union[int, signedinteger[Any]]) -> Any: ...
         @overload
         def __call__(self, __other: float) -> floating[Union[_NBit1, _NBitDouble]]: ...
         @overload
@@ -197,9 +192,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> unsignedinteger[_NBit1]: ...
         @overload
-        def __call__(
-            self, __other: Union[int, signedinteger[Any]]
-        ) -> Any: ...
+        def __call__(self, __other: Union[int, signedinteger[Any]]) -> Any: ...
         @overload
         def __call__(self, __other: float) -> floating[Union[_NBit1, _NBitDouble]]: ...
         @overload
@@ -211,9 +204,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> _2Tuple[signedinteger[_NBit1]]: ...
         @overload
-        def __call__(
-            self, __other: Union[int, signedinteger[Any]]
-        ) -> _2Tuple[Any]: ...
+        def __call__(self, __other: Union[int, signedinteger[Any]]) -> _2Tuple[Any]: ...
         @overload
         def __call__(self, __other: float) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
         @overload
@@ -315,7 +306,9 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> complexfloating[_NBit1, _NBit1]: ...
         @overload
-        def __call__(self, __other: int) -> complexfloating[Union[_NBit1, _NBitInt], Union[_NBit1, _NBitInt]]: ...
+        def __call__(
+            self, __other: int
+        ) -> complexfloating[Union[_NBit1, _NBitInt], Union[_NBit1, _NBitInt]]: ...
         @overload
         def __call__(
             self, __other: Union[float, complex]
@@ -327,7 +320,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
                 integer[_NBit2],
                 floating[_NBit2],
                 complexfloating[_NBit2, _NBit2],
-            ]
+            ],
         ) -> complexfloating[Union[_NBit1, _NBit2], Union[_NBit1, _NBit2]]: ...
 
     class _NumberOp(Protocol):

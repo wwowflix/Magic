@@ -63,11 +63,15 @@ class TestNavigableString(SoupTest):
         # Try to access an HTML attribute of a NavigableString and get a helpful exception.
         with pytest.raises(TypeError) as e:
             string["attr"]
-        assert str(e.value) == "string indices must be integers, not 'str'. Are you treating a NavigableString like a Tag?"
+        assert (
+            str(e.value)
+            == "string indices must be integers, not 'str'. Are you treating a NavigableString like a Tag?"
+        )
 
         # Normal string access works.
         assert string[2] == "e"
         assert string[2:5] == "e s"
+
 
 class TestNavigableStringSubclasses(SoupTest):
     def test_cdata(self):
@@ -121,13 +125,8 @@ class TestNavigableStringSubclasses(SoupTest):
         # The TemplateString is a little unusual because it's generally found
         # _inside_ children of a <template> element, not a direct child of the
         # <template> element.
-        soup = self.soup(
-            "<template>Some text<p>In a tag</p></template>Some text outside"
-        )
-        assert all(
-            isinstance(x, TemplateString)
-            for x in soup.template._all_strings(types=None)
-        )
+        soup = self.soup("<template>Some text<p>In a tag</p></template>Some text outside")
+        assert all(isinstance(x, TemplateString) for x in soup.template._all_strings(types=None))
 
         # Once the <template> tag closed, we went back to using
         # NavigableString.
@@ -143,7 +142,9 @@ class TestNavigableStringSubclasses(SoupTest):
         assert markup == soup.template.encode("utf8")
 
     def test_ruby_strings(self):
-        markup = "<ruby>漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字 <rp>(</rp><rt>ji</rt><rp>)</rp></ruby>"
+        markup = (
+            "<ruby>漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字 <rp>(</rp><rt>ji</rt><rp>)</rp></ruby>"
+        )
         soup = self.soup(markup)
         assert isinstance(soup.rp.string, RubyParenthesisString)
         assert isinstance(soup.rt.string, RubyTextString)

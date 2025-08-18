@@ -1,0 +1,13 @@
+coverage:
+  precision: 2
+  round: down
+  status:
+    project:
+      default:
+        target: 90%
+        threshold: 1%
+ignore:
+  - backups/**
+  - outputs/**
+  - tests/**
+  - scripts/**

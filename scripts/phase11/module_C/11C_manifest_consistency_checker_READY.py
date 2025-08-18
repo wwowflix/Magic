@@ -1,8 +1,11 @@
 ﻿# 11C_manifest_consistency_checker_READY.py
-import json, os, sys
+import json
+import os
+import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 MANIFEST = os.path.join(ROOT, "phase_manifest.json")
+
 
 def normalize_entry(e):
     """
@@ -36,6 +39,7 @@ def normalize_entry(e):
         rel = f"scripts/phase{phase}/module_{module}/{final}"
 
     return phase, module, rel
+
 
 def main():
     try:
@@ -78,6 +82,7 @@ def main():
 
     print(f"Manifest OK. Checked={total} Missing=0 Bad=0")
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

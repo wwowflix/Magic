@@ -50,9 +50,7 @@ def to_time(arg, format=None, infer_time_format=False, errors="raise"):
             arg = np.array(arg, dtype="O")
 
         elif getattr(arg, "ndim", 1) > 1:
-            raise TypeError(
-                "arg must be a string, datetime, list, tuple, 1-d array, or Series"
-            )
+            raise TypeError("arg must be a string, datetime, list, tuple, 1-d array, or Series")
 
         arg = np.asarray(arg, dtype="O")
 
@@ -66,10 +64,7 @@ def to_time(arg, format=None, infer_time_format=False, errors="raise"):
                     times.append(datetime.strptime(element, format).time())
                 except (ValueError, TypeError) as err:
                     if errors == "raise":
-                        msg = (
-                            f"Cannot convert {element} to a time with given "
-                            f"format {format}"
-                        )
+                        msg = f"Cannot convert {element} to a time with given " f"format {format}"
                         raise ValueError(msg) from err
                     elif errors == "ignore":
                         return arg

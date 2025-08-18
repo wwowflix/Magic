@@ -1,6 +1,7 @@
 """
 Testing interaction between the different managers (BlockManager, ArrayManager)
 """
+
 import os
 import subprocess
 import sys
@@ -23,16 +24,12 @@ def test_dataframe_creation():
     msg = "data_manager option is deprecated"
     with tm.assert_produces_warning(FutureWarning, match=msg):
         with pd.option_context("mode.data_manager", "block"):
-            df_block = pd.DataFrame(
-                {"a": [1, 2, 3], "b": [0.1, 0.2, 0.3], "c": [4, 5, 6]}
-            )
+            df_block = pd.DataFrame({"a": [1, 2, 3], "b": [0.1, 0.2, 0.3], "c": [4, 5, 6]})
     assert isinstance(df_block._mgr, BlockManager)
 
     with tm.assert_produces_warning(FutureWarning, match=msg):
         with pd.option_context("mode.data_manager", "array"):
-            df_array = pd.DataFrame(
-                {"a": [1, 2, 3], "b": [0.1, 0.2, 0.3], "c": [4, 5, 6]}
-            )
+            df_array = pd.DataFrame({"a": [1, 2, 3], "b": [0.1, 0.2, 0.3], "c": [4, 5, 6]})
     assert isinstance(df_array._mgr, ArrayManager)
 
     # also ensure both are seen as equal
@@ -101,4 +98,3 @@ def test_array_manager_depr_env_var(manager):
     msg = "FutureWarning: The env variable PANDAS_DATA_MANAGER is set"
     stderr_msg = response.stderr.decode("utf-8")
     assert msg in stderr_msg, stderr_msg
-

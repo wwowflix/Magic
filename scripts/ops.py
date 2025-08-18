@@ -27,9 +27,7 @@ class BaseOpsUtil(BaseExtensionTests):
             expected = obj.combine(other, op)
         return expected
 
-    def _check_op(
-        self, ser: pd.Series, op, other, op_name: str, exc=NotImplementedError
-    ):
+    def _check_op(self, ser: pd.Series, op, other, op_name: str, exc=NotImplementedError):
         if exc is None:
             result = op(ser, other)
             expected = self._combine(ser, other, op)
@@ -114,9 +112,7 @@ class BaseArithmeticOpsTests(BaseOpsUtil):
         self.assert_series_equal(result, expected)
 
     @pytest.mark.parametrize("box", [pd.Series, pd.DataFrame])
-    def test_direct_arith_with_ndframe_returns_not_implemented(
-        self, request, data, box
-    ):
+    def test_direct_arith_with_ndframe_returns_not_implemented(self, request, data, box):
         # EAs should return NotImplemented for ops with Series/DataFrame
         # Pandas takes care of unboxing the series and calling the EA's op.
         other = pd.Series(data)
@@ -124,9 +120,7 @@ class BaseArithmeticOpsTests(BaseOpsUtil):
             other = other.to_frame()
         if not hasattr(data, "__add__"):
             request.node.add_marker(
-                pytest.mark.xfail(
-                    reason=f"{type(data).__name__} does not implement add"
-                )
+                pytest.mark.xfail(reason=f"{type(data).__name__} does not implement add")
             )
         result = data.__add__(other)
         assert result is NotImplemented
@@ -199,9 +193,7 @@ class BaseUnaryOpsTests(BaseOpsUtil):
     def test_unary_ufunc_dunder_equivalence(self, data, ufunc):
         # the dunder __pos__ works if and only if np.positive works,
         #  same for __neg__/np.negative and __abs__/np.abs
-        attr = {np.positive: "__pos__", np.negative: "__neg__", np.abs: "__abs__"}[
-            ufunc
-        ]
+        attr = {np.positive: "__pos__", np.negative: "__neg__", np.abs: "__abs__"}[ufunc]
 
         exc = None
         try:

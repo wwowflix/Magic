@@ -1,4 +1,5 @@
-""" miscellaneous sorting / groupby utilities """
+"""miscellaneous sorting / groupby utilities"""
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -82,9 +83,7 @@ def get_indexer_indexer(
     target = target._sort_levels_monotonic()
 
     if level is not None:
-        _, indexer = target.sortlevel(
-            level, ascending=ascending, sort_remaining=sort_remaining
-        )
+        _, indexer = target.sortlevel(level, ascending=ascending, sort_remaining=sort_remaining)
     elif isinstance(target, ABCMultiIndex):
         indexer = lexsort_indexer(
             target._get_codes_for_sorting(), orders=ascending, na_position=na_position
@@ -106,9 +105,7 @@ def get_indexer_indexer(
     return indexer
 
 
-def get_group_index(
-    labels, shape: Shape, sort: bool, xnull: bool
-) -> npt.NDArray[np.int64]:
+def get_group_index(labels, shape: Shape, sort: bool, xnull: bool) -> npt.NDArray[np.int64]:
     """
     For the particular label_list, gets the offsets into the hypothetical list
     representing the totally ordered cartesian product of all possible label
@@ -200,9 +197,7 @@ def get_group_index(
     return out
 
 
-def get_compressed_ids(
-    labels, sizes: Shape
-) -> tuple[npt.NDArray[np.intp], npt.NDArray[np.int64]]:
+def get_compressed_ids(labels, sizes: Shape) -> tuple[npt.NDArray[np.intp], npt.NDArray[np.int64]]:
     """
     Group_index is offsets into cartesian product of all possible labels. This
     space can be huge, so this function compresses it, by computing offsets
@@ -287,9 +282,7 @@ def decons_obs_group_ids(
     return [lab[indexer].astype(np.intp, subok=False, copy=True) for lab in labels]
 
 
-def indexer_from_factorized(
-    labels, shape: Shape, compress: bool = True
-) -> npt.NDArray[np.intp]:
+def indexer_from_factorized(labels, shape: Shape, compress: bool = True) -> npt.NDArray[np.intp]:
     ids = get_group_index(labels, shape, sort=True, xnull=False)
 
     if not compress:
@@ -493,9 +486,7 @@ def _nanargminmax(values: np.ndarray, mask: npt.NDArray[np.bool_], func) -> int:
     return non_nan_idx[func(non_nans)]
 
 
-def _ensure_key_mapped_multiindex(
-    index: MultiIndex, key: Callable, level=None
-) -> MultiIndex:
+def _ensure_key_mapped_multiindex(index: MultiIndex, key: Callable, level=None) -> MultiIndex:
     """
     Returns a new MultiIndex in which key has been applied
     to all levels specified in level (or all levels if level
@@ -533,9 +524,11 @@ def _ensure_key_mapped_multiindex(
         sort_levels = list(range(index.nlevels))  # satisfies mypy
 
     mapped = [
-        ensure_key_mapped(index._get_level_values(level), key)
-        if level in sort_levels
-        else index._get_level_values(level)
+        (
+            ensure_key_mapped(index._get_level_values(level), key)
+            if level in sort_levels
+            else index._get_level_values(level)
+        )
         for level in range(index.nlevels)
     ]
 
@@ -565,14 +558,10 @@ def ensure_key_mapped(values, key: Callable | None, levels=None):
 
     result = key(values.copy())
     if len(result) != len(values):
-        raise ValueError(
-            "User-provided `key` function must not change the shape of the array."
-        )
+        raise ValueError("User-provided `key` function must not change the shape of the array.")
 
     try:
-        if isinstance(
-            values, Index
-        ):  # convert to a new Index subclass, not necessarily the same
+        if isinstance(values, Index):  # convert to a new Index subclass, not necessarily the same
             result = Index(result)
         else:
             type_of_values = type(values)

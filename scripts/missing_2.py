@@ -1,6 +1,7 @@
 """
 missing types & inference
 """
+
 from __future__ import annotations
 
 from decimal import Decimal
@@ -78,31 +79,28 @@ _dtype_str = np.dtype(str)
 
 
 @overload
-def isna(obj: Scalar) -> bool:
-    ...
+def isna(obj: Scalar) -> bool: ...
 
 
 @overload
 def isna(
     obj: ArrayLike | Index | list,
-) -> npt.NDArray[np.bool_]:
-    ...
+) -> npt.NDArray[np.bool_]: ...
 
 
 @overload
-def isna(obj: NDFrameT) -> NDFrameT:
-    ...
+def isna(obj: NDFrameT) -> NDFrameT: ...
 
 
 # handle unions
 @overload
-def isna(obj: NDFrameT | ArrayLike | Index | list) -> NDFrameT | npt.NDArray[np.bool_]:
-    ...
+def isna(
+    obj: NDFrameT | ArrayLike | Index | list,
+) -> NDFrameT | npt.NDArray[np.bool_]: ...
 
 
 @overload
-def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
-    ...
+def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame: ...
 
 
 def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
@@ -327,31 +325,28 @@ def _isna_string_dtype(values: np.ndarray, inf_as_na: bool) -> npt.NDArray[np.bo
 
 
 @overload
-def notna(obj: Scalar) -> bool:
-    ...
+def notna(obj: Scalar) -> bool: ...
 
 
 @overload
 def notna(
     obj: ArrayLike | Index | list,
-) -> npt.NDArray[np.bool_]:
-    ...
+) -> npt.NDArray[np.bool_]: ...
 
 
 @overload
-def notna(obj: NDFrameT) -> NDFrameT:
-    ...
+def notna(obj: NDFrameT) -> NDFrameT: ...
 
 
 # handle unions
 @overload
-def notna(obj: NDFrameT | ArrayLike | Index | list) -> NDFrameT | npt.NDArray[np.bool_]:
-    ...
+def notna(
+    obj: NDFrameT | ArrayLike | Index | list,
+) -> NDFrameT | npt.NDArray[np.bool_]: ...
 
 
 @overload
-def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
-    ...
+def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame: ...
 
 
 def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
@@ -545,9 +540,7 @@ def array_equivalent(
         right = right.view("i8")
 
     # if we have structured dtypes, compare first
-    if (
-        left.dtype.type is np.void or right.dtype.type is np.void
-    ) and left.dtype != right.dtype:
+    if (left.dtype.type is np.void or right.dtype.type is np.void) and left.dtype != right.dtype:
         return False
 
     return np.array_equal(left, right)
@@ -774,10 +767,6 @@ def isna_all(arr: ArrayLike) -> bool:
     else:
         # error: Incompatible types in assignment (expression has type "Callable[[Any],
         # Any]", variable has type "ufunc")
-        checker = lambda x: _isna_array(  # type: ignore[assignment]
-            x, inf_as_na=INF_AS_NA
-        )
+        checker = lambda x: _isna_array(x, inf_as_na=INF_AS_NA)  # type: ignore[assignment]
 
-    return all(
-        checker(arr[i : i + chunk_len]).all() for i in range(0, total_len, chunk_len)
-    )
+    return all(checker(arr[i : i + chunk_len]).all() for i in range(0, total_len, chunk_len))

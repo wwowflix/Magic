@@ -131,9 +131,7 @@ class AbstractPutTests:
 
             # Without recursive does nothing
             fs.put(s, t)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # With recursive
             fs.put(s, t, recursive=True)
@@ -160,9 +158,7 @@ class AbstractPutTests:
                 assert fs.isfile(fs_join(target, "subdir", "nesteddir", "nestedfile"))
 
                 fs.rm(fs_join(target, "subdir"), recursive=True)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # Limit recursive by maxdepth
             fs.put(s, t, recursive=True, maxdepth=1)
@@ -186,9 +182,7 @@ class AbstractPutTests:
                 assert not fs.exists(fs_join(target, "subdir", "nesteddir"))
 
                 fs.rm(fs_join(target, "subdir"), recursive=True)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
     def test_put_directory_to_new_directory(
         self,
@@ -281,9 +275,7 @@ class AbstractPutTests:
                 ],
                 recursive=True,
             )
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # With recursive
             for glob, recursive in zip(["*", "**"], [True, False]):
@@ -423,9 +415,7 @@ class AbstractPutTests:
                     fs_sanitize_path(fs_join(target, "newdir", p)) for p in expected
                 ]
             else:
-                prefixed_expected = [
-                    fs_sanitize_path(fs_join(target, p)) for p in expected
-                ]
+                prefixed_expected = [fs_sanitize_path(fs_join(target, p)) for p in expected]
             assert sorted(output) == sorted(prefixed_expected)
 
             try:
@@ -475,9 +465,7 @@ class AbstractPutTests:
                 ],
                 recursive=True,
             )
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
     def test_put_list_of_files_to_new_directory(
         self, fs, fs_join, fs_target, local_join, local_bulk_operations_scenario_0

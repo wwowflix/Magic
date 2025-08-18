@@ -6,7 +6,10 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import copy, decimal, math, re
+import copy
+import decimal
+import math
+import re
 from collections import OrderedDict
 
 from collections.abc import Sequence
@@ -162,9 +165,7 @@ def render_pdf_primitive(primitive):
             if not isinstance(key, Name):
                 raise ValueError("dict keys must be Names")
 
-            item_list.append(
-                render_pdf_primitive(key) + " " + render_pdf_primitive(val)
-            )
+            item_list.append(render_pdf_primitive(key) + " " + render_pdf_primitive(val))
 
         output = "<< " + "\n".join(item_list) + " >>"
     else:
@@ -209,9 +210,7 @@ class DeviceRGB(
         if a is not None:
             _check_range(a)
 
-        return super().__new__(
-            cls, _check_range(r), _check_range(g), _check_range(b), a
-        )
+        return super().__new__(cls, _check_range(r), _check_range(g), _check_range(b), a)
 
     @property
     def colors(self):
@@ -332,9 +331,7 @@ class DeviceCMYK(
 
 __pdoc__["DeviceCMYK.OPERATOR"] = False
 __pdoc__["DeviceCMYK.c"] = "The cyan color component. Must be in the interval [0, 1]."
-__pdoc__["DeviceCMYK.m"] = (
-    "The magenta color component. Must be in the interval [0, 1]."
-)
+__pdoc__["DeviceCMYK.m"] = "The magenta color component. Must be in the interval [0, 1]."
 __pdoc__["DeviceCMYK.y"] = "The yellow color component. Must be in the interval [0, 1]."
 __pdoc__["DeviceCMYK.k"] = "The black color component. Must be in the interval [0, 1]."
 __pdoc__[
@@ -463,9 +460,7 @@ def color_from_hex_string(hexstr):
         return rgb8(*[int(char * 2, base=16) for char in hexstr[1:]])
 
     if hlen == 7:
-        return rgb8(
-            *[int(hexstr[idx : idx + 2], base=16) for idx in range(1, hlen, 2)], a=None
-        )
+        return rgb8(*[int(hexstr[idx : idx + 2], base=16) for idx in range(1, hlen, 2)], a=None)
 
     if hlen == 9:
         return rgb8(*[int(hexstr[idx : idx + 2], base=16) for idx in range(1, hlen, 2)])
@@ -847,9 +842,7 @@ class Transform(NamedTuple):
             A Transform representing the specified rotation.
 
         """
-        return cls(
-            math.cos(theta), math.sin(theta), -math.sin(theta), math.cos(theta), 0, 0
-        )
+        return cls(math.cos(theta), math.sin(theta), -math.sin(theta), math.cos(theta), 0, 0)
 
     @classmethod
     def rotation_d(cls, theta_d):
@@ -1130,12 +1123,8 @@ class GraphicsStyle:
         frozenset({"stroke"}): PathPaintRule.STROKE,
         frozenset({"fill", IntersectionRule.NONZERO}): PathPaintRule.FILL_NONZERO,
         frozenset({"fill", IntersectionRule.EVENODD}): PathPaintRule.FILL_EVENODD,
-        frozenset(
-            {"stroke", "fill", IntersectionRule.NONZERO}
-        ): PathPaintRule.STROKE_FILL_NONZERO,
-        frozenset(
-            {"stroke", "fill", IntersectionRule.EVENODD}
-        ): PathPaintRule.STROKE_FILL_EVENODD,
+        frozenset({"stroke", "fill", IntersectionRule.NONZERO}): PathPaintRule.STROKE_FILL_NONZERO,
+        frozenset({"stroke", "fill", IntersectionRule.EVENODD}): PathPaintRule.STROKE_FILL_EVENODD,
     }
     """A dictionary for resolving `PathPaintRule.AUTO`"""
 
@@ -1184,9 +1173,7 @@ class GraphicsStyle:
 
     def __setattr__(self, name, value):
         if not hasattr(self.__class__, name):
-            raise AttributeError(
-                f'{self.__class__} does not have style "{name}" (a typo?)'
-            )
+            raise AttributeError(f'{self.__class__} does not have style "{name}" (a typo?)')
 
         super().__setattr__(name, value)
 
@@ -1330,9 +1317,7 @@ class GraphicsStyle:
         if value is self.INHERIT:
             super().__setattr__(PDFStyleKeys.BLEND_MODE.value, value)
         else:
-            super().__setattr__(
-                PDFStyleKeys.BLEND_MODE.value, BlendMode.coerce(value).value
-            )
+            super().__setattr__(PDFStyleKeys.BLEND_MODE.value, BlendMode.coerce(value).value)
 
     @property
     def stroke_width(self):
@@ -1359,9 +1344,7 @@ class GraphicsStyle:
         if value is self.INHERIT:
             super().__setattr__(PDFStyleKeys.STROKE_CAP_STYLE.value, value)
         else:
-            super().__setattr__(
-                PDFStyleKeys.STROKE_CAP_STYLE.value, StrokeCapStyle.coerce(value)
-            )
+            super().__setattr__(PDFStyleKeys.STROKE_CAP_STYLE.value, StrokeCapStyle.coerce(value))
 
     @property
     def stroke_join_style(self):
@@ -1560,9 +1543,7 @@ class Move(NamedTuple):
         return _render_move(self.pt), self, self.pt
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1625,9 +1606,7 @@ class RelativeMove(NamedTuple):
         return _render_move(point), Move(point), point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1693,9 +1672,7 @@ class Line(NamedTuple):
         return _render_line(self.pt), self, initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1759,9 +1736,7 @@ class RelativeLine(NamedTuple):
         return _render_line(point), Line(point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1821,9 +1796,7 @@ class HorizontalLine(NamedTuple):
         return _render_line(end_point), Line(end_point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1887,9 +1860,7 @@ class RelativeHorizontalLine(NamedTuple):
         return _render_line(end_point), Line(end_point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -1949,9 +1920,7 @@ class VerticalLine(NamedTuple):
         return _render_line(end_point), Line(end_point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2015,9 +1984,7 @@ class RelativeVerticalLine(NamedTuple):
         return _render_line(end_point), Line(end_point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2087,9 +2054,7 @@ class BezierCurve(NamedTuple):
         return _render_curve(self.c1, self.c2, self.end), self, initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2167,9 +2132,7 @@ class RelativeBezierCurve(NamedTuple):
         )
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2257,9 +2220,7 @@ class QuadraticBezierCurve(NamedTuple):
         )
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2283,9 +2244,7 @@ class QuadraticBezierCurve(NamedTuple):
         rendered, resolved, initial_point = self.render(
             gsd_registry, style, last_item, initial_point
         )
-        debug_stream.write(
-            f"{self} resolved to {self.to_cubic_curve(last_item.end_point)}\n"
-        )
+        debug_stream.write(f"{self} resolved to {self.to_cubic_curve(last_item.end_point)}\n")
 
         return rendered, resolved, initial_point
 
@@ -2328,9 +2287,7 @@ class RelativeQuadraticBezierCurve(NamedTuple):
         return absolute.render(gsd_registry, style, last_item, initial_point)
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2499,9 +2456,7 @@ class Arc(NamedTuple):
         curves = []
 
         for ctrl1, ctrl2, end in self.subdivde_sweep(deltatheta):
-            curves.append(
-                BezierCurve(ctrl1 @ final_tf, ctrl2 @ final_tf, end @ final_tf)
-            )
+            curves.append(BezierCurve(ctrl1 @ final_tf, ctrl2 @ final_tf, end @ final_tf))
 
         return curves
 
@@ -2536,9 +2491,7 @@ class Arc(NamedTuple):
         )
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2629,9 +2582,7 @@ class RelativeArc(NamedTuple):
         ).render(gsd_registry, style, last_item, initial_point)
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2696,9 +2647,7 @@ class Rectangle(NamedTuple):
         )
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2813,9 +2762,7 @@ class RoundedRectangle(NamedTuple):
         return " ".join(render_list), Line(self.org), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2923,9 +2870,7 @@ class Ellipse(NamedTuple):
         return " ".join(render_list), Move(self.center), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -2999,9 +2944,7 @@ class ImplicitClose(NamedTuple):
         return "", last_item, initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -3061,9 +3004,7 @@ class Close(NamedTuple):
         return "h", Move(initial_point), initial_point
 
     @force_nodocument
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -3132,10 +3073,7 @@ class DrawingContext:
 
         last_item = Move(first_point)
         scale, last_item = (
-            Transform.scaling(x=1, y=-1)
-            .about(x=0, y=height / 2)
-            .scale(scale)
-            .render(last_item)
+            Transform.scaling(x=1, y=-1).about(x=0, y=height / 2).scale(scale).render(last_item)
         )
 
         render_list = ["q", scale]
@@ -3195,9 +3133,7 @@ class DrawingContext:
 
         return " ".join(render_list)
 
-    def render_debug(
-        self, gsd_registry, first_point, scale, height, starting_style, debug_stream
-    ):
+    def render_debug(self, gsd_registry, first_point, scale, height, starting_style, debug_stream):
         """
         Render the drawing context to PDF format.
 
@@ -3719,9 +3655,7 @@ class PaintedPath:
         positive_sweep = bool(positive_sweep)
         end = Point(x, y)
 
-        self.add_path_element(
-            Arc(radii, rotation, large_arc, positive_sweep, end), _copy=False
-        )
+        self.add_path_element(Arc(radii, rotation, large_arc, positive_sweep, end), _copy=False)
         return self
 
     def arc_relative(self, rx, ry, rotation, large_arc, positive_sweep, dx, dy):
@@ -3787,9 +3721,7 @@ class PaintedPath:
             self._close_context = self._graphics_context
             self._closed = True
 
-    def render(
-        self, gsd_registry, style, last_item, initial_point, debug_stream=None, pfx=None
-    ):
+    def render(self, gsd_registry, style, last_item, initial_point, debug_stream=None, pfx=None):
         self._insert_implicit_close_if_open()
 
         (
@@ -3806,9 +3738,7 @@ class PaintedPath:
 
         return " ".join(render_list), last_item, initial_point
 
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -3828,9 +3758,7 @@ class PaintedPath:
         Returns:
             The same tuple as `PaintedPath.render`.
         """
-        return self.render(
-            gsd_registry, style, last_item, initial_point, debug_stream, pfx
-        )
+        return self.render(gsd_registry, style, last_item, initial_point, debug_stream, pfx)
 
 
 class ClippingPath(PaintedPath):
@@ -3865,9 +3793,7 @@ class ClippingPath(PaintedPath):
         super().__init__(x=x, y=y)
         self.paint_rule = PathPaintRule.DONT_PAINT
 
-    def render(
-        self, gsd_registry, style, last_item, initial_point, debug_stream=None, pfx=None
-    ):
+    def render(self, gsd_registry, style, last_item, initial_point, debug_stream=None, pfx=None):
         # painting the clipping path outside of its root graphics context allows it to
         # be transformed without affecting the transform of the graphics context of the
         # path it is being used to clip. This is because, unlike all of the other style
@@ -3909,9 +3835,7 @@ class ClippingPath(PaintedPath):
 
         return " ".join(render_list), last_item, initial_point
 
-    def render_debug(
-        self, gsd_registry, style, last_item, initial_point, debug_stream, pfx
-    ):
+    def render_debug(self, gsd_registry, style, last_item, initial_point, debug_stream, pfx):
         """
         Render this path element to its PDF representation and produce debug
         information.
@@ -3930,9 +3854,7 @@ class ClippingPath(PaintedPath):
         Returns:
             The same tuple as `ClippingPath.render`.
         """
-        return self.render(
-            gsd_registry, style, last_item, initial_point, debug_stream, pfx
-        )
+        return self.render(gsd_registry, style, last_item, initial_point, debug_stream, pfx)
 
 
 class GraphicsContext:
@@ -4107,8 +4029,7 @@ class GraphicsContext:
 
             if emit_dash is not None:
                 render_list.append(
-                    render_pdf_primitive(emit_dash[0])
-                    + f" {number_to_str(emit_dash[1])} d"
+                    render_pdf_primitive(emit_dash[0]) + f" {number_to_str(emit_dash[1])} d"
                 )
 
             if debug_stream:

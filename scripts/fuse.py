@@ -247,9 +247,7 @@ def main(args):
         action="append",
         help="Any options of protocol included in the chained URL",
     )
-    parser.add_argument(
-        "-l", "--log-file", type=str, help="Logging FUSE debug info (Default: '')"
-    )
+    parser.add_argument("-l", "--log-file", type=str, help="Logging FUSE debug info (Default: '')")
     parser.add_argument(
         "-f",
         "--foreground",

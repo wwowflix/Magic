@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
-print('? Environment loaded from .env')
+print("? Environment loaded from .env")

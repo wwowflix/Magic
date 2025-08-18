@@ -79,7 +79,9 @@ def title_contains(title: str) -> Callable[[WebDriver], bool]:
     return _predicate
 
 
-def presence_of_element_located(locator: tuple[str, str]) -> Callable[[WebDriverOrWebElement], WebElement]:
+def presence_of_element_located(
+    locator: tuple[str, str],
+) -> Callable[[WebDriverOrWebElement], WebElement]:
     """An expectation for checking that an element is present on the DOM of a
     page. This does not necessarily mean that the element is visible.
 
@@ -221,7 +223,9 @@ def visibility_of_element_located(
     return _predicate
 
 
-def visibility_of(element: WebElement) -> Callable[[Any], Union[Literal[False], WebElement]]:
+def visibility_of(
+    element: WebElement,
+) -> Callable[[Any], Union[Literal[False], WebElement]]:
     """An expectation for checking that an element, known to be present on the
     DOM of a page, is visible.
 
@@ -254,7 +258,9 @@ def visibility_of(element: WebElement) -> Callable[[Any], Union[Literal[False], 
     return _predicate
 
 
-def _element_if_visible(element: WebElement, visibility: bool = True) -> Union[Literal[False], WebElement]:
+def _element_if_visible(
+    element: WebElement, visibility: bool = True
+) -> Union[Literal[False], WebElement]:
     """An expectation for checking that an element, known to be present on the
     DOM of a page, is of the expected visibility.
 
@@ -272,7 +278,9 @@ def _element_if_visible(element: WebElement, visibility: bool = True) -> Union[L
     return element if element.is_displayed() == visibility else False
 
 
-def presence_of_all_elements_located(locator: tuple[str, str]) -> Callable[[WebDriverOrWebElement], list[WebElement]]:
+def presence_of_all_elements_located(
+    locator: tuple[str, str],
+) -> Callable[[WebDriverOrWebElement], list[WebElement]]:
     """An expectation for checking that there is at least one element present
     on a web page.
 
@@ -299,7 +307,9 @@ def presence_of_all_elements_located(locator: tuple[str, str]) -> Callable[[WebD
     return _predicate
 
 
-def visibility_of_any_elements_located(locator: tuple[str, str]) -> Callable[[WebDriverOrWebElement], list[WebElement]]:
+def visibility_of_any_elements_located(
+    locator: tuple[str, str],
+) -> Callable[[WebDriverOrWebElement], list[WebElement]]:
     """An expectation for checking that there is at least one element visible
     on a web page.
 
@@ -321,7 +331,9 @@ def visibility_of_any_elements_located(locator: tuple[str, str]) -> Callable[[We
     """
 
     def _predicate(driver: WebDriverOrWebElement):
-        return [element for element in driver.find_elements(*locator) if _element_if_visible(element)]
+        return [
+            element for element in driver.find_elements(*locator) if _element_if_visible(element)
+        ]
 
     return _predicate
 
@@ -363,7 +375,9 @@ def visibility_of_all_elements_located(
     return _predicate
 
 
-def text_to_be_present_in_element(locator: tuple[str, str], text_: str) -> Callable[[WebDriverOrWebElement], bool]:
+def text_to_be_present_in_element(
+    locator: tuple[str, str], text_: str
+) -> Callable[[WebDriverOrWebElement], bool]:
     """An expectation for checking if the given text is present in the
     specified element.
 
@@ -689,7 +703,9 @@ def element_to_be_selected(element: WebElement) -> Callable[[Any], bool]:
     return _predicate
 
 
-def element_located_to_be_selected(locator: tuple[str, str]) -> Callable[[WebDriverOrWebElement], bool]:
+def element_located_to_be_selected(
+    locator: tuple[str, str],
+) -> Callable[[WebDriverOrWebElement], bool]:
     """An expectation for the element to be located is selected.
 
     Parameters:
@@ -860,7 +876,9 @@ def alert_is_present() -> Callable[[WebDriver], Union[Alert, Literal[False]]]:
     return _predicate
 
 
-def element_attribute_to_include(locator: tuple[str, str], attribute_: str) -> Callable[[WebDriverOrWebElement], bool]:
+def element_attribute_to_include(
+    locator: tuple[str, str], attribute_: str
+) -> Callable[[WebDriverOrWebElement], bool]:
     """An expectation for checking if the given attribute is included in the
     specified element.
 

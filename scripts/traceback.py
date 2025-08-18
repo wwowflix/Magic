@@ -98,9 +98,7 @@ def install(
             tb_data = kwargs
             default_showtraceback(*args, **kwargs)
 
-        def ipy_display_traceback(
-            *args: Any, is_syntax: bool = False, **kwargs: Any
-        ) -> None:
+        def ipy_display_traceback(*args: Any, is_syntax: bool = False, **kwargs: Any) -> None:
             """Internally called traceback from ip._showtraceback"""
             nonlocal tb_data
             exc_tuple = ip._get_exc_info()
@@ -222,12 +220,8 @@ class Traceback:
         if trace is None:
             exc_type, exc_value, traceback = sys.exc_info()
             if exc_type is None or exc_value is None or traceback is None:
-                raise ValueError(
-                    "Value for 'trace' required if not called in except: block"
-                )
-            trace = self.extract(
-                exc_type, exc_value, traceback, show_locals=show_locals
-            )
+                raise ValueError("Value for 'trace' required if not called in except: block")
+            trace = self.extract(exc_type, exc_value, traceback, show_locals=show_locals)
         self.trace = trace
         self.width = width
         self.extra_lines = extra_lines
@@ -289,9 +283,7 @@ class Traceback:
         Returns:
             Traceback: A Traceback instance that may be printed.
         """
-        rich_traceback = cls.extract(
-            exc_type, exc_value, traceback, show_locals=show_locals
-        )
+        rich_traceback = cls.extract(exc_type, exc_value, traceback, show_locals=show_locals)
         return cls(
             rich_traceback,
             width=width,
@@ -373,16 +365,18 @@ class Traceback:
                     filename=filename or "?",
                     lineno=line_no,
                     name=frame_summary.f_code.co_name,
-                    locals={
-                        key: pretty.traverse(
-                            value,
-                            max_length=locals_max_length,
-                            max_string=locals_max_string,
-                        )
-                        for key, value in frame_summary.f_locals.items()
-                    }
-                    if show_locals
-                    else None,
+                    locals=(
+                        {
+                            key: pretty.traverse(
+                                value,
+                                max_length=locals_max_length,
+                                max_string=locals_max_string,
+                            )
+                            for key, value in frame_summary.f_locals.items()
+                        }
+                        if show_locals
+                        else None
+                    ),
                 )
                 append(frame)
                 if frame_summary.f_locals.get("_rich_traceback_guard", False):
@@ -411,9 +405,7 @@ class Traceback:
         trace = Trace(stacks=stacks)
         return trace
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
+    def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
         theme = self.theme
         background_style = theme.get_background_style()
         token_style = theme.get_style_for_token
@@ -544,9 +536,7 @@ class Traceback:
             """
             code = code_cache.get(filename)
             if code is None:
-                with open(
-                    filename, "rt", encoding="utf-8", errors="replace"
-                ) as code_file:
+                with open(filename, "rt", encoding="utf-8", errors="replace") as code_file:
                     code = code_file.read()
                 code_cache[filename] = code
             return code
@@ -647,7 +637,9 @@ if __name__ == "__main__":  # pragma: no cover
     console = Console()
     import sys
 
-    def bar(a: Any) -> None:  # 这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑
+    def bar(
+        a: Any,
+    ) -> None:  # 这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑
         one = 1
         print(one / a)
 

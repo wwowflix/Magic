@@ -21,12 +21,12 @@ if theme_choice != st.session_state["theme"]:
 
 if st.session_state["theme"] == "dark":
     st.markdown(
-        '''
+        """
         <style>
             body { background-color: #111111; color: #FFFFFF; }
             .stDataFrame { background-color: #222222; color: #FFFFFF; }
         </style>
-        ''',
+        """,
         unsafe_allow_html=True,
     )
 

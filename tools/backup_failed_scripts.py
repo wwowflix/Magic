@@ -5,6 +5,7 @@ from datetime import datetime
 SUMMARY_PATH = "outputs/summaries/phase_master_summary.tsv"
 BACKUP_DIR = "backups/failed"
 
+
 def read_failures(summary_path):
     failures = []
     if not os.path.exists(summary_path):
@@ -20,9 +21,11 @@ def read_failures(summary_path):
                 failures.append((phase, module, script))
     return failures
 
+
 def find_script_path(phase, module, script):
     folder = f"scripts/phase{phase}/module_{module}"
     return os.path.join(folder, script)
+
 
 def backup_script(script_path):
     if not os.path.exists(script_path):
@@ -38,6 +41,7 @@ def backup_script(script_path):
     shutil.copy2(script_path, destination)
     print(f"📦 Backed up: {script_path} → {destination}")
 
+
 def main():
     print("🔍 Scanning for failed scripts...")
     failed_entries = read_failures(SUMMARY_PATH)
@@ -51,6 +55,7 @@ def main():
         backup_script(script_path)
 
     print(f"\n🗃️ Backup complete. All failed scripts stored in '{BACKUP_DIR}'.")
+
 
 if __name__ == "__main__":
     main()

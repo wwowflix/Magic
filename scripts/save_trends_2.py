@@ -1,4 +1,4 @@
-﻿""" 
+﻿"""
 save_trends.py 🔽
 Part of Zephyr – Phase 2, Module G (G.2.44)
 
@@ -21,9 +21,11 @@ from datetime import datetime
 
 OUTPUT_DIR = "outputs"
 
+
 def ensure_output_dir():
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
+
 
 def save_trends(data, source_name="unknown"):
     """
@@ -42,7 +44,7 @@ def save_trends(data, source_name="unknown"):
         if isinstance(data, pd.DataFrame):
             data.to_csv(filepath, index=False, encoding="utf-8-sig")
         elif isinstance(data, list) and isinstance(data[0], dict):
-            with open(filepath, mode="w", newline='', encoding="utf-8-sig") as file:
+            with open(filepath, mode="w", newline="", encoding="utf-8-sig") as file:
                 writer = csv.DictWriter(file, fieldnames=data[0].keys())
                 writer.writeheader()
                 writer.writerows(data)

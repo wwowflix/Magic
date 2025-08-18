@@ -15,6 +15,7 @@ REQUIRED_FOLDERS = [
     "tests",
 ]
 
+
 def check_folders(base_path="."):
     print("?? Scanning folder health...\n")
     missing = []
@@ -30,8 +31,10 @@ def check_folders(base_path="."):
     if not missing:
         print("\n?? All required folders are present!")
     else:
-        print(f"\n?? {len(missing)} folders missing. You can auto-create them using `setup_folders.py`")
+        print(
+            f"\n?? {len(missing)} folders missing. You can auto-create them using `setup_folders.py`"
+        )
+
 
 if __name__ == "__main__":
     check_folders()
-

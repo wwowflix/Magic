@@ -2,6 +2,7 @@
 Internal module for formatting output data in csv, html, xml,
 and latex files. This module also applies to display formatting.
 """
+
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -330,9 +331,7 @@ class SeriesFormatter:
         footer = ""
 
         if getattr(self.series.index, "freq", None) is not None:
-            assert isinstance(
-                self.series.index, (DatetimeIndex, PeriodIndex, TimedeltaIndex)
-            )
+            assert isinstance(self.series.index, (DatetimeIndex, PeriodIndex, TimedeltaIndex))
             footer += f"Freq: {self.series.index.freqstr}"
 
         if self.name is not False and name is not None:
@@ -342,9 +341,7 @@ class SeriesFormatter:
             series_name = pprint_thing(name, escape_chars=("\t", "\r", "\n"))
             footer += f"Name: {series_name}"
 
-        if self.length is True or (
-            self.length == "truncate" and self.is_truncated_vertically
-        ):
+        if self.length is True or (self.length == "truncate" and self.is_truncated_vertically):
             if footer:
                 footer += ", "
             footer += f"Length: {len(self.series)}"
@@ -459,13 +456,9 @@ class EastAsianTextAdjustment(TextAdjustment):
         if not isinstance(text, str):
             return len(text)
 
-        return sum(
-            self._EAW_MAP.get(east_asian_width(c), self.ambiguous_width) for c in text
-        )
+        return sum(self._EAW_MAP.get(east_asian_width(c), self.ambiguous_width) for c in text)
 
-    def justify(
-        self, texts: Iterable[str], max_len: int, mode: str = "right"
-    ) -> list[str]:
+    def justify(self, texts: Iterable[str], max_len: int, mode: str = "right") -> list[str]:
         # re-calculate padding space per str considering East Asian Width
         def _get_pad(t):
             return max_len - self.len(t) + len(t)
@@ -537,16 +530,8 @@ def get_series_repr_params() -> dict[str, Any]:
     True
     """
     width, height = get_terminal_size()
-    max_rows = (
-        height
-        if get_option("display.max_rows") == 0
-        else get_option("display.max_rows")
-    )
-    min_rows = (
-        height
-        if get_option("display.max_rows") == 0
-        else get_option("display.min_rows")
-    )
+    max_rows = height if get_option("display.max_rows") == 0 else get_option("display.max_rows")
+    min_rows = height if get_option("display.max_rows") == 0 else get_option("display.min_rows")
 
     return {
         "name": True,
@@ -669,9 +654,7 @@ class DataFrameFormatter:
             return get_option("display.multi_sparse")
         return sparsify
 
-    def _initialize_formatters(
-        self, formatters: FormattersType | None
-    ) -> FormattersType:
+    def _initialize_formatters(self, formatters: FormattersType | None) -> FormattersType:
         if formatters is None:
             return {}
         elif len(self.frame.columns) == len(formatters) or isinstance(formatters, dict):
@@ -709,9 +692,7 @@ class DataFrameFormatter:
         elif isinstance(col_space, Mapping):
             for column in col_space.keys():
                 if column not in self.frame.columns and column != "":
-                    raise ValueError(
-                        f"Col_space is defined for an unknown column: {column}"
-                    )
+                    raise ValueError(f"Col_space is defined for an unknown column: {column}")
             result = col_space
         else:
             if len(self.frame.columns) != len(col_space):
@@ -864,8 +845,7 @@ class DataFrameFormatter:
             self.header = cast(List[str], self.header)
             if len(self.header) != len(self.columns):
                 raise ValueError(
-                    f"Writing {len(self.columns)} cols "
-                    f"but got {len(self.header)} aliases"
+                    f"Writing {len(self.columns)} cols " f"but got {len(self.header)} aliases"
                 )
             str_columns = [[label] for label in self.header]
         else:
@@ -931,17 +911,11 @@ class DataFrameFormatter:
             need_leadsp = dict(zip(fmt_columns, map(is_numeric_dtype, dtypes)))
 
             def space_format(x, y):
-                if (
-                    y not in self.formatters
-                    and need_leadsp[x]
-                    and not restrict_formatting
-                ):
+                if y not in self.formatters and need_leadsp[x] and not restrict_formatting:
                     return " " + y
                 return y
 
-            str_columns = list(
-                zip(*([space_format(x, y) for y in x] for x in fmt_columns))
-            )
+            str_columns = list(zip(*([space_format(x, y) for y in x] for x in fmt_columns)))
             if self.sparsify and len(str_columns):
                 str_columns = sparsify_labels(str_columns)
 
@@ -1364,9 +1338,7 @@ class GenericArrayFormatter:
             float_format = get_option("display.float_format")
             if float_format is None:
                 precision = get_option("display.precision")
-                float_format = lambda x: _trim_zeros_single_float(
-                    f"{x: .{precision:d}f}"
-                )
+                float_format = lambda x: _trim_zeros_single_float(f"{x: .{precision:d}f}")
         else:
             float_format = self.float_format
 
@@ -1403,9 +1375,7 @@ class GenericArrayFormatter:
 
         vals = extract_array(self.values, extract_numpy=True)
         if not isinstance(vals, np.ndarray):
-            raise TypeError(
-                "ExtensionArray formatting should use ExtensionArrayFormatter"
-            )
+            raise TypeError("ExtensionArray formatting should use ExtensionArrayFormatter")
         inferred = lib.map_infer(vals, is_float)
         is_float_type = (
             inferred
@@ -1588,9 +1558,7 @@ class FloatArrayFormatter(GenericArrayFormatter):
             # large values: more that 8 characters including decimal symbol
             # and first digit, hence > 1e6
             has_large_values = (abs_vals > 1e6).any()
-            has_small_values = (
-                (abs_vals < 10 ** (-self.digits)) & (abs_vals > 0)
-            ).any()
+            has_small_values = ((abs_vals < 10 ** (-self.digits)) & (abs_vals > 0)).any()
 
         if has_small_values or (too_long and has_large_values):
             if self.leading_space is True:
@@ -1675,7 +1643,7 @@ class ExtensionArrayFormatter(GenericArrayFormatter):
 
 
 def format_percentiles(
-    percentiles: (np.ndarray | Sequence[float]),
+    percentiles: np.ndarray | Sequence[float],
 ) -> list[str]:
     """
     Outputs rounded and formatted percentiles.
@@ -1799,9 +1767,7 @@ def get_format_datetime64(
     a string as output"""
 
     if is_dates_only:
-        return lambda x: _format_datetime64_dateonly(
-            x, nat_rep=nat_rep, date_format=date_format
-        )
+        return lambda x: _format_datetime64_dateonly(x, nat_rep=nat_rep, date_format=date_format)
     else:
         return lambda x: _format_datetime64(x, nat_rep=nat_rep)
 
@@ -1827,9 +1793,7 @@ class Datetime64TZFormatter(Datetime64Formatter):
         """we by definition have a TZ"""
         values = self.values.astype(object)
         ido = is_dates_only(values)
-        formatter = self.formatter or get_format_datetime64(
-            ido, date_format=self.date_format
-        )
+        formatter = self.formatter or get_format_datetime64(ido, date_format=self.date_format)
         fmt_values = [formatter(x) for x in values]
 
         return fmt_values
@@ -1941,10 +1905,7 @@ def _trim_zeros_complex(str_complexes: np.ndarray, decimal: str = ".") -> list[s
     Separates the real and imaginary parts from the complex number, and
     executes the _trim_zeros_float method on each of those.
     """
-    trimmed = [
-        "".join(_trim_zeros_float(re.split(r"([j+-])", x), decimal))
-        for x in str_complexes
-    ]
+    trimmed = ["".join(_trim_zeros_float(re.split(r"([j+-])", x), decimal)) for x in str_complexes]
 
     # pad strings to the length of the longest trimmed string for alignment
     lengths = [len(s) for s in trimmed]
@@ -1973,9 +1934,7 @@ def _trim_zeros_single_float(str_float: str) -> str:
     return str_float
 
 
-def _trim_zeros_float(
-    str_floats: np.ndarray | list[str], decimal: str = "."
-) -> list[str]:
+def _trim_zeros_float(str_floats: np.ndarray | list[str], decimal: str = ".") -> list[str]:
     """
     Trims the maximum number of trailing zeros equally from
     all numbers containing decimals, leaving just one if
@@ -2002,10 +1961,7 @@ def _trim_zeros_float(
         trimmed = [x[:-1] if is_number_with_decimal(x) else x for x in trimmed]
 
     # leave one 0 after the decimal points if need be.
-    result = [
-        x + "0" if is_number_with_decimal(x) and x.endswith(decimal) else x
-        for x in trimmed
-    ]
+    result = [x + "0" if is_number_with_decimal(x) and x.endswith(decimal) else x for x in trimmed]
     return result
 
 
@@ -2044,9 +2000,7 @@ class EngFormatter:
         24: "Y",
     }
 
-    def __init__(
-        self, accuracy: int | None = None, use_eng_prefix: bool = False
-    ) -> None:
+    def __init__(self, accuracy: int | None = None, use_eng_prefix: bool = False) -> None:
         self.accuracy = accuracy
         self.use_eng_prefix = use_eng_prefix
 
@@ -2124,9 +2078,7 @@ def set_eng_float_format(accuracy: int = 3, use_eng_prefix: bool = False) -> Non
     set_option("display.float_format", EngFormatter(accuracy, use_eng_prefix))
 
 
-def get_level_lengths(
-    levels: Any, sentinel: bool | object | str = ""
-) -> list[dict[int, int]]:
+def get_level_lengths(levels: Any, sentinel: bool | object | str = "") -> list[dict[int, int]]:
     """
     For each index in each level the function returns lengths of indexes.
 

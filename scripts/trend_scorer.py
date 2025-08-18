@@ -20,29 +20,30 @@ if not os.path.exists(input_csv):
 print("?? Scoring trends from:", input_csv)
 df = pd.read_csv(input_csv)
 
+
 def compute_score(row):
     score = 0
 
     # ?? Log-scaled view count boost
     try:
-        views = int(row['metric'])
+        views = int(row["metric"])
         score += min(10, round((np.log1p(views) * 5), 2))
     except:
         pass
 
     # ?? Source weight: API > Autocomplete
-    if pd.notna(row.get('author')) and row['author'] != '':
+    if pd.notna(row.get("author")) and row["author"] != "":
         score += 10
     else:
         score += 5
 
     # ? Keyword length bonus
-    if len(str(row['keyword']).split()) <= 3:
+    if len(str(row["keyword"]).split()) <= 3:
         score += 3
 
     # ?? Recency bonus (within 24h)
     try:
-        date = pd.to_datetime(row['date'], errors='coerce')
+        date = pd.to_datetime(row["date"], errors="coerce")
         if pd.notna(date) and date > pd.Timestamp.utcnow() - pd.Timedelta(days=1):
             score += 5
     except:
@@ -50,7 +51,8 @@ def compute_score(row):
 
     return round(score, 2)
 
-df['score'] = df.apply(compute_score, axis=1)
-df = df.sort_values(by='score', ascending=False)
+
+df["score"] = df.apply(compute_score, axis=1)
+df = df.sort_values(by="score", ascending=False)
 df.to_csv(output_csv, index=False)
 print(f"? Scored trends saved to {output_csv}")

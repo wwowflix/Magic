@@ -191,9 +191,7 @@ def __internal_pivot_table(
                 and v in agged
                 and not is_integer_dtype(agged[v])
             ):
-                if not isinstance(agged[v], ABCDataFrame) and isinstance(
-                    data[v].dtype, np.dtype
-                ):
+                if not isinstance(agged[v], ABCDataFrame) and isinstance(data[v].dtype, np.dtype):
                     # exclude DataFrame case bc maybe_downcast_to_dtype expects
                     #  ArrayLike
                     # e.g. test_pivot_table_multiindex_columns_doctest_case
@@ -336,9 +334,7 @@ def _add_margins(
     # check the result column and leave floats
     for dtype in set(result.dtypes):
         cols = result.select_dtypes([dtype]).columns
-        margin_dummy[cols] = margin_dummy[cols].apply(
-            maybe_downcast_to_dtype, args=(dtype,)
-        )
+        margin_dummy[cols] = margin_dummy[cols].apply(maybe_downcast_to_dtype, args=(dtype,))
     result = result._append(margin_dummy)
     result.index.names = row_names
 
@@ -472,11 +468,7 @@ def _generate_marginal_results_without_values(
 def _convert_by(by):
     if by is None:
         by = []
-    elif (
-        is_scalar(by)
-        or isinstance(by, (np.ndarray, Index, ABCSeries, Grouper))
-        or callable(by)
-    ):
+    elif is_scalar(by) or isinstance(by, (np.ndarray, Index, ABCSeries, Grouper)) or callable(by):
         by = [by]
     else:
         by = list(by)
@@ -507,16 +499,12 @@ def pivot(
         append = index is None
         # error: Unsupported operand types for + ("List[Any]" and "ExtensionArray")
         # error: Unsupported left operand type for + ("ExtensionArray")
-        indexed = data.set_index(
-            cols + columns_listlike, append=append  # type: ignore[operator]
-        )
+        indexed = data.set_index(cols + columns_listlike, append=append)  # type: ignore[operator]
     else:
         if index is None:
             if isinstance(data.index, MultiIndex):
                 # GH 23955
-                index_list = [
-                    data.index.get_level_values(i) for i in range(data.index.nlevels)
-                ]
+                index_list = [data.index.get_level_values(i) for i in range(data.index.nlevels)]
             else:
                 index_list = [Series(data.index, name=data.index.name)]
         else:
@@ -529,9 +517,7 @@ def pivot(
         if is_list_like(values) and not isinstance(values, tuple):
             # Exclude tuple because it is seen as a single column name
             values = cast(Sequence[Hashable], values)
-            indexed = data._constructor(
-                data[values]._values, index=multiindex, columns=values
-            )
+            indexed = data._constructor(data[values]._values, index=multiindex, columns=values)
         else:
             indexed = data._constructor_sliced(data[values]._values, index=multiindex)
     # error: Argument 1 to "unstack" of "DataFrame" has incompatible type "Union
@@ -700,9 +686,7 @@ def crosstab(
 
     # Post-process
     if normalize is not False:
-        table = _normalize(
-            table, normalize=normalize, margins=margins, margins_name=margins_name
-        )
+        table = _normalize(table, normalize=normalize, margins=margins, margins_name=margins_name)
 
     table = table.rename_axis(index=rownames_mapper, axis=0)
     table = table.rename_axis(columns=colnames_mapper, axis=1)
@@ -710,9 +694,7 @@ def crosstab(
     return table
 
 
-def _normalize(
-    table: DataFrame, normalize, margins: bool, margins_name="All"
-) -> DataFrame:
+def _normalize(table: DataFrame, normalize, margins: bool, margins_name="All") -> DataFrame:
 
     if not isinstance(normalize, (bool, str)):
         axis_subs = {0: "index", 1: "columns"}
@@ -846,18 +828,10 @@ def _build_names_mapper(
     shared_names = set(rownames).intersection(set(colnames))
     dup_names = get_duplicates(rownames) | get_duplicates(colnames) | shared_names
 
-    rownames_mapper = {
-        f"row_{i}": name for i, name in enumerate(rownames) if name in dup_names
-    }
-    unique_rownames = [
-        f"row_{i}" if name in dup_names else name for i, name in enumerate(rownames)
-    ]
+    rownames_mapper = {f"row_{i}": name for i, name in enumerate(rownames) if name in dup_names}
+    unique_rownames = [f"row_{i}" if name in dup_names else name for i, name in enumerate(rownames)]
 
-    colnames_mapper = {
-        f"col_{i}": name for i, name in enumerate(colnames) if name in dup_names
-    }
-    unique_colnames = [
-        f"col_{i}" if name in dup_names else name for i, name in enumerate(colnames)
-    ]
+    colnames_mapper = {f"col_{i}": name for i, name in enumerate(colnames) if name in dup_names}
+    unique_colnames = [f"col_{i}" if name in dup_names else name for i, name in enumerate(colnames)]
 
     return rownames_mapper, unique_rownames, colnames_mapper, unique_colnames

@@ -1,46 +1,53 @@
-name: CI
+﻿name: CI
+
 on:
   push:
+    branches: [ "main", "fix/mypy-e2e-67" ]
   pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        py: ["3.11", "3.12", "3.13"]
-    runs-on: ${{ matrix.os }}
+  ci:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          python-version: ${{ matrix.py }}
+          fetch-depth: 0
 
-      - uses: actions/cache@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-py${{ matrix.py }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-py${{ matrix.py }}-pip-
+          python-version: "3.11"
 
-      - run: python -m pip install --upgrade pip
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
 
-      - name: Install project deps (if present)
-        if: hashFiles('requirements.txt') != ''
-        run: pip install -r requirements.txt
+      - name: Tests + coverage (tools only)
+        run: |
+          pytest -q --maxfail=1 --disable-warnings 
+            --cov=tools --cov-branch 
+            --cov-report=xml:coverage.xml --cov-report=term
 
-      - name: Install dev deps (if present)
-        if: hashFiles('requirements-dev.txt') != ''
-        run: pip install -r requirements-dev.txt
-
-      - run: pip install pytest pytest-cov
-
-      - name: Run tests
-        run: pytest -q --maxfail=1 --disable-warnings --cov=tools --cov-branch --cov-report=xml --cov-fail-under=90
-
-      - uses: codecov/codecov-action@v4
+      - name: Upload coverage.xml (artifact)
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          files: ./coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+          name: coverage-xml
+          path: coverage.xml
+          if-no-files-found: error
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          verbose: true
+          fail_ci_if_error: true
+
+

@@ -164,13 +164,10 @@ def infer_freq(index, warn: bool = True) -> str | None:
     if isinstance(index, ABCSeries):
         values = index._values
         if not (
-            is_datetime64_dtype(values)
-            or is_timedelta64_dtype(values)
-            or values.dtype == object
+            is_datetime64_dtype(values) or is_timedelta64_dtype(values) or values.dtype == object
         ):
             raise TypeError(
-                "cannot infer freq from a non-convertible dtype "
-                f"on a Series of {index.dtype}"
+                "cannot infer freq from a non-convertible dtype " f"on a Series of {index.dtype}"
             )
         index = values
 
@@ -180,8 +177,7 @@ def infer_freq(index, warn: bool = True) -> str | None:
         pass
     elif is_period_dtype(index.dtype):
         raise TypeError(
-            "PeriodIndex given. Check the `freq` attribute "
-            "instead of using infer_freq."
+            "PeriodIndex given. Check the `freq` attribute " "instead of using infer_freq."
         )
     elif is_timedelta64_dtype(index.dtype):
         # Allow TimedeltaIndex and TimedeltaArray
@@ -190,9 +186,7 @@ def infer_freq(index, warn: bool = True) -> str | None:
 
     if isinstance(index, Index) and not isinstance(index, DatetimeIndex):
         if isinstance(index, (Int64Index, Float64Index)):
-            raise TypeError(
-                f"cannot infer freq from a non-convertible index type {type(index)}"
-            )
+            raise TypeError(f"cannot infer freq from a non-convertible index type {type(index)}")
         index = index._values
 
     if not isinstance(index, DatetimeIndex):
@@ -216,9 +210,7 @@ class _FrequencyInferer:
         if isinstance(index, ABCIndex):
             # error: Item "ndarray[Any, Any]" of "Union[ExtensionArray,
             # ndarray[Any, Any]]" has no attribute "_ndarray"
-            self._reso = get_unit_from_dtype(
-                index._data._ndarray.dtype  # type: ignore[union-attr]
-            )
+            self._reso = get_unit_from_dtype(index._data._ndarray.dtype)  # type: ignore[union-attr]
         else:
             # otherwise we have DTA/TDA
             self._reso = get_unit_from_dtype(index._ndarray.dtype)
@@ -514,9 +506,7 @@ def is_subperiod(source, target) -> bool:
 
     if _is_annual(target):
         if _is_quarterly(source):
-            return _quarter_months_conform(
-                get_rule_month(source), get_rule_month(target)
-            )
+            return _quarter_months_conform(get_rule_month(source), get_rule_month(target))
         return source in {"D", "C", "B", "M", "H", "T", "S", "L", "U", "N"}
     elif _is_quarterly(target):
         return source in {"D", "C", "B", "M", "H", "T", "S", "L", "U", "N"}

@@ -2,6 +2,7 @@
 Functions for arithmetic and comparison operations on NumPy arrays and
 ExtensionArrays.
 """
+
 from __future__ import annotations
 
 import datetime
@@ -111,9 +112,7 @@ def _masked_arith_op(x: np.ndarray, y, op):
 
     else:
         if not is_scalar(y):
-            raise TypeError(
-                f"Cannot broadcast np.ndarray with operand of type { type(y) }"
-            )
+            raise TypeError(f"Cannot broadcast np.ndarray with operand of type { type(y) }")
 
         # mask is only meaningful for x
         result = np.empty(x.size, dtype=x.dtype)
@@ -261,9 +260,7 @@ def comparison_op(left: ArrayLike, right: Any, op) -> ArrayLike:
         #  We are not catching all listlikes here (e.g. frozenset, tuple)
         #  The ambiguous case is object-dtype.  See GH#27803
         if len(lvalues) != len(rvalues):
-            raise ValueError(
-                "Lengths must match to compare", lvalues.shape, rvalues.shape
-            )
+            raise ValueError("Lengths must match to compare", lvalues.shape, rvalues.shape)
 
     if should_extension_dispatch(lvalues, rvalues) or (
         (isinstance(rvalues, (Timedelta, BaseOffset, Timestamp)) or right is NaT)
@@ -517,10 +514,6 @@ def _bool_arith_check(op, a, b):
     with booleans.
     """
     if op in _BOOL_OP_NOT_ALLOWED:
-        if is_bool_dtype(a.dtype) and (
-            is_bool_dtype(b) or isinstance(b, (bool, np.bool_))
-        ):
+        if is_bool_dtype(a.dtype) and (is_bool_dtype(b) or isinstance(b, (bool, np.bool_))):
             op_name = op.__name__.strip("_").lstrip("r")
-            raise NotImplementedError(
-                f"operator '{op_name}' not implemented for bool dtypes"
-            )
+            raise NotImplementedError(f"operator '{op_name}' not implemented for bool dtypes")

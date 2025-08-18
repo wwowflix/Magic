@@ -10,7 +10,7 @@ that drawings don't need to know the details of how outlines are stored.
 
 The most basic pattern is this::
 
-	outline.draw(pen)  # 'outline' draws itself onto 'pen'
+        outline.draw(pen)  # 'outline' draws itself onto 'pen'
 
 Pens can be used to render outlines to the screen, but also to construct
 new outlines. Eg. an outline object can be both a drawable object (it has a
@@ -453,10 +453,7 @@ class _TestPen(BasePen):
         print("%s %s lineto" % (pt[0], pt[1]))
 
     def _curveToOne(self, bcp1, bcp2, pt):
-        print(
-            "%s %s %s %s %s %s curveto"
-            % (bcp1[0], bcp1[1], bcp2[0], bcp2[1], pt[0], pt[1])
-        )
+        print("%s %s %s %s %s %s curveto" % (bcp1[0], bcp1[1], bcp2[0], bcp2[1], pt[0], pt[1]))
 
     def _closePath(self):
         print("closepath")

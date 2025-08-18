@@ -230,13 +230,9 @@ def _check_isinstance(left, right, cls):
     cls_name = cls.__name__
 
     if not isinstance(left, cls):
-        raise AssertionError(
-            f"{cls_name} Expected type {cls}, found {type(left)} instead"
-        )
+        raise AssertionError(f"{cls_name} Expected type {cls}, found {type(left)} instead")
     if not isinstance(right, cls):
-        raise AssertionError(
-            f"{cls_name} Expected type {cls}, found {type(right)} instead"
-        )
+        raise AssertionError(f"{cls_name} Expected type {cls}, found {type(right)} instead")
 
 
 def assert_dict_equal(left, right, compare_keys: bool = True) -> None:
@@ -548,18 +544,14 @@ def assert_categorical_equal(
     _check_isinstance(left, right, Categorical)
 
     exact: bool | str
-    if isinstance(left.categories, RangeIndex) or isinstance(
-        right.categories, RangeIndex
-    ):
+    if isinstance(left.categories, RangeIndex) or isinstance(right.categories, RangeIndex):
         exact = "equiv"
     else:
         # We still want to require exact matches for NumericIndex
         exact = True
 
     if check_category_order:
-        assert_index_equal(
-            left.categories, right.categories, obj=f"{obj}.categories", exact=exact
-        )
+        assert_index_equal(left.categories, right.categories, obj=f"{obj}.categories", exact=exact)
         assert_numpy_array_equal(
             left.codes, right.codes, check_dtype=check_dtype, obj=f"{obj}.codes"
         )
@@ -581,9 +573,7 @@ def assert_categorical_equal(
     assert_attr_equal("ordered", left, right, obj=obj)
 
 
-def assert_interval_array_equal(
-    left, right, exact="equiv", obj="IntervalArray"
-) -> None:
+def assert_interval_array_equal(left, right, exact="equiv", obj="IntervalArray") -> None:
     """
     Test that two IntervalArrays are equivalent.
 
@@ -619,9 +609,7 @@ def assert_period_array_equal(left, right, obj="PeriodArray") -> None:
     assert_attr_equal("freq", left, right, obj=obj)
 
 
-def assert_datetime_array_equal(
-    left, right, obj="DatetimeArray", check_freq=True
-) -> None:
+def assert_datetime_array_equal(left, right, obj="DatetimeArray", check_freq=True) -> None:
     __tracebackhide__ = True
     _check_isinstance(left, right, DatetimeArray)
 
@@ -631,9 +619,7 @@ def assert_datetime_array_equal(
     assert_attr_equal("tz", left, right, obj=obj)
 
 
-def assert_timedelta_array_equal(
-    left, right, obj="TimedeltaArray", check_freq=True
-) -> None:
+def assert_timedelta_array_equal(left, right, obj="TimedeltaArray", check_freq=True) -> None:
     __tracebackhide__ = True
     _check_isinstance(left, right, TimedeltaArray)
     assert_numpy_array_equal(left._data, right._data, obj=f"{obj}._data")
@@ -734,9 +720,7 @@ def assert_numpy_array_equal(
     def _raise(left, right, err_msg):
         if err_msg is None:
             if left.shape != right.shape:
-                raise_assert_detail(
-                    obj, f"{obj} shapes are different", left.shape, right.shape
-                )
+                raise_assert_detail(obj, f"{obj} shapes are different", left.shape, right.shape)
 
             diff = 0
             for left_arr, right_arr in zip(left, right):
@@ -1032,9 +1016,7 @@ def assert_series_equal(
         left_values = left._values
         right_values = right._values
         # Only check exact if dtype is numeric
-        if isinstance(left_values, ExtensionArray) and isinstance(
-            right_values, ExtensionArray
-        ):
+        if isinstance(left_values, ExtensionArray) and isinstance(right_values, ExtensionArray):
             assert_extension_array_equal(
                 left_values,
                 right_values,
@@ -1059,16 +1041,11 @@ def assert_series_equal(
         # datetimelike may have different objects (e.g. datetime.datetime
         # vs Timestamp) but will compare equal
         if not Index(left._values).equals(Index(right._values)):
-            msg = (
-                f"[datetimelike_compat=True] {left._values} "
-                f"is not equal to {right._values}."
-            )
+            msg = f"[datetimelike_compat=True] {left._values} " f"is not equal to {right._values}."
             raise AssertionError(msg)
     elif is_interval_dtype(left.dtype) and is_interval_dtype(right.dtype):
         assert_interval_array_equal(left.array, right.array)
-    elif isinstance(left.dtype, CategoricalDtype) or isinstance(
-        right.dtype, CategoricalDtype
-    ):
+    elif isinstance(left.dtype, CategoricalDtype) or isinstance(right.dtype, CategoricalDtype):
         _testing.assert_almost_equal(
             left._values,
             right._values,
@@ -1120,9 +1097,7 @@ def assert_series_equal(
         assert_attr_equal("name", left, right, obj=obj)
 
     if check_categorical:
-        if isinstance(left.dtype, CategoricalDtype) or isinstance(
-            right.dtype, CategoricalDtype
-        ):
+        if isinstance(left.dtype, CategoricalDtype) or isinstance(right.dtype, CategoricalDtype):
             assert_categorical_equal(
                 left._values,
                 right._values,
@@ -1324,9 +1299,7 @@ def assert_frame_equal(
         for dtype in list(set(list(lblocks.keys()) + list(rblocks.keys()))):
             assert dtype in lblocks
             assert dtype in rblocks
-            assert_frame_equal(
-                lblocks[dtype], rblocks[dtype], check_dtype=check_dtype, obj=obj
-            )
+            assert_frame_equal(lblocks[dtype], rblocks[dtype], check_dtype=check_dtype, obj=obj)
 
     # compare by columns
     else:
@@ -1420,9 +1393,7 @@ def assert_sp_array_equal(left, right) -> None:
     right_index = right.sp_index
 
     if not left_index.equals(right_index):
-        raise_assert_detail(
-            "SparseArray.index", "index are not equal", left_index, right_index
-        )
+        raise_assert_detail("SparseArray.index", "index are not equal", left_index, right_index)
     else:
         # Just ensure a
         pass

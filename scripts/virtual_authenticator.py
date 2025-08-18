@@ -130,7 +130,9 @@ class Credential:
         return self._sign_count
 
     @classmethod
-    def create_non_resident_credential(cls, id: bytes, rp_id: str, private_key: bytes, sign_count: int) -> "Credential":
+    def create_non_resident_credential(
+        cls, id: bytes, rp_id: str, private_key: bytes, sign_count: int
+    ) -> "Credential":
         """Creates a non-resident (i.e. stateless) credential.
 
         :Args:
@@ -146,7 +148,12 @@ class Credential:
 
     @classmethod
     def create_resident_credential(
-        cls, id: bytes, rp_id: str, user_handle: Optional[bytes], private_key: bytes, sign_count: int
+        cls,
+        id: bytes,
+        rp_id: str,
+        user_handle: Optional[bytes],
+        private_key: bytes,
+        sign_count: int,
     ) -> "Credential":
         """Creates a resident (i.e. stateful) credential.
 
@@ -183,7 +190,9 @@ class Credential:
         rp_id = data.get("rpId", None)
         private_key = urlsafe_b64decode(f"{data['privateKey']}==")
         sign_count = int(data["signCount"])
-        user_handle = urlsafe_b64decode(f"{data['userHandle']}==") if data.get("userHandle", None) else None
+        user_handle = (
+            urlsafe_b64decode(f"{data['userHandle']}==") if data.get("userHandle", None) else None
+        )
 
         return cls(_id, is_resident_credential, rp_id, user_handle, private_key, sign_count)
 

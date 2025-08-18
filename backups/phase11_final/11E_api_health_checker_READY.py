@@ -5,7 +5,7 @@ import requests
 ENDPOINTS = [
     "https://api.github.com",
     "https://www.google.com",
-    "https://nonexistent.openai.com"
+    "https://nonexistent.openai.com",
 ]
 LOG_FILE = "outputs/logs/api_health_check_log.txt"
 

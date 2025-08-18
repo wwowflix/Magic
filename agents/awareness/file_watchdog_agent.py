@@ -22,7 +22,7 @@ WATCH_PATHS = [
     "D:\\MAGIC\\approved",
     "D:\\MAGIC\\hold",
     "D:\\MAGIC\\quarantine",
-    "D:\\MAGIC\\scripts"
+    "D:\\MAGIC\\scripts",
 ]
 LOG_FILE = "D:\\MAGIC\\logs\\magic_master_log.txt"
 

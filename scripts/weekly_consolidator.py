@@ -23,7 +23,7 @@ if not os.path.exists(history_folder):
     os.makedirs(history_folder)
 
 df = pd.read_csv(input_csv)
-df['week'] = timestamp  # tag with current week
+df["week"] = timestamp  # tag with current week
 
 df.to_csv(output_csv, index=False)
 print(f"✅ Weekly snapshot saved to {output_csv}")

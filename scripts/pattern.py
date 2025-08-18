@@ -79,14 +79,14 @@ class Shading(PDFObject):
         super().__init__()
         self.shading_type = shading_type
         self.background = (
-            f'[{" ".join(f"{c:.2f}" for c in background.colors)}]'
-            if background
-            else None
+            f'[{" ".join(f"{c:.2f}" for c in background.colors)}]' if background else None
         )
         self.color_space = Name(color_space)
         self.coords = coords
         self.function = f"{function.id} 0 R"
-        self.extend = f'[{"true" if extend_before else "false"} {"true" if extend_after else "false"}]'
+        self.extend = (
+            f'[{"true" if extend_before else "false"} {"true" if extend_after else "false"}]'
+        )
 
 
 class Gradient(ABC):
@@ -100,9 +100,7 @@ class Gradient(ABC):
                 else convert_to_device_color(*background)
             )
         if self.background and self.background.__class__.__name__ != self.color_space:
-            raise ValueError(
-                "The background color must be of the same color space as the gradient"
-            )
+            raise ValueError("The background color must be of the same color space as the gradient")
         self.extend_before = extend_before
         self.extend_after = extend_after
         self.bounds = (
@@ -111,9 +109,7 @@ class Gradient(ABC):
             else [(i + 1) / (len(self.colors) - 1) for i in range(len(self.colors) - 2)]
         )
         if len(self.bounds) != len(self.colors) - 2:
-            raise ValueError(
-                "Bounds array length must be two less than the number of colors"
-            )
+            raise ValueError("Bounds array length must be two less than the number of colors")
         self.functions = self._generate_functions()
         self.pattern = Pattern(self)
         self._shading_object = None

@@ -13,6 +13,7 @@ classes (if they are relevant for the extension interface for all dtypes), or
 be added to the array-specific tests in `pandas/tests/arrays/`.
 
 """
+
 import numpy as np
 import pytest
 
@@ -183,9 +184,7 @@ class TestMethods(base.BaseMethodsTests):
             msg = "Specifying the specific value to use for `na_sentinel` is deprecated"
         with tm.assert_produces_warning(FutureWarning, match=msg):
             labels, uniques = pd.factorize(data_for_grouping, na_sentinel=na_sentinel)
-        expected_labels = np.array(
-            [0, 0, na_sentinel, na_sentinel, 1, 1, 0], dtype=np.intp
-        )
+        expected_labels = np.array([0, 0, na_sentinel, na_sentinel, 1, 1, 0], dtype=np.intp)
         expected_uniques = data_for_grouping.take([0, 4])
 
         tm.assert_numpy_array_equal(labels, expected_labels)
@@ -260,9 +259,7 @@ class TestGroupby(base.BaseGroupbyTests):
     """
 
     def test_grouping_grouper(self, data_for_grouping):
-        df = pd.DataFrame(
-            {"A": ["B", "B", None, None, "A", "A", "B"], "B": data_for_grouping}
-        )
+        df = pd.DataFrame({"A": ["B", "B", None, None, "A", "A", "B"], "B": data_for_grouping})
         gr1 = df.groupby("A").grouper.groupings[0]
         gr2 = df.groupby("B").grouper.groupings[0]
 

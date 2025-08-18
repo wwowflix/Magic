@@ -111,15 +111,12 @@ class FTPFileSystem(AbstractFileSystem):
                     out = [
                         (fn, details)
                         for (fn, details) in self.ftp.mlsd(path)
-                        if fn not in [".", ".."]
-                        and details["type"] not in ["pdir", "cdir"]
+                        if fn not in [".", ".."] and details["type"] not in ["pdir", "cdir"]
                     ]
                 except error_perm:
                     out = _mlsd2(self.ftp, path)  # Not platform independent
                 for fn, details in out:
-                    details["name"] = "/".join(
-                        ["" if path == "/" else path, fn.lstrip("/")]
-                    )
+                    details["name"] = "/".join(["" if path == "/" else path, fn.lstrip("/")])
                     if details["type"] == "file":
                         details["size"] = int(details["size"])
                     else:

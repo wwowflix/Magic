@@ -26,9 +26,7 @@ class TestLookup:
         with tm.assert_produces_warning(FutureWarning):
             result = df.lookup(rows, cols)
 
-        expected = np.array(
-            [df.loc[r, c] for r, c in zip(rows, cols)], dtype=np.object_
-        )
+        expected = np.array([df.loc[r, c] for r, c in zip(rows, cols)], dtype=np.object_)
         tm.assert_almost_equal(result, expected)
 
     def test_lookup_bool(self):
@@ -43,9 +41,7 @@ class TestLookup:
         with tm.assert_produces_warning(FutureWarning):
             df["mask"] = df.lookup(df.index, "mask_" + df["label"])
 
-        exp_mask = np.array(
-            [df.loc[r, c] for r, c in zip(df.index, "mask_" + df["label"])]
-        )
+        exp_mask = np.array([df.loc[r, c] for r, c in zip(df.index, "mask_" + df["label"])])
 
         tm.assert_series_equal(df["mask"], Series(exp_mask, name="mask"))
         assert df["mask"].dtype == np.bool_
@@ -87,8 +83,6 @@ class TestLookup:
 
 def test_lookup_deprecated():
     # GH#18262
-    df = DataFrame(
-        {"col": ["A", "A", "B", "B"], "A": [80, 23, np.nan, 22], "B": [80, 55, 76, 67]}
-    )
+    df = DataFrame({"col": ["A", "A", "B", "B"], "A": [80, 23, np.nan, 22], "B": [80, 55, 76, 67]})
     with tm.assert_produces_warning(FutureWarning):
         df.lookup(df.index, df["col"])

@@ -162,9 +162,7 @@ def deprecate_kwarg(
     should raise warning
     """
     if mapping is not None and not hasattr(mapping, "get") and not callable(mapping):
-        raise TypeError(
-            "mapping from old to new argument values must be dict or callable!"
-        )
+        raise TypeError("mapping from old to new argument values must be dict or callable!")
 
     def _deprecate_kwarg(func: F) -> F:
         @wraps(func)
@@ -298,17 +296,18 @@ def deprecate_nonkeyword_arguments(
             allow_args = [
                 p.name
                 for p in old_sig.parameters.values()
-                if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
-                and p.default is p.empty
+                if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD) and p.default is p.empty
             ]
 
         new_params = [
-            p.replace(kind=p.KEYWORD_ONLY)
-            if (
-                p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
-                and p.name not in allow_args
+            (
+                p.replace(kind=p.KEYWORD_ONLY)
+                if (
+                    p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
+                    and p.name not in allow_args
+                )
+                else p
             )
-            else p
             for p in old_sig.parameters.values()
         ]
         new_params.sort(key=lambda p: p.kind)
@@ -409,17 +408,17 @@ def doc(*docstrings: str | Callable, **params) -> Callable[[F], F]:
         # formatting templates and concatenating docstring
         decorated.__doc__ = "".join(
             [
-                component.format(**params)
-                if isinstance(component, str)
-                else dedent(component.__doc__ or "")
+                (
+                    component.format(**params)
+                    if isinstance(component, str)
+                    else dedent(component.__doc__ or "")
+                )
                 for component in docstring_components
             ]
         )
 
         # error: "F" has no attribute "_docstring_components"
-        decorated._docstring_components = (  # type: ignore[attr-defined]
-            docstring_components
-        )
+        decorated._docstring_components = docstring_components  # type: ignore[attr-defined]
         return decorated
 
     return decorator

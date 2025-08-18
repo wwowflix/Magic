@@ -1,4 +1,5 @@
-""" PEP 610 """
+"""PEP 610"""
+
 import json
 import re
 import urllib.parse
@@ -31,9 +32,7 @@ def _get(
     value = d[key]
     if not isinstance(value, expected_type):
         raise DirectUrlValidationError(
-            "{!r} has unexpected type for {} (expected {})".format(
-                value, key, expected_type
-            )
+            "{!r} has unexpected type for {} (expected {})".format(value, key, expected_type)
         )
     return value
 
@@ -50,13 +49,9 @@ def _get_required(
 def _exactly_one_of(infos: Iterable[Optional["InfoType"]]) -> "InfoType":
     infos = [info for info in infos if info is not None]
     if not infos:
-        raise DirectUrlValidationError(
-            "missing one of archive_info, dir_info, vcs_info"
-        )
+        raise DirectUrlValidationError("missing one of archive_info, dir_info, vcs_info")
     if len(infos) > 1:
-        raise DirectUrlValidationError(
-            "more than one of archive_info, dir_info, vcs_info"
-        )
+        raise DirectUrlValidationError("more than one of archive_info, dir_info, vcs_info")
     assert infos[0] is not None
     return infos[0]
 
@@ -111,9 +106,7 @@ class ArchiveInfo:
             try:
                 hash_name, hash_value = hash.split("=", 1)
             except ValueError:
-                raise DirectUrlValidationError(
-                    f"invalid archive_info.hash format: {hash!r}"
-                )
+                raise DirectUrlValidationError(f"invalid archive_info.hash format: {hash!r}")
             if hashes is None:
                 hashes = {hash_name: hash_value}
             elif hash_name not in hash:
@@ -169,11 +162,7 @@ class DirectUrl:
         if "@" not in netloc:
             return netloc
         user_pass, netloc_no_user_pass = netloc.split("@", 1)
-        if (
-            isinstance(self.info, VcsInfo)
-            and self.info.vcs == "git"
-            and user_pass == "git"
-        ):
+        if isinstance(self.info, VcsInfo) and self.info.vcs == "git" and user_pass == "git":
             return netloc
         if ENV_VAR_RE.match(user_pass):
             return netloc
@@ -187,9 +176,7 @@ class DirectUrl:
         """
         purl = urllib.parse.urlsplit(self.url)
         netloc = self._remove_auth_from_netloc(purl.netloc)
-        surl = urllib.parse.urlunsplit(
-            (purl.scheme, netloc, purl.path, purl.query, purl.fragment)
-        )
+        surl = urllib.parse.urlunsplit((purl.scheme, netloc, purl.path, purl.query, purl.fragment))
         return surl
 
     def validate(self) -> None:

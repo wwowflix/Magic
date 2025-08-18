@@ -10,8 +10,5 @@ UNIVERSAL_CSV_SCHEMA = [
     "region",
     "language",
     "scrape_ts",
-    "additional_info"
+    "additional_info",
 ]
-
-
-

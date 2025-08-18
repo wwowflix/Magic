@@ -1,6 +1,7 @@
 """
 Tests for subclasses of NDArrayBackedExtensionArray
 """
+
 import numpy as np
 
 from pandas import (
@@ -73,4 +74,3 @@ class TestEmpty:
         assert isinstance(result, NumpyExtensionArray)
         assert result.dtype == dtype
         assert result.shape == shape
-

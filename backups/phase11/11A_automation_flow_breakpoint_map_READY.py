@@ -24,7 +24,7 @@ log_lines = []
 for phase in sorted(flow_map):
     modules = sorted(flow_map[phase])
     missing = []
-    for i in range(ord('A'), ord('Z') + 1):
+    for i in range(ord("A"), ord("Z") + 1):
         mod = chr(i)
         if mod not in modules:
             if any(chr(j) in modules for j in range(i - 1, i + 2)):

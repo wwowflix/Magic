@@ -137,8 +137,7 @@ class UpgradePrompt:
                 f"[red]{self.old}[reset] -> [green]{self.new}[reset]"
             ),
             Text.from_markup(
-                f"{notice} To update, run: "
-                f"[green]{escape(pip_cmd)} install --upgrade pip"
+                f"{notice} To update, run: " f"[green]{escape(pip_cmd)} install --upgrade pip"
             ),
         )
 
@@ -153,9 +152,7 @@ def was_installed_by_pip(pkg: str) -> bool:
     return dist is not None and "pip" == dist.installer
 
 
-def _get_current_remote_pip_version(
-    session: PipSession, options: optparse.Values
-) -> Optional[str]:
+def _get_current_remote_pip_version(session: PipSession, options: optparse.Values) -> Optional[str]:
     # Lets use PackageFinder to see what the latest pip version is
     link_collector = LinkCollector.create(
         session,
@@ -206,8 +203,7 @@ def _self_version_check_logic(
         return None  # Only suggest upgrade if pip is installed by pip.
 
     local_version_is_older = (
-        local_version < remote_version
-        and local_version.base_version != remote_version.base_version
+        local_version < remote_version and local_version.base_version != remote_version.base_version
     )
     if local_version_is_older:
         return UpgradePrompt(old=str(local_version), new=remote_version_str)
@@ -231,9 +227,7 @@ def pip_self_version_check(session: PipSession, options: optparse.Values) -> Non
             state=SelfCheckState(cache_dir=options.cache_dir),
             current_time=datetime.datetime.utcnow(),
             local_version=installed_dist.version,
-            get_remote_version=functools.partial(
-                _get_current_remote_pip_version, session, options
-            ),
+            get_remote_version=functools.partial(_get_current_remote_pip_version, session, options),
         )
         if upgrade_prompt is not None:
             logger.warning("[present-rich] %s", upgrade_prompt)

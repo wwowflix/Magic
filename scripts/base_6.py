@@ -1,6 +1,7 @@
 """
 Extend pandas with custom array types.
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -127,9 +128,7 @@ class ExtensionDtype:
             except TypeError:
                 return False
         if isinstance(other, type(self)):
-            return all(
-                getattr(self, attr) == getattr(other, attr) for attr in self._metadata
-            )
+            return all(getattr(self, attr) == getattr(other, attr) for attr in self._metadata)
         return False
 
     def __hash__(self) -> int:
@@ -227,9 +226,7 @@ class ExtensionDtype:
         return cls._empty(shape, dtype=self)
 
     @classmethod
-    def construct_from_string(
-        cls: type_t[ExtensionDtypeT], string: str
-    ) -> ExtensionDtypeT:
+    def construct_from_string(cls: type_t[ExtensionDtypeT], string: str) -> ExtensionDtypeT:
         r"""
         Construct this type from a string.
 
@@ -273,9 +270,7 @@ class ExtensionDtype:
         ...         )
         """
         if not isinstance(string, str):
-            raise TypeError(
-                f"'construct_from_string' expects a string, got {type(string)}"
-            )
+            raise TypeError(f"'construct_from_string' expects a string, got {type(string)}")
         # error: Non-overlapping equality check (left operand type: "str", right
         #  operand type: "Callable[[ExtensionDtype], str]")  [comparison-overlap]
         assert isinstance(cls.name, str), (cls, type(cls.name))
@@ -474,22 +469,16 @@ class Registry:
         self.dtypes.append(dtype)
 
     @overload
-    def find(self, dtype: type_t[ExtensionDtypeT]) -> type_t[ExtensionDtypeT]:
-        ...
+    def find(self, dtype: type_t[ExtensionDtypeT]) -> type_t[ExtensionDtypeT]: ...
 
     @overload
-    def find(self, dtype: ExtensionDtypeT) -> ExtensionDtypeT:
-        ...
+    def find(self, dtype: ExtensionDtypeT) -> ExtensionDtypeT: ...
 
     @overload
-    def find(self, dtype: str) -> ExtensionDtype | None:
-        ...
+    def find(self, dtype: str) -> ExtensionDtype | None: ...
 
     @overload
-    def find(
-        self, dtype: npt.DTypeLike
-    ) -> type_t[ExtensionDtype] | ExtensionDtype | None:
-        ...
+    def find(self, dtype: npt.DTypeLike) -> type_t[ExtensionDtype] | ExtensionDtype | None: ...
 
     def find(
         self, dtype: type_t[ExtensionDtype] | ExtensionDtype | npt.DTypeLike

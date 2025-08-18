@@ -70,9 +70,7 @@ class PandasArray(
         if isinstance(values, type(self)):
             values = values._ndarray
         if not isinstance(values, np.ndarray):
-            raise ValueError(
-                f"'values' must be a NumPy array, not {type(values).__name__}"
-            )
+            raise ValueError(f"'values' must be a NumPy array, not {type(values).__name__}")
 
         if values.ndim == 0:
             # Technically we support 2, but do not advertise that fact.
@@ -97,11 +95,7 @@ class PandasArray(
         # Union[Tuple[Any, int], Tuple[Any, Union[int, Sequence[int]]], List[Any],
         # _DTypeDict, Tuple[Any, Any]]]"
         result = np.asarray(scalars, dtype=dtype)  # type: ignore[arg-type]
-        if (
-            result.ndim > 1
-            and not hasattr(scalars, "dtype")
-            and (dtype is None or dtype == object)
-        ):
+        if result.ndim > 1 and not hasattr(scalars, "dtype") and (dtype is None or dtype == object):
             # e.g. list-of-tuples
             result = construct_1d_object_array_from_listlike(scalars)
 
@@ -132,22 +126,16 @@ class PandasArray(
         # in PandasArray, since pandas' ExtensionArrays are 1-d.
         out = kwargs.get("out", ())
 
-        result = ops.maybe_dispatch_ufunc_to_dunder_op(
-            self, ufunc, method, *inputs, **kwargs
-        )
+        result = ops.maybe_dispatch_ufunc_to_dunder_op(self, ufunc, method, *inputs, **kwargs)
         if result is not NotImplemented:
             return result
 
         if "out" in kwargs:
             # e.g. test_ufunc_unary
-            return arraylike.dispatch_ufunc_with_out(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            return arraylike.dispatch_ufunc_with_out(self, ufunc, method, *inputs, **kwargs)
 
         if method == "reduce":
-            result = arraylike.dispatch_reduction_ufunc(
-                self, ufunc, method, *inputs, **kwargs
-            )
+            result = arraylike.dispatch_reduction_ufunc(self, ufunc, method, *inputs, **kwargs)
             if result is not NotImplemented:
                 # e.g. tests.series.test_ufunc.TestNumpyReductions
                 return result
@@ -155,9 +143,7 @@ class PandasArray(
         # Defer to the implementation of the ufunc on unwrapped values.
         inputs = tuple(x._ndarray if isinstance(x, PandasArray) else x for x in inputs)
         if out:
-            kwargs["out"] = tuple(
-                x._ndarray if isinstance(x, PandasArray) else x for x in out
-            )
+            kwargs["out"] = tuple(x._ndarray if isinstance(x, PandasArray) else x for x in out)
         result = getattr(ufunc, method)(*inputs, **kwargs)
 
         if ufunc.nout > 1:
@@ -225,34 +211,24 @@ class PandasArray(
 
     def min(self, *, axis: int | None = None, skipna: bool = True, **kwargs) -> Scalar:
         nv.validate_min((), kwargs)
-        result = nanops.nanmin(
-            values=self._ndarray, axis=axis, mask=self.isna(), skipna=skipna
-        )
+        result = nanops.nanmin(values=self._ndarray, axis=axis, mask=self.isna(), skipna=skipna)
         return self._wrap_reduction_result(axis, result)
 
     def max(self, *, axis: int | None = None, skipna: bool = True, **kwargs) -> Scalar:
         nv.validate_max((), kwargs)
-        result = nanops.nanmax(
-            values=self._ndarray, axis=axis, mask=self.isna(), skipna=skipna
-        )
+        result = nanops.nanmax(values=self._ndarray, axis=axis, mask=self.isna(), skipna=skipna)
         return self._wrap_reduction_result(axis, result)
 
-    def sum(
-        self, *, axis: int | None = None, skipna: bool = True, min_count=0, **kwargs
-    ) -> Scalar:
+    def sum(self, *, axis: int | None = None, skipna: bool = True, min_count=0, **kwargs) -> Scalar:
         nv.validate_sum((), kwargs)
-        result = nanops.nansum(
-            self._ndarray, axis=axis, skipna=skipna, min_count=min_count
-        )
+        result = nanops.nansum(self._ndarray, axis=axis, skipna=skipna, min_count=min_count)
         return self._wrap_reduction_result(axis, result)
 
     def prod(
         self, *, axis: int | None = None, skipna: bool = True, min_count=0, **kwargs
     ) -> Scalar:
         nv.validate_prod((), kwargs)
-        result = nanops.nanprod(
-            self._ndarray, axis=axis, skipna=skipna, min_count=min_count
-        )
+        result = nanops.nanprod(self._ndarray, axis=axis, skipna=skipna, min_count=min_count)
         return self._wrap_reduction_result(axis, result)
 
     def mean(

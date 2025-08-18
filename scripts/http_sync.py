@@ -63,10 +63,7 @@ class ResponseProxy:
     def headers(self):
         if self._headers is None:
             self._headers = dict(
-                [
-                    _.split(": ")
-                    for _ in self.request.getAllResponseHeaders().strip().split("\r\n")
-                ]
+                [_.split(": ") for _ in self.request.getAllResponseHeaders().strip().split("\r\n")]
             )
         return self._headers
 
@@ -76,9 +73,7 @@ class ResponseProxy:
 
     def raise_for_status(self):
         if not self.ok:
-            raise JsHttpException(
-                self.url, self.status_code, self.reason, self.headers, None
-            )
+            raise JsHttpException(self.url, self.status_code, self.reason, self.headers, None)
 
     def iter_content(self, chunksize, *_, **__):
         while True:
@@ -278,9 +273,7 @@ class HTTPFileSystem(AbstractFileSystem):
     @classmethod
     def _strip_protocol(cls, path: str) -> str:
         """For HTTP, we always want to keep the full URL"""
-        path = path.replace("sync-http://", "http://").replace(
-            "sync-https://", "https://"
-        )
+        path = path.replace("sync-http://", "http://").replace("sync-https://", "https://")
         return path
 
     @classmethod
@@ -369,17 +362,14 @@ class HTTPFileSystem(AbstractFileSystem):
         self._raise_not_found_for_status(r, url)
         return r.content
 
-    def get_file(
-        self, rpath, lpath, chunk_size=5 * 2**20, callback=_DEFAULT_CALLBACK, **kwargs
-    ):
+    def get_file(self, rpath, lpath, chunk_size=5 * 2**20, callback=_DEFAULT_CALLBACK, **kwargs):
         kw = self.kwargs.copy()
         kw.update(kwargs)
         logger.debug(rpath)
         r = self.session.get(self.encode_url(rpath), **kw)
         try:
             size = int(
-                r.headers.get("content-length", None)
-                or r.headers.get("Content-Length", None)
+                r.headers.get("content-length", None) or r.headers.get("Content-Length", None)
             )
         except (ValueError, KeyError, TypeError):
             size = None
@@ -429,9 +419,7 @@ class HTTPFileSystem(AbstractFileSystem):
 
         method = method.lower()
         if method not in ("post", "put"):
-            raise ValueError(
-                f"method has to be either 'post' or 'put', not: {method!r}"
-            )
+            raise ValueError(f"method has to be either 'post' or 'put', not: {method!r}")
 
         meth = getattr(self.session, method)
         resp = meth(rpath, data=gen_chunks(), **kw)
@@ -606,9 +594,7 @@ class HTTPFileSystem(AbstractFileSystem):
             root = ""
             depth = None if "**" in path else path[ind + 1 :].count("/") + 1
 
-        allpaths = self.find(
-            root, maxdepth=maxdepth or depth, withdirs=True, detail=True, **kwargs
-        )
+        allpaths = self.find(root, maxdepth=maxdepth or depth, withdirs=True, detail=True, **kwargs)
         # Escape characters special to python regex, leaving our supported
         # special characters in place.
         # See https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html

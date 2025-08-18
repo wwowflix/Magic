@@ -57,8 +57,7 @@ class FSMap(MutableMapping):
         if check:
             if not self.fs.exists(root):
                 raise ValueError(
-                    f"Path {root} does not exist. Create "
-                    f" with the ``create=True`` keyword"
+                    f"Path {root} does not exist. Create " f" with the ``create=True`` keyword"
                 )
             self.fs.touch(root + "/a")
             self.fs.rm(root + "/a")
@@ -108,8 +107,7 @@ class FSMap(MutableMapping):
         except self.missing_exceptions as e:
             raise KeyError from e
         out = {
-            k: (KeyError() if isinstance(v, self.missing_exceptions) else v)
-            for k, v in out.items()
+            k: (KeyError() if isinstance(v, self.missing_exceptions) else v) for k, v in out.items()
         }
         return {
             key: out[k2] if on_error == "raise" else out.get(k2, KeyError(k2))

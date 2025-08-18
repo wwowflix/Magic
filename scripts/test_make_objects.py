@@ -2,7 +2,6 @@
 Tests for tm.makeFoo functions.
 """
 
-
 import numpy as np
 
 import pandas._testing as tm

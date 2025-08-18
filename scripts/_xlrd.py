@@ -18,9 +18,7 @@ from pandas.io.excel._base import BaseExcelReader
 
 class XlrdReader(BaseExcelReader):
     @doc(storage_options=_shared_docs["storage_options"])
-    def __init__(
-        self, filepath_or_buffer, storage_options: StorageOptions = None
-    ) -> None:
+    def __init__(self, filepath_or_buffer, storage_options: StorageOptions = None) -> None:
         """
         Reader using xlrd engine.
 

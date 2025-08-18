@@ -328,9 +328,7 @@ class MemoryReceiveChannel(ReceiveChannel[ReceiveType], metaclass=NoPublicConstr
         return self._state.statistics()
 
     def __repr__(self) -> str:
-        return (
-            f"<receive channel at {id(self):#x}, using buffer at {id(self._state):#x}>"
-        )
+        return f"<receive channel at {id(self):#x}, using buffer at {id(self._state):#x}>"
 
     @enable_ki_protection
     def receive_nowait(self) -> ReceiveType:
@@ -466,9 +464,7 @@ class MemoryReceiveChannel(ReceiveChannel[ReceiveType], metaclass=NoPublicConstr
 
 
 class RecvChanWrapper(ReceiveChannel[T]):
-    def __init__(
-        self, recv_chan: MemoryReceiveChannel[T], send_semaphore: trio.Semaphore
-    ) -> None:
+    def __init__(self, recv_chan: MemoryReceiveChannel[T], send_semaphore: trio.Semaphore) -> None:
         self._recv_chan = recv_chan
         self._send_semaphore = send_semaphore
 
@@ -539,9 +535,7 @@ def as_safe_channel(
                 # `nursery.start` to make sure that we will clean up send_chan & agen
                 # If this errors we don't close `recv_chan`, but the caller
                 # never gets access to it, so that's not a problem.
-                await nursery.start(
-                    _move_elems_to_channel, agen, send_chan, send_semaphore
-                )
+                await nursery.start(_move_elems_to_channel, agen, send_chan, send_semaphore)
                 # `async with recv_chan` could eat exceptions, so use sync cm
                 with RecvChanWrapper(recv_chan, send_semaphore) as wrapped_recv_chan:
                     yield wrapped_recv_chan

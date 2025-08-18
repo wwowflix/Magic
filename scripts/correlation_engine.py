@@ -24,14 +24,14 @@ yt_df = pd.read_csv(yt_file)
 reddit_df = pd.read_csv(reddit_file)
 
 # ✅ Normalize keywords for comparison
-yt_keywords = set(yt_df['keyword'].str.lower().str.strip())
-reddit_keywords = set(reddit_df['title'].str.lower().str.strip())
+yt_keywords = set(yt_df["keyword"].str.lower().str.strip())
+reddit_keywords = set(reddit_df["title"].str.lower().str.strip())
 
 # ✅ Find overlaps
 matched_keywords = yt_keywords.intersection(reddit_keywords)
 
 # ✅ Filter original YouTube rows
-correlated_df = yt_df[yt_df['keyword'].str.lower().isin(matched_keywords)]
+correlated_df = yt_df[yt_df["keyword"].str.lower().isin(matched_keywords)]
 
 # ✅ Save output
 os.makedirs(os.path.dirname(output_file), exist_ok=True)

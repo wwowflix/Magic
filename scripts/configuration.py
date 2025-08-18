@@ -124,9 +124,7 @@ class ConfigurationCommand(Command):
             return ERROR
 
         # Load a new configuration
-        self.configuration = Configuration(
-            isolated=options.isolated_mode, load_only=load_only
-        )
+        self.configuration = Configuration(isolated=options.isolated_mode, load_only=load_only)
         self.configuration.load()
 
         # Error handling happens here, not in the action-handlers.
@@ -164,8 +162,7 @@ class ConfigurationCommand(Command):
             return file_options[0]
 
         raise PipError(
-            "Need exactly one file to operate upon "
-            "(--user, --site, --global) to perform."
+            "Need exactly one file to operate upon " "(--user, --site, --global) to perform."
         )
 
     def list_values(self, options: Values, args: List[str]) -> None:
@@ -231,9 +228,7 @@ class ConfigurationCommand(Command):
         elif '"' in fname:
             # This shouldn't happen, unless we see a username like that.
             # If that happens, we'd appreciate a pull request fixing this.
-            raise PipError(
-                f'Can not open an editor for a file name containing "\n{fname}'
-            )
+            raise PipError(f'Can not open an editor for a file name containing "\n{fname}')
 
         try:
             subprocess.check_call(f'{editor} "{fname}"', shell=True)
@@ -242,16 +237,13 @@ class ConfigurationCommand(Command):
                 e.filename = editor
             raise
         except subprocess.CalledProcessError as e:
-            raise PipError(
-                "Editor Subprocess exited with exit code {}".format(e.returncode)
-            )
+            raise PipError("Editor Subprocess exited with exit code {}".format(e.returncode))
 
     def _get_n_args(self, args: List[str], example: str, n: int) -> Any:
         """Helper to make sure the command got the right number of arguments"""
         if len(args) != n:
             msg = (
-                "Got unexpected number of arguments, expected {}. "
-                '(example: "{} config {}")'
+                "Got unexpected number of arguments, expected {}. " '(example: "{} config {}")'
             ).format(n, get_prog(), example)
             raise PipError(msg)
 
@@ -266,9 +258,7 @@ class ConfigurationCommand(Command):
         try:
             self.configuration.save()
         except Exception:
-            logger.exception(
-                "Unable to save configuration. Please report this as a bug."
-            )
+            logger.exception("Unable to save configuration. Please report this as a bug.")
             raise PipError("Internal Error.")
 
     def _determine_editor(self, options: Values) -> str:

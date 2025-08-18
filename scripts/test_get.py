@@ -10,9 +10,7 @@ class TestGet:
         tm.assert_series_equal(b, float_frame["B"])
 
         assert float_frame.get("foo") is None
-        tm.assert_series_equal(
-            float_frame.get("foo", float_frame["B"]), float_frame["B"]
-        )
+        tm.assert_series_equal(float_frame.get("foo", float_frame["B"]), float_frame["B"])
 
     @pytest.mark.parametrize(
         "df",
@@ -25,4 +23,3 @@ class TestGet:
     def test_get_none(self, df):
         # see gh-5652
         assert df.get(None) is None
-

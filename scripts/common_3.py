@@ -1,6 +1,7 @@
 """
 Common type operations.
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -131,9 +132,7 @@ def ensure_python_int(value: int | np.integer) -> int:
     """
     if not (is_integer(value) or is_float(value)):
         if not is_scalar(value):
-            raise TypeError(
-                f"Value needs to be a scalar value, was type {type(value).__name__}"
-            )
+            raise TypeError(f"Value needs to be a scalar value, was type {type(value).__name__}")
         raise TypeError(f"Wrong type {type(value)} for value {value}")
     try:
         new_value = int(value)
@@ -154,8 +153,7 @@ def classes_and_not_datetimelike(*klasses) -> Callable:
     and not a datetimelike.
     """
     return lambda tipo: (
-        issubclass(tipo, klasses)
-        and not issubclass(tipo, (np.datetime64, np.timedelta64))
+        issubclass(tipo, klasses) and not issubclass(tipo, (np.datetime64, np.timedelta64))
     )
 
 
@@ -569,6 +567,7 @@ def is_string_dtype(arr_or_dtype) -> bool:
     >>> is_string_dtype(pd.Series([1, 2]))
     False
     """
+
     # TODO: gh-15585: consider making the checks stricter.
     def condition(dtype) -> bool:
         return dtype.kind in ("O", "S", "U") and not is_excluded_dtype(dtype)
@@ -829,9 +828,7 @@ def is_unsigned_integer_dtype(arr_or_dtype) -> bool:
     >>> is_unsigned_integer_dtype(np.array([1, 2], dtype=np.uint32))
     True
     """
-    return _is_dtype_type(
-        arr_or_dtype, classes_and_not_datetimelike(np.unsignedinteger)
-    )
+    return _is_dtype_type(arr_or_dtype, classes_and_not_datetimelike(np.unsignedinteger))
 
 
 def is_int64_dtype(arr_or_dtype) -> bool:
@@ -970,9 +967,7 @@ def is_datetime64_ns_dtype(arr_or_dtype) -> bool:
             tipo = get_dtype(arr_or_dtype.dtype)
         else:
             return False
-    return tipo == DT64NS_DTYPE or (
-        isinstance(tipo, DatetimeTZDtype) and tipo._unit == "ns"
-    )
+    return tipo == DT64NS_DTYPE or (isinstance(tipo, DatetimeTZDtype) and tipo._unit == "ns")
 
 
 def is_timedelta64_ns_dtype(arr_or_dtype) -> bool:
@@ -1146,9 +1141,7 @@ def is_datetimelike_v_numeric(a, b) -> bool:
         """
         return is_integer_dtype(x) or is_float_dtype(x)
 
-    return (needs_i8_conversion(a) and is_numeric(b)) or (
-        needs_i8_conversion(b) and is_numeric(a)
-    )
+    return (needs_i8_conversion(a) and is_numeric(b)) or (needs_i8_conversion(b) and is_numeric(a))
 
 
 def needs_i8_conversion(arr_or_dtype) -> bool:
@@ -1238,9 +1231,7 @@ def is_numeric_dtype(arr_or_dtype) -> bool:
     >>> is_numeric_dtype(np.array([], dtype=np.timedelta64))
     False
     """
-    return _is_dtype_type(
-        arr_or_dtype, classes_and_not_datetimelike(np.number, np.bool_)
-    )
+    return _is_dtype_type(arr_or_dtype, classes_and_not_datetimelike(np.number, np.bool_))
 
 
 def is_float_dtype(arr_or_dtype) -> bool:
@@ -1809,10 +1800,7 @@ def is_all_strings(value: ArrayLike) -> bool:
     dtype = value.dtype
 
     if isinstance(dtype, np.dtype):
-        return (
-            dtype == np.dtype("object")
-            and lib.infer_dtype(value, skipna=False) == "string"
-        )
+        return dtype == np.dtype("object") and lib.infer_dtype(value, skipna=False) == "string"
     elif isinstance(dtype, CategoricalDtype):
         return dtype.categories.inferred_type == "string"
     return dtype == "string"

@@ -111,9 +111,7 @@ def test_resample_loffset(loffset):
     s = Series(np.random.randn(14), index=rng)
 
     with tm.assert_produces_warning(FutureWarning):
-        result = s.resample(
-            "5min", closed="right", label="right", loffset=loffset
-        ).mean()
+        result = s.resample("5min", closed="right", label="right", loffset=loffset).mean()
     idx = date_range("1/1/2000", periods=4, freq="5min")
     expected = Series(
         [s[0], s[1:6].mean(), s[6:11].mean(), s[11:].mean()],
@@ -158,9 +156,7 @@ def test_resample_loffset_count():
     with tm.assert_produces_warning(FutureWarning):
         result = ts.resample("10S", loffset="1s").count()
 
-    expected_index = date_range(start_time, periods=10, freq="10S") + timedelta(
-        seconds=1
-    )
+    expected_index = date_range(start_time, periods=10, freq="10S") + timedelta(seconds=1)
     expected = Series(10, index=expected_index)
 
     tm.assert_series_equal(result, expected)
@@ -193,9 +189,7 @@ def test_resample_float_base():
     base = 17 + 43.51 / 60
     with tm.assert_produces_warning(FutureWarning):
         result = s.resample("3min", base=base).size()
-    expected = Series(
-        3, index=pd.DatetimeIndex(["2018-11-26 16:17:43.51"], freq="3min")
-    )
+    expected = Series(3, index=pd.DatetimeIndex(["2018-11-26 16:17:43.51"], freq="3min"))
     tm.assert_series_equal(result, expected)
 
 

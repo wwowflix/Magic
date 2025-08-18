@@ -231,9 +231,7 @@ class CategoricalIndex(NDArrayBackedExtensionIndex):
         if is_scalar(data):
             raise cls._scalar_data_error(data)
 
-        data = Categorical(
-            data, categories=categories, ordered=ordered, dtype=dtype, copy=copy
-        )
+        data = Categorical(data, categories=categories, ordered=ordered, dtype=dtype, copy=copy)
 
         return cls._simple_new(data, name=name)
 
@@ -261,9 +259,7 @@ class CategoricalIndex(NDArrayBackedExtensionIndex):
         if is_categorical_dtype(other):
             other = extract_array(other)
             if not other._categories_match_up_to_permutation(self):
-                raise TypeError(
-                    "categories must match existing categories when appending"
-                )
+                raise TypeError("categories must match existing categories when appending")
 
         elif other._is_multi:
             # preempt raising NotImplementedError in isna call
@@ -274,16 +270,12 @@ class CategoricalIndex(NDArrayBackedExtensionIndex):
             cat = Categorical(other, dtype=self.dtype)
             other = CategoricalIndex(cat)
             if not other.isin(values).all():
-                raise TypeError(
-                    "cannot append a non-category item to a CategoricalIndex"
-                )
+                raise TypeError("cannot append a non-category item to a CategoricalIndex")
             other = other._values
 
             if not ((other == values) | (isna(other) & isna(values))).all():
                 # GH#37667 see test_equals_non_category
-                raise TypeError(
-                    "categories must match existing categories when appending"
-                )
+                raise TypeError("categories must match existing categories when appending")
 
         return other
 
@@ -492,8 +484,7 @@ class CategoricalIndex(NDArrayBackedExtensionIndex):
     def take_nd(self, *args, **kwargs) -> CategoricalIndex:
         """Alias for `take`"""
         warnings.warn(
-            "CategoricalIndex.take_nd is deprecated, use CategoricalIndex.take "
-            "instead.",
+            "CategoricalIndex.take_nd is deprecated, use CategoricalIndex.take " "instead.",
             FutureWarning,
             stacklevel=find_stack_level(),
         )
@@ -572,9 +563,7 @@ class CategoricalIndex(NDArrayBackedExtensionIndex):
     def _concat(self, to_concat: list[Index], name: Hashable) -> Index:
         # if calling index is category, don't check dtype of others
         try:
-            cat = Categorical._concat_same_type(
-                [self._is_dtype_compat(c) for c in to_concat]
-            )
+            cat = Categorical._concat_same_type([self._is_dtype_compat(c) for c in to_concat])
         except TypeError:
             # not all to_concat elements are among our categories (or NA)
             from pandas.core.dtypes.concat import concat_compat

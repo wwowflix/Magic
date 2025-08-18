@@ -3,6 +3,7 @@ from pathlib import Path
 import csv
 import argparse
 
+
 def merge_summaries(input_dir: str, out_file: str) -> int:
     """
     Merge all *.tsv in input_dir into a single TSV (header written once).
@@ -44,12 +45,16 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
 
     return 0
 
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--input_dir", default=str(Path("outputs") / "summaries"))
-    ap.add_argument("--out", default=str(Path("outputs") / "summaries" / "phase_master_summary.tsv"))
+    ap.add_argument(
+        "--out", default=str(Path("outputs") / "summaries" / "phase_master_summary.tsv")
+    )
     args = ap.parse_args(argv)
     return merge_summaries(args.input_dir, args.out)
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

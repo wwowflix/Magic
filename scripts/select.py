@@ -16,7 +16,10 @@
 # under the License.
 
 
-from selenium.common.exceptions import NoSuchElementException, UnexpectedTagNameException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    UnexpectedTagNameException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -34,7 +37,9 @@ class Select:
             Select(driver.find_element(By.TAG_NAME, "select")).select_by_index(2)
         """
         if webelement.tag_name.lower() != "select":
-            raise UnexpectedTagNameException(f"Select only works on <select> elements, not on {webelement.tag_name}")
+            raise UnexpectedTagNameException(
+                f"Select only works on <select> elements, not on {webelement.tag_name}"
+            )
         self._el = webelement
         multi = self._el.get_dom_attribute("multiple")
         self.is_multiple = multi and multi != "false"

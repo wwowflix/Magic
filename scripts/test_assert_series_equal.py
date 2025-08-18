@@ -179,9 +179,7 @@ def test_series_equal_index_mismatch(check_index):
 def test_series_invalid_param_combination():
     left = Series(dtype=object)
     right = Series(dtype=object)
-    with pytest.raises(
-        ValueError, match="check_like must be False if check_index is False"
-    ):
+    with pytest.raises(ValueError, match="check_like must be False if check_index is False"):
         tm.assert_series_equal(left, right, check_index=False, check_like=True)
 
 
@@ -482,4 +480,3 @@ def test_assert_series_equal_index_exact_default():
     ser2 = Series(np.zeros(6, dtype=int), np.linspace(0, 1, 6))
     tm.assert_series_equal(ser1, ser2)
     tm.assert_frame_equal(ser1.to_frame(), ser2.to_frame())
-

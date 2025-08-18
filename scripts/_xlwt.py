@@ -184,17 +184,11 @@ class XlwtWriter(ExcelWriter):
         """
         if hasattr(item, "items"):
             if firstlevel:
-                it = [
-                    f"{key}: {cls._style_to_xlwt(value, False)}"
-                    for key, value in item.items()
-                ]
+                it = [f"{key}: {cls._style_to_xlwt(value, False)}" for key, value in item.items()]
                 out = f"{line_sep.join(it)} "
                 return out
             else:
-                it = [
-                    f"{key} {cls._style_to_xlwt(value, False)}"
-                    for key, value in item.items()
-                ]
+                it = [f"{key} {cls._style_to_xlwt(value, False)}" for key, value in item.items()]
                 out = f"{field_sep.join(it)} "
                 return out
         else:
@@ -204,9 +198,7 @@ class XlwtWriter(ExcelWriter):
             return item
 
     @classmethod
-    def _convert_to_style(
-        cls, style_dict, num_format_str: str | None = None
-    ) -> XFStyle:
+    def _convert_to_style(cls, style_dict, num_format_str: str | None = None) -> XFStyle:
         """
         converts a style_dict to an xlwt style object
 

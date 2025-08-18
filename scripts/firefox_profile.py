@@ -57,7 +57,9 @@ class FirefoxProfile:
         if profile_directory:
             newprof = os.path.join(tempfile.mkdtemp(), "webdriver-py-profilecopy")
             shutil.copytree(
-                profile_directory, newprof, ignore=shutil.ignore_patterns("parent.lock", "lock", ".parentlock")
+                profile_directory,
+                newprof,
+                ignore=shutil.ignore_patterns("parent.lock", "lock", ".parentlock"),
             )
             self._profile_dir = newprof
             os.chmod(self._profile_dir, 0o755)
@@ -65,7 +67,8 @@ class FirefoxProfile:
             self._profile_dir = tempfile.mkdtemp()
             if not FirefoxProfile.DEFAULT_PREFERENCES:
                 with open(
-                    os.path.join(os.path.dirname(__file__), WEBDRIVER_PREFERENCES), encoding="utf-8"
+                    os.path.join(os.path.dirname(__file__), WEBDRIVER_PREFERENCES),
+                    encoding="utf-8",
                 ) as default_prefs:
                     FirefoxProfile.DEFAULT_PREFERENCES = json.load(default_prefs)
 

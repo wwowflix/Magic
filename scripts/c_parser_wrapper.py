@@ -55,9 +55,7 @@ class CParserWrapper(ParserBase):
 
         # #2442
         # error: Cannot determine type of 'index_col'
-        kwds["allow_leading_cols"] = (
-            self.index_col is not False  # type: ignore[has-type]
-        )
+        kwds["allow_leading_cols"] = self.index_col is not False  # type: ignore[has-type]
 
         # GH20529, validate usecol arg before TextReader
         kwds["usecols"] = self.usecols
@@ -108,9 +106,7 @@ class CParserWrapper(ParserBase):
                 ]
             else:
                 # error: Cannot determine type of 'names'
-                self.names = list(  # type: ignore[has-type]
-                    range(self._reader.table_width)
-                )
+                self.names = list(range(self._reader.table_width))  # type: ignore[has-type]
 
         # gh-9755
         #
@@ -129,9 +125,7 @@ class CParserWrapper(ParserBase):
             # GH 14671
             # assert for mypy, orig_names is List or None, None would error in issubset
             assert self.orig_names is not None
-            if self.usecols_dtype == "string" and not set(usecols).issubset(
-                self.orig_names
-            ):
+            if self.usecols_dtype == "string" and not set(usecols).issubset(self.orig_names):
                 self._validate_usecols_names(usecols, self.orig_names)
 
             # error: Cannot determine type of 'names'
@@ -292,9 +286,7 @@ class CParserWrapper(ParserBase):
             column_names, date_data = self._do_date_conversions(names, data)
 
             # maybe create a mi on the columns
-            column_names = self._maybe_make_multi_index_columns(
-                column_names, self.col_names
-            )
+            column_names = self._maybe_make_multi_index_columns(column_names, self.col_names)
 
         else:
             # rename dict keys
@@ -326,9 +318,7 @@ class CParserWrapper(ParserBase):
         # hackish
         usecols = self._evaluate_usecols(self.usecols, names)
         if usecols is not None and len(names) != len(usecols):
-            names = [
-                name for i, name in enumerate(names) if i in usecols or name in usecols
-            ]
+            names = [name for i, name in enumerate(names) if i in usecols or name in usecols]
         return names
 
     def _get_index_names(self):
@@ -336,9 +326,7 @@ class CParserWrapper(ParserBase):
         idx_names = None
 
         if self._reader.leading_cols == 0 and self.index_col is not None:
-            (idx_names, names, self.index_col) = self._clean_index_names(
-                names, self.index_col
-            )
+            (idx_names, names, self.index_col) = self._clean_index_names(names, self.index_col)
 
         return names, idx_names
 
@@ -387,9 +375,7 @@ def _concatenate_chunks(chunks: list[dict[int, ArrayLike]]) -> dict:
                 # error: Argument 1 to "_concat_same_type" of "ExtensionArray"
                 # has incompatible type "List[Union[ExtensionArray, ndarray]]";
                 # expected "Sequence[ExtensionArray]"
-                result[name] = array_type._concat_same_type(
-                    arrs  # type: ignore[arg-type]
-                )
+                result[name] = array_type._concat_same_type(arrs)  # type: ignore[arg-type]
             else:
                 # error: Argument 1 to "concatenate" has incompatible
                 # type "List[Union[ExtensionArray, ndarray[Any, Any]]]"
@@ -414,7 +400,7 @@ def _concatenate_chunks(chunks: list[dict[int, ArrayLike]]) -> dict:
 
 
 def ensure_dtype_objs(
-    dtype: DtypeArg | dict[Hashable, DtypeArg] | None
+    dtype: DtypeArg | dict[Hashable, DtypeArg] | None,
 ) -> DtypeObj | dict[Hashable, DtypeObj] | None:
     """
     Ensure we have either None, a dtype object, or a dictionary mapping to

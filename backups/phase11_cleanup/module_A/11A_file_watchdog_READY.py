@@ -9,10 +9,11 @@ WATCHED_FOLDERS = [
     "D:/MAGIC/review/",
     "D:/MAGIC/approved/",
     "D:/MAGIC/scripts/",
-    "D:/MAGIC/quarantine/"
+    "D:/MAGIC/quarantine/",
 ]
 
 LOG_FILE = "logs/file_watchdog.log"
+
 
 class WatchdogHandler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -23,6 +24,7 @@ class WatchdogHandler(FileSystemEventHandler):
 
     def on_deleted(self, event):
         logging.info(f"Deleted: {event.src_path}")
+
 
 if __name__ == "__main__":
     os.makedirs("logs", exist_ok=True)

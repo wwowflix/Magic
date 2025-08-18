@@ -28,7 +28,7 @@ class TestSizeSumExample(util.F2PyTest):
         assert np.allclose(r.T, np.array([[]]))
 
         r = self.module.trans([[1, 2]])
-        assert np.allclose(r, [[1.], [2.]])
+        assert np.allclose(r, [[1.0], [2.0]])
 
         r = self.module.trans([[1, 2, 3], [4, 5, 6]])
         assert np.allclose(r, [[1, 4], [2, 5], [3, 6]])
@@ -43,4 +43,3 @@ class TestSizeSumExample(util.F2PyTest):
 
         r = self.module.flatten([[1, 2, 3], [4, 5, 6]])
         assert np.allclose(r, [1, 2, 3, 4, 5, 6])
-

@@ -45,9 +45,7 @@ class SigSlot:
         self.panel = pn.pane.PaneBase()
         # no signals to set up in the base class
 
-    def _register(
-        self, widget, name, thing="value", log_level=logging.DEBUG, auto=False
-    ):
+    def _register(self, widget, name, thing="value", log_level=logging.DEBUG, auto=False):
         """Watch the given attribute of a widget and assign it a named event
 
         This is normally called at the time a widget is instantiated, in the
@@ -94,9 +92,7 @@ class SigSlot:
         try:
             return self.panel._repr_mimebundle_(*args, **kwargs)
         except (ValueError, AttributeError) as exc:
-            raise NotImplementedError(
-                "Panel does not seem to be set up properly"
-            ) from exc
+            raise NotImplementedError("Panel does not seem to be set up properly") from exc
 
     def connect(self, signal, slot):
         """Associate call back with given event
@@ -265,9 +261,7 @@ class FileSelector(SigSlot):
             name="protocol",
             align="center",
         )
-        self.kwargs = pn.widgets.TextInput(
-            name="kwargs", value=self.init_kwargs, align="center"
-        )
+        self.kwargs = pn.widgets.TextInput(name="kwargs", value=self.init_kwargs, align="center")
         self.go = pn.widgets.Button(name="⇨", align="end", width=45)
         self.main = SingleSelect(size=10)
         self.home = pn.widgets.Button(name="🏠", width=40, height=30, align="end")
@@ -321,11 +315,7 @@ class FileSelector(SigSlot):
     @property
     def urlpath(self):
         """URL of currently selected item"""
-        return (
-            (f"{self.protocol.value}://{self.main.value[0]}")
-            if self.main.value
-            else None
-        )
+        return (f"{self.protocol.value}://{self.main.value[0]}") if self.main.value else None
 
     def open_file(self, mode="rb", compression=None, encoding=None):
         """Create OpenFile instance for the currently selected item
@@ -367,16 +357,11 @@ class FileSelector(SigSlot):
         self.go_clicked()
 
     def go_clicked(self, *_):
-        if (
-            self.prev_protocol != self.protocol.value
-            or self.prev_kwargs != self.storage_options
-        ):
+        if self.prev_protocol != self.protocol.value or self.prev_kwargs != self.storage_options:
             self._fs = None  # causes fs to be recreated
             self.prev_protocol = self.protocol.value
             self.prev_kwargs = self.storage_options
-        listing = sorted(
-            self.fs.ls(self.url.value, detail=True), key=lambda x: x["name"]
-        )
+        listing = sorted(self.fs.ls(self.url.value, detail=True), key=lambda x: x["name"])
         listing = [
             l
             for l in listing
@@ -388,16 +373,10 @@ class FileSelector(SigSlot):
             if o["type"] == "directory"
         }
         files = {
-            "📄 " + o["name"].rsplit("/", 1)[-1]: o["name"]
-            for o in listing
-            if o["type"] == "file"
+            "📄 " + o["name"].rsplit("/", 1)[-1]: o["name"] for o in listing if o["type"] == "file"
         }
         if self.filters:
-            files = {
-                k: v
-                for k, v in files.items()
-                if any(v.endswith(ext) for ext in self.filters)
-            }
+            files = {k: v for k, v in files.items() if any(v.endswith(ext) for ext in self.filters)}
         self.main.set_options(dict(**folders, **files))
 
     def protocol_changed(self, *_):

@@ -65,9 +65,7 @@ def maybe_resample(series: Series, ax: Axes, kwargs):
         if is_superperiod(freq, ax_freq):  # upsample input
             series = series.copy()
             # error: "Index" has no attribute "asfreq"
-            series.index = series.index.asfreq(  # type: ignore[attr-defined]
-                ax_freq, how="s"
-            )
+            series.index = series.index.asfreq(ax_freq, how="s")  # type: ignore[attr-defined]
             freq = ax_freq
         elif _is_sup(freq, ax_freq):  # one is weekly
             how = kwargs.pop("how", "last")

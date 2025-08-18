@@ -85,9 +85,7 @@ class disallow:
             obj_iter = itertools.chain(args, kwargs.values())
             if any(self.check(obj) for obj in obj_iter):
                 f_name = f.__name__.replace("nan", "")
-                raise TypeError(
-                    f"reduction operation '{f_name}' not allowed for this dtype"
-                )
+                raise TypeError(f"reduction operation '{f_name}' not allowed for this dtype")
             try:
                 with np.errstate(invalid="ignore"):
                     return f(*args, **kwargs)
@@ -192,9 +190,7 @@ def _has_infs(result) -> bool:
         return False
 
 
-def _get_fill_value(
-    dtype: DtypeObj, fill_value: Scalar | None = None, fill_value_typ=None
-):
+def _get_fill_value(dtype: DtypeObj, fill_value: Scalar | None = None, fill_value_typ=None):
     """return the correct fill value for the dtype of the values"""
     if fill_value is not None:
         return fill_value
@@ -324,9 +320,7 @@ def _get_values(
 
     # get our fill value (in case we need to provide an alternative
     # dtype for it)
-    fill_value = _get_fill_value(
-        dtype, fill_value=fill_value, fill_value_typ=fill_value_typ
-    )
+    fill_value = _get_fill_value(dtype, fill_value=fill_value, fill_value_typ=fill_value_typ)
 
     if skipna and (mask is not None) and (fill_value is not None):
         if mask.any():
@@ -481,9 +475,7 @@ def maybe_operate_rowwise(func: F) -> F:
             arrs = list(values)
             if kwargs.get("mask") is not None:
                 mask = kwargs.pop("mask")
-                results = [
-                    func(arrs[i], mask=mask[i], **kwargs) for i in range(len(arrs))
-                ]
+                results = [func(arrs[i], mask=mask[i], **kwargs) for i in range(len(arrs))]
             else:
                 results = [func(x, **kwargs) for x in arrs]
             return np.array(results)
@@ -619,9 +611,7 @@ def nansum(
     >>> nanops.nansum(s)
     3.0
     """
-    values, mask, dtype, dtype_max, _ = _get_values(
-        values, skipna, fill_value=0, mask=mask
-    )
+    values, mask, dtype, dtype_max, _ = _get_values(values, skipna, fill_value=0, mask=mask)
     dtype_sum = dtype_max
     if is_float_dtype(dtype):
         dtype_sum = dtype
@@ -687,9 +677,7 @@ def nanmean(
     >>> nanops.nanmean(s)
     1.5
     """
-    values, mask, dtype, dtype_max, _ = _get_values(
-        values, skipna, fill_value=0, mask=mask
-    )
+    values, mask, dtype, dtype_max, _ = _get_values(values, skipna, fill_value=0, mask=mask)
     dtype_sum = dtype_max
     dtype_count = np.dtype(np.float64)
 

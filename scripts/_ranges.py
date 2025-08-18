@@ -2,6 +2,7 @@
 Helper functions to generate range-like data for DatetimeArray
 (and possibly TimedeltaArray/PeriodArray)
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -58,9 +59,7 @@ def generate_regular_range(
         e = iend + stride
         b = _generate_range_overflow_safe(e, periods, stride, side="end")
     else:
-        raise ValueError(
-            "at least 'start' or 'end' should be specified if a 'period' is given."
-        )
+        raise ValueError("at least 'start' or 'end' should be specified if a 'period' is given.")
 
     with np.errstate(over="raise"):
         # If the range is sufficiently large, np.arange may overflow
@@ -129,9 +128,7 @@ def _generate_range_overflow_safe(
     elif side == "end" and endpoint > i64max and endpoint - stride <= i64max:
         # in _generate_regular_range we added `stride` thereby overflowing
         #  the bounds.  Adjust to fix this.
-        return _generate_range_overflow_safe(
-            endpoint - stride, periods - 1, stride, side
-        )
+        return _generate_range_overflow_safe(endpoint - stride, periods - 1, stride, side)
 
     # split into smaller pieces
     mid_periods = periods // 2
@@ -189,6 +186,4 @@ def _generate_range_overflow_safe_signed(
                 # "int")
                 return result  # type: ignore[return-value]
 
-    raise OutOfBoundsDatetime(
-        f"Cannot generate range with {side}={endpoint} and periods={periods}"
-    )
+    raise OutOfBoundsDatetime(f"Cannot generate range with {side}={endpoint} and periods={periods}")

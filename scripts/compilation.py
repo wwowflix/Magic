@@ -24,43 +24,43 @@ from cmdstanpy.utils.command import do_command
 from cmdstanpy.utils.filesystem import SanitizedOrTmpFilePath
 
 STANC_OPTS = [
-    'O',
-    'O0',
-    'O1',
-    'Oexperimental',
-    'allow-undefined',
-    'use-opencl',
-    'warn-uninitialized',
-    'include-paths',
-    'name',
-    'warn-pedantic',
+    "O",
+    "O0",
+    "O1",
+    "Oexperimental",
+    "allow-undefined",
+    "use-opencl",
+    "warn-uninitialized",
+    "include-paths",
+    "name",
+    "warn-pedantic",
 ]
 
 # TODO(2.0): remove
 STANC_DEPRECATED_OPTS = {
-    'allow_undefined': 'allow-undefined',
-    'include_paths': 'include-paths',
+    "allow_undefined": "allow-undefined",
+    "include_paths": "include-paths",
 }
 
 STANC_IGNORE_OPTS = [
-    'debug-lex',
-    'debug-parse',
-    'debug-ast',
-    'debug-decorated-ast',
-    'debug-generate-data',
-    'debug-mir',
-    'debug-mir-pretty',
-    'debug-optimized-mir',
-    'debug-optimized-mir-pretty',
-    'debug-transformed-mir',
-    'debug-transformed-mir-pretty',
-    'dump-stan-math-signatures',
-    'auto-format',
-    'print-canonical',
-    'print-cpp',
-    'o',
-    'help',
-    'version',
+    "debug-lex",
+    "debug-parse",
+    "debug-ast",
+    "debug-decorated-ast",
+    "debug-generate-data",
+    "debug-mir",
+    "debug-mir-pretty",
+    "debug-optimized-mir",
+    "debug-optimized-mir-pretty",
+    "debug-transformed-mir",
+    "debug-transformed-mir-pretty",
+    "dump-stan-math-signatures",
+    "auto-format",
+    "print-canonical",
+    "print-cpp",
+    "o",
+    "help",
+    "version",
 ]
 
 OptionalPath = Union[str, os.PathLike, None]
@@ -87,12 +87,10 @@ class CompilerOptions:
         """Initialize object."""
         self._stanc_options = stanc_options if stanc_options is not None else {}
         self._cpp_options = cpp_options if cpp_options is not None else {}
-        self._user_header = str(user_header) if user_header is not None else ''
+        self._user_header = str(user_header) if user_header is not None else ""
 
     def __repr__(self) -> str:
-        return 'stanc_options={}, cpp_options={}'.format(
-            self._stanc_options, self._cpp_options
-        )
+        return "stanc_options={}, cpp_options={}".format(self._stanc_options, self._cpp_options)
 
     def __eq__(self, other: Any) -> bool:
         """Overrides the default implementation"""
@@ -108,11 +106,7 @@ class CompilerOptions:
 
     def is_empty(self) -> bool:
         """True if no options specified."""
-        return (
-            self._stanc_options == {}
-            and self._cpp_options == {}
-            and self._user_header == ''
-        )
+        return self._stanc_options == {} and self._cpp_options == {} and self._user_header == ""
 
     @property
     def stanc_options(self) -> Dict[str, Union[bool, int, str, Iterable[str]]]:
@@ -158,42 +152,39 @@ class CompilerOptions:
                         deprecated,
                         replacement,
                     )
-                    self._stanc_options[replacement] = copy(
-                        self._stanc_options[deprecated]
-                    )
+                    self._stanc_options[replacement] = copy(self._stanc_options[deprecated])
                     del self._stanc_options[deprecated]
                 else:
                     get_logger().warning(
-                        'compiler option "%s" is deprecated and '
-                        'should not be used',
+                        'compiler option "%s" is deprecated and ' "should not be used",
                         deprecated,
                     )
         for key, val in self._stanc_options.items():
             if key in STANC_IGNORE_OPTS:
-                get_logger().info('ignoring compiler option: %s', key)
+                get_logger().info("ignoring compiler option: %s", key)
                 ignore.append(key)
             elif key not in STANC_OPTS:
-                raise ValueError(f'unknown stanc compiler option: {key}')
-            elif key == 'include-paths':
+                raise ValueError(f"unknown stanc compiler option: {key}")
+            elif key == "include-paths":
                 paths = val
                 if isinstance(val, str):
-                    paths = val.split(',')
+                    paths = val.split(",")
                 elif not isinstance(val, list):
                     raise ValueError(
-                        'Invalid include-paths, expecting list or '
-                        f'string, found type: {type(val)}.'
+                        "Invalid include-paths, expecting list or "
+                        f"string, found type: {type(val)}."
                     )
-            elif key == 'use-opencl':
+            elif key == "use-opencl":
                 if self._cpp_options is None:
-                    self._cpp_options = {'STAN_OPENCL': 'TRUE'}
+                    self._cpp_options = {"STAN_OPENCL": "TRUE"}
                 else:
-                    self._cpp_options['STAN_OPENCL'] = 'TRUE'
-            elif key.startswith('O'):
+                    self._cpp_options["STAN_OPENCL"] = "TRUE"
+            elif key.startswith("O"):
                 if has_o_flag:
                     get_logger().warning(
-                        'More than one of (O, O1, O2, Oexperimental)'
-                        'optimizations passed. Only the last one will'
-                        'be used'
+                        "More than one of (O, O1, O2, Oexperimental)"
+                        "optimizations passed. Only the last one will"
+                        "be used"
                     )
                 else:
                     has_o_flag = True
@@ -203,11 +194,9 @@ class CompilerOptions:
         if paths is not None:
             bad_paths = [dir for dir in paths if not os.path.exists(dir)]
             if any(bad_paths):
-                raise ValueError(
-                    'invalid include paths: {}'.format(', '.join(bad_paths))
-                )
+                raise ValueError("invalid include paths: {}".format(", ".join(bad_paths)))
 
-            self._stanc_options['include-paths'] = [
+            self._stanc_options["include-paths"] = [
                 os.path.abspath(os.path.expanduser(path)) for path in paths
             ]
 
@@ -218,14 +207,13 @@ class CompilerOptions:
         """
         if self._cpp_options is None:
             return
-        for key in ['OPENCL_DEVICE_ID', 'OPENCL_PLATFORM_ID']:
+        for key in ["OPENCL_DEVICE_ID", "OPENCL_PLATFORM_ID"]:
             if key in self._cpp_options:
-                self._cpp_options['STAN_OPENCL'] = 'TRUE'
+                self._cpp_options["STAN_OPENCL"] = "TRUE"
                 val = self._cpp_options[key]
                 if not isinstance(val, int) or val < 0:
                     raise ValueError(
-                        f'{key} must be a non-negative integer value,'
-                        f' found {val}.'
+                        f"{key} must be a non-negative integer value," f" found {val}."
                     )
 
     def validate_user_header(self) -> None:
@@ -234,37 +222,28 @@ class CompilerOptions:
         Raise ValueError if bad config is found.
         """
         if self._user_header != "":
-            if not (
-                os.path.exists(self._user_header)
-                and os.path.isfile(self._user_header)
-            ):
-                raise ValueError(
-                    f"User header file {self._user_header} cannot be found"
-                )
-            if self._user_header[-4:] != '.hpp':
-                raise ValueError(
-                    f"Header file must end in .hpp, got {self._user_header}"
-                )
+            if not (os.path.exists(self._user_header) and os.path.isfile(self._user_header)):
+                raise ValueError(f"User header file {self._user_header} cannot be found")
+            if self._user_header[-4:] != ".hpp":
+                raise ValueError(f"Header file must end in .hpp, got {self._user_header}")
             if "allow-undefined" not in self._stanc_options:
                 self._stanc_options["allow-undefined"] = True
             # set full path
             self._user_header = os.path.abspath(self._user_header)
 
-            if ' ' in self._user_header:
-                raise ValueError(
-                    "User header must be in a location with no spaces in path!"
-                )
+            if " " in self._user_header:
+                raise ValueError("User header must be in a location with no spaces in path!")
 
             if (
-                'USER_HEADER' in self._cpp_options
-                and self._user_header != self._cpp_options['USER_HEADER']
+                "USER_HEADER" in self._cpp_options
+                and self._user_header != self._cpp_options["USER_HEADER"]
             ):
                 raise ValueError(
                     "Disagreement in user_header C++ options found!\n"
                     f"{self._user_header}, {self._cpp_options['USER_HEADER']}"
                 )
 
-            self._cpp_options['USER_HEADER'] = self._user_header
+            self._cpp_options["USER_HEADER"] = self._user_header
 
     def add(self, new_opts: "CompilerOptions") -> None:  # noqa: disable=Q000
         """Adds options to existing set of compiler options."""
@@ -273,10 +252,8 @@ class CompilerOptions:
                 self._stanc_options = new_opts.stanc_options
             else:
                 for key, val in new_opts.stanc_options.items():
-                    if key == 'include-paths':
-                        if isinstance(val, Iterable) and not isinstance(
-                            val, str
-                        ):
+                    if key == "include-paths":
+                        if isinstance(val, Iterable) and not isinstance(val, str):
                             for path in val:
                                 self.add_include_path(str(path))
                         else:
@@ -286,39 +263,36 @@ class CompilerOptions:
         if new_opts.cpp_options is not None:
             for key, val in new_opts.cpp_options.items():
                 self._cpp_options[key] = val
-        if new_opts._user_header != '' and self._user_header == '':
+        if new_opts._user_header != "" and self._user_header == "":
             self._user_header = new_opts._user_header
 
     def add_include_path(self, path: str) -> None:
         """Adds include path to existing set of compiler options."""
         path = os.path.abspath(os.path.expanduser(path))
-        if 'include-paths' not in self._stanc_options:
-            self._stanc_options['include-paths'] = [path]
-        elif path not in self._stanc_options['include-paths']:
-            self._stanc_options['include-paths'].append(path)
+        if "include-paths" not in self._stanc_options:
+            self._stanc_options["include-paths"] = [path]
+        elif path not in self._stanc_options["include-paths"]:
+            self._stanc_options["include-paths"].append(path)
 
     def compose_stanc(self, filename_in_msg: Optional[str]) -> List[str]:
         opts = []
 
         if filename_in_msg is not None:
-            opts.append(f'--filename-in-msg={filename_in_msg}')
+            opts.append(f"--filename-in-msg={filename_in_msg}")
 
         if self._stanc_options is not None and len(self._stanc_options) > 0:
             for key, val in self._stanc_options.items():
-                if key == 'include-paths':
+                if key == "include-paths":
                     opts.append(
-                        '--include-paths='
-                        + ','.join(
-                            (
-                                Path(p).as_posix()
-                                for p in self._stanc_options['include-paths']
-                            )
+                        "--include-paths="
+                        + ",".join(
+                            (Path(p).as_posix() for p in self._stanc_options["include-paths"])
                         )
                     )
-                elif key == 'name':
-                    opts.append(f'--name={val}')
+                elif key == "name":
+                    opts.append(f"--name={val}")
                 else:
-                    opts.append(f'--{key}')
+                    opts.append(f"--{key}")
         return opts
 
     def compose(self, filename_in_msg: Optional[str] = None) -> List[str]:
@@ -332,18 +306,16 @@ class CompilerOptions:
             (if different from actual filename on disk), by default None
         """
         opts = [
-            'STANCFLAGS+=' + flag.replace(" ", "\\ ")
+            "STANCFLAGS+=" + flag.replace(" ", "\\ ")
             for flag in self.compose_stanc(filename_in_msg)
         ]
         if self._cpp_options is not None and len(self._cpp_options) > 0:
             for key, val in self._cpp_options.items():
-                opts.append(f'{key}={val}')
+                opts.append(f"{key}={val}")
         return opts
 
 
-def src_info(
-    stan_file: str, compiler_options: CompilerOptions
-) -> Dict[str, Any]:
+def src_info(stan_file: str, compiler_options: CompilerOptions) -> Dict[str, Any]:
     """
     Get source info for Stan program file.
 
@@ -351,16 +323,15 @@ def src_info(
     :meth:`CmdStanModel.src_info`, and should not be called directly.
     """
     cmd = (
-        [os.path.join(cmdstan_path(), 'bin', 'stanc' + EXTENSION)]
+        [os.path.join(cmdstan_path(), "bin", "stanc" + EXTENSION)]
         # handle include-paths, allow-undefined etc
         + compiler_options.compose_stanc(None)
-        + ['--info', str(stan_file)]
+        + ["--info", str(stan_file)]
     )
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
     if proc.returncode:
         raise ValueError(
-            f"Failed to get source info for Stan model "
-            f"'{stan_file}'. Console:\n{proc.stderr}"
+            f"Failed to get source info for Stan model " f"'{stan_file}'. Console:\n{proc.stderr}"
         )
     result: Dict[str, Any] = json.loads(proc.stdout)
     return result
@@ -397,7 +368,7 @@ def compile_stan_file(
 
     src = Path(src).resolve()
     if not src.exists():
-        raise ValueError(f'stan file does not exist: {src}')
+        raise ValueError(f"stan file does not exist: {src}")
 
     compiler_options = CompilerOptions(
         stanc_options=stanc_options,
@@ -410,15 +381,12 @@ def compile_stan_file(
     if exe_target.exists():
         exe_time = os.path.getmtime(exe_target)
         included_files = [src]
-        included_files.extend(
-            src_info(str(src), compiler_options).get('included_files', [])
-        )
+        included_files.extend(src_info(str(src), compiler_options).get("included_files", []))
         out_of_date = any(
-            os.path.getmtime(included_file) > exe_time
-            for included_file in included_files
+            os.path.getmtime(included_file) > exe_time for included_file in included_files
         )
         if not out_of_date and not force:
-            get_logger().debug('found newer exe file, not recompiling')
+            get_logger().debug("found newer exe file, not recompiling")
             return str(exe_target)
 
     compilation_failed = False
@@ -427,22 +395,22 @@ def compile_stan_file(
     with SanitizedOrTmpFilePath(str(src)) as (stan_file, is_copied):
         exe_file = os.path.splitext(stan_file)[0] + EXTENSION
 
-        hpp_file = os.path.splitext(exe_file)[0] + '.hpp'
+        hpp_file = os.path.splitext(exe_file)[0] + ".hpp"
         if os.path.exists(hpp_file):
             os.remove(hpp_file)
         if os.path.exists(exe_file):
-            get_logger().debug('Removing %s', exe_file)
+            get_logger().debug("Removing %s", exe_file)
             os.remove(exe_file)
 
         get_logger().info(
-            'compiling stan file %s to exe file %s',
+            "compiling stan file %s to exe file %s",
             stan_file,
             exe_target,
         )
 
         make = os.getenv(
-            'MAKE',
-            'make' if platform.system() != 'Windows' else 'mingw32-make',
+            "MAKE",
+            "make" if platform.system() != "Windows" else "mingw32-make",
         )
         cmd = [make]
         cmd.extend(compiler_options.compose(filename_in_msg=src.name))
@@ -452,35 +420,33 @@ def compile_stan_file(
         try:
             do_command(cmd=cmd, cwd=cmdstan_path(), fd_out=sout)
         except RuntimeError as e:
-            sout.write(f'\n{str(e)}\n')
+            sout.write(f"\n{str(e)}\n")
             compilation_failed = True
         finally:
             console = sout.getvalue()
 
-        get_logger().debug('Console output:\n%s', console)
+        get_logger().debug("Console output:\n%s", console)
         if not compilation_failed:
             if is_copied:
                 shutil.copy(exe_file, exe_target)
-            get_logger().info('compiled model executable: %s', exe_target)
-        if 'Warning' in console:
-            lines = console.split('\n')
-            warnings = [x for x in lines if x.startswith('Warning')]
+            get_logger().info("compiled model executable: %s", exe_target)
+        if "Warning" in console:
+            lines = console.split("\n")
+            warnings = [x for x in lines if x.startswith("Warning")]
             get_logger().warning(
-                'Stan compiler has produced %d warnings:',
+                "Stan compiler has produced %d warnings:",
                 len(warnings),
             )
             get_logger().warning(console)
         if compilation_failed:
-            if 'PCH' in console or 'precompiled header' in console:
+            if "PCH" in console or "precompiled header" in console:
                 get_logger().warning(
                     "CmdStan's precompiled header (PCH) files "
                     "may need to be rebuilt."
                     "Please run cmdstanpy.rebuild_cmdstan().\n"
                     "If the issue persists please open a bug report"
                 )
-            raise ValueError(
-                f"Failed to compile Stan model '{src}'. " f"Console:\n{console}"
-            )
+            raise ValueError(f"Failed to compile Stan model '{src}'. " f"Console:\n{console}")
         return str(exe_target)
 
 
@@ -514,11 +480,11 @@ def format_stan_file(
     stan_file = Path(stan_file).resolve()
 
     if not stan_file.exists():
-        raise ValueError(f'File does not exist: {stan_file}')
+        raise ValueError(f"File does not exist: {stan_file}")
 
     try:
         cmd = (
-            [os.path.join(cmdstan_path(), 'bin', 'stanc' + EXTENSION)]
+            [os.path.join(cmdstan_path(), "bin", "stanc" + EXTENSION)]
             # handle include-paths, allow-undefined etc
             + CompilerOptions(stanc_options=stanc_options).compose_stanc(None)
             + [str(stan_file)]
@@ -527,30 +493,28 @@ def format_stan_file(
         if canonicalize:
             if cmdstan_version_before(2, 29):
                 if isinstance(canonicalize, bool):
-                    cmd.append('--print-canonical')
+                    cmd.append("--print-canonical")
                 else:
                     raise ValueError(
                         "Invalid arguments passed for current CmdStan"
-                        + " version({})\n".format(
-                            cmdstan_version() or "Unknown"
-                        )
+                        + " version({})\n".format(cmdstan_version() or "Unknown")
                         + "--canonicalize requires 2.29 or higher"
                     )
             else:
                 if isinstance(canonicalize, str):
-                    cmd.append('--canonicalize=' + canonicalize)
+                    cmd.append("--canonicalize=" + canonicalize)
                 elif isinstance(canonicalize, Iterable):
-                    cmd.append('--canonicalize=' + ','.join(canonicalize))
+                    cmd.append("--canonicalize=" + ",".join(canonicalize))
                 else:
-                    cmd.append('--print-canonical')
+                    cmd.append("--print-canonical")
 
         # before 2.29, having both --print-canonical
         # and --auto-format printed twice
         if not (cmdstan_version_before(2, 29) and canonicalize):
-            cmd.append('--auto-format')
+            cmd.append("--auto-format")
 
         if not cmdstan_version_before(2, 29):
-            cmd.append(f'--max-line-length={max_line_length}')
+            cmd.append(f"--max-line-length={max_line_length}")
         elif max_line_length != 78:
             raise ValueError(
                 "Invalid arguments passed for current CmdStan version"
@@ -567,9 +531,7 @@ def format_stan_file(
                 if backup:
                     shutil.copyfile(
                         stan_file,
-                        str(stan_file)
-                        + '.bak-'
-                        + datetime.now().strftime("%Y%m%d%H%M%S"),
+                        str(stan_file) + ".bak-" + datetime.now().strftime("%Y%m%d%H%M%S"),
                     )
                 stan_file.write_text(result)
         else:

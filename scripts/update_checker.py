@@ -1,4 +1,5 @@
 """Module that checks if there is an updated version of a package available."""
+
 import os
 import pickle
 import re
@@ -102,7 +103,6 @@ def standard_release(version):
 # This class must be defined before UpdateChecker in order to unpickle objects
 # of this type
 class UpdateResult:
-
     """Contains the information for a package that has an update."""
 
     def __init__(self, package, running, available, release_date):
@@ -126,7 +126,6 @@ class UpdateResult:
 
 
 class UpdateChecker:
-
     """A class to check for package updates."""
 
     def __init__(self, *, bypass_cache=False):
@@ -136,9 +135,7 @@ class UpdateChecker:
     def check(self, package_name, package_version):
         """Return a UpdateResult object if there is a newer version."""
 
-        data = query_pypi(
-            package_name, include_prereleases=not standard_release(package_version)
-        )
+        data = query_pypi(package_name, include_prereleases=not standard_release(package_version))
 
         if not data.get("success") or (
             parse_version(package_version) >= parse_version(data["data"]["version"])

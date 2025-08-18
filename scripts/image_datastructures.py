@@ -27,9 +27,7 @@ class ImageInfo(dict):
         return self["rendered_height"]
 
     def __str__(self):
-        d = {
-            k: ("..." if k in ("data", "iccp", "smask") else v) for k, v in self.items()
-        }
+        d = {k: ("..." if k in ("data", "iccp", "smask") else v) for k, v in self.items()}
         return f"self.__class__.__name__({d})"
 
     def scale_inside_box(self, x, y, w, h):

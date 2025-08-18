@@ -1,4 +1,5 @@
-""" define the IntervalIndex """
+"""define the IntervalIndex"""
+
 from __future__ import annotations
 
 from operator import (
@@ -261,9 +262,7 @@ class IntervalIndex(ExtensionIndex):
         dtype: Dtype | None = None,
     ) -> IntervalIndex:
         with rewrite_exception("IntervalArray", cls.__name__):
-            array = IntervalArray.from_breaks(
-                breaks, closed=closed, copy=copy, dtype=dtype
-            )
+            array = IntervalArray.from_breaks(breaks, closed=closed, copy=copy, dtype=dtype)
         return cls._simple_new(array, name=name)
 
     @classmethod
@@ -297,9 +296,7 @@ class IntervalIndex(ExtensionIndex):
         dtype: Dtype | None = None,
     ) -> IntervalIndex:
         with rewrite_exception("IntervalArray", cls.__name__):
-            array = IntervalArray.from_arrays(
-                left, right, closed, copy=copy, dtype=dtype
-            )
+            array = IntervalArray.from_arrays(left, right, closed, copy=copy, dtype=dtype)
         return cls._simple_new(array, name=name)
 
     @classmethod
@@ -532,9 +529,7 @@ class IntervalIndex(ExtensionIndex):
             right = self._maybe_convert_i8(key.right)
             constructor = Interval if scalar else IntervalIndex.from_arrays
             # error: "object" not callable
-            return constructor(
-                left, right, closed=self.closed
-            )  # type: ignore[operator]
+            return constructor(left, right, closed=self.closed)  # type: ignore[operator]
 
         if scalar:
             # Timestamp/Timedelta
@@ -595,9 +590,7 @@ class IntervalIndex(ExtensionIndex):
     # --------------------------------------------------------------------
     # Indexing Methods
 
-    def get_loc(
-        self, key, method: str | None = None, tolerance=None
-    ) -> int | slice | np.ndarray:
+    def get_loc(self, key, method: str | None = None, tolerance=None) -> int | slice | np.ndarray:
         """
         Get integer location, slice or boolean mask for requested label.
 
@@ -929,8 +922,7 @@ class IntervalIndex(ExtensionIndex):
         #  dtype or constructing tuples (faster than constructing Intervals)
         #  but the libjoin fastpaths are no longer fast in these cases.
         raise NotImplementedError(
-            "IntervalIndex does not use libjoin fastpaths or pass values to "
-            "IndexEngine objects"
+            "IntervalIndex does not use libjoin fastpaths or pass values to " "IndexEngine objects"
         )
 
     def _from_join_target(self, result):

@@ -130,9 +130,7 @@ class AcroForm:
 
 
 class PDFCatalog(PDFObject):
-    def __init__(
-        self, lang=None, page_layout=None, page_mode=None, viewer_preferences=None
-    ):
+    def __init__(self, lang=None, page_layout=None, page_mode=None, viewer_preferences=None):
         super().__init__()
         self.type = Name("Catalog")
         self.lang = PDFString(lang) if lang else None
@@ -247,9 +245,7 @@ class PDFICCProfile(PDFContentStream):
 class PDFPageLabel:
     __slots__ = ("_style", "_prefix", "st")  # RAM usage optimization
 
-    def __init__(
-        self, label_style: PageLabelStyle, label_prefix: str, label_start: int
-    ):
+    def __init__(self, label_style: PageLabelStyle, label_prefix: str, label_start: int):
         self._style: PageLabelStyle = label_style
         self._prefix: str = label_prefix
         self.st: int = label_start
@@ -351,9 +347,7 @@ class PDFPage(PDFObject):
         "Accepts a pair (width, height) in the unit specified to FPDF constructor"
         self._width_pt, self._height_pt = width_pt, height_pt
 
-    def set_page_label(
-        self, previous_page_label: PDFPageLabel, page_label: PDFPageLabel
-    ):
+    def set_page_label(self, previous_page_label: PDFPageLabel, page_label: PDFPageLabel):
         if (
             previous_page_label
             and page_label
@@ -493,13 +487,9 @@ class OutputIntentDictionary:
         self.type = Name("OutputIntent")
         self.s = Name(OutputIntentSubType.coerce(subtype).value)
         self.output_condition_identifier = (
-            PDFString(output_condition_identifier)
-            if output_condition_identifier
-            else None
+            PDFString(output_condition_identifier) if output_condition_identifier else None
         )
-        self.output_condition = (
-            PDFString(output_condition) if output_condition else None
-        )
+        self.output_condition = PDFString(output_condition) if output_condition else None
         self.registry_name = PDFString(registry_name) if registry_name else None
         self.dest_output_profile = (
             dest_output_profile
@@ -528,12 +518,8 @@ class ResourceCatalog:
         if resource_type in (PDFResourceType.PATTERN, PDFResourceType.SHADDING):
             registry = self.resources[resource_type]
             if resource not in registry:
-                registry[resource] = (
-                    f"{self._get_prefix(resource_type)}{len(registry) + 1}"
-                )
-            self.resources_per_page[(page_number, resource_type)].add(
-                registry[resource]
-            )
+                registry[resource] = f"{self._get_prefix(resource_type)}{len(registry) + 1}"
+            self.resources_per_page[(page_number, resource_type)].add(registry[resource])
             return registry[resource]
         self.resources_per_page[(page_number, resource_type)].add(resource)
         return None
@@ -594,10 +580,7 @@ class OutputProducer:
             fpdf._security_handler.generate_passwords(file_id)
 
         pdf_version = fpdf.pdf_version
-        if (
-            fpdf.viewer_preferences
-            and fpdf.viewer_preferences._min_pdf_version > pdf_version
-        ):
+        if fpdf.viewer_preferences and fpdf.viewer_preferences._min_pdf_version > pdf_version:
             pdf_version = fpdf.viewer_preferences._min_pdf_version
         self.pdf_objs.append(PDFHeader(pdf_version))
         pages_root_obj = self._add_pages_root()
@@ -673,9 +656,7 @@ class OutputProducer:
                 trace_label = self.trace_labels_per_obj_id.get(pdf_obj.id)
             if trace_label:
                 with self._trace_size(trace_label):
-                    self._out(
-                        pdf_obj.serialize(_security_handler=fpdf._security_handler)
-                    )
+                    self._out(pdf_obj.serialize(_security_handler=fpdf._security_handler))
             else:
                 self._out(pdf_obj.serialize(_security_handler=fpdf._security_handler))
         self._log_final_sections_sizes()
@@ -721,9 +702,7 @@ class OutputProducer:
         for page_index in range(1, self.fpdf.pages_count + 1):
             page_obj = self.fpdf.pages[page_index]
             # Defensive check:
-            assert (
-                page_obj.index() == page_index
-            ), f"{page_obj.index()=} != {page_index=}"
+            assert page_obj.index() == page_index, f"{page_obj.index()=} != {page_index=}"
             yield page_obj
 
     def _add_pages(self, _slice=slice(0, None)):
@@ -741,9 +720,7 @@ class OutputProducer:
             page_objs.append(page_obj)
 
             # Extracting the page contents to insert it as a content stream:
-            cs_obj = PDFContentStream(
-                contents=page_obj.contents, compress=fpdf.compress
-            )
+            cs_obj = PDFContentStream(contents=page_obj.contents, compress=fpdf.compress)
             self._add_pdf_obj(cs_obj, "pages")
             page_obj.contents = cs_obj
 
@@ -768,13 +745,9 @@ class OutputProducer:
             # Standard font
             if font.type == "core":
                 encoding = (
-                    "WinAnsiEncoding"
-                    if font.name not in ("Symbol", "ZapfDingbats")
-                    else None
+                    "WinAnsiEncoding" if font.name not in ("Symbol", "ZapfDingbats") else None
                 )
-                core_font_obj = PDFFont(
-                    subtype="Type1", base_font=font.name, encoding=encoding
-                )
+                core_font_obj = PDFFont(subtype="Type1", base_font=font.name, encoding=encoding)
                 self._add_pdf_obj(core_font_obj, "fonts")
                 font_objs_per_index[font.i] = core_font_obj
             elif font.type == "TTF":
@@ -790,9 +763,7 @@ class OutputProducer:
                     )
                     if len(font.missing_glyphs) > 10:
                         msg += f", ... (and {len(font.missing_glyphs) - 10} others)"
-                    LOGGER.warning(
-                        "Font %s is missing the following glyphs: %s", fontname, msg
-                    )
+                    LOGGER.warning("Font %s is missing the following glyphs: %s", fontname, msg)
 
                 # 2. make a subset
                 # notdef_outline=True means that keeps the white box for the .notdef glyph
@@ -944,9 +915,7 @@ class OutputProducer:
 
     def _add_images(self):
         img_objs_per_index = {}
-        for img in sorted(
-            self.fpdf.image_cache.images.values(), key=lambda img: img["i"]
-        ):
+        for img in sorted(self.fpdf.image_cache.images.values(), key=lambda img: img["i"]):
             if img["usages"] > 0:
                 img_objs_per_index[img["i"]] = self._add_image(img)
         return img_objs_per_index
@@ -966,9 +935,7 @@ class OutputProducer:
                 break
         assert iccp_content is not None
         # Note: n should be 4 if the profile ColorSpace is CMYK
-        iccp_obj = PDFICCProfile(
-            contents=iccp_content, n=img_info["dpn"], alternate=img_info["cs"]
-        )
+        iccp_obj = PDFICCProfile(contents=iccp_content, n=img_info["dpn"], alternate=img_info["cs"])
         iccp_pdf_i = self._add_pdf_obj(iccp_obj, "iccp")
         self.iccp_i_to_pdf_i[iccp_i] = iccp_pdf_i
         return iccp_pdf_i
@@ -978,9 +945,7 @@ class OutputProducer:
         decode = None
         iccp_i = info.get("iccp_i")
         if color_space == "Indexed":
-            color_space = PDFArray(
-                ["/Indexed", "/DeviceRGB", f"{len(info['pal']) // 3 - 1}"]
-            )
+            color_space = PDFArray(["/Indexed", "/DeviceRGB", f"{len(info['pal']) // 3 - 1}"])
         elif iccp_i is not None:
             iccp_pdf_i = self._ensure_iccp(info)
             color_space = PDFArray(["/ICCBased", str(iccp_pdf_i), str("0"), "R"])
@@ -1019,9 +984,7 @@ class OutputProducer:
 
         # Palette
         if "/Indexed" in color_space:
-            pal_cs_obj = PDFContentStream(
-                contents=info["pal"], compress=self.fpdf.compress
-            )
+            pal_cs_obj = PDFContentStream(contents=info["pal"], compress=self.fpdf.compress)
             self._add_pdf_obj(pal_cs_obj, "images")
             img_obj.color_space.append(pdf_ref(pal_cs_obj.id))
 
@@ -1037,9 +1000,7 @@ class OutputProducer:
 
     def _add_shadings(self):
         shading_objs_per_name = OrderedDict()
-        for shading, name in self.fpdf._resource_catalog.get_items(
-            PDFResourceType.SHADDING
-        ):
+        for shading, name in self.fpdf._resource_catalog.get_items(PDFResourceType.SHADDING):
             for function in shading.functions:
                 self._add_pdf_obj(function, "function")
             shading_obj = shading.get_shading_object()
@@ -1049,9 +1010,7 @@ class OutputProducer:
 
     def _add_patterns(self):
         pattern_objs_per_name = OrderedDict()
-        for pattern, name in self.fpdf._resource_catalog.get_items(
-            PDFResourceType.PATTERN
-        ):
+        for pattern, name in self.fpdf._resource_catalog.get_items(PDFResourceType.PATTERN):
             self._add_pdf_obj(pattern, "pattern")
             pattern_objs_per_name[name] = pattern
         return pattern_objs_per_name
@@ -1219,9 +1178,7 @@ class OutputProducer:
             try:
                 creation_date = PDFDate(fpdf.creation_date, with_tz=True, encrypt=True)
             except Exception as error:
-                raise FPDFException(
-                    f"Could not format date: {fpdf.creation_date}"
-                ) from error
+                raise FPDFException(f"Could not format date: {fpdf.creation_date}") from error
         info_obj = PDFInfo(
             title=fpdf.title,
             subject=getattr(fpdf, "subject", None),
@@ -1282,9 +1239,7 @@ class OutputProducer:
         catalog_obj.metadata = xmp_metadata_obj
         if sig_annotation_obj:
             flags = SignatureFlag.SIGNATURES_EXIST + SignatureFlag.APPEND_ONLY
-            catalog_obj.acro_form = AcroForm(
-                fields=PDFArray([sig_annotation_obj]), sig_flags=flags
-            )
+            catalog_obj.acro_form = AcroForm(fields=PDFArray([sig_annotation_obj]), sig_flags=flags)
         if fpdf.zoom_mode in ZOOM_CONFIGS:
             zoom_config = [
                 pdf_ref(first_page_obj.id),
@@ -1319,9 +1274,7 @@ class OutputProducer:
             # If page labels are used, an entry for sequence 0 is mandatory
             page_labels.insert(0, "0 <<>>")
         if page_labels:
-            catalog_obj.page_labels = pdf_dict(
-                {"/Nums": PDFArray(page_labels).serialize()}
-            )
+            catalog_obj.page_labels = pdf_dict({"/Nums": PDFArray(page_labels).serialize()})
 
     @contextmanager
     def _trace_size(self, label):

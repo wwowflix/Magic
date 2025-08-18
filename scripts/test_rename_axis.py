@@ -46,9 +46,7 @@ class TestDataFrameRenameAxis:
     def test_rename_axis_mapper(self):
         # GH#19978
         mi = MultiIndex.from_product([["a", "b", "c"], [1, 2]], names=["ll", "nn"])
-        df = DataFrame(
-            {"x": list(range(len(mi))), "y": [i * 10 for i in range(len(mi))]}, index=mi
-        )
+        df = DataFrame({"x": list(range(len(mi))), "y": [i * 10 for i in range(len(mi))]}, index=mi)
 
         # Test for rename of the Index object of columns
         result = df.rename_axis("cols", axis=1)
@@ -109,4 +107,3 @@ class TestDataFrameRenameAxis:
         expected_columns = columns.rename(None) if rename_columns else columns
         expected = DataFrame(data, expected_index, expected_columns)
         tm.assert_frame_equal(result, expected)
-

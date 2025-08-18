@@ -1,6 +1,7 @@
 """
 Read SAS sas7bdat or xport files.
 """
+
 from __future__ import annotations
 
 from abc import (
@@ -61,8 +62,7 @@ def read_sas(
     chunksize: int = ...,
     iterator: bool = ...,
     compression: CompressionOptions = ...,
-) -> ReaderBase:
-    ...
+) -> ReaderBase: ...
 
 
 @overload
@@ -74,8 +74,7 @@ def read_sas(
     chunksize: None = ...,
     iterator: bool = ...,
     compression: CompressionOptions = ...,
-) -> DataFrame | ReaderBase:
-    ...
+) -> DataFrame | ReaderBase: ...
 
 
 @deprecate_nonkeyword_arguments(version=None, allowed_args=["filepath_or_buffer"])
@@ -140,9 +139,7 @@ def read_sas(
         elif ".sas7bdat" in fname:
             format = "sas7bdat"
         else:
-            raise ValueError(
-                f"unable to infer format of SAS file from filename: {repr(fname)}"
-            )
+            raise ValueError(f"unable to infer format of SAS file from filename: {repr(fname)}")
 
     reader: ReaderBase
     if format.lower() == "xport":

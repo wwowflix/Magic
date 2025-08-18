@@ -261,9 +261,7 @@ def test_static_tool_sees_class_members(
     # ignore hidden, but not dunder, symbols
     def no_hidden(symbols: Iterable[str]) -> set[str]:
         return {
-            symbol
-            for symbol in symbols
-            if (not symbol.startswith("_")) or symbol.startswith("__")
+            symbol for symbol in symbols if (not symbol.startswith("_")) or symbol.startswith("__")
         }
 
     if tool == "jedi" and sys.implementation.name != "cpython":
@@ -368,9 +366,7 @@ def test_static_tool_sees_class_members(
         # inspect.getmembers sees `name` and `value` in Enums, otherwise
         # it behaves the same way as `dir`
         # runtime_names = no_underscores(dir(class_))
-        runtime_names = (
-            no_hidden(x[0] for x in inspect.getmembers(class_)) - ignore_names
-        )
+        runtime_names = no_hidden(x[0] for x in inspect.getmembers(class_)) - ignore_names
 
         if tool == "jedi":
             try:
@@ -394,14 +390,10 @@ def test_static_tool_sees_class_members(
 
             assert "node" in cached_type_info
             node = cached_type_info["node"]
-            static_names = no_hidden(
-                k for k in node.get("names", ()) if not k.startswith(".")
-            )
+            static_names = no_hidden(k for k in node.get("names", ()) if not k.startswith("."))
             for symbol in node["mro"][1:]:
                 node = lookup_symbol(symbol)["node"]
-                static_names |= no_hidden(
-                    k for k in node.get("names", ()) if not k.startswith(".")
-                )
+                static_names |= no_hidden(k for k in node.get("names", ()) if not k.startswith("."))
             static_names -= ignore_names
 
         else:  # pragma: no cover
@@ -413,18 +405,10 @@ def test_static_tool_sees_class_members(
         # using .remove() instead of .delete() to get an error in case they start not
         # being missing
 
-        if (
-            tool == "jedi"
-            and BaseException in class_.__mro__
-            and sys.version_info >= (3, 11)
-        ):
+        if tool == "jedi" and BaseException in class_.__mro__ and sys.version_info >= (3, 11):
             missing.remove("add_note")
 
-        if (
-            tool == "mypy"
-            and BaseException in class_.__mro__
-            and sys.version_info >= (3, 11)
-        ):
+        if tool == "mypy" and BaseException in class_.__mro__ and sys.version_info >= (3, 11):
             extra.remove("__notes__")
 
         if tool == "mypy" and attrs.has(class_):
@@ -434,11 +418,7 @@ def test_static_tool_sees_class_members(
             assert len(extra) == before - 1
 
         # mypy does not see these attributes in Enum subclasses
-        if (
-            tool == "mypy"
-            and enum.Enum in class_.__mro__
-            and sys.version_info >= (3, 12)
-        ):
+        if tool == "mypy" and enum.Enum in class_.__mro__ and sys.version_info >= (3, 12):
             # Another attribute, in 3.12+ only.
             extra.remove("__signature__")
 

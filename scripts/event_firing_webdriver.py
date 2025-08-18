@@ -93,11 +93,18 @@ class EventFiringWebDriver:
 
     def execute_script(self, script: str, *args):
         unwrapped_args = (script,) + self._unwrap_element_args(args)
-        return self._dispatch("execute_script", (script, self._driver), "execute_script", unwrapped_args)
+        return self._dispatch(
+            "execute_script", (script, self._driver), "execute_script", unwrapped_args
+        )
 
     def execute_async_script(self, script, *args):
         unwrapped_args = (script,) + self._unwrap_element_args(args)
-        return self._dispatch("execute_script", (script, self._driver), "execute_async_script", unwrapped_args)
+        return self._dispatch(
+            "execute_script",
+            (script, self._driver),
+            "execute_async_script",
+            unwrapped_args,
+        )
 
     def close(self) -> None:
         self._dispatch("close", (self._driver,), "close", ())

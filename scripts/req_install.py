@@ -263,9 +263,7 @@ class InstallRequirement:
             # without matching any extra
             extras_requested = ("",)
         if self.markers is not None:
-            return any(
-                self.markers.evaluate({"extra": extra}) for extra in extras_requested
-            )
+            return any(self.markers.evaluate({"extra": extra}) for extra in extras_requested)
         else:
             return True
 
@@ -314,9 +312,7 @@ class InstallRequirement:
                 s += "->" + comes_from
         return s
 
-    def ensure_build_location(
-        self, build_dir: str, autodelete: bool, parallel_builds: bool
-    ) -> str:
+    def ensure_build_location(self, build_dir: str, autodelete: bool, parallel_builds: bool) -> str:
         assert build_dir is not None
         if self._temp_build_dir is not None:
             assert self._temp_build_dir.path
@@ -443,9 +439,7 @@ class InstallRequirement:
     # Things valid for sdists
     @property
     def unpacked_source_directory(self) -> str:
-        return os.path.join(
-            self.source_dir, self.link and self.link.subdirectory_fragment or ""
-        )
+        return os.path.join(self.source_dir, self.link and self.link.subdirectory_fragment or "")
 
     @property
     def setup_py_path(self) -> str:
@@ -525,11 +519,7 @@ class InstallRequirement:
 
         if self.use_pep517:
             assert self.pep517_backend is not None
-            if (
-                self.editable
-                and self.permit_editable_wheels
-                and self.supports_pyproject_editable()
-            ):
+            if self.editable and self.permit_editable_wheels and self.supports_pyproject_editable():
                 self.metadata_directory = generate_editable_metadata(
                     build_env=self.build_env,
                     backend=self.pep517_backend,
@@ -893,9 +883,7 @@ def _has_option(options: Values, reqs: List[InstallRequirement], option: str) ->
     return False
 
 
-def _install_option_ignored(
-    install_options: List[str], reqs: List[InstallRequirement]
-) -> bool:
+def _install_option_ignored(install_options: List[str], reqs: List[InstallRequirement]) -> bool:
     for req in reqs:
         if (install_options or req.install_options) and not req.use_pep517:
             return False
@@ -916,9 +904,7 @@ def check_legacy_setup_py_options(
     has_install_options = _has_option(options, reqs, "install_options")
     has_build_options = _has_option(options, reqs, "build_options")
     has_global_options = _has_option(options, reqs, "global_options")
-    legacy_setup_py_options_present = (
-        has_install_options or has_build_options or has_global_options
-    )
+    legacy_setup_py_options_present = has_install_options or has_build_options or has_global_options
     if not legacy_setup_py_options_present:
         return
 

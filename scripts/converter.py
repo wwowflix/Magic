@@ -462,9 +462,7 @@ def _from_ordinal(x, tz: tzinfo | None = None) -> datetime:
     microsecond = int(1_000_000 * remainder)
     if microsecond < 10:
         microsecond = 0  # compensate for rounding errors
-    dt = datetime(
-        dt.year, dt.month, dt.day, int(hour), int(minute), int(second), microsecond
-    )
+    dt = datetime(dt.year, dt.month, dt.day, int(hour), int(minute), int(second), microsecond)
     if tz is not None:
         dt = dt.astimezone(tz)
 
@@ -527,9 +525,7 @@ def has_level_label(label_flags: np.ndarray, vmin: float) -> bool:
     if the minimum view limit is not an exact integer, then the first tick
     label won't be shown, so we must adjust for that.
     """
-    if label_flags.size == 0 or (
-        label_flags.size == 1 and label_flags[0] == 0 and vmin % 1 > 0.0
-    ):
+    if label_flags.size == 0 or (label_flags.size == 1 and label_flags[0] == 0 and vmin % 1 > 0.0):
         return False
     else:
         return True
@@ -584,9 +580,7 @@ def _daily_finder(vmin, vmax, freq: BaseOffset):
     span = vmax.ordinal - vmin.ordinal + 1
     dates_ = period_range(start=vmin, end=vmax, freq=freq)
     # Initialize the output
-    info = np.zeros(
-        span, dtype=[("val", np.int64), ("maj", bool), ("min", bool), ("fmt", "|S20")]
-    )
+    info = np.zeros(span, dtype=[("val", np.int64), ("maj", bool), ("min", bool), ("fmt", "|S20")])
     info["val"][:] = dates_.asi8
     info["fmt"][:] = ""
     info["maj"][[0, -1]] = True
@@ -775,9 +769,7 @@ def _monthly_finder(vmin, vmax, freq):
     span = vmax - vmin + 1
 
     # Initialize the output
-    info = np.zeros(
-        span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")]
-    )
+    info = np.zeros(span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")])
     info["val"] = np.arange(vmin, vmax + 1)
     dates_ = info["val"]
     info["fmt"] = ""
@@ -843,9 +835,7 @@ def _quarterly_finder(vmin, vmax, freq):
     (vmin, vmax) = (int(vmin), int(vmax))
     span = vmax - vmin + 1
 
-    info = np.zeros(
-        span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")]
-    )
+    info = np.zeros(span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")])
     info["val"] = np.arange(vmin, vmax + 1)
     info["fmt"] = ""
     dates_ = info["val"]
@@ -888,9 +878,7 @@ def _annual_finder(vmin, vmax, freq):
     (vmin, vmax) = (int(vmin), int(vmax + 1))
     span = vmax - vmin + 1
 
-    info = np.zeros(
-        span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")]
-    )
+    info = np.zeros(span, dtype=[("val", int), ("maj", bool), ("min", bool), ("fmt", "|S8")])
     info["val"] = np.arange(vmin, vmax + 1)
     info["fmt"] = ""
     dates_ = info["val"]

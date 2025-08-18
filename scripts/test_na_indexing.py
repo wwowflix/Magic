@@ -20,9 +20,7 @@ import pandas._testing as tm
         ([pd.Interval(0, 1), pd.Interval(1, 2), pd.Interval(3, 4)], "interval"),
     ],
 )
-@pytest.mark.parametrize(
-    "mask", [[True, False, False], [True, True, True], [False, False, False]]
-)
+@pytest.mark.parametrize("mask", [[True, False, False], [True, True, True], [False, False, False]])
 @pytest.mark.parametrize("indexer_class", [list, pd.array, pd.Index, pd.Series])
 @pytest.mark.parametrize("frame", [True, False])
 def test_series_mask_boolean(values, dtype, mask, indexer_class, frame):
@@ -73,4 +71,3 @@ def test_na_treated_as_false(frame_or_series, indexer_sli):
     expected = indexer_sli(obj)[mask.fillna(False)]
 
     tm.assert_equal(result, expected)
-

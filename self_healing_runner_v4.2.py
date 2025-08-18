@@ -1,7 +1,6 @@
 ﻿import json
 import subprocess
 import os
-from datetime import datetime
 
 # Load manifest
 with open("phase_manifest.json", encoding="utf-8-sig") as f:
@@ -27,7 +26,7 @@ for script_path in manifest:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            timeout=30
+            timeout=30,
         )
         with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write(result.stdout)

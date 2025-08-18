@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import StringIO
 
 import numpy as np
@@ -77,4 +78,3 @@ def test_too_many_exponent_digits(all_parsers_all_precisions, exp, request):
         expected = DataFrame({"data": [f"10E{exp}"]})
 
     tm.assert_frame_equal(result, expected)
-

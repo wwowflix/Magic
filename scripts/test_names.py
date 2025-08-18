@@ -19,9 +19,7 @@ def test_index_name_retained():
     result = pd.DataFrame({"x": [1, 2, 6], "y": [2, 2, 8], "z": [-5, 0, 5]})
     result = result.set_index("z")
     result.loc[10] = [9, 10]
-    df_expected = pd.DataFrame(
-        {"x": [1, 2, 6, 9], "y": [2, 2, 8, 10], "z": [-5, 0, 5, 10]}
-    )
+    df_expected = pd.DataFrame({"x": [1, 2, 6, 9], "y": [2, 2, 8, 10], "z": [-5, 0, 5, 10]})
     df_expected = df_expected.set_index("z")
     tm.assert_frame_equal(result, df_expected)
 
@@ -199,4 +197,3 @@ def test_multiindex_name_and_level_raising():
     mi = MultiIndex.from_arrays([[1, 2], [3, 4]], names=["x", "y"])
     with pytest.raises(TypeError, match="Can not pass level for dictlike `names`."):
         mi.set_names(names={"x": "z"}, level={"x": "z"})
-

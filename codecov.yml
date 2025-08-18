@@ -1,0 +1,14 @@
+﻿coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+    patch:
+      default:
+        target: 90%
+        threshold: 0.5%
+comment: false
+ignore:
+  - "backups/**"
+  - "scripts/**"

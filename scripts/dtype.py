@@ -68,9 +68,7 @@ class BaseDtypeTests(BaseExtensionTests):
         dtype = data.dtype
 
         # check equivalency for using .dtypes
-        df = pd.DataFrame(
-            {"A": pd.Series(data, dtype=dtype), "B": data, "C": "foo", "D": 1}
-        )
+        df = pd.DataFrame({"A": pd.Series(data, dtype=dtype), "B": data, "C": "foo", "D": 1})
 
         # TODO(numpy-1.20): This warnings filter and if block can be removed
         # once we require numpy>=1.20

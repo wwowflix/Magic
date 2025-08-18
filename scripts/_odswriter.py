@@ -85,10 +85,7 @@ class ODSWriter(ExcelWriter):
         """Mapping of sheet names to sheet objects."""
         from odf.table import Table
 
-        result = {
-            sheet.getAttribute("name"): sheet
-            for sheet in self.book.getElementsByType(Table)
-        }
+        result = {sheet.getAttribute("name"): sheet for sheet in self.book.getElementsByType(Table)}
         return result
 
     def _save(self) -> None:
@@ -287,9 +284,7 @@ class ODSWriter(ExcelWriter):
         self.book.styles.addElement(odf_style)
         return name
 
-    def _create_freeze_panes(
-        self, sheet_name: str, freeze_panes: tuple[int, int]
-    ) -> None:
+    def _create_freeze_panes(self, sheet_name: str, freeze_panes: tuple[int, int]) -> None:
         """
         Create freeze panes in the sheet.
 
@@ -330,14 +325,10 @@ class ODSWriter(ExcelWriter):
             ConfigItem(name="VerticalSplitMode", type="short", text="2")
         )
         config_item_map_entry.addElement(
-            ConfigItem(
-                name="HorizontalSplitPosition", type="int", text=str(freeze_panes[0])
-            )
+            ConfigItem(name="HorizontalSplitPosition", type="int", text=str(freeze_panes[0]))
         )
         config_item_map_entry.addElement(
-            ConfigItem(
-                name="VerticalSplitPosition", type="int", text=str(freeze_panes[1])
-            )
+            ConfigItem(name="VerticalSplitPosition", type="int", text=str(freeze_panes[1]))
         )
         config_item_map_entry.addElement(
             ConfigItem(name="PositionRight", type="int", text=str(freeze_panes[0]))

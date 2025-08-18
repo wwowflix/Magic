@@ -41,9 +41,7 @@ class GithubFileSystem(AbstractFileSystem):
     protocol = "github"
     timeout = (60, 60)  # connect, read timeouts
 
-    def __init__(
-        self, org, repo, sha=None, username=None, token=None, timeout=None, **kwargs
-    ):
+    def __init__(self, org, repo, sha=None, username=None, token=None, timeout=None, **kwargs):
         super().__init__(**kwargs)
         self.org = org
         self.repo = repo
@@ -56,9 +54,7 @@ class GithubFileSystem(AbstractFileSystem):
         if sha is None:
             # look up default branch (not necessarily "master")
             u = "https://api.github.com/repos/{org}/{repo}"
-            r = requests.get(
-                u.format(org=org, repo=repo), timeout=self.timeout, **self.kw
-            )
+            r = requests.get(u.format(org=org, repo=repo), timeout=self.timeout, **self.kw)
             r.raise_for_status()
             sha = r.json()["default_branch"]
 
@@ -227,9 +223,7 @@ class GithubFileSystem(AbstractFileSystem):
             raise NotImplementedError
 
         # construct a url to hit the GitHub API's repo contents API
-        url = self.content_url.format(
-            org=self.org, repo=self.repo, path=path, sha=sha or self.root
-        )
+        url = self.content_url.format(org=self.org, repo=self.repo, path=path, sha=sha or self.root)
 
         # make a request to this API, and parse the response as JSON
         r = requests.get(url, timeout=self.timeout, **self.kw)
@@ -305,9 +299,7 @@ class GithubFileSystem(AbstractFileSystem):
             sha = r.json()["sha"]
 
         # Delete the file
-        delete_url = self.content_url.format(
-            org=self.org, repo=self.repo, path=path, sha=self.root
-        )
+        delete_url = self.content_url.format(org=self.org, repo=self.repo, path=path, sha=self.root)
         branch = self.root
         data = {
             "message": message or f"Delete {path}",

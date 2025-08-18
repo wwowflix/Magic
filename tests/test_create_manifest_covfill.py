@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import tools.create_manifest as cm
 
+
 def test_cov_fill_edge_cases(tmp_path: Path):
     # (A) Base path without a "scripts" subdir -> discover() else-branch
     root = tmp_path / "noscripts"

@@ -235,14 +235,11 @@ def test_groupby_blocklist(df_letters):
 
             # e.g., to_csv
             defined_but_not_allowed = (
-                f"(?:^Cannot.+{repr(bl)}.+'{type(gb).__name__}'.+try "
-                f"using the 'apply' method$)"
+                f"(?:^Cannot.+{repr(bl)}.+'{type(gb).__name__}'.+try " f"using the 'apply' method$)"
             )
 
             # e.g., query, eval
-            not_defined = (
-                f"(?:^'{type(gb).__name__}' object has no attribute {repr(bl)}$)"
-            )
+            not_defined = f"(?:^'{type(gb).__name__}' object has no attribute {repr(bl)}$)"
 
             msg = f"{defined_but_not_allowed}|{not_defined}"
 
@@ -403,9 +400,7 @@ def test_groupby_selection_other_methods(df):
     tm.assert_frame_equal(g.resample("D").mean(), g_exp.resample("D").mean())
     tm.assert_frame_equal(g.resample("D").ohlc(), g_exp.resample("D").ohlc())
 
-    tm.assert_frame_equal(
-        g.filter(lambda x: len(x) == 3), g_exp.filter(lambda x: len(x) == 3)
-    )
+    tm.assert_frame_equal(g.filter(lambda x: len(x) == 3), g_exp.filter(lambda x: len(x) == 3))
 
 
 def test_all_methods_categorized(mframe):

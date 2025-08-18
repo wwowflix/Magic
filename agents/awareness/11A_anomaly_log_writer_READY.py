@@ -19,6 +19,7 @@ ANOMALY_LOG = os.path.join(LOG_DIR, "anomaly_flags.log")
 # Ensure log folder exists
 os.makedirs(LOG_DIR, exist_ok=True)
 
+
 def detect_anomalies(lines):
     anomalies = []
 
@@ -37,11 +38,13 @@ def detect_anomalies(lines):
 
     return anomalies
 
+
 def write_anomalies(anomalies):
     if anomalies:
         with open(ANOMALY_LOG, "a", encoding="utf-8") as f:
             for anomaly in anomalies:
                 f.write(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {anomaly}\n")
+
 
 def main():
     print("🔍 Anomaly Log Writer Agent started...")
@@ -60,6 +63,7 @@ def main():
             write_anomalies(anomalies)
 
         time.sleep(3)
+
 
 if __name__ == "__main__":
     main()

@@ -159,9 +159,7 @@ class AbstractGetTests:
                 assert local_fs.isfile(local_join(target, "subdir", "subfile1"))
                 assert local_fs.isfile(local_join(target, "subdir", "subfile2"))
                 assert local_fs.isdir(local_join(target, "subdir", "nesteddir"))
-                assert local_fs.isfile(
-                    local_join(target, "subdir", "nesteddir", "nestedfile")
-                )
+                assert local_fs.isfile(local_join(target, "subdir", "nesteddir", "nestedfile"))
 
                 local_fs.rm(local_join(target, "subdir"), recursive=True)
             assert local_fs.ls(target) == []
@@ -223,9 +221,7 @@ class AbstractGetTests:
             assert local_fs.isfile(local_join(target, "newdir", "subfile1"))
             assert local_fs.isfile(local_join(target, "newdir", "subfile2"))
             assert local_fs.isdir(local_join(target, "newdir", "nesteddir"))
-            assert local_fs.isfile(
-                local_join(target, "newdir", "nesteddir", "nestedfile")
-            )
+            assert local_fs.isfile(local_join(target, "newdir", "nesteddir", "nestedfile"))
             assert not local_fs.exists(local_join(target, "subdir"))
 
             local_fs.rm(local_join(target, "newdir"), recursive=True)
@@ -297,9 +293,7 @@ class AbstractGetTests:
                 assert local_fs.ls(target) == []
 
                 # Limit recursive by maxdepth
-                fs.get(
-                    fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1
-                )
+                fs.get(fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1)
                 assert local_fs.isfile(local_join(target, "subfile1"))
                 assert local_fs.isfile(local_join(target, "subfile2"))
                 assert not local_fs.exists(local_join(target, "nesteddir"))
@@ -340,9 +334,7 @@ class AbstractGetTests:
             assert local_fs.isfile(local_join(target, "newdir", "subfile1"))
             assert local_fs.isfile(local_join(target, "newdir", "subfile2"))
             assert not local_fs.exists(local_join(target, "newdir", "nesteddir"))
-            assert not local_fs.exists(
-                local_join(target, "newdir", "nesteddir", "nestedfile")
-            )
+            assert not local_fs.exists(local_join(target, "newdir", "nesteddir", "nestedfile"))
             assert not local_fs.exists(local_join(target, "subdir"))
             assert not local_fs.exists(local_join(target, "newdir", "subdir"))
 
@@ -356,9 +348,7 @@ class AbstractGetTests:
                 assert local_fs.isfile(local_join(target, "newdir", "subfile1"))
                 assert local_fs.isfile(local_join(target, "newdir", "subfile2"))
                 assert local_fs.isdir(local_join(target, "newdir", "nesteddir"))
-                assert local_fs.isfile(
-                    local_join(target, "newdir", "nesteddir", "nestedfile")
-                )
+                assert local_fs.isfile(local_join(target, "newdir", "nesteddir", "nestedfile"))
                 assert not local_fs.exists(local_join(target, "subdir"))
                 assert not local_fs.exists(local_join(target, "newdir", "subdir"))
 
@@ -366,9 +356,7 @@ class AbstractGetTests:
                 assert not local_fs.exists(local_join(target, "newdir"))
 
                 # Limit recursive by maxdepth
-                fs.get(
-                    fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1
-                )
+                fs.get(fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1)
                 assert local_fs.isdir(local_join(target, "newdir"))
                 assert local_fs.isfile(local_join(target, "newdir", "subfile1"))
                 assert local_fs.isfile(local_join(target, "newdir", "subfile2"))
@@ -415,9 +403,7 @@ class AbstractGetTests:
                     make_path_posix(local_join(target, "newdir", p)) for p in expected
                 ]
             else:
-                prefixed_expected = [
-                    make_path_posix(local_join(target, p)) for p in expected
-                ]
+                prefixed_expected = [make_path_posix(local_join(target, p)) for p in expected]
             assert sorted(output) == sorted(prefixed_expected)
 
             try:
@@ -575,9 +561,7 @@ class AbstractGetTests:
         for i in range(10):
             hashed_i = md5(str(i).encode("utf-8")).hexdigest()
             source_files.append(fs_join(source, f"{hashed_i}.txt"))
-            destination_files.append(
-                make_path_posix(local_join(target, f"{hashed_i}.txt"))
-            )
+            destination_files.append(make_path_posix(local_join(target, f"{hashed_i}.txt")))
 
         # Copy and assert order was kept
         fs.get(rpath=source_files, lpath=destination_files)

@@ -17,4 +17,3 @@ class Test(TestCase):
         self.assertGreater(g._stack_saved, 0)
         g.switch()
         self.assertEqual(g._stack_saved, 0)
-

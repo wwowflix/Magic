@@ -635,9 +635,7 @@ class TLRUCache(_TimedCache):
         return value
 
 
-_CacheInfo = collections.namedtuple(
-    "CacheInfo", ["hits", "misses", "maxsize", "currsize"]
-)
+_CacheInfo = collections.namedtuple("CacheInfo", ["hits", "misses", "maxsize", "currsize"])
 
 
 def cached(cache, key=keys.hashkey, lock=None, condition=None, info=False):

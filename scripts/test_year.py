@@ -3,6 +3,7 @@ Tests for the following offsets:
 - YearBegin
 - YearEnd
 """
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -337,4 +338,3 @@ def test_add_out_of_pydatetime_range():
     assert result.year in (-19999, 1973)
     assert result.month == 12
     assert result.day == 31
-

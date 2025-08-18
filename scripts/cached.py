@@ -117,13 +117,9 @@ class CachingFileSystem(AbstractFileSystem):
         """
         super().__init__(**kwargs)
         if fs is None and target_protocol is None:
-            raise ValueError(
-                "Please provide filesystem instance(fs) or target_protocol"
-            )
+            raise ValueError("Please provide filesystem instance(fs) or target_protocol")
         if not (fs is None) ^ (target_protocol is None):
-            raise ValueError(
-                "Both filesystems (fs) and target_protocol may not be both given."
-            )
+            raise ValueError("Both filesystems (fs) and target_protocol may not be both given.")
         if cache_storage == "TMP":
             tempdir = tempfile.mkdtemp()
             storage = [tempdir]
@@ -148,15 +144,12 @@ class CachingFileSystem(AbstractFileSystem):
 
         if same_names is not None and cache_mapper is not None:
             raise ValueError(
-                "Cannot specify both same_names and cache_mapper in "
-                "CachingFileSystem.__init__"
+                "Cannot specify both same_names and cache_mapper in " "CachingFileSystem.__init__"
             )
         if cache_mapper is not None:
             self._mapper = cache_mapper
         else:
-            self._mapper = create_cache_mapper(
-                same_names if same_names is not None else False
-            )
+            self._mapper = create_cache_mapper(same_names if same_names is not None else False)
 
         self.target_protocol = (
             target_protocol
@@ -359,11 +352,7 @@ class CachingFileSystem(AbstractFileSystem):
             self._metadata.update_file(path, detail)
 
         if self.compression:
-            comp = (
-                infer_compression(path)
-                if self.compression == "infer"
-                else self.compression
-            )
+            comp = infer_compression(path) if self.compression == "infer" else self.compression
             f = compr[comp](f, mode="rb")
         if "blocksize" in detail:
             if detail["blocksize"] != f.blocksize:
@@ -467,9 +456,7 @@ class CachingFileSystem(AbstractFileSystem):
         }:
             # all the methods defined in this class. Note `open` here, since
             # it calls `_open`, but is actually in superclass
-            return lambda *args, **kw: getattr(type(self), item).__get__(self)(
-                *args, **kw
-            )
+            return lambda *args, **kw: getattr(type(self), item).__get__(self)(*args, **kw)
         if item in ["__reduce_ex__"]:
             raise AttributeError
         if item in ["transaction"]:
@@ -570,8 +557,7 @@ class WholeFileCacheFileSystem(CachingFileSystem):
         details = [self._check_file(sp) for sp in paths]
         downpath = [p for p, d in zip(paths, details) if not d]
         downfn0 = [
-            os.path.join(self.storage[-1], self._mapper(p))
-            for p, d in zip(paths, details)
+            os.path.join(self.storage[-1], self._mapper(p)) for p, d in zip(paths, details)
         ]  # keep these path names for opening later
         downfn = [fn for fn, d in zip(downfn0, details) if not d]
         if downpath:
@@ -635,9 +621,7 @@ class WholeFileCacheFileSystem(CachingFileSystem):
         callback=DEFAULT_CALLBACK,
         **kwargs,
     ):
-        paths = self.expand_path(
-            path, recursive=recursive, maxdepth=kwargs.get("maxdepth")
-        )
+        paths = self.expand_path(path, recursive=recursive, maxdepth=kwargs.get("maxdepth"))
         getpaths = []
         storepaths = []
         fns = []
@@ -701,8 +685,7 @@ class WholeFileCacheFileSystem(CachingFileSystem):
                 return f
             else:
                 raise ValueError(
-                    f"Attempt to open partially cached file {path}"
-                    f" as a wholly cached file"
+                    f"Attempt to open partially cached file {path}" f" as a wholly cached file"
                 )
         else:
             fn = self._make_local_details(path)
@@ -715,11 +698,7 @@ class WholeFileCacheFileSystem(CachingFileSystem):
                 if isinstance(f, AbstractBufferedFile):
                     # want no type of caching if just downloading whole thing
                     f.cache = BaseCache(0, f.cache.fetcher, f.size)
-                comp = (
-                    infer_compression(path)
-                    if self.compression == "infer"
-                    else self.compression
-                )
+                comp = infer_compression(path) if self.compression == "infer" else self.compression
                 f = compr[comp](f, mode="rb")
                 data = True
                 while data:
@@ -786,9 +765,7 @@ class SimpleCacheFileSystem(WholeFileCacheFileSystem):
         path = self._strip_protocol(path)
         details = []
         try:
-            details = self.fs.ls(
-                path, detail=True, **kwargs
-            ).copy()  # don't edit original!
+            details = self.fs.ls(path, detail=True, **kwargs).copy()  # don't edit original!
         except FileNotFoundError as e:
             ex = e
         else:
@@ -797,14 +774,10 @@ class SimpleCacheFileSystem(WholeFileCacheFileSystem):
             path1 = path.rstrip("/") + "/"
             for f in self.transaction.files:
                 if f.path == path:
-                    details.append(
-                        {"name": path, "size": f.size or f.tell(), "type": "file"}
-                    )
+                    details.append({"name": path, "size": f.size or f.tell(), "type": "file"})
                 elif f.path.startswith(path1):
                     if f.path.count("/") == path1.count("/"):
-                        details.append(
-                            {"name": f.path, "size": f.size or f.tell(), "type": "file"}
-                        )
+                        details.append({"name": f.path, "size": f.size or f.tell(), "type": "file"})
                     else:
                         dname = "/".join(f.path.split("/")[: path1.count("/") + 1])
                         details.append({"name": dname, "size": 0, "type": "directory"})
@@ -835,16 +808,12 @@ class SimpleCacheFileSystem(WholeFileCacheFileSystem):
         else:
             raise ValueError("path must be str or dict")
 
-    def cat_ranges(
-        self, paths, starts, ends, max_gap=None, on_error="return", **kwargs
-    ):
+    def cat_ranges(self, paths, starts, ends, max_gap=None, on_error="return", **kwargs):
         lpaths = [self._check_file(p) for p in paths]
         rpaths = [p for l, p in zip(lpaths, paths) if l is False]
         lpaths = [l for l, p in zip(lpaths, paths) if l is False]
         self.fs.get(rpaths, lpaths)
-        return super().cat_ranges(
-            paths, starts, ends, max_gap=max_gap, on_error=on_error, **kwargs
-        )
+        return super().cat_ranges(paths, starts, ends, max_gap=max_gap, on_error=on_error, **kwargs)
 
     def _open(self, path, mode="rb", **kwargs):
         path = self._strip_protocol(path)
@@ -880,11 +849,7 @@ class SimpleCacheFileSystem(WholeFileCacheFileSystem):
                 if isinstance(f, AbstractBufferedFile):
                     # want no type of caching if just downloading whole thing
                     f.cache = BaseCache(0, f.cache.fetcher, f.size)
-                comp = (
-                    infer_compression(path)
-                    if self.compression == "infer"
-                    else self.compression
-                )
+                comp = infer_compression(path) if self.compression == "infer" else self.compression
                 f = compr[comp](f, mode="rb")
                 data = True
                 while data:

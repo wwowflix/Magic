@@ -63,11 +63,8 @@ class TestToTime:
         with pytest.raises(ValueError, match=msg):
             to_time(arg, format="%I:%M%p", errors="raise")
 
-        tm.assert_series_equal(
-            to_time(Series(arg, name="test")), Series(expected_arr, name="test")
-        )
+        tm.assert_series_equal(to_time(Series(arg, name="test")), Series(expected_arr, name="test"))
 
         res = to_time(np.array(arg))
         assert isinstance(res, list)
         assert res == expected_arr
-

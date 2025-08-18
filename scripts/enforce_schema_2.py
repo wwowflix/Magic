@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # enforce_schema.py
 
-import pandas as pd
 from datetime import datetime
 from constants import UNIVERSAL_CSV_SCHEMA
+
 
 def enforce_schema(df, platform_name):
     df["platform"] = platform_name
@@ -15,6 +15,3 @@ def enforce_schema(df, platform_name):
 
     df = df[UNIVERSAL_CSV_SCHEMA]
     return df
-
-
-

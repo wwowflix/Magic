@@ -2,6 +2,7 @@
 Module that contains many useful utilities
 for validating data or function arguments
 """
+
 from __future__ import annotations
 
 from typing import (
@@ -41,8 +42,7 @@ def _check_arg_length(fname, args, max_fname_arg_count, compat_args):
         argument = "argument" if max_arg_count == 1 else "arguments"
 
         raise TypeError(
-            f"{fname}() takes at most {max_arg_count} {argument} "
-            f"({actual_arg_count} given)"
+            f"{fname}() takes at most {max_arg_count} {argument} " f"({actual_arg_count} given)"
         )
 
 
@@ -165,9 +165,7 @@ def validate_kwargs(fname, kwargs, compat_args) -> None:
     _check_for_default_values(fname, kwds, compat_args)
 
 
-def validate_args_and_kwargs(
-    fname, args, kwargs, max_fname_arg_count, compat_args
-) -> None:
+def validate_args_and_kwargs(fname, args, kwargs, max_fname_arg_count, compat_args) -> None:
     """
     Checks whether parameters passed to the *args and **kwargs argument in a
     function `fname` are valid parameters as specified in `*compat_args`
@@ -205,9 +203,7 @@ def validate_args_and_kwargs(
     """
     # Check that the total number of arguments passed in (i.e.
     # args and kwargs) does not exceed the length of compat_args
-    _check_arg_length(
-        fname, args + tuple(kwargs.values()), max_fname_arg_count, compat_args
-    )
+    _check_arg_length(fname, args + tuple(kwargs.values()), max_fname_arg_count, compat_args)
 
     # Check there is no overlap with the positional and keyword
     # arguments, similar to what is done in actual Python functions
@@ -215,9 +211,7 @@ def validate_args_and_kwargs(
 
     for key in args_dict:
         if key in kwargs:
-            raise TypeError(
-                f"{fname}() got multiple values for keyword argument '{key}'"
-            )
+            raise TypeError(f"{fname}() got multiple values for keyword argument '{key}'")
 
     kwargs.update(args_dict)
     validate_kwargs(fname, kwargs, compat_args)
@@ -265,9 +259,7 @@ def validate_bool_kwarg(
     return value
 
 
-def validate_axis_style_args(
-    data, args, kwargs, arg_name, method_name
-) -> dict[str, Any]:
+def validate_axis_style_args(data, args, kwargs, arg_name, method_name) -> dict[str, Any]:
     """
     Argument handler for mixed index, columns / axis functions
 
@@ -437,13 +429,11 @@ def validate_percentile(q: float | Iterable[float]) -> np.ndarray:
 
 
 @overload
-def validate_ascending(ascending: BoolishT) -> BoolishT:
-    ...
+def validate_ascending(ascending: BoolishT) -> BoolishT: ...
 
 
 @overload
-def validate_ascending(ascending: Sequence[BoolishT]) -> list[BoolishT]:
-    ...
+def validate_ascending(ascending: Sequence[BoolishT]) -> list[BoolishT]: ...
 
 
 def validate_ascending(
@@ -517,9 +507,7 @@ def validate_inclusive(inclusive: str | None) -> tuple[bool, bool]:
         }.get(inclusive)
 
     if left_right_inclusive is None:
-        raise ValueError(
-            "Inclusive has to be either 'both', 'neither', 'left' or 'right'"
-        )
+        raise ValueError("Inclusive has to be either 'both', 'neither', 'left' or 'right'")
 
     return left_right_inclusive
 

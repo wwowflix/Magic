@@ -92,9 +92,7 @@ def recode_for_groupby(
     return c.reorder_categories(cat.categories), None
 
 
-def recode_from_groupby(
-    c: Categorical, sort: bool, ci: CategoricalIndex
-) -> CategoricalIndex:
+def recode_from_groupby(c: Categorical, sort: bool, ci: CategoricalIndex) -> CategoricalIndex:
     """
     Reverse the codes_to_groupby to account for sort / observed.
 

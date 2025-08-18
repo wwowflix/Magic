@@ -42,9 +42,7 @@ class TestConvert:
         tm.assert_series_equal(results, ser)
 
     def test_convert_datetime_objects(self):
-        ser = Series(
-            [datetime(2001, 1, 1, 0, 0), datetime(2001, 1, 1, 0, 0)], dtype="O"
-        )
+        ser = Series([datetime(2001, 1, 1, 0, 0), datetime(2001, 1, 1, 0, 0)], dtype="O")
         results = ser._convert(datetime=True, numeric=True, timedelta=True)
         expected = Series([datetime(2001, 1, 1, 0, 0), datetime(2001, 1, 1, 0, 0)])
         tm.assert_series_equal(results, expected)

@@ -3,31 +3,35 @@ import time
 import hashlib
 from datetime import datetime
 
-WATCH_DIRS = ['inbox', 'scripts']
-STATE_FILE = 'agents/awareness/script_tracker_state.json'
+WATCH_DIRS = ["inbox", "scripts"]
+STATE_FILE = "agents/awareness/script_tracker_state.json"
 CHECK_INTERVAL = 60  # seconds
 
 import json
 
+
 def load_state():
     if os.path.exists(STATE_FILE):
-        with open(STATE_FILE, 'r') as f:
+        with open(STATE_FILE, "r") as f:
             return json.load(f)
     return {}
 
+
 def save_state(state):
-    with open(STATE_FILE, 'w') as f:
+    with open(STATE_FILE, "w") as f:
         json.dump(state, f, indent=2)
+
 
 def file_hash(path):
     hasher = hashlib.md5()
     try:
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             buf = f.read()
             hasher.update(buf)
         return hasher.hexdigest()
     except FileNotFoundError:
         return None
+
 
 def scan_files(state):
     changed = []
@@ -38,7 +42,7 @@ def scan_files(state):
             continue
         for root, _, files in os.walk(base_dir):
             for file in files:
-                if not file.endswith('.py'):
+                if not file.endswith(".py"):
                     continue
                 path = os.path.join(root, file)
                 h = file_hash(path)
@@ -49,8 +53,9 @@ def scan_files(state):
 
     return changed, current_state
 
+
 def main():
-    print(f"▶ Starting Script Tracker. Ctrl+C to stop.")
+    print("▶ Starting Script Tracker. Ctrl+C to stop.")
     state = load_state()
 
     while True:
@@ -65,5 +70,6 @@ def main():
         save_state(state)
         time.sleep(CHECK_INTERVAL)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

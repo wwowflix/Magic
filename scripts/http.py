@@ -308,9 +308,7 @@ class HTTPFileSystem(AsyncFileSystem):
 
         method = method.lower()
         if method not in ("post", "put"):
-            raise ValueError(
-                f"method has to be either 'post' or 'put', not: {method!r}"
-            )
+            raise ValueError(f"method has to be either 'post' or 'put', not: {method!r}")
 
         meth = getattr(session, method)
         async with meth(self.encode_url(rpath), data=gen_chunks(), **kw) as resp:
@@ -491,9 +489,7 @@ class HTTPFileSystem(AsyncFileSystem):
             else:
                 depth = None
 
-        allpaths = await self._find(
-            root, maxdepth=depth, withdirs=True, detail=True, **kwargs
-        )
+        allpaths = await self._find(root, maxdepth=depth, withdirs=True, detail=True, **kwargs)
 
         pattern = glob_translate(path + ("/" if ends_with_slash else ""))
         pattern = re.compile(pattern)
@@ -501,9 +497,7 @@ class HTTPFileSystem(AsyncFileSystem):
         out = {
             (
                 p.rstrip("/")
-                if not append_slash_to_dirname
-                and info["type"] == "directory"
-                and p.endswith("/")
+                if not append_slash_to_dirname and info["type"] == "directory" and p.endswith("/")
                 else p
             ): info
             for p, info in sorted(allpaths.items())
@@ -638,9 +632,7 @@ class HTTPFile(AbstractBufferedFile):
             async with r:
                 r.raise_for_status()
                 out = await r.read()
-                self.cache = AllBytes(
-                    size=len(out), fetcher=None, blocksize=None, data=out
-                )
+                self.cache = AllBytes(size=len(out), fetcher=None, blocksize=None, data=out)
                 self.size = len(out)
 
     _fetch_all = sync_wrapper(async_fetch_all)
@@ -672,9 +664,7 @@ class HTTPFile(AbstractBufferedFile):
         headers = kwargs.pop("headers", {}).copy()
         headers["Range"] = f"bytes={start}-{end - 1}"
         logger.debug(f"{self.url} : {headers['Range']}")
-        r = await self.session.get(
-            self.fs.encode_url(self.url), headers=headers, **kwargs
-        )
+        r = await self.session.get(self.fs.encode_url(self.url), headers=headers, **kwargs)
         async with r:
             if r.status == 416:
                 # range request outside file
@@ -771,9 +761,7 @@ class HTTPStreamFile(AbstractBufferedFile):
 
 
 class AsyncStreamFile(AbstractAsyncStreamedFile):
-    def __init__(
-        self, fs, url, mode="rb", loop=None, session=None, size=None, **kwargs
-    ):
+    def __init__(self, fs, url, mode="rb", loop=None, session=None, size=None, **kwargs):
         self.url = url
         self.session = session
         self.r = None
@@ -786,9 +774,7 @@ class AsyncStreamFile(AbstractAsyncStreamedFile):
 
     async def read(self, num=-1):
         if self.r is None:
-            r = await self.session.get(
-                self.fs.encode_url(self.url), **self.kwargs
-            ).__aenter__()
+            r = await self.session.get(self.fs.encode_url(self.url), **self.kwargs).__aenter__()
             self.fs._raise_not_found_for_status(r, self.url)
             self.r = r
         out = await self.r.content.read(num)

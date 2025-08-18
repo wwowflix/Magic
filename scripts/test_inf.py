@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import StringIO
 
 import numpy as np
@@ -76,4 +77,3 @@ def test_read_csv_with_use_inf_as_na(all_parsers):
             result = parser.read_csv(StringIO(data), header=None)
     expected = DataFrame([1.0, np.nan, 3.0])
     tm.assert_frame_equal(result, expected)
-

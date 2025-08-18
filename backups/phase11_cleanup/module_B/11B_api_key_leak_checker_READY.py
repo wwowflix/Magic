@@ -12,7 +12,7 @@ key_patterns = [
     r"(?i)sk_live_[\w\-]{16,}",
     r"(?i)ghp_[\w]{36,}",
     r"(?i)AIza[0-9A-Za-z-_]{35}",
-    r"(?i)xox[baprs]-[0-9a-zA-Z]{10,}"
+    r"(?i)xox[baprs]-[0-9a-zA-Z]{10,}",
 ]
 
 # Recursively scan for leaks
