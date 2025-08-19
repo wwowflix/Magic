@@ -1,0 +1,9 @@
+❌ Data Quality Issues Found:
+⚠️ google_trends_output.csv: Failed to load – No columns to parse from file
+⚠️ twitter_data.csv: Failed to load – No columns to parse from file
+🧪 umath-validation-set-cos.csv: 4 rows with nulls
+🧪 umath-validation-set-exp.csv: 44 rows with nulls
+🧪 umath-validation-set-log.csv: 10 rows with nulls
+🧪 umath-validation-set-sin.csv: 4 rows with nulls
+🧪 youtube_normalized.csv: 60 rows with nulls
+🧪 youtube_scored.csv: 60 rows with nulls

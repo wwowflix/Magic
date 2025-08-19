@@ -1,0 +1,13 @@
+file	status	action
+outputs\reddit_dump.json	OK	none
+outputs\dashboard\dashboard_summary.json	OK	none
+outputs\metrics\run_1755170773.json	OK	none
+outputs\metrics\run_1755171771.json	OK	none
+outputs\metrics\run_1755171879.json	OK	none
+outputs\metrics\run_1755172114.json	OK	none
+outputs\metrics\run_1755173941.json	OK	none
+outputs\metrics\run_1755173988.json	OK	none
+outputs\summaries\e2e_report.json	OK	none
+outputs\trends\correlated_trends.json	OK	none
+outputs\module_C\heartbeat\heartbeat.json	OK	none
+outputs\logs\agent_metrics\agent_metrics_20250807_195057.json	OK	none

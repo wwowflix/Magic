@@ -1,0 +1,1 @@
+Anomalies logged: 2

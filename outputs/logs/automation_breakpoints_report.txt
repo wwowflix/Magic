@@ -2,7 +2,7 @@
 ✅ Module module_AA looks okay (3 scripts).
 ✅ Module module_AB looks okay (3 scripts).
 ✅ Module module_B looks okay (5 scripts).
-✅ Module module_C looks okay (3 scripts).
+✅ Module module_C looks okay (6 scripts).
 ✅ Module module_D looks okay (4 scripts).
 ✅ Module module_E looks okay (6 scripts).
 ✅ Module module_F looks okay (5 scripts).
