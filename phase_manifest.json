@@ -3458,6 +3458,24 @@
     {
         "Phase":  "phase11",
         "Module":  "module_C",
+        "Script":  "11C_corruption_recovery_agent_READY.py",
+        "Path":  "scripts\\phase11\\module_C\\11C_corruption_recovery_agent_READY.py"
+    },
+    {
+        "Phase":  "phase11",
+        "Module":  "module_C",
+        "Script":  "11C_data_quality_validator_READY.py",
+        "Path":  "scripts\\phase11\\module_C\\11C_data_quality_validator_READY.py"
+    },
+    {
+        "Phase":  "phase11",
+        "Module":  "module_C",
+        "Script":  "11C_fail_safe_backup_system_READY.py",
+        "Path":  "scripts\\phase11\\module_C\\11C_fail_safe_backup_system_READY.py"
+    },
+    {
+        "Phase":  "phase11",
+        "Module":  "module_C",
         "Script":  "11C_placeholder_READY.py",
         "Path":  "scripts\\phase11\\module_C\\11C_placeholder_READY.py"
     },
