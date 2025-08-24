@@ -44,3 +44,5 @@ jobs:
           files: ./coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
+  env:
+    PYTHONPATH: .
