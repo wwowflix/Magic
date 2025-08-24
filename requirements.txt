@@ -5,7 +5,7 @@ filelock==3.18.0
 idna==3.10
 lxml==6.0.0
 numpy==1.26.4 ; python_version < "3.13"
-pandas @ file:///D:/MAGIC/wheels/pandas-1.5.3-cp310-cp310-win_amd64.whl
+pandas
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
@@ -15,4 +15,5 @@ snscrape==0.7.0.20230622
 soupsieve==2.7
 typing_extensions==4.14.1
 urllib3==2.5.0
+
 
