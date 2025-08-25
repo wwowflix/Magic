@@ -1,6 +1,9 @@
 ﻿name: CI
 
-on:
+on:\r
+  push:\r
+  pull_request:\r
+  workflow_dispatch:\r
   push:
   pull_request:
 
@@ -81,5 +84,6 @@ jobs:
             pytest_junit.xml
             coverage.xml
             precommit.log
+
 
 
