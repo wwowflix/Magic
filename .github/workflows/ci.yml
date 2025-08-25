@@ -1,11 +1,9 @@
-﻿name: CI
+name: CI
 
-on:\r
-  push:\r
-  pull_request:\r
-  workflow_dispatch:\r
+on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   tests:
@@ -29,38 +27,24 @@ jobs:
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Install deps
-  shell: bash
-  run: |
-    python -m pip install -U pip
-    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi      - name: Pre-commit (optional)
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          if (Test-Path requirements.txt)     { pip install -r requirements.txt }
+          if (Test-Path requirements-dev.txt) { pip install -r requirements-dev.txt }
+          if (-not (Test-Path requirements-dev.txt)) { pip install pandas numpy matplotlib }
+
+      - name: Pre-commit (optional)
         continue-on-error: true
         shell: pwsh
         run: |
           if (Test-Path .pre-commit-config.yaml) {
             pip install pre-commit
             pre-commit run --all-files 2>&1 | Tee-Object -FilePath precommit.log
-          }
-
-      - name: Install dev deps
-
-        shell: pwsh
-
-        run: |
-
-          python -m pip install --upgrade pip
-
-          if (Test-Path requirements-dev.txt) {
-
-            pip install -r requirements-dev.txt
-
-          } else {
-
-            pip install pandas numpy matplotlib
-
           }
 
       - name: Run tests (pytest)
@@ -84,6 +68,3 @@ jobs:
             pytest_junit.xml
             coverage.xml
             precommit.log
-
-
-
