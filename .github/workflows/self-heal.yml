@@ -1,21 +1,75 @@
-﻿name: self-heal/ci
+﻿name: self-heal
+
 on:
   push:
-    branches: [ main ]
+    branches: [ main, week10-failover, feat/week11-2-priority ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  week10-selfcheck:
+  tests:
     runs-on: windows-latest
-    timeout-minutes: 15
-    # Don’t block PRs: allow this job to fail on PR events
-    continue-on-error: ${{ github.event_name == 'pull_request' }}
+    timeout-minutes: 20
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+      PYTHONUNBUFFERED: "1"
+      PYTHONPATH: "."
     steps:
       - uses: actions/checkout@v4
-      - name: Week10 self-check
-        shell: pwsh
+
+      - uses: actions/setup-python@v5
+        with:
+            python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        shell: bash
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          ./tools/week10_selfcheck.ps1
+          set -e
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-dev.txt ]; then
+            pip install -r requirements-dev.txt
+          else
+            pip install pandas numpy "lxml<6" matplotlib
+          fi
+          pip install pre-commit pytest
+
+      - name: Lint (non-blocking)
+        shell: bash
+        run: pre-commit run --all-files || echo "lint non-blocking"
+
+      - name: Run Python tests
+        shell: bash
+        run: pytest -q
+
+      - name: Run Pester gates (Week 10–12)
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          # Use Windows PowerShell 5.1 bundled Pester 3.x syntax compatibility
+          if (Test-Path .\tools\gates) {
+            Invoke-Pester -Script .\tools\gates\*.Tests.ps1 -EnableExit
+          } else {
+            Write-Host "No gates found; skipping"
+          }
+
+      # Example: guard an optional dashboard step so it never fails the job when TSV is missing
+      - name: Dashboard (skip if summary missing)
+        if: ${{ hashFiles('**/phase_master_summary.tsv') != '' }}
+        shell: bash
+        run: |
+          echo "Summary present; run your dashboard build here"
+          # python tools/dashboard/build.py || true
