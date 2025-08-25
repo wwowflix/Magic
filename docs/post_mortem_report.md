@@ -5,3 +5,6 @@
 ## Root Cause
 ## Mitigations
 ## Follow-ups
+
+# Top Failures (auto)\r\n
+
