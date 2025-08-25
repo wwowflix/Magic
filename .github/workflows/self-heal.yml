@@ -1,0 +1,21 @@
+﻿name: self-heal/ci
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  week10-selfcheck:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    # Don’t block PRs: allow this job to fail on PR events
+    continue-on-error: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Week10 self-check
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          ./tools/week10_selfcheck.ps1

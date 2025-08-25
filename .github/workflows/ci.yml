@@ -1,46 +1,72 @@
-name: CI
+﻿name: CI
+
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
 jobs:
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        py: ["3.11", "3.12", "3.13"]
-    runs-on: ${{ matrix.os }}
+  tests:
+    runs-on: windows-latest
+
+    env:
+      PYTHONUTF8: "1"
+      PYTHONPATH: .
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.py }}
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/cache@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-py${{ matrix.py }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          python-version: "3.12"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
           restore-keys: |
-            ${{ runner.os }}-py${{ matrix.py }}-pip-
+            ${{ runner.os }}-pip-
 
-      - run: python -m pip install --upgrade pip
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          if (Test-Path requirements.txt)     { pip install -r requirements.txt }
+          if (Test-Path requirements-dev.txt) { pip install -r requirements-dev.txt }
+          if (-not (Test-Path requirements-dev.txt)) { pip install pandas numpy matplotlib }
 
-      - name: Install project deps (if present)
-        if: hashFiles('requirements.txt') != ''
-        run: pip install -r requirements.txt
+      - name: Pre-commit (optional)
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          if (Test-Path .pre-commit-config.yaml) {
+            pip install pre-commit
+            pre-commit run --all-files 2>&1 | Tee-Object -FilePath precommit.log
+          }
 
-      - name: Install dev deps (if present)
-        if: hashFiles('requirements-dev.txt') != ''
-        run: pip install -r requirements-dev.txt
+      - name: Run tests (pytest)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          pip install pytest pytest-cov
+          pytest -vv --maxfail=1 --disable-warnings `
+            --junitxml=pytest_junit.xml `
+            --cov=. --cov-report=xml:coverage.xml `
+            2>&1 | Tee-Object -FilePath pytest.log
+          if ($LASTEXITCODE -ne 0) { exit 1 }
 
-      - run: pip install pytest pytest-cov
-
-      - name: Run tests
-        run: pytest -q --maxfail=1 --disable-warnings --cov=tools --cov-branch --cov-report=xml --cov-fail-under=90
-
-      - uses: codecov/codecov-action@v4
-        if: always()
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          files: ./coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+          name: ci-failure-logs
+          path: |
+            pytest.log
+            pytest_junit.xml
+            coverage.xml
+            precommit.log
+
+

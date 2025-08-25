@@ -28,3 +28,15 @@ phase_manifest.json
 .DS_Store
 # local backups
 tools/*.bak*
+
+# local helper files
+PR_BODY.md
+ci_tests.log
+.pre-commit-config.yaml.bak_*
+
+
+# local helper files
+PR_BODY.md
+ci_tests.log
+.pre-commit-config.yaml.bak_*
+
