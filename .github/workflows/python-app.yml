@@ -1,11 +1,26 @@
-﻿name: Python application
-
-on:
+﻿on:
+  pull_request:
+    paths:
+      - "**/*.py"
+      - "tools/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - "setup.cfg"
+      - "setup.py"
+      - "requirements*.txt"
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    paths:
+      - "**/*.py"
+      - "tools/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - "setup.cfg"
+      - "setup.py"
+      - "requirements*.txt"
+  workflow_dispatch:
 
+name: Python application
 jobs:
   build:
     runs-on: windows-latest
@@ -26,3 +41,4 @@ jobs:
     - name: Run tests
       run: |
         pytest .\scripts
+
