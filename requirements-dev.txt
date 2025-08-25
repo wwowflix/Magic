@@ -1,3 +1,5 @@
 ﻿pytest
 pytest-cov
 matplotlib>=3.8
+pandas
+numpy
