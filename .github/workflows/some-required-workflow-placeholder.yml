@@ -1,0 +1,13 @@
+﻿name: Some Required Workflow
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+permissions:
+  contents: read
+jobs:
+  ok:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'placeholder for required status: Some Required Workflow / build'
