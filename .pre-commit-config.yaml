@@ -10,12 +10,13 @@
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix, --select=E,F, --ignore=E402,E701,E702,E722,F841]
-        files: ^(tools/|tests/)$
+        files: ^(tools/|tests/|self_healing_runner_v5(_parallel)?\.py)$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.11.2
     hooks:
       - id: mypy
         args: [--config-file, mypy.ini]
-        files: ^(tools/|tests/)$
+        files: ^(tools/|tests/|self_healing_runner_v5(_parallel)?\.py)$
         additional_dependencies: [types-requests]
+
