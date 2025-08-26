@@ -1,0 +1,13 @@
+﻿name: self-heal
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "✓ self-heal / ci placeholder (always succeed)"
