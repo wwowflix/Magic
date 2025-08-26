@@ -1,0 +1,12 @@
+- name: Week 10 self-check (optional; Windows only)
+  if: runner.os == 'Windows'
+  shell: pwsh
+  run: |
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    if (Test-Path "$env:GITHUB_WORKSPACE\tools\week10_selfcheck.ps1") {
+      & "$env:GITHUB_WORKSPACE\tools\week10_selfcheck.ps1"
+    } elseif (Test-Path "$env:GITHUB_WORKSPACE\tools\run_cleanup.ps1") {
+      & "$env:GITHUB_WORKSPACE\tools\run_cleanup.ps1"
+    } else {
+      Write-Host "No Week 10 self-check script found. Skipping."
+    }
