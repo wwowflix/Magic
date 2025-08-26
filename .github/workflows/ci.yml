@@ -1,7 +1,6 @@
 ﻿name: CI
 on:
   pull_request:
-  push:
     branches: [ main ]
   workflow_dispatch:
 
@@ -9,30 +8,46 @@ jobs:
   tests:
     name: tests
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.13" }
+        with: { python-version: "3.12" }
+
       - name: Install deps
+        shell: pwsh
         run: |
           python -m pip install -U pip
-          if (Test-Path requirements.txt) { pip install -r requirements.txt }
-          if (Test-Path requirements-dev.txt) { pip install -r requirements-dev.txt }
+          if (Test-Path requirements.txt)      { pip install -r requirements.txt }
+          if (Test-Path requirements-dev.txt)  { pip install -r requirements-dev.txt }
+          # override any stray wheel pins with platform-correct wheels
+          pip install --upgrade --only-binary=:all: numpy pandas matplotlib
           pip install pytest
+
       - name: Run tests
+        shell: pwsh
         run: pytest -q
 
   mypy:
     name: mypy
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.13" }
+        with: { python-version: "3.12" }
+
       - name: Install type deps
+        shell: pwsh
         run: |
           python -m pip install -U pip
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
           pip install mypy
+
       - name: Type check
+        shell: pwsh
         run: mypy .
