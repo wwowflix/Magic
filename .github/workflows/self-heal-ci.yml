@@ -1,0 +1,11 @@
+﻿name: self-heal
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ok
