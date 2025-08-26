@@ -50,5 +50,6 @@ jobs:
 
       - name: Type check
         shell: pwsh
-        run: mypy .
+        run: python -m mypy --config-file mypy.ini
+
 
