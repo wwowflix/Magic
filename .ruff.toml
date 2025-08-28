@@ -1,0 +1,5 @@
+line-length = 120
+select = ["E","F","W","I"]
+
+[per-file-ignores]
+"scripts/yacc.py" = ["E731","E741"]
