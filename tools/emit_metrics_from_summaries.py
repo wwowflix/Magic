@@ -51,7 +51,7 @@ def main(argv=None) -> int:
     import argparse
 
     ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
-    # ✨ defaults changed to what the test expects
+    # âœ¨ defaults changed to what the test expects
     ap.add_argument("--summaries", default="outputs/summaries")
     ap.add_argument("--out", default="outputs/metrics")
     ns = ap.parse_args(argv)
