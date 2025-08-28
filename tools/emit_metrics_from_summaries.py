@@ -1,79 +1,78 @@
 from __future__ import annotations
-from collections import Counter, defaultdict
-from typing import DefaultDict
 
-# Module-scope typed counters for mypy
-totals: Counter[str] = Counter()
-by_phase: DefaultDict[str, int] = defaultdict(int)
-from typing import TypedDict, Dict
+from pathlib import Path
+from typing import TypedDict, Dict, Iterable, Tuple
+import argparse
+import csv
+import json
+
 
 class Counts(TypedDict):
     ok: int
     fail: int
     total: int
 
-try:
-    totals  # type: ignore[name-defined]
-except NameError:
 
-try:
-    by_phase  # type: ignore[name-defined]
-except NameError:
-
-# Explicit module-scope annotations for mypy
-totals: Dict[str, int]
-by_phase: DefaultDict[str, int]
-#!/usr/bin/env python3
-import csv
-import json
-from pathlib import Path
-
-__all__ = ["emit_metrics", "main"]
+def _empty() -> Counts:
+    return {"ok": 0, "fail": 0, "total": 0}
 
 
-def emit_metrics(summaries_dir: str, out_dir: str) -> str:
-    """
-    Read all *.tsv files in `summaries_dir` (tab-delimited with 'Status' and 'Phase' columns,
-    but we will also work if only 'Status' is present), aggregate counts, and write JSON to
-    `out_dir/agent_metrics.json`. Returns the output file path as a string.
-    """
-    sdir = Path(summaries_dir)
-    odir = Path(out_dir)
-    odir.mkdir(parents=True, exist_ok=True)
+def _add(c: Counts, status: str) -> None:
+    c["total"] += 1
+    s = status.upper()
+    if s == "PASS":
+        c["ok"] += 1
+    elif s == "FAIL":
+        c["fail"] += 1
 
 
-    for tsv in sdir.glob("*.tsv"):
-        with tsv.open("r", encoding="utf-8", newline="") as f:
-            reader = csv.DictReader(f, delimiter="\t")
-            for row in reader:
-                status = str(row.get("Status", "")).strip()
-                phase = str(row.get("Phase", "")).strip()
-                if not status:
-                    continue
-                totals[status] += 1
-                if phase:
-                    by_phase[phase][status] += 1
-
-    payload = {
-        "totals": dict(totals),
-        "by_phase": {k: dict(v) for k, v in by_phase.items()},
-    }
-
-    out_path = odir / "agent_metrics.json"
-    out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    return str(out_path)
+def _iter_rows(tsv_path: Path) -> Iterable[dict[str, str]]:
+    with tsv_path.open("r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        for row in reader:
+            yield row
 
 
-def main(argv=None) -> int:
-    import argparse
+def summarize(tsv_paths: Iterable[Path]) -> Tuple[Counts, Dict[str, Counts]]:
+    totals: Counts = _empty()
+    by_phase: Dict[str, Counts] = {}
 
-    ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
-    # ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“Ãƒâ€šÃ‚Â¨ defaults changed to what the test expects
-    ap.add_argument("--summaries", default="outputs/summaries")
-    ap.add_argument("--out", default="outputs/metrics")
-    ns = ap.parse_args(argv)
-    p = emit_metrics(ns.summaries, ns.out)
-    print(f"[emit_metrics] wrote {p}")
+    for tsv in tsv_paths:
+        for row in _iter_rows(tsv):
+            phase = str(row.get("Phase", "")).strip()
+            status = str(row.get("Status", "")).strip()
+            _add(totals, status)
+            bucket = by_phase.setdefault(phase, _empty())
+            _add(bucket, status)
+    return totals, by_phase
+
+
+def main(argv: list[str] | None = None) -> int:
+    p = argparse.ArgumentParser()
+    g = p.add_mutually_exclusive_group(required=True)
+    g.add_argument("--summary", type=Path, help="Path to a single TSV summary")
+    g.add_argument("--summary-dir", type=Path, help="Directory with *.tsv summaries")
+    p.add_argument(
+        "--out-json",
+        type=Path,
+        default=Path("outputs/metrics/summary_counts.json"),
+        help="Where to write the JSON summary",
+    )
+    args = p.parse_args(argv)
+
+    if args.summary:
+        tsvs = [args.summary]
+    else:
+        sdir: Path = args.summary_dir
+        tsvs = sorted(sdir.glob("*.tsv"))
+
+    totals, by_phase = summarize(tsvs)
+
+    args.out_json.parent.mkdir(parents=True, exist_ok=True)
+    args.out_json.write_text(
+        json.dumps({"totals": totals, "by_phase": by_phase}, indent=2),
+        encoding="utf-8",
+    )
     return 0
 
 
