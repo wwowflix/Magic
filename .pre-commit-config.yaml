@@ -35,4 +35,3 @@ repos:
       - id: trailing-whitespace
         exclude: >-
           ^(clean_env/|backups/|rclone-|data/|scripts/chromedriver-win64/)
-
