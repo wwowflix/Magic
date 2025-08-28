@@ -22,8 +22,8 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)
 
-    totals = Counter()
-    by_phase = defaultdict(lambda: Counter())
+totals: Counter[str] = Counter()
+by_phase: DefaultDict[str, int] = defaultdict(int)
 
     for tsv in sdir.glob("*.tsv"):
         with tsv.open("r", encoding="utf-8", newline="") as f:
@@ -51,7 +51,7 @@ def main(argv=None) -> int:
     import argparse
 
     ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
-    # âœ¨ defaults changed to what the test expects
+    # Ã¢Å“Â¨ defaults changed to what the test expects
     ap.add_argument("--summaries", default="outputs/summaries")
     ap.add_argument("--out", default="outputs/metrics")
     ns = ap.parse_args(argv)
