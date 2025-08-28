@@ -18,7 +18,7 @@ repos:
     rev: v0.6.9
     hooks:
       - id: ruff
-        args: [--fix, --force-exclude]
+        args: [--fix, ]
         files: ^(tools/|tests/|self_healing_runner_v5\.py)$
         exclude: >
           (?x)(

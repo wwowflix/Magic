@@ -1,5 +1,16 @@
 line-length = 120
+target-version = "py311"
+
+# keep noisy dirs out globally
+exclude = [
+  "outputs/**",
+  "logs/**",
+  ".venv/**", "venv/**", "env/**",
+  "**/*.bak",
+]
+
+[lint]
 select = ["E","F","W","I"]
 
-[per-file-ignores]
+[lint.per-file-ignores]
 "scripts/yacc.py" = ["E731","E741"]
