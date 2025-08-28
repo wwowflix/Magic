@@ -1,5 +1,17 @@
 line-length = 120
 select = ["E","F","W","I"]
 
+# Keep vendor/generated noise out globally.
+exclude = [
+  "outputs/**",
+  "logs/**",
+  "scripts/**",
+  "agents/**",
+  "docs/**",
+  "notebooks/**",
+  ".venv/**", "venv/**", "env/**",
+  "**/*.bak",
+]
+
 [per-file-ignores]
 "scripts/yacc.py" = ["E731","E741"]
