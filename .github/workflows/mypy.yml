@@ -1,17 +1,17 @@
 name: mypy
+
 on:
+  workflow_dispatch:
   push:
-    branches: [ "**" ]
     paths:
-      - "tools/**"
-      - "mypy.ini"
-      - ".github/workflows/mypy.yml"
+      - 'tools/**'
+      - 'mypy.ini'
+      - '.github/workflows/mypy.yml'
   pull_request:
     paths:
-      - "tools/**"
-      - "mypy.ini"
-      - ".github/workflows/mypy.yml"
-  workflow_dispatch:
+      - 'tools/**'
+      - 'mypy.ini'
+      - '.github/workflows/mypy.yml'
 
 jobs:
   mypy:
@@ -20,12 +20,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Install mypy only
+          python-version: '3.12'
+      - name: Install type deps
+        shell: pwsh
         run: |
           python -m pip install -U pip
+          if (Test-Path requirements.txt)     { pip install -r requirements.txt }
+          if (Test-Path requirements-dev.txt) { pip install -r requirements-dev.txt }
           pip install mypy
-      - name: Type check (tools only)
-        env:
-          PYTHONPATH: .
-        run: python -m mypy --config-file mypy.ini
+          # Missing stubs for requests:
+          pip install types-requests
+      - name: Type check
+        shell: pwsh
+        run: |
+          python -m mypy --config-file mypy.ini tools

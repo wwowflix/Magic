@@ -1,4 +1,9 @@
-﻿#!/usr/bin/env python3
+﻿from typing import DefaultDict, Dict
+
+# Explicit module-scope annotations for mypy
+totals: Dict[str, int]
+by_phase: DefaultDict[str, int]
+#!/usr/bin/env python3
 import csv
 import json
 from pathlib import Path
@@ -57,3 +62,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
