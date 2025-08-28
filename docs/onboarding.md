@@ -1,4 +1,4 @@
-﻿# Onboarding Checklist
+# Onboarding Checklist
 - [ ] Clone repo
 - [ ] Run `./setup.sh` (Linux/mac) or `.\setup.ps1` (Windows)
 - [ ] Verify: `python scripts/start_check.py`

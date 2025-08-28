@@ -314,9 +314,11 @@ def test_str_cat_align_mixed_inputs(join):
     rhs_idx = (
         t.index.intersection(s.index)
         if join == "inner"
-        else t.index.union(s.index)
-        if join == "outer"
-        else t.index.append(s.index.difference(t.index))
+        else (
+            t.index.union(s.index)
+            if join == "outer"
+            else t.index.append(s.index.difference(t.index))
+        )
     )
 
     expected = expected_outer.loc[s.index.join(rhs_idx, how=join)]
@@ -425,4 +427,3 @@ def test_cat_on_series_dot_str():
     )
     with pytest.raises(TypeError, match=message):
         ps.str.cat(others=ps.str)
-

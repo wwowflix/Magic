@@ -1,6 +1,7 @@
 """
 test where we are determining what we are grouping, or getting groups
 """
+
 from datetime import (
     date,
     timedelta,
@@ -1236,4 +1237,3 @@ def test_depr_grouping_attrs(attr):
     msg = f"{attr} is deprecated"
     with tm.assert_produces_warning(FutureWarning, match=msg):
         getattr(gb._grouper.groupings[0], attr)
-

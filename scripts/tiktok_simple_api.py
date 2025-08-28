@@ -32,4 +32,3 @@ if __name__ == "__main__":
         writer.writeheader()
         writer.writerows(videos)
     print(f"OK Simple-API scraped -> {len(videos)} rows.")
-

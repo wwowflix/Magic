@@ -6,7 +6,8 @@ cur = conn.cursor()
 
 tables = ["google_trends", "reddit", "youtube", "tiktok"]
 for table in tables:
-    cur.execute(f"""
+    cur.execute(
+        f"""
         CREATE TABLE IF NOT EXISTS {table} (
             date TEXT,
             keyword TEXT,
@@ -14,9 +15,9 @@ for table in tables:
             platform TEXT,
             author TEXT
         )
-    """)
+    """
+    )
     print(f"OK Created table {table}")
 
 conn.commit()
 conn.close()
-

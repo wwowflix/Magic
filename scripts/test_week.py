@@ -4,6 +4,7 @@ Tests for the following offsets:
 - WeekOfMonth
 - LastWeekOfMonth
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -349,4 +350,3 @@ class TestLastWeekOfMonth:
         assert (
             repr(LastWeekOfMonth(n=2, weekday=1)) == "<2 * LastWeekOfMonths: weekday=1>"
         )
-

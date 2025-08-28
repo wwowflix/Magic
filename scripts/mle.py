@@ -23,31 +23,29 @@ class CmdStanMLE:
         """Initialize object."""
         if not runset.method == Method.OPTIMIZE:
             raise ValueError(
-                'Wrong runset method, expecting optimize runset, '
-                'found method {}'.format(runset.method)
+                "Wrong runset method, expecting optimize runset, "
+                "found method {}".format(runset.method)
             )
         self.runset = runset
         # info from runset to be exposed
         self.converged = runset._check_retcodes()
         optimize_args = self.runset._args.method_args
-        assert isinstance(
-            optimize_args, OptimizeArgs
-        )  # make the typechecker happy
+        assert isinstance(optimize_args, OptimizeArgs)  # make the typechecker happy
         self._save_iterations: bool = optimize_args.save_iterations
         self._set_mle_attrs(runset.csv_files[0])
 
     def __repr__(self) -> str:
-        repr = 'CmdStanMLE: model={}{}'.format(
+        repr = "CmdStanMLE: model={}{}".format(
             self.runset.model, self.runset._args.method_args.compose(0, cmd=[])
         )
-        repr = '{}\n csv_file:\n\t{}\n output_file:\n\t{}'.format(
+        repr = "{}\n csv_file:\n\t{}\n output_file:\n\t{}".format(
             repr,
-            '\n\t'.join(self.runset.csv_files),
-            '\n\t'.join(self.runset.stdout_files),
+            "\n\t".join(self.runset.csv_files),
+            "\n\t".join(self.runset.stdout_files),
         )
         if not self.converged:
-            repr = '{}\n Warning: invalid estimate, '.format(repr)
-            repr = '{} optimization failed to converge.'.format(repr)
+            repr = "{}\n Warning: invalid estimate, ".format(repr)
+            repr = "{} optimization failed to converge.".format(repr)
         return repr
 
     def __getattr__(self, attr: str) -> Union[np.ndarray, float]:
@@ -63,10 +61,10 @@ class CmdStanMLE:
     def _set_mle_attrs(self, sample_csv_0: str) -> None:
         meta = scan_optimize_csv(sample_csv_0, self._save_iterations)
         self._metadata = InferenceMetadata(meta)
-        self._column_names: Tuple[str, ...] = meta['column_names']
-        self._mle: np.ndarray = meta['mle']
+        self._column_names: Tuple[str, ...] = meta["column_names"]
+        self._mle: np.ndarray = meta["mle"]
         if self._save_iterations:
-            self._all_iters: np.ndarray = meta['all_iters']
+            self._all_iters: np.ndarray = meta["all_iters"]
 
     @property
     def column_names(self) -> Tuple[str, ...]:
@@ -93,9 +91,7 @@ class CmdStanMLE:
         as well as all Stan program variables.
         """
         if not self.converged:
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         return self._mle
 
     @property
@@ -108,14 +104,12 @@ class CmdStanMLE:
         """
         if not self._save_iterations:
             get_logger().warning(
-                'Intermediate iterations not saved to CSV output file. '
+                "Intermediate iterations not saved to CSV output file. "
                 'Rerun the optimize method with "save_iterations=True".'
             )
             return None
         if not self.converged:
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         return self._all_iters
 
     @property
@@ -126,9 +120,7 @@ class CmdStanMLE:
         as well as all Stan program variables.
         """
         if not self.runset._check_retcodes():
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         return pd.DataFrame([self._mle], columns=self.column_names)
 
     @property
@@ -141,14 +133,12 @@ class CmdStanMLE:
         """
         if not self._save_iterations:
             get_logger().warning(
-                'Intermediate iterations not saved to CSV output file. '
+                "Intermediate iterations not saved to CSV output file. "
                 'Rerun the optimize method with "save_iterations=True".'
             )
             return None
         if not self.converged:
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         return pd.DataFrame(self._all_iters, columns=self.column_names)
 
     @property
@@ -158,9 +148,7 @@ class CmdStanMLE:
         Python Dict.  Only returns estimate from final iteration.
         """
         if not self.runset._check_retcodes():
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         return OrderedDict(zip(self.column_names, self._mle))
 
     def stan_variable(
@@ -196,27 +184,23 @@ class CmdStanMLE:
         """
         if var not in self._metadata.stan_vars:
             raise ValueError(
-                f'Unknown variable name: {var}\n'
-                'Available variables are ' + ", ".join(self._metadata.stan_vars)
+                f"Unknown variable name: {var}\n"
+                "Available variables are " + ", ".join(self._metadata.stan_vars)
             )
         if warn and inc_iterations and not self._save_iterations:
             get_logger().warning(
-                'Intermediate iterations not saved to CSV output file. '
+                "Intermediate iterations not saved to CSV output file. "
                 'Rerun the optimize method with "save_iterations=True".'
             )
         if warn and not self.runset._check_retcodes():
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         if inc_iterations and self._save_iterations:
             data = self._all_iters
         else:
             data = self._mle
 
         try:
-            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(
-                data
-            )
+            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(data)
             # TODO(2.0) remove
             if out.shape == () or out.shape == (1,):
                 get_logger().warning(
@@ -229,9 +213,8 @@ class CmdStanMLE:
         except KeyError:
             # pylint: disable=raise-missing-from
             raise ValueError(
-                f'Unknown variable name: {var}\n'
-                'Available variables are '
-                + ", ".join(self._metadata.stan_vars.keys())
+                f"Unknown variable name: {var}\n"
+                "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
     def stan_variables(
@@ -257,9 +240,7 @@ class CmdStanMLE:
         CmdStanLaplace.stan_variables
         """
         if not self.runset._check_retcodes():
-            get_logger().warning(
-                'Invalid estimate, optimization failed to converge.'
-            )
+            get_logger().warning("Invalid estimate, optimization failed to converge.")
         result = {}
         for name in self._metadata.stan_vars:
             result[name] = self.stan_variable(

@@ -367,12 +367,9 @@ def read_excel(
     header: int | Sequence[int] | None = ...,
     names: list[str] | None = ...,
     index_col: int | Sequence[int] | None = ...,
-    usecols: int
-    | str
-    | Sequence[int]
-    | Sequence[str]
-    | Callable[[str], bool]
-    | None = ...,
+    usecols: (
+        int | str | Sequence[int] | Sequence[str] | Callable[[str], bool] | None
+    ) = ...,
     squeeze: bool | None = ...,
     dtype: DtypeArg | None = ...,
     engine: Literal["xlrd", "openpyxl", "odf", "pyxlsb"] | None = ...,
@@ -394,8 +391,7 @@ def read_excel(
     convert_float: bool | None = ...,
     mangle_dupe_cols: bool = ...,
     storage_options: StorageOptions = ...,
-) -> DataFrame:
-    ...
+) -> DataFrame: ...
 
 
 @overload
@@ -406,12 +402,9 @@ def read_excel(
     header: int | Sequence[int] | None = ...,
     names: list[str] | None = ...,
     index_col: int | Sequence[int] | None = ...,
-    usecols: int
-    | str
-    | Sequence[int]
-    | Sequence[str]
-    | Callable[[str], bool]
-    | None = ...,
+    usecols: (
+        int | str | Sequence[int] | Sequence[str] | Callable[[str], bool] | None
+    ) = ...,
     squeeze: bool | None = ...,
     dtype: DtypeArg | None = ...,
     engine: Literal["xlrd", "openpyxl", "odf", "pyxlsb"] | None = ...,
@@ -433,8 +426,7 @@ def read_excel(
     convert_float: bool | None = ...,
     mangle_dupe_cols: bool = ...,
     storage_options: StorageOptions = ...,
-) -> dict[IntStrT, DataFrame]:
-    ...
+) -> dict[IntStrT, DataFrame]: ...
 
 
 @doc(storage_options=_shared_docs["storage_options"])
@@ -447,12 +439,9 @@ def read_excel(
     header: int | Sequence[int] | None = 0,
     names: list[str] | None = None,
     index_col: int | Sequence[int] | None = None,
-    usecols: int
-    | str
-    | Sequence[int]
-    | Sequence[str]
-    | Callable[[str], bool]
-    | None = None,
+    usecols: (
+        int | str | Sequence[int] | Sequence[str] | Callable[[str], bool] | None
+    ) = None,
     squeeze: bool | None = None,
     dtype: DtypeArg | None = None,
     engine: Literal["xlrd", "openpyxl", "odf", "pyxlsb"] | None = None,
@@ -1485,7 +1474,7 @@ XLS_SIGNATURES = (
     b"\x09\x00\x04\x00\x07\x00\x10\x00",  # BIFF2
     b"\x09\x02\x06\x00\x00\x00\x10\x00",  # BIFF3
     b"\x09\x04\x06\x00\x00\x00\x10\x00",  # BIFF4
-    b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1",  # Compound File Binary
+    b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1",  # Compound File Binary
 )
 ZIP_SIGNATURE = b"PK\x03\x04"
 PEEK_SIZE = max(map(len, XLS_SIGNATURES + (ZIP_SIGNATURE,)))

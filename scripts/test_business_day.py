@@ -1,6 +1,7 @@
 """
 Tests for offsets.BDay
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -234,4 +235,3 @@ class TestBusinessDay:
             )
         with pytest.raises(ApplyTypeError, match=msg):
             _offset()._apply(BMonthEnd())
-

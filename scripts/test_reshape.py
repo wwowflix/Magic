@@ -1,6 +1,7 @@
 """
 Tests for ndarray-like method on the base Index class
 """
+
 import numpy as np
 import pytest
 
@@ -95,4 +96,3 @@ class TestReshape:
         # empty
         result = index.append([])
         tm.assert_index_equal(result, index)
-

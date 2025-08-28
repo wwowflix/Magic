@@ -10,7 +10,6 @@ Purpose:
 """
 
 import os
-import sys
 from datetime import datetime
 
 # ------------------------------
@@ -18,7 +17,9 @@ from datetime import datetime
 # ------------------------------
 PROJECT_ROOT = r"D:\MAGIC"
 LOGS_DIR = os.path.join(PROJECT_ROOT, "logs")
-TARGET_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "phase11", "module_l", "11L_rate_limit_guard_READY.py")
+TARGET_SCRIPT = os.path.join(
+    PROJECT_ROOT, "scripts", "phase11", "module_l", "11L_rate_limit_guard_READY.py"
+)
 MASTER_LOG = os.path.join(LOGS_DIR, "magic_master_log.txt")
 
 # ------------------------------

@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from datetime import datetime
 from inspect import signature
 from io import StringIO
@@ -981,4 +982,3 @@ def test_read_seek(all_parsers):
             actual = parser.read_csv(file)
         expected = parser.read_csv(StringIO(content))
     tm.assert_frame_equal(actual, expected)
-

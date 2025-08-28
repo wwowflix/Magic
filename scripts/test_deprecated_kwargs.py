@@ -1,6 +1,7 @@
 """
 Tests for the deprecated keyword arguments for `read_json`.
 """
+
 from io import StringIO
 
 import pandas as pd
@@ -19,4 +20,3 @@ def test_good_kwargs():
         tm.assert_frame_equal(df, read_json(data2, orient="columns"))
         data3 = StringIO(df.to_json(orient="index"))
         tm.assert_frame_equal(df, read_json(data3, orient="index"))
-

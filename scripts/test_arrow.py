@@ -10,6 +10,7 @@ Additional tests should either be added to one of the BaseExtensionTests
 classes (if they are relevant for the extension interface for all dtypes), or
 be added to the array-specific tests in `pandas/tests/arrays/`.
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -3418,4 +3419,3 @@ def test_map_numeric_na_action():
     result = ser.map(lambda x: 42, na_action="ignore")
     expected = pd.Series([42.0, 42.0, np.nan], dtype="float64")
     tm.assert_series_equal(result, expected)
-

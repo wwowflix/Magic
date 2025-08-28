@@ -32,7 +32,7 @@ def normalize_whitespace(s):
     Remove leading and trailing whitespace, and convert internal
     stretches of whitespace to a single space.
     """
-    return ' '.join(s.split())
+    return " ".join(s.split())
 
 
 def test_from_template():
@@ -41,4 +41,3 @@ def test_from_template():
     normalized_pyf = normalize_whitespace(pyf)
     normalized_expected_pyf = normalize_whitespace(expected_pyf)
     assert_equal(normalized_pyf, normalized_expected_pyf)
-

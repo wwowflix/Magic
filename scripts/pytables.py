@@ -2,6 +2,7 @@
 High level interface to PyTables for reading and writing pandas data structures
 to disk
 """
+
 from __future__ import annotations
 
 from contextlib import suppress
@@ -4830,13 +4831,13 @@ def _get_tz(tz: tzinfo) -> str | tzinfo:
 @overload
 def _set_tz(
     values: np.ndarray | Index, tz: str | tzinfo, coerce: bool = False
-) -> DatetimeIndex:
-    ...
+) -> DatetimeIndex: ...
 
 
 @overload
-def _set_tz(values: np.ndarray | Index, tz: None, coerce: bool = False) -> np.ndarray:
-    ...
+def _set_tz(
+    values: np.ndarray | Index, tz: None, coerce: bool = False
+) -> np.ndarray: ...
 
 
 def _set_tz(
@@ -4952,7 +4953,7 @@ def _unconvert_index(data, kind: str, encoding: str, errors: str) -> np.ndarray 
     elif kind == "date":
         try:
             index = np.asarray([date.fromordinal(v) for v in data], dtype=object)
-        except (ValueError):
+        except ValueError:
             index = np.asarray([date.fromtimestamp(v) for v in data], dtype=object)
     elif kind in ("integer", "float", "bool"):
         index = np.asarray(data)

@@ -280,7 +280,7 @@ def test_complibs_default_settings_override(tmp_path, setup_path):
 @pytest.mark.filterwarnings("ignore:object name is not a valid")
 @pytest.mark.skipif(
     not PY311 and is_ci_environment() and is_platform_linux(),
-    reason="Segfaulting in a CI environment"
+    reason="Segfaulting in a CI environment",
     # with xfail, would sometimes raise UnicodeDecodeError
     # invalid state byte
 )
@@ -515,4 +515,3 @@ def test_fspath():
     with tm.ensure_clean("foo.h5") as path:
         with HDFStore(path) as store:
             assert os.fspath(store) == str(path)
-

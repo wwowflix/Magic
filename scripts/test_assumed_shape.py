@@ -48,4 +48,3 @@ class TestF2cmapOption(TestAssumedShapeSumExample):
 
     def teardown_method(self):
         os.unlink(self.f2cmap_file.name)
-

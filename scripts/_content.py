@@ -239,4 +239,3 @@ def encode_response(
         return encode_json(json)
 
     return {}, ByteStream(b"")
-

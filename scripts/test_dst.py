@@ -1,6 +1,7 @@
 """
 Tests for DateOffset additions over Daylight Savings Time
 """
+
 from datetime import timedelta
 
 import pytest
@@ -258,4 +259,3 @@ def test_nontick_offset_with_ambiguous_time_error(original_dt, target_dt, offset
     msg = f"Cannot infer dst time from {target_dt}, try using the 'ambiguous' argument"
     with pytest.raises(pytz.AmbiguousTimeError, match=msg):
         localized_dt + offset
-

@@ -221,11 +221,13 @@ def test_dt64_array(dtype_unit):
         (
             ["a", None],
             "str",
-            pd.StringDtype(na_value=np.nan)
-            .construct_array_type()
-            ._from_sequence(["a", None], dtype=pd.StringDtype(na_value=np.nan))
-            if using_string_dtype()
-            else NumpyExtensionArray(np.array(["a", "None"])),
+            (
+                pd.StringDtype(na_value=np.nan)
+                .construct_array_type()
+                ._from_sequence(["a", None], dtype=pd.StringDtype(na_value=np.nan))
+                if using_string_dtype()
+                else NumpyExtensionArray(np.array(["a", "None"]))
+            ),
         ),
         (
             ["a", None],
@@ -517,4 +519,3 @@ def test_array_to_numpy_na():
     result = arr.to_numpy(na_value=True, dtype=bool)
     expected = np.array([True, True])
     tm.assert_numpy_array_equal(result, expected)
-

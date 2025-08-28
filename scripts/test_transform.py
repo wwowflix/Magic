@@ -1,4 +1,5 @@
-""" test with the .transform """
+"""test with the .transform"""
+
 import numpy as np
 import pytest
 
@@ -1708,4 +1709,3 @@ def test_idxmin_idxmax_transform_args(how, skipna, numeric_only):
     with tm.assert_produces_warning(warn, match=msg):
         expected = gb.transform(how, skipna=skipna, numeric_only=numeric_only)
     tm.assert_frame_equal(result, expected)
-

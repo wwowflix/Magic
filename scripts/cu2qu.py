@@ -24,7 +24,7 @@ COMPILED = cython.compiled
 
 import math
 
-from .errors import Error as Cu2QuError, ApproxNotFoundError
+from .errors import ApproxNotFoundError
 
 
 __all__ = ["curve_to_quadratic", "curves_to_quadratic"]

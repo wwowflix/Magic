@@ -232,13 +232,11 @@ class WriteBuffer(BaseBuffer, Protocol[AnyStr_con]):
 
 
 class ReadPickleBuffer(ReadBuffer[bytes], Protocol):
-    def readline(self) -> AnyStr_cov:
-        ...
+    def readline(self) -> AnyStr_cov: ...
 
 
 class WriteExcelBuffer(WriteBuffer[bytes], Protocol):
-    def truncate(self, size: int | None = ...) -> int:
-        ...
+    def truncate(self, size: int | None = ...) -> int: ...
 
 
 class ReadCsvBuffer(ReadBuffer[AnyStr_cov], Protocol):

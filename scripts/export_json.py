@@ -20,9 +20,9 @@ if not os.path.exists(input_csv):
 df = pd.read_csv(input_csv)
 
 # Keep only relevant fields
-export_data = df[['keyword', 'score']].to_dict(orient='records')
+export_data = df[["keyword", "score"]].to_dict(orient="records")
 
-with open(output_json, 'w', encoding='utf-8') as f:
+with open(output_json, "w", encoding="utf-8") as f:
     json.dump(export_data, f, ensure_ascii=False, indent=2)
 
 print(f"✅ Correlated trends exported to {output_json}")

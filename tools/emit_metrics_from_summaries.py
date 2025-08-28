@@ -1,9 +1,11 @@
 ﻿#!/usr/bin/env python3
-import csv, json
+import csv
+import json
 from pathlib import Path
 from collections import defaultdict, Counter
 
 __all__ = ["emit_metrics", "main"]
+
 
 def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     """
@@ -23,7 +25,7 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
             reader = csv.DictReader(f, delimiter="\t")
             for row in reader:
                 status = str(row.get("Status", "")).strip()
-                phase  = str(row.get("Phase", "")).strip()
+                phase = str(row.get("Phase", "")).strip()
                 if not status:
                     continue
                 totals[status] += 1
@@ -39,16 +41,19 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return str(out_path)
 
+
 def main(argv=None) -> int:
     import argparse
+
     ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
     # ✨ defaults changed to what the test expects
     ap.add_argument("--summaries", default="outputs/summaries")
-    ap.add_argument("--out",        default="outputs/metrics")
+    ap.add_argument("--out", default="outputs/metrics")
     ns = ap.parse_args(argv)
     p = emit_metrics(ns.summaries, ns.out)
     print(f"[emit_metrics] wrote {p}")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

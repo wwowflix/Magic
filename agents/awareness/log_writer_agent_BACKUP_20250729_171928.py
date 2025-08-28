@@ -50,10 +50,7 @@ def run_and_log(script_path):
     write_log(f"🚀 Starting script: {abs_path}")
     try:
         result = subprocess.run(
-            ["python", abs_path],
-            capture_output=True,
-            text=True,
-            check=False
+            ["python", abs_path], capture_output=True, text=True, check=False
         )
         if result.stdout:
             write_log(f"✅ OUTPUT:\n{result.stdout.strip()}")

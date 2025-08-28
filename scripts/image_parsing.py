@@ -1,4 +1,7 @@
-import base64, hashlib, io, zlib
+import base64
+import hashlib
+import io
+import zlib
 from dataclasses import dataclass
 from io import BytesIO
 from math import ceil

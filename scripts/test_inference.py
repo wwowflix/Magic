@@ -3,6 +3,7 @@ These the test the public routines exposed in types/common.py
 related to inference and not otherwise tested in types/test_common.py
 
 """
+
 import collections
 from collections import namedtuple
 from collections.abc import Iterator
@@ -240,8 +241,7 @@ def test_is_list_like_generic():
     # is_list_like was yielding false positives for Generic classes in python 3.11
     T = TypeVar("T")
 
-    class MyDataFrame(DataFrame, Generic[T]):
-        ...
+    class MyDataFrame(DataFrame, Generic[T]): ...
 
     tstc = MyDataFrame[int]
     tst = MyDataFrame[int]({"x": [1, 2, 3]})
@@ -656,9 +656,7 @@ class TestInference:
         arr = np.array([2**63, 2**63 + 1], dtype=object)
         na_values = {2**63}
 
-        expected = (
-            np.array([np.nan, 2**63 + 1], dtype=float) if coerce else arr.copy()
-        )
+        expected = np.array([np.nan, 2**63 + 1], dtype=float) if coerce else arr.copy()
         result = lib.maybe_convert_numeric(
             arr,
             na_values,
@@ -2070,4 +2068,3 @@ def test_find_result_type_int_int(right, result):
 def test_find_result_type_floats(right, result):
     left_dtype = np.dtype("float16")
     assert find_result_type(left_dtype, right) == result
-

@@ -4,12 +4,12 @@ Package            Version ------------------ -------------- attrs              
 
 TEST RESULTS:
 
-Script                                    Status                                       
-------                                    ------                                       
+Script                                    Status
+------                                    ------
 .\scripts\fixed_twitter_scraper_clean.py  ❌ ERROR: snscrape.base.ScraperException: 4...
 .\scripts\fixed_twitter_scraper_simple.py ❌ ERROR: snscrape.base.ScraperException: 4...
-.\scripts\zephyr\twitter_api.py           ✅ SUCCESS                                    
-.\scripts\zephyr\twitter_scraper.py       ✅ SUCCESS                                    
+.\scripts\zephyr\twitter_api.py           ✅ SUCCESS
+.\scripts\zephyr\twitter_scraper.py       ✅ SUCCESS
 D:\MAGIC\reddit_api_proper_fix.py         ❌ ERROR: OSError: [Errno 22] Invalid argum...
 
 

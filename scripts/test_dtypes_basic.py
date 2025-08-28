@@ -2,6 +2,7 @@
 Tests dtype specification during parsing
 for all of the parsers defined in parsers.py
 """
+
 from collections import defaultdict
 from io import StringIO
 
@@ -642,4 +643,3 @@ def test_index_col_with_dtype_no_rangeindex(all_parsers):
     ).index
     expected = pd.Index([0, 1], dtype=np.uint32, name="bin_id")
     tm.assert_index_equal(result, expected)
-

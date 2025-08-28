@@ -2,6 +2,7 @@
 Generic data algorithms. This module is experimental at the moment and not
 intended for public consumption
 """
+
 from __future__ import annotations
 
 import inspect
@@ -1789,6 +1790,7 @@ def diff(arr, n: int, axis: int = 0):
 # --------------------------------------------------------------------
 # Helper functions
 
+
 # Note: safe_sort is in algorithms.py instead of sorting.py because it is
 #  low-dependency, is used in this module, and used private methods from
 #  this module.
@@ -1941,13 +1943,11 @@ def _sort_mixed(values) -> np.ndarray:
 
 
 @overload
-def _sort_tuples(values: np.ndarray, original_values: np.ndarray) -> np.ndarray:
-    ...
+def _sort_tuples(values: np.ndarray, original_values: np.ndarray) -> np.ndarray: ...
 
 
 @overload
-def _sort_tuples(values: np.ndarray, original_values: MultiIndex) -> MultiIndex:
-    ...
+def _sort_tuples(values: np.ndarray, original_values: MultiIndex) -> MultiIndex: ...
 
 
 def _sort_tuples(

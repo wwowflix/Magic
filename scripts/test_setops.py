@@ -2,6 +2,7 @@
 The tests in this package are to ensure the proper resultant dtypes of
 set operations.
 """
+
 from datetime import datetime
 import operator
 
@@ -971,4 +972,3 @@ class TestSetOpsUnsorted:
         result = idx1.union(idx2)
         expected = Index(["a", "b"], dtype=any_string_dtype)
         tm.assert_index_equal(result, expected)
-

@@ -8,7 +8,9 @@ in non-backward-compatible ways.
 
 from html.parser import HTMLParser
 from string import ascii_lowercase, ascii_uppercase
-import logging, re, warnings
+import logging
+import re
+import warnings
 
 from .deprecation import get_stack_level
 from .drawing import color_from_hex_string, convert_to_device_color
@@ -718,7 +720,7 @@ class HTML2FPDF(HTMLParser):
             align = None
             if "align" in attrs:
                 align = attrs.get("align")[0].upper()
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             line_height = css_style.get("line-height", attrs.get("line-height"))
             # "line-height" attributes are not valid in HTML,
@@ -752,7 +754,7 @@ class HTML2FPDF(HTMLParser):
             hsize = (tag_style.size_pt or self.font_size_pt) / self.pdf.k
             if attrs:
                 align = attrs.get("align")
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             else:
                 align = None

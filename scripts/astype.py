@@ -2,6 +2,7 @@
 Functions for implementing 'astype' methods according to pandas conventions,
 particularly ones that differ from numpy.
 """
+
 from __future__ import annotations
 
 import inspect
@@ -54,15 +55,13 @@ _dtype_obj = np.dtype(object)
 @overload
 def astype_nansafe(
     arr: np.ndarray, dtype: np.dtype, copy: bool = ..., skipna: bool = ...
-) -> np.ndarray:
-    ...
+) -> np.ndarray: ...
 
 
 @overload
 def astype_nansafe(
     arr: np.ndarray, dtype: ExtensionDtype, copy: bool = ..., skipna: bool = ...
-) -> ExtensionArray:
-    ...
+) -> ExtensionArray: ...
 
 
 def astype_nansafe(

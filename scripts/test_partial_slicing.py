@@ -1,4 +1,4 @@
-""" test partial slicing on Series/Frame """
+"""test partial slicing on Series/Frame"""
 
 from datetime import datetime
 
@@ -464,4 +464,3 @@ class TestSlicing:
         )
         result = df.loc["2000", "A"]
         tm.assert_series_equal(result, expected)
-

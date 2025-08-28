@@ -56,18 +56,28 @@ def get_platform_architecture(chrome_version=None):
         # Mac architecture naming changed again as of the transition to CfT
         # 115.0.5763.0/mac-arm64/chromedriver-mac-arm64.zip'
         # 115.0.5763.0/mac-x64/chromedriver-mac-x64.zip'
-        
+
         if pf.processor() == "arm":
-            if chrome_version is not None and get_major_version(chrome_version) >= "115":
+            if (
+                chrome_version is not None
+                and get_major_version(chrome_version) >= "115"
+            ):
                 print("CHROME >= 115, using mac-arm64 as architecture identifier")
                 architecture = "-arm64"
-            elif chrome_version is not None and version.parse(chrome_version) <= version.parse("106.0.5249.21"):
-                print("CHROME <= 106.0.5249.21, using mac64_m1 as architecture identifier")
+            elif chrome_version is not None and version.parse(
+                chrome_version
+            ) <= version.parse("106.0.5249.21"):
+                print(
+                    "CHROME <= 106.0.5249.21, using mac64_m1 as architecture identifier"
+                )
                 architecture = "64_m1"
             else:
                 architecture = "_arm64"
         elif pf.processor() == "i386":
-            if chrome_version is not None and get_major_version(chrome_version) >= "115":
+            if (
+                chrome_version is not None
+                and get_major_version(chrome_version) >= "115"
+            ):
                 print("CHROME >= 115, using mac-x64 as architecture identifier")
                 architecture = "-x64"
             else:
@@ -94,14 +104,23 @@ def get_chromedriver_url(chromedriver_version, download_options, no_ssl=False):
     :return:                     String. Download URL for chromedriver
     """
     platform, architecture = get_platform_architecture(chromedriver_version)
-    if get_major_version(chromedriver_version) >= "115":  # new CfT ChromeDriver versions have their URLs published, so we already have a list of options
+    if (
+        get_major_version(chromedriver_version) >= "115"
+    ):  # new CfT ChromeDriver versions have their URLs published, so we already have a list of options
         for option in download_options:
             if option["platform"] == platform + architecture:
-                        return option['url']
+                return option["url"]
     else:  # old ChromeDriver versions use the old urls
         base_url = "chromedriver.storage.googleapis.com/"
         base_url = "http://" + base_url if no_ssl else "https://" + base_url
-        return base_url + chromedriver_version + "/chromedriver_" + platform + architecture + ".zip"
+        return (
+            base_url
+            + chromedriver_version
+            + "/chromedriver_"
+            + platform
+            + architecture
+            + ".zip"
+        )
 
 
 def find_binary_in_path(filename):
@@ -162,11 +181,25 @@ def get_chrome_version():
         )
     elif platform == "win":
         PROGRAMFILES = f"{os.environ.get('PROGRAMW6432') or os.environ.get('PROGRAMFILES')}\\Google\\Chrome\\Application"
-        PROGRAMFILESX86 = f"{os.environ.get('PROGRAMFILES(X86)')}\\Google\\Chrome\\Application"
-        
-        path = PROGRAMFILES if os.path.exists(PROGRAMFILES) else PROGRAMFILESX86 if os.path.exists(PROGRAMFILESX86) else None
+        PROGRAMFILESX86 = (
+            f"{os.environ.get('PROGRAMFILES(X86)')}\\Google\\Chrome\\Application"
+        )
 
-        dirs = [f.name for f in os.scandir(path) if f.is_dir() and re.match("^[0-9.]+$", f.name)] if path else None
+        path = (
+            PROGRAMFILES
+            if os.path.exists(PROGRAMFILES)
+            else PROGRAMFILESX86 if os.path.exists(PROGRAMFILESX86) else None
+        )
+
+        dirs = (
+            [
+                f.name
+                for f in os.scandir(path)
+                if f.is_dir() and re.match("^[0-9.]+$", f.name)
+            ]
+            if path
+            else None
+        )
 
         version = max(dirs) if dirs else None
     else:
@@ -213,23 +246,25 @@ def get_matched_chromedriver_version(chrome_version, no_ssl=False):
     :return:               String. The version of chromedriver that matches the Chrome version
                            None.   if no matching version of chromedriver was discovered
     """
-    
+
     # Newer versions of chrome use the CfT publishing system
     if get_major_version(chrome_version) >= "115":
         browser_major_version = get_major_version(chrome_version)
         version_url = "googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone-with-downloads.json"
         version_url = f"http://{version_url}" if no_ssl else f"https://{version_url}"
         latest_version_per_milestone = json.load(urllib.request.urlopen(version_url))
-        
+
         # Determine if driver download is available for milestone
-        milestone = latest_version_per_milestone['milestones'].get(browser_major_version)
+        milestone = latest_version_per_milestone["milestones"].get(
+            browser_major_version
+        )
         if milestone:
             try:
-                download_options = milestone['downloads']['chromedriver']
-                return milestone['version'], download_options
+                download_options = milestone["downloads"]["chromedriver"]
+                return milestone["version"], download_options
             except KeyError:
                 return None, None
-                    
+
     # check old versions of chrome using the old system
     else:
         version_url = "chromedriver.storage.googleapis.com"
@@ -270,8 +305,10 @@ def download_chromedriver(path: Optional[AnyStr] = None, no_ssl: bool = False):
     if not chrome_version:
         logging.debug("Chrome is not installed.")
         return
-    chromedriver_version, download_options = get_matched_chromedriver_version(chrome_version, no_ssl)
-    
+    chromedriver_version, download_options = get_matched_chromedriver_version(
+        chrome_version, no_ssl
+    )
+
     major_version = get_major_version(chromedriver_version)
 
     if not chromedriver_version or (major_version >= "115" and not download_options):
@@ -279,7 +316,6 @@ def download_chromedriver(path: Optional[AnyStr] = None, no_ssl: bool = False):
             "Can not find chromedriver for currently installed chrome version."
         )
         return
-
 
     if path:
         if not os.path.isdir(path):
@@ -297,8 +333,12 @@ def download_chromedriver(path: Optional[AnyStr] = None, no_ssl: bool = False):
         logging.info(f"Downloading chromedriver ({chromedriver_version})...")
         if not os.path.isdir(chromedriver_dir):
             os.makedirs(chromedriver_dir)
-            
-        url = get_chromedriver_url(chromedriver_version=chromedriver_version, download_options=download_options, no_ssl=no_ssl)
+
+        url = get_chromedriver_url(
+            chromedriver_version=chromedriver_version,
+            download_options=download_options,
+            no_ssl=no_ssl,
+        )
         try:
             response = urllib.request.urlopen(url)
             if response.getcode() != 200:
@@ -323,4 +363,3 @@ def download_chromedriver(path: Optional[AnyStr] = None, no_ssl: bool = False):
 if __name__ == "__main__":
     print(get_chrome_version())
     print(download_chromedriver(no_ssl=False))
-  

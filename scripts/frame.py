@@ -8,6 +8,7 @@ Similar to its R counterpart, data.frame, except providing automatic data
 alignment and a host of useful data manipulation methods having to do with the
 labeling information
 """
+
 from __future__ import annotations
 
 import collections
@@ -1129,8 +1130,7 @@ class DataFrame(NDFrame, OpsMixin):
         min_rows: int | None = ...,
         max_colwidth: int | None = ...,
         encoding: str | None = ...,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @overload
     def to_string(
@@ -1154,8 +1154,7 @@ class DataFrame(NDFrame, OpsMixin):
         min_rows: int | None = ...,
         max_colwidth: int | None = ...,
         encoding: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @Substitution(
         header_type="bool or sequence of str",
@@ -1502,12 +1501,10 @@ class DataFrame(NDFrame, OpsMixin):
         return len(self.index)
 
     @overload
-    def dot(self, other: Series) -> Series:
-        ...
+    def dot(self, other: Series) -> Series: ...
 
     @overload
-    def dot(self, other: DataFrame | Index | ArrayLike) -> DataFrame:
-        ...
+    def dot(self, other: DataFrame | Index | ArrayLike) -> DataFrame: ...
 
     def dot(self, other: AnyArrayLike | DataFrame) -> DataFrame | Series:
         """
@@ -1620,12 +1617,10 @@ class DataFrame(NDFrame, OpsMixin):
             raise TypeError(f"unsupported type: {type(other)}")
 
     @overload
-    def __matmul__(self, other: Series) -> Series:
-        ...
+    def __matmul__(self, other: Series) -> Series: ...
 
     @overload
-    def __matmul__(self, other: AnyArrayLike | DataFrame) -> DataFrame | Series:
-        ...
+    def __matmul__(self, other: AnyArrayLike | DataFrame) -> DataFrame | Series: ...
 
     def __matmul__(self, other: AnyArrayLike | DataFrame) -> DataFrame | Series:
         """
@@ -1851,12 +1846,12 @@ class DataFrame(NDFrame, OpsMixin):
         self,
         orient: Literal["dict", "list", "series", "split", "tight", "index"] = ...,
         into: type[dict] = ...,
-    ) -> dict:
-        ...
+    ) -> dict: ...
 
     @overload
-    def to_dict(self, orient: Literal["records"], into: type[dict] = ...) -> list[dict]:
-        ...
+    def to_dict(
+        self, orient: Literal["records"], into: type[dict] = ...
+    ) -> list[dict]: ...
 
     def to_dict(
         self,
@@ -2858,8 +2853,7 @@ class DataFrame(NDFrame, OpsMixin):
         partition_cols: list[str] | None = ...,
         storage_options: StorageOptions = ...,
         **kwargs,
-    ) -> bytes:
-        ...
+    ) -> bytes: ...
 
     @overload
     def to_parquet(
@@ -2871,8 +2865,7 @@ class DataFrame(NDFrame, OpsMixin):
         partition_cols: list[str] | None = ...,
         storage_options: StorageOptions = ...,
         **kwargs,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @doc(storage_options=_shared_docs["storage_options"])
     @deprecate_kwarg(old_arg_name="fname", new_arg_name="path")
@@ -3097,8 +3090,7 @@ class DataFrame(NDFrame, OpsMixin):
         table_id: str | None = ...,
         render_links: bool = ...,
         encoding: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def to_html(
@@ -3126,8 +3118,7 @@ class DataFrame(NDFrame, OpsMixin):
         table_id: str | None = ...,
         render_links: bool = ...,
         encoding: str | None = ...,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @Substitution(
         header_type="bool",
@@ -4310,16 +4301,17 @@ class DataFrame(NDFrame, OpsMixin):
     # Unsorted
 
     @overload
-    def query(self, expr: str, *, inplace: Literal[False] = ..., **kwargs) -> DataFrame:
-        ...
+    def query(
+        self, expr: str, *, inplace: Literal[False] = ..., **kwargs
+    ) -> DataFrame: ...
 
     @overload
-    def query(self, expr: str, *, inplace: Literal[True], **kwargs) -> None:
-        ...
+    def query(self, expr: str, *, inplace: Literal[True], **kwargs) -> None: ...
 
     @overload
-    def query(self, expr: str, *, inplace: bool = ..., **kwargs) -> DataFrame | None:
-        ...
+    def query(
+        self, expr: str, *, inplace: bool = ..., **kwargs
+    ) -> DataFrame | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "expr"])
     def query(self, expr: str, inplace: bool = False, **kwargs) -> DataFrame | None:
@@ -4487,12 +4479,10 @@ class DataFrame(NDFrame, OpsMixin):
             return result
 
     @overload
-    def eval(self, expr: str, *, inplace: Literal[False] = ..., **kwargs) -> Any:
-        ...
+    def eval(self, expr: str, *, inplace: Literal[False] = ..., **kwargs) -> Any: ...
 
     @overload
-    def eval(self, expr: str, *, inplace: Literal[True], **kwargs) -> None:
-        ...
+    def eval(self, expr: str, *, inplace: Literal[True], **kwargs) -> None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "expr"])
     def eval(self, expr: str, inplace: bool = False, **kwargs) -> Any | None:
@@ -5108,8 +5098,7 @@ class DataFrame(NDFrame, OpsMixin):
         axis: Axis = ...,
         inplace: Literal[False] | lib.NoDefault = ...,
         copy: bool | lib.NoDefault = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def set_axis(
@@ -5119,8 +5108,7 @@ class DataFrame(NDFrame, OpsMixin):
         axis: Axis = ...,
         inplace: Literal[True],
         copy: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def set_axis(
@@ -5130,8 +5118,7 @@ class DataFrame(NDFrame, OpsMixin):
         axis: Axis = ...,
         inplace: bool | lib.NoDefault = ...,
         copy: bool | lib.NoDefault = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "set_axis" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "labels"])
@@ -5215,8 +5202,7 @@ class DataFrame(NDFrame, OpsMixin):
         level: Level = ...,
         inplace: Literal[True],
         errors: IgnoreRaise = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def drop(
@@ -5229,8 +5215,7 @@ class DataFrame(NDFrame, OpsMixin):
         level: Level = ...,
         inplace: Literal[False] = ...,
         errors: IgnoreRaise = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def drop(
@@ -5243,8 +5228,7 @@ class DataFrame(NDFrame, OpsMixin):
         level: Level = ...,
         inplace: bool = ...,
         errors: IgnoreRaise = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "drop" incompatible with supertype "NDFrame"
     # github.com/python/mypy/issues/12387
@@ -5418,8 +5402,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: Literal[True],
         level: Level = ...,
         errors: IgnoreRaise = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def rename(
@@ -5433,8 +5416,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: Literal[False] = ...,
         level: Level = ...,
         errors: IgnoreRaise = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def rename(
@@ -5448,8 +5430,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: bool = ...,
         level: Level = ...,
         errors: IgnoreRaise = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     def rename(
         self,
@@ -5591,8 +5572,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: Literal[False] = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def fillna(
@@ -5604,8 +5584,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: Literal[True],
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def fillna(
@@ -5617,8 +5596,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace: bool = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "fillna" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "value"])
@@ -5695,8 +5673,7 @@ class DataFrame(NDFrame, OpsMixin):
         limit: int | None = ...,
         regex: bool = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def replace(
@@ -5708,8 +5685,7 @@ class DataFrame(NDFrame, OpsMixin):
         limit: int | None = ...,
         regex: bool = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # error: Signature of "replace" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(
@@ -5865,8 +5841,7 @@ class DataFrame(NDFrame, OpsMixin):
         append: bool = ...,
         inplace: Literal[False] = ...,
         verify_integrity: bool = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def set_index(
@@ -5877,8 +5852,7 @@ class DataFrame(NDFrame, OpsMixin):
         append: bool = ...,
         inplace: Literal[True],
         verify_integrity: bool = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "keys"])
     def set_index(
@@ -6094,8 +6068,7 @@ class DataFrame(NDFrame, OpsMixin):
         col_fill: Hashable = ...,
         allow_duplicates: bool | lib.NoDefault = ...,
         names: Hashable | Sequence[Hashable] = None,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def reset_index(
@@ -6108,8 +6081,7 @@ class DataFrame(NDFrame, OpsMixin):
         col_fill: Hashable = ...,
         allow_duplicates: bool | lib.NoDefault = ...,
         names: Hashable | Sequence[Hashable] = None,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def reset_index(
@@ -6122,8 +6094,7 @@ class DataFrame(NDFrame, OpsMixin):
         col_fill: Hashable = ...,
         allow_duplicates: bool | lib.NoDefault = ...,
         names: Hashable | Sequence[Hashable] = None,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "level"])
     def reset_index(
@@ -6406,8 +6377,7 @@ class DataFrame(NDFrame, OpsMixin):
         thresh: int | NoDefault = ...,
         subset: IndexLabel = ...,
         inplace: Literal[False] = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def dropna(
@@ -6418,8 +6388,7 @@ class DataFrame(NDFrame, OpsMixin):
         thresh: int | NoDefault = ...,
         subset: IndexLabel = ...,
         inplace: Literal[True],
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     def dropna(
@@ -6839,8 +6808,7 @@ class DataFrame(NDFrame, OpsMixin):
         na_position: str = ...,
         ignore_index: bool = ...,
         key: ValueKeyFunc = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def sort_values(
@@ -6854,8 +6822,7 @@ class DataFrame(NDFrame, OpsMixin):
         na_position: str = ...,
         ignore_index: bool = ...,
         key: ValueKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # TODO: Just move the sort_values doc here.
     # error: Signature of "sort_values" incompatible with supertype "NDFrame"
@@ -6954,8 +6921,7 @@ class DataFrame(NDFrame, OpsMixin):
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def sort_index(
@@ -6970,8 +6936,7 @@ class DataFrame(NDFrame, OpsMixin):
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def sort_index(
@@ -6986,8 +6951,7 @@ class DataFrame(NDFrame, OpsMixin):
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "sort_index" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -9367,8 +9331,7 @@ Parrot 2  Parrot       24.0
         skipna: bool = ...,
         level: None = ...,
         **kwargs,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def any(
@@ -9379,8 +9342,7 @@ Parrot 2  Parrot       24.0
         skipna: bool = ...,
         level: Level,
         **kwargs,
-    ) -> DataFrame | Series:
-        ...
+    ) -> DataFrame | Series: ...
 
     @doc(NDFrame.any, **_shared_doc_kwargs)
     def any(
@@ -9390,8 +9352,7 @@ Parrot 2  Parrot       24.0
         skipna: bool = True,
         level: Level = None,
         **kwargs,
-    ) -> DataFrame | Series:
-        ...
+    ) -> DataFrame | Series: ...
 
     @doc(
         _shared_docs["transform"],
@@ -10483,8 +10444,10 @@ Parrot 2  Parrot       24.0
         other: DataFrame | Series,
         axis: Axis = 0,
         drop: bool = False,
-        method: Literal["pearson", "kendall", "spearman"]
-        | Callable[[np.ndarray, np.ndarray], float] = "pearson",
+        method: (
+            Literal["pearson", "kendall", "spearman"]
+            | Callable[[np.ndarray, np.ndarray], float]
+        ) = "pearson",
         numeric_only: bool | lib.NoDefault = lib.no_default,
     ) -> Series:
         """
@@ -11143,8 +11106,7 @@ Parrot 2  Parrot       24.0
         axis: Axis = ...,
         numeric_only: bool | lib.NoDefault = ...,
         interpolation: QuantileInterpolation = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def quantile(
@@ -11153,8 +11115,7 @@ Parrot 2  Parrot       24.0
         axis: Axis = ...,
         numeric_only: bool | lib.NoDefault = ...,
         interpolation: QuantileInterpolation = ...,
-    ) -> Series | DataFrame:
-        ...
+    ) -> Series | DataFrame: ...
 
     @overload
     def quantile(
@@ -11163,8 +11124,7 @@ Parrot 2  Parrot       24.0
         axis: Axis = ...,
         numeric_only: bool | lib.NoDefault = ...,
         interpolation: QuantileInterpolation = ...,
-    ) -> Series | DataFrame:
-        ...
+    ) -> Series | DataFrame: ...
 
     def quantile(
         self,
@@ -11746,8 +11706,7 @@ Parrot 2  Parrot       24.0
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def ffill(
@@ -11757,8 +11716,7 @@ Parrot 2  Parrot       24.0
         inplace: Literal[True],
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def ffill(
@@ -11768,8 +11726,7 @@ Parrot 2  Parrot       24.0
         inplace: bool = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "ffill" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -11790,8 +11747,7 @@ Parrot 2  Parrot       24.0
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast=...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def bfill(
@@ -11801,8 +11757,7 @@ Parrot 2  Parrot       24.0
         inplace: Literal[True],
         limit: None | int = ...,
         downcast=...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def bfill(
@@ -11812,8 +11767,7 @@ Parrot 2  Parrot       24.0
         inplace: bool = ...,
         limit: None | int = ...,
         downcast=...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "bfill" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -11874,8 +11828,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def where(
@@ -11888,8 +11841,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def where(
@@ -11902,8 +11854,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "where" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
@@ -11940,8 +11891,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def mask(
@@ -11954,8 +11904,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def mask(
@@ -11968,8 +11917,7 @@ Parrot 2  Parrot       24.0
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> DataFrame | None:
-        ...
+    ) -> DataFrame | None: ...
 
     # error: Signature of "mask" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)

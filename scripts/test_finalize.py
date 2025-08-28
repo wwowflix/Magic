@@ -1,6 +1,7 @@
 """
 An exhaustive list of pandas methods exercising NDFrame.__finalize__.
 """
+
 import operator
 import re
 
@@ -765,4 +766,3 @@ def test_finalize_frame_series_name():
     df = pd.DataFrame({"name": [1, 2]})
     result = pd.Series([1, 2]).__finalize__(df)
     assert result.name is None
-

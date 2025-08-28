@@ -3,6 +3,7 @@ Tests for the following offsets:
 - BQuarterBegin
 - BQuarterEnd
 """
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -313,4 +314,3 @@ class TestBQuarterEnd:
     def test_is_on_offset(self, case):
         offset, dt, expected = case
         assert_is_on_offset(offset, dt, expected)
-

@@ -77,13 +77,3 @@ output_path = r'D:\MAGIC\data\tiktok_trending.csv'
 df.to_csv(output_path, index=False, encoding='utf-8-sig')
 
 print(f"✅ TikTok trending data saved to {output_path}")
-
-
-
-
-
-
-
-
-
-

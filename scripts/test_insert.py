@@ -3,6 +3,7 @@ test_insert is specifically for the DataFrame.insert method; not to be
 confused with tests with "insert" in their names that are really testing
 __setitem__.
 """
+
 import numpy as np
 import pytest
 
@@ -118,4 +119,3 @@ class TestDataFrameInsert:
         df = DataFrame({"a": [1, 2]})
         df.insert(np.int64(0), "b", 0)
         tm.assert_frame_equal(df, DataFrame({"b": [0, 0], "a": [1, 2]}))
-

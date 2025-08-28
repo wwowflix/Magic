@@ -1,6 +1,7 @@
 """
 missing types & inference
 """
+
 from __future__ import annotations
 
 from decimal import Decimal
@@ -78,31 +79,28 @@ _dtype_str = np.dtype(str)
 
 
 @overload
-def isna(obj: Scalar) -> bool:
-    ...
+def isna(obj: Scalar) -> bool: ...
 
 
 @overload
 def isna(
     obj: ArrayLike | Index | list,
-) -> npt.NDArray[np.bool_]:
-    ...
+) -> npt.NDArray[np.bool_]: ...
 
 
 @overload
-def isna(obj: NDFrameT) -> NDFrameT:
-    ...
+def isna(obj: NDFrameT) -> NDFrameT: ...
 
 
 # handle unions
 @overload
-def isna(obj: NDFrameT | ArrayLike | Index | list) -> NDFrameT | npt.NDArray[np.bool_]:
-    ...
+def isna(
+    obj: NDFrameT | ArrayLike | Index | list,
+) -> NDFrameT | npt.NDArray[np.bool_]: ...
 
 
 @overload
-def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
-    ...
+def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame: ...
 
 
 def isna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
@@ -327,31 +325,28 @@ def _isna_string_dtype(values: np.ndarray, inf_as_na: bool) -> npt.NDArray[np.bo
 
 
 @overload
-def notna(obj: Scalar) -> bool:
-    ...
+def notna(obj: Scalar) -> bool: ...
 
 
 @overload
 def notna(
     obj: ArrayLike | Index | list,
-) -> npt.NDArray[np.bool_]:
-    ...
+) -> npt.NDArray[np.bool_]: ...
 
 
 @overload
-def notna(obj: NDFrameT) -> NDFrameT:
-    ...
+def notna(obj: NDFrameT) -> NDFrameT: ...
 
 
 # handle unions
 @overload
-def notna(obj: NDFrameT | ArrayLike | Index | list) -> NDFrameT | npt.NDArray[np.bool_]:
-    ...
+def notna(
+    obj: NDFrameT | ArrayLike | Index | list,
+) -> NDFrameT | npt.NDArray[np.bool_]: ...
 
 
 @overload
-def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:
-    ...
+def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame: ...
 
 
 def notna(obj: object) -> bool | npt.NDArray[np.bool_] | NDFrame:

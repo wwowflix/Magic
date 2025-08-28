@@ -237,6 +237,3 @@ def sync\_to\_notion():
 if \_\_name\_\_ == "\_\_main\_\_":
 
 &nbsp;   sync\_to\_notion()
-
-
-

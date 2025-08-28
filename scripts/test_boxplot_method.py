@@ -1,4 +1,4 @@
-""" Test cases for .boxplot method """
+"""Test cases for .boxplot method"""
 
 from __future__ import annotations
 
@@ -784,4 +784,3 @@ class TestDataFrameGroupByPlots:
         expected_xticklabel = ["(bar, one)", "(bar, two)"]
         result_xticklabel = [x.get_text() for x in axes.get_xticklabels()]
         assert expected_xticklabel == result_xticklabel
-

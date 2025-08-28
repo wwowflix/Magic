@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import (
     BytesIO,
     StringIO,
@@ -476,4 +477,3 @@ def test_memory_map(all_parsers, csv_dir_path):
 
     result = parser.read_csv(mmap_file, memory_map=True)
     tm.assert_frame_equal(result, expected)
-

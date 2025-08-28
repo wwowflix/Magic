@@ -312,9 +312,11 @@ class ParserBase:
         # Clean the column names (if we have an index_col).
         if len(ic):
             col_names = [
-                r[ic[0]]
-                if ((r[ic[0]] is not None) and r[ic[0]] not in self.unnamed_cols)
-                else None
+                (
+                    r[ic[0]]
+                    if ((r[ic[0]] is not None) and r[ic[0]] not in self.unnamed_cols)
+                    else None
+                )
                 for r in header
             ]
         else:
@@ -800,16 +802,14 @@ class ParserBase:
         self,
         names: Index,
         data: DataFrame,
-    ) -> tuple[Sequence[Hashable] | Index, DataFrame]:
-        ...
+    ) -> tuple[Sequence[Hashable] | Index, DataFrame]: ...
 
     @overload
     def _do_date_conversions(
         self,
         names: Sequence[Hashable],
         data: Mapping[Hashable, ArrayLike],
-    ) -> tuple[Sequence[Hashable], Mapping[Hashable, ArrayLike]]:
-        ...
+    ) -> tuple[Sequence[Hashable], Mapping[Hashable, ArrayLike]]: ...
 
     def _do_date_conversions(
         self,
@@ -865,14 +865,12 @@ class ParserBase:
         self,
         usecols: set[int] | Callable[[Hashable], object],
         names: Sequence[Hashable],
-    ) -> set[int]:
-        ...
+    ) -> set[int]: ...
 
     @overload
     def _evaluate_usecols(
         self, usecols: set[str], names: Sequence[Hashable]
-    ) -> set[str]:
-        ...
+    ) -> set[str]: ...
 
     def _evaluate_usecols(
         self,

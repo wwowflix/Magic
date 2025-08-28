@@ -6,7 +6,10 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import logging, math, re, warnings
+import logging
+import math
+import re
+import warnings
 from numbers import Number
 from typing import NamedTuple
 

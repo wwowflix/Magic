@@ -4,22 +4,31 @@ self_healing_runner.py
 Automated, self-healing runner for all Phase scripts across modules.
 """
 
-import json, time, logging, subprocess
+import json
+import time
+import logging
+import subprocess
 from pathlib import Path
 import sys
 
 # --- CONFIG ---
 DEFAULT_MANIFEST = "phase_manifest.json"
 LOG_ROOT = Path("outputs/logs")
-PLACEHOLDER_TEMPLATE = "# Auto-generated placeholder for {script}\nprint('{script} placeholder running')\n"
+PLACEHOLDER_TEMPLATE = (
+    "# Auto-generated placeholder for {script}\nprint('{script} placeholder running')\n"
+)
 RETRY_LIMIT = 2
 RETRY_DELAY = 1  # seconds
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
 
 def load_manifest(path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
 
 def ensure_placeholder(script_path):
     if not script_path.exists():
@@ -28,11 +37,13 @@ def ensure_placeholder(script_path):
             f.write(PLACEHOLDER_TEMPLATE.format(script=script_path.name))
         logging.info(f"Generated placeholder for {script_path}")
 
+
 def run_script(script_path, log_path):
     cmd = [sys.executable, str(script_path)]
     with open(log_path, "w", encoding="utf-8") as logf:
         proc = subprocess.run(cmd, stdout=logf, stderr=subprocess.STDOUT)
     return proc.returncode
+
 
 def apply_remediation(log_text, script_path):
     if "FileNotFoundError" in log_text:
@@ -42,6 +53,7 @@ def apply_remediation(log_text, script_path):
         return True
     return False
 
+
 def process_script(phase, module, script_name):
     base = Path("scripts") / f"phase{phase}" / f"module_{module}"
     script = base / script_name
@@ -50,7 +62,7 @@ def process_script(phase, module, script_name):
     outdir.mkdir(parents=True, exist_ok=True)
     logfile = outdir / f"{script_name}.log"
 
-    for attempt in range(1, RETRY_LIMIT+1):
+    for attempt in range(1, RETRY_LIMIT + 1):
         logging.info(f"Running {script_name} (attempt {attempt})")
         code = run_script(script, logfile)
         if code == 0:
@@ -61,6 +73,7 @@ def process_script(phase, module, script_name):
             continue
         break
     return False
+
 
 def main():
     # 1) Generate run manifest
@@ -88,6 +101,7 @@ def main():
     # 4) Exit code
     if any(s != "OK" for _, s in results):
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 """
 Tests for offsets.BusinessHour
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -1443,4 +1444,3 @@ class TestOpeningTimes:
             for dt, (exp_next, exp_prev) in cases.items():
                 assert offset._next_opening_time(dt) == exp_next
                 assert offset._prev_opening_time(dt) == exp_prev
-

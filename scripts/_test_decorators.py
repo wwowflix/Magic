@@ -23,6 +23,7 @@ def test_foo():
 
 For more information, refer to the ``pytest`` documentation on ``skipif``.
 """
+
 from __future__ import annotations
 
 import locale
@@ -171,4 +172,3 @@ skip_copy_on_write_invalid_test = pytest.mark.skipif(
     get_option("mode.copy_on_write") is True,
     reason="Test not valid for Copy-on-Write mode",
 )
-

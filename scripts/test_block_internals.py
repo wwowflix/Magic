@@ -193,9 +193,11 @@ class TestDataFrameBlockInternals:
         expected = Series(
             [np.dtype("float64")] * 4
             + [
-                np.dtype("object")
-                if not using_infer_string
-                else pd.StringDtype(na_value=np.nan),
+                (
+                    np.dtype("object")
+                    if not using_infer_string
+                    else pd.StringDtype(na_value=np.nan)
+                ),
                 np.dtype("datetime64[us]"),
                 np.dtype("timedelta64[us]"),
             ],
@@ -447,4 +449,3 @@ def test_nonconsolidated_item_cache_take():
     expected = DataFrame({"col1": ["A"], "col2": [0]}, dtype=object)
     tm.assert_frame_equal(df, expected)
     assert df.at[0, "col1"] == "A"
-

@@ -718,8 +718,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         axis: Axis = ...,
         inplace: Literal[False] | lib.NoDefault = ...,
         copy: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def set_axis(
@@ -729,8 +728,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         axis: Axis = ...,
         inplace: Literal[True],
         copy: bool_t | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def set_axis(
@@ -740,8 +738,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         axis: Axis = ...,
         inplace: bool_t | lib.NoDefault = ...,
         copy: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "labels"])
     def set_axis(
@@ -1118,8 +1115,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         *,
         inplace: Literal[False] = ...,
         **kwargs,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def rename_axis(
@@ -1128,8 +1124,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         *,
         inplace: Literal[True],
         **kwargs,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def rename_axis(
@@ -1138,8 +1133,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         *,
         inplace: bool_t = ...,
         **kwargs,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @rewrite_axis_style_signature("mapper", [("copy", True)])
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "mapper"])
@@ -3251,8 +3245,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         caption: str | tuple[str, str] | None = ...,
         label: str | None = ...,
         position: str | None = ...,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @overload
     def to_latex(
@@ -3279,8 +3272,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         caption: str | tuple[str, str] | None = ...,
         label: str | None = ...,
         position: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @final
     @doc(returns=fmt.return_docstring)
@@ -3503,8 +3495,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         decimal: str = ...,
         errors: str = ...,
         storage_options: StorageOptions = ...,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @overload
     def to_csv(
@@ -3530,8 +3521,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         decimal: str = ...,
         errors: str = ...,
         storage_options: StorageOptions = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @final
     @doc(
@@ -4441,8 +4431,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level | None = ...,
         inplace: Literal[True],
         errors: IgnoreRaise = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def drop(
@@ -4455,8 +4444,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level | None = ...,
         inplace: Literal[False] = ...,
         errors: IgnoreRaise = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def drop(
@@ -4469,8 +4457,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level | None = ...,
         inplace: bool_t = ...,
         errors: IgnoreRaise = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "labels"])
     def drop(
@@ -4752,8 +4739,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         na_position: str = ...,
         ignore_index: bool_t = ...,
         key: ValueKeyFunc = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def sort_values(
@@ -4766,8 +4752,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         na_position: str = ...,
         ignore_index: bool_t = ...,
         key: ValueKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def sort_values(
@@ -4780,8 +4765,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         na_position: str = ...,
         ignore_index: bool_t = ...,
         key: ValueKeyFunc = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     def sort_values(
@@ -4953,8 +4937,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         sort_remaining: bool_t = ...,
         ignore_index: bool_t = ...,
         key: IndexKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def sort_index(
@@ -4969,8 +4952,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         sort_remaining: bool_t = ...,
         ignore_index: bool_t = ...,
         key: IndexKeyFunc = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def sort_index(
@@ -4985,8 +4967,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         sort_remaining: bool_t = ...,
         ignore_index: bool_t = ...,
         key: IndexKeyFunc = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     def sort_index(
         self: NDFrameT,
@@ -6642,8 +6623,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[False] = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def fillna(
@@ -6655,8 +6635,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[True],
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def fillna(
@@ -6668,8 +6647,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: bool_t = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @doc(**_shared_doc_kwargs)
     def fillna(
@@ -6942,8 +6920,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def ffill(
@@ -6953,8 +6930,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[True],
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def ffill(
@@ -6964,8 +6940,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: bool_t = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     @doc(klass=_shared_doc_kwargs["klass"])
@@ -6998,8 +6973,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def bfill(
@@ -7009,8 +6983,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: Literal[True],
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def bfill(
@@ -7020,8 +6993,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         inplace: bool_t = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     @doc(klass=_shared_doc_kwargs["klass"])
@@ -7056,8 +7028,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         limit: int | None = ...,
         regex: bool_t = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def replace(
@@ -7069,8 +7040,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         limit: int | None = ...,
         regex: bool_t = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def replace(
@@ -7082,8 +7052,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         limit: int | None = ...,
         regex: bool_t = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_nonkeyword_arguments(
         version=None, allowed_args=["self", "to_replace", "value"]
@@ -9754,8 +9723,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def where(
@@ -9768,8 +9736,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def where(
@@ -9782,8 +9749,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
     @deprecate_nonkeyword_arguments(
@@ -9978,8 +9944,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT:
-        ...
+    ) -> NDFrameT: ...
 
     @overload
     def mask(
@@ -9992,8 +9957,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def mask(
@@ -10006,8 +9970,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool_t | lib.NoDefault = ...,
-    ) -> NDFrameT | None:
-        ...
+    ) -> NDFrameT | None: ...
 
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
     @deprecate_nonkeyword_arguments(

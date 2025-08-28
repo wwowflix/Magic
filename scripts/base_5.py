@@ -6,6 +6,7 @@ An interface for extending pandas with custom arrays.
    This is an experimental API and subject to breaking changes
    without warning.
 """
+
 from __future__ import annotations
 
 import inspect
@@ -315,12 +316,12 @@ class ExtensionArray:
     # Must be a Sequence
     # ------------------------------------------------------------------------
     @overload
-    def __getitem__(self, item: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, item: ScalarIndexer) -> Any: ...
 
     @overload
-    def __getitem__(self: ExtensionArrayT, item: SequenceIndexer) -> ExtensionArrayT:
-        ...
+    def __getitem__(
+        self: ExtensionArrayT, item: SequenceIndexer
+    ) -> ExtensionArrayT: ...
 
     def __getitem__(
         self: ExtensionArrayT, item: PositionalIndexer
@@ -565,16 +566,13 @@ class ExtensionArray:
     # ------------------------------------------------------------------------
 
     @overload
-    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray:
-        ...
+    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray: ...
 
     @overload
-    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray:
-        ...
+    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray: ...
 
     @overload
-    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike:
-        ...
+    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike: ...
 
     def astype(self, dtype: AstypeArg, copy: bool = True) -> ArrayLike:
         """

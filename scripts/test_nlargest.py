@@ -2,6 +2,7 @@
 Note: for naming purposes, most tests are title with as e.g. "test_nlargest_foo"
 but are implicitly also testing nsmallest_foo.
 """
+
 from string import ascii_lowercase
 
 import numpy as np
@@ -248,4 +249,3 @@ class TestNLargestNSmallest:
             index=range(5),
         ).astype({"a": "float"})
         tm.assert_frame_equal(result, expected)
-

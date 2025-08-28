@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import StringIO
 
 import pytest
@@ -79,4 +80,3 @@ eight,1,2,3"""
         assert "Parser memory cleanup took:" in captured.out
     else:  # Python engine
         assert captured.out == "Filled 1 NA values in column a\n"
-

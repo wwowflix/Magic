@@ -303,12 +303,14 @@ def deprecate_nonkeyword_arguments(
             ]
 
         new_params = [
-            p.replace(kind=p.KEYWORD_ONLY)
-            if (
-                p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
-                and p.name not in allow_args
+            (
+                p.replace(kind=p.KEYWORD_ONLY)
+                if (
+                    p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
+                    and p.name not in allow_args
+                )
+                else p
             )
-            else p
             for p in old_sig.parameters.values()
         ]
         new_params.sort(key=lambda p: p.kind)
@@ -409,9 +411,11 @@ def doc(*docstrings: str | Callable, **params) -> Callable[[F], F]:
         # formatting templates and concatenating docstring
         decorated.__doc__ = "".join(
             [
-                component.format(**params)
-                if isinstance(component, str)
-                else dedent(component.__doc__ or "")
+                (
+                    component.format(**params)
+                    if isinstance(component, str)
+                    else dedent(component.__doc__ or "")
+                )
                 for component in docstring_components
             ]
         )

@@ -1,12 +1,37 @@
 repos:
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.12.9
-  hooks: [{ id: ruff, args: ["--fix"] }]
-- repo: https://github.com/psf/black
-  rev: 25.1.0
-  hooks: [{ id: black }]
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.17.1
-  hooks:
-    - id: mypy
-      additional_dependencies: ["types-requests"]
+  # Code formatters (only touch real code)
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        files: ^tools/|^scripts/[^/]+\.py$
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.10
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+        files: ^tools/|^scripts/[^/]+\.py$
+
+  # Run mypy manually (not on commit); CI will run it
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.17.1
+    hooks:
+      - id: mypy
+        args: ["--config-file", "mypy.ini"]
+        stages: [manual]   # <-- prevents blocking your local commits
+
+  # Hygiene hooks; exclude big/vendor/venv/backups/etc.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        exclude: >-
+          ^(clean_env/|backups/|rclone-|data/|scripts/chromedriver-win64/|.*\.xz$|.*\.7z$)
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        exclude: >-
+          ^(clean_env/|backups/|rclone-|data/|scripts/chromedriver-win64/)
+      - id: trailing-whitespace
+        exclude: >-
+          ^(clean_env/|backups/|rclone-|data/|scripts/chromedriver-win64/)

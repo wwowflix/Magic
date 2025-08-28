@@ -137,12 +137,12 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         raise AbstractMethodError(self)
 
     @overload
-    def __getitem__(self, item: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, item: ScalarIndexer) -> Any: ...
 
     @overload
-    def __getitem__(self: BaseMaskedArrayT, item: SequenceIndexer) -> BaseMaskedArrayT:
-        ...
+    def __getitem__(
+        self: BaseMaskedArrayT, item: SequenceIndexer
+    ) -> BaseMaskedArrayT: ...
 
     def __getitem__(
         self: BaseMaskedArrayT, item: PositionalIndexer
@@ -422,16 +422,13 @@ class BaseMaskedArray(OpsMixin, ExtensionArray):
         return data
 
     @overload
-    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray:
-        ...
+    def astype(self, dtype: npt.DTypeLike, copy: bool = ...) -> np.ndarray: ...
 
     @overload
-    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray:
-        ...
+    def astype(self, dtype: ExtensionDtype, copy: bool = ...) -> ExtensionArray: ...
 
     @overload
-    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike:
-        ...
+    def astype(self, dtype: AstypeArg, copy: bool = ...) -> ArrayLike: ...
 
     def astype(self, dtype: AstypeArg, copy: bool = True) -> ArrayLike:
         dtype = pandas_dtype(dtype)

@@ -27,7 +27,7 @@ foreach ($module in $moduleOrder) {
     foreach ($script in $scripts) {
         Write-Host "▶ Executing: $($script.Name)"
         "`n--- Running: $($script.Name) ---" | Out-File -FilePath $logFile -Append -Encoding UTF8
-        
+
         try {
             $output = & "$env:VIRTUAL_ENV\Scripts\python.exe" $script.FullName 2>&1
             if ($LASTEXITCODE -eq 0) {

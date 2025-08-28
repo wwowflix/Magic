@@ -7,13 +7,13 @@ Package            Version ------------------ -------------- attrs              
 
 SCRIPT TEST RESULTS:
 
-Script                              Status                                             
-------                              ------                                             
+Script                              Status
+------                              ------
 .\scripts\twitter_scraper_clean.py  ❌ ERROR: Error retrieving https://twitter.com/se...
 .\scripts\twitter_scraper_simple.py ❌ ERROR: Error retrieving https://twitter.com/se...
-.\scripts\zephyr\twitter_api.py     ✅ SUCCESS                                          
-.\scripts\zephyr\twitter_scraper.py ✅ SUCCESS                                          
-.\reddit_api_proper_fix.py          ⚠️ NOT FOUND                                       
+.\scripts\zephyr\twitter_api.py     ✅ SUCCESS
+.\scripts\zephyr\twitter_scraper.py ✅ SUCCESS
+.\reddit_api_proper_fix.py          ⚠️ NOT FOUND
 
 
 

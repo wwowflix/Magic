@@ -1,4 +1,5 @@
 """Tests for Table Schema integration."""
+
 from collections import OrderedDict
 from io import StringIO
 import json
@@ -871,4 +872,3 @@ class TestTableOrientReader:
         out = df.to_json(orient="table")
         result = pd.read_json(out, orient="table")
         tm.assert_frame_equal(df, result)
-

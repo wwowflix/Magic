@@ -1,5 +1,5 @@
 """
-    Container for the result of running a laplace approximation.
+Container for the result of running a laplace approximation.
 """
 
 from typing import (
@@ -41,8 +41,8 @@ class CmdStanLaplace:
         """Initialize object."""
         if not runset.method == Method.LAPLACE:
             raise ValueError(
-                'Wrong runset method, expecting laplace runset, '
-                'found method {}'.format(runset.method)
+                "Wrong runset method, expecting laplace runset, "
+                "found method {}".format(runset.method)
             )
         self._runset = runset
         self._mode = mode
@@ -56,14 +56,14 @@ class CmdStanLaplace:
         if self._draws.shape != (0,):
             return
 
-        with open(self._runset.csv_files[0], 'r') as fd:
+        with open(self._runset.csv_files[0], "r") as fd:
             while (fd.readline()).startswith("#"):
                 pass
             self._draws = np.loadtxt(
                 fd,
                 dtype=float,
                 ndmin=2,
-                delimiter=',',
+                delimiter=",",
                 comments="#",
             )
 
@@ -88,16 +88,13 @@ class CmdStanLaplace:
         """
         self._assemble_draws()
         try:
-            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(
-                self._draws
-            )
+            out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(self._draws)
             return out
         except KeyError:
             # pylint: disable=raise-missing-from
             raise ValueError(
-                f'Unknown variable name: {var}\n'
-                'Available variables are '
-                + ", ".join(self._metadata.stan_vars.keys())
+                f"Unknown variable name: {var}\n"
+                "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
     def stan_variables(self) -> Dict[str, np.ndarray]:
@@ -163,11 +160,9 @@ class CmdStanLaplace:
                     cols.append(var)
                 elif var in self._metadata.stan_vars:
                     info = self._metadata.stan_vars[var]
-                    cols.extend(
-                        self.column_names[info.start_idx : info.end_idx]
-                    )
+                    cols.extend(self.column_names[info.start_idx : info.end_idx])
                 else:
-                    raise ValueError(f'Unknown variable: {var}')
+                    raise ValueError(f"Unknown variable: {var}")
 
         else:
             cols = list(self.column_names)
@@ -222,7 +217,7 @@ class CmdStanLaplace:
             )
         return (
             xr.Dataset(data, coords=coordinates, attrs=attrs)
-            .transpose('draw', ...)
+            .transpose("draw", ...)
             .squeeze()
         )
 
@@ -244,18 +239,16 @@ class CmdStanLaplace:
         return self._metadata
 
     def __repr__(self) -> str:
-        mode = '\n'.join(
-            ['\t' + line for line in repr(self.mode).splitlines()]
-        )[1:]
-        rep = 'CmdStanLaplace: model={} \nmode=({})\n{}'.format(
+        mode = "\n".join(["\t" + line for line in repr(self.mode).splitlines()])[1:]
+        rep = "CmdStanLaplace: model={} \nmode=({})\n{}".format(
             self._runset.model,
             mode,
             self._runset._args.method_args.compose(0, cmd=[]),
         )
-        rep = '{}\n csv_files:\n\t{}\n output_files:\n\t{}'.format(
+        rep = "{}\n csv_files:\n\t{}\n output_files:\n\t{}".format(
             rep,
-            '\n\t'.join(self._runset.csv_files),
-            '\n\t'.join(self._runset.stdout_files),
+            "\n\t".join(self._runset.csv_files),
+            "\n\t".join(self._runset.stdout_files),
         )
         return rep
 
@@ -285,7 +278,7 @@ class CmdStanLaplace:
         and quantities of interest. Corresponds to Stan CSV file header row,
         with names munged to array notation, e.g. `beta[1]` not `beta.1`.
         """
-        return self._metadata.cmdstan_config['column_names']  # type: ignore
+        return self._metadata.cmdstan_config["column_names"]  # type: ignore
 
     def save_csvfiles(self, dir: Optional[str] = None) -> None:
         """

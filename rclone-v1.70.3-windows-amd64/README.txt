@@ -3998,114 +3998,114 @@ alterations.
 
 Conversion modes:
 
-    none  
-    nfc  
-    nfd  
-    nfkc  
-    nfkd  
-    replace  
-    prefix  
-    suffix  
-    suffix_keep_extension  
-    trimprefix  
-    trimsuffix  
-    index  
-    date  
-    truncate  
-    base64encode  
-    base64decode  
-    encoder  
-    decoder  
-    ISO-8859-1  
-    Windows-1252  
-    Macintosh  
-    charmap  
-    lowercase  
-    uppercase  
-    titlecase  
-    ascii  
-    url  
-    regex  
-    command  
+    none
+    nfc
+    nfd
+    nfkc
+    nfkd
+    replace
+    prefix
+    suffix
+    suffix_keep_extension
+    trimprefix
+    trimsuffix
+    index
+    date
+    truncate
+    base64encode
+    base64decode
+    encoder
+    decoder
+    ISO-8859-1
+    Windows-1252
+    Macintosh
+    charmap
+    lowercase
+    uppercase
+    titlecase
+    ascii
+    url
+    regex
+    command
 
 Char maps:
 
-      
-    IBM-Code-Page-037  
-    IBM-Code-Page-437  
-    IBM-Code-Page-850  
-    IBM-Code-Page-852  
-    IBM-Code-Page-855  
-    Windows-Code-Page-858  
-    IBM-Code-Page-860  
-    IBM-Code-Page-862  
-    IBM-Code-Page-863  
-    IBM-Code-Page-865  
-    IBM-Code-Page-866  
-    IBM-Code-Page-1047  
-    IBM-Code-Page-1140  
-    ISO-8859-1  
-    ISO-8859-2  
-    ISO-8859-3  
-    ISO-8859-4  
-    ISO-8859-5  
-    ISO-8859-6  
-    ISO-8859-7  
-    ISO-8859-8  
-    ISO-8859-9  
-    ISO-8859-10  
-    ISO-8859-13  
-    ISO-8859-14  
-    ISO-8859-15  
-    ISO-8859-16  
-    KOI8-R  
-    KOI8-U  
-    Macintosh  
-    Macintosh-Cyrillic  
-    Windows-874  
-    Windows-1250  
-    Windows-1251  
-    Windows-1252  
-    Windows-1253  
-    Windows-1254  
-    Windows-1255  
-    Windows-1256  
-    Windows-1257  
-    Windows-1258  
-    X-User-Defined  
+
+    IBM-Code-Page-037
+    IBM-Code-Page-437
+    IBM-Code-Page-850
+    IBM-Code-Page-852
+    IBM-Code-Page-855
+    Windows-Code-Page-858
+    IBM-Code-Page-860
+    IBM-Code-Page-862
+    IBM-Code-Page-863
+    IBM-Code-Page-865
+    IBM-Code-Page-866
+    IBM-Code-Page-1047
+    IBM-Code-Page-1140
+    ISO-8859-1
+    ISO-8859-2
+    ISO-8859-3
+    ISO-8859-4
+    ISO-8859-5
+    ISO-8859-6
+    ISO-8859-7
+    ISO-8859-8
+    ISO-8859-9
+    ISO-8859-10
+    ISO-8859-13
+    ISO-8859-14
+    ISO-8859-15
+    ISO-8859-16
+    KOI8-R
+    KOI8-U
+    Macintosh
+    Macintosh-Cyrillic
+    Windows-874
+    Windows-1250
+    Windows-1251
+    Windows-1252
+    Windows-1253
+    Windows-1254
+    Windows-1255
+    Windows-1256
+    Windows-1257
+    Windows-1258
+    X-User-Defined
 
 Encoding masks:
 
-    Asterisk  
-     BackQuote  
-     BackSlash  
-     Colon  
-     CrLf  
-     Ctl  
-     Del  
-     Dollar  
-     Dot  
-     DoubleQuote  
-     Exclamation  
-     Hash  
-     InvalidUtf8  
-     LeftCrLfHtVt  
-     LeftPeriod  
-     LeftSpace  
-     LeftTilde  
-     LtGt  
-     None  
-     Percent  
-     Pipe  
-     Question  
-     Raw  
-     RightCrLfHtVt  
-     RightPeriod  
-     RightSpace  
-     Semicolon  
-     SingleQuote  
-     Slash  
-     SquareBracket  
+    Asterisk
+     BackQuote
+     BackSlash
+     Colon
+     CrLf
+     Ctl
+     Del
+     Dollar
+     Dot
+     DoubleQuote
+     Exclamation
+     Hash
+     InvalidUtf8
+     LeftCrLfHtVt
+     LeftPeriod
+     LeftSpace
+     LeftTilde
+     LtGt
+     None
+     Percent
+     Pipe
+     Question
+     Raw
+     RightCrLfHtVt
+     RightPeriod
+     RightSpace
+     Semicolon
+     SingleQuote
+     Slash
+     SquareBracket
 
 Examples:
 
@@ -14818,40 +14818,40 @@ backend may implement.
   key                                description           example
   ---------------------------------- --------------------- -------------------------------------
   mode                               File type and mode:   0100664
-                                     octal, unix style     
+                                     octal, unix style
 
   uid                                User ID of owner:     500
-                                     decimal number        
+                                     decimal number
 
   gid                                Group ID of owner:    500
-                                     decimal number        
+                                     decimal number
 
   rdev                               Device ID (if special 0
-                                     file) => hexadecimal  
+                                     file) => hexadecimal
 
   atime                              Time of last access:  2006-01-02T15:04:05.999999999Z07:00
-                                     RFC 3339              
+                                     RFC 3339
 
   mtime                              Time of last          2006-01-02T15:04:05.999999999Z07:00
-                                     modification: RFC     
-                                     3339                  
+                                     modification: RFC
+                                     3339
 
   btime                              Time of file creation 2006-01-02T15:04:05.999999999Z07:00
-                                     (birth): RFC 3339     
+                                     (birth): RFC 3339
 
   utime                              Time of file upload:  2006-01-02T15:04:05.999999999Z07:00
-                                     RFC 3339              
+                                     RFC 3339
 
   cache-control                      Cache-Control header  no-cache
 
   content-disposition                Content-Disposition   inline
-                                     header                
+                                     header
 
   content-encoding                   Content-Encoding      gzip
-                                     header                
+                                     header
 
   content-language                   Content-Language      en-US
-                                     header                
+                                     header
 
   content-type                       Content-Type header   text/plain
   ----------------------------------------------------------------------------------------------
@@ -17502,8 +17502,8 @@ Then back to the headless box, paste in the code
     config_token> SECRET_TOKEN
     --------------------
     [acd12]
-    client_id = 
-    client_secret = 
+    client_id =
+    client_secret =
     token = SECRET_TOKEN
     --------------------
     y) Yes this is OK
@@ -21488,7 +21488,7 @@ show you the defaults for the backends.
   CrLf                   CR 0x0D, LF 0x0A         ␍, ␊
 
   Ctl                    All control characters   ␀␁␂␃␄␅␆␇␈␉␊␋␌␍␎␏␐␑␒␓␔␕␖␗␘␙␚␛␜␝␞␟
-                         0x00-0x1F                
+                         0x00-0x1F
 
   Del                    DEL 0x7F                 ␡
 
@@ -21503,20 +21503,20 @@ show you the defaults for the backends.
   Hash                   #                        ＃
 
   InvalidUtf8            An invalid UTF-8         �
-                         character (e.g. latin1)  
+                         character (e.g. latin1)
 
   LeftCrLfHtVt           CR 0x0D, LF 0x0A, HT     ␍, ␊, ␉, ␋
-                         0x09, VT 0x0B on the     
-                         left of a string         
+                         0x09, VT 0x0B on the
+                         left of a string
 
   LeftPeriod             . on the left of a       .
-                         string                   
+                         string
 
   LeftSpace              SPACE on the left of a   ␠
-                         string                   
+                         string
 
   LeftTilde              ~ on the left of a       ～
-                         string                   
+                         string
 
   LtGt                   <, >                     ＜, ＞
 
@@ -21529,14 +21529,14 @@ show you the defaults for the backends.
   Question               ?                        ？
 
   RightCrLfHtVt          CR 0x0D, LF 0x0A, HT     ␍, ␊, ␉, ␋
-                         0x09, VT 0x0B on the     
-                         right of a string        
+                         0x09, VT 0x0B on the
+                         right of a string
 
   RightPeriod            . on the right of a      .
-                         string                   
+                         string
 
   RightSpace             SPACE on the right of a  ␠
-                         string                   
+                         string
 
   Semicolon              ;                        ；
 
@@ -21660,24 +21660,24 @@ upon backend-specific capabilities.
   1Fichier          No     Yes    Yes      No        No       No          No       No                       Yes        No       Yes
 
   Akamai            Yes     No     No      No        No       Yes        Yes       No                       No         No       Yes
-  Netstorage                                                                                                                 
+  Netstorage
 
   Amazon S3 (or     No     Yes     No      No        Yes      Yes        Yes       Yes                      Yes        No        No
-  S3 compatible)                                                                                                             
+  S3 compatible)
 
   Backblaze B2      No     Yes     No      No        Yes      Yes        Yes       Yes                      Yes        No        No
 
   Box               Yes    Yes    Yes      Yes       Yes      No         Yes       No                       Yes        Yes      Yes
 
   Citrix            Yes    Yes    Yes      Yes       No       No          No       No                       No         No       Yes
-  ShareFile                                                                                                                  
+  ShareFile
 
   Dropbox           Yes    Yes    Yes      Yes       No       No         Yes       No                       Yes        Yes      Yes
 
   Cloudinary        No      No     No      No        No       No         Yes       No                       No         No        No
 
   Enterprise File   Yes    Yes    Yes      Yes       Yes      No          No       No                       No         No       Yes
-  Fabric                                                                                                                     
+  Fabric
 
   Files.com         Yes    Yes    Yes      Yes       No       No         Yes       No                       Yes        No       Yes
 
@@ -21686,7 +21686,7 @@ upon backend-specific capabilities.
   Gofile            Yes    Yes    Yes      Yes       No       No         Yes       No                       Yes        Yes      Yes
 
   Google Cloud      Yes    Yes     No      No        No       No         Yes       No                       No         No        No
-  Storage                                                                                                                    
+  Storage
 
   Google Drive      Yes    Yes    Yes      Yes       Yes      Yes        Yes       No                       Yes        Yes      Yes
 
@@ -21703,7 +21703,7 @@ upon backend-specific capabilities.
   ImageKit          Yes    Yes    Yes      No        No       No          No       No                       No         No       Yes
 
   Internet          No     Yes     No      No        Yes      Yes         No       No                       Yes        Yes       No
-  Archive                                                                                                                    
+  Archive
 
   Jottacloud        Yes    Yes    Yes      Yes       Yes      Yes         No       No                       Yes        Yes      Yes
 
@@ -21716,20 +21716,20 @@ upon backend-specific capabilities.
   Memory            No     Yes     No      No        No       Yes        Yes       No                       No         No        No
 
   Microsoft Azure   Yes    Yes     No      No        No       Yes        Yes       Yes                      No         No        No
-  Blob Storage                                                                                                               
+  Blob Storage
 
   Microsoft Azure   No     Yes    Yes      Yes       No       No         Yes       Yes                      No         Yes      Yes
-  Files Storage                                                                                                              
+  Files Storage
 
   Microsoft         Yes    Yes    Yes      Yes       Yes     Yes ⁵        No       No                       Yes        Yes      Yes
-  OneDrive                                                                                                                   
+  OneDrive
 
   OpenDrive         Yes    Yes    Yes      Yes       No       No          No       No                       No         Yes      Yes
 
   OpenStack Swift  Yes ¹   Yes     No      No        No       Yes        Yes       No                       No         Yes       No
 
   Oracle Object     No     Yes     No      No        Yes      Yes        Yes       Yes                      No         No        No
-  Storage                                                                                                                    
+  Storage
 
   pCloud            Yes    Yes    Yes      Yes       Yes      No          No       No                       Yes        Yes      Yes
 
@@ -21746,7 +21746,7 @@ upon backend-specific capabilities.
   QingStor          No     Yes     No      No        Yes      Yes         No       No                       No         No        No
 
   Quatrix by        Yes    Yes    Yes      Yes       No       No          No       No                       No         Yes      Yes
-  Maytech                                                                                                                    
+  Maytech
 
   Seafile           Yes    Yes    Yes      Yes       Yes      Yes        Yes       No                       Yes        Yes      Yes
 
@@ -21771,7 +21771,7 @@ upon backend-specific capabilities.
   Zoho WorkDrive    Yes    Yes    Yes      Yes       No       No          No       No                       No         Yes      Yes
 
   The local         No      No    Yes      Yes       No       No         Yes       Yes                      No         Yes      Yes
-  filesystem                                                                                                                 
+  filesystem
   -------------------------------------------------------------------------------------------------------------------------------------
 
 ¹ Note Swift implements this in order to delete directory markers but it
@@ -24381,11 +24381,11 @@ Unusual sync checks
   Type              Description           Result               Implementation
   ----------------- --------------------- -------------------- -----------------
   Path1 new/changed File is new/changed   No change            None
-  AND Path2         on Path1 AND                               
-  new/changed AND   new/changed on Path2                       
-  Path1 == Path2    AND Path1 version is                       
-                    currently identical                        
-                    to Path2                                   
+  AND Path2         on Path1 AND
+  new/changed AND   new/changed on Path2
+  Path1 == Path2    AND Path1 version is
+                    currently identical
+                    to Path2
 
   Path1 new AND     File is new on Path1  Conflicts handled    default:
   Path2 new         AND new on Path2 (and according to         rclone copy
@@ -24409,17 +24409,17 @@ Unusual sync checks
 
   Path2 newer AND   File is newer on      Path2 version        rclone copy Path2
   Path1 deleted     Path2 AND also        survives             to Path1
-                    deleted on Path1                           
+                    deleted on Path1
 
   Path2 deleted AND File is deleted on    Path1 version        rclone copy Path1
   Path1 changed     Path2 AND changed     survives             to Path2
-                    (newer/older/size) on                      
-                    Path1                                      
+                    (newer/older/size) on
+                    Path1
 
   Path1 deleted AND File is deleted on    Path2 version        rclone copy Path2
   Path2 changed     Path1 AND changed     survives             to Path1
-                    (newer/older/size) on                      
-                    Path2                                      
+                    (newer/older/size) on
+                    Path2
   ------------------------------------------------------------------------------
 
 As of rclone v1.64, bisync is now better at detecting false positive
@@ -25274,18 +25274,18 @@ added in a new directory, each ~9.5 MB, ~475 MB total.
                                                                time
   ------------------------ ----------------------------------- -----------
   500 files synched        1x listings for Path1 & Path2       1.5 sec
-  (nothing to move)                                            
+  (nothing to move)
 
   500 files synched with   1x listings for Path1 & Path2       1.5 sec
-  --check-access                                               
+  --check-access
 
   50 new files on remote   Queued 50 copies down: 27 sec       29 sec
 
   Moved local dir          Queued 50 copies up: 410 sec, 50    421 sec
-                           deletes up: 9 sec                   
+                           deletes up: 9 sec
 
   Moved remote dir         Queued 50 copies down: 31 sec, 50   33 sec
-                           deletes down: <1 sec                
+                           deletes down: <1 sec
 
   Delete local dir         Queued 50 deletes up: 9 sec         13 sec
   ------------------------------------------------------------------------
@@ -25515,7 +25515,7 @@ Import the key. See above for ways to verify this key is correct.
 
 Then check the signature:
 
-    $ gpg --verify SHA256SUMS 
+    $ gpg --verify SHA256SUMS
     gpg: Signature made Mon 17 Jul 2023 15:03:17 BST
     gpg:                using DSA key FBF737ECE9F8AB18604BD2AC93935E02FF3B54FA
     gpg: Good signature from "Nick Craig-Wood <nick@craig-wood.com>" [ultimate]
@@ -25534,7 +25534,7 @@ binaries match the hashes, completing the verification.
 
 Or do the check with rclone
 
-    $ rclone hashsum sha256 -C SHA256SUMS rclone-v1.63.1-windows-amd64.zip 
+    $ rclone hashsum sha256 -C SHA256SUMS rclone-v1.63.1-windows-amd64.zip
     2023/09/11 10:53:58 NOTICE: SHA256SUMS: improperly formatted checksum line 0
     2023/09/11 10:53:58 NOTICE: SHA256SUMS: improperly formatted checksum line 1
     2023/09/11 10:53:58 NOTICE: SHA256SUMS: improperly formatted checksum line 49
@@ -25597,7 +25597,7 @@ This will guide you through an interactive setup process:
     Edit advanced config? (y/n)
     y) Yes
     n) No
-    y/n> 
+    y/n>
     Remote config
     Configuration complete.
     Options:
@@ -28103,25 +28103,25 @@ Here are the possible system metadata items for the s3 backend.
   Name                  Help                  Type        Example                               Read Only
   --------------------- --------------------- ----------- ------------------------------------- --------------------
   btime                 Time of file birth    RFC 3339    2006-01-02T15:04:05.999999999Z07:00   Y
-                        (creation) read from                                                    
-                        Last-Modified header                                                    
+                        (creation) read from
+                        Last-Modified header
 
   cache-control         Cache-Control header  string      no-cache                              N
 
   content-disposition   Content-Disposition   string      inline                                N
-                        header                                                                  
+                        header
 
   content-encoding      Content-Encoding      string      gzip                                  N
-                        header                                                                  
+                        header
 
   content-language      Content-Language      string      en-US                                 N
-                        header                                                                  
+                        header
 
   content-type          Content-Type header   string      text/plain                            N
 
   mtime                 Time of last          RFC 3339    2006-01-02T15:04:05.999999999Z07:00   N
-                        modification, read                                                      
-                        from rclone metadata                                                    
+                        modification, read
+                        from rclone metadata
 
   tier                  Tier of the object    string      GLACIER                               Y
   ------------------------------------------------------------------------------------------------------------------
@@ -29040,7 +29040,7 @@ This will guide you through an interactive setup process.
        \ (false)
      2 / Get AWS credentials from the environment (env vars or IAM).
        \ (true)
-    env_auth> 
+    env_auth>
 
     Option access_key_id.
     AWS Access Key ID.
@@ -29082,12 +29082,12 @@ This will guide you through an interactive setup process.
        / Both the object owner and the bucket owner get FULL_CONTROL over the object.
      6 | If you specify this canned ACL when creating a bucket, Amazon S3 ignores it.
        \ (bucket-owner-full-control)
-    acl> 
+    acl>
 
     Edit advanced config?
     y) Yes
     n) No (default)
-    y/n> 
+    y/n>
 
     Configuration complete.
     Options:
@@ -29382,7 +29382,7 @@ process:
        \ (false)
      2 / Get AWS credentials from the environment (env vars or IAM).
        \ (true)
-    env_auth> 
+    env_auth>
 
     Option access_key_id.
     AWS Access Key ID.
@@ -30720,7 +30720,7 @@ This will guide you through an interactive setup process.
        \ (false)
      2 / Get AWS credentials from the environment (env vars or IAM).
        \ (true)
-    env_auth> 
+    env_auth>
 
     Option access_key_id.
     AWS Access Key ID.
@@ -30796,7 +30796,7 @@ This will guide you through an interactive setup process.
      1 | No one else has access rights (default).
        \ (private)
     [snip]
-    acl> 
+    acl>
 
     Edit advanced config?
     y) Yes
@@ -30909,7 +30909,7 @@ This will guide you through an interactive setup process.
      1 | No one else has access rights (default).
        \ (private)
     [snip]
-    acl> 
+    acl>
 
     Edit advanced config?
     y) Yes
@@ -31084,7 +31084,7 @@ rclone like this.
        | Leave location constraint empty.
        \ "us-east-1"
     [snip]
-    region> 
+    region>
     Endpoint for S3 API.
     Leave blank if using ArvanCloud to use the default endpoint for the region.
     Specify if using an S3 clone such as Ceph.
@@ -32575,7 +32575,7 @@ This will guide you through an interactive setup process:
     [snip]
     Storage> box
     Box App Client Id - leave blank normally.
-    client_id> 
+    client_id>
     Box App Client Secret - leave blank normally.
     client_secret>
     Box App config.json location
@@ -34204,7 +34204,7 @@ Properties:
         -   Requires hash type "none".
     -   "simplejson"
         -   Simple JSON supports hash sums and chunk validation.
-        -   
+        -
         -   It has the following fields: ver, size, nchunks, md5, sha1.
 
 --chunker-fail-hard
@@ -34559,7 +34559,7 @@ This will guide you through an interactive setup process:
        \ "connectors"
      5 / Access the home, favorites, and shared folders as well as the connectors.
        \ "top"
-    root_folder_id> 
+    root_folder_id>
     Edit advanced config? (y/n)
     y) Yes
     n) No
@@ -35695,7 +35695,7 @@ compression mode to use:
 
     Remote to compress.
     Enter a string value. Press Enter for the default ("").
-    remote> remote_to_press:subdir 
+    remote> remote_to_press:subdir
     Compression mode.
     Enter a string value. Press Enter for the default ("gzip").
     Choose a number from below, or type in your own value
@@ -36133,7 +36133,7 @@ Show metadata about the DOI.
 
 This command returns a JSON object with some information about the DOI.
 
-    rclone backend medatadata doi: 
+    rclone backend medatadata doi:
 
 It returns a JSON object representing metadata about the DOI.
 
@@ -36843,7 +36843,7 @@ This will guide you through an interactive setup process:
     Fill in to make rclone start with directory of a given ID.
 
     Enter a string value. Press Enter for the default ("").
-    root_folder_id> 
+    root_folder_id>
     Permanent Authentication Token
 
     A Permanent Authentication Token can be created in the Enterprise File
@@ -37496,10 +37496,10 @@ For an anonymous FTP server, see below.
     host> ftp.example.com
     FTP username
     Enter a string value. Press Enter for the default ("$USER").
-    user> 
+    user>
     FTP port number
     Enter a signed integer. Press Enter for the default (21).
-    port> 
+    port>
     FTP password
     y) Yes type in my own password
     g) Generate random password
@@ -37510,10 +37510,10 @@ For an anonymous FTP server, see below.
     password:
     Use FTP over TLS (Implicit)
     Enter a boolean value (true or false). Press Enter for the default ("false").
-    tls> 
+    tls>
     Use FTP over TLS (Explicit)
     Enter a boolean value (true or false). Press Enter for the default ("false").
-    explicit_tls> 
+    explicit_tls>
     Remote config
     Configuration complete.
     Options:
@@ -38439,7 +38439,7 @@ If you already have a working service account, skip to step 3.
 
 1. Create a service account using
 
-    gcloud iam service-accounts create gcs-read-only 
+    gcloud iam service-accounts create gcs-read-only
 
 You can re-use an existing service account as well (like the one created
 above)
@@ -38464,7 +38464,7 @@ pre-defined roles:
 
     $ gcloud auth application-default print-access-token  \
        --impersonate-service-account \
-          gcs-read-only@${PROJECT_ID}.iam.gserviceaccount.com  
+          gcs-read-only@${PROJECT_ID}.iam.gserviceaccount.com
 
     ya29.c.c0ASRK0GbAFEewXD [truncated]
 
@@ -40511,56 +40511,56 @@ Here are the possible system metadata items for the drive backend.
   Name                              Help                            Type        Example                         Read Only
   --------------------------------- ------------------------------- ----------- ------------------------------- --------------------
   btime                             Time of file birth (creation)   RFC 3339    2006-01-02T15:04:05.999Z07:00   N
-                                    with mS accuracy. Note that                                                 
-                                    this is only writable on fresh                                              
-                                    uploads - it can't be written                                               
-                                    for updates.                                                                
+                                    with mS accuracy. Note that
+                                    this is only writable on fresh
+                                    uploads - it can't be written
+                                    for updates.
 
   content-type                      The MIME type of the file.      string      text/plain                      N
 
   copy-requires-writer-permission   Whether the options to copy,    boolean     true                            N
-                                    print, or download this file,                                               
-                                    should be disabled for readers                                              
-                                    and commenters.                                                             
+                                    print, or download this file,
+                                    should be disabled for readers
+                                    and commenters.
 
   description                       A short description of the      string      Contract for signing            N
-                                    file.                                                                       
+                                    file.
 
   folder-color-rgb                  The color for a folder or a     string      881133                          N
-                                    shortcut to a folder as an RGB                                              
-                                    hex string.                                                                 
+                                    shortcut to a folder as an RGB
+                                    hex string.
 
   labels                            Labels attached to this file in JSON        []                              N
-                                    a JSON dump of Googled drive                                                
-                                    format. Enable with                                                         
-                                    --drive-metadata-labels.                                                    
+                                    a JSON dump of Googled drive
+                                    format. Enable with
+                                    --drive-metadata-labels.
 
   mtime                             Time of last modification with  RFC 3339    2006-01-02T15:04:05.999Z07:00   N
-                                    mS accuracy.                                                                
+                                    mS accuracy.
 
   owner                             The owner of the file. Usually  string      user@example.com                N
-                                    an email address. Enable with                                               
-                                    --drive-metadata-owner.                                                     
+                                    an email address. Enable with
+                                    --drive-metadata-owner.
 
   permissions                       Permissions in a JSON dump of   JSON        {}                              N
-                                    Google drive format. On shared                                              
-                                    drives these will only be                                                   
-                                    present if they aren't                                                      
-                                    inherited. Enable with                                                      
-                                    --drive-metadata-permissions.                                               
+                                    Google drive format. On shared
+                                    drives these will only be
+                                    present if they aren't
+                                    inherited. Enable with
+                                    --drive-metadata-permissions.
 
   starred                           Whether the user has starred    boolean     false                           N
-                                    the file.                                                                   
+                                    the file.
 
   viewed-by-me                      Whether the file has been       boolean     true                            Y
-                                    viewed by this user.                                                        
+                                    viewed by this user.
 
   writers-can-share                 Whether users with only writer  boolean     false                           N
-                                    permission can modify the                                                   
-                                    file's permissions. Not                                                     
-                                    populated and ignored when                                                  
-                                    setting for items in shared                                                 
-                                    drives.                                                                     
+                                    permission can modify the
+                                    file's permissions. Not
+                                    populated and ignored when
+                                    setting for items in shared
+                                    drives.
   ----------------------------------------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -41079,17 +41079,17 @@ This will guide you through an interactive setup process:
     Google Application Client Id
     Leave blank normally.
     Enter a string value. Press Enter for the default ("").
-    client_id> 
+    client_id>
     Google Application Client Secret
     Leave blank normally.
     Enter a string value. Press Enter for the default ("").
-    client_secret> 
+    client_secret>
     Set to make the Google Photos backend read only.
 
     If you choose read only then rclone will only request read only access
     to your photos, otherwise rclone will request full access.
     Enter a boolean value (true or false). Press Enter for the default ("false").
-    read_only> 
+    read_only>
     Edit advanced config? (y/n)
     y) Yes
     n) No
@@ -43059,11 +43059,11 @@ This will guide you through an interactive setup process:
     \ (imagekit)
     [snip]
     Storage> imagekit
-      
+
     Option endpoint.
     You can find your ImageKit.io URL endpoint in your [dashboard](https://imagekit.io/dashboard/developer/api-keys)
     Enter a value.
-    endpoint> https://ik.imagekit.io/imagekit_id  
+    endpoint> https://ik.imagekit.io/imagekit_id
 
     Option public_key.
     You can find your ImageKit.io public key in your [dashboard](https://imagekit.io/dashboard/developer/api-keys)
@@ -43223,52 +43223,52 @@ Here are the possible system metadata items for the imagekit backend.
   Name                 Help            Type        Example                               Read Only
   -------------------- --------------- ----------- ------------------------------------- --------------------
   aws-tags             AI generated    string      tag1,tag2                             Y
-                       tags by AWS                                                       
-                       Rekognition                                                       
-                       associated with                                                   
-                       the image                                                         
+                       tags by AWS
+                       Rekognition
+                       associated with
+                       the image
 
   btime                Time of file    RFC 3339    2006-01-02T15:04:05.999999999Z07:00   Y
-                       birth                                                             
-                       (creation) read                                                   
-                       from                                                              
-                       Last-Modified                                                     
-                       header                                                            
+                       birth
+                       (creation) read
+                       from
+                       Last-Modified
+                       header
 
   custom-coordinates   Custom          string      0,0,100,100                           Y
-                       coordinates of                                                    
-                       the file                                                          
+                       coordinates of
+                       the file
 
   file-type            Type of the     string      image                                 Y
-                       file                                                              
+                       file
 
   google-tags          AI generated    string      tag1,tag2                             Y
-                       tags by Google                                                    
-                       Cloud Vision                                                      
-                       associated with                                                   
-                       the image                                                         
+                       tags by Google
+                       Cloud Vision
+                       associated with
+                       the image
 
   has-alpha            Whether the     bool                                              Y
-                       image has alpha                                                   
-                       channel or not                                                    
+                       image has alpha
+                       channel or not
 
   height               Height of the   int                                               Y
-                       image or video                                                    
-                       in pixels                                                         
+                       image or video
+                       in pixels
 
   is-private-file      Whether the     bool                                              Y
-                       file is private                                                   
-                       or not                                                            
+                       file is private
+                       or not
 
   size                 Size of the     int64                                             Y
-                       object in bytes                                                   
+                       object in bytes
 
   tags                 Tags associated string      tag1,tag2                             Y
-                       with the file                                                     
+                       with the file
 
   width                Width of the    int                                               Y
-                       image or video                                                    
-                       in pixels                                                         
+                       image or video
+                       in pixels
   -----------------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -43313,7 +43313,7 @@ This will guide you through an interactive setup process:
     Option apple_id.
     Apple ID.
     Enter a value.
-    apple_id> APPLEID  
+    apple_id> APPLEID
     Option password.
     Password.
     Choose an alternative below.
@@ -43588,12 +43588,12 @@ This will guide you through an interactive setup process.
     IAS3 Endpoint.
     Leave blank for default value.
     Enter a string value. Press Enter for the default (https://s3.us.archive.org).
-    endpoint> 
+    endpoint>
     Option front_endpoint.
     Host of InternetArchive Frontend.
     Leave blank for default value.
     Enter a string value. Press Enter for the default (https://archive.org).
-    front_endpoint> 
+    front_endpoint>
     Option disable_checksum.
     Don't store MD5 checksum with object metadata.
     Normally rclone will calculate the MD5 checksum of the input before
@@ -43606,7 +43606,7 @@ This will guide you through an interactive setup process.
     The encoding for the backend.
     See the [encoding section in the overview](https://rclone.org/overview/#encoding) for more info.
     Enter a encoder.MultiEncoder value. Press Enter for the default (Slash,Question,Hash,Percent,Del,Ctl,InvalidUtf8,Dot).
-    encoding> 
+    encoding>
     Edit advanced config?
     y) Yes
     n) No (default)
@@ -43783,47 +43783,47 @@ backend.
   Name                  Help                               Type        Example                                      Read Only
   --------------------- ---------------------------------- ----------- -------------------------------------------- --------------------
   crc32                 CRC32 calculated by Internet       string      01234567                                     Y
-                        Archive                                                                                     
+                        Archive
 
   format                Name of format identified by       string      Comma-Separated Values                       Y
-                        Internet Archive                                                                            
+                        Internet Archive
 
   md5                   MD5 hash calculated by Internet    string      01234567012345670123456701234567             Y
-                        Archive                                                                                     
+                        Archive
 
   mtime                 Time of last modification, managed RFC 3339    2006-01-02T15:04:05.999999999Z               Y
-                        by Rclone                                                                                   
+                        by Rclone
 
   name                  Full file path, without the bucket filename    backend/internetarchive/internetarchive.go   Y
-                        part                                                                                        
+                        part
 
   old_version           Whether the file was replaced and  boolean     true                                         Y
-                        moved by keep-old-version flag                                                              
+                        moved by keep-old-version flag
 
   rclone-ia-mtime       Time of last modification, managed RFC 3339    2006-01-02T15:04:05.999999999Z               N
-                        by Internet Archive                                                                         
+                        by Internet Archive
 
   rclone-mtime          Time of last modification, managed RFC 3339    2006-01-02T15:04:05.999999999Z               N
-                        by Rclone                                                                                   
+                        by Rclone
 
   rclone-update-track   Random value used by Rclone for    string      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa             N
-                        tracking changes inside Internet                                                            
-                        Archive                                                                                     
+                        tracking changes inside Internet
+                        Archive
 
   sha1                  SHA1 hash calculated by Internet   string      0123456701234567012345670123456701234567     Y
-                        Archive                                                                                     
+                        Archive
 
   size                  File size in bytes                 decimal     123456                                       Y
-                                                           number                                                   
+                                                           number
 
   source                The source of the file             string      original                                     Y
 
   summation             Check                              string      md5                                          Y
-                        https://forum.rclone.org/t/31922                                                            
-                        for how it is used                                                                          
+                        https://forum.rclone.org/t/31922
+                        for how it is used
 
   viruscheck            The last time viruscheck process   unixtime    1654191352                                   Y
-                        was run for the file (?)                                                                    
+                        was run for the file (?)
   --------------------------------------------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -44322,27 +44322,27 @@ Here are the possible system metadata items for the jottacloud backend.
   Name           Help            Type        Example                               Read Only
   -------------- --------------- ----------- ------------------------------------- --------------------
   btime          Time of file    RFC 3339    2006-01-02T15:04:05.999999999Z07:00   N
-                 birth                                                             
-                 (creation),                                                       
-                 read from                                                         
-                 rclone metadata                                                   
+                 birth
+                 (creation),
+                 read from
+                 rclone metadata
 
   content-type   MIME type, also string      text/plain                            Y
-                 known as media                                                    
-                 type                                                              
+                 known as media
+                 type
 
   mtime          Time of last    RFC 3339    2006-01-02T15:04:05.999999999Z07:00   N
-                 modification,                                                     
-                 read from                                                         
-                 rclone metadata                                                   
+                 modification,
+                 read from
+                 rclone metadata
 
   utime          Time of last    RFC 3339    2006-01-02T15:04:05.999999999Z07:00   Y
-                 upload, when                                                      
-                 current                                                           
-                 revision was                                                      
-                 created,                                                          
-                 generated by                                                      
-                 backend                                                           
+                 upload, when
+                 current
+                 revision was
+                 created,
+                 generated by
+                 backend
   -----------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -44408,7 +44408,7 @@ This will guide you through an interactive setup process:
        \ (digistorage)
      3 / Any other Koofr API compatible storage service
        \ (other)
-    provider> 1    
+    provider> 1
     Option user.
     Your user name.
     Enter a value.
@@ -45381,7 +45381,7 @@ Object not found
 If you are connecting to your Mega remote for the first time, to test
 access and synchronization, you may receive an error such as
 
-    Failed to create file system for "my-mega-remote:": 
+    Failed to create file system for "my-mega-remote:":
     couldn't login: Object (typically, node or user) not found
 
 The diagnostic steps often recommended in the rclone forum start with
@@ -45399,7 +45399,7 @@ search or work with others in the forum.
     Fetching nodes ...
     Loading transfers from local cache
     Login complete as me@example.com
-    me@example.com:/$ 
+    me@example.com:/$
 
 Note that some have found issues with passwords containing special
 characters. If you can not log on with rclone, but MEGAcmd logs on just
@@ -46009,7 +46009,7 @@ This will guide you through an interactive setup process:
     Storage Account Key
     key> base64encodedkey==
     Endpoint for the service - leave blank normally.
-    endpoint> 
+    endpoint>
     Remote config
     Configuration complete.
     Options:
@@ -47043,7 +47043,7 @@ This will guide you through an interactive setup process:
     Read credentials from runtime (environment variables, CLI or MSI).
     See the [authentication docs](/azurefiles#authentication) for full info.
     Enter a boolean value (true or false). Press Enter for the default (false).
-    env_auth> 
+    env_auth>
 
     Option key.
     Storage Account Shared Key.
@@ -47055,12 +47055,12 @@ This will guide you through an interactive setup process:
     SAS URL.
     Leave blank if using account/key or connection string.
     Enter a value. Press Enter to leave empty.
-    sas_url> 
+    sas_url>
 
     Option connection_string.
     Azure Files Connection String.
     Enter a value. Press Enter to leave empty.
-    connection_string> 
+    connection_string>
     [snip]
 
     Configuration complete.
@@ -47073,7 +47073,7 @@ This will guide you through an interactive setup process:
     y) Yes this is OK (default)
     e) Edit this remote
     d) Delete this remote
-    y/e/d> 
+    y/e/d>
 
 Once configured you can use rclone.
 
@@ -48494,7 +48494,7 @@ block download of the file.
 
 In this case you will see a message like this
 
-    server reports this file is infected with a virus - use --onedrive-av-override to download anyway: Infected (name of virus): 403 Forbidden: 
+    server reports this file is infected with a virus - use --onedrive-av-override to download anyway: Infected (name of virus): 403 Forbidden:
 
 If you are 100% sure you want to download this file anyway then use the
 --onedrive-av-override flag, or av_override = true in the config file.
@@ -48727,67 +48727,67 @@ Here are the possible system metadata items for the onedrive backend.
   Name                            Help                               Type        Example                                Read Only
   ------------------------------- ---------------------------------- ----------- -------------------------------------- --------------------
   btime                           Time of file birth (creation) with RFC 3339    2006-01-02T15:04:05Z                   N
-                                  S accuracy (mS for OneDrive                                                           
-                                  Personal).                                                                            
+                                  S accuracy (mS for OneDrive
+                                  Personal).
 
   content-type                    The MIME type of the file.         string      text/plain                             Y
 
   created-by-display-name         Display name of the user that      string      John Doe                               Y
-                                  created the item.                                                                     
+                                  created the item.
 
   created-by-id                   ID of the user that created the    string      48d31887-5fad-4d73-a9f5-3c356e68a038   Y
-                                  item.                                                                                 
+                                  item.
 
   description                     A short description of the file.   string      Contract for signing                   N
-                                  Max 1024 characters. Only                                                             
-                                  supported for OneDrive Personal.                                                      
+                                  Max 1024 characters. Only
+                                  supported for OneDrive Personal.
 
   id                              The unique identifier of the item  string      01BYE5RZ6QN3ZWBTUFOFD3GSPGOHDJD36K     Y
-                                  within OneDrive.                                                                      
+                                  within OneDrive.
 
   last-modified-by-display-name   Display name of the user that last string      John Doe                               Y
-                                  modified the item.                                                                    
+                                  modified the item.
 
   last-modified-by-id             ID of the user that last modified  string      48d31887-5fad-4d73-a9f5-3c356e68a038   Y
-                                  the item.                                                                             
+                                  the item.
 
   malware-detected                Whether OneDrive has detected that boolean     true                                   Y
-                                  the item contains malware.                                                            
+                                  the item contains malware.
 
   mtime                           Time of last modification with S   RFC 3339    2006-01-02T15:04:05Z                   N
-                                  accuracy (mS for OneDrive                                                             
-                                  Personal).                                                                            
+                                  accuracy (mS for OneDrive
+                                  Personal).
 
   package-type                    If present, indicates that this    string      oneNote                                Y
-                                  item is a package instead of a                                                        
-                                  folder or file. Packages are                                                          
-                                  treated like files in some                                                            
-                                  contexts and folders in others.                                                       
+                                  item is a package instead of a
+                                  folder or file. Packages are
+                                  treated like files in some
+                                  contexts and folders in others.
 
   permissions                     Permissions in a JSON dump of      JSON        {}                                     N
-                                  OneDrive format. Enable with                                                          
-                                  --onedrive-metadata-permissions.                                                      
-                                  Properties: id, grantedTo,                                                            
-                                  grantedToIdentities, invitation,                                                      
-                                  inheritedFrom, link, roles,                                                           
-                                  shareId                                                                               
+                                  OneDrive format. Enable with
+                                  --onedrive-metadata-permissions.
+                                  Properties: id, grantedTo,
+                                  grantedToIdentities, invitation,
+                                  inheritedFrom, link, roles,
+                                  shareId
 
   shared-by-id                    ID of the user that shared the     string      48d31887-5fad-4d73-a9f5-3c356e68a038   Y
-                                  item (if shared).                                                                     
+                                  item (if shared).
 
   shared-owner-id                 ID of the owner of the shared item string      48d31887-5fad-4d73-a9f5-3c356e68a038   Y
-                                  (if shared).                                                                          
+                                  (if shared).
 
   shared-scope                    If shared, indicates the scope of  string      users                                  Y
-                                  how the item is shared: anonymous,                                                    
-                                  organization, or users.                                                               
+                                  how the item is shared: anonymous,
+                                  organization, or users.
 
   shared-time                     Time when the item was shared,     RFC 3339    2006-01-02T15:04:05Z                   Y
-                                  with S accuracy (mS for OneDrive                                                      
-                                  Personal).                                                                            
+                                  with S accuracy (mS for OneDrive
+                                  Personal).
 
   utime                           Time of upload with S accuracy (mS RFC 3339    2006-01-02T15:04:05Z                   Y
-                                  for OneDrive Personal).                                                               
+                                  for OneDrive Personal).
   ------------------------------------------------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -49372,7 +49372,7 @@ This will guide you through an interactive setup process:
     Endpoint for Object storage API.
     Leave blank to use the default endpoint for the region.
     Enter a value. Press Enter to leave empty.
-    endpoint> 
+    endpoint>
 
     Option config_file.
     Full Path to OCI config file
@@ -51007,9 +51007,9 @@ This will guide you through an interactive setup process.
        \ "true"
     env_auth> true
     User name to log in (OS_USERNAME).
-    user> 
+    user>
     API key or password (OS_PASSWORD).
-    key> 
+    key>
     Authentication URL for server (OS_AUTH_URL).
     Choose a number from below, or type in your own value
      1 / Rackspace US
@@ -51026,25 +51026,25 @@ This will guide you through an interactive setup process.
        \ "https://auth.cloud.ovh.net/v3"
      7  / Blomp Cloud Storage
        \ "https://authenticate.ain.net"
-    auth> 
+    auth>
     User ID to log in - optional - most swift systems use user and leave this blank (v3 auth) (OS_USER_ID).
-    user_id> 
+    user_id>
     User domain - optional (v3 auth) (OS_USER_DOMAIN_NAME)
-    domain> 
+    domain>
     Tenant name - optional for v1 auth, this or tenant_id required otherwise (OS_TENANT_NAME or OS_PROJECT_NAME)
-    tenant> 
+    tenant>
     Tenant ID - optional for v1 auth, this or tenant required otherwise (OS_TENANT_ID)
-    tenant_id> 
+    tenant_id>
     Tenant domain - optional (v3 auth) (OS_PROJECT_DOMAIN_NAME)
-    tenant_domain> 
+    tenant_domain>
     Region name - optional (OS_REGION_NAME)
-    region> 
+    region>
     Storage URL - optional (OS_STORAGE_URL)
-    storage_url> 
+    storage_url>
     Auth Token from alternate authentication - optional (OS_AUTH_TOKEN)
-    auth_token> 
+    auth_token>
     AuthVersion - optional - set to (1,2,3) if your auth URL has no version (ST_AUTH_VERSION)
-    auth_version> 
+    auth_version>
     Endpoint type to choose from the service catalogue (OS_ENDPOINT_TYPE)
     Choose a number from below, or type in your own value
      1 / Public (default, choose this if not sure)
@@ -51053,24 +51053,24 @@ This will guide you through an interactive setup process.
        \ "internal"
      3 / Admin
        \ "admin"
-    endpoint_type> 
+    endpoint_type>
     Remote config
     --------------------
     [test]
     env_auth = true
-    user = 
-    key = 
-    auth = 
-    user_id = 
-    domain = 
-    tenant = 
-    tenant_id = 
-    tenant_domain = 
-    region = 
-    storage_url = 
-    auth_token = 
-    auth_version = 
-    endpoint_type = 
+    user =
+    key =
+    auth =
+    user_id =
+    domain =
+    tenant =
+    tenant_id =
+    tenant_domain =
+    region =
+    storage_url =
+    auth_token =
+    auth_version =
+    endpoint_type =
     --------------------
     y) Yes this is OK
     e) Edit this remote
@@ -51711,9 +51711,9 @@ This will guide you through an interactive setup process:
     [snip]
     Storage> pcloud
     Pcloud App Client Id - leave blank normally.
-    client_id> 
+    client_id>
     Pcloud App Client Secret - leave blank normally.
-    client_secret> 
+    client_secret>
     Edit advanced config?
     y) Yes
     n) No (default)
@@ -52049,7 +52049,7 @@ This will guide you through an interactive setup process:
     Edit advanced config?
     y) Yes
     n) No (default)
-    y/n> 
+    y/n>
 
     Configuration complete.
     Options:
@@ -52509,14 +52509,14 @@ Here are the possible system metadata items for the pixeldrain backend.
   Name        Help           Type        Example                               Read Only
   ----------- -------------- ----------- ------------------------------------- --------------------
   btime       Time of file   RFC 3339    2006-01-02T15:04:05.999999999Z07:00   N
-              birth                                                            
-              (creation)                                                       
+              birth
+              (creation)
 
   mode        File mode      octal, unix 755                                   N
-                             style                                             
+                             style
 
   mtime       Time of last   RFC 3339    2006-01-02T15:04:05.999999999Z07:00   N
-              modification                                                     
+              modification
   -------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.
@@ -52575,7 +52575,7 @@ This will guide you through an interactive setup process:
     y) Yes this is OK
     e) Edit this remote
     d) Delete this remote
-    y/e/d> 
+    y/e/d>
 
 See the remote setup docs for how to set it up on a machine with no
 Internet browser available.
@@ -53875,7 +53875,7 @@ at the end of the configuration, and will attempt to authenticate you:
     type = seafile
     url = http://my.seafile.server/
     user = me@example.com
-    pass = 
+    pass =
     2fa = true
     library = My Library
     --------------------
@@ -54278,7 +54278,7 @@ e.g. using the OpenSSH known_hosts file:
     type = sftp
     host = example.com
     user = sftpuser
-    pass = 
+    pass =
     known_hosts_file = ~/.ssh/known_hosts
 
 Alternatively you can create your own known hosts file like this:
@@ -55289,7 +55289,7 @@ This will guide you through an interactive setup process.
     Option port.
     Samba port number.
     Enter a signed integer. Press Enter for the default (445).
-    port> 
+    port>
 
     Option pass.
     Samba password.
@@ -55304,8 +55304,8 @@ This will guide you through an interactive setup process.
     1024 is the maximum
     Bits> 64
     Your password is: XXXX
-    Use this password? Please note that an obscured version of this 
-    password (and not the password itself) will be stored under your 
+    Use this password? Please note that an obscured version of this
+    password (and not the password itself) will be stored under your
     configuration file, so keep this generated password in a safe place.
     y) Yes (default)
     n) No
@@ -55314,7 +55314,7 @@ This will guide you through an interactive setup process.
     Option domain.
     Domain name for NTLM authentication.
     Enter a string value. Press Enter for the default (WORKGROUP).
-    domain> 
+    domain>
 
     Edit advanced config?
     y) Yes
@@ -55988,19 +55988,19 @@ This will guide you through an interactive setup process:
     Sugarsync App ID.
     Leave blank to use rclone's.
     Enter a string value. Press Enter for the default ("").
-    app_id> 
+    app_id>
     Sugarsync Access Key ID.
     Leave blank to use rclone's.
     Enter a string value. Press Enter for the default ("").
-    access_key_id> 
+    access_key_id>
     Sugarsync Private Access Key
     Leave blank to use rclone's.
     Enter a string value. Press Enter for the default ("").
-    private_access_key> 
+    private_access_key>
     Permanently delete files if true
     otherwise put them in the deleted files.
     Enter a boolean value (true or false). Press Enter for the default ("false").
-    hard_delete> 
+    hard_delete>
     Edit advanced config? (y/n)
     y) Yes
     n) No (default)
@@ -56265,7 +56265,7 @@ This will guide you through an interactive setup process:
     Storage> ulozto
 
     Option app_token.
-    The application token identifying the app. An app API key can be either found in the API doc 
+    The application token identifying the app. An app API key can be either found in the API doc
     https://uloz.to/upload-resumable-api-beta or obtained from customer service.
     Enter a value. Press Enter to leave empty.
     app_token> token_value
@@ -56558,7 +56558,7 @@ This will guide you through an interactive setup process:
     y) Yes this is OK (default)
     e) Edit this remote
     d) Delete this remote
-    y/e/d> 
+    y/e/d>
 
 Once configured you can then use rclone like this,
 
@@ -56783,8 +56783,8 @@ Function / Category classifications
              Existing file   (as destination when file exist)
 
   create     Create          copy, sync (as destination when file not exist)
-             non-existing    
-             file            
+             non-existing
+             file
 
   search     Reading and     ls, lsd, lsl, cat, md5sum, sha1sum and copy, sync
              listing file    (as source)
@@ -56855,24 +56855,24 @@ much larger latency of remote file systems.
 
   epff (existing   Act on the first one found, by the time upstreams
   path, first      reply, where the relative path exists.
-  found)           
+  found)
 
   eplfs (existing  Of all the upstreams on which the relative path exists
   path, least free choose the one with the least free space.
-  space)           
+  space)
 
   eplus (existing  Of all the upstreams on which the relative path exists
   path, least used choose the one with the least used space.
-  space)           
+  space)
 
   eplno (existing  Of all the upstreams on which the relative path exists
   path, least      choose the one with the least number of objects.
-  number of        
-  objects)         
+  number of
+  objects)
 
   epmfs (existing  Of all the upstreams on which the relative path exists
   path, most free  choose the one with the most free space.
-  space)           
+  space)
 
   eprand (existing Calls epall and then randomizes. Returns only one
   path, random)    upstream.
@@ -57853,11 +57853,11 @@ This will guide you through an interactive setup process:
     OAuth Client Id
     Leave blank normally.
     Enter a string value. Press Enter for the default ("").
-    client_id> 
+    client_id>
     OAuth Client Secret
     Leave blank normally.
     Enter a string value. Press Enter for the default ("").
-    client_secret> 
+    client_secret>
     Edit advanced config? (y/n)
     y) Yes
     n) No (default)
@@ -57869,7 +57869,7 @@ This will guide you through an interactive setup process:
     If not sure try Y. If Y failed, try N.
     y) Yes (default)
     n) No
-    y/n> 
+    y/n>
     If your browser doesn't open automatically go to the following link: http://127.0.0.1:53682/auth?state=LVn0IHzxej1ZkmQw31d0wQ
     Log in and authorize rclone for access
     Waiting for code...
@@ -57891,7 +57891,7 @@ This will guide you through an interactive setup process:
     y) Yes this is OK (default)
     e) Edit this remote
     d) Delete this remote
-    y/e/d> 
+    y/e/d>
 
 See the remote setup docs for how to set it up on a machine with no
 Internet browser available.
@@ -58752,26 +58752,26 @@ Here are the possible system metadata items for the local backend.
   Name        Help           Type          Example                               Read Only
   ----------- -------------- ------------- ------------------------------------- --------------------
   atime       Time of last   RFC 3339      2006-01-02T15:04:05.999999999Z07:00   N
-              access                                                             
+              access
 
   btime       Time of file   RFC 3339      2006-01-02T15:04:05.999999999Z07:00   N
-              birth                                                              
-              (creation)                                                         
+              birth
+              (creation)
 
   gid         Group ID of    decimal       500                                   N
-              owner          number                                              
+              owner          number
 
   mode        File type and  octal, unix   0100664                               N
-              mode           style                                               
+              mode           style
 
   mtime       Time of last   RFC 3339      2006-01-02T15:04:05.999999999Z07:00   N
-              modification                                                       
+              modification
 
   rdev        Device ID (if  hexadecimal   1abc                                  N
-              special file)                                                      
+              special file)
 
   uid         User ID of     decimal       500                                   N
-              owner          number                                              
+              owner          number
   ---------------------------------------------------------------------------------------------------
 
 See the metadata docs for more info.

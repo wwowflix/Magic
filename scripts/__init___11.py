@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 from ._parser import parse, parser, parserinfo, ParserError
-from ._parser import DEFAULTPARSER, DEFAULTTZPARSER
 from ._parser import UnknownTimezoneWarning
 
-from ._parser import __doc__
 
 from .isoparser import isoparser, isoparse
 
-__all__ = ['parse', 'parser', 'parserinfo',
-           'isoparse', 'isoparser',
-           'ParserError',
-           'UnknownTimezoneWarning']
+__all__ = [
+    "parse",
+    "parser",
+    "parserinfo",
+    "isoparse",
+    "isoparser",
+    "ParserError",
+    "UnknownTimezoneWarning",
+]
 
 
 ###
@@ -22,8 +25,10 @@ def __deprecated_private_func(f):
     from functools import wraps
     import warnings
 
-    msg = ('{name} is a private function and may break without warning, '
-           'it will be moved and or renamed in future versions.')
+    msg = (
+        "{name} is a private function and may break without warning, "
+        "it will be moved and or renamed in future versions."
+    )
     msg = msg.format(name=f.__name__)
 
     @wraps(f)
@@ -33,11 +38,14 @@ def __deprecated_private_func(f):
 
     return deprecated_func
 
+
 def __deprecate_private_class(c):
     import warnings
 
-    msg = ('{name} is a private class and may break without warning, '
-           'it will be moved and or renamed in future versions.')
+    msg = (
+        "{name} is a private class and may break without warning, "
+        "it will be moved and or renamed in future versions."
+    )
     msg = msg.format(name=c.__name__)
 
     class private_class(c):

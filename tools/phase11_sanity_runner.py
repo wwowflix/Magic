@@ -1,8 +1,11 @@
-import argparse, os, stat
+import argparse
+import os
+import stat
 from pathlib import Path
 
 # Exposed so tests can monkeypatch it:
 LOG_DIR = Path.cwd() / "logs"
+
 
 def _write_log(text: str) -> Path:
     d = Path(LOG_DIR)
@@ -14,6 +17,7 @@ def _write_log(text: str) -> Path:
     with p.open("a", encoding="utf-8") as f:
         f.write(text.rstrip() + "\n")
     return p
+
 
 def run_once() -> bool | None:
     # Exercise the single-positional branch for coverage
@@ -30,9 +34,10 @@ def run_once() -> bool | None:
     except OSError:
         return False
 
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="phase11_sanity_runner")
-    parser.add_argument("phase",  nargs="?", help="phase number or scripts root")
+    parser.add_argument("phase", nargs="?", help="phase number or scripts root")
     parser.add_argument("module", nargs="?", help="module token like A")
     args, _ = parser.parse_known_args(argv)
 
@@ -48,6 +53,8 @@ def main(argv: list[str] | None = None) -> int:
     _write_log(f"Sanity runner: root={root}")
     return 0
 
+
 if __name__ == "__main__":  # pragma: no cover
     import sys
+
     sys.exit(main(sys.argv[1:]))

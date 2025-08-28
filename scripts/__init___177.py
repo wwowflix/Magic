@@ -1,4 +1,4 @@
-""" Partially instantiate a variable font.
+"""Partially instantiate a variable font.
 
 The module exports an `instantiateVariableFont` function and CLI that allow to
 create full instances (i.e. static fonts) from variable fonts, as well as "partial"
@@ -36,7 +36,7 @@ If the input location specifies all the axes, the resulting instance is no longe
 'variable' (same as using fontools varLib.mutator):
 .. code-block:: pycon
 
-    >>>    
+    >>>
     >> instance = instancer.instantiateVariableFont(
     ...     varfont, {"wght": 700, "wdth": 67.5}
     ... )
@@ -72,7 +72,7 @@ L1
 L2
     dropping one or more axes while pinning them at non-default locations;
     .. code-block:: pycon
-    
+
         >>>
         >> font = instancer.instantiateVariableFont(varfont, {"wght": 700})
 
@@ -81,14 +81,14 @@ L3
     a new minimum or maximum, potentially -- though not necessarily -- dropping
     entire regions of variations that fall completely outside this new range.
     .. code-block:: pycon
-    
+
         >>>
         >> font = instancer.instantiateVariableFont(varfont, {"wght": (100, 300)})
 
 L4
     moving the default location of an axis, by specifying (min,defalt,max) values:
     .. code-block:: pycon
-    
+
         >>>
         >> font = instancer.instantiateVariableFont(varfont, {"wght": (100, 300, 700)})
 
@@ -101,11 +101,10 @@ https://github.com/fonttools/fonttools/issues/1537
 
 from fontTools.misc.fixedTools import (
     floatToFixedToFloat,
-    strToFixedToFloat,
     otRound,
 )
 from fontTools.varLib.models import normalizeValue, piecewiseLinearMap
-from fontTools.ttLib import TTFont, newTable
+from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables import _g_l_y_f
 from fontTools import varLib
@@ -127,7 +126,6 @@ from fontTools.varLib.instancer import names
 from .featureVars import instantiateFeatureVariations
 from fontTools.misc.cliTools import makeOutputFileName
 from fontTools.varLib.instancer import solver
-from fontTools.ttLib.tables.otTables import VarComponentFlags
 import collections
 import dataclasses
 from contextlib import contextmanager

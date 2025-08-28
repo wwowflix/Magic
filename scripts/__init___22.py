@@ -1,4 +1,4 @@
-"""A collection of modules for iterating through different kinds of
+﻿"""A collection of modules for iterating through different kinds of
 tree, generating tokens identical to those produced by the tokenizer
 module.
 
@@ -10,8 +10,8 @@ returns an iterator which generates tokens.
 
 from __future__ import absolute_import, division, unicode_literals
 
-from .. import constants
-from .._utils import default_etree
+from scripts.. import constants
+from scripts.._utils import default_etree
 
 __all__ = ["getTreeWalker", "pprint"]
 

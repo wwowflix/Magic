@@ -113,4 +113,3 @@ class Redditors(PRAWBase):
 
         """
         return stream_generator(self.new, **stream_options)
-

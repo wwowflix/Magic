@@ -6,7 +6,10 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import copy, decimal, math, re
+import copy
+import decimal
+import math
+import re
 from collections import OrderedDict
 
 from collections.abc import Sequence

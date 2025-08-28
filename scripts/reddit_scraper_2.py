@@ -19,14 +19,16 @@ print("?? Scraping Reddit trending posts...")
 
 for sub in subreddits:
     for post in reddit.subreddit(sub).hot(limit=limit):
-        data.append({
-            "date": datetime.utcnow().isoformat(),
-            "subreddit": sub,
-            "title": post.title,
-            "score": post.score,
-            "comments": post.num_comments,
-            "url": post.url,
-        })
+        data.append(
+            {
+                "date": datetime.utcnow().isoformat(),
+                "subreddit": sub,
+                "title": post.title,
+                "score": post.score,
+                "comments": post.num_comments,
+                "url": post.url,
+            }
+        )
 
 df = pd.DataFrame(data)
 df.to_csv("outputs/reddit_scrape.csv", index=False)

@@ -232,9 +232,7 @@ class TestResetIndex:
 
     def test_reset_index_right_dtype(self):
         time = np.arange(0.0, 10, np.sqrt(2) / 2)
-        s1 = Series(
-            (9.81 * time**2) / 2, index=Index(time, name="time"), name="speed"
-        )
+        s1 = Series((9.81 * time**2) / 2, index=Index(time, name="time"), name="speed")
         df = DataFrame(s1)
 
         reset = s1.reset_index()
@@ -811,4 +809,3 @@ def test_reset_index_with_empty_frame(columns):
     result = df.reset_index()
     expected = DataFrame({"foo": [1, 2], "bar": [2, 3]})
     tm.assert_frame_equal(result, expected)
-

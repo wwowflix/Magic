@@ -1,4 +1,7 @@
-import os, subprocess, sys, textwrap, tempfile, shutil
+import os
+import subprocess
+import sys
+
 
 def test_integrity_checker_runs_ok(tmp_path):
     # Make a minimal READY file
@@ -9,14 +12,24 @@ def test_integrity_checker_runs_ok(tmp_path):
 
     # Copy the checker into tmp and run it
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    checker_src = os.path.join(repo_root, "scripts", "phase11", "module_C", "11C_script_integrity_checker_READY.py")
+    checker_src = os.path.join(
+        repo_root,
+        "scripts",
+        "phase11",
+        "module_C",
+        "11C_script_integrity_checker_READY.py",
+    )
     checker_dst = scripts_dir / "11C_script_integrity_checker_READY.py"
-    checker_dst.write_text(open(checker_src, "r", encoding="utf-8").read(), encoding="utf-8")
+    checker_dst.write_text(
+        open(checker_src, "r", encoding="utf-8").read(), encoding="utf-8"
+    )
 
     # Patch SCRIPTS_DIR in the checker by running from tmp root (relative walk)
     env = os.environ.copy()
     cwd = tmp_path
 
     # Run checker
-    result = subprocess.run([sys.executable, str(checker_dst)], cwd=cwd, capture_output=True, text=True)
+    result = subprocess.run(
+        [sys.executable, str(checker_dst)], cwd=cwd, capture_output=True, text=True
+    )
     assert result.returncode == 0, f"stdout={result.stdout} stderr={result.stderr}"

@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 from sklearn.preprocessing import MinMaxScaler
 
+
 class LSTMModel(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, output_size):
         super(LSTMModel, self).__init__()
@@ -16,6 +17,7 @@ class LSTMModel(nn.Module):
         out, _ = self.lstm(x)
         out = self.fc(out[:, -1, :])
         return out
+
 
 def run_lstm_forecast(csv_file, keyword):
     print("? Running PyTorch LSTM forecast...")
@@ -35,15 +37,15 @@ def run_lstm_forecast(csv_file, keyword):
     data_scaled = scaler.fit_transform(data)
 
     # Prepare sequences
-    seq_length = min(2, len(df_filtered["value"])-1)
+    seq_length = min(2, len(df_filtered["value"]) - 1)
     print("Using sequence length:", seq_length)
     print("Using sequence length:", seq_length)
     X = []
     y = []
 
     for i in range(len(data_scaled) - seq_length):
-        X.append(data_scaled[i:i+seq_length])
-        y.append(data_scaled[i+seq_length])
+        X.append(data_scaled[i : i + seq_length])
+        y.append(data_scaled[i + seq_length])
 
     X = np.array(X)
     y = np.array(y)
@@ -73,15 +75,15 @@ def run_lstm_forecast(csv_file, keyword):
     predictions_rescaled = scaler.inverse_transform(predictions)
 
     # Plot
-    plt.figure(figsize=(10,5))
-    plt.plot(df_filtered["date"].values[seq_length:], predictions_rescaled, label="Forecast")
+    plt.figure(figsize=(10, 5))
+    plt.plot(
+        df_filtered["date"].values[seq_length:], predictions_rescaled, label="Forecast"
+    )
     plt.plot(df_filtered["date"].values, df_filtered["value"].values, label="Actual")
     plt.legend()
     plt.title(f"PyTorch LSTM Forecast for {keyword}")
     plt.show()
 
+
 if __name__ == "__main__":
     run_lstm_forecast("outputs/google_trends.csv", "ai tools")
-
-
-

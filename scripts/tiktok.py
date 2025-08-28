@@ -4,7 +4,6 @@ import logging
 import dataclasses
 from typing import Any
 import random
-import time
 import json
 
 from playwright.async_api import async_playwright, TimeoutError
@@ -155,7 +154,7 @@ class TikTokApi:
                 if cookies is None:
                     cookies = {}
                 cookies["msToken"] = ms_token
-    
+
             context = await self.browser.new_context(proxy=proxy, **context_options)
             if cookies is not None:
                 formatted_cookies = [
@@ -166,38 +165,42 @@ class TikTokApi:
                 await context.add_cookies(formatted_cookies)
             page = await context.new_page()
             await stealth_async(page)
-    
+
             # Get the request headers to the url
             request_headers = None
-    
+
             def handle_request(request):
                 nonlocal request_headers
                 request_headers = request.headers
-    
+
             page.once("request", handle_request)
-    
+
             if suppress_resource_load_types is not None:
                 await page.route(
                     "**/*",
-                    lambda route, request: route.abort()
-                    if request.resource_type in suppress_resource_load_types
-                    else route.continue_(),
+                    lambda route, request: (
+                        route.abort()
+                        if request.resource_type in suppress_resource_load_types
+                        else route.continue_()
+                    ),
                 )
-            
+
             # Set the navigation timeout
             page.set_default_navigation_timeout(timeout)
-    
+
             await page.goto(url)
-            await page.goto(url) # hack: tiktok blocks first request not sure why, likely bot detection
-            
+            await page.goto(
+                url
+            )  # hack: tiktok blocks first request not sure why, likely bot detection
+
             # by doing this, we are simulate scroll event using mouse to `avoid` bot detection
             x, y = random.randint(0, 50), random.randint(0, 50)
             a, b = random.randint(1, 50), random.randint(100, 200)
-    
+
             await page.mouse.move(x, y)
             await page.wait_for_load_state("networkidle")
             await page.mouse.move(a, b)
-    
+
             session = TikTokPlaywrightSession(
                 context,
                 page,
@@ -208,7 +211,9 @@ class TikTokApi:
             )
 
             if ms_token is None:
-                await asyncio.sleep(sleep_after)  # TODO: Find a better way to wait for msToken
+                await asyncio.sleep(
+                    sleep_after
+                )  # TODO: Find a better way to wait for msToken
                 cookies = await self.get_session_cookies(session)
                 ms_token = cookies.get("msToken")
                 session.ms_token = ms_token
@@ -222,9 +227,9 @@ class TikTokApi:
             # clean up
             self.logger.error(f"Failed to create session: {e}")
             # Cleanup resources if they were partially created
-            if 'page' in locals():
+            if "page" in locals():
                 await page.close()
-            if 'context' in locals():
+            if "context" in locals():
                 await context.close()
             raise  # Re-raise the exception after cleanup
 
@@ -278,15 +283,24 @@ class TikTokApi:
                 override_browser_args = ["--headless=new"]
                 headless = False  # managed by the arg
             self.browser = await self.playwright.chromium.launch(
-                headless=headless, args=override_browser_args, proxy=random_choice(proxies), executable_path=executable_path
+                headless=headless,
+                args=override_browser_args,
+                proxy=random_choice(proxies),
+                executable_path=executable_path,
             )
         elif browser == "firefox":
             self.browser = await self.playwright.firefox.launch(
-                headless=headless, args=override_browser_args, proxy=random_choice(proxies), executable_path=executable_path
+                headless=headless,
+                args=override_browser_args,
+                proxy=random_choice(proxies),
+                executable_path=executable_path,
             )
         elif browser == "webkit":
             self.browser = await self.playwright.webkit.launch(
-                headless=headless, args=override_browser_args, proxy=random_choice(proxies), executable_path=executable_path
+                headless=headless,
+                args=override_browser_args,
+                proxy=random_choice(proxies),
+                executable_path=executable_path,
             )
         else:
             raise ValueError("Invalid browser argument passed")
@@ -403,16 +417,25 @@ class TikTokApi:
             attempts += 1
             try:
                 timeout_time = random.randint(5000, 20000)
-                await session.page.wait_for_function("window.byted_acrawler !== undefined", timeout=timeout_time)
+                await session.page.wait_for_function(
+                    "window.byted_acrawler !== undefined", timeout=timeout_time
+                )
                 break
-            except TimeoutError as e:
+            except TimeoutError:
                 if attempts == max_attempts:
-                    raise TimeoutError(f"Failed to load tiktok after {max_attempts} attempts, consider using a proxy")
-                
-                try_urls = ["https://www.tiktok.com/foryou", "https://www.tiktok.com", "https://www.tiktok.com/@tiktok", "https://www.tiktok.com/foryou"]
+                    raise TimeoutError(
+                        f"Failed to load tiktok after {max_attempts} attempts, consider using a proxy"
+                    )
+
+                try_urls = [
+                    "https://www.tiktok.com/foryou",
+                    "https://www.tiktok.com",
+                    "https://www.tiktok.com/@tiktok",
+                    "https://www.tiktok.com/foryou",
+                ]
 
                 await session.page.goto(random.choice(try_urls))
-        
+
         result = await session.page.evaluate(
             f'() => {{ return window.byted_acrawler.frontierSign("{url}") }}'
         )
@@ -501,7 +524,10 @@ class TikTokApi:
                 raise Exception("TikTokApi.run_fetch_script returned None")
 
             if result == "":
-                raise EmptyResponseException(result, "TikTok returned an empty response. They are detecting you're a bot, try some of these: headless=False, browser='webkit', consider using a proxy")
+                raise EmptyResponseException(
+                    result,
+                    "TikTok returned an empty response. They are detecting you're a bot, try some of these: headless=False, browser='webkit', consider using a proxy",
+                )
 
             try:
                 data = json.loads(result)
@@ -544,4 +570,3 @@ class TikTokApi:
     async def __aexit__(self, exc_type, exc, tb):
         await self.close_sessions()
         await self.stop_playwright()
-

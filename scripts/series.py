@@ -1,6 +1,7 @@
 """
 Data structure for 1-dimensional cross-sectional and time series data
 """
+
 from __future__ import annotations
 
 from textwrap import dedent
@@ -1398,8 +1399,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         name: Level = ...,
         inplace: Literal[False] = ...,
         allow_duplicates: bool = ...,
-    ) -> DataFrame:
-        ...
+    ) -> DataFrame: ...
 
     @overload
     def reset_index(
@@ -1410,8 +1410,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         name: Level = ...,
         inplace: Literal[False] = ...,
         allow_duplicates: bool = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def reset_index(
@@ -1422,8 +1421,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         name: Level = ...,
         inplace: Literal[True],
         allow_duplicates: bool = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "level"])
     def reset_index(
@@ -1606,8 +1604,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         name=...,
         max_rows: int | None = ...,
         min_rows: int | None = ...,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @overload
     def to_string(
@@ -1622,8 +1619,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         name=...,
         max_rows: int | None = ...,
         min_rows: int | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def to_string(
         self,
@@ -2247,20 +2243,17 @@ Name: Max Speed, dtype: float64
         keep: Literal["first", "last", False] = ...,
         *,
         inplace: Literal[False] = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def drop_duplicates(
         self, keep: Literal["first", "last", False] = ..., *, inplace: Literal[True]
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def drop_duplicates(
         self, keep: Literal["first", "last", False] = ..., *, inplace: bool = ...
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     def drop_duplicates(
@@ -2609,24 +2602,21 @@ Name: Max Speed, dtype: float64
     @overload
     def quantile(
         self, q: float = ..., interpolation: QuantileInterpolation = ...
-    ) -> float:
-        ...
+    ) -> float: ...
 
     @overload
     def quantile(
         self,
         q: Sequence[float] | AnyArrayLike,
         interpolation: QuantileInterpolation = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def quantile(
         self,
         q: float | Sequence[float] | AnyArrayLike = ...,
         interpolation: QuantileInterpolation = ...,
-    ) -> float | Series:
-        ...
+    ) -> float | Series: ...
 
     def quantile(
         self,
@@ -2694,8 +2684,10 @@ Name: Max Speed, dtype: float64
     def corr(
         self,
         other: Series,
-        method: Literal["pearson", "kendall", "spearman"]
-        | Callable[[np.ndarray, np.ndarray], float] = "pearson",
+        method: (
+            Literal["pearson", "kendall", "spearman"]
+            | Callable[[np.ndarray, np.ndarray], float]
+        ) = "pearson",
         min_periods: int | None = None,
     ) -> float:
         """
@@ -3552,8 +3544,7 @@ Keep all original rows and also all original values
         na_position: str = ...,
         ignore_index: bool = ...,
         key: ValueKeyFunc = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def sort_values(
@@ -3566,8 +3557,7 @@ Keep all original rows and also all original values
         na_position: str = ...,
         ignore_index: bool = ...,
         key: ValueKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # error: Signature of "sort_values" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -3792,8 +3782,7 @@ Keep all original rows and also all original values
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def sort_index(
@@ -3808,8 +3797,7 @@ Keep all original rows and also all original values
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def sort_index(
@@ -3824,8 +3812,7 @@ Keep all original rows and also all original values
         sort_remaining: bool = ...,
         ignore_index: bool = ...,
         key: IndexKeyFunc = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "sort_index" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -4617,8 +4604,7 @@ Keep all original rows and also all original values
         skipna: bool = ...,
         level: None = ...,
         **kwargs,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @overload
     def any(
@@ -4629,8 +4615,7 @@ Keep all original rows and also all original values
         skipna: bool = ...,
         level: Level,
         **kwargs,
-    ) -> Series | bool:
-        ...
+    ) -> Series | bool: ...
 
     @doc(NDFrame.any, **_shared_doc_kwargs)
     def any(
@@ -4640,8 +4625,7 @@ Keep all original rows and also all original values
         skipna: bool = True,
         level: Level | None = None,
         **kwargs,
-    ) -> Series | bool:
-        ...
+    ) -> Series | bool: ...
 
     @doc(
         _shared_docs["transform"],
@@ -4881,8 +4865,7 @@ Keep all original rows and also all original values
         inplace: Literal[True],
         level: Level | None = ...,
         errors: IgnoreRaise = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def rename(
@@ -4894,8 +4877,7 @@ Keep all original rows and also all original values
         inplace: Literal[False] = ...,
         level: Level | None = ...,
         errors: IgnoreRaise = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def rename(
@@ -4907,8 +4889,7 @@ Keep all original rows and also all original values
         inplace: bool = ...,
         level: Level | None = ...,
         errors: IgnoreRaise = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     def rename(
         self,
@@ -5012,8 +4993,7 @@ Keep all original rows and also all original values
         axis: Axis = ...,
         inplace: Literal[False] | lib.NoDefault = ...,
         copy: bool | lib.NoDefault = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def set_axis(
@@ -5023,8 +5003,7 @@ Keep all original rows and also all original values
         axis: Axis = ...,
         inplace: Literal[True],
         copy: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def set_axis(
@@ -5034,8 +5013,7 @@ Keep all original rows and also all original values
         axis: Axis = ...,
         inplace: bool | lib.NoDefault = ...,
         copy: bool | lib.NoDefault = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "set_axis" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "labels"])
@@ -5104,8 +5082,7 @@ Keep all original rows and also all original values
         level: Level | None = ...,
         inplace: Literal[True],
         errors: IgnoreRaise = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def drop(
@@ -5118,8 +5095,7 @@ Keep all original rows and also all original values
         level: Level | None = ...,
         inplace: Literal[False] = ...,
         errors: IgnoreRaise = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def drop(
@@ -5132,8 +5108,7 @@ Keep all original rows and also all original values
         level: Level | None = ...,
         inplace: bool = ...,
         errors: IgnoreRaise = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "drop" incompatible with supertype "NDFrame"
     # github.com/python/mypy/issues/12387
@@ -5254,8 +5229,7 @@ Keep all original rows and also all original values
         inplace: Literal[False] = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def fillna(
@@ -5267,8 +5241,7 @@ Keep all original rows and also all original values
         inplace: Literal[True],
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def fillna(
@@ -5280,8 +5253,7 @@ Keep all original rows and also all original values
         inplace: bool = ...,
         limit: int | None = ...,
         downcast: dict | None = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     #  error: Signature of "fillna" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "value"])
@@ -5342,8 +5314,7 @@ Keep all original rows and also all original values
         limit: int | None = ...,
         regex: bool = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def replace(
@@ -5355,8 +5326,7 @@ Keep all original rows and also all original values
         limit: int | None = ...,
         regex: bool = ...,
         method: Literal["pad", "ffill", "bfill"] | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # error: Signature of "replace" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(
@@ -5732,14 +5702,12 @@ Keep all original rows and also all original values
     @overload
     def dropna(
         self, *, axis: Axis = ..., inplace: Literal[False] = ..., how: str | None = ...
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def dropna(
         self, *, axis: Axis = ..., inplace: Literal[True], how: str | None = ...
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
     def dropna(
@@ -5954,8 +5922,7 @@ Keep all original rows and also all original values
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def ffill(
@@ -5965,8 +5932,7 @@ Keep all original rows and also all original values
         inplace: Literal[True],
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def ffill(
@@ -5976,8 +5942,7 @@ Keep all original rows and also all original values
         inplace: bool = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "ffill" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -5998,8 +5963,7 @@ Keep all original rows and also all original values
         inplace: Literal[False] = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def bfill(
@@ -6009,8 +5973,7 @@ Keep all original rows and also all original values
         inplace: Literal[True],
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def bfill(
@@ -6020,8 +5983,7 @@ Keep all original rows and also all original values
         inplace: bool = ...,
         limit: None | int = ...,
         downcast: dict | None = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "bfill" incompatible with supertype "NDFrame"
     @deprecate_nonkeyword_arguments(version=None, allowed_args=["self"])
@@ -6082,8 +6044,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def where(
@@ -6096,8 +6057,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def where(
@@ -6110,8 +6070,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "where" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
@@ -6148,8 +6107,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> Series:
-        ...
+    ) -> Series: ...
 
     @overload
     def mask(
@@ -6162,8 +6120,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def mask(
@@ -6176,8 +6133,7 @@ Keep all original rows and also all original values
         level: Level = ...,
         errors: IgnoreRaise | lib.NoDefault = ...,
         try_cast: bool | lib.NoDefault = ...,
-    ) -> Series | None:
-        ...
+    ) -> Series | None: ...
 
     # error: Signature of "mask" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)

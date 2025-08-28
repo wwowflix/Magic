@@ -5,13 +5,10 @@ certifi            2025.7.14 numpy              1.21.6 pandas             1.5.3 
 
 Test Results:
 
-Script                              Status   
-------                              ------   
+Script                              Status
+------                              ------
 .\scripts\twitter_scraper_clean.py  ✅ SUCCESS
 .\scripts\twitter_scraper_simple.py ✅ SUCCESS
 .\scripts\zephyr\twitter_api.py     ✅ SUCCESS
 .\scripts\zephyr\twitter_scraper.py ✅ SUCCESS
 .\reddit_api_fixed.py               ✅ SUCCESS
-
-
-

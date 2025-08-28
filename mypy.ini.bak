@@ -1,0 +1,14 @@
+﻿[mypy]
+python_version = 3.12
+ignore_missing_imports = True
+follow_imports = silent
+warn_unused_ignores = False
+no_site_packages = True
+files = tools, tests
+
+[mypy-agents.*]
+ignore_errors = True
+[mypy-notebooks.*]
+ignore_errors = True
+[mypy-scripts.*]
+ignore_errors = True

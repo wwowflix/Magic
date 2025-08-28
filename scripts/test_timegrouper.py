@@ -1,6 +1,7 @@
 """
 test with the TimeGrouper / grouping with datetimes
 """
+
 from datetime import (
     datetime,
     timedelta,
@@ -966,4 +967,3 @@ class TestGroupBy:
         )
         expected_df = gb[["Quantity"]].aggregate("mean")
         tm.assert_frame_equal(result_df, expected_df)
-

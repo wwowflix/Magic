@@ -3842,7 +3842,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                         link=link_dest,
                     )
                     continue
-            if self.is_ttf_font and text[0] != "\n" and not ord(text[0]) in font_glyphs:
+            if self.is_ttf_font and text[0] != "\n" and ord(text[0]) not in font_glyphs:
                 style = ("B" if in_bold else "") + ("I" if in_italics else "")
                 fallback_font = self.get_fallback_font(text[0], style)
                 if fallback_font:

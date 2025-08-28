@@ -2,6 +2,7 @@
 A verbatim copy (vendored) of the spec tests.
 Taken from https://github.com/data-apis/dataframe-api
 """
+
 import ctypes
 import math
 
@@ -173,4 +174,3 @@ def test_buffer(df_from_dict):
         for idx, truth in enumerate(arr):
             val = ctype.from_address(dataBuf.ptr + idx * (bitwidth // 8)).value
             assert val == truth, f"Buffer at index {idx} mismatch"
-

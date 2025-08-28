@@ -1,4 +1,8 @@
-﻿import os, sys, json, subprocess, pathlib
+﻿import sys
+import json
+import subprocess
+import pathlib
+
 
 def test_e2e_ok_with_existing_logs(tmp_path):
     summaries_dir = tmp_path / "outputs" / "summaries"
@@ -11,7 +15,7 @@ def test_e2e_ok_with_existing_logs(tmp_path):
         "Filename\tStatus\tPhase\tFolder\n"
         "11A_foo.py\tPASS\t11\tscripts/phase11/module_A/\n"
         "11B_bar.py\tFAIL\t11\tscripts/phase11/module_B/\n",
-        encoding="utf-8"
+        encoding="utf-8",
     )
 
     fail_log_dir = logs_root / "phase11_module_B"
@@ -20,9 +24,16 @@ def test_e2e_ok_with_existing_logs(tmp_path):
 
     report = tmp_path / "e2e_report.json"
     cmd = [
-        sys.executable, str(pathlib.Path("tools") / "e2e_smoketest.py"),
-        "--summary", str(tsv), "--logs_root", str(logs_root),
-        "--phase", "11", "--report", str(report),
+        sys.executable,
+        str(pathlib.Path("tools") / "e2e_smoketest.py"),
+        "--summary",
+        str(tsv),
+        "--logs_root",
+        str(logs_root),
+        "--phase",
+        "11",
+        "--report",
+        str(report),
     ]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     assert proc.returncode == 0, f"stderr:\n{proc.stderr}\nstdout:\n{proc.stdout}"

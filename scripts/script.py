@@ -252,11 +252,15 @@ class Script:
 
     def add_console_message_handler(self, handler):
         self._subscribe_to_log_entries()
-        return self.conn.add_callback(LogEntryAdded, self._handle_log_entry("console", handler))
+        return self.conn.add_callback(
+            LogEntryAdded, self._handle_log_entry("console", handler)
+        )
 
     def add_javascript_error_handler(self, handler):
         self._subscribe_to_log_entries()
-        return self.conn.add_callback(LogEntryAdded, self._handle_log_entry("javascript", handler))
+        return self.conn.add_callback(
+            LogEntryAdded, self._handle_log_entry("javascript", handler)
+        )
 
     def remove_console_message_handler(self, id):
         self.conn.remove_callback(LogEntryAdded, id)
@@ -304,7 +308,9 @@ class Script:
         """
 
         if self.driver is None:
-            raise WebDriverException("Driver reference is required for script execution")
+            raise WebDriverException(
+                "Driver reference is required for script execution"
+            )
         browsing_context_id = self.driver.current_window_handle
 
         # Convert arguments to the format expected by BiDi call_function (LocalValue Type)
@@ -315,7 +321,10 @@ class Script:
         target = {"context": browsing_context_id}
 
         result = self._call_function(
-            function_declaration=script, await_promise=True, target=target, arguments=arguments if arguments else None
+            function_declaration=script,
+            await_promise=True,
+            target=target,
+            arguments=arguments if arguments else None,
         )
 
         if result.type == "success":
@@ -351,7 +360,9 @@ class Script:
                     return {"type": "number", "value": "-0"}
 
             JS_MAX_SAFE_INTEGER = 9007199254740991
-            if isinstance(value, int) and (value > JS_MAX_SAFE_INTEGER or value < -JS_MAX_SAFE_INTEGER):
+            if isinstance(value, int) and (
+                value > JS_MAX_SAFE_INTEGER or value < -JS_MAX_SAFE_INTEGER
+            ):
                 return {"type": "bigint", "value": str(value)}
 
             return {"type": "number", "value": value}
@@ -360,20 +371,36 @@ class Script:
             return {"type": "string", "value": value}
         elif isinstance(value, datetime.datetime):
             # Convert Python datetime to JavaScript Date (ISO 8601 format)
-            return {"type": "date", "value": value.isoformat() + "Z" if value.tzinfo is None else value.isoformat()}
+            return {
+                "type": "date",
+                "value": (
+                    value.isoformat() + "Z"
+                    if value.tzinfo is None
+                    else value.isoformat()
+                ),
+            }
         elif isinstance(value, datetime.date):
             # Convert Python date to JavaScript Date
-            dt = datetime.datetime.combine(value, datetime.time.min).replace(tzinfo=datetime.timezone.utc)
+            dt = datetime.datetime.combine(value, datetime.time.min).replace(
+                tzinfo=datetime.timezone.utc
+            )
             return {"type": "date", "value": dt.isoformat()}
         elif isinstance(value, set):
-            return {"type": "set", "value": [self.__convert_to_local_value(item) for item in value]}
+            return {
+                "type": "set",
+                "value": [self.__convert_to_local_value(item) for item in value],
+            }
         elif isinstance(value, (list, tuple)):
-            return {"type": "array", "value": [self.__convert_to_local_value(item) for item in value]}
+            return {
+                "type": "array",
+                "value": [self.__convert_to_local_value(item) for item in value],
+            }
         elif isinstance(value, dict):
             return {
                 "type": "object",
                 "value": [
-                    [self.__convert_to_local_value(k), self.__convert_to_local_value(v)] for k, v in value.items()
+                    [self.__convert_to_local_value(k), self.__convert_to_local_value(v)]
+                    for k, v in value.items()
                 ],
             }
         else:
@@ -567,7 +594,10 @@ class Script:
             self.log_entry_subscribed = True
 
     def _unsubscribe_from_log_entries(self):
-        if self.log_entry_subscribed and LogEntryAdded.event_class not in self.conn.callbacks:
+        if (
+            self.log_entry_subscribed
+            and LogEntryAdded.event_class not in self.conn.callbacks
+        ):
             session = Session(self.conn)
             self.conn.execute(session.unsubscribe(LogEntryAdded.event_class))
             self.log_entry_subscribed = False

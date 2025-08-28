@@ -42,7 +42,7 @@ for page in pages:
     elif filename in error_scripts:
         new_status = "Error ❌"
         note = f"Auto-updated {datetime.now().strftime('%Y-%m-%d %H:%M')} | Errors found."
-    
+
     if new_status:
         update_url = f"https://api.notion.com/v1/pages/{page['id']}"
         data = {

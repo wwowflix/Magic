@@ -142,7 +142,7 @@ def test_select(setup_path):
         tm.assert_frame_equal(expected, result)
 
         # equivalently
-        result = store.select("df", [("columns=['A', 'B']")])
+        result = store.select("df", ["columns=['A', 'B']"])
         expected = df.reindex(columns=["A", "B"])
         tm.assert_frame_equal(expected, result)
 
@@ -1044,4 +1044,3 @@ def test_select_large_integer(tmp_path):
     expected = df["y"][0]
 
     assert expected == result
-

@@ -1,4 +1,5 @@
-""" test label based indexing with loc """
+"""test label based indexing with loc"""
+
 from collections import namedtuple
 import contextlib
 from datetime import (
@@ -3390,4 +3391,3 @@ class TestLocSeries:
             index=Index(np.array(ids).repeat(1000), dtype="Int64"),
         )
         tm.assert_frame_equal(result, expected)
-

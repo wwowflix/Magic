@@ -1,6 +1,7 @@
 """
 Tests for offsets.CustomBusinessHour
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -327,4 +328,3 @@ def test_custom_businesshour_weekmask_and_holidays(weekmask, expected_time, mult
     result = Timestamp("2018-11-08 08:00") + mult * bh
     expected = Timestamp(expected_time)
     assert result == expected
-

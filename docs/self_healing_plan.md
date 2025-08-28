@@ -1,4 +1,4 @@
-﻿# Self-Healing Runner Design Plan
+# Self-Healing Runner Design Plan
 
 ## 1. Detect missing scripts
 - Check manifest entries against file system.

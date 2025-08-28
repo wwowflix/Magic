@@ -2,6 +2,7 @@
 Additional tests for NumpyExtensionArray that aren't covered by
 the interface tests.
 """
+
 import numpy as np
 import pytest
 
@@ -349,4 +350,3 @@ def test_array_repr(any_numpy_array):
     expected = f"<NumpyExtensionArray>\n{values}\nLength: 2, dtype: {nparray.dtype}"
     result = repr(arr)
     assert result == expected, f"{result} vs {expected}"
-

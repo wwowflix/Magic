@@ -1032,7 +1032,7 @@ class FrameColumnApply(FrameApply):
                 yield obj._ixs(i, axis=0)
 
         else:
-            for (arr, name) in zip(values, self.index):
+            for arr, name in zip(values, self.index):
                 # GH#35462 re-pin mgr in case setitem changed it
                 ser._mgr = mgr
                 mgr.set_values(arr)
@@ -1388,7 +1388,7 @@ def normalize_keyword_aggregation(
 
 
 def _make_unique_kwarg_list(
-    seq: Sequence[tuple[Any, Any]]
+    seq: Sequence[tuple[Any, Any]],
 ) -> Sequence[tuple[Any, Any]]:
     """
     Uniquify aggfunc name of the pairs in the order list
@@ -1400,9 +1400,11 @@ def _make_unique_kwarg_list(
     [('a', '<lambda>_0'), ('a', '<lambda>_1'), ('b', '<lambda>')]
     """
     return [
-        (pair[0], "_".join([pair[1], str(seq[:i].count(pair))]))
-        if seq.count(pair) > 1
-        else pair
+        (
+            (pair[0], "_".join([pair[1], str(seq[:i].count(pair))]))
+            if seq.count(pair) > 1
+            else pair
+        )
         for i, pair in enumerate(seq)
     ]
 

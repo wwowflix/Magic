@@ -72,9 +72,9 @@ class ArrowParserWrapper(ParserBase):
         }
         self.read_options = {
             "autogenerate_column_names": self.header is None,
-            "skip_rows": self.header
-            if self.header is not None
-            else self.kwds["skiprows"],
+            "skip_rows": (
+                self.header if self.header is not None else self.kwds["skiprows"]
+            ),
         }
 
     def _finalize_output(self, frame: DataFrame) -> DataFrame:

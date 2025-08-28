@@ -1,4 +1,4 @@
-﻿# MAGIC — Granular Learning & Maintenance Guide 🚀
+# MAGIC — Granular Learning & Maintenance Guide 🚀
 
 Welcome to your **MAGIC knowledge vault.**
 

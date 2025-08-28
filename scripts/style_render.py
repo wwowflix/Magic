@@ -316,9 +316,9 @@ class StylerRenderer:
             max_cols,
         )
 
-        self.cellstyle_map_columns: DefaultDict[
-            tuple[CSSPair, ...], list[str]
-        ] = defaultdict(list)
+        self.cellstyle_map_columns: DefaultDict[tuple[CSSPair, ...], list[str]] = (
+            defaultdict(list)
+        )
         head = self._translate_header(sparse_cols, max_cols)
         d.update({"head": head})
 
@@ -331,9 +331,9 @@ class StylerRenderer:
         self.cellstyle_map: DefaultDict[tuple[CSSPair, ...], list[str]] = defaultdict(
             list
         )
-        self.cellstyle_map_index: DefaultDict[
-            tuple[CSSPair, ...], list[str]
-        ] = defaultdict(list)
+        self.cellstyle_map_index: DefaultDict[tuple[CSSPair, ...], list[str]] = (
+            defaultdict(list)
+        )
         body: list = self._translate_body(idx_lengths, max_rows, max_cols)
         d.update({"body": body})
 
@@ -468,9 +468,11 @@ class StylerRenderer:
                     if name is None
                     else f"{self.css['index_name']} {self.css['level']}{r}"
                 ),
-                name
-                if (name is not None and not self.hide_column_names)
-                else self.css["blank_value"],
+                (
+                    name
+                    if (name is not None and not self.hide_column_names)
+                    else self.css["blank_value"]
+                ),
                 not all(self.hide_index_),
             )
         ]
@@ -774,9 +776,9 @@ class StylerRenderer:
             )
 
             if self.cell_ids:
-                header_element[
-                    "id"
-                ] = f"{self.css['level']}{c}_{self.css['row']}{r}"  # id is given
+                header_element["id"] = (
+                    f"{self.css['level']}{c}_{self.css['row']}{r}"  # id is given
+                )
             if (
                 header_element_visible
                 and (r, c) in self.ctx_index
@@ -888,9 +890,9 @@ class StylerRenderer:
                 row_body_headers = [
                     {
                         **col,
-                        "display_value": col["display_value"]
-                        if col["is_visible"]
-                        else "",
+                        "display_value": (
+                            col["display_value"] if col["is_visible"] else ""
+                        ),
                         "cellstyle": self.ctx_index[r, c],
                     }
                     for c, col in enumerate(row[:index_levels])
@@ -2152,7 +2154,7 @@ def _parse_latex_cell_styles(
     """
     if convert_css:
         latex_styles = _parse_latex_css_conversion(latex_styles)
-    for (command, options) in latex_styles[::-1]:  # in reverse for most recent style
+    for command, options in latex_styles[::-1]:  # in reverse for most recent style
         formatter = {
             "--wrap": f"{{\\{command}--to_parse {display_value}}}",
             "--nowrap": f"\\{command}--to_parse {display_value}",
@@ -2295,7 +2297,7 @@ def _parse_latex_css_conversion(styles: CSSList) -> CSSList:
     }
 
     latex_styles: CSSList = []
-    for (attribute, value) in styles:
+    for attribute, value in styles:
         if isinstance(value, str) and "--latex" in value:
             # return the style without conversion but drop '--latex'
             latex_styles.append((attribute, value.replace("--latex", "")))

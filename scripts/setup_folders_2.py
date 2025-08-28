@@ -11,7 +11,7 @@ REQUIRED_FOLDERS = [
     "scripts",
     "tests",
     "temp",
-    "dashboards"
+    "dashboards",
 ]
 
 print("🧱 Ensuring folder structure...")

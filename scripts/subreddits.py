@@ -182,4 +182,3 @@ class Subreddits(PRAWBase):
 
         """
         return stream_generator(self.new, **stream_options)
-

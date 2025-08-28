@@ -26,7 +26,6 @@ from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables.otBase import OTTableWriter
 from fontTools.ttLib.tables.otBase import OTTableReader
 from fontTools.ttLib.tables import otTables as ot
-from io import BytesIO
 import struct
 import logging
 import re

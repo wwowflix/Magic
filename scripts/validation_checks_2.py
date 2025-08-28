@@ -4,14 +4,14 @@ files = [
     "outputs/google_trends.csv",
     "outputs/reddit_scrape.csv",
     "outputs/youtube_scrape.csv",
-    "outputs/tiktok_scrape.csv"
+    "outputs/tiktok_scrape.csv",
 ]
 
 required_columns = {
     "outputs/google_trends.csv": ["term", "region", "score"],
     "outputs/reddit_scrape.csv": ["subreddit", "title", "score"],
     "outputs/youtube_scrape.csv": ["video_id", "title", "views"],
-    "outputs/tiktok_scrape.csv": ["hashtag", "desc", "likes"]
+    "outputs/tiktok_scrape.csv": ["hashtag", "desc", "likes"],
 }
 
 for file in files:

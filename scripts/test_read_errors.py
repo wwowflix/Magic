@@ -2,6 +2,7 @@
 Tests that work on the Python, C and PyArrow engines but do not have a
 specific classification into the other test modules.
 """
+
 import codecs
 import csv
 from io import StringIO
@@ -318,4 +319,3 @@ a,b
     ):
         result = parser.read_csv(StringIO(data), on_bad_lines="warn")
     tm.assert_frame_equal(result, expected)
-

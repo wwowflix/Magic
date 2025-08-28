@@ -1,6 +1,7 @@
 """
 Tests for Fiscal Year and Fiscal Quarter offset classes
 """
+
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
@@ -654,4 +655,3 @@ def test_fy5253qtr_onoffset_last():
     slow = (ts + offset) - offset == ts
     fast = offset.is_on_offset(ts)
     assert fast == slow
-
