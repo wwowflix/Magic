@@ -1,4 +1,4 @@
-﻿from typing import DefaultDict, Dict
+from typing import DefaultDict, Dict
 
 # Explicit module-scope annotations for mypy
 totals: Dict[str, int]
