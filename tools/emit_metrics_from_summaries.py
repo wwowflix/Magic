@@ -1,4 +1,24 @@
-from typing import DefaultDict, Dict
+from __future__ import annotations
+from collections import Counter, defaultdict
+from typing import DefaultDict
+
+# Module-scope typed counters for mypy
+totals: Counter[str] = Counter()
+by_phase: DefaultDict[str, int] = defaultdict(int)
+from typing import TypedDict, Dict
+
+class Counts(TypedDict):
+    ok: int
+    fail: int
+    total: int
+
+try:
+    totals  # type: ignore[name-defined]
+except NameError:
+
+try:
+    by_phase  # type: ignore[name-defined]
+except NameError:
 
 # Explicit module-scope annotations for mypy
 totals: Dict[str, int]
@@ -7,7 +27,6 @@ by_phase: DefaultDict[str, int]
 import csv
 import json
 from pathlib import Path
-from collections import defaultdict, Counter
 
 __all__ = ["emit_metrics", "main"]
 
@@ -22,8 +41,6 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)
 
-totals: Counter[str] = Counter()
-by_phase: DefaultDict[str, int] = defaultdict(int)
 
     for tsv in sdir.glob("*.tsv"):
         with tsv.open("r", encoding="utf-8", newline="") as f:
@@ -51,7 +68,7 @@ def main(argv=None) -> int:
     import argparse
 
     ap = argparse.ArgumentParser(description="Emit runner metrics from summary TSVs")
-    # Ã¢Å“Â¨ defaults changed to what the test expects
+    # ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“Ãƒâ€šÃ‚Â¨ defaults changed to what the test expects
     ap.add_argument("--summaries", default="outputs/summaries")
     ap.add_argument("--out", default="outputs/metrics")
     ns = ap.parse_args(argv)
@@ -62,4 +79,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
