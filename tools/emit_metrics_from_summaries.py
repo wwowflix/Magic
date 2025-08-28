@@ -1,4 +1,11 @@
 from __future__ import annotations
+from collections import Counter, defaultdict
+from typing import DefaultDict
+
+# Explicit, module-scoped typed counters for mypy
+totals: Counter[str] = Counter()
+by_phase: DefaultDict[str, int] = defaultdict(int)
+from __future__ import annotations
 
 from pathlib import Path
 from typing import TypedDict, Dict, Iterable, Tuple
