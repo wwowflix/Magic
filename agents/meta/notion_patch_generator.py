@@ -43,14 +43,10 @@ def create_notion_entry(row):
                 "Status": {"select": {"name": status}},
                 "Is Placeholder": {"checkbox": is_placeholder},
                 "Is Implemented": {"checkbox": is_implemented},
-                "Folder Location": {
-                    "rich_text": [{"text": {"content": folder_location}}]
-                },
+                "Folder Location": {"rich_text": [{"text": {"content": folder_location}}]},
                 "Notes": {"rich_text": [{"text": {"content": notes}}]} if notes else {},
                 "Last Synced": (
-                    {"rich_text": [{"text": {"content": last_synced}}]}
-                    if last_synced
-                    else {}
+                    {"rich_text": [{"text": {"content": last_synced}}]} if last_synced else {}
                 ),
             },
         )

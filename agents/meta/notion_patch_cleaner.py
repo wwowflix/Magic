@@ -9,9 +9,7 @@ NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 if not NOTION_TOKEN or not NOTION_DATABASE_ID:
-    raise ValueError(
-        "❌ Please set NOTION_TOKEN and NOTION_DATABASE_ID in your .env file."
-    )
+    raise ValueError("❌ Please set NOTION_TOKEN and NOTION_DATABASE_ID in your .env file.")
 
 notion = Client(auth=NOTION_TOKEN)
 
