@@ -1,24 +1,27 @@
-import os
 import sys
+import pathlib
 import importlib.util
+import pytest
 
-# Ensure project root on sys.path
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
+# Make repo root importable (for tools/* etc.)
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-# Map test file -> required module
+# Map test files to optional modules they require.
 NEEDS = {
-    os.path.join("tests", "test_create_manifest_covfill.py"): "tools.create_manifest",
-    os.path.join("tests", "test_remediator_unit.py"): "tools.remediator",
+    # Week 8 dashboard test relies on pandas (and maybe matplotlib later)
+    "tests/test_build_dashboard.py": "pandas",
+    # Keep earlier skips you used on feature branches, harmless if files absent:
+    "tests/test_create_manifest_covfill.py": "tools.create_manifest",
+    "tests/test_remediator_unit.py": "tools.remediator",
 }
 
 
-def pytest_ignore_collect(path, config):
-    p = str(path)
-    for rel, mod in NEEDS.items():
-        if p.endswith(rel):
-            if importlib.util.find_spec(mod) is None:
-                # Ignore this test file entirely if its target module is missing
-                return True
-    return False
+def pytest_collection_modifyitems(config, items):
+    skip_missing = pytest.mark.skip(reason="optional dependency missing in CI")
+    for item in items:
+        node = item.nodeid.split("::", 1)[0]
+        mod = NEEDS.get(node)
+        if mod and importlib.util.find_spec(mod) is None:
+            item.add_marker(skip_missing)
