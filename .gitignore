@@ -31,3 +31,6 @@ tools/*.bak*
 
 .coverage*
 
+
+backups/
+
