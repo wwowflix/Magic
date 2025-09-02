@@ -1,0 +1,4 @@
+D:/MAGIC/scripts/phase99/module_ZZ/99ZZ_dummy_script_v2_READY.py	PASS	outputs/logs\module_ZZ\99ZZ_dummy_script_v2_READY.py\99ZZ_dummy_script_v2_READY.py_2025-08-04_17-45-37.log
+D:/MAGIC/scripts/phase99/module_ZZ/99Z_file_not_found_test_READY.py	FAIL	outputs/logs\module_ZZ\99Z_file_not_found_test_READY.py\99Z_file_not_found_test_READY.py_2025-08-04_17-45-37.log
+D:/MAGIC/scripts/phase99/module_ZZ/99Z_import_error_test_READY.py	FAIL	outputs/logs\module_ZZ\99Z_import_error_test_READY.py\99Z_import_error_test_READY.py_2025-08-04_17-45-37.log
+D:/MAGIC/scripts/phase99/module_ZZ/99Z_unicode_error_test_READY.py	FAIL	outputs/logs\module_ZZ\99Z_unicode_error_test_READY.py\99Z_unicode_error_test_READY.py_2025-08-04_17-45-37.log

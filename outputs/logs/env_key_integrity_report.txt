@@ -1,0 +1,8 @@
+❌ Missing keys:
+ - GITHUB_TOKEN
+ - YOUTUBE_API_KEY
+
+🧪 Extra (unknown) keys:
+ - REDDIT_CLIENT_ID
+ - REDDIT_CLIENT_SECRET
+ - REDDIT_USER_AGENT

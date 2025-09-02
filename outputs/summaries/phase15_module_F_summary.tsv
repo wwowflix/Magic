@@ -1,0 +1,7 @@
+Script	Status
+15F_contradictory_signal_suppressor_READY.py	PASS
+15F_external_authority_override_READY.py	PASS
+15F_multi_trend_priority_arbiter_READY.py	PASS
+15F_placeholder_READY.py	PASS
+15F_trend_sentiment_reconciler_READY.py	PASS
+15F_trend_vote_weighting_system_READY.py	PASS

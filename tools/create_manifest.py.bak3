@@ -1,0 +1,95 @@
+﻿from __future__ import annotations
+import argparse, json, sys
+from pathlib import Path
+
+# Keep legacy constant for tests that import it
+SCRIPTS_ROOT = (Path(__file__).resolve().parents[1] / "scripts")
+
+def _discover_scripts(root: Path) -> list[dict]:
+    """
+    Walk oot and collect *_READY.py files grouped by phase/module.
+    Returns a list of dicts so it's JSON-safe even when empty.
+    """
+    if not root.exists():
+        return []
+    items = []
+    for p in root.rglob("*_READY.py"):
+        # Expected path: scripts/phase<NN>/module_<X>/<file>.py
+        parts = p.parts
+        try:
+            phase_idx = parts.index("scripts") + 1
+            phase_name = parts[phase_idx]      # e.g., phase11
+            module_name = parts[phase_idx + 1] # e.g., module_B
+        except (ValueError, IndexError):
+            phase_name, module_name = "unknown", "unknown"
+        items.append({
+            "phase": phase_name,
+            "module": module_name,
+            "path": str(p.as_posix()),
+            "filename": p.name,
+        })
+    return sorted(items, key=lambda x: (x["phase"], x["module"], x["filename"]))
+
+def generate_manifest(scripts_root: Path) -> list[dict]:
+    return _discover_scripts(scripts_root)
+
+def main(argv: list[str] | None = None) -> int:
+    """
+    CLI entrypoint. Defaults:
+      --scripts-root ./scripts
+      --out ./phase_manifest.json
+    Writes a JSON array (possibly empty) and exits 0.
+    """
+    parser = argparse.ArgumentParser(prog="create_manifest")
+    parser.add_argument("--scripts-root", default=str(Path.cwd() / "scripts"))
+    parser.add_argument("--out", default=str(Path.cwd() / "phase_manifest.json"))
+    args = parser.parse_known_args(argv)[0]
+
+    scripts_root = Path(args.scripts_root).resolve()
+    out_path = Path(args.out).resolve()
+
+    manifest = generate_manifest(scripts_root)
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
+
+    print(f"[create_manifest] Wrote {len(manifest)} entries to {out_path}")
+    return 0
+
+if __name__ == "__main__":  # pragma: no cover
+    sys.exit(main())
+
+
+# --- Compatibility shims for older tests expecting discover()/build() ---
+
+def discover(root: Path | str) -> list[Path]:
+    # Return a sorted list of *_READY.py under root (or root/scripts if present).
+    base = Path(root)
+    base = base / "scripts" if (base / "scripts").exists() else base
+    if not base.exists():
+        return []
+    return sorted(base.rglob("*_READY.py"))
+
+def build(files: list[Path | str]) -> list[dict]:
+    # Build manifest-style dicts from a list of file paths.
+    items = []
+    for f in files:
+        p = Path(f)
+        parts = p.parts
+        try:
+            idx = parts.index("scripts")
+            phase_name  = parts[idx + 1] if len(parts) > idx + 1 else "unknown"
+            module_name = parts[idx + 2] if len(parts) > idx + 2 else "unknown"
+        except ValueError:
+            phase_name, module_name = "unknown", "unknown"
+        items.append({
+            "phase": phase_name,
+            "module": module_name,
+            "path": str(p.as_posix()),
+            "filename": p.name,
+        })
+    return sorted(items, key=lambda x: (x["phase"], x["module"], x["filename"]))
+
+# Older alias some suites use
+build_manifest = build

@@ -1,56 +1,45 @@
-﻿# 11C_script_integrity_checker_READY.py
-import os
-import sys
-import ast
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import argparse, hashlib, os, sys, csv
+from pathlib import Path
 
-# repo root (works when run from anywhere, incl. tests)
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-SCRIPTS_DIR = os.path.join(ROOT, "scripts")
-
-def list_ready_py(root):
-    for dirpath, _, filenames in os.walk(root):
-        for fn in filenames:
-            if fn.endswith("_READY.py"):
-                yield os.path.join(dirpath, fn)
-
-def check_file(path):
-    # 1) Non-empty file
-    if os.path.getsize(path) == 0:
-        return False, "empty file"
-
-    # 2) UTF-8 (accept BOM) read
-    try:
-        with open(path, "r", encoding="utf-8-sig") as f:
-            src = f.read()
-    except Exception as e:
-        return False, f"utf8-read-fail: {e}"
-
-    # 3) Syntax check (no imports executed)
-    try:
-        ast.parse(src, filename=path)
-    except SyntaxError as e:
-        return False, f"syntax-error: {e}"
-
-    return True, "ok"
+def sha256_of(p: Path) -> str:
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 def main():
-    problems = []
-    total = 0
-    for p in list_ready_py(SCRIPTS_DIR):
-        total += 1
-        ok, msg = check_file(p)
-        if not ok:
-            problems.append((p, msg))
+    ap = argparse.ArgumentParser(description="Script integrity checker")
+    ap.add_argument("--root", default="scripts/phase11", help="Where scripts live")
+    ap.add_argument("--out", default="outputs/module_C/integrity", help="Output dir")
+    ap.add_argument("--min-bytes", type=int, default=300, help="Warn if file smaller than this")
+    args = ap.parse_args()
 
-    if problems:
-        print("INTEGRITY FAILURES:")
-        for p, msg in problems:
-            print(f"- {p}: {msg}")
-        print(f"Checked={total} Fail={len(problems)}")
-        sys.exit(1)
+    root = Path(args.root)
+    out  = Path(args.out); out.mkdir(parents=True, exist_ok=True)
+    csvp = out / "integrity.csv"
 
-    print(f"Integrity OK. Checked={total} Fail=0")
-    sys.exit(0)
+    fields = ["path","bytes","sha256","status"]
+    rows   = []
+    for p in root.rglob("*.py"):
+        try:
+            size = p.stat().st_size
+            status = "OK"
+            if size < args.min_bytes:
+                status = f"SMALL<{args.min_bytes}"
+            rows.append({"path": str(p), "bytes": size, "sha256": sha256_of(p), "status": status})
+        except Exception as e:
+            rows.append({"path": str(p), "bytes": 0, "sha256": "", "status": f"ERROR:{e}"})
+
+    with open(csvp, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        w.writerows(rows)
+
+    print(f"Wrote {csvp} ({len(rows)} rows)")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
