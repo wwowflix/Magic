@@ -14,9 +14,7 @@ def aggregate_status():
         phase_module = summary_file.replace("_summary.tsv", "")
 
         if "_module_" not in phase_module:
-            print(
-                f"⚠️ Skipping summary file with unexpected name format: {summary_file}"
-            )
+            print(f"⚠️ Skipping summary file with unexpected name format: {summary_file}")
             continue
 
         try:

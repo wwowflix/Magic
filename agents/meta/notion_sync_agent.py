@@ -148,9 +148,7 @@ def read_latest_summary_files():
 def sync_to_notion():
     schema = fetch_database_schema()
     status_prop = schema.get("Status", {}).get("select", {}).get("options", [])
-    valid_statuses = (
-        [opt["name"] for opt in status_prop] if status_prop else ["Unknown"]
-    )
+    valid_statuses = [opt["name"] for opt in status_prop] if status_prop else ["Unknown"]
 
     # Build lookup of existing pages
     pages = get_all_pages()
@@ -197,9 +195,7 @@ def sync_to_notion():
                             valid_statuses,
                         )
                     else:
-                        create_page(
-                            script_name, phase_num, module, status, valid_statuses
-                        )
+                        create_page(script_name, phase_num, module, status, valid_statuses)
                 except Exception as e:
                     print(f"⚠️ Error syncing {script_name}: {e}")
 

@@ -1,19 +1,19 @@
-﻿default_language_version:
-  python: python3
-
 repos:
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.4.2
     hooks:
       - id: black
-        # Only run on our real code paths
-        files: ^(agents|scripts/phase\\d+/module_[A-Z]|tools)/.*\\.py$
-        exclude: ^(backups|outputs|logs)(/|\\)
+        args: ["--line-length=100"]
+        files: ^(?:agents/|tools/|scripts/phase\d+/module_[A-Z]+/).+\.py$
+        exclude: ^(?:backups|outputs|logs|\.venv|venv)/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.0
     hooks:
       - id: mypy
-        args: ["--config-file", "mypy.ini"]
-        files: ^(agents|scripts/phase\\d+/module_[A-Z]|tools)/.*\\.py$
-        exclude: ^(backups|outputs|logs)(/|\\)
+        args: ["--config-file=mypy.ini", "--install-types", "--non-interactive"]
+        additional_dependencies:
+          - types-requests
+          - types-urllib3
+        files: ^(?:agents/|tools/|scripts/phase\d+/module_[A-Z]+/).+\.py$
+        exclude: ^(?:backups|outputs|logs|\.venv|venv)/
