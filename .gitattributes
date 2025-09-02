@@ -4,3 +4,6 @@
 
 tests/*.py text eol=lf
 
+
+mypy.ini text eol=lf
+
