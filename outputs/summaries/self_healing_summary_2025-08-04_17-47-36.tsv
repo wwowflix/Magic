@@ -1,0 +1,4 @@
+99ZZ_dummy_script_v2_READY.py	PASS		outputs\logs\phaseMAGIC\module_scripts\99ZZ_dummy_script_v2_READY.py_2025-08-04_17-47-36.log
+99Z_file_not_found_test_READY.py	PASS		outputs\logs\phaseMAGIC\module_scripts\99Z_file_not_found_test_READY.py_2025-08-04_17-47-36.log
+99Z_import_error_test_READY.py	FAIL	Traceback (most recent call last):	outputs\logs\phaseMAGIC\module_scripts\99Z_import_error_test_READY.py_2025-08-04_17-47-36.log
+99Z_unicode_error_test_READY.py	FAIL	Traceback (most recent call last):	outputs\logs\phaseMAGIC\module_scripts\99Z_unicode_error_test_READY.py_2025-08-04_17-47-36.log

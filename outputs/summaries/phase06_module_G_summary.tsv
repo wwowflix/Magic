@@ -1,0 +1,4 @@
+Script	Status
+06G_export_analytics_to_google_sheets_READY.py	PASS
+06G_kpi_metrics_dashboard_generator_READY.py	PASS
+06G_weekly_report_emailer_READY.py	PASS

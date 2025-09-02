@@ -1,30 +1,9 @@
-﻿# build / runtime debris
-venv/
-.env
+﻿# project ignores
+outputs/
+backups/
+.full_run/
+release/
 .venv/
+venv/
 __pycache__/
 *.pyc
-.coverage
-htmlcov/
-
-# large/generated outputs (keep the demo mp4 tracked)
-outputs/**
-!outputs/dashboard/**
-!outputs/summaries/**
-
-# logs (keep repo-friendly summaries only)
-logs/**
-
-# demos (track the mp4, ignore temp audio)
-docs/demos/*.wav
-
-# coverage / pytest
-coverage.xml
-.pytest_cache/
-# Python
-# local outputs
-phase_manifest.json
-# editor/OS
-.DS_Store
-# local backups
-tools/*.bak*

@@ -1,0 +1,65 @@
+[
+    {
+        "script": "scripts/phase11/module_f\\11F_ai_bias_detector_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 16.099999999999998,
+        "mem_usage_bytes": 110592,
+        "execution_time_sec": 0.08
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_ai_ethics_validator_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 26.8,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.07
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_error_pattern_analyzer_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 18.9,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.05
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_example_test_case_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 11.1,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.05
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_openai_api_guardrail_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 13.7,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.07
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_placeholder_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 19.4,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.05
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_redundancy_reducer_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 18.8,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.05
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_responsible_ai_audit_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 22.4,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.06
+    },
+    {
+        "script": "scripts/phase11/module_f\\11F_retry_dead_job_scanner_READY.py",
+        "exit_code": 0,
+        "cpu_delta_percent": 16.7,
+        "mem_usage_bytes": 0,
+        "execution_time_sec": 0.05
+    }
+]
