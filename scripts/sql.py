@@ -194,8 +194,7 @@ def read_sql_table(
     parse_dates: list[str] | dict[str, str] | None = ...,
     columns: list[str] | None = ...,
     chunksize: None = ...,
-) -> DataFrame:
-    ...
+) -> DataFrame: ...
 
 
 @overload
@@ -208,8 +207,7 @@ def read_sql_table(
     parse_dates: list[str] | dict[str, str] | None = ...,
     columns: list[str] | None = ...,
     chunksize: int = ...,
-) -> Iterator[DataFrame]:
-    ...
+) -> Iterator[DataFrame]: ...
 
 
 def read_sql_table(
@@ -308,8 +306,7 @@ def read_sql_query(
     parse_dates: list[str] | dict[str, str] | None = ...,
     chunksize: None = ...,
     dtype: DtypeArg | None = ...,
-) -> DataFrame:
-    ...
+) -> DataFrame: ...
 
 
 @overload
@@ -322,8 +319,7 @@ def read_sql_query(
     parse_dates: list[str] | dict[str, str] | None = ...,
     chunksize: int = ...,
     dtype: DtypeArg | None = ...,
-) -> Iterator[DataFrame]:
-    ...
+) -> Iterator[DataFrame]: ...
 
 
 def read_sql_query(
@@ -415,8 +411,7 @@ def read_sql(
     parse_dates=...,
     columns: list[str] = ...,
     chunksize: None = ...,
-) -> DataFrame:
-    ...
+) -> DataFrame: ...
 
 
 @overload
@@ -429,8 +424,7 @@ def read_sql(
     parse_dates=...,
     columns: list[str] = ...,
     chunksize: int = ...,
-) -> Iterator[DataFrame]:
-    ...
+) -> Iterator[DataFrame]: ...
 
 
 def read_sql(

@@ -13,7 +13,6 @@ import socket as _stdlib_socket
 import sys
 import typing as _t
 
-from . import _socket
 
 _bad_symbols: set[str] = set()
 if sys.platform == "win32":

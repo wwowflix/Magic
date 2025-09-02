@@ -2,6 +2,7 @@
 import time
 from random import randint
 
+
 def safe_scrape(query, max_tweets=10, max_retries=3):
     tweets = []
     for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
@@ -10,6 +11,7 @@ def safe_scrape(query, max_tweets=10, max_retries=3):
         tweets.append(tweet)
         time.sleep(randint(1, 3))  # Random delay
     return tweets
+
 
 # Example usage (modify according to your script):
 try:

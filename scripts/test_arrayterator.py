@@ -44,4 +44,3 @@ def test():
 
     # Check that all elements are iterated correctly
     assert_(list(c.flat) == list(d.flat))
-

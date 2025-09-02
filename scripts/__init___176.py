@@ -31,7 +31,6 @@ from fontTools.misc.textTools import Tag, tostr
 from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables._f_v_a_r import Axis, NamedInstance
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates, dropImpliedOnCurvePoints
-from fontTools.ttLib.tables.ttProgram import Program
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables import otTables as ot
 from fontTools.ttLib.tables.otBase import OTTableWriter
@@ -43,8 +42,6 @@ from fontTools.varLib.featureVars import addFeatureVariations
 from fontTools.designspaceLib import DesignSpaceDocument, InstanceDescriptor
 from fontTools.designspaceLib.split import splitInterpolable, splitVariableFonts
 from fontTools.varLib.stat import buildVFStatTable
-from fontTools.colorLib.builder import buildColrV1
-from fontTools.colorLib.unbuilder import unbuildColrV1
 from functools import partial
 from collections import OrderedDict, defaultdict, namedtuple
 import os.path
@@ -52,7 +49,7 @@ import logging
 from copy import deepcopy
 from pprint import pformat
 from re import fullmatch
-from .errors import VarLibError, VarLibValidationError
+from .errors import VarLibValidationError
 
 log = logging.getLogger("fontTools.varLib")
 
@@ -916,7 +913,7 @@ def load_designspace(designspace, log_enabled=True, *, require_sources=True):
 
     # Setup axes
     if not ds.axes:
-        raise VarLibValidationError(f"Designspace must have at least one axis.")
+        raise VarLibValidationError("Designspace must have at least one axis.")
 
     axes = OrderedDict()
     for axis_index, axis in enumerate(ds.axes):

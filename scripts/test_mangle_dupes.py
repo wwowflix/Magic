@@ -3,6 +3,7 @@ Tests that duplicate columns are handled appropriately when parsed by the
 CSV engine. In general, the expected result is that they are either thoroughly
 de-duplicated (if mangling requested) or ignored otherwise.
 """
+
 from io import StringIO
 
 import pytest
@@ -180,4 +181,3 @@ def test_mangle_cols_names(all_parsers, usecol, engine):
     names = ["A", "A", "B"]
     with pytest.raises(ValueError, match="Duplicate names"):
         parser.read_csv(StringIO(data), names=names, usecols=usecol, engine=engine)
-

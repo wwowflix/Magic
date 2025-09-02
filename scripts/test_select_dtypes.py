@@ -483,4 +483,3 @@ class TestSelectDtypes:
         result = df.select_dtypes(include=["number"])
         result.iloc[0, 0] = 0
         tm.assert_frame_equal(df, df_orig)
-

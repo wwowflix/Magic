@@ -15,13 +15,14 @@ PHASE_PATH = r"D:\MAGIC\scripts\phase11"
 CSV_FILE = r"D:\MAGIC\Fulfinal_File_CLEANED.csv"
 LOG_FILE = r"D:\MAGIC\outputs\logs\missing_scripts_report.txt"
 
+
 def main():
     try:
         expected_files = set()
         missing_files = []
 
         # Read expected filenames for phase 11
-        with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
+        with open(CSV_FILE, newline="", encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 if row.get("PhaseNumber") == "11":
@@ -51,6 +52,7 @@ def main():
         with open(LOG_FILE, "w", encoding="utf-8") as log:
             log.write(f"❌ Error occurred: {str(e)}\n")
         print("FAIL")
+
 
 if __name__ == "__main__":
     main()

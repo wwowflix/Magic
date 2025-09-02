@@ -6,6 +6,7 @@ and are clearly communicated to the user.
 Ultimately, the goal is to remove test cases from this
 test suite as new feature support is added to the parsers.
 """
+
 from io import StringIO
 import os
 from pathlib import Path
@@ -224,4 +225,3 @@ def test_invalid_dtype_backend(all_parsers):
     )
     with pytest.raises(ValueError, match=msg):
         parser.read_csv("test", dtype_backend="numpy")
-

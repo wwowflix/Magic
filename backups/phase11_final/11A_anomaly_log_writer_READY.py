@@ -1,5 +1,4 @@
 import os
-import time
 from datetime import datetime
 
 # Define the log directory and anomaly log output path
@@ -7,7 +6,15 @@ LOG_DIR = "logs"
 ANOMALY_LOG = os.path.join(LOG_DIR, "anomalies_detected.log")
 
 # Keywords that indicate anomalies
-ANOMALY_KEYWORDS = ["ERROR", "WARNING", "FAILURE", "CRITICAL", "UNAUTHORIZED", "EXCEPTION"]
+ANOMALY_KEYWORDS = [
+    "ERROR",
+    "WARNING",
+    "FAILURE",
+    "CRITICAL",
+    "UNAUTHORIZED",
+    "EXCEPTION",
+]
+
 
 def scan_logs_for_anomalies():
     print("🔍 Scanning logs for anomalies...")
@@ -23,7 +30,9 @@ def scan_logs_for_anomalies():
                         for keyword in ANOMALY_KEYWORDS:
                             if keyword in line:
                                 found = True
-                                summary.append(f"{file} [Line {line_number}]: {line.strip()}")
+                                summary.append(
+                                    f"{file} [Line {line_number}]: {line.strip()}"
+                                )
 
     if found:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -34,6 +43,7 @@ def scan_logs_for_anomalies():
         print(f"🚨 {len(summary)} anomalies found. Written to anomalies_detected.log.")
     else:
         print("✅ No anomalies found.")
+
 
 if __name__ == "__main__":
     scan_logs_for_anomalies()

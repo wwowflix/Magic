@@ -11,8 +11,7 @@ class TestString(util.F2PyTest):
     @pytest.mark.slow
     def test_char(self):
         strings = np.array(["ab", "cd", "ef"], dtype="c").T
-        inp, out = self.module.char_test.change_strings(
-            strings, strings.shape[1])
+        inp, out = self.module.char_test.change_strings(strings, strings.shape[1])
         assert inp == pytest.approx(strings)
         expected = strings.copy()
         expected[1, :] = "AAA"
@@ -98,4 +97,3 @@ class TestFixedString(util.F2PyTest):
 
             # check that the rest of input string is preserved
             assert rest == self._sint(s, start=4)
-

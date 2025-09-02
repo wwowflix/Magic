@@ -27,4 +27,3 @@ def debugmsg(msg):
 
 
 from fontTools.ttLib.ttFont import *
-from fontTools.ttLib.ttCollection import TTCollection

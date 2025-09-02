@@ -1,4 +1,5 @@
-""" Test cases for DataFrame.plot """
+"""Test cases for DataFrame.plot"""
+
 import re
 
 import numpy as np
@@ -668,4 +669,3 @@ class TestDataFrameColor:
         ax = df.plot(color=None)
         expected = _unpack_cycler(mpl.pyplot.rcParams)[:3]
         _check_colors(ax.get_lines(), linecolors=expected)
-

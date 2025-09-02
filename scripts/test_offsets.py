@@ -1,6 +1,7 @@
 """
 Tests of pandas.tseries.offsets
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -1183,4 +1184,3 @@ def test_is_yqm_start_end():
 
     for ts, value in tests:
         assert ts == value
-

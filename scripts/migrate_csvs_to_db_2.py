@@ -58,21 +58,21 @@ for file in csv_files:
 
     # Insert rows into DB
     for _, row in df.iterrows():
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT INTO trends (date, keyword, platform, metric)
             VALUES (?, ?, ?, ?)
-        """, (
-            str(row["date"]),
-            str(row["keyword"]),
-            str(row["platform"]),
-            float(row["metric"]) if not pd.isna(row["metric"]) else None
-        ))
+        """,
+            (
+                str(row["date"]),
+                str(row["keyword"]),
+                str(row["platform"]),
+                float(row["metric"]) if not pd.isna(row["metric"]) else None,
+            ),
+        )
         total_rows_inserted += 1
 
 conn.commit()
 conn.close()
 
 print(f"[OK] Migration complete. Rows inserted: {total_rows_inserted}")
-
-
-

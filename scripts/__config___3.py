@@ -169,4 +169,3 @@ def show_config(mode=DisplayModes.stdout.value):
 
 show_config.__doc__ = show.__doc__
 show_config.__module__ = "numpy"
-

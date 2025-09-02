@@ -13,7 +13,7 @@ file_table_map = {
     "google_trends.csv": "google_trends",
     "reddit_scrape.csv": "reddit_scrape",
     "youtube_scrape.csv": "youtube_scrape",
-    "tiktok_scrape.csv": "tiktok_scrape"
+    "tiktok_scrape.csv": "tiktok_scrape",
 }
 
 for csv_filename, table_name in file_table_map.items():
@@ -29,6 +29,7 @@ for csv_filename, table_name in file_table_map.items():
             print(f"[OK] Loaded {csv_filename} into table {table_name}")
         except Exception as e:
             import traceback
+
             print(f"[ERROR] Failed to process {csv_path}: {e}")
             traceback.print_exc()
     else:
@@ -36,4 +37,3 @@ for csv_filename, table_name in file_table_map.items():
 
 conn.close()
 print("[DONE] Ingestion complete.")
-
