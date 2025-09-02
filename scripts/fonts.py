@@ -7,7 +7,8 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import re, warnings
+import re
+import warnings
 import logging
 
 from bisect import bisect_left

@@ -1,9 +1,11 @@
 import os
 
 # CONFIG
-SCRIPT_ROOT = 'scripts/'
+SCRIPT_ROOT = "scripts/"
 REQUIRED_ORCHESTRATORS = [
-    'orchestrator.py', 'orchestration_engine.py', 'central_controller.py'
+    "orchestrator.py",
+    "orchestration_engine.py",
+    "central_controller.py",
 ]
 
 found_files = []
@@ -21,8 +23,8 @@ for required in REQUIRED_ORCHESTRATORS:
         missing_orchestration.append(required)
 
 if not missing_orchestration:
-    print('✅ Orchestration layer is consistent.')
+    print("✅ Orchestration layer is consistent.")
 else:
-    print('❌ Missing orchestrator components:')
+    print("❌ Missing orchestrator components:")
     for m in missing_orchestration:
-        print(f' - {m}')
+        print(f" - {m}")

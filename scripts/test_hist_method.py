@@ -1,4 +1,5 @@
-""" Test cases for .hist method """
+"""Test cases for .hist method"""
+
 import re
 
 import numpy as np
@@ -969,4 +970,3 @@ class TestDataFrameGroupByPlots:
         )
         ax = df.hist(by="a", histtype=histtype)
         _check_patches_all_filled(ax, filled=expected)
-

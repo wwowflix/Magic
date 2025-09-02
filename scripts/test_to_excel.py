@@ -2,6 +2,7 @@
 
 ExcelFormatter is tested implicitly in pandas/tests/io/excel
 """
+
 import string
 
 import pytest
@@ -427,4 +428,3 @@ def test_css_excel_cell_cache(styles, cache_hits, cache_misses):
 
     assert cache_info.hits == cache_hits
     assert cache_info.misses == cache_misses
-

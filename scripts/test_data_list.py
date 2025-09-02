@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 import csv
 from io import StringIO
 
@@ -89,4 +90,3 @@ bar"""
     result = parser.read_csv(StringIO(data), header=None)
     expected = DataFrame(["foo", "bar baz", "qux foo", "foo", "bar"])
     tm.assert_frame_equal(result, expected)
-

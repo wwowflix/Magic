@@ -4,24 +4,19 @@
 
 from __future__ import annotations
 
-from fontTools import config
-from fontTools.misc.roundTools import otRound
 from fontTools import ttLib
 from fontTools.ttLib.tables import otTables
 from fontTools.ttLib.tables.otBase import USE_HARFBUZZ_REPACKER
 from fontTools.otlLib.maxContextCalc import maxCtxFont
-from fontTools.pens.basePen import NullPen
 from fontTools.misc.loggingTools import Timer
 from fontTools.misc.cliTools import makeOutputFileName
 from fontTools.subset.util import _add_method, _uniq_sort
 from fontTools.subset.cff import *
 from fontTools.subset.svg import *
-from fontTools.varLib import varStore, multiVarStore  # For monkey-patching
 from fontTools.ttLib.tables._n_a_m_e import NameRecordVisitor, makeName
 from fontTools.unicodedata import mirrored
 import sys
 import struct
-import array
 import logging
 from collections import Counter, defaultdict
 from functools import reduce
@@ -3774,7 +3769,6 @@ def usage():
 @timer("make one with everything (TOTAL TIME)")
 def main(args=None):
     """OpenType font subsetter and optimizer"""
-    from os.path import splitext
     from fontTools import configLogger
 
     if args is None:

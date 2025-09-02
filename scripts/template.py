@@ -4,7 +4,11 @@ __author__ = "Mariano Reingart <reingart@gmail.com>"
 __copyright__ = "Copyright (C) 2010 Mariano Reingart"
 __license__ = "LGPL 3.0"
 
-import os, csv, json, locale, warnings
+import os
+import csv
+import json
+import locale
+import warnings
 
 from .deprecation import get_stack_level
 from .errors import FPDFException
@@ -91,7 +95,7 @@ class FlexTemplate:
         self.keys = []
         for e in elements:
             # priority is optional, but we need a default for sorting.
-            if not "priority" in e:
+            if "priority" not in e:
                 e["priority"] = 0
             for k in ("name", "type", "x1", "y1", "y2"):
                 if k not in e:
@@ -115,7 +119,7 @@ class FlexTemplate:
                     e["x2"] = 0
                 else:
                     raise KeyError("Mandatory key 'x2' missing in input data")
-            if not "size" in e and e["type"] == "C39":
+            if "size" not in e and e["type"] == "C39":
                 if "w" in e:
                     e["size"] = e["w"]
             for k, t in key_config.items():

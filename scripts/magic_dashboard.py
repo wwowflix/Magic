@@ -21,12 +21,12 @@ if theme_choice != st.session_state["theme"]:
 
 if st.session_state["theme"] == "dark":
     st.markdown(
-        '''
+        """
         <style>
             body { background-color: #111111; color: #FFFFFF; }
             .stDataFrame { background-color: #222222; color: #FFFFFF; }
         </style>
-        ''',
+        """,
         unsafe_allow_html=True,
     )
 
@@ -59,7 +59,9 @@ for platform in tables.keys():
         try:
             df = pd.read_sql(f"SELECT * FROM {platform}", conn)
             if keyword_filter and "keyword" in df.columns:
-                df = df[df["keyword"].str.contains(keyword_filter, case=False, na=False)]
+                df = df[
+                    df["keyword"].str.contains(keyword_filter, case=False, na=False)
+                ]
             tables[platform] = df
         except Exception as e:
             st.warning(f"Could not read table {platform}: {e}")

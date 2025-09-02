@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from playwright.sync_api import sync_playwright
-import os
+
 
 def open_foryou_for_5_minutes():
     with sync_playwright() as p:
@@ -16,6 +16,6 @@ def open_foryou_for_5_minutes():
         print("OK Done. Closing browser.")
         browser.close()
 
+
 if __name__ == "__main__":
     open_foryou_for_5_minutes()
-

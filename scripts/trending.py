@@ -59,4 +59,3 @@ class Trending:
 
             if not resp.get("hasMore", False):
                 return
-

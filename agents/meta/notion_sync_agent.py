@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 from dotenv import load_dotenv
 from datetime import datetime, timezone
@@ -10,15 +9,15 @@ from urllib3.util.retry import Retry
 # 1️⃣ Load Environment Variables
 # ================================
 load_dotenv()
-NOTION_TOKEN = os.getenv('NOTION_TOKEN')
-NOTION_DATABASE_ID = os.getenv('NOTION_DATABASE_ID')
+NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 HEADERS = {
     "Authorization": f"Bearer {NOTION_TOKEN}",
     "Content-Type": "application/json",
-    "Notion-Version": "2022-06-28"
+    "Notion-Version": "2022-06-28",
 }
 
-SUMMARY_DIR = os.path.join('outputs', 'summaries')
+SUMMARY_DIR = os.path.join("outputs", "summaries")
 NOTION_PAGE_SIZE = 100
 
 # ================================
@@ -29,9 +28,9 @@ retries = Retry(
     total=5,
     backoff_factor=0.5,
     status_forcelist=[429, 500, 502, 503, 504],
-    allowed_methods=["GET", "POST", "PATCH"]
+    allowed_methods=["GET", "POST", "PATCH"],
 )
-session.mount('https://', HTTPAdapter(max_retries=retries))
+session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 # ================================
@@ -43,7 +42,7 @@ def fetch_database_schema():
         url = f"https://api.notion.com/v1/databases/{NOTION_DATABASE_ID}"
         resp = session.get(url, headers=HEADERS)
         resp.raise_for_status()
-        return resp.json().get('properties', {})
+        return resp.json().get("properties", {})
     except Exception as e:
         print(f"⚠️ Failed to fetch schema: {e}")
         return {}
@@ -65,10 +64,10 @@ def get_all_pages():
     cursor = None
     while True:
         data = query_database(cursor)
-        pages.extend(data.get('results', []))
-        if not data.get('has_more'):
+        pages.extend(data.get("results", []))
+        if not data.get("has_more"):
             break
-        cursor = data.get('next_cursor')
+        cursor = data.get("next_cursor")
     return pages
 
 
@@ -93,8 +92,8 @@ def create_page(script_name, phase, module, status, valid_statuses):
             "Phase": {"number": int(phase)},
             "Module": {"rich_text": [{"text": {"content": module}}]},
             "Status": {"select": {"name": clean_status}},
-            "Last Updated": {"date": {"start": now}}
-        }
+            "Last Updated": {"date": {"start": now}},
+        },
     }
     try:
         print(f"➕ Creating: {script_name}")
@@ -110,12 +109,14 @@ def update_page(page_id, phase, module, status, valid_statuses):
     url = f"https://api.notion.com/v1/pages/{page_id}"
     now = datetime.now(timezone.utc).isoformat()
     clean_status = normalize_status(status, valid_statuses)
-    data = {"properties": {
-        "Phase": {"number": int(phase)},
-        "Module": {"rich_text": [{"text": {"content": module}}]},
-        "Status": {"select": {"name": clean_status}},
-        "Last Updated": {"date": {"start": now}}
-    }}
+    data = {
+        "properties": {
+            "Phase": {"number": int(phase)},
+            "Module": {"rich_text": [{"text": {"content": module}}]},
+            "Status": {"select": {"name": clean_status}},
+            "Last Updated": {"date": {"start": now}},
+        }
+    }
     try:
         print(f"✏️ Updating: {page_id}")
         resp = session.patch(url, headers=HEADERS, json=data)
@@ -130,10 +131,10 @@ def read_latest_summary_files():
     if not os.path.isdir(SUMMARY_DIR):
         print(f"⚠️ Summary directory not found: {SUMMARY_DIR}, skipping sync.")
         return []
-    files = [f for f in os.listdir(SUMMARY_DIR) if f.endswith('_summary.tsv')]
+    files = [f for f in os.listdir(SUMMARY_DIR) if f.endswith("_summary.tsv")]
     latest = {}
     for f in files:
-        key = f.rsplit('_summary.tsv', 1)[0]
+        key = f.rsplit("_summary.tsv", 1)[0]
         path = os.path.join(SUMMARY_DIR, f)
         mtime = os.path.getmtime(path)
         if key not in latest or mtime > latest[key][1]:
@@ -146,18 +147,20 @@ def read_latest_summary_files():
 # ================================
 def sync_to_notion():
     schema = fetch_database_schema()
-    status_prop = schema.get('Status', {}).get('select', {}).get('options', [])
-    valid_statuses = [opt['name'] for opt in status_prop] if status_prop else ["Unknown"]
+    status_prop = schema.get("Status", {}).get("select", {}).get("options", [])
+    valid_statuses = (
+        [opt["name"] for opt in status_prop] if status_prop else ["Unknown"]
+    )
 
     # Build lookup of existing pages
     pages = get_all_pages()
     existing_pages = {}
     for p in pages:
-        title = p.get('properties', {}).get('Script', {}).get('title', [])
+        title = p.get("properties", {}).get("Script", {}).get("title", [])
         if title:
-            name = title[0].get('plain_text')
+            name = title[0].get("plain_text")
             if name:
-                existing_pages[name] = p['id']
+                existing_pages[name] = p["id"]
 
     summary_files = read_latest_summary_files()
     if not summary_files:
@@ -166,29 +169,37 @@ def sync_to_notion():
 
     for summary in summary_files:
         name = os.path.basename(summary)
-        if not name.startswith('phase') or '_module_' not in name:
+        if not name.startswith("phase") or "_module_" not in name:
             print(f"⚠️ Skipping invalid file: {name}")
             continue
-        phase_part, module_part = name.split('_module_')
-        phase_num = phase_part.replace('phase', '')
+        phase_part, module_part = name.split("_module_")
+        phase_num = phase_part.replace("phase", "")
         if not phase_num.isdigit():
             print(f"⚠️ Skipping non-numeric phase file: {name}")
             continue
-        module = module_part.replace('_summary.tsv', '')
+        module = module_part.replace("_summary.tsv", "")
 
-        with open(summary, encoding='utf-8') as f:
+        with open(summary, encoding="utf-8") as f:
             _ = next(f, None)
             for line in f:
-                parts = line.strip().split('\t')
+                parts = line.strip().split("\t")
                 if len(parts) != 2:
                     print(f"⚠️ Skipping invalid line in {name}: {line.strip()}")
                     continue
                 script_name, status = parts
                 try:
                     if script_name in existing_pages:
-                        update_page(existing_pages[script_name], phase_num, module, status, valid_statuses)
+                        update_page(
+                            existing_pages[script_name],
+                            phase_num,
+                            module,
+                            status,
+                            valid_statuses,
+                        )
                     else:
-                        create_page(script_name, phase_num, module, status, valid_statuses)
+                        create_page(
+                            script_name, phase_num, module, status, valid_statuses
+                        )
                 except Exception as e:
                     print(f"⚠️ Error syncing {script_name}: {e}")
 
@@ -198,5 +209,5 @@ def sync_to_notion():
 # ================================
 # 5️⃣ Entry Point
 # ================================
-if __name__ == '__main__':
+if __name__ == "__main__":
     sync_to_notion()

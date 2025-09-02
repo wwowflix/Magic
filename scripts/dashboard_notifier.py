@@ -7,7 +7,6 @@ Currently just prints confirmation, but can be extended to Slack, Notion, etc.
 """
 
 import datetime
-import os
 
 timestamp = datetime.datetime.utcnow().isoformat()
 signal_file = "D:/MAGIC/outputs/trends/dashboard_signal.log"

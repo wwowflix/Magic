@@ -1,4 +1,4 @@
-""" test the scalar Timestamp """
+"""test the scalar Timestamp"""
 
 import calendar
 from datetime import (
@@ -926,4 +926,3 @@ def test_negative_dates():
     func = "^toordinal"
     with pytest.raises(NotImplementedError, match=func + msg):
         ts.toordinal()
-

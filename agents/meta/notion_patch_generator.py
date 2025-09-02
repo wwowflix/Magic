@@ -18,6 +18,7 @@ notion = Client(auth=NOTION_TOKEN)
 # Path to patch CSV
 patch_file_path = "outputs/notion_export/magic_patch.csv"
 
+
 def create_notion_entry(row):
     try:
         filename = row.get("Filename", "").strip()
@@ -42,15 +43,22 @@ def create_notion_entry(row):
                 "Status": {"select": {"name": status}},
                 "Is Placeholder": {"checkbox": is_placeholder},
                 "Is Implemented": {"checkbox": is_implemented},
-                "Folder Location": {"rich_text": [{"text": {"content": folder_location}}]},
+                "Folder Location": {
+                    "rich_text": [{"text": {"content": folder_location}}]
+                },
                 "Notes": {"rich_text": [{"text": {"content": notes}}]} if notes else {},
-                "Last Synced": {"rich_text": [{"text": {"content": last_synced}}]} if last_synced else {}
-            }
+                "Last Synced": (
+                    {"rich_text": [{"text": {"content": last_synced}}]}
+                    if last_synced
+                    else {}
+                ),
+            },
         )
         print(f"✅ Added: {filename}")
 
     except Exception as e:
         print(f"❌ Failed to add: {filename} → {e}")
+
 
 # Main Execution
 if __name__ == "__main__":
@@ -58,7 +66,7 @@ if __name__ == "__main__":
         print(f"❌ File not found: {patch_file_path}")
         exit(1)
 
-    with open(patch_file_path, newline='', encoding='utf-8') as csvfile:
+    with open(patch_file_path, newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row.get("Filename") and row.get("Prefix"):

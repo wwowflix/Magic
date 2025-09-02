@@ -1423,4 +1423,3 @@ class TestToLatexMultiindex:
             """
         )
         assert result == expected
-
