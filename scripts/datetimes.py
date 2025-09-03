@@ -664,8 +664,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> Timestamp:
-    ...
+) -> Timestamp: ...
 
 
 @overload
@@ -681,8 +680,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> Series:
-    ...
+) -> Series: ...
 
 
 @overload
@@ -698,8 +696,7 @@ def to_datetime(
     infer_datetime_format: bool = ...,
     origin=...,
     cache: bool = ...,
-) -> DatetimeIndex:
-    ...
+) -> DatetimeIndex: ...
 
 
 def to_datetime(

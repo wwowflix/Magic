@@ -1,4 +1,5 @@
 """Tests dealing with the NDFrame.allows_duplicates."""
+
 import operator
 
 import numpy as np
@@ -411,4 +412,3 @@ def test_pickle():
     a = pd.DataFrame({"A": []}).set_flags(allows_duplicate_labels=False)
     b = tm.round_trip_pickle(a)
     tm.assert_frame_equal(a, b)
-

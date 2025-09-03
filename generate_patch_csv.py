@@ -17,6 +17,7 @@ MODULE_REGEX = re.compile(r"module_([A-Z])", re.IGNORECASE)
 # e.g. 11A_some_script_READY.py
 FILE_PREFIX_REGEX = re.compile(r"^(\d+[A-Z])_(.+)")
 
+
 def get_phase_module_from_path(path):
     # Extract phase and module from path string
     phase_match = PHASE_REGEX.search(path)
@@ -24,6 +25,7 @@ def get_phase_module_from_path(path):
     phase = phase_match.group(1) if phase_match else ""
     module = module_match.group(1) if module_match else ""
     return phase, module
+
 
 def get_prefix_filename(file_name):
     match = FILE_PREFIX_REGEX.match(file_name)
@@ -34,6 +36,7 @@ def get_prefix_filename(file_name):
     else:
         # fallback if no prefix pattern found
         return "", file_name
+
 
 def generate_patch_csv():
     rows = []
@@ -48,14 +51,16 @@ def generate_patch_csv():
             prefix, filename = get_prefix_filename(file)
             status = "Ready"  # you can customize status detection here
 
-            rows.append({
-                "Filename": filename,
-                "Phase": phase,
-                "Module": module,
-                "Prefix": prefix,
-                "Status": status,
-                "Path": full_path
-            })
+            rows.append(
+                {
+                    "Filename": filename,
+                    "Phase": phase,
+                    "Module": module,
+                    "Prefix": prefix,
+                    "Status": status,
+                    "Path": full_path,
+                }
+            )
 
     # Write CSV
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
@@ -65,6 +70,7 @@ def generate_patch_csv():
         writer.writerows(rows)
 
     print(f"✅ Patch CSV generated: {OUTPUT_CSV}")
+
 
 if __name__ == "__main__":
     generate_patch_csv()

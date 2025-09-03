@@ -2,6 +2,7 @@
 Tests multithreading behaviour for reading and
 parsing files for each parser defined in parsers.py
 """
+
 from contextlib import ExitStack
 from io import BytesIO
 from multiprocessing.pool import ThreadPool
@@ -155,4 +156,3 @@ def test_multi_thread_path_multipart_read_csv(all_parsers):
             parser, path, num_rows, num_tasks
         )
         tm.assert_frame_equal(df, final_dataframe)
-

@@ -4,6 +4,7 @@ Tests for the following offsets:
 - CustomBusinessMonthBegin
 - CustomBusinessMonthEnd
 """
+
 from __future__ import annotations
 
 from datetime import (
@@ -435,4 +436,3 @@ class TestCustomBusinessMonthEnd:
         offset, cases = case
         for base, expected in cases.items():
             assert_offset_equal(offset, base, expected)
-

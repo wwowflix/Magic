@@ -8,12 +8,14 @@ TOTAL_REQUESTS = 50
 MAX_PER_SECOND = 5
 LOG_FILE = "outputs/logs/rate_limit_stress_test_log.txt"
 
+
 # Function to simulate an API call
 def simulate_api_call(index):
     start = datetime.now()
     time.sleep(random.uniform(0.05, 0.2))  # Simulate response time
     duration = (datetime.now() - start).total_seconds()
     return f"Request {index}: Took {duration:.3f}s"
+
 
 # Rate limiting logic
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

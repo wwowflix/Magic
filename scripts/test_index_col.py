@@ -3,6 +3,7 @@ Tests that the specified index column (a.k.a "index_col")
 is properly handled or inferred during parsing for all of
 the parsers defined in parsers.py
 """
+
 from io import StringIO
 
 import numpy as np
@@ -374,4 +375,3 @@ x,y,1,2
     )
     expected = DataFrame([["x", 1, 2]], columns=cols, index=["y"])
     tm.assert_frame_equal(result, expected)
-

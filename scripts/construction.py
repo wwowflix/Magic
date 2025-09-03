@@ -2,6 +2,7 @@
 Functions for preparing various inputs passed to the DataFrame or Series
 constructors before passing them to a BlockManager.
 """
+
 from __future__ import annotations
 
 from collections import abc
@@ -1050,6 +1051,7 @@ def _convert_object_array(
     -------
     List[ArrayLike]
     """
+
     # provide soft conversion of object dtypes
     def convert(arr):
         if dtype != np.dtype("O"):

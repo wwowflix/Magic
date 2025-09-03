@@ -1,6 +1,7 @@
 """
 Note: includes tests for `last`
 """
+
 import numpy as np
 import pytest
 
@@ -141,4 +142,3 @@ class TestFirst:
 
         tm.assert_frame_equal(df, result)
         assert df is not result
-

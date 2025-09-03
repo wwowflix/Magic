@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from notion_client import Client
 
+
 def main():
     load_dotenv()  # Load .env file
 
@@ -20,6 +21,7 @@ def main():
         print(f"Database title: {response['title'][0]['plain_text']}")
     except Exception as e:
         print(f"❌ Connection failed: {e}")
+
 
 if __name__ == "__main__":
     main()

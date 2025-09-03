@@ -270,15 +270,13 @@ class NDArrayBackedExtensionArray(NDArrayBacked, ExtensionArray):
         return value
 
     @overload
-    def __getitem__(self, key: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, key: ScalarIndexer) -> Any: ...
 
     @overload
     def __getitem__(
         self: NDArrayBackedExtensionArrayT,
         key: SequenceIndexer | PositionalIndexerTuple,
-    ) -> NDArrayBackedExtensionArrayT:
-        ...
+    ) -> NDArrayBackedExtensionArrayT: ...
 
     def __getitem__(
         self: NDArrayBackedExtensionArrayT,

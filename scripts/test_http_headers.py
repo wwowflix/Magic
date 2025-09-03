@@ -1,6 +1,7 @@
 """
 Tests for the pandas custom headers in http(s) requests
 """
+
 from functools import partial
 import gzip
 from io import BytesIO
@@ -173,4 +174,3 @@ def test_to_parquet_to_disk_with_storage_options(engine):
     )
     with pytest.raises(ValueError, match=msg):
         true_df.to_parquet("/tmp/junk.parquet", storage_options=headers, engine=engine)
-

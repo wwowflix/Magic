@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import StringIO
 
 import pytest
@@ -132,4 +133,3 @@ def test_iteration_open_handle(all_parsers):
             result = parser.read_csv(f, **kwargs)
             expected = DataFrame({0: ["DDD", "EEE", "FFF", "GGG"]})
             tm.assert_frame_equal(result, expected)
-

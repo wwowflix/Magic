@@ -1,6 +1,7 @@
 """
 Tests for np.foo applied to DataFrame, not necessarily ufuncs.
 """
+
 import numpy as np
 
 from pandas import (
@@ -87,4 +88,3 @@ class TestAsArray:
             ]
         )
         tm.assert_numpy_array_equal(result, expected)
-

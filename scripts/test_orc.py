@@ -1,4 +1,5 @@
-""" test orc compat """
+"""test orc compat"""
+
 import datetime
 from decimal import Decimal
 from io import BytesIO
@@ -442,4 +443,3 @@ def test_string_inference(tmp_path):
         columns=pd.Index(["a"], dtype=pd.StringDtype(na_value=np.nan)),
     )
     tm.assert_frame_equal(result, expected)
-

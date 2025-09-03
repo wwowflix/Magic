@@ -21,7 +21,7 @@ class TestReturnReal(util.F2PyTest):
         assert abs(t("234.6") - 234.6) <= err
         assert abs(t(-234) + 234) <= err
         assert abs(t([234]) - 234) <= err
-        assert abs(t((234, )) - 234.0) <= err
+        assert abs(t((234,)) - 234.0) <= err
         assert abs(t(array(234)) - 234.0) <= err
         assert abs(t(array(234).astype("b")) + 22) <= err
         assert abs(t(array(234, "h")) - 234.0) <= err
@@ -54,9 +54,7 @@ class TestReturnReal(util.F2PyTest):
     reason="Prone to error when run with numpy/f2py/tests on mac os, "
     "but not when run in isolation",
 )
-@pytest.mark.skipif(
-    not IS_64BIT, reason="32-bit builds are buggy"
-)
+@pytest.mark.skipif(not IS_64BIT, reason="32-bit builds are buggy")
 class TestCReturnReal(TestReturnReal):
     suffix = ".pyf"
     module_name = "c_ext_return_real"
@@ -107,4 +105,3 @@ class TestFReturnReal(TestReturnReal):
     @pytest.mark.parametrize("name", ["t0", "t4", "t8", "td", "s0", "s4", "s8", "sd"])
     def test_all_f90(self, name):
         self.check_function(getattr(self.module.f90_return_real, name), name)
-
