@@ -1529,9 +1529,7 @@ class TestDuplicated:
                 ]
             ),
             np.array(["a", "b", "a", "e", "c", "b", "d", "a", "e", "f"], dtype=object),
-            np.array(
-                [1, 2**63, 1, 3**5, 10, 2**63, 39, 1, 3**5, 7], dtype=np.uint64
-            ),
+            np.array([1, 2**63, 1, 3**5, 10, 2**63, 39, 1, 3**5, 7], dtype=np.uint64),
         ],
     )
     def test_numeric_object_likes(self, case):
@@ -2057,4 +2055,3 @@ def test_union_with_duplicates(op):
     else:
         result = algos.union_with_duplicates(lvals, rvals)
         tm.assert_extension_array_equal(result, expected)
-

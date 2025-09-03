@@ -1,5 +1,12 @@
-﻿import pandas as pd, os
-files = ["outputs/google_trends.csv", "outputs/reddit_scrape.csv", "outputs/youtube_scrape.csv", "outputs/tiktok_scrape.csv"]
+﻿import pandas as pd
+import os
+
+files = [
+    "outputs/google_trends.csv",
+    "outputs/reddit_scrape.csv",
+    "outputs/youtube_scrape.csv",
+    "outputs/tiktok_scrape.csv",
+]
 for f in files:
     if os.path.exists(f):
         try:

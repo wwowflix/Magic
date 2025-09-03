@@ -19,7 +19,9 @@ for _, row in ready_scripts.iterrows():
     if isinstance(path_value, str):
         expected_path = os.path.normpath(path_value)
         if not os.path.exists(expected_path):
-            missing_files.append(f'{row["Phase"]} | {row["Module"]} | {row["Filename"]} → MISSING')
+            missing_files.append(
+                f'{row["Phase"]} | {row["Module"]} | {row["Filename"]} → MISSING'
+            )
 
 # Output to log file
 os.makedirs(os.path.dirname(LOG_OUTPUT), exist_ok=True)

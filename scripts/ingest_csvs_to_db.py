@@ -14,6 +14,7 @@ TABLES = {
     "youtube_scrape.csv": "youtube",
 }
 
+
 def ingest():
     conn = sqlite3.connect(DB_PATH)
     for csv_name, table in TABLES.items():
@@ -26,6 +27,7 @@ def ingest():
             print(f"File not found: {csv_path}")
     conn.close()
     print("? All CSVs ingested successfully.")
+
 
 if __name__ == "__main__":
     ingest()

@@ -1005,7 +1005,7 @@ class PythonParser(ParserBase):
             content_len = len(content)
             content = []
 
-            for (i, l) in iter_content:
+            for i, l in iter_content:
                 actual_len = len(l)
 
                 if actual_len > col_len:

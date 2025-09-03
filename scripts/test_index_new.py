@@ -1,6 +1,7 @@
 """
 Tests for the Index constructor conducting inference.
 """
+
 from datetime import (
     datetime,
     timedelta,
@@ -430,4 +431,3 @@ class TestIndexConstructionErrors:
         )
         with pytest.raises(OverflowError, match=msg):
             Index([np.iinfo(np.uint64).max - 1], dtype="int64")
-

@@ -392,4 +392,3 @@ class TestCategoricalIndex2:
                 ["a", "b", np.nan, "d", "d", "a"], categories=list("dba"), ordered=True
             ),
         )
-

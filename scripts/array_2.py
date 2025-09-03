@@ -1,6 +1,7 @@
 """
 SparseArray data structure
 """
+
 from __future__ import annotations
 
 from collections import abc
@@ -952,15 +953,13 @@ class SparseArray(OpsMixin, PandasObject, ExtensionArray):
     # Indexing
     # --------
     @overload
-    def __getitem__(self, key: ScalarIndexer) -> Any:
-        ...
+    def __getitem__(self, key: ScalarIndexer) -> Any: ...
 
     @overload
     def __getitem__(
         self: SparseArrayT,
         key: SequenceIndexer | tuple[int | ellipsis, ...],
-    ) -> SparseArrayT:
-        ...
+    ) -> SparseArrayT: ...
 
     def __getitem__(
         self: SparseArrayT,
@@ -1938,13 +1937,11 @@ def make_sparse(
 
 
 @overload
-def make_sparse_index(length: int, indices, kind: Literal["block"]) -> BlockIndex:
-    ...
+def make_sparse_index(length: int, indices, kind: Literal["block"]) -> BlockIndex: ...
 
 
 @overload
-def make_sparse_index(length: int, indices, kind: Literal["integer"]) -> IntIndex:
-    ...
+def make_sparse_index(length: int, indices, kind: Literal["integer"]) -> IntIndex: ...
 
 
 def make_sparse_index(length: int, indices, kind: SparseIndexKind) -> SparseIndex:

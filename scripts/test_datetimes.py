@@ -1,6 +1,7 @@
 """
 Tests for DatetimeArray
 """
+
 from __future__ import annotations
 
 from datetime import timedelta
@@ -838,4 +839,3 @@ def test_factorize_sort_without_freq():
     tda = dta - dta[0]
     with pytest.raises(NotImplementedError, match=msg):
         tda.factorize(sort=True)
-

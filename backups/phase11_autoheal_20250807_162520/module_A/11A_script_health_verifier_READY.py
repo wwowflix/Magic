@@ -14,6 +14,7 @@ import subprocess
 PHASE_PATH = r"D:\MAGIC\scripts\phase11"
 LOG_FILE = r"D:\MAGIC\outputs\logs\script_health_report.txt"
 
+
 def main():
     try:
         bad_scripts = []
@@ -24,8 +25,11 @@ def main():
                     if file.endswith("_READY.py"):
                         filepath = os.path.join(root, file)
                         # Syntax check
-                        result = subprocess.run(["python", "-m", "py_compile", filepath],
-                                                capture_output=True, text=True)
+                        result = subprocess.run(
+                            ["python", "-m", "py_compile", filepath],
+                            capture_output=True,
+                            text=True,
+                        )
                         if result.returncode != 0:
                             bad_scripts.append(file)
                             log.write(f"❌ Syntax error: {file}\n")
@@ -45,6 +49,7 @@ def main():
         with open(LOG_FILE, "w", encoding="utf-8") as log:
             log.write(f"❌ Error occurred: {str(e)}\n")
         print("FAIL")
+
 
 if __name__ == "__main__":
     main()

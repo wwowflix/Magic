@@ -1,6 +1,7 @@
 """
 Tests for Timestamp parsing, aimed at pandas/_libs/tslibs/parsing.pyx
 """
+
 from datetime import datetime
 import re
 
@@ -413,4 +414,3 @@ def test_hypothesis_delimited_date(
 
     assert except_out_dateutil == except_in_dateutil
     assert result == expected
-

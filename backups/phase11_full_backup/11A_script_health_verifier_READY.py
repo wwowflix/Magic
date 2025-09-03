@@ -25,7 +25,7 @@ for root, _, files in os.walk(SCRIPTS_ROOT):
                         issues.append("Syntax Error")
             except Exception as e:
                 issues.append(f"Read Error: {e}")
-            
+
             if issues:
                 results.append(f"{full_path} ❌ {' | '.join(issues)}")
             else:
@@ -37,5 +37,7 @@ with open(LOG_OUTPUT, "w", encoding="utf-8") as f:
     for line in results:
         f.write(line + "\n")
 
-print(f"🔍 Health scan complete. ✅={sum('✅' in l for l in results)}, ❌={sum('❌' in l for l in results)}")
+print(
+    f"🔍 Health scan complete. ✅={sum('✅' in l for l in results)}, ❌={sum('❌' in l for l in results)}"
+)
 print(f"📄 See report: {LOG_OUTPUT}")

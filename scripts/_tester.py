@@ -1,6 +1,7 @@
 """
 Entrypoint for testing from the top-level namespace.
 """
+
 from __future__ import annotations
 
 import os
@@ -51,4 +52,3 @@ def test(extra_args: list[str] | None = None, run_doctests: bool = False) -> Non
 
 
 __all__ = ["test"]
-

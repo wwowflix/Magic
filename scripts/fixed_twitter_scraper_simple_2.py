@@ -2,25 +2,27 @@
 from fake_useragent import UserAgent
 import requests
 
+
 # Add retry logic
 def safe_request(url, max_retries=3):
     ua = UserAgent()
     for i in range(max_retries):
         try:
-            response = requests.get(url, headers={'User-Agent': ua.random})
+            response = requests.get(url, headers={"User-Agent": ua.random})
             response.raise_for_status()
             return response
-        except Exception as e:
+        except Exception:
             if i == max_retries - 1:
                 raise
-            time.sleep(2 ** i)
+            time.sleep(2**i)
+
 
 # Original script content follows:
-import os, certifi
-os.environ['SSL_CERT_FILE'] = certifi.where()
+import os
+import certifi
+
+os.environ["SSL_CERT_FILE"] = certifi.where()
 import snscrape.modules.twitter as sntwitter
-import pandas as pd
-from datetime import datetime
 import csv
 
 # Define query
@@ -39,4 +41,3 @@ with open("outputs/twitter_trends.csv", mode="w", newline="", encoding="utf-8") 
         writer.writerow([tweet.date, tweet.user.username, tweet.content, tweet.url])
 
 print("âœ… Scraped", limit, "tweets to outputs/twitter_trends.csv")
-

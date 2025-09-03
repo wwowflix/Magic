@@ -3,8 +3,7 @@
 # Copyright (c) 2013 by Christian Heimes <christian@python.org>
 # Licensed to PSF under a Contributor Agreement.
 # See https://www.python.org/psf/license for licensing details.
-"""Defused xml.sax.expatreader
-"""
+"""Defused xml.sax.expatreader"""
 from __future__ import print_function, absolute_import
 
 from xml.sax.expatreader import ExpatParser as _ExpatParser
@@ -20,7 +19,7 @@ class DefusedExpatParser(_ExpatParser):
     def __init__(
         self,
         namespaceHandling=0,
-        bufsize=2 ** 16 - 20,
+        bufsize=2**16 - 20,
         forbid_dtd=False,
         forbid_entities=True,
         forbid_external=True,
@@ -40,7 +39,9 @@ class DefusedExpatParser(_ExpatParser):
 
     def defused_unparsed_entity_decl(self, name, base, sysid, pubid, notation_name):
         # expat 1.2
-        raise EntitiesForbidden(name, None, base, sysid, pubid, notation_name)  # pragma: no cover
+        raise EntitiesForbidden(
+            name, None, base, sysid, pubid, notation_name
+        )  # pragma: no cover
 
     def defused_external_entity_ref_handler(self, context, base, sysid, pubid):
         raise ExternalReferenceForbidden(context, base, sysid, pubid)

@@ -158,6 +158,7 @@ API
 ---
 
 """
+
 # NOTE: The API section will be appended with additional entries
 # further down in this file
 
@@ -166,12 +167,16 @@ from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     import sys
+
     if sys.version_info >= (3, 8):
         from typing import final
     else:
         from typing_extensions import final
 else:
-    def final(f): return f
+
+    def final(f):
+        return f
+
 
 if not TYPE_CHECKING:
     __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
@@ -230,8 +235,15 @@ class NBitBase:
 
     def __init_subclass__(cls) -> None:
         allowed_names = {
-            "NBitBase", "_256Bit", "_128Bit", "_96Bit", "_80Bit",
-            "_64Bit", "_32Bit", "_16Bit", "_8Bit",
+            "NBitBase",
+            "_256Bit",
+            "_128Bit",
+            "_96Bit",
+            "_80Bit",
+            "_64Bit",
+            "_32Bit",
+            "_16Bit",
+            "_8Bit",
         }
         if cls.__name__ not in allowed_names:
             raise TypeError('cannot inherit from final class "NBitBase"')
@@ -240,120 +252,37 @@ class NBitBase:
 
 # Silence errors about subclassing a `@final`-decorated class
 class _256Bit(NBitBase): ...  # type: ignore[misc]
+
+
 class _128Bit(_256Bit): ...  # type: ignore[misc]
+
+
 class _96Bit(_128Bit): ...  # type: ignore[misc]
+
+
 class _80Bit(_96Bit): ...  # type: ignore[misc]
+
+
 class _64Bit(_80Bit): ...  # type: ignore[misc]
+
+
 class _32Bit(_64Bit): ...  # type: ignore[misc]
+
+
 class _16Bit(_32Bit): ...  # type: ignore[misc]
+
+
 class _8Bit(_16Bit): ...  # type: ignore[misc]
 
-from ._nbit import (
-    _NBitByte,
-    _NBitShort,
-    _NBitIntC,
-    _NBitIntP,
-    _NBitInt,
-    _NBitLongLong,
-    _NBitHalf,
-    _NBitSingle,
-    _NBitDouble,
-    _NBitLongDouble,
-)
-from ._char_codes import (
-    _BoolCodes,
-    _UInt8Codes,
-    _UInt16Codes,
-    _UInt32Codes,
-    _UInt64Codes,
-    _Int8Codes,
-    _Int16Codes,
-    _Int32Codes,
-    _Int64Codes,
-    _Float16Codes,
-    _Float32Codes,
-    _Float64Codes,
-    _Complex64Codes,
-    _Complex128Codes,
-    _ByteCodes,
-    _ShortCodes,
-    _IntCCodes,
-    _IntPCodes,
-    _IntCodes,
-    _LongLongCodes,
-    _UByteCodes,
-    _UShortCodes,
-    _UIntCCodes,
-    _UIntPCodes,
-    _UIntCodes,
-    _ULongLongCodes,
-    _HalfCodes,
-    _SingleCodes,
-    _DoubleCodes,
-    _LongDoubleCodes,
-    _CSingleCodes,
-    _CDoubleCodes,
-    _CLongDoubleCodes,
-    _DT64Codes,
-    _TD64Codes,
-    _StrCodes,
-    _BytesCodes,
-    _VoidCodes,
-    _ObjectCodes,
-)
-from ._scalars import (
-    _CharLike_co,
-    _BoolLike_co,
-    _UIntLike_co,
-    _IntLike_co,
-    _FloatLike_co,
-    _ComplexLike_co,
-    _TD64Like_co,
-    _NumberLike_co,
-    _ScalarLike_co,
-    _VoidLike_co,
-)
-from ._shape import _Shape, _ShapeLike
+
 from ._dtype_like import (
     DTypeLike as DTypeLike,
-    _SupportsDType,
-    _VoidDTypeLike,
-    _DTypeLikeBool,
-    _DTypeLikeUInt,
-    _DTypeLikeInt,
-    _DTypeLikeFloat,
-    _DTypeLikeComplex,
-    _DTypeLikeTD64,
-    _DTypeLikeDT64,
-    _DTypeLikeObject,
-    _DTypeLikeVoid,
-    _DTypeLikeStr,
-    _DTypeLikeBytes,
-    _DTypeLikeComplex_co,
 )
 from ._array_like import (
     ArrayLike as ArrayLike,
-    _ArrayLike,
-    _NestedSequence,
-    _RecursiveSequence,
-    _SupportsArray,
-    _ArrayLikeInt,
-    _ArrayLikeBool_co,
-    _ArrayLikeUInt_co,
-    _ArrayLikeInt_co,
-    _ArrayLikeFloat_co,
-    _ArrayLikeComplex_co,
-    _ArrayLikeNumber_co,
-    _ArrayLikeTD64_co,
-    _ArrayLikeDT64_co,
-    _ArrayLikeObject_co,
-    _ArrayLikeVoid_co,
-    _ArrayLikeStr_co,
-    _ArrayLikeBytes_co,
 )
 from ._generic_alias import (
     NDArray as NDArray,
-    _GenericAlias,
 )
 
 if TYPE_CHECKING:
@@ -378,10 +307,12 @@ del TYPE_CHECKING, final, List, ufunc
 
 if __doc__ is not None:
     from ._add_docstring import _docstrings
+
     __doc__ += _docstrings
-    __doc__ += '\n.. autoclass:: numpy.typing.NBitBase\n'
+    __doc__ += "\n.. autoclass:: numpy.typing.NBitBase\n"
     del _docstrings
 
 from numpy._pytesttester import PytestTester
+
 test = PytestTester(__name__)
 del PytestTester

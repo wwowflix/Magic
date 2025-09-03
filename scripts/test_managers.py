@@ -1,6 +1,7 @@
 """
 Testing interaction between the different managers (BlockManager, ArrayManager)
 """
+
 import os
 import subprocess
 import sys
@@ -101,4 +102,3 @@ def test_array_manager_depr_env_var(manager):
     msg = "FutureWarning: The env variable PANDAS_DATA_MANAGER is set"
     stderr_msg = response.stderr.decode("utf-8")
     assert msg in stderr_msg, stderr_msg
-
