@@ -127,7 +127,9 @@ class BrowsingContextInfo:
             children = []
             for child in raw_children:
                 if not isinstance(child, dict):
-                    raise ValueError(f"Each child must be a dictionary, got {type(child)}")
+                    raise ValueError(
+                        f"Each child must be a dictionary, got {type(child)}"
+                    )
                 children.append(BrowsingContextInfo.from_json(child))
 
         context = json.get("context")
@@ -463,7 +465,9 @@ class BrowsingContext:
         if clip is not None:
             params["clip"] = clip
 
-        result = self.conn.execute(command_builder("browsingContext.captureScreenshot", params))
+        result = self.conn.execute(
+            command_builder("browsingContext.captureScreenshot", params)
+        )
         return result["data"]
 
     def close(self, context: str, prompt_unload: bool = False) -> None:
@@ -536,7 +540,9 @@ class BrowsingContext:
             params["root"] = root
 
         result = self.conn.execute(command_builder("browsingContext.getTree", params))
-        return [BrowsingContextInfo.from_json(context) for context in result["contexts"]]
+        return [
+            BrowsingContextInfo.from_json(context) for context in result["contexts"]
+        ]
 
     def handle_user_prompt(
         self,
@@ -590,7 +596,9 @@ class BrowsingContext:
         if start_nodes is not None:
             params["startNodes"] = start_nodes
 
-        result = self.conn.execute(command_builder("browsingContext.locateNodes", params))
+        result = self.conn.execute(
+            command_builder("browsingContext.locateNodes", params)
+        )
         return result["nodes"]
 
     def navigate(
@@ -736,7 +744,9 @@ class BrowsingContext:
             Dict: A dictionary containing the traverse history result.
         """
         params = {"context": context, "delta": delta}
-        result = self.conn.execute(command_builder("browsingContext.traverseHistory", params))
+        result = self.conn.execute(
+            command_builder("browsingContext.traverseHistory", params)
+        )
         return result
 
     def _on_event(self, event_name: str, callback: Callable) -> int:
@@ -754,7 +764,10 @@ class BrowsingContext:
         event = BrowsingContextEvent(event_name)
 
         def _callback(event_data):
-            if event_name == self.EVENTS["context_created"] or event_name == self.EVENTS["context_destroyed"]:
+            if (
+                event_name == self.EVENTS["context_created"]
+                or event_name == self.EVENTS["context_destroyed"]
+            ):
                 info = BrowsingContextInfo.from_json(event_data.params)
                 callback(info)
             elif event_name == self.EVENTS["download_will_begin"]:
@@ -783,7 +796,9 @@ class BrowsingContext:
 
         return callback_id
 
-    def add_event_handler(self, event: str, callback: Callable, contexts: Optional[list[str]] = None) -> int:
+    def add_event_handler(
+        self, event: str, callback: Callable, contexts: Optional[list[str]] = None
+    ) -> int:
         """Add an event handler to the browsing context.
 
         Parameters:

@@ -7,7 +7,7 @@ REQUIRED_KEYS = [
     "NOTION_DATABASE_ID",
     "OPENAI_API_KEY",
     "GITHUB_TOKEN",
-    "YOUTUBE_API_KEY"
+    "YOUTUBE_API_KEY",
 ]
 
 ENV_PATH = ".env"

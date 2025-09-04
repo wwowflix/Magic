@@ -7,10 +7,12 @@ LOG_FILE = "outputs/logs/bottleneck_profile_log.txt"
 PHASES = 3
 TASKS_PER_PHASE = 5
 
+
 def simulate_task(phase, task_id):
     delay = random.uniform(0.1, 0.7)
     time.sleep(delay)
     return f"Phase {phase} - Task {task_id} → Took {delay:.2f}s"
+
 
 # Ensure log folder
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

@@ -1,6 +1,7 @@
 """
 Testing that we work in the downstream packages
 """
+
 import array
 import subprocess
 import sys
@@ -368,4 +369,3 @@ def test_xarray_coerce_unit():
         freq=None,
     )
     tm.assert_index_equal(result, expected)
-

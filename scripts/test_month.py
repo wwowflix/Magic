@@ -5,6 +5,7 @@ Tests for the following offsets:
 - MonthBegin
 - MonthEnd
 """
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -664,4 +665,3 @@ class TestMonthEnd:
     def test_is_on_offset(self, case):
         offset, dt, expected = case
         assert_is_on_offset(offset, dt, expected)
-

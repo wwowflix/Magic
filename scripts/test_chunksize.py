@@ -2,6 +2,7 @@
 Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
+
 from io import StringIO
 
 import numpy as np
@@ -380,4 +381,3 @@ def test_chunksize_second_block_shorter(all_parsers):
 
     for i, result in enumerate(result_chunks):
         tm.assert_frame_equal(result, expected_frames[i])
-

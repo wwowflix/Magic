@@ -1,1 +1,1 @@
-﻿''' Placeholder script for 04B_lifecycle_heatmap_READY.py in Phase 4 Module B '''
+﻿"""Placeholder script for 04B_lifecycle_heatmap_READY.py in Phase 4 Module B"""

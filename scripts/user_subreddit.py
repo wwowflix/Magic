@@ -241,4 +241,3 @@ class UserSubredditModeration(SubredditModeration):
         return UserSubreddit._create_or_update(
             _reddit=self.subreddit._reddit, **current_settings
         )
-

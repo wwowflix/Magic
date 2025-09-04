@@ -411,7 +411,7 @@ class TestStata:
             [(1, 2, 3, 4)],
             columns=[
                 "good",
-                "b\u00E4d",
+                "b\u00e4d",
                 "8number",
                 "astringwithmorethan32characters______",
             ],
@@ -1365,7 +1365,7 @@ class TestStata:
                 )
 
     def test_write_variable_label_errors(self, mixed_frame):
-        values = ["\u03A1", "\u0391", "\u039D", "\u0394", "\u0391", "\u03A3"]
+        values = ["\u03a1", "\u0391", "\u039d", "\u0394", "\u0391", "\u03a3"]
 
         variable_labels_utf8 = {
             "a": "City Rank",
@@ -2396,4 +2396,3 @@ def test_empty_frame():
         df3 = read_stata(path, columns=["a"])
         assert "b" not in df3
         tm.assert_series_equal(df3.dtypes, dtypes.loc[["a"]])
-

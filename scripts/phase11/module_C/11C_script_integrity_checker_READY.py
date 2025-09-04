@@ -7,11 +7,13 @@ import ast
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 SCRIPTS_DIR = os.path.join(ROOT, "scripts")
 
+
 def list_ready_py(root):
     for dirpath, _, filenames in os.walk(root):
         for fn in filenames:
             if fn.endswith("_READY.py"):
                 yield os.path.join(dirpath, fn)
+
 
 def check_file(path):
     # 1) Non-empty file
@@ -33,6 +35,7 @@ def check_file(path):
 
     return True, "ok"
 
+
 def main():
     problems = []
     total = 0
@@ -51,6 +54,7 @@ def main():
 
     print(f"Integrity OK. Checked={total} Fail=0")
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

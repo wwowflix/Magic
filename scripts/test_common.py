@@ -21,4 +21,3 @@ class TestCommonWithUse(util.F2PyTest):
 
     def test_common_gh19161(self):
         assert self.module.data.x == 0
-
