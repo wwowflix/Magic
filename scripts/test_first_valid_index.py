@@ -1,6 +1,7 @@
 """
 Includes test for last_valid_index.
 """
+
 import numpy as np
 import pytest
 
@@ -76,4 +77,3 @@ class TestFirstValidIndex:
         ser = frame["foo"]
         assert ser.first_valid_index() is None
         assert ser.last_valid_index() is None
-

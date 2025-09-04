@@ -1,4 +1,5 @@
-""" support numpy compatibility across versions """
+"""support numpy compatibility across versions"""
+
 import numpy as np
 
 from pandas.util.version import Version

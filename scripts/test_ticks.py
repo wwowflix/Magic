@@ -1,6 +1,7 @@
 """
 Tests for offsets.Tick and subclasses
 """
+
 from datetime import (
     datetime,
     timedelta,
@@ -403,4 +404,3 @@ def test_compare_ticks_to_timedeltalike(cls):
         assert not off > other
         assert off <= other
         assert off >= other
-

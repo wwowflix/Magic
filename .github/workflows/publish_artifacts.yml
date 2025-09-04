@@ -1,0 +1,28 @@
+﻿name: publish-artifacts
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  pkg:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          \ = @()
+          if (Test-Path outputs\reports) { \ += 'outputs\reports\*' }
+          if (Test-Path outputs\metrics) { \ += 'outputs\metrics\*' }
+          \ = Get-ChildItem outputs -Filter 'nightly_allphases_*.log' -ErrorAction SilentlyContinue
+          if (\) { \ += (\ | ForEach-Object { \.FullName }) }
+          if (\.Count -eq 0) { 'No artifacts to package' | Out-Host } else {
+            Compress-Archive -Path \ -DestinationPath dist\run_artifacts.zip -Force
+          }
+      - name: Upload run artifacts
+        if: hashFiles('dist/run_artifacts.zip') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-artifacts
+          path: dist/run_artifacts.zip

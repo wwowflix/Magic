@@ -2,6 +2,7 @@
 Tests dtype specification during parsing
 for all of the parsers defined in parsers.py
 """
+
 from io import StringIO
 
 import numpy as np
@@ -179,4 +180,3 @@ def test_empty_dtype(all_parsers, dtype, expected):
 
     result = parser.read_csv(StringIO(data), header=0, dtype=dtype)
     tm.assert_frame_equal(result, expected)
-

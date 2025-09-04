@@ -2,6 +2,7 @@
 Tests encoding functionality during parsing
 for all of the parsers defined in parsers.py
 """
+
 from io import (
     BytesIO,
     TextIOWrapper,
@@ -335,4 +336,3 @@ def test_not_readable(all_parsers, mode):
         df = parser.read_csv(handle)
     expected = DataFrame([], columns=["abcd"])
     tm.assert_frame_equal(df, expected)
-

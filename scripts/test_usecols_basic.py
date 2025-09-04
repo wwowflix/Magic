@@ -2,6 +2,7 @@
 Tests the usecols functionality during parsing
 for all of the parsers defined in parsers.py
 """
+
 from io import StringIO
 
 import numpy as np
@@ -561,4 +562,3 @@ b,2,y
         {"col1": array(["a", "b"]), "col2": np.array([1, 2], dtype="uint8")}
     )
     tm.assert_frame_equal(result, expected)
-

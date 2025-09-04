@@ -9,7 +9,9 @@ if IS_RELEASE:
     build_path = os.path.join(absolute_path, "frontend/build")
     _component_func = components.declare_component("tab_bar", path=build_path)
 else:
-    _component_func = components.declare_component("tab_bar", url="http://localhost:3001")
+    _component_func = components.declare_component(
+        "tab_bar", url="http://localhost:3001"
+    )
 
 
 @dataclass(frozen=True, order=True, unsafe_hash=True)
@@ -24,7 +26,9 @@ class TabBarItemData:
 
 def tab_bar(data: List[TabBarItemData], default=None, return_type=str, key=None):
     data = list(map(lambda item: item.to_dict(), data))
-    component_value = _component_func(data=data, selectedId=default, key=key, default=default)
+    component_value = _component_func(
+        data=data, selectedId=default, key=key, default=default
+    )
 
     try:
         if return_type == str:

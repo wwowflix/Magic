@@ -24,13 +24,15 @@ for base_keyword in keywords:
         response = requests.get(url)
         suggestions = response.json()[1]
         for suggestion in suggestions:
-            results.append({
-                "date": datetime.utcnow().isoformat(),
-                "keyword": suggestion,
-                "platform": "YouTube",
-                "metric": 1,
-                "author": ""
-            })
+            results.append(
+                {
+                    "date": datetime.utcnow().isoformat(),
+                    "keyword": suggestion,
+                    "platform": "YouTube",
+                    "metric": 1,
+                    "author": "",
+                }
+            )
     except Exception as e:
         print(f"❌ Failed to fetch suggestions for '{base_keyword}': {e}")
 

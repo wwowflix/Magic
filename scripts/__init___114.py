@@ -10,7 +10,7 @@ _CMDSTAN_WARMUP = 1000
 _CMDSTAN_SAMPLING = 1000
 _CMDSTAN_THIN = 1
 _CMDSTAN_REFRESH = 100
-_DOT_CMDSTAN = '.cmdstan'
+_DOT_CMDSTAN = ".cmdstan"
 
 
 def _cleanup_tmpdir() -> None:
@@ -45,22 +45,22 @@ from .utils import (
 )
 
 __all__ = [
-    'set_cmdstan_path',
-    'cmdstan_path',
-    'set_make_env',
-    'install_cmdstan',
-    'compile_stan_file',
-    'format_stan_file',
-    'CmdStanMCMC',
-    'CmdStanMLE',
-    'CmdStanGQ',
-    'CmdStanVB',
-    'CmdStanLaplace',
-    'CmdStanPathfinder',
-    'CmdStanModel',
-    'from_csv',
-    'write_stan_json',
-    'show_versions',
-    'rebuild_cmdstan',
-    'cmdstan_version',
+    "set_cmdstan_path",
+    "cmdstan_path",
+    "set_make_env",
+    "install_cmdstan",
+    "compile_stan_file",
+    "format_stan_file",
+    "CmdStanMCMC",
+    "CmdStanMLE",
+    "CmdStanGQ",
+    "CmdStanVB",
+    "CmdStanLaplace",
+    "CmdStanPathfinder",
+    "CmdStanModel",
+    "from_csv",
+    "write_stan_json",
+    "show_versions",
+    "rebuild_cmdstan",
+    "cmdstan_version",
 ]
