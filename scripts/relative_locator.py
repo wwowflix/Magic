@@ -95,9 +95,7 @@ class RelativeBy:
 
     LocatorType = dict[ByType, str]
 
-    def __init__(
-        self, root: Optional[dict[ByType, str]] = None, filters: Optional[list] = None
-    ):
+    def __init__(self, root: Optional[dict[ByType, str]] = None, filters: Optional[list] = None):
         """Creates a new RelativeBy object. It is preferred if you use the
         `locate_with` method as this signature could change.
 
@@ -114,9 +112,7 @@ class RelativeBy:
         self.filters = filters or []
 
     @overload
-    def above(
-        self, element_or_locator: Union[WebElement, LocatorType]
-    ) -> "RelativeBy": ...
+    def above(self, element_or_locator: Union[WebElement, LocatorType]) -> "RelativeBy": ...
 
     @overload
     def above(self, element_or_locator: None = None) -> "NoReturn": ...
@@ -146,24 +142,18 @@ class RelativeBy:
         >>> elements = driver.find_elements(locate_with(By.CSS_SELECTOR, "p").above(lowest))
         """
         if not element_or_locator:
-            raise WebDriverException(
-                "Element or locator must be given when calling above method"
-            )
+            raise WebDriverException("Element or locator must be given when calling above method")
 
         self.filters.append({"kind": "above", "args": [element_or_locator]})
         return self
 
     @overload
-    def below(
-        self, element_or_locator: Union[WebElement, LocatorType]
-    ) -> "RelativeBy": ...
+    def below(self, element_or_locator: Union[WebElement, LocatorType]) -> "RelativeBy": ...
 
     @overload
     def below(self, element_or_locator: None = None) -> "NoReturn": ...
 
-    def below(
-        self, element_or_locator: Union[WebElement, dict, None] = None
-    ) -> "RelativeBy":
+    def below(self, element_or_locator: Union[WebElement, dict, None] = None) -> "RelativeBy":
         """Add a filter to look for elements below.
 
         Parameters:
@@ -186,24 +176,18 @@ class RelativeBy:
         >>> elements = driver.find_elements(locate_with(By.CSS_SELECTOR, "p").below(highest))
         """
         if not element_or_locator:
-            raise WebDriverException(
-                "Element or locator must be given when calling below method"
-            )
+            raise WebDriverException("Element or locator must be given when calling below method")
 
         self.filters.append({"kind": "below", "args": [element_or_locator]})
         return self
 
     @overload
-    def to_left_of(
-        self, element_or_locator: Union[WebElement, LocatorType]
-    ) -> "RelativeBy": ...
+    def to_left_of(self, element_or_locator: Union[WebElement, LocatorType]) -> "RelativeBy": ...
 
     @overload
     def to_left_of(self, element_or_locator: None = None) -> "NoReturn": ...
 
-    def to_left_of(
-        self, element_or_locator: Union[WebElement, dict, None] = None
-    ) -> "RelativeBy":
+    def to_left_of(self, element_or_locator: Union[WebElement, dict, None] = None) -> "RelativeBy":
         """Add a filter to look for elements to the left of.
 
         Parameters:
@@ -234,16 +218,12 @@ class RelativeBy:
         return self
 
     @overload
-    def to_right_of(
-        self, element_or_locator: Union[WebElement, LocatorType]
-    ) -> "RelativeBy": ...
+    def to_right_of(self, element_or_locator: Union[WebElement, LocatorType]) -> "RelativeBy": ...
 
     @overload
     def to_right_of(self, element_or_locator: None = None) -> "NoReturn": ...
 
-    def to_right_of(
-        self, element_or_locator: Union[WebElement, dict, None] = None
-    ) -> "RelativeBy":
+    def to_right_of(self, element_or_locator: Union[WebElement, dict, None] = None) -> "RelativeBy":
         """Add a filter to look for elements right of.
 
         Parameters:
@@ -290,9 +270,7 @@ class RelativeBy:
             - element_or_locator: Element to look above
         """
         if not element_or_locator:
-            raise WebDriverException(
-                "Element or locator must be given when calling above method"
-            )
+            raise WebDriverException("Element or locator must be given when calling above method")
 
         self.filters.append({"kind": "straightAbove", "args": [element_or_locator]})
         return self
@@ -314,9 +292,7 @@ class RelativeBy:
             - element_or_locator: Element to look below
         """
         if not element_or_locator:
-            raise WebDriverException(
-                "Element or locator must be given when calling below method"
-            )
+            raise WebDriverException("Element or locator must be given when calling below method")
 
         self.filters.append({"kind": "straightBelow", "args": [element_or_locator]})
         return self
@@ -375,9 +351,7 @@ class RelativeBy:
     ) -> "RelativeBy": ...
 
     @overload
-    def near(
-        self, element_or_locator: None = None, distance: int = 50
-    ) -> "NoReturn": ...
+    def near(self, element_or_locator: None = None, distance: int = 50) -> "NoReturn": ...
 
     def near(
         self,
@@ -410,9 +384,7 @@ class RelativeBy:
         >>> elements = driver.find_elements(locate_with(By.CSS_SELECTOR, "p").near(near, 50))
         """
         if not element_or_locator:
-            raise WebDriverException(
-                "Element or locator must be given when calling near method"
-            )
+            raise WebDriverException("Element or locator must be given when calling near method")
         if distance <= 0:
             raise WebDriverException("Distance must be positive")
 

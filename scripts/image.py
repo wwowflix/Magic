@@ -72,9 +72,7 @@ class ImageCaptcha:
     def truefonts(self) -> list[FreeTypeFont]:
         if self._truefonts:
             return self._truefonts
-        self._truefonts = [
-            truetype(n, s) for n in self._fonts for s in self._font_sizes
-        ]
+        self._truefonts = [truetype(n, s) for n in self._fonts for s in self._font_sizes]
         return self._truefonts
 
     @staticmethod
@@ -108,15 +106,11 @@ class ImageCaptcha:
         _, _, w, h = draw.multiline_textbbox((1, 1), c, font=font)
 
         dx1 = (
-            secrets.randbelow(
-                self.character_offset_dx[1] - self.character_offset_dx[0] + 1
-            )
+            secrets.randbelow(self.character_offset_dx[1] - self.character_offset_dx[0] + 1)
             + self.character_offset_dx[0]
         )
         dy1 = (
-            secrets.randbelow(
-                self.character_offset_dy[1] - self.character_offset_dy[0] + 1
-            )
+            secrets.randbelow(self.character_offset_dy[1] - self.character_offset_dy[0] + 1)
             + self.character_offset_dy[0]
         )
         im = createImage("RGBA", (int(w) + dx1, int(h) + dy1))
@@ -165,9 +159,7 @@ class ImageCaptcha:
         im = im.transform((int(w), int(h)), Transform.QUAD, data)
         return im
 
-    def create_captcha_image(
-        self, chars: str, color: ColorTuple, background: ColorTuple
-    ) -> Image:
+    def create_captcha_image(self, chars: str, color: ColorTuple, background: ColorTuple) -> Image:
         """Create the CAPTCHA image itself.
 
         :param chars: text to be generated.

@@ -171,9 +171,7 @@ def method_cache(
 
     def wrapper(self: object, *args: object, **kwargs: object) -> object:
         # it's the first call, replace the method with a cached, bound method
-        bound_method: CallableT = types.MethodType(  # type: ignore[assignment]
-            method, self
-        )
+        bound_method: CallableT = types.MethodType(method, self)  # type: ignore[assignment]
         cached_method = cache_wrapper(bound_method)
         setattr(self, method.__name__, cached_method)
         return cached_method(*args, **kwargs)
@@ -181,9 +179,7 @@ def method_cache(
     # Support cache clear even before cache has been created.
     wrapper.cache_clear = lambda: None  # type: ignore[attr-defined]
 
-    return (  # type: ignore[return-value]
-        _special_method_cache(method, cache_wrapper) or wrapper
-    )
+    return _special_method_cache(method, cache_wrapper) or wrapper  # type: ignore[return-value]
 
 
 def _special_method_cache(method, cache_wrapper):

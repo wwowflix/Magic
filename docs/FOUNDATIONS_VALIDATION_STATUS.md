@@ -1,4 +1,4 @@
-﻿# MAGIC — FOUNDATIONS & VALIDATION — COMPLETION STATUS 🚀
+# MAGIC — FOUNDATIONS & VALIDATION — COMPLETION STATUS 🚀
 
 This document tracks the completion of all foundational tasks in the MAGIC project.
 

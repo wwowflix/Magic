@@ -143,9 +143,7 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getNodeDetails(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), (
-                "Text nodes are text or tail, found %s" % key
-            )
+            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
             return base.TEXT, ensure_str(getattr(node, key))
 
         elif isinstance(node, Root):
@@ -200,9 +198,7 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getNextSibling(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), (
-                "Text nodes are text or tail, found %s" % key
-            )
+            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
             if key == "text":
                 # XXX: we cannot use a "bool(node) and node[0] or None" construct here
                 # because node[0] might evaluate to False if it has no child element
@@ -218,9 +214,7 @@ class TreeWalker(base.NonRecursiveTreeWalker):
     def getParentNode(self, node):
         if isinstance(node, tuple):  # Text node
             node, key = node
-            assert key in ("text", "tail"), (
-                "Text nodes are text or tail, found %s" % key
-            )
+            assert key in ("text", "tail"), "Text nodes are text or tail, found %s" % key
             if key == "text":
                 return node
             # else: fallback to "normal" processing

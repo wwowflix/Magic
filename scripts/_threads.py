@@ -381,7 +381,9 @@ async def to_thread_run_sync(
     current_trio_token = trio.lowlevel.current_trio_token()
 
     if thread_name is None:
-        thread_name = f"{getattr(sync_fn, '__name__', None)} from {trio.lowlevel.current_task().name}"
+        thread_name = (
+            f"{getattr(sync_fn, '__name__', None)} from {trio.lowlevel.current_task().name}"
+        )
 
     def worker_fn() -> RetT:
         PARENT_TASK_DATA.token = current_trio_token

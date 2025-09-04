@@ -58,19 +58,14 @@ def run():
 
     if has_newnumpy:
         try:
-            print(
-                "Found new numpy version %r in %s" % (numpy.__version__, numpy.__file__)
-            )
+            print("Found new numpy version %r in %s" % (numpy.__version__, numpy.__file__))
         except Exception as msg:
             print("error:", msg)
             print("------")
 
     if has_f2py2e:
         try:
-            print(
-                "Found f2py2e version %r in %s"
-                % (f2py2e.__version__.version, f2py2e.__file__)
-            )
+            print("Found f2py2e version %r in %s" % (f2py2e.__version__.version, f2py2e.__file__))
         except Exception as msg:
             print("error:", msg)
             print("------")

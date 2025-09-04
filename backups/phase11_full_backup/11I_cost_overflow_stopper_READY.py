@@ -1,4 +1,4 @@
-﻿import os
+ï¿import os
 import re
 
 # CONFIG
@@ -9,7 +9,7 @@ TOKEN_LIMIT = 75000
 
 alerts = []
 
-# ✅ FIXED LINE — THIS IS CORRECT
+# âœ… FIXED LINE â€” THIS IS CORRECT
 cost_pattern = re.compile(r"Total Cost[:=]\s*\$?([0-9]+\.[0-9]+)", re.IGNORECASE)
 token_pattern = re.compile(r"Tokens Used[:=]\s*([0-9]+)", re.IGNORECASE)
 
@@ -27,21 +27,21 @@ for root, _, files in os.walk(TARGET_FOLDER):
                     if cost_match:
                         cost_val = float(cost_match.group(1))
                         if cost_val > COST_LIMIT_USD:
-                            alerts.append(f"{path} → 🚨 Cost exceeded: ")
+                            alerts.append(f"{path} â†’ ðŸš¨ Cost exceeded: ")
                     if token_match:
                         token_val = int(token_match.group(1))
                         if token_val > TOKEN_LIMIT:
                             alerts.append(
-                                f"{path} → 🚨 Token limit exceeded: {token_val}"
+                                f"{path} â†’ ðŸš¨ Token limit exceeded: {token_val}"
                             )
             except Exception as e:
-                alerts.append(f"{path} → ⚠️ {e}")
+                alerts.append(f"{path} â†’ âš ï¸ {e}")
 
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if alerts:
-        f.write("🚨 Cost overflow alerts:\n" + "\n".join(alerts))
+        f.write("ðŸš¨ Cost overflow alerts:\n" + "\n".join(alerts))
     else:
-        f.write("✅ All cost/token usage within safe limits.\n")
+        f.write("âœ… All cost/token usage within safe limits.\n")
 
-print(f"💰 Cost monitoring complete. Report saved to: {LOG_FILE}")
+print(f"ðŸ’° Cost monitoring complete. Report saved to: {LOG_FILE}")

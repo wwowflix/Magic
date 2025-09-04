@@ -1,4 +1,4 @@
-﻿function Get-BranchProtection {
+function Get-BranchProtection {
   param([string]$Owner,[string]$Repo,[string]$Branch='main')
   gh api -H "Accept: application/vnd.github+json" "repos/$Owner/$Repo/branches/$Branch/protection" |
     ConvertFrom-Json

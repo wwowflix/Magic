@@ -108,14 +108,9 @@ def testSerializer(element):
                 ns = nsmatch.group(1)
                 tag = nsmatch.group(2)
                 prefix = constants.prefixes[ns]
-                rv.append(
-                    "|%s<%s %s>"
-                    % (" " * indent, prefix, infosetFilter.fromXmlName(tag))
-                )
+                rv.append("|%s<%s %s>" % (" " * indent, prefix, infosetFilter.fromXmlName(tag)))
             else:
-                rv.append(
-                    "|%s<%s>" % (" " * indent, infosetFilter.fromXmlName(element.tag))
-                )
+                rv.append("|%s<%s>" % (" " * indent, infosetFilter.fromXmlName(element.tag)))
 
             if hasattr(element, "attrib"):
                 attributes = []
@@ -169,10 +164,7 @@ def tostring(element):
                 rv.append("<%s>" % (element.tag,))
             else:
                 attr = " ".join(
-                    [
-                        '%s="%s"' % (name, value)
-                        for name, value in element.attrib.items()
-                    ]
+                    ['%s="%s"' % (name, value) for name, value in element.attrib.items()]
                 )
                 rv.append("<%s %s>" % (element.tag, attr))
             if element.text:
@@ -201,9 +193,7 @@ class TreeBuilder(base.TreeBuilder):
 
     def __init__(self, namespaceHTMLElements, fullTree=False):
         builder = etree_builders.getETreeModule(etree, fullTree=fullTree)
-        infosetFilter = self.infosetFilter = _ihatexml.InfosetFilter(
-            preventDoubleDashComments=True
-        )
+        infosetFilter = self.infosetFilter = _ihatexml.InfosetFilter(preventDoubleDashComments=True)
         self.namespaceHTMLElements = namespaceHTMLElements
 
         class Attributes(MutableMapping):
@@ -339,10 +329,7 @@ class TreeBuilder(base.TreeBuilder):
         self.initial_comments.append(data)
 
     def insertCommentMain(self, data, parent=None):
-        if (
-            parent == self.document
-            and self.document._elementTree.getroot()[-1].tag == comment_type
-        ):
+        if parent == self.document and self.document._elementTree.getroot()[-1].tag == comment_type:
             warnings.warn(
                 "lxml cannot represent adjacent comments beyond the root elements",
                 DataLossWarning,

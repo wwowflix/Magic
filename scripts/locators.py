@@ -297,9 +297,7 @@ class Locator(object):
                             "name": wheel.name,
                             "version": wheel.version,
                             "filename": wheel.filename,
-                            "url": urlunparse(
-                                (scheme, netloc, origpath, params, query, "")
-                            ),
+                            "url": urlunparse((scheme, netloc, origpath, params, query, "")),
                             "python-version": ", ".join(
                                 [".".join(list(v[2:])) for v in wheel.pyver]
                             ),
@@ -323,9 +321,7 @@ class Locator(object):
                                 "name": name,
                                 "version": version,
                                 "filename": filename,
-                                "url": urlunparse(
-                                    (scheme, netloc, origpath, params, query, "")
-                                ),
+                                "url": urlunparse((scheme, netloc, origpath, params, query, "")),
                                 #'packagetype': 'sdist',
                             }
                             if pyver:  # pragma: no cover
@@ -610,14 +606,7 @@ href\\s*=\\s*(?:"(?P<url1>[^"]*)"|'(?P<url2>[^']*)'|(?P<url3>[^>\\s\n]*))
         result = set()
         for match in self._href.finditer(self.data):
             d = match.groupdict("")
-            rel = (
-                d["rel1"]
-                or d["rel2"]
-                or d["rel3"]
-                or d["rel4"]
-                or d["rel5"]
-                or d["rel6"]
-            )
+            rel = d["rel1"] or d["rel2"] or d["rel3"] or d["rel4"] or d["rel5"] or d["rel6"]
             url = d["url1"] or d["url2"] or d["url3"]
             url = urljoin(self.base_url, url)
             url = unescape(url)
@@ -791,9 +780,9 @@ class SimpleScrapingLocator(Locator):
                         if link not in self._seen:
                             try:
                                 self._seen.add(link)
-                                if not self._process_download(
-                                    link
-                                ) and self._should_queue(link, url, rel):
+                                if not self._process_download(link) and self._should_queue(
+                                    link, url, rel
+                                ):
                                     logger.debug("Queueing %s from %s", link, url)
                                     self._to_fetch.put(link)
                             except MetadataInvalidError:  # e.g. invalid versions
@@ -917,9 +906,7 @@ class DirectoryLocator(Locator):
             for fn in files:
                 if self.should_include(fn, root):
                     fn = os.path.join(root, fn)
-                    url = urlunparse(
-                        ("file", "", pathname2url(os.path.abspath(fn)), "", "", "")
-                    )
+                    url = urlunparse(("file", "", pathname2url(os.path.abspath(fn)), "", "", ""))
                     info = self.convert_url_to_download_info(url, name)
                     if info:
                         self._update_version_data(result, info)
@@ -936,9 +923,7 @@ class DirectoryLocator(Locator):
             for fn in files:
                 if self.should_include(fn, root):
                     fn = os.path.join(root, fn)
-                    url = urlunparse(
-                        ("file", "", pathname2url(os.path.abspath(fn)), "", "", "")
-                    )
+                    url = urlunparse(("file", "", pathname2url(os.path.abspath(fn)), "", "", ""))
                     info = self.convert_url_to_download_info(url, None)
                     if info:
                         result.add(info["name"])
@@ -1332,9 +1317,7 @@ class DependencyFinder(object):
                         providers.add(provider)
                         if r in ireqts and dist in install_dists:
                             install_dists.add(provider)
-                            logger.debug(
-                                "Adding %s to install_dists", provider.name_and_version
-                            )
+                            logger.debug("Adding %s to install_dists", provider.name_and_version)
                 for p in providers:
                     name = p.key
                     if name not in self.dists_by_name:
@@ -1349,8 +1332,6 @@ class DependencyFinder(object):
         for dist in dists:
             dist.build_time_dependency = dist not in install_dists
             if dist.build_time_dependency:
-                logger.debug(
-                    "%s is a build-time dependency only.", dist.name_and_version
-                )
+                logger.debug("%s is a build-time dependency only.", dist.name_and_version)
         logger.debug("find done for %s", odist)
         return dists, problems

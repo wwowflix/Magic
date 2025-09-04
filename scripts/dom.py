@@ -387,34 +387,22 @@ class Node:
             node_name=str(json["nodeName"]),
             local_name=str(json["localName"]),
             node_value=str(json["nodeValue"]),
-            parent_id=(
-                NodeId.from_json(json["parentId"]) if "parentId" in json else None
-            ),
-            child_node_count=(
-                int(json["childNodeCount"]) if "childNodeCount" in json else None
-            ),
+            parent_id=(NodeId.from_json(json["parentId"]) if "parentId" in json else None),
+            child_node_count=(int(json["childNodeCount"]) if "childNodeCount" in json else None),
             children=(
-                [Node.from_json(i) for i in json["children"]]
-                if "children" in json
-                else None
+                [Node.from_json(i) for i in json["children"]] if "children" in json else None
             ),
-            attributes=(
-                [str(i) for i in json["attributes"]] if "attributes" in json else None
-            ),
+            attributes=([str(i) for i in json["attributes"]] if "attributes" in json else None),
             document_url=str(json["documentURL"]) if "documentURL" in json else None,
             base_url=str(json["baseURL"]) if "baseURL" in json else None,
             public_id=str(json["publicId"]) if "publicId" in json else None,
             system_id=str(json["systemId"]) if "systemId" in json else None,
-            internal_subset=(
-                str(json["internalSubset"]) if "internalSubset" in json else None
-            ),
+            internal_subset=(str(json["internalSubset"]) if "internalSubset" in json else None),
             xml_version=str(json["xmlVersion"]) if "xmlVersion" in json else None,
             name=str(json["name"]) if "name" in json else None,
             value=str(json["value"]) if "value" in json else None,
             pseudo_type=(
-                PseudoType.from_json(json["pseudoType"])
-                if "pseudoType" in json
-                else None
+                PseudoType.from_json(json["pseudoType"]) if "pseudoType" in json else None
             ),
             pseudo_identifier=(
                 str(json["pseudoIdentifier"]) if "pseudoIdentifier" in json else None
@@ -424,23 +412,15 @@ class Node:
                 if "shadowRootType" in json
                 else None
             ),
-            frame_id=(
-                page.FrameId.from_json(json["frameId"]) if "frameId" in json else None
-            ),
+            frame_id=(page.FrameId.from_json(json["frameId"]) if "frameId" in json else None),
             content_document=(
-                Node.from_json(json["contentDocument"])
-                if "contentDocument" in json
-                else None
+                Node.from_json(json["contentDocument"]) if "contentDocument" in json else None
             ),
             shadow_roots=(
-                [Node.from_json(i) for i in json["shadowRoots"]]
-                if "shadowRoots" in json
-                else None
+                [Node.from_json(i) for i in json["shadowRoots"]] if "shadowRoots" in json else None
             ),
             template_content=(
-                Node.from_json(json["templateContent"])
-                if "templateContent" in json
-                else None
+                Node.from_json(json["templateContent"]) if "templateContent" in json else None
             ),
             pseudo_elements=(
                 [Node.from_json(i) for i in json["pseudoElements"]]
@@ -448,9 +428,7 @@ class Node:
                 else None
             ),
             imported_document=(
-                Node.from_json(json["importedDocument"])
-                if "importedDocument" in json
-                else None
+                Node.from_json(json["importedDocument"]) if "importedDocument" in json else None
             ),
             distributed_nodes=(
                 [BackendNode.from_json(i) for i in json["distributedNodes"]]
@@ -464,13 +442,9 @@ class Node:
                 else None
             ),
             assigned_slot=(
-                BackendNode.from_json(json["assignedSlot"])
-                if "assignedSlot" in json
-                else None
+                BackendNode.from_json(json["assignedSlot"]) if "assignedSlot" in json else None
             ),
-            is_scrollable=(
-                bool(json["isScrollable"]) if "isScrollable" in json else None
-            ),
+            is_scrollable=(bool(json["isScrollable"]) if "isScrollable" in json else None),
         )
 
 
@@ -600,9 +574,7 @@ class BoxModel:
             width=int(json["width"]),
             height=int(json["height"]),
             shape_outside=(
-                ShapeOutsideInfo.from_json(json["shapeOutside"])
-                if "shapeOutside" in json
-                else None
+                ShapeOutsideInfo.from_json(json["shapeOutside"]) if "shapeOutside" in json else None
             ),
         )
 
@@ -1342,9 +1314,7 @@ def query_selector_all(
     return [NodeId.from_json(i) for i in json["nodeIds"]]
 
 
-def get_top_layer_elements() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[NodeId]]
-):
+def get_top_layer_elements() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[NodeId]]:
     """
     Returns NodeIds of current top layer elements.
     Top layer is rendered closest to the user within a viewport, therefore its elements always
@@ -1620,9 +1590,7 @@ def get_node_stack_traces(
         "params": params,
     }
     json = yield cmd_dict
-    return (
-        runtime.StackTrace.from_json(json["creation"]) if "creation" in json else None
-    )
+    return runtime.StackTrace.from_json(json["creation"]) if "creation" in json else None
 
 
 def get_file_info(
@@ -1684,9 +1652,7 @@ def set_inspected_node(
     json = yield cmd_dict
 
 
-def set_node_name(
-    node_id: NodeId, name: str
-) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, NodeId]:
+def set_node_name(node_id: NodeId, name: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, NodeId]:
     """
     Sets node name for a node with given id.
 
@@ -1705,9 +1671,7 @@ def set_node_name(
     return NodeId.from_json(json["nodeId"])
 
 
-def set_node_value(
-    node_id: NodeId, value: str
-) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
+def set_node_value(node_id: NodeId, value: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Sets node value for a node with given id.
 
@@ -2013,9 +1977,7 @@ class DistributedNodesUpdated:
     def from_json(cls, json: T_JSON_DICT) -> DistributedNodesUpdated:
         return cls(
             insertion_point_id=NodeId.from_json(json["insertionPointId"]),
-            distributed_nodes=[
-                BackendNode.from_json(i) for i in json["distributedNodes"]
-            ],
+            distributed_nodes=[BackendNode.from_json(i) for i in json["distributedNodes"]],
         )
 
 
@@ -2187,6 +2149,4 @@ class ShadowRootPushed:
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> ShadowRootPushed:
-        return cls(
-            host_id=NodeId.from_json(json["hostId"]), root=Node.from_json(json["root"])
-        )
+        return cls(host_id=NodeId.from_json(json["hostId"]), root=Node.from_json(json["root"]))

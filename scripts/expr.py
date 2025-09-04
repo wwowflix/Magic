@@ -135,9 +135,7 @@ def _compose(*funcs):
 
 def _preparse(
     source: str,
-    f=_compose(
-        _replace_locals, _replace_booleans, _rewrite_assign, clean_backtick_quoted_toks
-    ),
+    f=_compose(_replace_locals, _replace_booleans, _rewrite_assign, clean_backtick_quoted_toks),
 ) -> str:
     """
     Compose a collection of tokenization functions.
@@ -490,9 +488,7 @@ class BaseExprVisitor(ast.NodeVisitor):
         # [1,2] in a + 2 * b
         # in that case a + 2 * b will be evaluated using numexpr, and the "in"
         # call will be evaluated using isin (in python space)
-        return binop.evaluate(
-            self.env, self.engine, self.parser, self.term_type, eval_in_python
-        )
+        return binop.evaluate(self.env, self.engine, self.parser, self.term_type, eval_in_python)
 
     def _maybe_evaluate_binop(
         self,
@@ -507,8 +503,7 @@ class BaseExprVisitor(ast.NodeVisitor):
 
         if res.has_invalid_return_type:
             raise TypeError(
-                f"unsupported operand type(s) for {res.op}: "
-                f"'{lhs.type}' and '{rhs.type}'"
+                f"unsupported operand type(s) for {res.op}: " f"'{lhs.type}' and '{rhs.type}'"
             )
 
         if self.engine != "pytables" and (
@@ -577,17 +572,13 @@ class BaseExprVisitor(ast.NodeVisitor):
 
         value = self.visit(node.value)
         slobj = self.visit(node.slice)
-        result = pd_eval(
-            slobj, local_dict=self.env, engine=self.engine, parser=self.parser
-        )
+        result = pd_eval(slobj, local_dict=self.env, engine=self.engine, parser=self.parser)
         try:
             # a Term instance
             v = value.value[result]
         except AttributeError:
             # an Op instance
-            lhs = pd_eval(
-                value, local_dict=self.env, engine=self.engine, parser=self.parser
-            )
+            lhs = pd_eval(value, local_dict=self.env, engine=self.engine, parser=self.parser)
             v = lhs[result]
         name = self.env.add_tmp(v)
         return self.term_type(name, env=self.env)
@@ -630,9 +621,7 @@ class BaseExprVisitor(ast.NodeVisitor):
 
         self.assigner = getattr(assigner, "name", assigner)
         if self.assigner is None:
-            raise SyntaxError(
-                "left hand side of an assignment must be a single resolvable name"
-            )
+            raise SyntaxError("left hand side of an assignment must be a single resolvable name")
 
         return self.visit(node.value, **kwargs)
 
@@ -675,9 +664,7 @@ class BaseExprVisitor(ast.NodeVisitor):
 
         if res is None:
             # error: "expr" has no attribute "id"
-            raise ValueError(
-                f"Invalid function call {node.func.id}"  # type: ignore[attr-defined]
-            )
+            raise ValueError(f"Invalid function call {node.func.id}")  # type: ignore[attr-defined]
         if hasattr(res, "value"):
             res = res.value
 
@@ -686,9 +673,7 @@ class BaseExprVisitor(ast.NodeVisitor):
             new_args = [self.visit(arg) for arg in node.args]
 
             if node.keywords:
-                raise TypeError(
-                    f'Function "{res.name}" does not support keyword arguments'
-                )
+                raise TypeError(f'Function "{res.name}" does not support keyword arguments')
 
             return res(*new_args)
 
@@ -775,9 +760,7 @@ class PandasExprVisitor(BaseExprVisitor):
 
 @disallow(_unsupported_nodes | _python_not_supported | frozenset(["Not"]))
 class PythonExprVisitor(BaseExprVisitor):
-    def __init__(
-        self, env, engine, parser, preparser=lambda source, f=None: source
-    ) -> None:
+    def __init__(self, env, engine, parser, preparser=lambda source, f=None: source) -> None:
         super().__init__(env, engine, parser, preparser=preparser)
 
 

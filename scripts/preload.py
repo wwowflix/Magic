@@ -103,14 +103,10 @@ class RuleSet:
             ),
             url=str(json["url"]) if "url" in json else None,
             request_id=(
-                network.RequestId.from_json(json["requestId"])
-                if "requestId" in json
-                else None
+                network.RequestId.from_json(json["requestId"]) if "requestId" in json else None
             ),
             error_type=(
-                RuleSetErrorType.from_json(json["errorType"])
-                if "errorType" in json
-                else None
+                RuleSetErrorType.from_json(json["errorType"]) if "errorType" in json else None
             ),
             error_message=str(json["errorMessage"]) if "errorMessage" in json else None,
         )
@@ -297,9 +293,7 @@ class PrerenderFinalStatus(enum.Enum):
     START_FAILED = "StartFailed"
     TIMEOUT_BACKGROUNDED = "TimeoutBackgrounded"
     CROSS_SITE_REDIRECT_IN_INITIAL_NAVIGATION = "CrossSiteRedirectInInitialNavigation"
-    CROSS_SITE_NAVIGATION_IN_INITIAL_NAVIGATION = (
-        "CrossSiteNavigationInInitialNavigation"
-    )
+    CROSS_SITE_NAVIGATION_IN_INITIAL_NAVIGATION = "CrossSiteNavigationInInitialNavigation"
     SAME_SITE_CROSS_ORIGIN_REDIRECT_NOT_OPT_IN_IN_INITIAL_NAVIGATION = (
         "SameSiteCrossOriginRedirectNotOptInInInitialNavigation"
     )
@@ -309,26 +303,18 @@ class PrerenderFinalStatus(enum.Enum):
     ACTIVATION_NAVIGATION_PARAMETER_MISMATCH = "ActivationNavigationParameterMismatch"
     ACTIVATED_IN_BACKGROUND = "ActivatedInBackground"
     EMBEDDER_HOST_DISALLOWED = "EmbedderHostDisallowed"
-    ACTIVATION_NAVIGATION_DESTROYED_BEFORE_SUCCESS = (
-        "ActivationNavigationDestroyedBeforeSuccess"
-    )
+    ACTIVATION_NAVIGATION_DESTROYED_BEFORE_SUCCESS = "ActivationNavigationDestroyedBeforeSuccess"
     TAB_CLOSED_BY_USER_GESTURE = "TabClosedByUserGesture"
     TAB_CLOSED_WITHOUT_USER_GESTURE = "TabClosedWithoutUserGesture"
-    PRIMARY_MAIN_FRAME_RENDERER_PROCESS_CRASHED = (
-        "PrimaryMainFrameRendererProcessCrashed"
-    )
+    PRIMARY_MAIN_FRAME_RENDERER_PROCESS_CRASHED = "PrimaryMainFrameRendererProcessCrashed"
     PRIMARY_MAIN_FRAME_RENDERER_PROCESS_KILLED = "PrimaryMainFrameRendererProcessKilled"
     ACTIVATION_FRAME_POLICY_NOT_COMPATIBLE = "ActivationFramePolicyNotCompatible"
     PRELOADING_DISABLED = "PreloadingDisabled"
     BATTERY_SAVER_ENABLED = "BatterySaverEnabled"
     ACTIVATED_DURING_MAIN_FRAME_NAVIGATION = "ActivatedDuringMainFrameNavigation"
     PRELOADING_UNSUPPORTED_BY_WEB_CONTENTS = "PreloadingUnsupportedByWebContents"
-    CROSS_SITE_REDIRECT_IN_MAIN_FRAME_NAVIGATION = (
-        "CrossSiteRedirectInMainFrameNavigation"
-    )
-    CROSS_SITE_NAVIGATION_IN_MAIN_FRAME_NAVIGATION = (
-        "CrossSiteNavigationInMainFrameNavigation"
-    )
+    CROSS_SITE_REDIRECT_IN_MAIN_FRAME_NAVIGATION = "CrossSiteRedirectInMainFrameNavigation"
+    CROSS_SITE_NAVIGATION_IN_MAIN_FRAME_NAVIGATION = "CrossSiteNavigationInMainFrameNavigation"
     SAME_SITE_CROSS_ORIGIN_REDIRECT_NOT_OPT_IN_IN_MAIN_FRAME_NAVIGATION = (
         "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"
     )
@@ -339,22 +325,12 @@ class PrerenderFinalStatus(enum.Enum):
     MEMORY_PRESSURE_AFTER_TRIGGERED = "MemoryPressureAfterTriggered"
     PRERENDERING_DISABLED_BY_DEV_TOOLS = "PrerenderingDisabledByDevTools"
     SPECULATION_RULE_REMOVED = "SpeculationRuleRemoved"
-    ACTIVATED_WITH_AUXILIARY_BROWSING_CONTEXTS = (
-        "ActivatedWithAuxiliaryBrowsingContexts"
-    )
-    MAX_NUM_OF_RUNNING_EAGER_PRERENDERS_EXCEEDED = (
-        "MaxNumOfRunningEagerPrerendersExceeded"
-    )
-    MAX_NUM_OF_RUNNING_NON_EAGER_PRERENDERS_EXCEEDED = (
-        "MaxNumOfRunningNonEagerPrerendersExceeded"
-    )
-    MAX_NUM_OF_RUNNING_EMBEDDER_PRERENDERS_EXCEEDED = (
-        "MaxNumOfRunningEmbedderPrerendersExceeded"
-    )
+    ACTIVATED_WITH_AUXILIARY_BROWSING_CONTEXTS = "ActivatedWithAuxiliaryBrowsingContexts"
+    MAX_NUM_OF_RUNNING_EAGER_PRERENDERS_EXCEEDED = "MaxNumOfRunningEagerPrerendersExceeded"
+    MAX_NUM_OF_RUNNING_NON_EAGER_PRERENDERS_EXCEEDED = "MaxNumOfRunningNonEagerPrerendersExceeded"
+    MAX_NUM_OF_RUNNING_EMBEDDER_PRERENDERS_EXCEEDED = "MaxNumOfRunningEmbedderPrerendersExceeded"
     PRERENDERING_URL_HAS_EFFECTIVE_URL = "PrerenderingUrlHasEffectiveUrl"
-    REDIRECTED_PRERENDERING_URL_HAS_EFFECTIVE_URL = (
-        "RedirectedPrerenderingUrlHasEffectiveUrl"
-    )
+    REDIRECTED_PRERENDERING_URL_HAS_EFFECTIVE_URL = "RedirectedPrerenderingUrlHasEffectiveUrl"
     ACTIVATION_URL_HAS_EFFECTIVE_URL = "ActivationUrlHasEffectiveUrl"
     JAVA_SCRIPT_INTERFACE_ADDED = "JavaScriptInterfaceAdded"
     JAVA_SCRIPT_INTERFACE_REMOVED = "JavaScriptInterfaceRemoved"
@@ -407,9 +383,7 @@ class PrefetchStatus(enum.Enum):
     PREFETCH_FAILED_MIME_NOT_SUPPORTED = "PrefetchFailedMIMENotSupported"
     PREFETCH_FAILED_NET_ERROR = "PrefetchFailedNetError"
     PREFETCH_FAILED_NON2_XX = "PrefetchFailedNon2XX"
-    PREFETCH_EVICTED_AFTER_BROWSING_DATA_REMOVED = (
-        "PrefetchEvictedAfterBrowsingDataRemoved"
-    )
+    PREFETCH_EVICTED_AFTER_BROWSING_DATA_REMOVED = "PrefetchEvictedAfterBrowsingDataRemoved"
     PREFETCH_EVICTED_AFTER_CANDIDATE_REMOVED = "PrefetchEvictedAfterCandidateRemoved"
     PREFETCH_EVICTED_FOR_NEWER_PREFETCH = "PrefetchEvictedForNewerPrefetch"
     PREFETCH_HELDBACK = "PrefetchHeldback"
@@ -430,21 +404,15 @@ class PrefetchStatus(enum.Enum):
     )
     PREFETCH_NOT_ELIGIBLE_SCHEME_IS_NOT_HTTPS = "PrefetchNotEligibleSchemeIsNotHttps"
     PREFETCH_NOT_ELIGIBLE_USER_HAS_COOKIES = "PrefetchNotEligibleUserHasCookies"
-    PREFETCH_NOT_ELIGIBLE_USER_HAS_SERVICE_WORKER = (
-        "PrefetchNotEligibleUserHasServiceWorker"
-    )
+    PREFETCH_NOT_ELIGIBLE_USER_HAS_SERVICE_WORKER = "PrefetchNotEligibleUserHasServiceWorker"
     PREFETCH_NOT_ELIGIBLE_USER_HAS_SERVICE_WORKER_NO_FETCH_HANDLER = (
         "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"
     )
     PREFETCH_NOT_ELIGIBLE_REDIRECT_FROM_SERVICE_WORKER = (
         "PrefetchNotEligibleRedirectFromServiceWorker"
     )
-    PREFETCH_NOT_ELIGIBLE_REDIRECT_TO_SERVICE_WORKER = (
-        "PrefetchNotEligibleRedirectToServiceWorker"
-    )
-    PREFETCH_NOT_ELIGIBLE_BATTERY_SAVER_ENABLED = (
-        "PrefetchNotEligibleBatterySaverEnabled"
-    )
+    PREFETCH_NOT_ELIGIBLE_REDIRECT_TO_SERVICE_WORKER = "PrefetchNotEligibleRedirectToServiceWorker"
+    PREFETCH_NOT_ELIGIBLE_BATTERY_SAVER_ENABLED = "PrefetchNotEligibleBatterySaverEnabled"
     PREFETCH_NOT_ELIGIBLE_PRELOADING_DISABLED = "PrefetchNotEligiblePreloadingDisabled"
     PREFETCH_NOT_FINISHED_IN_TIME = "PrefetchNotFinishedInTime"
     PREFETCH_NOT_STARTED = "PrefetchNotStarted"
@@ -488,9 +456,7 @@ class PrerenderMismatchedHeaders:
         return cls(
             header_name=str(json["headerName"]),
             initial_value=str(json["initialValue"]) if "initialValue" in json else None,
-            activation_value=(
-                str(json["activationValue"]) if "activationValue" in json else None
-            ),
+            activation_value=(str(json["activationValue"]) if "activationValue" in json else None),
         )
 
 
@@ -619,15 +585,10 @@ class PrerenderStatusUpdated:
                 else None
             ),
             disallowed_mojo_interface=(
-                str(json["disallowedMojoInterface"])
-                if "disallowedMojoInterface" in json
-                else None
+                str(json["disallowedMojoInterface"]) if "disallowedMojoInterface" in json else None
             ),
             mismatched_headers=(
-                [
-                    PrerenderMismatchedHeaders.from_json(i)
-                    for i in json["mismatchedHeaders"]
-                ]
+                [PrerenderMismatchedHeaders.from_json(i) for i in json["mismatchedHeaders"]]
                 if "mismatchedHeaders" in json
                 else None
             ),
@@ -649,7 +610,6 @@ class PreloadingAttemptSourcesUpdated:
         return cls(
             loader_id=network.LoaderId.from_json(json["loaderId"]),
             preloading_attempt_sources=[
-                PreloadingAttemptSource.from_json(i)
-                for i in json["preloadingAttemptSources"]
+                PreloadingAttemptSource.from_json(i) for i in json["preloadingAttemptSources"]
             ],
         )

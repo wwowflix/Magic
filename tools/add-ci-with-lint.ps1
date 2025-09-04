@@ -1,4 +1,4 @@
-﻿# tools/add-ci-with-lint.ps1
+# tools/add-ci-with-lint.ps1
 # Write/update CI with lint + tests + mypy, commit, and push the working branch.
 
 $ErrorActionPreference = "Stop"

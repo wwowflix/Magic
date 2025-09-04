@@ -1,12 +1,29 @@
-﻿repos:
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.12.11
-  hooks: [{ id: ruff, args: ["--fix"] }]
-- repo: https://github.com/psf/black
-  rev: 25.1.0
-  hooks: [{ id: black }]
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.17.1
-  hooks:
-    - id: mypy
-      additional_dependencies: ["types-requests"]
+﻿exclude: '^(backups/|quarantine/|venv/|\.venv/)'
+
+repos:
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+    exclude: |
+      (?x)
+      ^scripts/.*_2\.py$
+      | ^scripts/.*_3\.py$
+      | ^scripts/core\.py$
+      | ^scripts/constants_2\.py$
+      | ^scripts/deduplicate_records_2\.py$        args: [--line-length=100]
+        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.11
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.17.1
+    hooks:
+      - id: mypy
+        args: ["--config-file","mypy.ini"]
+        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'

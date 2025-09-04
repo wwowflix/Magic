@@ -1,1 +1,1 @@
-﻿# Placeholder script for data user_prefs
+# Placeholder script for data user_prefs

@@ -683,9 +683,7 @@ class RNG:
         )
         assert_equal(a, d)
         self._reset_state()
-        e = self.rg.integers(
-            np.array([lower] * 10), np.array([upper] * 10), size=10, dtype=dtype
-        )
+        e = self.rg.integers(np.array([lower] * 10), np.array([upper] * 10), size=10, dtype=dtype)
         assert_equal(a, e)
 
         self._reset_state()

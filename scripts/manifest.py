@@ -245,9 +245,7 @@ class Manifest(object):
 
         elif action in ("recursive-include", "recursive-exclude"):
             if len(words) < 3:
-                raise DistlibException(
-                    "%r expects <dir> <pattern1> <pattern2> ..." % action
-                )
+                raise DistlibException("%r expects <dir> <pattern1> <pattern2> ..." % action)
 
             thedir = convert_path(words[1])
             patterns = [convert_path(word) for word in words[2:]]

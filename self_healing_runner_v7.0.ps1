@@ -1,4 +1,4 @@
-﻿# self_healing_runner_v7.0.ps1
+# self_healing_runner_v7.0.ps1
 param([string]$ManifestPath = ".\phase_manifest.json", [switch]$Force)
 
 Write-Host "=== Starting Self-Healing Runner v7.0 ===`n"

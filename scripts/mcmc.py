@@ -181,11 +181,7 @@ class CmdStanMCMC:
         to CmdStan arg 'metric'.
         When sampler algorithm 'fixed_param' is specified, metric_type is None.
         """
-        return (
-            self._metadata.cmdstan_config["metric"]
-            if not self._is_fixed_param
-            else None
-        )
+        return self._metadata.cmdstan_config["metric"] if not self._is_fixed_param else None
 
     @property
     def metric(self) -> Optional[np.ndarray]:
@@ -196,9 +192,7 @@ class CmdStanMCMC:
         if self._is_fixed_param:
             return None
         if self._metadata.cmdstan_config["metric"] == "unit_e":
-            get_logger().info(
-                "Unit diagnonal metric, inverse mass matrix size unknown."
-            )
+            get_logger().info("Unit diagnonal metric, inverse mass matrix size unknown.")
             return None
         self._assemble_draws()
         return self._metric
@@ -236,9 +230,7 @@ class CmdStanMCMC:
         """
         return self._max_treedepths if not self._is_fixed_param else None
 
-    def draws(
-        self, *, inc_warmup: bool = False, concat_chains: bool = False
-    ) -> np.ndarray:
+    def draws(self, *, inc_warmup: bool = False, concat_chains: bool = False) -> np.ndarray:
         """
         Returns a numpy.ndarray over all draws from all chains which is
         stored column major so that the values for a parameter are contiguous
@@ -612,17 +604,9 @@ class CmdStanMCMC:
         draws = self.draws(inc_warmup=inc_warmup)
         # add long-form columns for chain, iteration, draw
         n_draws, n_chains, _ = draws.shape
-        chains_col = (
-            np.repeat(np.arange(1, n_chains + 1), n_draws)
-            .reshape(1, n_chains, n_draws)
-            .T
-        )
-        iter_col = (
-            np.tile(np.arange(1, n_draws + 1), n_chains).reshape(1, n_chains, n_draws).T
-        )
-        draw_col = (
-            np.arange(1, (n_draws * n_chains) + 1).reshape(1, n_chains, n_draws).T
-        )
+        chains_col = np.repeat(np.arange(1, n_chains + 1), n_draws).reshape(1, n_chains, n_draws).T
+        iter_col = np.tile(np.arange(1, n_draws + 1), n_chains).reshape(1, n_chains, n_draws).T
+        draw_col = np.arange(1, (n_draws * n_chains) + 1).reshape(1, n_chains, n_draws).T
         draws = np.concatenate([chains_col, iter_col, draw_col, draws], axis=2)
 
         return pd.DataFrame(
@@ -649,9 +633,7 @@ class CmdStanMCMC:
         CmdStanGQ.draws_xr
         """
         if not XARRAY_INSTALLED:
-            raise RuntimeError(
-                'Package "xarray" is not installed, cannot produce draws array.'
-            )
+            raise RuntimeError('Package "xarray" is not installed, cannot produce draws array.')
         if inc_warmup and not self._save_warmup:
             get_logger().warning(
                 "Draws from warmup iterations not available,"
@@ -690,9 +672,7 @@ class CmdStanMCMC:
                 self._metadata.stan_vars[var],
                 self.draws(inc_warmup=inc_warmup),
             )
-        return xr.Dataset(data, coords=coordinates, attrs=attrs).transpose(
-            "chain", "draw", ...
-        )
+        return xr.Dataset(data, coords=coordinates, attrs=attrs).transpose("chain", "draw", ...)
 
     def stan_variable(
         self,

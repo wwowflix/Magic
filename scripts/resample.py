@@ -561,8 +561,7 @@ class Resampler(BaseGroupBy, PandasObject):
         An upsampled Series.
         """
         warnings.warn(
-            "pad is deprecated and will be removed in a future version. "
-            "Use ffill instead.",
+            "pad is deprecated and will be removed in a future version. " "Use ffill instead.",
             FutureWarning,
             stacklevel=find_stack_level(),
         )
@@ -748,8 +747,7 @@ class Resampler(BaseGroupBy, PandasObject):
             An upsampled Series or DataFrame with backward filled NaN values.
         """
         warnings.warn(
-            "backfill is deprecated and will be removed in a future version. "
-            "Use bfill instead.",
+            "backfill is deprecated and will be removed in a future version. " "Use bfill instead.",
             FutureWarning,
             stacklevel=find_stack_level(),
         )
@@ -1044,9 +1042,7 @@ class Resampler(BaseGroupBy, PandasObject):
             else:
                 from pandas import DataFrame
 
-                result = DataFrame(
-                    [], index=result.index, columns=result.columns, dtype="int64"
-                )
+                result = DataFrame([], index=result.index, columns=result.columns, dtype="int64")
 
         return result
 
@@ -1077,9 +1073,7 @@ class Resampler(BaseGroupBy, PandasObject):
         return self._downsample("quantile", q=q, **kwargs)
 
 
-def _add_downsample_kernel(
-    name: str, args: tuple[str, ...], docs_class: type = GroupBy
-) -> None:
+def _add_downsample_kernel(name: str, args: tuple[str, ...], docs_class: type = GroupBy) -> None:
     """
     Add a kernel to Resampler.
 
@@ -1114,9 +1108,7 @@ def _add_downsample_kernel(
                 # For DataFrameGroupBy, set it to be False for methods other than `sum`.
                 numeric_only = False
 
-            return self._downsample(
-                name, numeric_only=numeric_only, min_count=min_count
-            )
+            return self._downsample(name, numeric_only=numeric_only, min_count=min_count)
 
     elif args == ("numeric_only",):
         # error: All conditional function variants must have identical signatures
@@ -1245,14 +1237,10 @@ class _GroupByMixin(PandasObject):
             groupby = self._groupby
 
         selection = None
-        if subset.ndim == 2 and (
-            (lib.is_scalar(key) and key in subset) or lib.is_list_like(key)
-        ):
+        if subset.ndim == 2 and ((lib.is_scalar(key) and key in subset) or lib.is_list_like(key)):
             selection = key
 
-        new_rs = type(self)(
-            subset, groupby=groupby, parent=self, selection=selection, **kwargs
-        )
+        new_rs = type(self)(subset, groupby=groupby, parent=self, selection=selection, **kwargs)
         return new_rs
 
 
@@ -1362,9 +1350,7 @@ class DatetimeIndexResampler(Resampler):
             result = obj.copy()
             result.index = res_index
         else:
-            result = obj.reindex(
-                res_index, method=method, limit=limit, fill_value=fill_value
-            )
+            result = obj.reindex(res_index, method=method, limit=limit, fill_value=fill_value)
 
         result = self._apply_loffset(result)
         return self._wrap_result(result)
@@ -1662,8 +1648,7 @@ class TimeGrouper(Grouper):
             self.offset = Timedelta(offset) if offset is not None else None
         except (ValueError, TypeError) as err:
             raise ValueError(
-                "'offset' should be a Timedelta convertible type. "
-                f"Got '{offset}' instead."
+                "'offset' should be a Timedelta convertible type. " f"Got '{offset}' instead."
             ) from err
 
         # always sort time groupers
@@ -1736,8 +1721,7 @@ class TimeGrouper(Grouper):
     def _get_time_bins(self, ax: DatetimeIndex):
         if not isinstance(ax, DatetimeIndex):
             raise TypeError(
-                "axis must be a DatetimeIndex, but got "
-                f"an instance of {type(ax).__name__}"
+                "axis must be a DatetimeIndex, but got " f"an instance of {type(ax).__name__}"
             )
 
         if len(ax) == 0:
@@ -1773,9 +1757,7 @@ class TimeGrouper(Grouper):
         binner, bin_edges = self._adjust_bin_edges(binner, ax_values)
 
         # general version, knowing nothing about relative frequencies
-        bins = lib.generate_bins_dt64(
-            ax_values, bin_edges, self.closed, hasnans=ax.hasnans
-        )
+        bins = lib.generate_bins_dt64(ax_values, bin_edges, self.closed, hasnans=ax.hasnans)
 
         if self.closed == "right":
             labels = binner
@@ -1819,8 +1801,7 @@ class TimeGrouper(Grouper):
     def _get_time_delta_bins(self, ax: TimedeltaIndex):
         if not isinstance(ax, TimedeltaIndex):
             raise TypeError(
-                "axis must be a TimedeltaIndex, but got "
-                f"an instance of {type(ax).__name__}"
+                "axis must be a TimedeltaIndex, but got " f"an instance of {type(ax).__name__}"
             )
 
         if not len(ax):
@@ -1832,9 +1813,7 @@ class TimeGrouper(Grouper):
         if self.closed == "right":
             end += self.freq
 
-        labels = binner = timedelta_range(
-            start=start, end=end, freq=self.freq, name=ax.name
-        )
+        labels = binner = timedelta_range(start=start, end=end, freq=self.freq, name=ax.name)
 
         end_stamps = labels
         if self.closed == "left":
@@ -1854,8 +1833,7 @@ class TimeGrouper(Grouper):
     def _get_time_period_bins(self, ax: DatetimeIndex):
         if not isinstance(ax, DatetimeIndex):
             raise TypeError(
-                "axis must be a DatetimeIndex, but got "
-                f"an instance of {type(ax).__name__}"
+                "axis must be a DatetimeIndex, but got " f"an instance of {type(ax).__name__}"
             )
 
         freq = self.freq
@@ -1876,8 +1854,7 @@ class TimeGrouper(Grouper):
     def _get_period_bins(self, ax: PeriodIndex):
         if not isinstance(ax, PeriodIndex):
             raise TypeError(
-                "axis must be a PeriodIndex, but got "
-                f"an instance of {type(ax).__name__}"
+                "axis must be a PeriodIndex, but got " f"an instance of {type(ax).__name__}"
             )
 
         memb = ax.asfreq(self.freq, how=self.convention)
@@ -1925,9 +1902,7 @@ class TimeGrouper(Grouper):
             bin_shift = start_offset.n % freq_mult  # type: ignore[union-attr]
             start = p_start
 
-        labels = binner = period_range(
-            start=start, end=end, freq=self.freq, name=ax.name
-        )
+        labels = binner = period_range(start=start, end=end, freq=self.freq, name=ax.name)
 
         i8 = memb.asi8
 
@@ -2250,9 +2225,7 @@ def _asfreq_compat(index: DatetimeIndex | PeriodIndex | TimedeltaIndex, freq):
     """
     if len(index) != 0:
         # This should never be reached, always checked by the caller
-        raise ValueError(
-            "Can only set arbitrary freq for empty DatetimeIndex or TimedeltaIndex"
-        )
+        raise ValueError("Can only set arbitrary freq for empty DatetimeIndex or TimedeltaIndex")
     new_index: Index
     if isinstance(index, PeriodIndex):
         new_index = index.asfreq(freq=freq)

@@ -1,5 +1,5 @@
-﻿def main():
-    print("✅ [11E_api_health_checker_READY.py] executed successfully (stub mode).")
+ï¿def main():
+    print("âœ… [11E_api_health_checker_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

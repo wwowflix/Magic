@@ -211,12 +211,8 @@ class NonRecursiveTreeWalker(TreeWalker):
 
             elif type == ELEMENT:
                 namespace, name, attributes, hasChildren = details
-                if (
-                    not namespace or namespace == namespaces["html"]
-                ) and name in voidElements:
-                    for token in self.emptyTag(
-                        namespace, name, attributes, hasChildren
-                    ):
+                if (not namespace or namespace == namespaces["html"]) and name in voidElements:
+                    for token in self.emptyTag(namespace, name, attributes, hasChildren):
                         yield token
                     hasChildren = False
                 else:

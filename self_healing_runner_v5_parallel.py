@@ -1,6 +1,6 @@
-﻿#!/usr/bin/env python3
+ï¿#!/usr/bin/env python3
 """
-Self-Healing Runner v5 â€“ Parallel Execution
+Self-Healing Runner v5 Ã¢â‚¬â€œ Parallel Execution
 """
 import argparse
 import subprocess
@@ -86,7 +86,7 @@ def main():
     if not scripts:
         print("No matching scripts found.")
         return
-    print(f"ðŸŒ€ Executing {len(scripts)} scripts with {args.max_workers} workers...")
+    print(f"Ã°Å¸Å’â‚¬ Executing {len(scripts)} scripts with {args.max_workers} workers...")
     if args.dry_run:
         for s in scripts:
             print(s)
@@ -96,7 +96,7 @@ def main():
         futures = {executor.submit(run_script, s): s for s in scripts}
         for future in as_completed(futures):
             script, status, _, _ = future.result()
-            print(f"{status} â€” {script}")
+            print(f"{status} Ã¢â‚¬â€ {script}")
             results.append(status)
     passed = results.count("PASS")
     failed = results.count("FAIL")

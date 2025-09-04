@@ -2079,7 +2079,7 @@ class ParserElement(ABC):
         comments = []
         success = True
         NL = Literal(r"\n").add_parse_action(replace_with("\n")).ignore(quoted_string)
-        BOM = "\ufeff"
+        BOM = "\"
         for t in tests:
             if comment is not None and comment.matches(t, False) or comments and not t:
                 comments.append(
@@ -3334,7 +3334,7 @@ class White(Token):
         "\n": "<LF>",
         "\r": "<CR>",
         "\f": "<FF>",
-        "\u00a0": "<NBSP>",
+        "\ ": "<NBSP>",
         "\u1680": "<OGHAM_SPACE_MARK>",
         "\u180e": "<MONGOLIAN_VOWEL_SEPARATOR>",
         "\u2000": "<EN_QUAD>",
@@ -3348,7 +3348,7 @@ class White(Token):
         "\u2008": "<PUNCTUATION_SPACE>",
         "\u2009": "<THIN_SPACE>",
         "\u200a": "<HAIR_SPACE>",
-        "\u200b": "<ZERO_WIDTH_SPACE>",
+        "\": "<ZERO_WIDTH_SPACE>",
         "\u202f": "<NNBSP>",
         "\u205f": "<MMSP>",
         "\u3000": "<IDEOGRAPHIC_SPACE>",
@@ -5268,7 +5268,7 @@ class Forward(ParseElementEnhance):
                     try:
                         new_loc, new_peek = super().parseImpl(instring, loc, False)
                     except ParseException:
-                        # we failed before getting any match – do not hide the error
+                        # we failed before getting any match Ã¢â,¬â€œ do not hide the error
                         if isinstance(prev_peek, Exception):
                             raise
                         new_loc, new_peek = prev_loc, prev_peek

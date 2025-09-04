@@ -1,4 +1,4 @@
-﻿# Phase 0–5 verifier
+# Phase 0–5 verifier
 $ErrorActionPreference = "SilentlyContinue"
 
 function New-Row($phase,$step,$check,$ok,$details) {

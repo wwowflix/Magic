@@ -95,9 +95,7 @@ class AbstractCopyTests:
         target = fs_target
         fs.mkdir(target)
 
-        fs.cp(
-            fs_join(source, "subdir", "subfile1"), fs_join(target, "newdir", "newfile")
-        )
+        fs.cp(fs_join(source, "subdir", "subfile1"), fs_join(target, "newdir", "newfile"))
         assert fs.isdir(fs_join(target, "newdir"))
         assert fs.isfile(fs_join(target, "newdir", "newfile"))
 
@@ -128,9 +126,7 @@ class AbstractCopyTests:
 
             # Without recursive does nothing
             fs.cp(s, t)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # With recursive
             fs.cp(s, t, recursive=True)
@@ -157,9 +153,7 @@ class AbstractCopyTests:
                 assert fs.isfile(fs_join(target, "subdir", "nesteddir", "nestedfile"))
 
                 fs.rm(fs_join(target, "subdir"), recursive=True)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # Limit recursive by maxdepth
             fs.cp(s, t, recursive=True, maxdepth=1)
@@ -183,9 +177,7 @@ class AbstractCopyTests:
                 assert not fs.exists(fs_join(target, "subdir", "nesteddir"))
 
                 fs.rm(fs_join(target, "subdir"), recursive=True)
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
     def test_copy_directory_to_new_directory(
         self,
@@ -277,9 +269,7 @@ class AbstractCopyTests:
                 ],
                 recursive=True,
             )
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
             # With recursive
             for glob, recursive in zip(["*", "**"], [True, False]):
@@ -303,9 +293,7 @@ class AbstractCopyTests:
                 )
 
                 # Limit recursive by maxdepth
-                fs.cp(
-                    fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1
-                )
+                fs.cp(fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1)
                 assert fs.isfile(fs_join(target, "subfile1"))
                 assert fs.isfile(fs_join(target, "subfile2"))
                 assert not fs.exists(fs_join(target, "nesteddir"))
@@ -364,9 +352,7 @@ class AbstractCopyTests:
                 assert not fs.exists(fs_join(target, "newdir"))
 
                 # Limit recursive by maxdepth
-                fs.cp(
-                    fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1
-                )
+                fs.cp(fs_join(source, "subdir", glob), t, recursive=recursive, maxdepth=1)
                 assert fs.isdir(fs_join(target, "newdir"))
                 assert fs.isfile(fs_join(target, "newdir", "subfile1"))
                 assert fs.isfile(fs_join(target, "newdir", "subfile2"))
@@ -412,9 +398,7 @@ class AbstractCopyTests:
                     fs_sanitize_path(fs_join(target, "newdir", p)) for p in expected
                 ]
             else:
-                prefixed_expected = [
-                    fs_sanitize_path(fs_join(target, p)) for p in expected
-                ]
+                prefixed_expected = [fs_sanitize_path(fs_join(target, p)) for p in expected]
             assert sorted(output) == sorted(prefixed_expected)
 
             try:
@@ -463,9 +447,7 @@ class AbstractCopyTests:
                 ],
                 recursive=True,
             )
-            assert fs.ls(target, detail=False) == (
-                [] if supports_empty_directories else [dummy]
-            )
+            assert fs.ls(target, detail=False) == ([] if supports_empty_directories else [dummy])
 
     def test_copy_list_of_files_to_new_directory(
         self, fs, fs_join, fs_bulk_operations_scenario_0, fs_target

@@ -76,9 +76,7 @@ def run_lstm_forecast(csv_file, keyword):
 
     # Plot
     plt.figure(figsize=(10, 5))
-    plt.plot(
-        df_filtered["date"].values[seq_length:], predictions_rescaled, label="Forecast"
-    )
+    plt.plot(df_filtered["date"].values[seq_length:], predictions_rescaled, label="Forecast")
     plt.plot(df_filtered["date"].values, df_filtered["value"].values, label="Actual")
     plt.legend()
     plt.title(f"PyTorch LSTM Forecast for {keyword}")

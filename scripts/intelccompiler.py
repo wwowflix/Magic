@@ -20,9 +20,7 @@ class IntelCCompiler(UnixCCompiler):
 
         v = self.get_version()
         mpopt = "openmp" if v and v < "15" else "qopenmp"
-        self.cc_exe = (
-            "icc -fPIC -fp-model strict -O3 " "-fomit-frame-pointer -{}"
-        ).format(mpopt)
+        self.cc_exe = ("icc -fPIC -fp-model strict -O3 " "-fomit-frame-pointer -{}").format(mpopt)
         compiler = self.cc_exe
 
         if platform.system() == "Darwin":

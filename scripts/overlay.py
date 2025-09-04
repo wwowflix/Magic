@@ -154,83 +154,47 @@ class GridHighlightConfig:
     def from_json(cls, json):
         return cls(
             show_grid_extension_lines=(
-                bool(json["showGridExtensionLines"])
-                if "showGridExtensionLines" in json
-                else None
+                bool(json["showGridExtensionLines"]) if "showGridExtensionLines" in json else None
             ),
             show_positive_line_numbers=(
-                bool(json["showPositiveLineNumbers"])
-                if "showPositiveLineNumbers" in json
-                else None
+                bool(json["showPositiveLineNumbers"]) if "showPositiveLineNumbers" in json else None
             ),
             show_negative_line_numbers=(
-                bool(json["showNegativeLineNumbers"])
-                if "showNegativeLineNumbers" in json
-                else None
+                bool(json["showNegativeLineNumbers"]) if "showNegativeLineNumbers" in json else None
             ),
-            show_area_names=(
-                bool(json["showAreaNames"]) if "showAreaNames" in json else None
-            ),
-            show_line_names=(
-                bool(json["showLineNames"]) if "showLineNames" in json else None
-            ),
-            show_track_sizes=(
-                bool(json["showTrackSizes"]) if "showTrackSizes" in json else None
-            ),
+            show_area_names=(bool(json["showAreaNames"]) if "showAreaNames" in json else None),
+            show_line_names=(bool(json["showLineNames"]) if "showLineNames" in json else None),
+            show_track_sizes=(bool(json["showTrackSizes"]) if "showTrackSizes" in json else None),
             grid_border_color=(
-                dom.RGBA.from_json(json["gridBorderColor"])
-                if "gridBorderColor" in json
-                else None
+                dom.RGBA.from_json(json["gridBorderColor"]) if "gridBorderColor" in json else None
             ),
             cell_border_color=(
-                dom.RGBA.from_json(json["cellBorderColor"])
-                if "cellBorderColor" in json
-                else None
+                dom.RGBA.from_json(json["cellBorderColor"]) if "cellBorderColor" in json else None
             ),
             row_line_color=(
-                dom.RGBA.from_json(json["rowLineColor"])
-                if "rowLineColor" in json
-                else None
+                dom.RGBA.from_json(json["rowLineColor"]) if "rowLineColor" in json else None
             ),
             column_line_color=(
-                dom.RGBA.from_json(json["columnLineColor"])
-                if "columnLineColor" in json
-                else None
+                dom.RGBA.from_json(json["columnLineColor"]) if "columnLineColor" in json else None
             ),
-            grid_border_dash=(
-                bool(json["gridBorderDash"]) if "gridBorderDash" in json else None
-            ),
-            cell_border_dash=(
-                bool(json["cellBorderDash"]) if "cellBorderDash" in json else None
-            ),
+            grid_border_dash=(bool(json["gridBorderDash"]) if "gridBorderDash" in json else None),
+            cell_border_dash=(bool(json["cellBorderDash"]) if "cellBorderDash" in json else None),
             row_line_dash=bool(json["rowLineDash"]) if "rowLineDash" in json else None,
-            column_line_dash=(
-                bool(json["columnLineDash"]) if "columnLineDash" in json else None
-            ),
+            column_line_dash=(bool(json["columnLineDash"]) if "columnLineDash" in json else None),
             row_gap_color=(
-                dom.RGBA.from_json(json["rowGapColor"])
-                if "rowGapColor" in json
-                else None
+                dom.RGBA.from_json(json["rowGapColor"]) if "rowGapColor" in json else None
             ),
             row_hatch_color=(
-                dom.RGBA.from_json(json["rowHatchColor"])
-                if "rowHatchColor" in json
-                else None
+                dom.RGBA.from_json(json["rowHatchColor"]) if "rowHatchColor" in json else None
             ),
             column_gap_color=(
-                dom.RGBA.from_json(json["columnGapColor"])
-                if "columnGapColor" in json
-                else None
+                dom.RGBA.from_json(json["columnGapColor"]) if "columnGapColor" in json else None
             ),
             column_hatch_color=(
-                dom.RGBA.from_json(json["columnHatchColor"])
-                if "columnHatchColor" in json
-                else None
+                dom.RGBA.from_json(json["columnHatchColor"]) if "columnHatchColor" in json else None
             ),
             area_border_color=(
-                dom.RGBA.from_json(json["areaBorderColor"])
-                if "areaBorderColor" in json
-                else None
+                dom.RGBA.from_json(json["areaBorderColor"]) if "areaBorderColor" in json else None
             ),
             grid_background_color=(
                 dom.RGBA.from_json(json["gridBackgroundColor"])
@@ -294,19 +258,13 @@ class FlexContainerHighlightConfig:
     def from_json(cls, json):
         return cls(
             container_border=(
-                LineStyle.from_json(json["containerBorder"])
-                if "containerBorder" in json
-                else None
+                LineStyle.from_json(json["containerBorder"]) if "containerBorder" in json else None
             ),
             line_separator=(
-                LineStyle.from_json(json["lineSeparator"])
-                if "lineSeparator" in json
-                else None
+                LineStyle.from_json(json["lineSeparator"]) if "lineSeparator" in json else None
             ),
             item_separator=(
-                LineStyle.from_json(json["itemSeparator"])
-                if "itemSeparator" in json
-                else None
+                LineStyle.from_json(json["itemSeparator"]) if "itemSeparator" in json else None
             ),
             main_distributed_space=(
                 BoxStyle.from_json(json["mainDistributedSpace"])
@@ -319,19 +277,13 @@ class FlexContainerHighlightConfig:
                 else None
             ),
             row_gap_space=(
-                BoxStyle.from_json(json["rowGapSpace"])
-                if "rowGapSpace" in json
-                else None
+                BoxStyle.from_json(json["rowGapSpace"]) if "rowGapSpace" in json else None
             ),
             column_gap_space=(
-                BoxStyle.from_json(json["columnGapSpace"])
-                if "columnGapSpace" in json
-                else None
+                BoxStyle.from_json(json["columnGapSpace"]) if "columnGapSpace" in json else None
             ),
             cross_alignment=(
-                LineStyle.from_json(json["crossAlignment"])
-                if "crossAlignment" in json
-                else None
+                LineStyle.from_json(json["crossAlignment"]) if "crossAlignment" in json else None
             ),
         )
 
@@ -365,14 +317,10 @@ class FlexItemHighlightConfig:
     def from_json(cls, json):
         return cls(
             base_size_box=(
-                BoxStyle.from_json(json["baseSizeBox"])
-                if "baseSizeBox" in json
-                else None
+                BoxStyle.from_json(json["baseSizeBox"]) if "baseSizeBox" in json else None
             ),
             base_size_border=(
-                LineStyle.from_json(json["baseSizeBorder"])
-                if "baseSizeBorder" in json
-                else None
+                LineStyle.from_json(json["baseSizeBorder"]) if "baseSizeBorder" in json else None
             ),
             flexibility_arrow=(
                 LineStyle.from_json(json["flexibilityArrow"])
@@ -433,12 +381,8 @@ class BoxStyle:
     @classmethod
     def from_json(cls, json):
         return cls(
-            fill_color=(
-                dom.RGBA.from_json(json["fillColor"]) if "fillColor" in json else None
-            ),
-            hatch_color=(
-                dom.RGBA.from_json(json["hatchColor"]) if "hatchColor" in json else None
-            ),
+            fill_color=(dom.RGBA.from_json(json["fillColor"]) if "fillColor" in json else None),
+            hatch_color=(dom.RGBA.from_json(json["hatchColor"]) if "hatchColor" in json else None),
         )
 
 
@@ -507,9 +451,7 @@ class HighlightConfig:
     grid_highlight_config: typing.Optional[GridHighlightConfig] = None
 
     #: The flex container highlight configuration (default: all transparent).
-    flex_container_highlight_config: typing.Optional[FlexContainerHighlightConfig] = (
-        None
-    )
+    flex_container_highlight_config: typing.Optional[FlexContainerHighlightConfig] = None
 
     #: The flex item highlight configuration (default: all transparent).
     flex_item_highlight_config: typing.Optional[FlexItemHighlightConfig] = None
@@ -555,9 +497,7 @@ class HighlightConfig:
         if self.grid_highlight_config is not None:
             json["gridHighlightConfig"] = self.grid_highlight_config.to_json()
         if self.flex_container_highlight_config is not None:
-            json["flexContainerHighlightConfig"] = (
-                self.flex_container_highlight_config.to_json()
-            )
+            json["flexContainerHighlightConfig"] = self.flex_container_highlight_config.to_json()
         if self.flex_item_highlight_config is not None:
             json["flexItemHighlightConfig"] = self.flex_item_highlight_config.to_json()
         if self.contrast_algorithm is not None:
@@ -575,57 +515,35 @@ class HighlightConfig:
             show_styles=bool(json["showStyles"]) if "showStyles" in json else None,
             show_rulers=bool(json["showRulers"]) if "showRulers" in json else None,
             show_accessibility_info=(
-                bool(json["showAccessibilityInfo"])
-                if "showAccessibilityInfo" in json
-                else None
+                bool(json["showAccessibilityInfo"]) if "showAccessibilityInfo" in json else None
             ),
             show_extension_lines=(
-                bool(json["showExtensionLines"])
-                if "showExtensionLines" in json
-                else None
+                bool(json["showExtensionLines"]) if "showExtensionLines" in json else None
             ),
             content_color=(
-                dom.RGBA.from_json(json["contentColor"])
-                if "contentColor" in json
-                else None
+                dom.RGBA.from_json(json["contentColor"]) if "contentColor" in json else None
             ),
             padding_color=(
-                dom.RGBA.from_json(json["paddingColor"])
-                if "paddingColor" in json
-                else None
+                dom.RGBA.from_json(json["paddingColor"]) if "paddingColor" in json else None
             ),
             border_color=(
-                dom.RGBA.from_json(json["borderColor"])
-                if "borderColor" in json
-                else None
+                dom.RGBA.from_json(json["borderColor"]) if "borderColor" in json else None
             ),
             margin_color=(
-                dom.RGBA.from_json(json["marginColor"])
-                if "marginColor" in json
-                else None
+                dom.RGBA.from_json(json["marginColor"]) if "marginColor" in json else None
             ),
             event_target_color=(
-                dom.RGBA.from_json(json["eventTargetColor"])
-                if "eventTargetColor" in json
-                else None
+                dom.RGBA.from_json(json["eventTargetColor"]) if "eventTargetColor" in json else None
             ),
-            shape_color=(
-                dom.RGBA.from_json(json["shapeColor"]) if "shapeColor" in json else None
-            ),
+            shape_color=(dom.RGBA.from_json(json["shapeColor"]) if "shapeColor" in json else None),
             shape_margin_color=(
-                dom.RGBA.from_json(json["shapeMarginColor"])
-                if "shapeMarginColor" in json
-                else None
+                dom.RGBA.from_json(json["shapeMarginColor"]) if "shapeMarginColor" in json else None
             ),
             css_grid_color=(
-                dom.RGBA.from_json(json["cssGridColor"])
-                if "cssGridColor" in json
-                else None
+                dom.RGBA.from_json(json["cssGridColor"]) if "cssGridColor" in json else None
             ),
             color_format=(
-                ColorFormat.from_json(json["colorFormat"])
-                if "colorFormat" in json
-                else None
+                ColorFormat.from_json(json["colorFormat"]) if "colorFormat" in json else None
             ),
             grid_highlight_config=(
                 GridHighlightConfig.from_json(json["gridHighlightConfig"])
@@ -633,9 +551,7 @@ class HighlightConfig:
                 else None
             ),
             flex_container_highlight_config=(
-                FlexContainerHighlightConfig.from_json(
-                    json["flexContainerHighlightConfig"]
-                )
+                FlexContainerHighlightConfig.from_json(json["flexContainerHighlightConfig"])
                 if "flexContainerHighlightConfig" in json
                 else None
             ),
@@ -694,9 +610,7 @@ class GridNodeHighlightConfig:
     @classmethod
     def from_json(cls, json):
         return cls(
-            grid_highlight_config=GridHighlightConfig.from_json(
-                json["gridHighlightConfig"]
-            ),
+            grid_highlight_config=GridHighlightConfig.from_json(json["gridHighlightConfig"]),
             node_id=dom.NodeId.from_json(json["nodeId"]),
         )
 
@@ -711,9 +625,7 @@ class FlexNodeHighlightConfig:
 
     def to_json(self):
         json = dict()
-        json["flexContainerHighlightConfig"] = (
-            self.flex_container_highlight_config.to_json()
-        )
+        json["flexContainerHighlightConfig"] = self.flex_container_highlight_config.to_json()
         json["nodeId"] = self.node_id.to_json()
         return json
 
@@ -757,14 +669,10 @@ class ScrollSnapContainerHighlightConfig:
     def from_json(cls, json):
         return cls(
             snapport_border=(
-                LineStyle.from_json(json["snapportBorder"])
-                if "snapportBorder" in json
-                else None
+                LineStyle.from_json(json["snapportBorder"]) if "snapportBorder" in json else None
             ),
             snap_area_border=(
-                LineStyle.from_json(json["snapAreaBorder"])
-                if "snapAreaBorder" in json
-                else None
+                LineStyle.from_json(json["snapAreaBorder"]) if "snapAreaBorder" in json else None
             ),
             scroll_margin_color=(
                 dom.RGBA.from_json(json["scrollMarginColor"])
@@ -834,14 +742,10 @@ class HingeConfig:
         return cls(
             rect=dom.Rect.from_json(json["rect"]),
             content_color=(
-                dom.RGBA.from_json(json["contentColor"])
-                if "contentColor" in json
-                else None
+                dom.RGBA.from_json(json["contentColor"]) if "contentColor" in json else None
             ),
             outline_color=(
-                dom.RGBA.from_json(json["outlineColor"])
-                if "outlineColor" in json
-                else None
+                dom.RGBA.from_json(json["outlineColor"]) if "outlineColor" in json else None
             ),
         )
 
@@ -923,9 +827,7 @@ class ContainerQueryContainerHighlightConfig:
     def from_json(cls, json):
         return cls(
             container_border=(
-                LineStyle.from_json(json["containerBorder"])
-                if "containerBorder" in json
-                else None
+                LineStyle.from_json(json["containerBorder"]) if "containerBorder" in json else None
             ),
             descendant_border=(
                 LineStyle.from_json(json["descendantBorder"])
@@ -945,9 +847,7 @@ class IsolatedElementHighlightConfig:
 
     def to_json(self):
         json = dict()
-        json["isolationModeHighlightConfig"] = (
-            self.isolation_mode_highlight_config.to_json()
-        )
+        json["isolationModeHighlightConfig"] = self.isolation_mode_highlight_config.to_json()
         json["nodeId"] = self.node_id.to_json()
         return json
 
@@ -986,18 +886,14 @@ class IsolationModeHighlightConfig:
     def from_json(cls, json):
         return cls(
             resizer_color=(
-                dom.RGBA.from_json(json["resizerColor"])
-                if "resizerColor" in json
-                else None
+                dom.RGBA.from_json(json["resizerColor"]) if "resizerColor" in json else None
             ),
             resizer_handle_color=(
                 dom.RGBA.from_json(json["resizerHandleColor"])
                 if "resizerHandleColor" in json
                 else None
             ),
-            mask_color=(
-                dom.RGBA.from_json(json["maskColor"]) if "maskColor" in json else None
-            ),
+            mask_color=(dom.RGBA.from_json(json["maskColor"]) if "maskColor" in json else None),
         )
 
 
@@ -1367,9 +1263,7 @@ def set_show_grid_overlays(
     :param grid_node_highlight_configs: An array of node identifiers and descriptors for the highlight appearance.
     """
     params: T_JSON_DICT = dict()
-    params["gridNodeHighlightConfigs"] = [
-        i.to_json() for i in grid_node_highlight_configs
-    ]
+    params["gridNodeHighlightConfigs"] = [i.to_json() for i in grid_node_highlight_configs]
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.setShowGridOverlays",
         "params": params,
@@ -1384,9 +1278,7 @@ def set_show_flex_overlays(
     :param flex_node_highlight_configs: An array of node identifiers and descriptors for the highlight appearance.
     """
     params: T_JSON_DICT = dict()
-    params["flexNodeHighlightConfigs"] = [
-        i.to_json() for i in flex_node_highlight_configs
-    ]
+    params["flexNodeHighlightConfigs"] = [i.to_json() for i in flex_node_highlight_configs]
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.setShowFlexOverlays",
         "params": params,
@@ -1401,9 +1293,7 @@ def set_show_scroll_snap_overlays(
     :param scroll_snap_highlight_configs: An array of node identifiers and descriptors for the highlight appearance.
     """
     params: T_JSON_DICT = dict()
-    params["scrollSnapHighlightConfigs"] = [
-        i.to_json() for i in scroll_snap_highlight_configs
-    ]
+    params["scrollSnapHighlightConfigs"] = [i.to_json() for i in scroll_snap_highlight_configs]
     cmd_dict: T_JSON_DICT = {
         "method": "Overlay.setShowScrollSnapOverlays",
         "params": params,

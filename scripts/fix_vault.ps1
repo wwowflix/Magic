@@ -1,4 +1,4 @@
-﻿# fix_vault.ps1 – automatically corrects vault.json and tests Reddit
+# fix_vault.ps1 – automatically corrects vault.json and tests Reddit
 
 # Your real secrets:
 $vaultSecrets = @{

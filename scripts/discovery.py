@@ -8,32 +8,32 @@ For the purposes of this module, the following nomenclature is used:
   distribution when packaging the project. Example::
 
     .
-    ├── tox.ini
-    ├── pyproject.toml
-    └── src/
-        └── mypkg/
-            ├── __init__.py
-            ├── mymodule.py
-            └── my_data_file.txt
+    â”œâ”€â”€ tox.ini
+    â”œâ”€â”€ pyproject.toml
+    â””â”€â”€ src/
+        â””â”€â”€ mypkg/
+            â”œâ”€â”€ __init__.py
+            â”œâ”€â”€ mymodule.py
+            â””â”€â”€ my_data_file.txt
 
 - "flat-layout": a Python project that does not use "src-layout" but instead
   have a directory under the project root for each package::
 
     .
-    ├── tox.ini
-    ├── pyproject.toml
-    └── mypkg/
-        ├── __init__.py
-        ├── mymodule.py
-        └── my_data_file.txt
+    â”œâ”€â”€ tox.ini
+    â”œâ”€â”€ pyproject.toml
+    â””â”€â”€ mypkg/
+        â”œâ”€â”€ __init__.py
+        â”œâ”€â”€ mymodule.py
+        â””â”€â”€ my_data_file.txt
 
 - "single-module": a project that contains a single Python script direct under
   the project root (no directory used)::
 
     .
-    ├── tox.ini
-    ├── pyproject.toml
-    └── mymodule.py
+    â”œâ”€â”€ tox.ini
+    â”œâ”€â”€ pyproject.toml
+    â””â”€â”€ mymodule.py
 
 """
 
@@ -362,10 +362,7 @@ class ConfigDiscovery:
             # when nothing is given
             return True
 
-        log.debug(
-            "No `packages` or `py_modules` configuration, performing "
-            "automatic discovery."
-        )
+        log.debug("No `packages` or `py_modules` configuration, performing " "automatic discovery.")
 
         return (
             self._analyse_explicit_layout()
@@ -476,10 +473,7 @@ class ConfigDiscovery:
 
         log.debug("No `name` configuration, performing automatic discovery")
 
-        name = (
-            self._find_name_single_package_or_module()
-            or self._find_name_from_packages()
-        )
+        name = self._find_name_single_package_or_module() or self._find_name_from_packages()
         if name:
             self.dist.metadata.name = name
 
@@ -561,9 +555,7 @@ def find_parent_package(
     return None
 
 
-def find_package_path(
-    name: str, package_dir: Mapping[str, str], root_dir: _Path
-) -> str:
+def find_package_path(name: str, package_dir: Mapping[str, str], root_dir: _Path) -> str:
     """Given a package name, return the path where it should be found on
     disk, considering the ``package_dir`` option.
 

@@ -128,9 +128,7 @@ class Signal:
 
         if "receiver_connected" in self.__dict__ and self.receiver_connected.receivers:
             try:
-                self.receiver_connected.send(
-                    self, receiver=receiver, sender=sender, weak=weak
-                )
+                self.receiver_connected.send(self, receiver=receiver, sender=sender, weak=weak)
             except TypeError:
                 # TODO no explanation or test for this
                 self.disconnect(receiver, sender)
@@ -329,9 +327,7 @@ class Signal:
 
         return make_id(sender) in self._by_sender
 
-    def receivers_for(
-        self, sender: t.Any
-    ) -> c.Generator[c.Callable[..., t.Any], None, None]:
+    def receivers_for(self, sender: t.Any) -> c.Generator[c.Callable[..., t.Any], None, None]:
         """Yield each receiver to be called for ``sender``, in addition to those
         to be called for :data:`ANY`. Weakly referenced receivers that are not
         live will be disconnected and skipped.
@@ -385,10 +381,7 @@ class Signal:
         receiver_id = make_id(receiver)
         self._disconnect(receiver_id, sender_id)
 
-        if (
-            "receiver_disconnected" in self.__dict__
-            and self.receiver_disconnected.receivers
-        ):
+        if "receiver_disconnected" in self.__dict__ and self.receiver_disconnected.receivers:
             self.receiver_disconnected.send(self, receiver=receiver, sender=sender)
 
     def _disconnect(self, receiver_id: c.Hashable, sender_id: c.Hashable) -> None:
@@ -417,9 +410,7 @@ class Signal:
 
         return cleanup
 
-    def _make_cleanup_sender(
-        self, sender_id: c.Hashable
-    ) -> c.Callable[[weakref.ref[t.Any]], None]:
+    def _make_cleanup_sender(self, sender_id: c.Hashable) -> c.Callable[[weakref.ref[t.Any]], None]:
         """Create a callback function to disconnect all receivers for a weakly
         referenced sender when it is garbage collected.
         """

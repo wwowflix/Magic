@@ -1,6 +1,6 @@
-﻿def main():
+ï¿def main():
     print(
-        "✅ [11X_llm_jailbreak_resistance_tester_READY.py] executed successfully (stub mode)."
+        "âœ… [11X_llm_jailbreak_resistance_tester_READY.py] executed successfully (stub mode)."
     )
 
 

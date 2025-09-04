@@ -135,8 +135,7 @@ def coroutine_or_error(
 
         if inspect.isasyncgen(coro):
             raise TypeError(
-                "start_soon expected an async function but got an async "
-                f"generator {coro!r}",
+                "start_soon expected an async function but got an async " f"generator {coro!r}",
             )
 
         # Give good error for: nursery.start_soon(some_sync_fn)

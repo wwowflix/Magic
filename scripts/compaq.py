@@ -66,8 +66,7 @@ class CompaqVisualFCompiler(FCompiler):
     compiler_type = "compaqv"
     description = "DIGITAL or Compaq Visual Fortran Compiler"
     version_pattern = (
-        r"(DIGITAL|Compaq) Visual Fortran Optimizing Compiler"
-        r" Version (?P<version>[^\s]*).*"
+        r"(DIGITAL|Compaq) Visual Fortran Optimizing Compiler" r" Version (?P<version>[^\s]*).*"
     )
 
     compile_switch = "/compile_only"

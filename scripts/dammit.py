@@ -79,9 +79,7 @@ def _chardet_dammit(s: bytes) -> Optional[str]:
 # Build bytestring and Unicode versions of regular expressions for finding
 # a declared encoding inside an XML or HTML document.
 xml_encoding: str = "^\\s*<\\?.*encoding=['\"](.*?)['\"].*\\?>"  #: :meta private:
-html_meta: str = (
-    "<\\s*meta[^>]+charset\\s*=\\s*[\"']?([^>]*?)[ /;'\">]"  #: :meta private:
-)
+html_meta: str = "<\\s*meta[^>]+charset\\s*=\\s*[\"']?([^>]*?)[ /;'\">]"  #: :meta private:
 
 # TODO-TYPING: The Pattern type here could use more refinement, but it's tricky.
 encoding_res: Dict[Type, Dict[str, Pattern]] = dict()
@@ -132,13 +130,13 @@ class EntitySubstitution(object):
 
         This function sets the following class variables:
 
-        CHARACTER_TO_HTML_ENTITY - A mapping of Unicode strings like "⦨" to
+        CHARACTER_TO_HTML_ENTITY - A mapping of Unicode strings like "â¦¨" to
         entity names like "angmsdaa". When a single Unicode string has
         multiple entity names, we try to choose the most commonly-used
         name.
 
         HTML_ENTITY_TO_CHARACTER: A mapping of entity names like "angmsdaa" to
-        Unicode strings like "⦨".
+        Unicode strings like "â¦¨".
 
         CHARACTER_TO_HTML_ENTITY_RE: A regular expression matching (almost) any
         Unicode string that corresponds to an HTML5 named entity.
@@ -253,9 +251,7 @@ class EntitySubstitution(object):
         cls.CHARACTER_TO_HTML_ENTITY = unicode_to_name
         cls.HTML_ENTITY_TO_CHARACTER = name_to_unicode
         cls.CHARACTER_TO_HTML_ENTITY_RE = re.compile(re_definition)
-        cls.CHARACTER_TO_HTML_ENTITY_WITH_AMPERSAND_RE = re.compile(
-            re_definition_with_ampersand
-        )
+        cls.CHARACTER_TO_HTML_ENTITY_WITH_AMPERSAND_RE = re.compile(re_definition_with_ampersand)
 
     #: A map of Unicode strings to the corresponding named XML entities.
     #:
@@ -416,9 +412,7 @@ class EntitySubstitution(object):
            HTML entities.
         """
         # Convert any appropriate characters to HTML entities.
-        return cls.CHARACTER_TO_HTML_ENTITY_WITH_AMPERSAND_RE.sub(
-            cls._substitute_html_entity, s
-        )
+        return cls.CHARACTER_TO_HTML_ENTITY_WITH_AMPERSAND_RE.sub(cls._substitute_html_entity, s)
 
     @classmethod
     def substitute_html5(cls, s: str) -> str:
@@ -606,9 +600,7 @@ class EncodingDetector:
 
         # Did the document originally start with a byte-order mark
         # that indicated its encoding?
-        if self.sniffed_encoding is not None and self._usable(
-            self.sniffed_encoding, tried
-        ):
+        if self.sniffed_encoding is not None and self._usable(self.sniffed_encoding, tried):
             yield self.sniffed_encoding
 
         # Sniffing the byte-order mark did nothing; try the user
@@ -620,21 +612,15 @@ class EncodingDetector:
         # Look within the document for an XML or HTML encoding
         # declaration.
         if self.declared_encoding is None:
-            self.declared_encoding = self.find_declared_encoding(
-                self.markup, self.is_html
-            )
-        if self.declared_encoding is not None and self._usable(
-            self.declared_encoding, tried
-        ):
+            self.declared_encoding = self.find_declared_encoding(self.markup, self.is_html)
+        if self.declared_encoding is not None and self._usable(self.declared_encoding, tried):
             yield self.declared_encoding
 
         # Use third-party character set detection to guess at the
         # encoding.
         if self.chardet_encoding is None:
             self.chardet_encoding = _chardet_dammit(self.markup)
-        if self.chardet_encoding is not None and self._usable(
-            self.chardet_encoding, tried
-        ):
+        if self.chardet_encoding is not None and self._usable(self.chardet_encoding, tried):
             yield self.chardet_encoding
 
         # As a last-ditch effort, try utf-8 and windows-1252.
@@ -655,18 +641,10 @@ class EncodingDetector:
         if isinstance(data, str):
             # Unicode data cannot have a byte-order mark.
             return data, encoding
-        if (
-            (len(data) >= 4)
-            and (data[:2] == b"\xfe\xff")
-            and (data[2:4] != b"\x00\x00")
-        ):
+        if (len(data) >= 4) and (data[:2] == b"\xfe\xff") and (data[2:4] != b"\x00\x00"):
             encoding = "utf-16be"
             data = data[2:]
-        elif (
-            (len(data) >= 4)
-            and (data[:2] == b"\xff\xfe")
-            and (data[2:4] != b"\x00\x00")
-        ):
+        elif (len(data) >= 4) and (data[:2] == b"\xff\xfe") and (data[2:4] != b"\x00\x00"):
             encoding = "utf-16le"
             data = data[2:]
         elif data[:3] == b"\xef\xbb\xbf":
@@ -927,9 +905,7 @@ class UnicodeDammit:
         "iso-8859-2",
     ]
 
-    def _convert_from(
-        self, proposed: _Encoding, errors: str = "strict"
-    ) -> Optional[str]:
+    def _convert_from(self, proposed: _Encoding, errors: str = "strict") -> Optional[str]:
         """Attempt to convert the markup to the proposed encoding.
 
         :param proposed: The name of a character encoding.
@@ -945,10 +921,7 @@ class UnicodeDammit:
         markup = self.markup
         # Convert smart quotes to HTML if coming from an encoding
         # that might have them.
-        if (
-            self.smart_quotes_to is not None
-            and proposed in self.ENCODINGS_WITH_SMART_QUOTES
-        ):
+        if self.smart_quotes_to is not None and proposed in self.ENCODINGS_WITH_SMART_QUOTES:
             smart_quotes_re = b"([\x80-\x9f])"
             smart_quotes_compiled = re.compile(smart_quotes_re)
             markup = smart_quotes_compiled.sub(self._sub_ms_char, markup)
@@ -966,9 +939,7 @@ class UnicodeDammit:
         # print("Correct encoding: %s" % proposed)
         return self.unicode_markup
 
-    def _to_unicode(
-        self, data: bytes, encoding: _Encoding, errors: str = "strict"
-    ) -> str:
+    def _to_unicode(self, data: bytes, encoding: _Encoding, errors: str = "strict") -> str:
         """Given a bytestring and its encoding, decodes the string into Unicode.
 
         :param encoding: The name of an encoding.
@@ -1052,8 +1023,8 @@ class UnicodeDammit:
     }
 
     #: A parochial partial mapping of ISO-Latin-1 to ASCII. Contains
-    #: horrors like stripping diacritical marks to turn á into a, but also
-    #: contains non-horrors like turning “ into ".
+    #: horrors like stripping diacritical marks to turn Ã¡ into a, but also
+    #: contains non-horrors like turning â€œ into ".
     #:
     #: Seriously, don't use this for anything other than removing smart
     #: quotes.
@@ -1199,128 +1170,128 @@ class UnicodeDammit:
     #:
     #: :meta hide-value:
     WINDOWS_1252_TO_UTF8: Dict[int, bytes] = {
-        0x80: b"\xe2\x82\xac",  # €
-        0x82: b"\xe2\x80\x9a",  # ‚
-        0x83: b"\xc6\x92",  # ƒ
-        0x84: b"\xe2\x80\x9e",  # „
-        0x85: b"\xe2\x80\xa6",  # …
-        0x86: b"\xe2\x80\xa0",  # †
-        0x87: b"\xe2\x80\xa1",  # ‡
-        0x88: b"\xcb\x86",  # ˆ
-        0x89: b"\xe2\x80\xb0",  # ‰
-        0x8A: b"\xc5\xa0",  # Š
-        0x8B: b"\xe2\x80\xb9",  # ‹
-        0x8C: b"\xc5\x92",  # Œ
-        0x8E: b"\xc5\xbd",  # Ž
-        0x91: b"\xe2\x80\x98",  # ‘
-        0x92: b"\xe2\x80\x99",  # ’
-        0x93: b"\xe2\x80\x9c",  # “
-        0x94: b"\xe2\x80\x9d",  # ”
-        0x95: b"\xe2\x80\xa2",  # •
-        0x96: b"\xe2\x80\x93",  # –
-        0x97: b"\xe2\x80\x94",  # —
-        0x98: b"\xcb\x9c",  # ˜
-        0x99: b"\xe2\x84\xa2",  # ™
-        0x9A: b"\xc5\xa1",  # š
-        0x9B: b"\xe2\x80\xba",  # ›
-        0x9C: b"\xc5\x93",  # œ
-        0x9E: b"\xc5\xbe",  # ž
-        0x9F: b"\xc5\xb8",  # Ÿ
+        0x80: b"\xe2\x82\xac",  # â‚¬
+        0x82: b"\xe2\x80\x9a",  # â€š
+        0x83: b"\xc6\x92",  # Æ’
+        0x84: b"\xe2\x80\x9e",  # â€ž
+        0x85: b"\xe2\x80\xa6",  # â€¦
+        0x86: b"\xe2\x80\xa0",  # â€
+        0x87: b"\xe2\x80\xa1",  # â€¡
+        0x88: b"\xcb\x86",  # Ë†
+        0x89: b"\xe2\x80\xb0",  # â€°
+        0x8A: b"\xc5\xa0",  # Å
+        0x8B: b"\xe2\x80\xb9",  # â€¹
+        0x8C: b"\xc5\x92",  # Å’
+        0x8E: b"\xc5\xbd",  # Å½
+        0x91: b"\xe2\x80\x98",  # â€˜
+        0x92: b"\xe2\x80\x99",  # â€™
+        0x93: b"\xe2\x80\x9c",  # â€œ
+        0x94: b"\xe2\x80\x9d",  # â€
+        0x95: b"\xe2\x80\xa2",  # â€¢
+        0x96: b"\xe2\x80\x93",  # â€“
+        0x97: b"\xe2\x80\x94",  # â€”
+        0x98: b"\xcb\x9c",  # Ëœ
+        0x99: b"\xe2\x84\xa2",  # â„¢
+        0x9A: b"\xc5\xa1",  # Å¡
+        0x9B: b"\xe2\x80\xba",  # â€º
+        0x9C: b"\xc5\x93",  # Å“
+        0x9E: b"\xc5\xbe",  # Å¾
+        0x9F: b"\xc5\xb8",  # Å¸
         0xA0: b"\xc2\xa0",  #
-        0xA1: b"\xc2\xa1",  # ¡
-        0xA2: b"\xc2\xa2",  # ¢
-        0xA3: b"\xc2\xa3",  # £
-        0xA4: b"\xc2\xa4",  # ¤
-        0xA5: b"\xc2\xa5",  # ¥
-        0xA6: b"\xc2\xa6",  # ¦
-        0xA7: b"\xc2\xa7",  # §
-        0xA8: b"\xc2\xa8",  # ¨
-        0xA9: b"\xc2\xa9",  # ©
-        0xAA: b"\xc2\xaa",  # ª
-        0xAB: b"\xc2\xab",  # «
-        0xAC: b"\xc2\xac",  # ¬
-        0xAD: b"\xc2\xad",  # ­
-        0xAE: b"\xc2\xae",  # ®
-        0xAF: b"\xc2\xaf",  # ¯
-        0xB0: b"\xc2\xb0",  # °
-        0xB1: b"\xc2\xb1",  # ±
-        0xB2: b"\xc2\xb2",  # ²
-        0xB3: b"\xc2\xb3",  # ³
-        0xB4: b"\xc2\xb4",  # ´
-        0xB5: b"\xc2\xb5",  # µ
-        0xB6: b"\xc2\xb6",  # ¶
-        0xB7: b"\xc2\xb7",  # ·
-        0xB8: b"\xc2\xb8",  # ¸
-        0xB9: b"\xc2\xb9",  # ¹
-        0xBA: b"\xc2\xba",  # º
-        0xBB: b"\xc2\xbb",  # »
-        0xBC: b"\xc2\xbc",  # ¼
-        0xBD: b"\xc2\xbd",  # ½
-        0xBE: b"\xc2\xbe",  # ¾
-        0xBF: b"\xc2\xbf",  # ¿
-        0xC0: b"\xc3\x80",  # À
-        0xC1: b"\xc3\x81",  # Á
-        0xC2: b"\xc3\x82",  # Â
-        0xC3: b"\xc3\x83",  # Ã
-        0xC4: b"\xc3\x84",  # Ä
-        0xC5: b"\xc3\x85",  # Å
-        0xC6: b"\xc3\x86",  # Æ
-        0xC7: b"\xc3\x87",  # Ç
-        0xC8: b"\xc3\x88",  # È
-        0xC9: b"\xc3\x89",  # É
-        0xCA: b"\xc3\x8a",  # Ê
-        0xCB: b"\xc3\x8b",  # Ë
-        0xCC: b"\xc3\x8c",  # Ì
-        0xCD: b"\xc3\x8d",  # Í
-        0xCE: b"\xc3\x8e",  # Î
-        0xCF: b"\xc3\x8f",  # Ï
-        0xD0: b"\xc3\x90",  # Ð
-        0xD1: b"\xc3\x91",  # Ñ
-        0xD2: b"\xc3\x92",  # Ò
-        0xD3: b"\xc3\x93",  # Ó
-        0xD4: b"\xc3\x94",  # Ô
-        0xD5: b"\xc3\x95",  # Õ
-        0xD6: b"\xc3\x96",  # Ö
-        0xD7: b"\xc3\x97",  # ×
-        0xD8: b"\xc3\x98",  # Ø
-        0xD9: b"\xc3\x99",  # Ù
-        0xDA: b"\xc3\x9a",  # Ú
-        0xDB: b"\xc3\x9b",  # Û
-        0xDC: b"\xc3\x9c",  # Ü
-        0xDD: b"\xc3\x9d",  # Ý
-        0xDE: b"\xc3\x9e",  # Þ
-        0xDF: b"\xc3\x9f",  # ß
-        0xE0: b"\xc3\xa0",  # à
-        0xE1: b"\xa1",  # á
-        0xE2: b"\xc3\xa2",  # â
-        0xE3: b"\xc3\xa3",  # ã
-        0xE4: b"\xc3\xa4",  # ä
-        0xE5: b"\xc3\xa5",  # å
-        0xE6: b"\xc3\xa6",  # æ
-        0xE7: b"\xc3\xa7",  # ç
-        0xE8: b"\xc3\xa8",  # è
-        0xE9: b"\xc3\xa9",  # é
-        0xEA: b"\xc3\xaa",  # ê
-        0xEB: b"\xc3\xab",  # ë
-        0xEC: b"\xc3\xac",  # ì
-        0xED: b"\xc3\xad",  # í
-        0xEE: b"\xc3\xae",  # î
-        0xEF: b"\xc3\xaf",  # ï
-        0xF0: b"\xc3\xb0",  # ð
-        0xF1: b"\xc3\xb1",  # ñ
-        0xF2: b"\xc3\xb2",  # ò
-        0xF3: b"\xc3\xb3",  # ó
-        0xF4: b"\xc3\xb4",  # ô
-        0xF5: b"\xc3\xb5",  # õ
-        0xF6: b"\xc3\xb6",  # ö
-        0xF7: b"\xc3\xb7",  # ÷
-        0xF8: b"\xc3\xb8",  # ø
-        0xF9: b"\xc3\xb9",  # ù
-        0xFA: b"\xc3\xba",  # ú
-        0xFB: b"\xc3\xbb",  # û
-        0xFC: b"\xc3\xbc",  # ü
-        0xFD: b"\xc3\xbd",  # ý
-        0xFE: b"\xc3\xbe",  # þ
+        0xA1: b"\xc2\xa1",  # Â¡
+        0xA2: b"\xc2\xa2",  # Â¢
+        0xA3: b"\xc2\xa3",  # Â£
+        0xA4: b"\xc2\xa4",  # Â¤
+        0xA5: b"\xc2\xa5",  # Â¥
+        0xA6: b"\xc2\xa6",  # Â¦
+        0xA7: b"\xc2\xa7",  # Â§
+        0xA8: b"\xc2\xa8",  # Â¨
+        0xA9: b"\xc2\xa9",  # Â©
+        0xAA: b"\xc2\xaa",  # Âª
+        0xAB: b"\xc2\xab",  # Â
+        0xAC: b"\xc2\xac",  # Â¬
+        0xAD: b"\xc2\xad",  # Â­
+        0xAE: b"\xc2\xae",  # Â®
+        0xAF: b"\xc2\xaf",  # Â¯
+        0xB0: b"\xc2\xb0",  # Â°
+        0xB1: b"\xc2\xb1",  # Â±
+        0xB2: b"\xc2\xb2",  # Â²
+        0xB3: b"\xc2\xb3",  # Â³
+        0xB4: b"\xc2\xb4",  # Â´
+        0xB5: b"\xc2\xb5",  # Âµ
+        0xB6: b"\xc2\xb6",  # Â¶
+        0xB7: b"\xc2\xb7",  # Â·
+        0xB8: b"\xc2\xb8",  # Â¸
+        0xB9: b"\xc2\xb9",  # Â¹
+        0xBA: b"\xc2\xba",  # Âº
+        0xBB: b"\xc2\xbb",  # Â
+        0xBC: b"\xc2\xbc",  # Â¼
+        0xBD: b"\xc2\xbd",  # Â½
+        0xBE: b"\xc2\xbe",  # Â¾
+        0xBF: b"\xc2\xbf",  # Â¿
+        0xC0: b"\xc3\x80",  # Ã€
+        0xC1: b"\xc3\x81",  # Ã
+        0xC2: b"\xc3\x82",  # Ã‚
+        0xC3: b"\xc3\x83",  # Ãƒ
+        0xC4: b"\xc3\x84",  # Ã„
+        0xC5: b"\xc3\x85",  # Ã…
+        0xC6: b"\xc3\x86",  # Ã†
+        0xC7: b"\xc3\x87",  # Ã‡
+        0xC8: b"\xc3\x88",  # Ãˆ
+        0xC9: b"\xc3\x89",  # Ã‰
+        0xCA: b"\xc3\x8a",  # ÃŠ
+        0xCB: b"\xc3\x8b",  # Ã‹
+        0xCC: b"\xc3\x8c",  # ÃŒ
+        0xCD: b"\xc3\x8d",  # Ã
+        0xCE: b"\xc3\x8e",  # ÃŽ
+        0xCF: b"\xc3\x8f",  # Ã
+        0xD0: b"\xc3\x90",  # Ã
+        0xD1: b"\xc3\x91",  # Ã‘
+        0xD2: b"\xc3\x92",  # Ã’
+        0xD3: b"\xc3\x93",  # Ã“
+        0xD4: b"\xc3\x94",  # Ã”
+        0xD5: b"\xc3\x95",  # Ã•
+        0xD6: b"\xc3\x96",  # Ã–
+        0xD7: b"\xc3\x97",  # Ã—
+        0xD8: b"\xc3\x98",  # Ã˜
+        0xD9: b"\xc3\x99",  # Ã™
+        0xDA: b"\xc3\x9a",  # Ãš
+        0xDB: b"\xc3\x9b",  # Ã›
+        0xDC: b"\xc3\x9c",  # Ãœ
+        0xDD: b"\xc3\x9d",  # Ã
+        0xDE: b"\xc3\x9e",  # Ãž
+        0xDF: b"\xc3\x9f",  # ÃŸ
+        0xE0: b"\xc3\xa0",  # Ã
+        0xE1: b"\xa1",  # Ã¡
+        0xE2: b"\xc3\xa2",  # Ã¢
+        0xE3: b"\xc3\xa3",  # Ã£
+        0xE4: b"\xc3\xa4",  # Ã¤
+        0xE5: b"\xc3\xa5",  # Ã¥
+        0xE6: b"\xc3\xa6",  # Ã¦
+        0xE7: b"\xc3\xa7",  # Ã§
+        0xE8: b"\xc3\xa8",  # Ã¨
+        0xE9: b"\xc3\xa9",  # Ã©
+        0xEA: b"\xc3\xaa",  # Ãª
+        0xEB: b"\xc3\xab",  # Ã
+        0xEC: b"\xc3\xac",  # Ã¬
+        0xED: b"\xc3\xad",  # Ã­
+        0xEE: b"\xc3\xae",  # Ã®
+        0xEF: b"\xc3\xaf",  # Ã¯
+        0xF0: b"\xc3\xb0",  # Ã°
+        0xF1: b"\xc3\xb1",  # Ã±
+        0xF2: b"\xc3\xb2",  # Ã²
+        0xF3: b"\xc3\xb3",  # Ã³
+        0xF4: b"\xc3\xb4",  # Ã´
+        0xF5: b"\xc3\xb5",  # Ãµ
+        0xF6: b"\xc3\xb6",  # Ã¶
+        0xF7: b"\xc3\xb7",  # Ã·
+        0xF8: b"\xc3\xb8",  # Ã¸
+        0xF9: b"\xc3\xb9",  # Ã¹
+        0xFA: b"\xc3\xba",  # Ãº
+        0xFB: b"\xc3\xbb",  # Ã
+        0xFC: b"\xc3\xbc",  # Ã¼
+        0xFD: b"\xc3\xbd",  # Ã½
+        0xFE: b"\xc3\xbe",  # Ã¾
     }
 
     #: :meta private:
@@ -1369,9 +1340,7 @@ class UnicodeDammit:
             )
 
         if main_encoding.lower() not in ("utf8", "utf-8"):
-            raise NotImplementedError(
-                "UTF-8 is the only currently supported main encoding."
-            )
+            raise NotImplementedError("UTF-8 is the only currently supported main encoding.")
 
         byte_chunks = []
 

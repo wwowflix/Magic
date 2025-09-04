@@ -190,9 +190,7 @@ class BaseSetitemTests(BaseExtensionTests):
         "idx, box_in_series",
         [
             ([0, 1, 2, pd.NA], False),
-            pytest.param(
-                [0, 1, 2, pd.NA], True, marks=pytest.mark.xfail(reason="GH-31948")
-            ),
+            pytest.param([0, 1, 2, pd.NA], True, marks=pytest.mark.xfail(reason="GH-31948")),
             (pd.array([0, 1, 2, pd.NA], dtype="Int64"), False),
             (pd.array([0, 1, 2, pd.NA], dtype="Int64"), False),
         ],
@@ -358,9 +356,7 @@ class BaseSetitemTests(BaseExtensionTests):
 
         # https://github.com/pandas-dev/pandas/issues/47284
         df.loc[2, "data"] = na_value
-        expected = pd.DataFrame(
-            {"data": pd.Series([data[0], data[1], na_value], dtype=data.dtype)}
-        )
+        expected = pd.DataFrame({"data": pd.Series([data[0], data[1], na_value], dtype=data.dtype)})
         self.assert_frame_equal(df, expected)
 
     def test_setitem_series(self, data, full_indexer):
@@ -373,9 +369,7 @@ class BaseSetitemTests(BaseExtensionTests):
         key = full_indexer(ser)
         result.loc[key] = ser
 
-        expected = pd.Series(
-            data.astype(object), index=ser.index, name="data", dtype=object
-        )
+        expected = pd.Series(data.astype(object), index=ser.index, name="data", dtype=object)
         self.assert_series_equal(result, expected)
 
     def test_setitem_frame_2d_values(self, data):

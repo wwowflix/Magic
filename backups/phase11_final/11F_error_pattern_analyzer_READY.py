@@ -1,8 +1,8 @@
-﻿"""Detects recurring failure types across agents"""
+ï¿"""Detects recurring failure types across agents"""
 
 
 def main():
-    print("✅ Error Pattern Analyzer running...")
+    print("âœ… Error Pattern Analyzer running...")
 
 
 if __name__ == "__main__":

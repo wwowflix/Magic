@@ -205,9 +205,7 @@ class memmap(ndarray):
 
     __array_priority__ = -100.0
 
-    def __new__(
-        subtype, filename, dtype=uint8, mode="r+", offset=0, shape=None, order="C"
-    ):
+    def __new__(subtype, filename, dtype=uint8, mode="r+", offset=0, shape=None, order="C"):
         # Import here to minimize 'import numpy' overhead
         import mmap
         import os.path
@@ -240,17 +238,14 @@ class memmap(ndarray):
                 bytes = flen - offset
                 if bytes % _dbytes:
                     raise ValueError(
-                        "Size of available data is not a "
-                        "multiple of the data-type size."
+                        "Size of available data is not a " "multiple of the data-type size."
                     )
                 size = bytes // _dbytes
                 shape = (size,)
             else:
                 if not isinstance(shape, tuple):
                     shape = (shape,)
-                size = np.intp(
-                    1
-                )  # avoid default choice of np.int_, which might overflow
+                size = np.intp(1)  # avoid default choice of np.int_, which might overflow
                 for k in shape:
                     size *= k
 

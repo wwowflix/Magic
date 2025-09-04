@@ -62,13 +62,10 @@ class develop(namespaces.DevelopInstaller, easy_install):
             self.egg_path = os.path.abspath(ei.egg_base)
 
         target = pkg_resources.normalize_path(self.egg_base)
-        egg_path = pkg_resources.normalize_path(
-            os.path.join(self.install_dir, self.egg_path)
-        )
+        egg_path = pkg_resources.normalize_path(os.path.join(self.install_dir, self.egg_path))
         if egg_path != target:
             raise DistutilsOptionError(
-                "--egg-path must be a relative path from the install"
-                " directory to " + target
+                "--egg-path must be a relative path from the install" " directory to " + target
             )
 
         # Make a distribution for the package's source
@@ -94,13 +91,10 @@ class develop(namespaces.DevelopInstaller, easy_install):
         path_to_setup = egg_base.replace(os.sep, "/").rstrip("/")
         if path_to_setup != os.curdir:
             path_to_setup = "../" * (path_to_setup.count("/") + 1)
-        resolved = pkg_resources.normalize_path(
-            os.path.join(install_dir, egg_path, path_to_setup)
-        )
+        resolved = pkg_resources.normalize_path(os.path.join(install_dir, egg_path, path_to_setup))
         if resolved != pkg_resources.normalize_path(os.curdir):
             raise DistutilsOptionError(
-                "Can't get a consistent path to setup script from"
-                " installation directory",
+                "Can't get a consistent path to setup script from" " installation directory",
                 resolved,
                 pkg_resources.normalize_path(os.curdir),
             )

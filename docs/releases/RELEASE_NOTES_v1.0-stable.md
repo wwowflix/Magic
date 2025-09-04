@@ -1,4 +1,4 @@
-﻿# Release v1.0-stable
+# Release v1.0-stable
 Generated: 2025-09-03 15:22
 
 **Status**

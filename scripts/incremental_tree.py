@@ -162,9 +162,7 @@ class IncrementalTree(ET.ElementTree):
                             new_nsmap.update(nsmap)
                         if default_namespace:
                             new_nsmap[""] = default_namespace
-                global_nsmap = {
-                    prefix: uri for uri, prefix in ET._namespace_map.items()
-                }
+                global_nsmap = {prefix: uri for uri, prefix in ET._namespace_map.items()}
                 if None in global_nsmap:
                     raise ValueError(
                         "Found None as default nsmap prefix in nsmap registered with "
@@ -495,9 +493,7 @@ def write_elem_start(
                     else:
                         tag = uri_and_name[1]
                 elif "" in nsmap_scope:
-                    raise ValueError(
-                        "cannot use non-qualified names with default_namespace option"
-                    )
+                    raise ValueError("cannot use non-qualified names with default_namespace option")
             except TypeError:
                 ET._raise_serialization_error(tag)
 
@@ -525,31 +521,14 @@ def write_elem_start(
                         k = "xmlns"
                     ns_attrs.append((k, v))
                 if is_html:
-                    write(
-                        "".join(
-                            [f' {k}="{ET._escape_attrib_html(v)}"' for k, v in ns_attrs]
-                        )
-                    )
+                    write("".join([f' {k}="{ET._escape_attrib_html(v)}"' for k, v in ns_attrs]))
                 else:
-                    write(
-                        "".join([f' {k}="{ET._escape_attrib(v)}"' for k, v in ns_attrs])
-                    )
+                    write("".join([f' {k}="{ET._escape_attrib(v)}"' for k, v in ns_attrs]))
             if item_parts:
                 if is_html:
-                    write(
-                        "".join(
-                            [
-                                f' {k}="{ET._escape_attrib_html(v)}"'
-                                for k, v in item_parts
-                            ]
-                        )
-                    )
+                    write("".join([f' {k}="{ET._escape_attrib_html(v)}"' for k, v in item_parts]))
                 else:
-                    write(
-                        "".join(
-                            [f' {k}="{ET._escape_attrib(v)}"' for k, v in item_parts]
-                        )
-                    )
+                    write("".join([f' {k}="{ET._escape_attrib(v)}"' for k, v in item_parts]))
             if is_html:
                 write(">")
                 ltag = tag.lower()
@@ -669,11 +648,7 @@ def _qnames_iter(elem):
             if tag not in seen_el_qnames:
                 seen_el_qnames.add(tag)
                 yield tag, True
-        elif (
-            tag is not None
-            and tag is not ET.ProcessingInstruction
-            and tag is not ET.Comment
-        ):
+        elif tag is not None and tag is not ET.ProcessingInstruction and tag is not ET.Comment:
             ET._raise_serialization_error(tag)
 
         for key, value in this_elem.items():
@@ -887,9 +862,7 @@ def _get_writer(file_or_filename, encoding):
         # file_or_filename is a file name
         if encoding.lower() == "unicode":
             encoding = "utf-8"
-        with open(
-            file_or_filename, "w", encoding=encoding, errors="xmlcharrefreplace"
-        ) as file:
+        with open(file_or_filename, "w", encoding=encoding, errors="xmlcharrefreplace") as file:
             yield file.write, encoding
     else:
         # file_or_filename is a file-like object

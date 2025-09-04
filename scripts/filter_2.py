@@ -427,9 +427,7 @@ class SoupStrainer(ElementFilter):
                 if value is None:
                     value = False
                 for rule_obj in self._make_match_rules(value, AttributeValueMatchRule):
-                    self.attribute_rules[attr].append(
-                        cast(AttributeValueMatchRule, rule_obj)
-                    )
+                    self.attribute_rules[attr].append(cast(AttributeValueMatchRule, rule_obj))
 
         self.string_rules = cast(
             List[StringMatchRule], list(self._make_match_rules(string, StringMatchRule))
@@ -447,9 +445,7 @@ class SoupStrainer(ElementFilter):
         everything. (They might include everything even if this returns `False`,
         but not in an obvious way.)
         """
-        return (
-            not self.name_rules and not self.string_rules and not self.attribute_rules
-        )
+        return not self.name_rules and not self.string_rules and not self.attribute_rules
 
     @property
     def excludes_everything(self) -> bool:

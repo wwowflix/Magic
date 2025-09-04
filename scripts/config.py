@@ -90,9 +90,7 @@ class config(Command):
         from distutils.ccompiler import CCompiler, new_compiler
 
         if not isinstance(self.compiler, CCompiler):
-            self.compiler = new_compiler(
-                compiler=self.compiler, dry_run=self.dry_run, force=1
-            )
+            self.compiler = new_compiler(compiler=self.compiler, dry_run=self.dry_run, force=1)
             customize_compiler(self.compiler)
             if self.include_dirs:
                 self.compiler.set_include_dirs(self.include_dirs)
@@ -273,9 +271,7 @@ class config(Command):
 
         self._check_compiler()
         try:
-            src, obj, exe = self._link(
-                body, headers, include_dirs, libraries, library_dirs, lang
-            )
+            src, obj, exe = self._link(body, headers, include_dirs, libraries, library_dirs, lang)
             self.spawn([exe])
             ok = True
         except (CompileError, LinkError, DistutilsExecError):
@@ -356,9 +352,7 @@ class config(Command):
         exists and can be found by the preprocessor; return true if so,
         false otherwise.
         """
-        return self.try_cpp(
-            body="/* No body */", headers=[header], include_dirs=include_dirs
-        )
+        return self.try_cpp(body="/* No body */", headers=[header], include_dirs=include_dirs)
 
 
 def dump_file(filename, head=None):

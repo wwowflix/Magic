@@ -244,9 +244,7 @@ def parse_meta(config):
 
     for k in ["name", "description", "version"]:
         if k not in d:
-            raise FormatError(
-                "Option %s (section [meta]) is mandatory, " "but not found" % k
-            )
+            raise FormatError("Option %s (section [meta]) is mandatory, " "but not found" % k)
 
     if "requires" not in d:
         d["requires"] = []
@@ -339,8 +337,7 @@ def _read_config_imp(filenames, dirs=None):
         pkgname = vars["pkgname"]
         if pkgname not in sys.modules:
             raise ValueError(
-                "You should import %s to get information on %s"
-                % (pkgname, meta["name"])
+                "You should import %s to get information on %s" % (pkgname, meta["name"])
             )
 
         mod = sys.modules[pkgname]
@@ -425,21 +422,15 @@ if __name__ == "__main__":
         action="store_true",
         help="output all preprocessor and compiler flags",
     )
-    parser.add_option(
-        "--libs", dest="libs", action="store_true", help="output all linker flags"
-    )
+    parser.add_option("--libs", dest="libs", action="store_true", help="output all linker flags")
     parser.add_option(
         "--use-section",
         dest="section",
         help="use this section instead of default for options",
     )
-    parser.add_option(
-        "--version", dest="version", action="store_true", help="output version"
-    )
+    parser.add_option("--version", dest="version", action="store_true", help="output version")
     parser.add_option("--atleast-version", dest="min_version", help="Minimal version")
-    parser.add_option(
-        "--list-all", dest="list_all", action="store_true", help="Minimal version"
-    )
+    parser.add_option("--list-all", dest="list_all", action="store_true", help="Minimal version")
     parser.add_option(
         "--define-variable",
         dest="define_variable",
@@ -473,8 +464,7 @@ if __name__ == "__main__":
         m = re.search(r"([\S]+)=([\S]+)", options.define_variable)
         if not m:
             raise ValueError(
-                "--define-variable option should be of "
-                "the form --define-variable=foo=bar"
+                "--define-variable option should be of " "the form --define-variable=foo=bar"
             )
         else:
             name = m.group(1)

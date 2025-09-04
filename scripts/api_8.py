@@ -507,9 +507,7 @@ def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
 
 # -------------------------------------------------------------------------
 # Tools for working with conditions
-_TestPredicateType: TypeAlias = Union[
-    str, _expr_core.Expression, core.PredicateComposition
-]
+_TestPredicateType: TypeAlias = Union[str, _expr_core.Expression, core.PredicateComposition]
 """https://vega.github.io/vega-lite/docs/predicate.html"""
 
 _PredicateType: TypeAlias = Union[
@@ -521,9 +519,7 @@ _PredicateType: TypeAlias = Union[
 ]
 """Permitted types for `predicate`."""
 
-_ComposablePredicateType: TypeAlias = Union[
-    _expr_core.OperatorMixin, core.PredicateComposition
-]
+_ComposablePredicateType: TypeAlias = Union[_expr_core.OperatorMixin, core.PredicateComposition]
 """Permitted types for `&` reduced predicates."""
 
 _StatementType: TypeAlias = Union[SchemaBase, Map, str]
@@ -757,9 +753,7 @@ def _parse_when_constraints(
         yield _expr_core.GetAttrExpression("datum", name) == value
 
 
-def _validate_composables(
-    predicates: Iterable[Any], /
-) -> Iterator[_ComposablePredicateType]:
+def _validate_composables(predicates: Iterable[Any], /) -> Iterator[_ComposablePredicateType]:
     for p in predicates:
         if isinstance(p, (_expr_core.OperatorMixin, core.PredicateComposition)):
             yield p
@@ -813,8 +807,7 @@ def _parse_when(
             composed = _parse_when_compose(more_predicates, constraints)
         else:
             msg = (
-                f"At least one predicate or constraint must be provided, "
-                f"but got: {predicate=}"
+                f"At least one predicate or constraint must be provided, " f"but got: {predicate=}"
             )
             raise TypeError(msg)
     elif more_predicates or constraints:
@@ -898,9 +891,7 @@ class When(_BaseWhen):
     @overload
     def then(self, statement: _Value, /, **kwds: Any) -> Then[_Conditions]: ...
     @overload
-    def then(
-        self, statement: dict[str, Any] | SchemaBase, /, **kwds: Any
-    ) -> Then[Any]: ...
+    def then(self, statement: dict[str, Any] | SchemaBase, /, **kwds: Any) -> Then[Any]: ...
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[Any]:
         """
         Attach a statement to this predicate.
@@ -969,13 +960,9 @@ class Then(ConditionLike, t.Generic[_C]):
     @overload
     def otherwise(self, statement: str, /, **kwds: Any) -> _Conditional[_Condition]: ...
     @overload
-    def otherwise(
-        self, statement: _Value, /, **kwds: Any
-    ) -> _Conditional[_Conditions]: ...
+    def otherwise(self, statement: _Value, /, **kwds: Any) -> _Conditional[_Conditions]: ...
     @overload
-    def otherwise(
-        self, statement: dict[str, Any], /, **kwds: Any
-    ) -> _Conditional[Any]: ...
+    def otherwise(self, statement: dict[str, Any], /, **kwds: Any) -> _Conditional[Any]: ...
     def otherwise(
         self, statement: _StatementType, /, **kwds: Any
     ) -> SchemaBase | _Conditional[Any]:
@@ -1167,11 +1154,7 @@ class ChainedWhen(_BaseWhen):
         self._conditions = conditions
 
     def __repr__(self) -> str:
-        return (
-            f"{type(self).__name__}(\n"
-            f"  {self._conditions!r},\n  {self._condition!r}\n"
-            ")"
-        )
+        return f"{type(self).__name__}(\n" f"  {self._conditions!r},\n  {self._condition!r}\n" ")"
 
     def then(self, statement: _StatementType, /, **kwds: Any) -> Then[_Conditions]:
         """
@@ -1850,9 +1833,7 @@ def condition(
     **kwargs: Any,
 ) -> _Conditional[_Condition]: ...
 @overload
-def condition(
-    predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any
-) -> Never: ...
+def condition(predicate: _PredicateType, if_true: str, if_false: str, **kwargs: Any) -> Never: ...
 
 
 # TODO: update the docstring
@@ -1899,9 +1880,7 @@ def condition(
 # Top-level objects
 
 
-def _top_schema_base(  # noqa: ANN202
-    obj: Any, /
-):  # -> <subclass of SchemaBase and TopLevelMixin>
+def _top_schema_base(obj: Any, /):  # noqa: ANN202  # -> <subclass of SchemaBase and TopLevelMixin>
     """
     Enforces an intersection type w/ `SchemaBase` & `TopLevelMixin` objects.
 
@@ -2099,9 +2078,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             ignore = []
         if context is None:
             context = {}
-        spec = self.to_dict(
-            validate=validate, format=format, ignore=ignore, context=context
-        )
+        spec = self.to_dict(validate=validate, format=format, ignore=ignore, context=context)
         return json.dumps(spec, indent=indent, sort_keys=sort_keys, **kwargs)
 
     def to_html(
@@ -2407,9 +2384,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def project(
         self,
-        type: Optional[
-            ProjectionType_T | ProjectionType | ExprRef | Parameter
-        ] = Undefined,
+        type: Optional[ProjectionType_T | ProjectionType | ExprRef | Parameter] = Undefined,
         center: Optional[list[float] | Vector2number | ExprRef | Parameter] = Undefined,
         clipAngle: Optional[float | ExprRef | Parameter] = Undefined,
         clipExtent: Optional[
@@ -2431,9 +2406,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         scale: Optional[float | ExprRef | Parameter] = Undefined,
         spacing: Optional[float | Vector2number | ExprRef | Parameter] = Undefined,
         tilt: Optional[float | ExprRef | Parameter] = Undefined,
-        translate: Optional[
-            list[float] | Vector2number | ExprRef | Parameter
-        ] = Undefined,
+        translate: Optional[list[float] | Vector2number | ExprRef | Parameter] = Undefined,
         **kwds: Any,
     ) -> Self:
         """
@@ -2484,7 +2457,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fraction : float
             The fraction parameter for the ``bottomley`` projection.
 
-            **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+            **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
         lobes : float
             The number of lobes in projections that support multi-lobe views: ``berghaus``,
             ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -2498,7 +2471,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
              If precision is not specified, returns the projection's current resampling
-            precision which defaults to `√0.5 ≅ 0.70710…`.
+            precision which defaults to `âˆš0.5 â‰… 0.70710â€¦`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
             varies based on the projection type.
@@ -2640,9 +2613,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             }
             assert isinstance(aggregate, list)
             aggregate.append(core.AggregatedFieldDef(**dct))
-        return self._add_transform(
-            core.AggregateTransform(aggregate=aggregate, groupby=groupby)
-        )
+        return self._add_transform(core.AggregateTransform(aggregate=aggregate, groupby=groupby))
 
     def transform_bin(
         self,
@@ -2977,9 +2948,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
 
-    def transform_extent(
-        self, extent: str | FieldName, param: str | ParameterName
-    ) -> Self:
+    def transform_extent(self, extent: str | FieldName, param: str | ParameterName) -> Self:
         """
         Add a :class:`ExtentTransform` to the spec.
 
@@ -3135,9 +3104,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.FlattenTransform : underlying transform object
         """
-        return self._add_transform(
-            core.FlattenTransform(flatten=flatten, **{"as": as_})
-        )
+        return self._add_transform(core.FlattenTransform(flatten=flatten, **{"as": as_}))
 
     def transform_fold(
         self,
@@ -3306,9 +3273,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.PivotTransform : underlying transform object
         """
         return self._add_transform(
-            core.PivotTransform(
-                pivot=pivot, value=value, groupby=groupby, limit=limit, op=op
-            )
+            core.PivotTransform(pivot=pivot, value=value, groupby=groupby, limit=limit, op=op)
         )
 
     def transform_quantile(
@@ -3365,9 +3330,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         as_: Optional[list[str | FieldName]] = Undefined,
         extent: Optional[list[float]] = Undefined,
         groupby: Optional[list[str | FieldName]] = Undefined,
-        method: Optional[
-            Literal["linear", "log", "exp", "pow", "quad", "poly"]
-        ] = Undefined,
+        method: Optional[Literal["linear", "log", "exp", "pow", "quad", "poly"]] = Undefined,
         order: Optional[int] = Undefined,
         params: Optional[bool] = Undefined,
     ) -> Self:
@@ -3616,7 +3579,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``false``
         sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
-            objects are considered equal by the comparator, they are considered “peer” values of
+            objects are considered equal by the comparator, they are considered â€œpeerâ€ values of
             equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).
@@ -3880,9 +3843,7 @@ class _EncodingMixin(channels._EncodingMixin):
         )  # pyright: ignore[reportArgumentType]
 
 
-class Chart(
-    TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin, core.TopLevelUnitSpec
-):
+class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin, core.TopLevelUnitSpec):
     """
     Create a basic Altair/Vega-Lite chart.
 
@@ -4154,9 +4115,7 @@ def _check_if_can_be_layered(spec: LayerType) -> None:
                 raise TypeError(msg)
     if isinstance(spec, (Chart, LayerChart)):
         return
-    elif is_chart_type(spec) or _get_any(
-        spec, "facet", "repeat", "concat", "hconcat", "vconcat"
-    ):
+    elif is_chart_type(spec) or _get_any(spec, "facet", "repeat", "concat", "hconcat", "vconcat"):
         if isinstance(spec, FacetChart) or spec._get("facet") is not Undefined:
             msg = f"Faceted {base_msg} faceting."
         elif isinstance(spec, RepeatChart) or spec._get("repeat") is not Undefined:
@@ -4180,9 +4139,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         spec: Optional[ChartType] = Undefined,
         align: Optional[dict | SchemaBase | LayoutAlign_T] = Undefined,
         autosize: Optional[dict | SchemaBase | AutosizeType_T] = Undefined,
-        background: Optional[
-            str | dict | Parameter | SchemaBase | ColorName_T
-        ] = Undefined,
+        background: Optional[str | dict | Parameter | SchemaBase | ColorName_T] = Undefined,
         bounds: Optional[Literal["full", "flush"]] = Undefined,
         center: Optional[bool | dict | SchemaBase] = Undefined,
         columns: Optional[int] = Undefined,
@@ -4742,9 +4699,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             msg = "LayerChart: cannot call interactive() until a " "layer is defined"
             raise ValueError(msg)
         copy = self.copy(deep=["layer"])
-        copy.layer[0] = copy.layer[0].interactive(
-            name=name, bind_x=bind_x, bind_y=bind_y
-        )
+        copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
     def add_params(self, *params: Parameter) -> Self:
@@ -5149,8 +5104,7 @@ def _remove_layer_props(  # noqa: C901
                 msg = f"There are inconsistent values {values} for {prop}"
                 raise ValueError(msg)
         elif all(
-            getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop]
-            for c in subcharts
+            getattr(c, prop, Undefined) is Undefined or c[prop] == chart[prop] for c in subcharts
         ):
             # Top level has this prop; subchart must either not have the prop
             # or it must be Undefined or identical to proceed.

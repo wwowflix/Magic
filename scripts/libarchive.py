@@ -121,9 +121,7 @@ class LibArchiveFileSystem(AbstractArchiveFileSystem):
         if isinstance(fo, str):
             files = open_files(fo, protocol=target_protocol, **(target_options or {}))
             if len(files) != 1:
-                raise ValueError(
-                    f'Path "{fo}" did not resolve to exactly one file: "{files}"'
-                )
+                raise ValueError(f'Path "{fo}" did not resolve to exactly one file: "{files}"')
             fo = files[0]
         self.of = fo
         self.fo = fo.__enter__()  # the whole instance is a context

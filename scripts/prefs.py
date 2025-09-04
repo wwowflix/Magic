@@ -131,9 +131,7 @@ class ViewerPreferences:
 
     @non_full_screen_page_mode.setter
     def non_full_screen_page_mode(self, page_mode):
-        self._non_full_screen_page_mode = (
-            None if page_mode is None else PageMode.coerce(page_mode)
-        )
+        self._non_full_screen_page_mode = None if page_mode is None else PageMode.coerce(page_mode)
         if self._non_full_screen_page_mode in (
             PageMode.FULL_SCREEN,
             PageMode.USE_ATTACHMENTS,
@@ -198,9 +196,7 @@ class ViewerPreferences:
     def view_area(self, view_area):
         if view_area is not None:
             self._set_min_pdf_version("1.4")
-        self._view_area = (
-            None if view_area is None else PageBoundaries.coerce(view_area)
-        )
+        self._view_area = None if view_area is None else PageBoundaries.coerce(view_area)
 
     @property
     def view_clip(self):
@@ -210,9 +206,7 @@ class ViewerPreferences:
     def view_clip(self, view_clip):
         if view_clip is not None:
             self._set_min_pdf_version("1.4")
-        self._view_clip = (
-            None if view_clip is None else PageBoundaries.coerce(view_clip)
-        )
+        self._view_clip = None if view_clip is None else PageBoundaries.coerce(view_clip)
 
     @property
     def print_area(self):
@@ -222,9 +216,7 @@ class ViewerPreferences:
     def print_area(self, print_area):
         if print_area is not None:
             self._set_min_pdf_version("1.4")
-        self._print_area = (
-            None if print_area is None else PageBoundaries.coerce(print_area)
-        )
+        self._print_area = None if print_area is None else PageBoundaries.coerce(print_area)
 
     @property
     def print_clip(self):
@@ -234,9 +226,7 @@ class ViewerPreferences:
     def print_clip(self, print_clip):
         if print_clip is not None:
             self._set_min_pdf_version("1.4")
-        self._print_clip = (
-            None if print_clip is None else PageBoundaries.coerce(print_clip)
-        )
+        self._print_clip = None if print_clip is None else PageBoundaries.coerce(print_clip)
 
     @property
     def print_scaling(self):

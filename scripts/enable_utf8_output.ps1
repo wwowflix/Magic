@@ -1,4 +1,4 @@
-﻿# enable_utf8_output.ps1
+# enable_utf8_output.ps1
 # Add UTF-8 stdout reconfiguration to your Python scraper scripts
 
 # 1) List of scraper files to patch

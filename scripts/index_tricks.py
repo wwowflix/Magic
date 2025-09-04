@@ -23,9 +23,7 @@ from numpy.core import overrides, linspace
 from numpy.lib.stride_tricks import as_strided
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
 __all__ = [
@@ -186,9 +184,7 @@ class nd_grid:
                 ):
                     typ = float
             if self.sparse:
-                nn = [
-                    _nx.arange(_x, dtype=_t) for _x, _t in zip(size, (typ,) * len(size))
-                ]
+                nn = [_nx.arange(_x, dtype=_t) for _x, _t in zip(size, (typ,) * len(size))]
             else:
                 nn = _nx.indices(size, typ)
             for k in range(len(size)):
@@ -396,9 +392,7 @@ class AxisConcatenator:
                             trans1d = int(vec[2])
                         continue
                     except Exception as e:
-                        raise ValueError(
-                            "unknown special directive {!r}".format(item)
-                        ) from e
+                        raise ValueError("unknown special directive {!r}".format(item)) from e
                 try:
                     axis = int(item)
                     continue

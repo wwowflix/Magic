@@ -1,4 +1,4 @@
-﻿name: publish-artifacts
+name: publish-artifacts
 on:
   push:
     tags:

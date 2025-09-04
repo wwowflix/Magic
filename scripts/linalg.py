@@ -211,9 +211,7 @@ def _commonType(*arrays):
             rt = _realType(a.dtype.type, default=None)
             if rt is None:
                 # unsupported inexact scalar
-                raise TypeError(
-                    "array type %s is unsupported in linalg" % (a.dtype.name,)
-                )
+                raise TypeError("array type %s is unsupported in linalg" % (a.dtype.name,))
         else:
             rt = double
         if rt is double:
@@ -268,8 +266,7 @@ def _assert_stacked_2d(*arrays):
     for a in arrays:
         if a.ndim < 2:
             raise LinAlgError(
-                "%d-dimensional array given. Array must be "
-                "at least two-dimensional" % a.ndim
+                "%d-dimensional array given. Array must be " "at least two-dimensional" % a.ndim
             )
 
 
@@ -713,9 +710,7 @@ def matrix_power(a, n):
     elif a.ndim == 2:
         fmatmul = dot
     else:
-        raise NotImplementedError(
-            "matrix_power not supported for stacks of object arrays"
-        )
+        raise NotImplementedError("matrix_power not supported for stacks of object arrays")
 
     if n == 0:
         a = empty_like(a)
@@ -2610,11 +2605,7 @@ def norm(x, ord=None, axis=None, keepdims=False):
     # Immediately handle some default, simple, fast, and common cases.
     if axis is None:
         ndim = x.ndim
-        if (
-            (ord is None)
-            or (ord in ("f", "fro") and ndim == 2)
-            or (ord == 2 and ndim == 1)
-        ):
+        if (ord is None) or (ord in ("f", "fro") and ndim == 2) or (ord == 2 and ndim == 1):
 
             x = x.ravel(order="K")
             if isComplexType(x.dtype.type):
@@ -2634,9 +2625,7 @@ def norm(x, ord=None, axis=None, keepdims=False):
         try:
             axis = int(axis)
         except Exception as e:
-            raise TypeError(
-                "'axis' must be None, an integer or a tuple of integers"
-            ) from e
+            raise TypeError("'axis' must be None, an integer or a tuple of integers") from e
         axis = (axis,)
 
     if len(axis) == 1:

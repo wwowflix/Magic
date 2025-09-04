@@ -17,9 +17,7 @@ __origin__ = "xml.dom.expatbuilder"
 class DefusedExpatBuilder(_ExpatBuilder):
     """Defused document builder"""
 
-    def __init__(
-        self, options=None, forbid_dtd=False, forbid_entities=True, forbid_external=True
-    ):
+    def __init__(self, options=None, forbid_dtd=False, forbid_entities=True, forbid_external=True):
         _ExpatBuilder.__init__(self, options)
         self.forbid_dtd = forbid_dtd
         self.forbid_entities = forbid_entities
@@ -35,9 +33,7 @@ class DefusedExpatBuilder(_ExpatBuilder):
 
     def defused_unparsed_entity_decl(self, name, base, sysid, pubid, notation_name):
         # expat 1.2
-        raise EntitiesForbidden(
-            name, None, base, sysid, pubid, notation_name
-        )  # pragma: no cover
+        raise EntitiesForbidden(name, None, base, sysid, pubid, notation_name)  # pragma: no cover
 
     def defused_external_entity_ref_handler(self, context, base, sysid, pubid):
         raise ExternalReferenceForbidden(context, base, sysid, pubid)
@@ -68,9 +64,7 @@ class DefusedExpatBuilderNS(_Namespaces, DefusedExpatBuilder):
         self._initNamespaces()
 
 
-def parse(
-    file, namespaces=True, forbid_dtd=False, forbid_entities=True, forbid_external=True
-):
+def parse(file, namespaces=True, forbid_dtd=False, forbid_entities=True, forbid_external=True):
     """Parse a document, returning the resulting Document node.
 
     'file' may be either a file name or an open file object.

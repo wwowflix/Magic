@@ -1,8 +1,8 @@
-﻿"""Enforces zero-trust rules for agent resource access"""
+ï¿"""Enforces zero-trust rules for agent resource access"""
 
 
 def main():
-    print("✅ Zero-Trust Access Policy Engine running...")
+    print("âœ… Zero-Trust Access Policy Engine running...")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
-﻿def main():
-    print("✅ [11B_rate_limit_stress_test_READY.py] executed successfully (stub mode).")
+ï¿def main():
+    print("âœ… [11B_rate_limit_stress_test_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

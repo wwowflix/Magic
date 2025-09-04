@@ -31,18 +31,18 @@ for root, _, files in os.walk(SCRIPT_ROOT):
                 corrupted_files.append(full_path)
 
 if not corrupted_files:
-    print("✅ No corrupted files found.")
+    print("âœ… No corrupted files found.")
 else:
-    print(f"❌ Found {len(corrupted_files)} corrupted files. Attempting restore...")
+    print(f"âŒ Found {len(corrupted_files)} corrupted files. Attempting restore...")
     latest_backup = find_latest_backup()
     if not latest_backup:
-        print("⚠️ No backup found. Cannot restore.")
+        print("âš ï¸ No backup found. Cannot restore.")
     else:
         with zipfile.ZipFile(latest_backup, "r") as zip_ref:
             for corrupt in corrupted_files:
                 arcname = os.path.relpath(corrupt, start=os.path.dirname(SCRIPT_ROOT))
                 if arcname in zip_ref.namelist():
                     zip_ref.extract(arcname, path=".")
-                    print(f"🔁 Restored: {corrupt}")
+                    print(f"ðŸ” Restored: {corrupt}")
                 else:
-                    print(f"⚠️ Not found in backup: {corrupt}")
+                    print(f"âš ï¸ Not found in backup: {corrupt}")

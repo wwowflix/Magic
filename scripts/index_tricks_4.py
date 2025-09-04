@@ -22,15 +22,9 @@ reveal_type(
     np.ndenumerate(AR_LIKE_U).iter
 )  # E: numpy.flatiter[numpy.ndarray[Any, numpy.dtype[numpy.str_]]]
 
-reveal_type(
-    next(np.ndenumerate(AR_i8))
-)  # E: Tuple[builtins.tuple[builtins.int], {int64}]
-reveal_type(
-    next(np.ndenumerate(AR_LIKE_f))
-)  # E: Tuple[builtins.tuple[builtins.int], {double}]
-reveal_type(
-    next(np.ndenumerate(AR_LIKE_U))
-)  # E: Tuple[builtins.tuple[builtins.int], numpy.str_]
+reveal_type(next(np.ndenumerate(AR_i8)))  # E: Tuple[builtins.tuple[builtins.int], {int64}]
+reveal_type(next(np.ndenumerate(AR_LIKE_f)))  # E: Tuple[builtins.tuple[builtins.int], {double}]
+reveal_type(next(np.ndenumerate(AR_LIKE_U)))  # E: Tuple[builtins.tuple[builtins.int], numpy.str_]
 
 reveal_type(
     iter(np.ndenumerate(AR_i8))
@@ -53,9 +47,7 @@ reveal_type(
 )  # E: tuple[numpy.ndarray[Any, numpy.dtype[{intp}]]]
 reveal_type(np.unravel_index(1621, (6, 7, 8, 9)))  # E: tuple[{intp}]
 
-reveal_type(
-    np.ravel_multi_index([[1]], (7, 6))
-)  # E: numpy.ndarray[Any, numpy.dtype[{intp}]]
+reveal_type(np.ravel_multi_index([[1]], (7, 6)))  # E: numpy.ndarray[Any, numpy.dtype[{intp}]]
 reveal_type(np.ravel_multi_index(AR_LIKE_i, (7, 6)))  # E: {intp}
 reveal_type(np.ravel_multi_index(AR_LIKE_i, (7, 6), order="F"))  # E: {intp}
 reveal_type(np.ravel_multi_index(AR_LIKE_i, (4, 6), mode="clip"))  # E: {intp}
@@ -81,9 +73,7 @@ reveal_type(
 )  # E: Tuple[Literal[0]?, builtins.slice, builtins.ellipsis, builtins.list[builtins.int]]
 
 reveal_type(np.ix_(AR_LIKE_b))  # E: tuple[numpy.ndarray[Any, numpy.dtype[numpy.bool_]]]
-reveal_type(
-    np.ix_(AR_LIKE_i, AR_LIKE_f)
-)  # E: tuple[numpy.ndarray[Any, numpy.dtype[{double}]]]
+reveal_type(np.ix_(AR_LIKE_i, AR_LIKE_f))  # E: tuple[numpy.ndarray[Any, numpy.dtype[{double}]]]
 reveal_type(np.ix_(AR_i8))  # E: tuple[numpy.ndarray[Any, numpy.dtype[{int64}]]]
 
 reveal_type(np.fill_diagonal(AR_i8, 5))  # E: None
@@ -91,6 +81,4 @@ reveal_type(np.fill_diagonal(AR_i8, 5))  # E: None
 reveal_type(np.diag_indices(4))  # E: tuple[numpy.ndarray[Any, numpy.dtype[{int_}]]]
 reveal_type(np.diag_indices(2, 3))  # E: tuple[numpy.ndarray[Any, numpy.dtype[{int_}]]]
 
-reveal_type(
-    np.diag_indices_from(AR_i8)
-)  # E: tuple[numpy.ndarray[Any, numpy.dtype[{int_}]]]
+reveal_type(np.diag_indices_from(AR_i8))  # E: tuple[numpy.ndarray[Any, numpy.dtype[{int_}]]]

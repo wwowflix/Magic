@@ -694,14 +694,10 @@ def buildcallback(rout, um):
 """
             ]
     if isinstance(rd["docreturn"], list):
-        rd["docreturn"] = stripcomma(
-            replace("#docreturn#", {"docreturn": rd["docreturn"]})
-        )
+        rd["docreturn"] = stripcomma(replace("#docreturn#", {"docreturn": rd["docreturn"]}))
     optargs = stripcomma(replace("#docsignopt#", {"docsignopt": rd["docsignopt"]}))
     if optargs == "":
-        rd["docsignature"] = stripcomma(
-            replace("#docsign#", {"docsign": rd["docsign"]})
-        )
+        rd["docsignature"] = stripcomma(replace("#docsign#", {"docsign": rd["docsign"]}))
     else:
         rd["docsignature"] = replace(
             "#docsign#[#docsignopt#]",

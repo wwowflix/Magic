@@ -114,9 +114,7 @@ async def serve_ssl_over_tcp(
     https_compatible: bool = False,
     backlog: int | None = None,
     handler_nursery: trio.Nursery | None = None,
-    task_status: trio.TaskStatus[
-        list[trio.SSLListener[SocketStream]]
-    ] = trio.TASK_STATUS_IGNORED,
+    task_status: trio.TaskStatus[list[trio.SSLListener[SocketStream]]] = trio.TASK_STATUS_IGNORED,
 ) -> NoReturn:
     """Listen for incoming TCP connections, and for each one start a task
     running ``handler(stream)``.

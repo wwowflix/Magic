@@ -27,9 +27,7 @@ except ImportError:
     fully_fuzzable = False
 
 
-@pytest.mark.skipif(
-    not fully_fuzzable, reason="Prerequisites for fuzz tests are not installed."
-)
+@pytest.mark.skipif(not fully_fuzzable, reason="Prerequisites for fuzz tests are not installed.")
 class TestFuzz(object):
     # Test case markup files from fuzzers are given this extension so
     # they can be included in builds.

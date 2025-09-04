@@ -1,4 +1,4 @@
-﻿import os
+ï¿import os
 import shutil
 
 # CONFIG
@@ -19,16 +19,16 @@ for search_dir in SEARCH_DIRS:
                 try:
                     if os.path.abspath(source) != os.path.abspath(dest):
                         shutil.copy2(source, dest)
-                        moved_files.append(f"✅ Copied: {source} → {dest}")
+                        moved_files.append(f"âœ… Copied: {source} â†’ {dest}")
                 except Exception as e:
-                    moved_files.append(f"⚠️ Error copying {source}: {e}")
+                    moved_files.append(f"âš ï¸ Error copying {source}: {e}")
 
 # Log the operation
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if moved_files:
-        f.write("📦 Config migration log:\n" + "\n".join(moved_files))
+        f.write("ðŸ“¦ Config migration log:\n" + "\n".join(moved_files))
     else:
-        f.write("✅ No config files found to migrate.\n")
+        f.write("âœ… No config files found to migrate.\n")
 
-print(f"📁 Config migration complete. Log saved to: {LOG_FILE}")
+print(f"ðŸ“ Config migration complete. Log saved to: {LOG_FILE}")

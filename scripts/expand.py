@@ -88,9 +88,7 @@ class StaticModule:
             raise AttributeError(f"{self.name} has no attribute {attr}") from e
 
 
-def glob_relative(
-    patterns: Iterable[str], root_dir: Optional[_Path] = None
-) -> List[str]:
+def glob_relative(patterns: Iterable[str], root_dir: Optional[_Path] = None) -> List[str]:
     """Expand the list of glob patterns, but preserving relative paths.
 
     :param list[str] patterns: List of glob patterns
@@ -373,10 +371,7 @@ def canonic_data_files(
     if isinstance(data_files, list):
         return data_files
 
-    return [
-        (dest, glob_relative(patterns, root_dir))
-        for dest, patterns in data_files.items()
-    ]
+    return [(dest, glob_relative(patterns, root_dir)) for dest, patterns in data_files.items()]
 
 
 def entry_points(text: str, text_source="entry-points") -> Dict[str, dict]:

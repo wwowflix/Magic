@@ -353,13 +353,9 @@ class easy_install(Command):
         self.optimize = self._validate_optimize(self.optimize)
 
         if self.editable and not self.build_directory:
-            raise DistutilsArgError(
-                "Must specify a build directory (-b) when using --editable"
-            )
+            raise DistutilsArgError("Must specify a build directory (-b) when using --editable")
         if not self.args:
-            raise DistutilsArgError(
-                "No urls, filenames, or requirements specified (see --help)"
-            )
+            raise DistutilsArgError("No urls, filenames, or requirements specified (see --help)")
 
         self.outputs = []
 
@@ -638,9 +634,7 @@ class easy_install(Command):
                     # The "script" is a directory, likely a Python 3
                     # __pycache__ directory, so skip it.
                     continue
-                self.install_script(
-                    dist, script_name, dist.get_metadata("scripts/" + script_name)
-                )
+                self.install_script(dist, script_name, dist.get_metadata("scripts/" + script_name))
         self.install_wrapper_scripts(dist)
 
     def add_output(self, path):
@@ -722,8 +716,7 @@ class easy_install(Command):
         install_needed = install_needed or not download.endswith(".egg")
         install_needed = install_needed or (
             self.always_copy_from is not None
-            and os.path.dirname(normalize_path(download))
-            == normalize_path(self.always_copy_from)
+            and os.path.dirname(normalize_path(download)) == normalize_path(self.always_copy_from)
         )
 
         if spec and not install_needed:
@@ -774,9 +767,7 @@ class easy_install(Command):
         self.installed_projects[dist.key] = dist
         log.info(self.installation_report(requirement, dist, *info))
         if dist.has_metadata("dependency_links.txt") and not self.no_find_links:
-            self.package_index.add_find_links(
-                dist.get_metadata_lines("dependency_links.txt")
-            )
+            self.package_index.add_find_links(dist.get_metadata_lines("dependency_links.txt"))
         if not deps and not self.always_copy:
             return
         elif requirement is not None and dist.key != requirement.key:
@@ -788,9 +779,7 @@ class easy_install(Command):
             requirement = Requirement(str(distreq))
         log.info("Processing dependencies for %s", requirement)
         try:
-            distros = WorkingSet([]).resolve(
-                [requirement], self.local_index, self.easy_install
-            )
+            distros = WorkingSet([]).resolve([requirement], self.local_index, self.easy_install)
         except DistributionNotFound as e:
             raise DistutilsError(str(e)) from e
         except VersionConflict as e:
@@ -918,8 +907,7 @@ class easy_install(Command):
             setups = glob(os.path.join(setup_base, "*", "setup.py"))
             if not setups:
                 raise DistutilsError(
-                    "Couldn't find a setup script in %s"
-                    % os.path.abspath(dist_filename)
+                    "Couldn't find a setup script in %s" % os.path.abspath(dist_filename)
                 )
             if len(setups) > 1:
                 raise DistutilsError(
@@ -952,9 +940,7 @@ class easy_install(Command):
             ensure_directory(destination)
 
         dist = self.egg_distribution(egg_path)
-        if not (
-            os.path.exists(destination) and os.path.samefile(egg_path, destination)
-        ):
+        if not (os.path.exists(destination) and os.path.samefile(egg_path, destination)):
             if os.path.isdir(destination) and not os.path.islink(destination):
                 dir_util.remove_tree(destination, dry_run=self.dry_run)
             elif os.path.exists(destination):
@@ -982,8 +968,7 @@ class easy_install(Command):
                 self.execute(
                     f,
                     (egg_path, destination),
-                    (m + " %s to %s")
-                    % (os.path.basename(egg_path), os.path.dirname(destination)),
+                    (m + " %s to %s") % (os.path.basename(egg_path), os.path.dirname(destination)),
                 )
                 update_dist_caches(
                     destination,
@@ -1000,9 +985,7 @@ class easy_install(Command):
         # See if it's valid, get data
         cfg = extract_wininst_cfg(dist_filename)
         if cfg is None:
-            raise DistutilsError(
-                "%s is not a valid distutils Windows .exe" % dist_filename
-            )
+            raise DistutilsError("%s is not a valid distutils Windows .exe" % dist_filename)
         # Create a dummy distribution object until we build the real distro
         dist = Distribution(
             None,
@@ -1199,9 +1182,7 @@ class easy_install(Command):
     def build_and_install(self, setup_script, setup_base):
         args = ["bdist_egg", "--dist-dir"]
 
-        dist_dir = tempfile.mkdtemp(
-            prefix="egg-dist-tmp-", dir=os.path.dirname(setup_script)
-        )
+        dist_dir = tempfile.mkdtemp(prefix="egg-dist-tmp-", dir=os.path.dirname(setup_script))
         try:
             self._set_fetcher_options(os.path.dirname(setup_script))
             args.append(dist_dir)
@@ -2086,9 +2067,7 @@ class CommandSpec(list):
 
     @staticmethod
     def _render(items):
-        cmdline = subprocess.list2cmdline(
-            CommandSpec._strip_quotes(item.strip()) for item in items
-        )
+        cmdline = subprocess.list2cmdline(CommandSpec._strip_quotes(item.strip()) for item in items)
         return "#!" + cmdline + "\n"
 
 
@@ -2245,8 +2224,7 @@ class WindowsScriptWriter(ScriptWriter):
         ext = dict(console=".pya", gui=".pyw")[type_]
         if ext not in os.environ["PATHEXT"].lower().split(";"):
             msg = (
-                "{ext} not listed in PATHEXT; scripts will not be "
-                "recognized as executables."
+                "{ext} not listed in PATHEXT; scripts will not be " "recognized as executables."
             ).format(**locals())
             warnings.warn(msg, UserWarning)
         old = [".pya", ".py", "-script.py", ".pyc", ".pyo", ".pyw", ".exe"]

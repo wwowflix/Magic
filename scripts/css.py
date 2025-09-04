@@ -130,9 +130,7 @@ class InheritedStyleEntry:
         return cls(
             matched_css_rules=[RuleMatch.from_json(i) for i in json["matchedCSSRules"]],
             inline_style=(
-                CSSStyle.from_json(json["inlineStyle"])
-                if "inlineStyle" in json
-                else None
+                CSSStyle.from_json(json["inlineStyle"]) if "inlineStyle" in json else None
             ),
         )
 
@@ -166,9 +164,7 @@ class InheritedAnimatedStyleEntry:
                 else None
             ),
             transitions_style=(
-                CSSStyle.from_json(json["transitionsStyle"])
-                if "transitionsStyle" in json
-                else None
+                CSSStyle.from_json(json["transitionsStyle"]) if "transitionsStyle" in json else None
             ),
         )
 
@@ -190,9 +186,7 @@ class InheritedPseudoElementMatches:
     @classmethod
     def from_json(cls, json):
         return cls(
-            pseudo_elements=[
-                PseudoElementMatches.from_json(i) for i in json["pseudoElements"]
-            ],
+            pseudo_elements=[PseudoElementMatches.from_json(i) for i in json["pseudoElements"]],
         )
 
 
@@ -252,9 +246,7 @@ class Value:
             text=str(json["text"]),
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             specificity=(
-                Specificity.from_json(json["specificity"])
-                if "specificity" in json
-                else None
+                Specificity.from_json(json["specificity"]) if "specificity" in json else None
             ),
         )
 
@@ -428,20 +420,12 @@ class CSSStyleSheetHeader:
             length=float(json["length"]),
             end_line=float(json["endLine"]),
             end_column=float(json["endColumn"]),
-            source_map_url=(
-                str(json["sourceMapURL"]) if "sourceMapURL" in json else None
-            ),
+            source_map_url=(str(json["sourceMapURL"]) if "sourceMapURL" in json else None),
             owner_node=(
-                dom.BackendNodeId.from_json(json["ownerNode"])
-                if "ownerNode" in json
-                else None
+                dom.BackendNodeId.from_json(json["ownerNode"]) if "ownerNode" in json else None
             ),
-            has_source_url=(
-                bool(json["hasSourceURL"]) if "hasSourceURL" in json else None
-            ),
-            loading_failed=(
-                bool(json["loadingFailed"]) if "loadingFailed" in json else None
-            ),
+            has_source_url=(bool(json["hasSourceURL"]) if "hasSourceURL" in json else None),
+            loading_failed=(bool(json["loadingFailed"]) if "loadingFailed" in json else None),
         )
 
 
@@ -526,40 +510,22 @@ class CSSRule:
             origin=StyleSheetOrigin.from_json(json["origin"]),
             style=CSSStyle.from_json(json["style"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
             nesting_selectors=(
-                [str(i) for i in json["nestingSelectors"]]
-                if "nestingSelectors" in json
-                else None
+                [str(i) for i in json["nestingSelectors"]] if "nestingSelectors" in json else None
             ),
-            media=(
-                [CSSMedia.from_json(i) for i in json["media"]]
-                if "media" in json
-                else None
-            ),
+            media=([CSSMedia.from_json(i) for i in json["media"]] if "media" in json else None),
             container_queries=(
                 [CSSContainerQuery.from_json(i) for i in json["containerQueries"]]
                 if "containerQueries" in json
                 else None
             ),
             supports=(
-                [CSSSupports.from_json(i) for i in json["supports"]]
-                if "supports" in json
-                else None
+                [CSSSupports.from_json(i) for i in json["supports"]] if "supports" in json else None
             ),
-            layers=(
-                [CSSLayer.from_json(i) for i in json["layers"]]
-                if "layers" in json
-                else None
-            ),
-            scopes=(
-                [CSSScope.from_json(i) for i in json["scopes"]]
-                if "scopes" in json
-                else None
-            ),
+            layers=([CSSLayer.from_json(i) for i in json["layers"]] if "layers" in json else None),
+            scopes=([CSSScope.from_json(i) for i in json["scopes"]] if "scopes" in json else None),
             rule_types=(
                 [CSSRuleType.from_json(i) for i in json["ruleTypes"]]
                 if "ruleTypes" in json
@@ -756,13 +722,9 @@ class CSSStyle:
     def from_json(cls, json):
         return cls(
             css_properties=[CSSProperty.from_json(i) for i in json["cssProperties"]],
-            shorthand_entries=[
-                ShorthandEntry.from_json(i) for i in json["shorthandEntries"]
-            ],
+            shorthand_entries=[ShorthandEntry.from_json(i) for i in json["shorthandEntries"]],
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
             css_text=str(json["cssText"]) if "cssText" in json else None,
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
@@ -892,9 +854,7 @@ class CSSMedia:
             source_url=str(json["sourceURL"]) if "sourceURL" in json else None,
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
             media_list=(
                 [MediaQuery.from_json(i) for i in json["mediaList"]]
@@ -925,9 +885,7 @@ class MediaQuery:
     @classmethod
     def from_json(cls, json):
         return cls(
-            expressions=[
-                MediaQueryExpression.from_json(i) for i in json["expressions"]
-            ],
+            expressions=[MediaQueryExpression.from_json(i) for i in json["expressions"]],
             active=bool(json["active"]),
         )
 
@@ -971,13 +929,9 @@ class MediaQueryExpression:
             unit=str(json["unit"]),
             feature=str(json["feature"]),
             value_range=(
-                SourceRange.from_json(json["valueRange"])
-                if "valueRange" in json
-                else None
+                SourceRange.from_json(json["valueRange"]) if "valueRange" in json else None
             ),
-            computed_length=(
-                float(json["computedLength"]) if "computedLength" in json else None
-            ),
+            computed_length=(float(json["computedLength"]) if "computedLength" in json else None),
         )
 
 
@@ -1032,25 +986,17 @@ class CSSContainerQuery:
             text=str(json["text"]),
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
             name=str(json["name"]) if "name" in json else None,
             physical_axes=(
-                dom.PhysicalAxes.from_json(json["physicalAxes"])
-                if "physicalAxes" in json
-                else None
+                dom.PhysicalAxes.from_json(json["physicalAxes"]) if "physicalAxes" in json else None
             ),
             logical_axes=(
-                dom.LogicalAxes.from_json(json["logicalAxes"])
-                if "logicalAxes" in json
-                else None
+                dom.LogicalAxes.from_json(json["logicalAxes"]) if "logicalAxes" in json else None
             ),
             queries_scroll_state=(
-                bool(json["queriesScrollState"])
-                if "queriesScrollState" in json
-                else None
+                bool(json["queriesScrollState"]) if "queriesScrollState" in json else None
             ),
         )
 
@@ -1091,9 +1037,7 @@ class CSSSupports:
             active=bool(json["active"]),
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1129,9 +1073,7 @@ class CSSScope:
             text=str(json["text"]),
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1167,9 +1109,7 @@ class CSSLayer:
             text=str(json["text"]),
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1200,9 +1140,7 @@ class CSSStartingStyle:
         return cls(
             range_=SourceRange.from_json(json["range"]) if "range" in json else None,
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1423,9 +1361,7 @@ class CSSTryRule:
             origin=StyleSheetOrigin.from_json(json["origin"]),
             style=CSSStyle.from_json(json["style"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1469,9 +1405,7 @@ class CSSPositionTryRule:
             style=CSSStyle.from_json(json["style"]),
             active=bool(json["active"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1532,9 +1466,7 @@ class CSSPropertyRegistration:
             inherits=bool(json["inherits"]),
             syntax=str(json["syntax"]),
             initial_value=(
-                Value.from_json(json["initialValue"])
-                if "initialValue" in json
-                else None
+                Value.from_json(json["initialValue"]) if "initialValue" in json else None
             ),
         )
 
@@ -1574,9 +1506,7 @@ class CSSFontPaletteValuesRule:
             font_palette_name=Value.from_json(json["fontPaletteName"]),
             style=CSSStyle.from_json(json["style"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1616,9 +1546,7 @@ class CSSPropertyRule:
             property_name=Value.from_json(json["propertyName"]),
             style=CSSStyle.from_json(json["style"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1693,9 +1621,7 @@ class CSSFunctionConditionNode:
                 if "containerQueries" in json
                 else None
             ),
-            supports=(
-                CSSSupports.from_json(json["supports"]) if "supports" in json else None
-            ),
+            supports=(CSSSupports.from_json(json["supports"]) if "supports" in json else None),
         )
 
 
@@ -1771,9 +1697,7 @@ class CSSFunctionRule:
             parameters=[CSSFunctionParameter.from_json(i) for i in json["parameters"]],
             children=[CSSFunctionNode.from_json(i) for i in json["children"]],
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1813,9 +1737,7 @@ class CSSKeyframeRule:
             key_text=Value.from_json(json["keyText"]),
             style=CSSStyle.from_json(json["style"]),
             style_sheet_id=(
-                StyleSheetId.from_json(json["styleSheetId"])
-                if "styleSheetId" in json
-                else None
+                StyleSheetId.from_json(json["styleSheetId"]) if "styleSheetId" in json else None
             ),
         )
 
@@ -1872,9 +1794,7 @@ def add_rule(
     params["ruleText"] = rule_text
     params["location"] = location.to_json()
     if node_for_property_syntax_validation is not None:
-        params["nodeForPropertySyntaxValidation"] = (
-            node_for_property_syntax_validation.to_json()
-        )
+        params["nodeForPropertySyntaxValidation"] = node_for_property_syntax_validation.to_json()
     cmd_dict: T_JSON_DICT = {
         "method": "CSS.addRule",
         "params": params,
@@ -1989,9 +1909,7 @@ def get_background_colors(
 ) -> typing.Generator[
     T_JSON_DICT,
     T_JSON_DICT,
-    typing.Tuple[
-        typing.Optional[typing.List[str]], typing.Optional[str], typing.Optional[str]
-    ],
+    typing.Tuple[typing.Optional[typing.List[str]], typing.Optional[str], typing.Optional[str]],
 ]:
     """
     :param node_id: Id of the node to get background colors for.
@@ -2009,11 +1927,7 @@ def get_background_colors(
     }
     json = yield cmd_dict
     return (
-        (
-            [str(i) for i in json["backgroundColors"]]
-            if "backgroundColors" in json
-            else None
-        ),
+        ([str(i) for i in json["backgroundColors"]] if "backgroundColors" in json else None),
         str(json["computedFontSize"]) if "computedFontSize" in json else None,
         str(json["computedFontWeight"]) if "computedFontWeight" in json else None,
     )
@@ -2131,11 +2045,7 @@ def get_inline_styles_for_node(
     json = yield cmd_dict
     return (
         CSSStyle.from_json(json["inlineStyle"]) if "inlineStyle" in json else None,
-        (
-            CSSStyle.from_json(json["attributesStyle"])
-            if "attributesStyle" in json
-            else None
-        ),
+        (CSSStyle.from_json(json["attributesStyle"]) if "attributesStyle" in json else None),
     )
 
 
@@ -2176,11 +2086,7 @@ def get_animated_styles_for_node(
             if "animationStyles" in json
             else None
         ),
-        (
-            CSSStyle.from_json(json["transitionsStyle"])
-            if "transitionsStyle" in json
-            else None
-        ),
+        (CSSStyle.from_json(json["transitionsStyle"]) if "transitionsStyle" in json else None),
         (
             [InheritedAnimatedStyleEntry.from_json(i) for i in json["inherited"]]
             if "inherited" in json
@@ -2241,11 +2147,7 @@ def get_matched_styles_for_node(
     json = yield cmd_dict
     return (
         CSSStyle.from_json(json["inlineStyle"]) if "inlineStyle" in json else None,
-        (
-            CSSStyle.from_json(json["attributesStyle"])
-            if "attributesStyle" in json
-            else None
-        ),
+        (CSSStyle.from_json(json["attributesStyle"]) if "attributesStyle" in json else None),
         (
             [RuleMatch.from_json(i) for i in json["matchedCSSRules"]]
             if "matchedCSSRules" in json
@@ -2262,10 +2164,7 @@ def get_matched_styles_for_node(
             else None
         ),
         (
-            [
-                InheritedPseudoElementMatches.from_json(i)
-                for i in json["inheritedPseudoElements"]
-            ]
+            [InheritedPseudoElementMatches.from_json(i) for i in json["inheritedPseudoElements"]]
             if "inheritedPseudoElements" in json
             else None
         ),
@@ -2290,10 +2189,7 @@ def get_matched_styles_for_node(
             else None
         ),
         (
-            [
-                CSSPropertyRegistration.from_json(i)
-                for i in json["cssPropertyRegistrations"]
-            ]
+            [CSSPropertyRegistration.from_json(i) for i in json["cssPropertyRegistrations"]]
             if "cssPropertyRegistrations" in json
             else None
         ),
@@ -2315,9 +2211,7 @@ def get_matched_styles_for_node(
     )
 
 
-def get_media_queries() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[CSSMedia]]
-):
+def get_media_queries() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[CSSMedia]]:
     """
     Returns all media queries parsed by the rendering engine.
 
@@ -2707,9 +2601,7 @@ def set_style_texts(
     params: T_JSON_DICT = dict()
     params["edits"] = [i.to_json() for i in edits]
     if node_for_property_syntax_validation is not None:
-        params["nodeForPropertySyntaxValidation"] = (
-            node_for_property_syntax_validation.to_json()
-        )
+        params["nodeForPropertySyntaxValidation"] = node_for_property_syntax_validation.to_json()
     cmd_dict: T_JSON_DICT = {
         "method": "CSS.setStyleTexts",
         "params": params,
@@ -2745,9 +2637,7 @@ def stop_rule_usage_tracking() -> (
 
 
 def take_coverage_delta() -> (
-    typing.Generator[
-        T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[RuleUsage], float]
-    ]
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[RuleUsage], float]]
 ):
     """
     Obtain list of rules that became used since last call to this method (or since start of coverage

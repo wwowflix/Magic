@@ -42,10 +42,7 @@ class Filter(base.Filter):
                         elif name == "http-equiv" and value.lower() == "content-type":
                             has_http_equiv_content_type = True
                     else:
-                        if (
-                            has_http_equiv_content_type
-                            and (None, "content") in token["data"]
-                        ):
+                        if has_http_equiv_content_type and (None, "content") in token["data"]:
                             token["data"][(None, "content")] = (
                                 "text/html; charset=%s" % self.encoding
                             )

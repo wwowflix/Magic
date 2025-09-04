@@ -40,9 +40,7 @@ class TestTake:
                         real_index = real_indices[mode][index]
                         if real_index is IndexError and index_array.size != 0:
                             index_array.put(0, index)
-                            assert_raises(
-                                IndexError, ta.take, index_array, mode=mode, axis=1
-                            )
+                            assert_raises(IndexError, ta.take, index_array, mode=mode, axis=1)
                         elif index_array.size != 0:
                             index_array.put(0, index)
                             res = ta.take(index_array, mode=mode, axis=1)
@@ -61,21 +59,13 @@ class TestTake:
             a.take(b, out=a[:6], mode=mode)
             del a
             if HAS_REFCOUNT:
-                assert_(
-                    all(
-                        sys.getrefcount(o) == rc + 1 for o, rc in zip(objects, orig_rcs)
-                    )
-                )
+                assert_(all(sys.getrefcount(o) == rc + 1 for o, rc in zip(objects, orig_rcs)))
             # not contiguous, example:
             a = np.array(objects * 2)[::2]
             a.take(b, out=a[:6], mode=mode)
             del a
             if HAS_REFCOUNT:
-                assert_(
-                    all(
-                        sys.getrefcount(o) == rc + 1 for o, rc in zip(objects, orig_rcs)
-                    )
-                )
+                assert_(all(sys.getrefcount(o) == rc + 1 for o, rc in zip(objects, orig_rcs)))
 
     def test_unicode_mode(self):
         d = np.arange(10)

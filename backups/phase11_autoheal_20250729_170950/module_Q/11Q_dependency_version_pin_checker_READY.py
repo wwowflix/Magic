@@ -1,6 +1,6 @@
-﻿def main():
+ï¿def main():
     print(
-        "✅ [11Q_dependency_version_pin_checker_READY.py] executed successfully (stub mode)."
+        "âœ… [11Q_dependency_version_pin_checker_READY.py] executed successfully (stub mode)."
     )
 
 

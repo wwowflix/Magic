@@ -76,9 +76,7 @@ class _InstagramCommonScraper(snscrape.base.Scraper):
         for node in response[self._responseContainer][self._edgeXToMedia]["edges"]:
             code = node["node"]["shortcode"]
             username = (
-                node["node"]["owner"]["username"]
-                if "username" in node["node"]["owner"]
-                else None
+                node["node"]["owner"]["username"] if "username" in node["node"]["owner"] else None
             )
             url = f"https://www.instagram.com/p/{code}/"
             yield InstagramPost(
@@ -118,9 +116,9 @@ class _InstagramCommonScraper(snscrape.base.Scraper):
     def _check_initial_page_callback(self, r):
         if r.status_code != 200:
             return True, None
-        jsonData = r.text.split('<script type="text/javascript">window._sharedData = ')[
-            1
-        ].split(";</script>")[
+        jsonData = r.text.split('<script type="text/javascript">window._sharedData = ')[1].split(
+            ";</script>"
+        )[
             0
         ]  # May throw an IndexError if Instagram changes something again; we just let that bubble.
         try:
@@ -150,31 +148,29 @@ class _InstagramCommonScraper(snscrape.base.Scraper):
         response = r._snscrape_json_obj
         rhxGis = response["rhx_gis"] if "rhx_gis" in response else ""
         if (
-            response["entry_data"][self._pageName][0]["graphql"][
-                self._responseContainer
-            ][self._edgeXToMedia]["count"]
+            response["entry_data"][self._pageName][0]["graphql"][self._responseContainer][
+                self._edgeXToMedia
+            ]["count"]
             == 0
         ):
             _logger.info("Page has no posts")
             return
-        if not response["entry_data"][self._pageName][0]["graphql"][
-            self._responseContainer
-        ][self._edgeXToMedia]["edges"]:
+        if not response["entry_data"][self._pageName][0]["graphql"][self._responseContainer][
+            self._edgeXToMedia
+        ]["edges"]:
             _logger.warning("Private account")
             return
-        pageID = response["entry_data"][self._pageName][0]["graphql"][
-            self._responseContainer
-        ][self._pageIDKey]
-        yield from self._response_to_items(
-            response["entry_data"][self._pageName][0]["graphql"]
-        )
-        if not response["entry_data"][self._pageName][0]["graphql"][
-            self._responseContainer
-        ][self._edgeXToMedia]["page_info"]["has_next_page"]:
+        pageID = response["entry_data"][self._pageName][0]["graphql"][self._responseContainer][
+            self._pageIDKey
+        ]
+        yield from self._response_to_items(response["entry_data"][self._pageName][0]["graphql"])
+        if not response["entry_data"][self._pageName][0]["graphql"][self._responseContainer][
+            self._edgeXToMedia
+        ]["page_info"]["has_next_page"]:
             return
-        endCursor = response["entry_data"][self._pageName][0]["graphql"][
-            self._responseContainer
-        ][self._edgeXToMedia]["page_info"]["end_cursor"]
+        endCursor = response["entry_data"][self._pageName][0]["graphql"][self._responseContainer][
+            self._edgeXToMedia
+        ]["page_info"]["end_cursor"]
 
         headers = self._headers.copy()
         while True:
@@ -194,18 +190,16 @@ class _InstagramCommonScraper(snscrape.base.Scraper):
                 raise snscrape.base.ScraperException(f"Got status code {r.status_code}")
 
             response = r._snscrape_json_obj
-            if not response["data"][self._responseContainer][self._edgeXToMedia][
-                "edges"
-            ]:
+            if not response["data"][self._responseContainer][self._edgeXToMedia]["edges"]:
                 return
             yield from self._response_to_items(response["data"])
-            if not response["data"][self._responseContainer][self._edgeXToMedia][
-                "page_info"
-            ]["has_next_page"]:
+            if not response["data"][self._responseContainer][self._edgeXToMedia]["page_info"][
+                "has_next_page"
+            ]:
                 return
-            endCursor = response["data"][self._responseContainer][self._edgeXToMedia][
-                "page_info"
-            ]["end_cursor"]
+            endCursor = response["data"][self._responseContainer][self._edgeXToMedia]["page_info"][
+                "end_cursor"
+            ]
 
 
 class InstagramUserScraper(_InstagramCommonScraper):
@@ -227,12 +221,10 @@ class InstagramUserScraper(_InstagramCommonScraper):
             return
         if '<meta property="og:description" content="' not in r.text:
             return
-        ogDescriptionContentPos = r.text.index(
+        ogDescriptionContentPos = r.text.index('<meta property="og:description" content="') + len(
             '<meta property="og:description" content="'
-        ) + len('<meta property="og:description" content="')
-        ogDescription = r.text[
-            ogDescriptionContentPos : r.text.index('"', ogDescriptionContentPos)
-        ]
+        )
+        ogDescription = r.text[ogDescriptionContentPos : r.text.index('"', ogDescriptionContentPos)]
 
         numPattern = r"\d+(?:\.\d+)?m|\d+(?:\.\d+)?k|\d+,\d+|\d+"
         ogDescriptionPattern = re.compile(
@@ -250,15 +242,11 @@ class InstagramUserScraper(_InstagramCommonScraper):
         def parse_num(s):
             if s.endswith("m"):
                 return int(float(s[:-1].replace(",", "")) * 1e6), 10 ** (
-                    6
-                    if "." not in s
-                    else 6 - len(s[:-1].replace(",", "").split(".")[1])
+                    6 if "." not in s else 6 - len(s[:-1].replace(",", "").split(".")[1])
                 )
             elif s.endswith("k"):
                 return int(float(s[:-1].replace(",", "")) * 1000), 10 ** (
-                    3
-                    if "." not in s
-                    else 3 - len(s[:-1].replace(",", "").split(".")[1])
+                    3 if "." not in s else 3 - len(s[:-1].replace(",", "").split(".")[1])
                 )
             else:
                 return int(s.replace(",", "")), 1
@@ -298,9 +286,7 @@ class InstagramHashtagScraper(_InstagramCommonScraper):
         self._edgeXToMedia = "edge_hashtag_to_media"
         self._pageIDKey = "name"
         self._queryHash = "f92f56d47dc7a55b606908374b43a314"
-        self._variablesFormat = (
-            '{{"tag_name":"{pageID}","first":50,"after":"{endCursor}"}}'
-        )
+        self._variablesFormat = '{{"tag_name":"{pageID}","first":50,"after":"{endCursor}"}}'
 
     @classmethod
     def _cli_setup_parser(cls, subparser):

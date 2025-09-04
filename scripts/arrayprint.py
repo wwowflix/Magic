@@ -98,8 +98,7 @@ def _make_options_dict(
     modes = ["fixed", "unique", "maxprec", "maxprec_equal"]
     if floatmode not in modes + [None]:
         raise ValueError(
-            "floatmode option must be one of "
-            + ", ".join('"{}"'.format(m) for m in modes)
+            "floatmode option must be one of " + ", ".join('"{}"'.format(m) for m in modes)
         )
 
     if sign not in [None, "-", "+", " "]:
@@ -117,8 +116,7 @@ def _make_options_dict(
             raise TypeError("threshold must be numeric")
         if np.isnan(threshold):
             raise ValueError(
-                "threshold must be non-NAN, try "
-                "sys.maxsize for untruncated representation"
+                "threshold must be non-NAN, try " "sys.maxsize for untruncated representation"
             )
 
     if precision is not None:
@@ -424,18 +422,14 @@ def str_format(x):
     return str(x)
 
 
-def _get_formatdict(
-    data, *, precision, floatmode, suppress, sign, legacy, formatter, **kwargs
-):
+def _get_formatdict(data, *, precision, floatmode, suppress, sign, legacy, formatter, **kwargs):
     # note: extra arguments in kwargs are ignored
 
     # wrapped in lambdas to avoid taking a code path with the wrong type of data
     formatdict = {
         "bool": lambda: BoolFormat(data),
         "int": lambda: IntegerFormat(data),
-        "float": lambda: FloatingFormat(
-            data, precision, floatmode, suppress, sign, legacy=legacy
-        ),
+        "float": lambda: FloatingFormat(data, precision, floatmode, suppress, sign, legacy=legacy),
         "longfloat": lambda: FloatingFormat(
             data, precision, floatmode, suppress, sign, legacy=legacy
         ),
@@ -910,15 +904,11 @@ def _formatArray(
             line = hanging_indent
             for i in range(leading_items):
                 word = recurser(index + (i,), next_hanging_indent, next_width)
-                s, line = _extendLine_pretty(
-                    s, line, word, elem_width, hanging_indent, legacy
-                )
+                s, line = _extendLine_pretty(s, line, word, elem_width, hanging_indent, legacy)
                 line += separator
 
             if show_summary:
-                s, line = _extendLine(
-                    s, line, summary_insert, elem_width, hanging_indent, legacy
-                )
+                s, line = _extendLine(s, line, summary_insert, elem_width, hanging_indent, legacy)
                 if legacy == "1.13":
                     line += ", "
                 else:
@@ -926,18 +916,14 @@ def _formatArray(
 
             for i in range(trailing_items, 1, -1):
                 word = recurser(index + (-i,), next_hanging_indent, next_width)
-                s, line = _extendLine_pretty(
-                    s, line, word, elem_width, hanging_indent, legacy
-                )
+                s, line = _extendLine_pretty(s, line, word, elem_width, hanging_indent, legacy)
                 line += separator
 
             if legacy == "1.13":
                 # width of the separator is not considered on 1.13
                 elem_width = curr_width
             word = recurser(index + (-1,), next_hanging_indent, next_width)
-            s, line = _extendLine_pretty(
-                s, line, word, elem_width, hanging_indent, legacy
-            )
+            s, line = _extendLine_pretty(s, line, word, elem_width, hanging_indent, legacy)
 
             s += line
 
@@ -970,9 +956,7 @@ def _formatArray(
 
     try:
         # invoke the recursive part with an initial index and prefix
-        return recurser(
-            index=(), hanging_indent=next_line_prefix, curr_width=line_width
-        )
+        return recurser(index=(), hanging_indent=next_line_prefix, curr_width=line_width)
     finally:
         # recursive closures have a cyclic reference to themselves, which
         # requires gc to collect (gh-10620). To avoid this problem, for
@@ -991,9 +975,7 @@ def _none_or_positive_arg(x, name):
 class FloatingFormat:
     """Formatter for subtypes of np.floating"""
 
-    def __init__(
-        self, data, precision, floatmode, suppress_small, sign=False, *, legacy=None
-    ):
+    def __init__(self, data, precision, floatmode, suppress_small, sign=False, *, legacy=None):
         # for backcompatibility, accept bools
         if isinstance(sign, bool):
             sign = "+" if sign else "-"
@@ -1030,8 +1012,7 @@ class FloatingFormat:
             min_val = np.min(abs_non_zero)
             with errstate(over="ignore"):  # division can overflow
                 if max_val >= 1.0e8 or (
-                    not self.suppress_small
-                    and (min_val < 0.0001 or max_val / min_val > 1000.0)
+                    not self.suppress_small and (min_val < 0.0001 or max_val / min_val > 1000.0)
                 ):
                     self.exp_format = True
 
@@ -1379,9 +1360,7 @@ class BoolFormat:
 class ComplexFloatingFormat:
     """Formatter for subtypes of np.complexfloating"""
 
-    def __init__(
-        self, x, precision, floatmode, suppress_small, sign=False, *, legacy=None
-    ):
+    def __init__(self, x, precision, floatmode, suppress_small, sign=False, *, legacy=None):
         # for backcompatibility, accept bools
         if isinstance(sign, bool):
             sign = "+" if sign else "-"
@@ -1510,8 +1489,7 @@ class StructuredVoidFormat:
 
     def __call__(self, x):
         str_fields = [
-            format_function(field)
-            for field, format_function in zip(x, self.format_functions)
+            format_function(field) for field, format_function in zip(x, self.format_functions)
         ]
         if len(str_fields) == 1:
             return "({},)".format(str_fields[0])
@@ -1647,9 +1625,7 @@ def _array_repr_implementation(
     return arr_str + spacer + dtype_str
 
 
-def _array_repr_dispatcher(
-    arr, max_line_width=None, precision=None, suppress_small=None
-):
+def _array_repr_dispatcher(arr, max_line_width=None, precision=None, suppress_small=None):
     return (arr,)
 
 
@@ -1776,12 +1752,8 @@ def array_str(a, max_line_width=None, precision=None, suppress_small=None):
 
 # needed if __array_function__ is disabled
 _array2string_impl = getattr(array2string, "__wrapped__", array2string)
-_default_array_str = functools.partial(
-    _array_str_implementation, array2string=_array2string_impl
-)
-_default_array_repr = functools.partial(
-    _array_repr_implementation, array2string=_array2string_impl
-)
+_default_array_str = functools.partial(_array_str_implementation, array2string=_array2string_impl)
+_default_array_repr = functools.partial(_array_repr_implementation, array2string=_array2string_impl)
 
 
 def set_string_function(f, repr=True):

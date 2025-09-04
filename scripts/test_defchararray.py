@@ -156,42 +156,26 @@ class TestChar:
 
 class TestComparisons:
     def setup_method(self):
-        self.A = np.array([["abc", "abcc", "123"], ["789", "abc", "xyz"]]).view(
-            np.char.chararray
-        )
-        self.B = np.array([["efg", "efg", "123  "], ["051", "efgg", "tuv"]]).view(
-            np.char.chararray
-        )
+        self.A = np.array([["abc", "abcc", "123"], ["789", "abc", "xyz"]]).view(np.char.chararray)
+        self.B = np.array([["efg", "efg", "123  "], ["051", "efgg", "tuv"]]).view(np.char.chararray)
 
     def test_not_equal(self):
-        assert_array_equal(
-            (self.A != self.B), [[True, True, False], [True, True, True]]
-        )
+        assert_array_equal((self.A != self.B), [[True, True, False], [True, True, True]])
 
     def test_equal(self):
-        assert_array_equal(
-            (self.A == self.B), [[False, False, True], [False, False, False]]
-        )
+        assert_array_equal((self.A == self.B), [[False, False, True], [False, False, False]])
 
     def test_greater_equal(self):
-        assert_array_equal(
-            (self.A >= self.B), [[False, False, True], [True, False, True]]
-        )
+        assert_array_equal((self.A >= self.B), [[False, False, True], [True, False, True]])
 
     def test_less_equal(self):
-        assert_array_equal(
-            (self.A <= self.B), [[True, True, True], [False, True, False]]
-        )
+        assert_array_equal((self.A <= self.B), [[True, True, True], [False, True, False]])
 
     def test_greater(self):
-        assert_array_equal(
-            (self.A > self.B), [[False, False, False], [True, False, True]]
-        )
+        assert_array_equal((self.A > self.B), [[False, False, False], [True, False, True]])
 
     def test_less(self):
-        assert_array_equal(
-            (self.A < self.B), [[True, True, False], [False, True, False]]
-        )
+        assert_array_equal((self.A < self.B), [[True, True, False], [False, True, False]])
 
     def test_type(self):
         out1 = np.char.equal(self.A, self.B)
@@ -205,9 +189,9 @@ class TestComparisonsMixed1(TestComparisons):
 
     def setup_method(self):
         TestComparisons.setup_method(self)
-        self.B = np.array(
-            [["efg", "efg", "123  "], ["051", "efgg", "tuv"]], np.str_
-        ).view(np.char.chararray)
+        self.B = np.array([["efg", "efg", "123  "], ["051", "efgg", "tuv"]], np.str_).view(
+            np.char.chararray
+        )
 
 
 class TestComparisonsMixed2(TestComparisons):
@@ -215,9 +199,9 @@ class TestComparisonsMixed2(TestComparisons):
 
     def setup_method(self):
         TestComparisons.setup_method(self)
-        self.A = np.array(
-            [["abc", "abcc", "123"], ["789", "abc", "xyz"]], np.str_
-        ).view(np.char.chararray)
+        self.A = np.array([["abc", "abcc", "123"], ["789", "abc", "xyz"]], np.str_).view(
+            np.char.chararray
+        )
 
 
 class TestInformation:
@@ -229,9 +213,9 @@ class TestInformation:
             [[" \u03a3 ", ""], ["12345", "MixedCase"], ["123 \t 345 \0 ", "UPPER"]]
         ).view(np.char.chararray)
         # Array with longer strings, > MEMCHR_CUT_OFF in code.
-        self.C = np.array(
-            ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "01234567890123456789012345"]
-        ).view(np.char.chararray)
+        self.C = np.array(["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "01234567890123456789012345"]).view(
+            np.char.chararray
+        )
 
     def test_len(self):
         assert_(issubclass(np.char.str_len(self.A).dtype.type, np.integer))
@@ -272,9 +256,7 @@ class TestInformation:
         assert_array_equal(A.find(encode("a")), [[1, -1], [-1, 6], [-1, -1]])
         assert_array_equal(A.find(encode("3")), [[-1, -1], [2, -1], [2, -1]])
         assert_array_equal(A.find(encode("a"), 0, 2), [[1, -1], [-1, -1], [-1, -1]])
-        assert_array_equal(
-            A.find([encode("1"), encode("P")]), [[-1, -1], [0, -1], [0, 1]]
-        )
+        assert_array_equal(A.find([encode("1"), encode("P")]), [[-1, -1], [0, -1], [0, 1]])
         C = self.C.astype(dtype)
         assert_array_equal(C.find(encode("M")), [12, -1])
 
@@ -289,45 +271,31 @@ class TestInformation:
 
     def test_isalnum(self):
         assert_(issubclass(self.A.isalnum().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.isalnum(), [[False, False], [True, True], [False, True]]
-        )
+        assert_array_equal(self.A.isalnum(), [[False, False], [True, True], [False, True]])
 
     def test_isalpha(self):
         assert_(issubclass(self.A.isalpha().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.isalpha(), [[False, False], [False, True], [False, True]]
-        )
+        assert_array_equal(self.A.isalpha(), [[False, False], [False, True], [False, True]])
 
     def test_isdigit(self):
         assert_(issubclass(self.A.isdigit().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.isdigit(), [[False, False], [True, False], [False, False]]
-        )
+        assert_array_equal(self.A.isdigit(), [[False, False], [True, False], [False, False]])
 
     def test_islower(self):
         assert_(issubclass(self.A.islower().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.islower(), [[True, False], [False, False], [False, False]]
-        )
+        assert_array_equal(self.A.islower(), [[True, False], [False, False], [False, False]])
 
     def test_isspace(self):
         assert_(issubclass(self.A.isspace().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.isspace(), [[False, False], [False, False], [False, False]]
-        )
+        assert_array_equal(self.A.isspace(), [[False, False], [False, False], [False, False]])
 
     def test_istitle(self):
         assert_(issubclass(self.A.istitle().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.istitle(), [[False, False], [False, False], [False, False]]
-        )
+        assert_array_equal(self.A.istitle(), [[False, False], [False, False], [False, False]])
 
     def test_isupper(self):
         assert_(issubclass(self.A.isupper().dtype.type, np.bool))
-        assert_array_equal(
-            self.A.isupper(), [[False, False], [False, False], [False, True]]
-        )
+        assert_array_equal(self.A.isupper(), [[False, False], [False, False], [False, True]])
 
     def test_rfind(self):
         assert_(issubclass(self.A.rfind("a").dtype.type, np.integer))
@@ -427,9 +395,7 @@ class TestMethods:
         assert_array_equal(np.char.str_len(C), [[10, 20], [10, 20], [12, 20]])
 
         C = self.A.ljust(20, b"#")
-        assert_array_equal(
-            C.startswith(b"#"), [[False, True], [False, False], [False, False]]
-        )
+        assert_array_equal(C.startswith(b"#"), [[False, True], [False, False], [False, False]])
         assert_(np.all(C.endswith(b"#")))
 
         C = np.char.ljust(b"FOO", [[10, 20], [15, 8]])
@@ -511,8 +477,7 @@ class TestMethods:
         assert_array_equal(
             r5,
             np.array(
-                ["01234ABCDE6789" * i for i in range(3)]
-                + ["01234ABCDE6789" + "0123456789" * 2]
+                ["01234ABCDE6789" * i for i in range(3)] + ["01234ABCDE6789" + "0123456789" * 2]
             ),
         )
 
@@ -522,9 +487,7 @@ class TestMethods:
         assert r1.dtype == a.dtype
         assert_array_equal(r1, np.array(["0,0,0", "1,0,0", "1,1,0"]))
         r2 = a.replace("0", [["1"], ["2"]], count=np.arange(1, 4))
-        assert_array_equal(
-            r2, np.array([["1,0,0", "1,1,0", "1,1,1"], ["2,0,0", "2,2,0", "2,2,2"]])
-        )
+        assert_array_equal(r2, np.array([["1,0,0", "1,1,0", "1,1,1"], ["2,0,0", "2,2,0", "2,2,2"]]))
         r3 = a.replace(["0", "0,0", "0,0,0"], "X")
         assert_array_equal(r3, np.array(["X,X,X", "X,0", "X"]))
 
@@ -536,9 +499,7 @@ class TestMethods:
 
         C = self.A.rjust(20, b"#")
         assert_(np.all(C.startswith(b"#")))
-        assert_array_equal(
-            C.endswith(b"#"), [[False, True], [False, False], [False, False]]
-        )
+        assert_array_equal(C.endswith(b"#"), [[False, True], [False, False], [False, False]])
 
         C = np.char.rjust(b"FOO", [[10, 20], [15, 8]])
         tgt = [
@@ -643,9 +604,7 @@ class TestMethods:
 
         assert_raises(TypeError, fail)
         assert_(issubclass(self.B.isnumeric().dtype.type, np.bool))
-        assert_array_equal(
-            self.B.isnumeric(), [[False, False], [True, False], [False, False]]
-        )
+        assert_array_equal(self.B.isnumeric(), [[False, False], [True, False], [False, False]])
 
     def test_isdecimal(self):
 
@@ -654,9 +613,7 @@ class TestMethods:
 
         assert_raises(TypeError, fail)
         assert_(issubclass(self.B.isdecimal().dtype.type, np.bool))
-        assert_array_equal(
-            self.B.isdecimal(), [[False, False], [True, False], [False, False]]
-        )
+        assert_array_equal(self.B.isdecimal(), [[False, False], [True, False], [False, False]])
 
 
 class TestOperations:
@@ -665,9 +622,7 @@ class TestOperations:
         self.B = np.array([["efg", "456"], ["051", "tuv"]]).view(np.char.chararray)
 
     def test_add(self):
-        AB = np.array([["abcefg", "123456"], ["789051", "xyztuv"]]).view(
-            np.char.chararray
-        )
+        AB = np.array([["abcefg", "123456"], ["789051", "xyztuv"]]).view(np.char.chararray)
         assert_array_equal(AB, (self.A + self.B))
         assert_(len((self.A + self.B)[0][0]) == 6)
 
@@ -678,9 +633,9 @@ class TestOperations:
     def test_mul(self):
         A = self.A
         for r in (2, 3, 5, 7, 197):
-            Ar = np.array(
-                [[A[0, 0] * r, A[0, 1] * r], [A[1, 0] * r, A[1, 1] * r]]
-            ).view(np.char.chararray)
+            Ar = np.array([[A[0, 0] * r, A[0, 1] * r], [A[1, 0] * r, A[1, 1] * r]]).view(
+                np.char.chararray
+            )
 
             assert_array_equal(Ar, (self.A * r))
 
@@ -691,9 +646,9 @@ class TestOperations:
     def test_rmul(self):
         A = self.A
         for r in (2, 3, 5, 7, 197):
-            Ar = np.array(
-                [[A[0, 0] * r, A[0, 1] * r], [A[1, 0] * r, A[1, 1] * r]]
-            ).view(np.char.chararray)
+            Ar = np.array([[A[0, 0] * r, A[0, 1] * r], [A[1, 0] * r, A[1, 1] * r]]).view(
+                np.char.chararray
+            )
             assert_array_equal(Ar, (r * self.A))
 
         for ob in [object(), "qrs"]:
@@ -704,20 +659,14 @@ class TestOperations:
         """Ticket #856"""
         F = np.array([["%d", "%f"], ["%s", "%r"]]).view(np.char.chararray)
         C = np.array([[3, 7], [19, 1]], dtype=np.int64)
-        FC = np.array([["3", "7.000000"], ["19", "np.int64(1)"]]).view(
-            np.char.chararray
-        )
+        FC = np.array([["3", "7.000000"], ["19", "np.int64(1)"]]).view(np.char.chararray)
         assert_array_equal(FC, F % C)
 
         A = np.array([["%.3f", "%d"], ["%s", "%r"]]).view(np.char.chararray)
-        A1 = np.array([["1.000", "1"], ["1", repr(np.array(1)[()])]]).view(
-            np.char.chararray
-        )
+        A1 = np.array([["1.000", "1"], ["1", repr(np.array(1)[()])]]).view(np.char.chararray)
         assert_array_equal(A1, (A % 1))
 
-        A2 = np.array([["1.000", "2"], ["3", repr(np.array(4)[()])]]).view(
-            np.char.chararray
-        )
+        A2 = np.array([["1.000", "2"], ["3", repr(np.array(4)[()])]]).view(np.char.chararray)
         assert_array_equal(A2, (A % [[1, 2], [3, 4]]))
 
     def test_rmod(self):
@@ -725,17 +674,13 @@ class TestOperations:
         assert_(f"{self.A!r}" == repr(self.A))
 
         for ob in [42, object()]:
-            with assert_raises_regex(
-                TypeError, "unsupported operand type.* and 'chararray'"
-            ):
+            with assert_raises_regex(TypeError, "unsupported operand type.* and 'chararray'"):
                 ob % self.A
 
     def test_slice(self):
         """Regression test for https://github.com/numpy/numpy/issues/5982"""
 
-        arr = np.array([["abc ", "def "], ["geh ", "ijk "]], dtype="S4").view(
-            np.char.chararray
-        )
+        arr = np.array([["abc ", "def "], ["geh ", "ijk "]], dtype="S4").view(np.char.chararray)
         sl1 = arr[:]
         assert_array_equal(sl1, arr)
         assert_(sl1.base is arr)
@@ -799,9 +744,7 @@ class TestMethodsScalarValues:
 
     def test_encode(self):
         unicode = "aAaAaA"
-        assert_equal(
-            np.char.encode(unicode, encoding="cp037"), b"\x81\xc1\x81\xc1\x81\xc1"
-        )
+        assert_equal(np.char.encode(unicode, encoding="cp037"), b"\x81\xc1\x81\xc1\x81\xc1")
 
     def test_expandtabs(self):
         s = "\tone level of indentation\n\t\ttwo levels of indentation"
@@ -818,14 +761,10 @@ class TestMethodsScalarValues:
         assert_equal(np.char.partition("This string", " "), ["This", " ", "string"])
 
     def test_rpartition(self):
-        assert_equal(
-            np.char.rpartition("This string here", " "), ["This string", " ", "here"]
-        )
+        assert_equal(np.char.rpartition("This string here", " "), ["This string", " ", "here"])
 
     def test_replace(self):
-        assert_equal(
-            np.char.replace("Python is good", "good", "great"), "Python is great"
-        )
+        assert_equal(np.char.replace("Python is good", "good", "great"), "Python is great")
 
 
 def test_empty_indexing():

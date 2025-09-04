@@ -11,14 +11,10 @@ from numpy.core import overrides
 __all__ = ["logspace", "linspace", "geomspace"]
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
-def _linspace_dispatcher(
-    start, stop, num=None, endpoint=None, retstep=None, dtype=None, axis=None
-):
+def _linspace_dispatcher(start, stop, num=None, endpoint=None, retstep=None, dtype=None, axis=None):
     return (start, stop)
 
 
@@ -176,9 +172,7 @@ def linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis
         return y.astype(dtype, copy=False)
 
 
-def _logspace_dispatcher(
-    start, stop, num=None, endpoint=None, base=None, dtype=None, axis=None
-):
+def _logspace_dispatcher(start, stop, num=None, endpoint=None, base=None, dtype=None, axis=None):
     return (start, stop)
 
 
@@ -422,9 +416,7 @@ def geomspace(start, stop, num=50, endpoint=True, dtype=None, axis=0):
 
     log_start = _nx.log10(start)
     log_stop = _nx.log10(stop)
-    result = logspace(
-        log_start, log_stop, num=num, endpoint=endpoint, base=10.0, dtype=dtype
-    )
+    result = logspace(log_start, log_stop, num=num, endpoint=endpoint, base=10.0, dtype=dtype)
 
     # Make sure the endpoints match the start and stop arguments. This is
     # necessary because np.exp(np.log(x)) is not necessarily equal to x.

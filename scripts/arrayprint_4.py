@@ -7,9 +7,7 @@ func_int: Callable[[np.integer[Any]], str]
 
 reveal_type(np.get_printoptions())  # E: TypedDict
 reveal_type(
-    np.array2string(  # E: str
-        AR, formatter={"float_kind": func_float, "int_kind": func_int}
-    )
+    np.array2string(AR, formatter={"float_kind": func_float, "int_kind": func_int})  # E: str
 )
 reveal_type(np.format_float_scientific(1.0))  # E: str
 reveal_type(np.format_float_positional(1))  # E: str

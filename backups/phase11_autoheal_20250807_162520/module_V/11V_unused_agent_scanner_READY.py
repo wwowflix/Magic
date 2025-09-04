@@ -1,5 +1,5 @@
-﻿def main():
-    print("✅ [11V_unused_agent_scanner_READY.py] executed successfully (stub mode).")
+ï¿def main():
+    print("âœ… [11V_unused_agent_scanner_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

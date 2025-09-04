@@ -120,9 +120,7 @@ class TestRegression:
         assert_raises(ValueError, linalg.norm, testvector, ord=-np.inf)
         with warnings.catch_warnings():
             warnings.simplefilter("error", DeprecationWarning)
-            assert_raises(
-                (AttributeError, DeprecationWarning), linalg.norm, testvector, ord=0
-            )
+            assert_raises((AttributeError, DeprecationWarning), linalg.norm, testvector, ord=0)
         assert_raises(ValueError, linalg.norm, testvector, ord=-1)
         assert_raises(ValueError, linalg.norm, testvector, ord=-2)
 

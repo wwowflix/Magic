@@ -59,9 +59,7 @@ for platform in tables.keys():
         try:
             df = pd.read_sql(f"SELECT * FROM {platform}", conn)
             if keyword_filter and "keyword" in df.columns:
-                df = df[
-                    df["keyword"].str.contains(keyword_filter, case=False, na=False)
-                ]
+                df = df[df["keyword"].str.contains(keyword_filter, case=False, na=False)]
             tables[platform] = df
         except Exception as e:
             st.warning(f"Could not read table {platform}: {e}")

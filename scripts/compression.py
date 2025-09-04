@@ -84,9 +84,7 @@ try:  # pragma: no cover
 except ImportError:
     from gzip import GzipFile
 
-    register_compression(
-        "gzip", lambda f, **kwargs: GzipFile(fileobj=f, **kwargs), "gz"
-    )
+    register_compression("gzip", lambda f, **kwargs: GzipFile(fileobj=f, **kwargs), "gz")
 
 try:
     from lzma import LZMAFile

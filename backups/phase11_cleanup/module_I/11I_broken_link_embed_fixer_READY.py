@@ -1,4 +1,4 @@
-﻿import os
+ï¿import os
 import re
 import requests
 
@@ -34,19 +34,19 @@ for root, _, files in os.walk(TARGET_FOLDER):
                     all_links = links + images
                     for link in all_links:
                         if link.startswith("http") and is_url_dead(link):
-                            broken_links.append(f"{path} → ❌ Broken URL: {link}")
+                            broken_links.append(f"{path} â†’ âŒ Broken URL: {link}")
                         elif not link.startswith("http") and not os.path.exists(link):
                             broken_links.append(
-                                f"{path} → ❌ Missing local file: {link}"
+                                f"{path} â†’ âŒ Missing local file: {link}"
                             )
             except Exception as e:
-                broken_links.append(f"{path} → ⚠️ {e}")
+                broken_links.append(f"{path} â†’ âš ï¸ {e}")
 
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if broken_links:
-        f.write("🚨 Broken links or embeds found:\n" + "\n".join(broken_links))
+        f.write("ðŸš¨ Broken links or embeds found:\n" + "\n".join(broken_links))
     else:
-        f.write("✅ All links and embeds look fine.\n")
+        f.write("âœ… All links and embeds look fine.\n")
 
-print(f"🔗 Link check complete. Report saved to: {LOG_FILE}")
+print(f"ðŸ”— Link check complete. Report saved to: {LOG_FILE}")

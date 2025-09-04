@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$ManifestPath = "phase_manifest.json",
     [int]   $MaxRetries   = 2
 )

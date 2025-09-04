@@ -132,9 +132,7 @@ class Command:
 
         This method must be implemented by all command classes.
         """
-        raise RuntimeError(
-            "abstract method -- subclass %s must override" % self.__class__
-        )
+        raise RuntimeError("abstract method -- subclass %s must override" % self.__class__)
 
     def finalize_options(self):
         """Set final values for all the options that this command supports.
@@ -147,9 +145,7 @@ class Command:
 
         This method must be implemented by all command classes.
         """
-        raise RuntimeError(
-            "abstract method -- subclass %s must override" % self.__class__
-        )
+        raise RuntimeError("abstract method -- subclass %s must override" % self.__class__)
 
     def dump_options(self, header=None, indent=""):
         from distutils.fancy_getopt import longopt_xlate
@@ -175,9 +171,7 @@ class Command:
 
         This method must be implemented by all command classes.
         """
-        raise RuntimeError(
-            "abstract method -- subclass %s must override" % self.__class__
-        )
+        raise RuntimeError("abstract method -- subclass %s must override" % self.__class__)
 
     def announce(self, msg, level=1):
         """If the current verbosity level is of greater than or equal to
@@ -214,9 +208,7 @@ class Command:
             setattr(self, option, default)
             return default
         elif not isinstance(val, str):
-            raise DistutilsOptionError(
-                "'{}' must be a {} (got `{}`)".format(option, what, val)
-            )
+            raise DistutilsOptionError("'{}' must be a {} (got `{}`)".format(option, what, val))
         return val
 
     def ensure_string(self, option, default=None):
@@ -249,9 +241,7 @@ class Command:
     def _ensure_tested_string(self, option, tester, what, error_fmt, default=None):
         val = self._ensure_stringlike(option, what, default)
         if val is not None and not tester(val):
-            raise DistutilsOptionError(
-                ("error in '%s' option: " + error_fmt) % (option, val)
-            )
+            raise DistutilsOptionError(("error in '%s' option: " + error_fmt) % (option, val))
 
     def ensure_filename(self, option):
         """Ensure that 'option' is the name of an existing file."""
@@ -342,9 +332,7 @@ class Command:
     def mkpath(self, name, mode=0o777):
         dir_util.mkpath(name, mode, dry_run=self.dry_run)
 
-    def copy_file(
-        self, infile, outfile, preserve_mode=1, preserve_times=1, link=None, level=1
-    ):
+    def copy_file(self, infile, outfile, preserve_mode=1, preserve_times=1, link=None, level=1):
         """Copy a file respecting verbose, dry-run and force flags.  (The
         former two default to whatever is in the Distribution object, and
         the latter defaults to false for commands that don't define it.)"""
@@ -390,9 +378,7 @@ class Command:
 
         spawn(cmd, search_path, dry_run=self.dry_run)
 
-    def make_archive(
-        self, base_name, format, root_dir=None, base_dir=None, owner=None, group=None
-    ):
+    def make_archive(self, base_name, format, root_dir=None, base_dir=None, owner=None, group=None):
         return archive_util.make_archive(
             base_name,
             format,
@@ -403,9 +389,7 @@ class Command:
             group=group,
         )
 
-    def make_file(
-        self, infiles, outfile, func, args, exec_msg=None, skip_msg=None, level=1
-    ):
+    def make_file(self, infiles, outfile, func, args, exec_msg=None, skip_msg=None, level=1):
         """Special case of 'execute()' for operations that process one or
         more input files and generate one output file.  Works just like
         'execute()', except the operation is skipped and a different

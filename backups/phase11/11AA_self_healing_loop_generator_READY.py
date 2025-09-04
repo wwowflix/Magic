@@ -1,8 +1,8 @@
-﻿"""Orchestrates looped recovery and retry logic"""
+ï¿"""Orchestrates looped recovery and retry logic"""
 
 
 def main():
-    print("✅ Self-Healing Loop Generator running...")
+    print("âœ… Self-Healing Loop Generator running...")
 
 
 if __name__ == "__main__":

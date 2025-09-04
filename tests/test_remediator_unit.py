@@ -1,4 +1,4 @@
-﻿import tools.remediator as r
+import tools.remediator as r
 
 
 def test_fix_unicode_returns_clean_string():
@@ -33,9 +33,7 @@ def test_pip_install_mock(monkeypatch):
 
 def test_apply_remediation_file_not_found(monkeypatch):
     called = {"touch": False}
-    monkeypatch.setattr(
-        r, "create_missing_inputs", lambda *_: called.__setitem__("touch", True)
-    )
+    monkeypatch.setattr(r, "create_missing_inputs", lambda *_: called.__setitem__("touch", True))
     rc = r.apply_remediation(RuntimeError("FileNotFoundError: foo.csv"))
     assert rc is True and called["touch"] is True
 
@@ -48,9 +46,7 @@ def test_apply_remediation_import_error(monkeypatch):
 
 def test_apply_remediation_unicode(monkeypatch):
     # If fix_unicode is called, it should return True
-    monkeypatch.setattr(
-        r, "fix_unicode", lambda s: s.replace("\u2028", "").replace("\u2029", "")
-    )
+    monkeypatch.setattr(r, "fix_unicode", lambda s: s.replace("\u2028", "").replace("\u2029", ""))
     rc = r.apply_remediation(UnicodeError("bad \u2028 line"))
     assert rc is True
 

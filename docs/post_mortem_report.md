@@ -1,4 +1,4 @@
-﻿# Post-mortem Report
+# Post-mortem Report
 Date: 2025-09-03 13:01
 
 ## Summary

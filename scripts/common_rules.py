@@ -125,8 +125,7 @@ def buildhooks(m):
         )
         cadd("static void f2py_init_%s(void) {" % name)
         cadd(
-            "\t%s(f2pyinit%s,F2PYINIT%s)(f2py_setup_%s);"
-            % (F_FUNC, lower_name, name.upper(), name)
+            "\t%s(f2pyinit%s,F2PYINIT%s)(f2py_setup_%s);" % (F_FUNC, lower_name, name.upper(), name)
         )
         cadd("}\n")
         iadd("\ttmp = PyFortranObject_New(f2py_%s_def,f2py_init_%s);" % (name, name))

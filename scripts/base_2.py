@@ -12,9 +12,7 @@ listElementsMap = {
     None: (frozenset(scopingElements), False),
     "button": (frozenset(scopingElements | {(namespaces["html"], "button")}), False),
     "list": (
-        frozenset(
-            scopingElements | {(namespaces["html"], "ol"), (namespaces["html"], "ul")}
-        ),
+        frozenset(scopingElements | {(namespaces["html"], "ol"), (namespaces["html"], "ul")}),
         False,
     ),
     "table": (
@@ -365,8 +363,7 @@ class TreeBuilder(object):
             parent = self.openElements[-1]
 
         if not self.insertFromTable or (
-            self.insertFromTable
-            and self.openElements[-1].name not in tableInsertModeElements
+            self.insertFromTable and self.openElements[-1].name not in tableInsertModeElements
         ):
             parent.insertText(data)
         else:

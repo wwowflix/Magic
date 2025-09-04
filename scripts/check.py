@@ -46,10 +46,7 @@ class check(Command):
         (
             "restructuredtext",
             "r",
-            (
-                "Checks if long string meta-data syntax "
-                "are reStructuredText-compliant"
-            ),
+            ("Checks if long string meta-data syntax " "are reStructuredText-compliant"),
         ),
         ("strict", "s", "Will exit with an error if a check fails"),
     ]
@@ -145,8 +142,6 @@ class check(Command):
         try:
             parser.parse(data, document)
         except AttributeError as e:
-            reporter.messages.append(
-                (-1, "Could not finish the parsing: %s." % e, "", {})
-            )
+            reporter.messages.append((-1, "Could not finish the parsing: %s." % e, "", {}))
 
         return reporter.messages

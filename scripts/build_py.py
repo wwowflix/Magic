@@ -44,9 +44,7 @@ class build_py(Command):
         self.force = None
 
     def finalize_options(self):
-        self.set_undefined_options(
-            "build", ("build_lib", "build_lib"), ("force", "force")
-        )
+        self.set_undefined_options("build", ("build_lib", "build_lib"), ("force", "force"))
 
         # Get the distribution options that are aliases for build_py
         # options -- list of packages and list of modules.
@@ -126,13 +124,9 @@ class build_py(Command):
         files = []
         for pattern in globs:
             # Each pattern has to be converted to a platform-specific path
-            filelist = glob.glob(
-                os.path.join(glob.escape(src_dir), convert_path(pattern))
-            )
+            filelist = glob.glob(os.path.join(glob.escape(src_dir), convert_path(pattern)))
             # Files that match more than one pattern are only added once
-            files.extend(
-                [fn for fn in filelist if fn not in files and os.path.isfile(fn)]
-            )
+            files.extend([fn for fn in filelist if fn not in files and os.path.isfile(fn)])
         return files
 
     def build_package_data(self):
@@ -141,9 +135,7 @@ class build_py(Command):
             for filename in filenames:
                 target = os.path.join(build_dir, filename)
                 self.mkpath(os.path.dirname(target))
-                self.copy_file(
-                    os.path.join(src_dir, filename), target, preserve_mode=False
-                )
+                self.copy_file(os.path.join(src_dir, filename), target, preserve_mode=False)
 
     def get_package_dir(self, package):
         """Return the directory, relative to the top of the source
@@ -191,9 +183,7 @@ class build_py(Command):
         # circumvent them.
         if package_dir != "":
             if not os.path.exists(package_dir):
-                raise DistutilsFileError(
-                    "package directory '%s' does not exist" % package_dir
-                )
+                raise DistutilsFileError("package directory '%s' does not exist" % package_dir)
             if not os.path.isdir(package_dir):
                 raise DistutilsFileError(
                     "supposed package directory '%s' exists, "
@@ -316,14 +306,10 @@ class build_py(Command):
             outputs.append(filename)
             if include_bytecode:
                 if self.compile:
-                    outputs.append(
-                        importlib.util.cache_from_source(filename, optimization="")
-                    )
+                    outputs.append(importlib.util.cache_from_source(filename, optimization=""))
                 if self.optimize > 0:
                     outputs.append(
-                        importlib.util.cache_from_source(
-                            filename, optimization=self.optimize
-                        )
+                        importlib.util.cache_from_source(filename, optimization=self.optimize)
                     )
 
         outputs += [
@@ -338,9 +324,7 @@ class build_py(Command):
         if isinstance(package, str):
             package = package.split(".")
         elif not isinstance(package, (list, tuple)):
-            raise TypeError(
-                "'package' must be a string (dot-separated), list, or tuple"
-            )
+            raise TypeError("'package' must be a string (dot-separated), list, or tuple")
 
         # Now put the module source file into the "build" area -- this is
         # easy, we just copy it somewhere under self.build_lib (the build
@@ -394,9 +378,7 @@ class build_py(Command):
         # method of the "install_lib" command, except for the determination
         # of the 'prefix' string.  Hmmm.
         if self.compile:
-            byte_compile(
-                files, optimize=0, force=self.force, prefix=prefix, dry_run=self.dry_run
-            )
+            byte_compile(files, optimize=0, force=self.force, prefix=prefix, dry_run=self.dry_run)
         if self.optimize > 0:
             byte_compile(
                 files,

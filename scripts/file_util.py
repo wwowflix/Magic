@@ -32,24 +32,18 @@ def _copy_file_contents(src, dst, buffer_size=16 * 1024):  # noqa: C901
             try:
                 os.unlink(dst)
             except OSError as e:
-                raise DistutilsFileError(
-                    "could not delete '{}': {}".format(dst, e.strerror)
-                )
+                raise DistutilsFileError("could not delete '{}': {}".format(dst, e.strerror))
 
         try:
             fdst = open(dst, "wb")
         except OSError as e:
-            raise DistutilsFileError(
-                "could not create '{}': {}".format(dst, e.strerror)
-            )
+            raise DistutilsFileError("could not create '{}': {}".format(dst, e.strerror))
 
         while True:
             try:
                 buf = fsrc.read(buffer_size)
             except OSError as e:
-                raise DistutilsFileError(
-                    "could not read from '{}': {}".format(src, e.strerror)
-                )
+                raise DistutilsFileError("could not read from '{}': {}".format(src, e.strerror))
 
             if not buf:
                 break
@@ -57,9 +51,7 @@ def _copy_file_contents(src, dst, buffer_size=16 * 1024):  # noqa: C901
             try:
                 fdst.write(buf)
             except OSError as e:
-                raise DistutilsFileError(
-                    "could not write to '{}': {}".format(dst, e.strerror)
-                )
+                raise DistutilsFileError("could not write to '{}': {}".format(dst, e.strerror))
     finally:
         if fdst:
             fdst.close()
@@ -112,9 +104,7 @@ def copy_file(  # noqa: C901
     from stat import ST_ATIME, ST_MTIME, ST_MODE, S_IMODE
 
     if not os.path.isfile(src):
-        raise DistutilsFileError(
-            "can't copy '%s': doesn't exist or not a regular file" % src
-        )
+        raise DistutilsFileError("can't copy '%s': doesn't exist or not a regular file" % src)
 
     if os.path.isdir(dst):
         dir = dst
@@ -215,9 +205,7 @@ def move_file(src, dst, verbose=1, dry_run=0):  # noqa: C901
         if num == errno.EXDEV:
             copy_it = True
         else:
-            raise DistutilsFileError(
-                "couldn't move '{}' to '{}': {}".format(src, dst, msg)
-            )
+            raise DistutilsFileError("couldn't move '{}' to '{}': {}".format(src, dst, msg))
 
     if copy_it:
         copy_file(src, dst, verbose=verbose)

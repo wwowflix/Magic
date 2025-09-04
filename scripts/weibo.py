@@ -108,11 +108,7 @@ class WeiboUserScraper(snscrape.base.Scraper):
         return Post(
             url=f'https://m.weibo.cn/status/{mblog["bid"]}',
             id=mblog["id"],
-            user=(
-                self._user_info_to_entity(mblog["user"])
-                if mblog["user"] is not None
-                else None
-            ),
+            user=(self._user_info_to_entity(mblog["user"]) if mblog["user"] is not None else None),
             createdAt=mblog["created_at"],
             text=(
                 mblog["raw_text"]
@@ -123,9 +119,7 @@ class WeiboUserScraper(snscrape.base.Scraper):
             commentsCount=mblog.get("comments_count"),
             likesCount=mblog.get("attitudes_count"),
             picturesCount=mblog.get("pic_num"),
-            pictures=(
-                [x["large"]["url"] for x in mblog["pics"]] if "pics" in mblog else None
-            ),
+            pictures=([x["large"]["url"] for x in mblog["pics"]] if "pics" in mblog else None),
             video=(
                 urls.get("mp4_720p_mp4") or urls.get("mp4_hd_mp4") or urls["mp4_ld_mp4"]
                 if "page_info" in mblog
@@ -210,6 +204,4 @@ class WeiboUserScraper(snscrape.base.Scraper):
 
     @classmethod
     def _cli_from_args(cls, args):
-        return cls._cli_construct(
-            args, user=args.user if args.isName else int(args.user)
-        )
+        return cls._cli_construct(args, user=args.user if args.isName else int(args.user))

@@ -139,9 +139,7 @@ def read_sas(
         elif ".sas7bdat" in fname:
             format = "sas7bdat"
         else:
-            raise ValueError(
-                f"unable to infer format of SAS file from filename: {repr(fname)}"
-            )
+            raise ValueError(f"unable to infer format of SAS file from filename: {repr(fname)}")
 
     reader: ReaderBase
     if format.lower() == "xport":

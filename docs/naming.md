@@ -5,6 +5,6 @@
 "@},
 
     @{Path="README.md"; Content=@"
-# ?? Magic – AI Automation System
+# ?? Magic ï¿½ AI Automation System
 
 This project automates trend discovery, content generation, publishing, and monetization.

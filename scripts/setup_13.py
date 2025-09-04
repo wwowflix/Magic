@@ -5,9 +5,7 @@ from os.path import join
 
 from numpy.distutils.system_info import platform_bits
 
-is_msvc = platform.platform().startswith(
-    "Windows"
-) and platform.python_compiler().startswith("MS")
+is_msvc = platform.platform().startswith("Windows") and platform.python_compiler().startswith("MS")
 
 
 def configuration(parent_package="", top_path=None):

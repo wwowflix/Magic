@@ -1,4 +1,4 @@
-﻿# test_scripts_status.ps1
+# test_scripts_status.ps1
 
 # Define test cases
 $tests = @(

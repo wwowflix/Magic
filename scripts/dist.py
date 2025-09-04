@@ -482,9 +482,7 @@ Common commands: (see '--help-commands' for more)
         # latter, we omit the display-only options and show help for
         # each command listed on the command line.
         if self.help:
-            self._show_help(
-                parser, display_options=len(self.commands) == 0, commands=self.commands
-            )
+            self._show_help(parser, display_options=len(self.commands) == 0, commands=self.commands)
             return
 
         # Oops, no commands found -- an end-user error
@@ -537,20 +535,12 @@ Common commands: (see '--help-commands' for more)
         # Require that the command class be derived from Command -- want
         # to be sure that the basic "command" interface is implemented.
         if not issubclass(cmd_class, Command):
-            raise DistutilsClassError(
-                "command class %s must subclass Command" % cmd_class
-            )
+            raise DistutilsClassError("command class %s must subclass Command" % cmd_class)
 
         # Also make sure that the command object provides a list of its
         # known options.
-        if not (
-            hasattr(cmd_class, "user_options")
-            and isinstance(cmd_class.user_options, list)
-        ):
-            msg = (
-                "command class %s must provide "
-                "'user_options' attribute (a list of tuples)"
-            )
+        if not (hasattr(cmd_class, "user_options") and isinstance(cmd_class.user_options, list)):
+            msg = "command class %s must provide " "'user_options' attribute (a list of tuples)"
             raise DistutilsClassError(msg % cmd_class)
 
         # If the command class has a list of negative alias options,
@@ -562,27 +552,21 @@ Common commands: (see '--help-commands' for more)
 
         # Check for help_options in command class.  They have a different
         # format (tuple of four) so we need to preprocess them here.
-        if hasattr(cmd_class, "help_options") and isinstance(
-            cmd_class.help_options, list
-        ):
+        if hasattr(cmd_class, "help_options") and isinstance(cmd_class.help_options, list):
             help_options = fix_help_options(cmd_class.help_options)
         else:
             help_options = []
 
         # All commands support the global options too, just by adding
         # in 'global_options'.
-        parser.set_option_table(
-            self.global_options + cmd_class.user_options + help_options
-        )
+        parser.set_option_table(self.global_options + cmd_class.user_options + help_options)
         parser.set_negative_aliases(negative_opt)
         (args, opts) = parser.getopt(args[1:])
         if hasattr(opts, "help") and opts.help:
             self._show_help(parser, display_options=0, commands=[cmd_class])
             return
 
-        if hasattr(cmd_class, "help_options") and isinstance(
-            cmd_class.help_options, list
-        ):
+        if hasattr(cmd_class, "help_options") and isinstance(cmd_class.help_options, list):
             help_option_found = 0
             for help_option, short, desc, func in cmd_class.help_options:
                 if hasattr(opts, parser.get_attr_name(help_option)):
@@ -592,8 +576,7 @@ Common commands: (see '--help-commands' for more)
                     else:
                         raise DistutilsClassError(
                             "invalid help function %r for help option '%s': "
-                            "must be a callable object (function, etc.)"
-                            % (func, help_option)
+                            "must be a callable object (function, etc.)" % (func, help_option)
                         )
 
             if help_option_found:
@@ -649,8 +632,7 @@ Common commands: (see '--help-commands' for more)
         if display_options:
             parser.set_option_table(self.display_options)
             parser.print_help(
-                "Information display options (just display "
-                + "information, ignore any commands)"
+                "Information display options (just display " + "information, ignore any commands)"
             )
             print("")
 
@@ -660,9 +642,7 @@ Common commands: (see '--help-commands' for more)
             else:
                 klass = self.get_command_class(command)
             if hasattr(klass, "help_options") and isinstance(klass.help_options, list):
-                parser.set_option_table(
-                    klass.user_options + fix_help_options(klass.help_options)
-                )
+                parser.set_option_table(klass.user_options + fix_help_options(klass.help_options))
             else:
                 parser.set_option_table(klass.user_options)
             parser.print_help("Options for '%s' command:" % klass.__name__)
@@ -852,8 +832,7 @@ Common commands: (see '--help-commands' for more)
         if not cmd_obj and create:
             if DEBUG:
                 self.announce(
-                    "Distribution.get_command_obj(): "
-                    "creating '%s' command object" % command
+                    "Distribution.get_command_obj(): " "creating '%s' command object" % command
                 )
 
             klass = self.get_command_class(command)
@@ -1011,11 +990,7 @@ Common commands: (see '--help-commands' for more)
         return self.data_files and len(self.data_files) > 0
 
     def is_pure(self):
-        return (
-            self.has_pure_modules()
-            and not self.has_ext_modules()
-            and not self.has_c_libraries()
-        )
+        return self.has_pure_modules() and not self.has_ext_modules() and not self.has_c_libraries()
 
     # -- Metadata query methods ----------------------------------------
 
@@ -1130,9 +1105,7 @@ class DistributionMetadata:
 
     def write_pkg_info(self, base_dir):
         """Write the PKG-INFO file into the release tree."""
-        with open(
-            os.path.join(base_dir, "PKG-INFO"), "w", encoding="UTF-8"
-        ) as pkg_info:
+        with open(os.path.join(base_dir, "PKG-INFO"), "w", encoding="UTF-8") as pkg_info:
             self.write_pkg_file(pkg_info)
 
     def write_pkg_file(self, file):

@@ -259,9 +259,7 @@ class Fragment:
     def render_pdf_text(self, frag_ws, current_ws, word_spacing, adjust_x, adjust_y, h):
         if self.is_ttf_font:
             if self.text_shaping_parameters:
-                return self.render_with_text_shaping(
-                    adjust_x, adjust_y, h, word_spacing
-                )
+                return self.render_with_text_shaping(adjust_x, adjust_y, h, word_spacing)
             return self.render_pdf_text_ttf(frag_ws, word_spacing)
         return self.render_pdf_text_core(frag_ws, current_ws)
 
@@ -298,9 +296,7 @@ class Fragment:
             escaped_text = " ".join(words_strl)
             ret += f"[{escaped_text}] TJ"
         else:
-            escaped_text = escape_parens(
-                mapped_text.encode("utf-16-be").decode("latin-1")
-            )
+            escaped_text = escape_parens(mapped_text.encode("utf-16-be").decode("latin-1"))
             ret += f"({escaped_text}) Tj"
         return ret
 
@@ -332,9 +328,7 @@ class Fragment:
                     text = ""
                 offsetx = pos_x + adjust_pos(ti["x_offset"])
                 offsety = pos_y - adjust_pos(ti["y_offset"])
-                ret += (
-                    f"1 0 0 1 {(offsetx) * self.k:.2f} {(h - offsety) * self.k:.2f} Tm "
-                )
+                ret += f"1 0 0 1 {(offsetx) * self.k:.2f} {(h - offsety) * self.k:.2f} Tm "
             text += char
             pos_x += adjust_pos(ti["x_advance"]) + char_spacing
             pos_y += adjust_pos(ti["y_advance"])
@@ -342,9 +336,7 @@ class Fragment:
                 pos_x += word_spacing
 
             # if only moving "x" we don't need to move the text matrix
-            if ti["force_positioning"] or (
-                word_spacing and ti["mapped_char"] == space_mapped_code
-            ):
+            if ti["force_positioning"] or (word_spacing and ti["mapped_char"] == space_mapped_code):
                 if text:
                     ret += f"({escape_parens(text)}) Tj "
                     text = ""
@@ -525,9 +517,9 @@ class CurrentLine:
         # characters are expected to be grouped into fragments by font and
         # character attributes. If the last existing fragment doesn't match
         # the properties of the pending character -> add a new fragment.
-        elif isinstance(
-            original_fragment, Fragment
-        ) and not original_fragment.has_same_style(self.fragments[-1]):
+        elif isinstance(original_fragment, Fragment) and not original_fragment.has_same_style(
+            self.fragments[-1]
+        ):
             self.fragments.append(
                 original_fragment.__class__(
                     characters="",
@@ -721,15 +713,11 @@ class MultiLineBreak:
             # write_html() with TextColumns uses this, since it can't know in
             # advance where the lines will be broken.
             while self.fragment_index < len(self.fragments):
-                if self.character_index >= len(
-                    self.fragments[self.fragment_index].characters
-                ):
+                if self.character_index >= len(self.fragments[self.fragment_index].characters):
                     self.character_index = 0
                     self.fragment_index += 1
                     continue
-                character = self.fragments[self.fragment_index].characters[
-                    self.character_index
-                ]
+                character = self.fragments[self.fragment_index].characters[self.character_index]
                 if character == SPACE:
                     self.character_index += 1
                 else:
@@ -789,9 +777,7 @@ class MultiLineBreak:
                     self.character_index += 1
                     return line
                 if idx_last_forced_break == self.character_index:
-                    raise FPDFException(
-                        "Not enough horizontal space to render a single character"
-                    )
+                    raise FPDFException("Not enough horizontal space to render a single character")
                 self.idx_last_forced_break = self.character_index
                 return current_line.manual_break(
                     Align.L if self.align == Align.J else self.align,

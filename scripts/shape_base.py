@@ -19,9 +19,7 @@ from .multiarray import array, asanyarray, normalize_axis_index
 from . import fromnumeric as _from_nx
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
 def _atleast_1d_dispatcher(*arys):
@@ -506,8 +504,7 @@ def _block_check_depths_match(arrays, parent_index=[]):
         )
     elif type(arrays) is list and len(arrays) > 0:
         idxs_ndims = (
-            _block_check_depths_match(arr, parent_index + [i])
-            for i, arr in enumerate(arrays)
+            _block_check_depths_match(arr, parent_index + [i]) for i, arr in enumerate(arrays)
         )
 
         first_index, max_arr_ndim, final_size = next(idxs_ndims)
@@ -592,8 +589,7 @@ def _concatenate_shapes(shapes, axis):
     first_shape_post = first_shape[axis + 1 :]
 
     if any(
-        shape[:axis] != first_shape_pre or shape[axis + 1 :] != first_shape_post
-        for shape in shapes
+        shape[:axis] != first_shape_pre or shape[axis + 1 :] != first_shape_post for shape in shapes
     ):
         raise ValueError("Mismatched array shapes in block along axis {}.".format(axis))
 
@@ -601,8 +597,7 @@ def _concatenate_shapes(shapes, axis):
 
     offsets_at_axis = _accumulate(shape_at_axis)
     slice_prefixes = [
-        (slice(start, end),)
-        for start, end in zip([0] + offsets_at_axis, offsets_at_axis)
+        (slice(start, end),) for start, end in zip([0] + offsets_at_axis, offsets_at_axis)
     ]
     return shape, slice_prefixes
 
@@ -636,10 +631,7 @@ def _block_info_recursion(arrays, max_depth, result_ndim, depth=0):
     """
     if depth < max_depth:
         shapes, slices, arrays = zip(
-            *[
-                _block_info_recursion(arr, max_depth, result_ndim, depth + 1)
-                for arr in arrays
-            ]
+            *[_block_info_recursion(arr, max_depth, result_ndim, depth + 1) for arr in arrays]
         )
 
         axis = result_ndim - max_depth + depth
@@ -878,9 +870,7 @@ def _block_setup(arrays):
     bottom_index, arr_ndim, final_size = _block_check_depths_match(arrays)
     list_ndim = len(bottom_index)
     if bottom_index and bottom_index[-1] is None:
-        raise ValueError(
-            "List at {} cannot be empty".format(_block_format_index(bottom_index))
-        )
+        raise ValueError("List at {} cannot be empty".format(_block_format_index(bottom_index)))
     result_ndim = max(arr_ndim, list_ndim)
     return arrays, list_ndim, result_ndim, final_size
 

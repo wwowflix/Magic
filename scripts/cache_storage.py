@@ -281,9 +281,7 @@ def request_entries(
     skip_count: typing.Optional[int] = None,
     page_size: typing.Optional[int] = None,
     path_filter: typing.Optional[str] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[DataEntry], float]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[DataEntry], float]]:
     """
     Requests data from cache.
 

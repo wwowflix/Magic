@@ -421,9 +421,7 @@ def doc(*docstrings: str | Callable, **params) -> Callable[[F], F]:
         )
 
         # error: "F" has no attribute "_docstring_components"
-        decorated._docstring_components = (  # type: ignore[attr-defined]
-            docstring_components
-        )
+        decorated._docstring_components = docstring_components  # type: ignore[attr-defined]
         return decorated
 
     return decorator

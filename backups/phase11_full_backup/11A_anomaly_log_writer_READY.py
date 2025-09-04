@@ -17,7 +17,7 @@ ANOMALY_KEYWORDS = [
 
 
 def scan_logs_for_anomalies():
-    print("🔍 Scanning logs for anomalies...")
+    print("ðŸ” Scanning logs for anomalies...")
     found = False
     summary = []
 
@@ -40,9 +40,11 @@ def scan_logs_for_anomalies():
             out.write(f"\n=== Anomaly Report @ {timestamp} ===\n")
             for entry in summary:
                 out.write(entry + "\n")
-        print(f"🚨 {len(summary)} anomalies found. Written to anomalies_detected.log.")
+        print(
+            f"ðŸš¨ {len(summary)} anomalies found. Written to anomalies_detected.log."
+        )
     else:
-        print("✅ No anomalies found.")
+        print("âœ… No anomalies found.")
 
 
 if __name__ == "__main__":

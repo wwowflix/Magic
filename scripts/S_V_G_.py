@@ -199,7 +199,12 @@ class DocumentIndexEntry(object):
     def __repr__(self):
         return (
             "startGlyphID: %s, endGlyphID: %s, svgDocOffset: %s, svgDocLength: %s"
-            % (self.startGlyphID, self.endGlyphID, self.svgDocOffset, self.svgDocLength)
+            % (
+                self.startGlyphID,
+                self.endGlyphID,
+                self.svgDocOffset,
+                self.svgDocLength,
+            )
         )
 
 

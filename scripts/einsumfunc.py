@@ -194,9 +194,7 @@ def _optimal_path(input_sets, output_set, idx_dict, memory_limit):
                     continue
 
                 # Build (total_cost, positions, indices_remaining)
-                total_cost = cost + _flop_count(
-                    idx_contract, idx_removed, len(con), idx_dict
-                )
+                total_cost = cost + _flop_count(idx_contract, idx_removed, len(con), idx_dict)
                 new_pos = positions + [con]
                 iter_results.append((total_cost, new_pos, new_input_sets))
 
@@ -604,8 +602,7 @@ def _parse_einsum_input(operands):
                         s = operator.index(s)
                     except TypeError as e:
                         raise TypeError(
-                            "For this input type lists must contain "
-                            "either int or Ellipsis"
+                            "For this input type lists must contain " "either int or Ellipsis"
                         ) from e
                     subscripts += einsum_symbols[s]
             if num != last:
@@ -621,8 +618,7 @@ def _parse_einsum_input(operands):
                         s = operator.index(s)
                     except TypeError as e:
                         raise TypeError(
-                            "For this input type lists must contain "
-                            "either int or Ellipsis"
+                            "For this input type lists must contain " "either int or Ellipsis"
                         ) from e
                     subscripts += einsum_symbols[s]
     # Check for proper "->"
@@ -711,9 +707,7 @@ def _parse_einsum_input(operands):
 
     # Make sure number operands is equivalent to the number of terms
     if len(input_subscripts.split(",")) != len(operands):
-        raise ValueError(
-            "Number of einsum subscripts must be equal to the " "number of operands."
-        )
+        raise ValueError("Number of einsum subscripts must be equal to the " "number of operands.")
 
     return (input_subscripts, output_subscript, operands)
 
@@ -888,8 +882,7 @@ def einsum_path(*operands, optimize="greedy", einsum_call=False):
         if len(sh) != len(term):
             raise ValueError(
                 "Einstein sum subscript %s does not contain the "
-                "correct number of indices for operand %d."
-                % (input_subscripts[tnum], tnum)
+                "correct number of indices for operand %d." % (input_subscripts[tnum], tnum)
             )
         for cnum, char in enumerate(term):
             dim = sh[cnum]
@@ -916,8 +909,7 @@ def einsum_path(*operands, optimize="greedy", einsum_call=False):
 
     # Compute size of each input array plus the output array
     size_list = [
-        _compute_size_by_dict(term, dimension_dict)
-        for term in input_list + [output_subscript]
+        _compute_size_by_dict(term, dimension_dict) for term in input_list + [output_subscript]
     ]
     max_size = max(size_list)
 
@@ -954,9 +946,7 @@ def einsum_path(*operands, optimize="greedy", einsum_call=False):
         contract = _find_contraction(contract_inds, input_sets, output_set)
         out_inds, input_sets, idx_removed, idx_contract = contract
 
-        cost = _flop_count(
-            idx_contract, idx_removed, len(contract_inds), dimension_dict
-        )
+        cost = _flop_count(idx_contract, idx_removed, len(contract_inds), dimension_dict)
         cost_list.append(cost)
         scale_list.append(len(idx_contract))
         size_list.append(_compute_size_by_dict(out_inds, dimension_dict))
@@ -1402,9 +1392,7 @@ def einsum(*operands, out=None, optimize=False, **kwargs):
         raise TypeError("Did not understand the following kwargs: %s" % unknown_kwargs)
 
     # Build the contraction list and operand
-    operands, contraction_list = einsum_path(
-        *operands, optimize=optimize, einsum_call=True
-    )
+    operands, contraction_list = einsum_path(*operands, optimize=optimize, einsum_call=True)
 
     # Handle order kwarg for output array, c_einsum allows mixed case
     output_order = kwargs.pop("order", "K")
@@ -1439,17 +1427,13 @@ def einsum(*operands, out=None, optimize=False, **kwargs):
                 right_pos.append(input_right.find(s))
 
             # Contract!
-            new_view = tensordot(
-                *tmp_operands, axes=(tuple(left_pos), tuple(right_pos))
-            )
+            new_view = tensordot(*tmp_operands, axes=(tuple(left_pos), tuple(right_pos)))
 
             # Build a new view if needed
             if (tensor_result != results_index) or handle_out:
                 if handle_out:
                     kwargs["out"] = out
-                new_view = c_einsum(
-                    tensor_result + "->" + results_index, new_view, **kwargs
-                )
+                new_view = c_einsum(tensor_result + "->" + results_index, new_view, **kwargs)
 
         # Call einsum
         else:

@@ -1,4 +1,4 @@
-﻿import os
+ï¿import os
 import shutil
 import pandas as pd
 
@@ -7,7 +7,7 @@ BACKUP_DIR = "backups/"
 restored = 0
 
 if not os.path.exists(CSV_PATH):
-    print("❌ CSV file not found at", CSV_PATH)
+    print("âŒ CSV file not found at", CSV_PATH)
     exit()
 
 df = pd.read_csv(CSV_PATH)
@@ -20,14 +20,14 @@ for idx, row in df.iterrows():
             if os.path.exists(backup_path):
                 os.makedirs(os.path.dirname(full_path), exist_ok=True)
                 shutil.copy2(backup_path, full_path)
-                print(f"✅ Restored: {filename}")
+                print(f"âœ… Restored: {filename}")
                 restored += 1
             else:
-                print(f"⚠️ Missing in backup: {filename}")
+                print(f"âš ï¸ Missing in backup: {filename}")
     except Exception as e:
-        print("❌ Error:", e)
+        print("âŒ Error:", e)
 
 if restored == 0:
-    print("✅ No files to restore.")
+    print("âœ… No files to restore.")
 else:
-    print(f"🔁 Total restored files: {restored}")
+    print(f"ðŸ” Total restored files: {restored}")

@@ -44,9 +44,7 @@ common_apply_allowlist = (
 
 series_apply_allowlist: frozenset[str] = (
     common_apply_allowlist
-    | frozenset(
-        {"nlargest", "nsmallest", "is_monotonic_increasing", "is_monotonic_decreasing"}
-    )
+    | frozenset({"nlargest", "nsmallest", "is_monotonic_increasing", "is_monotonic_decreasing"})
 ) | frozenset(["dtype", "unique"])
 
 dataframe_apply_allowlist: frozenset[str] = common_apply_allowlist | frozenset(

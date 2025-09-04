@@ -22,128 +22,128 @@ BIDI_BRACKETS = {
     "]": {"pair": "[", "type": "c"},
     "{": {"pair": "}", "type": "o"},
     "}": {"pair": "{", "type": "c"},
-    "༺": {"pair": "༻", "type": "o"},
-    "༻": {"pair": "༺", "type": "c"},
-    "༼": {"pair": "༽", "type": "o"},
-    "༽": {"pair": "༼", "type": "c"},
-    "᚛": {"pair": "᚜", "type": "o"},
-    "᚜": {"pair": "᚛", "type": "c"},
-    "⁅": {"pair": "⁆", "type": "o"},
-    "⁆": {"pair": "⁅", "type": "c"},
-    "⁽": {"pair": "⁾", "type": "o"},
-    "⁾": {"pair": "⁽", "type": "c"},
-    "₍": {"pair": "₎", "type": "o"},
-    "₎": {"pair": "₍", "type": "c"},
-    "⌈": {"pair": "⌉", "type": "o"},
-    "⌉": {"pair": "⌈", "type": "c"},
-    "⌊": {"pair": "⌋", "type": "o"},
-    "⌋": {"pair": "⌊", "type": "c"},
-    "〈": {"pair": "〉", "type": "o"},
-    "〉": {"pair": "〈", "type": "c"},
-    "❨": {"pair": "❩", "type": "o"},
-    "❩": {"pair": "❨", "type": "c"},
-    "❪": {"pair": "❫", "type": "o"},
-    "❫": {"pair": "❪", "type": "c"},
-    "❬": {"pair": "❭", "type": "o"},
-    "❭": {"pair": "❬", "type": "c"},
-    "❮": {"pair": "❯", "type": "o"},
-    "❯": {"pair": "❮", "type": "c"},
-    "❰": {"pair": "❱", "type": "o"},
-    "❱": {"pair": "❰", "type": "c"},
-    "❲": {"pair": "❳", "type": "o"},
-    "❳": {"pair": "❲", "type": "c"},
-    "❴": {"pair": "❵", "type": "o"},
-    "❵": {"pair": "❴", "type": "c"},
-    "⟅": {"pair": "⟆", "type": "o"},
-    "⟆": {"pair": "⟅", "type": "c"},
-    "⟦": {"pair": "⟧", "type": "o"},
-    "⟧": {"pair": "⟦", "type": "c"},
-    "⟨": {"pair": "⟩", "type": "o"},
-    "⟩": {"pair": "⟨", "type": "c"},
-    "⟪": {"pair": "⟫", "type": "o"},
-    "⟫": {"pair": "⟪", "type": "c"},
-    "⟬": {"pair": "⟭", "type": "o"},
-    "⟭": {"pair": "⟬", "type": "c"},
-    "⟮": {"pair": "⟯", "type": "o"},
-    "⟯": {"pair": "⟮", "type": "c"},
-    "⦃": {"pair": "⦄", "type": "o"},
-    "⦄": {"pair": "⦃", "type": "c"},
-    "⦅": {"pair": "⦆", "type": "o"},
-    "⦆": {"pair": "⦅", "type": "c"},
-    "⦇": {"pair": "⦈", "type": "o"},
-    "⦈": {"pair": "⦇", "type": "c"},
-    "⦉": {"pair": "⦊", "type": "o"},
-    "⦊": {"pair": "⦉", "type": "c"},
-    "⦋": {"pair": "⦌", "type": "o"},
-    "⦌": {"pair": "⦋", "type": "c"},
-    "⦍": {"pair": "⦐", "type": "o"},
-    "⦎": {"pair": "⦏", "type": "c"},
-    "⦏": {"pair": "⦎", "type": "o"},
-    "⦐": {"pair": "⦍", "type": "c"},
-    "⦑": {"pair": "⦒", "type": "o"},
-    "⦒": {"pair": "⦑", "type": "c"},
-    "⦓": {"pair": "⦔", "type": "o"},
-    "⦔": {"pair": "⦓", "type": "c"},
-    "⦕": {"pair": "⦖", "type": "o"},
-    "⦖": {"pair": "⦕", "type": "c"},
-    "⦗": {"pair": "⦘", "type": "o"},
-    "⦘": {"pair": "⦗", "type": "c"},
-    "⧘": {"pair": "⧙", "type": "o"},
-    "⧙": {"pair": "⧘", "type": "c"},
-    "⧚": {"pair": "⧛", "type": "o"},
-    "⧛": {"pair": "⧚", "type": "c"},
-    "⧼": {"pair": "⧽", "type": "o"},
-    "⧽": {"pair": "⧼", "type": "c"},
-    "⸢": {"pair": "⸣", "type": "o"},
-    "⸣": {"pair": "⸢", "type": "c"},
-    "⸤": {"pair": "⸥", "type": "o"},
-    "⸥": {"pair": "⸤", "type": "c"},
-    "⸦": {"pair": "⸧", "type": "o"},
-    "⸧": {"pair": "⸦", "type": "c"},
-    "⸨": {"pair": "⸩", "type": "o"},
-    "⸩": {"pair": "⸨", "type": "c"},
-    "⹕": {"pair": "⹖", "type": "o"},
-    "⹖": {"pair": "⹕", "type": "c"},
-    "⹗": {"pair": "⹘", "type": "o"},
-    "⹘": {"pair": "⹗", "type": "c"},
-    "⹙": {"pair": "⹚", "type": "o"},
-    "⹚": {"pair": "⹙", "type": "c"},
-    "⹛": {"pair": "⹜", "type": "o"},
-    "⹜": {"pair": "⹛", "type": "c"},
-    "〈": {"pair": "〉", "type": "o"},
-    "〉": {"pair": "〈", "type": "c"},
-    "《": {"pair": "》", "type": "o"},
-    "》": {"pair": "《", "type": "c"},
-    "「": {"pair": "」", "type": "o"},
-    "」": {"pair": "「", "type": "c"},
-    "『": {"pair": "』", "type": "o"},
-    "』": {"pair": "『", "type": "c"},
-    "【": {"pair": "】", "type": "o"},
-    "】": {"pair": "【", "type": "c"},
-    "〔": {"pair": "〕", "type": "o"},
-    "〕": {"pair": "〔", "type": "c"},
-    "〖": {"pair": "〗", "type": "o"},
-    "〗": {"pair": "〖", "type": "c"},
-    "〘": {"pair": "〙", "type": "o"},
-    "〙": {"pair": "〘", "type": "c"},
-    "〚": {"pair": "〛", "type": "o"},
-    "〛": {"pair": "〚", "type": "c"},
-    "﹙": {"pair": "﹚", "type": "o"},
-    "﹚": {"pair": "﹙", "type": "c"},
-    "﹛": {"pair": "﹜", "type": "o"},
-    "﹜": {"pair": "﹛", "type": "c"},
-    "﹝": {"pair": "﹞", "type": "o"},
-    "﹞": {"pair": "﹝", "type": "c"},
-    "（": {"pair": "）", "type": "o"},
-    "）": {"pair": "（", "type": "c"},
-    "［": {"pair": "］", "type": "o"},
-    "］": {"pair": "［", "type": "c"},
-    "｛": {"pair": "｝", "type": "o"},
-    "｝": {"pair": "｛", "type": "c"},
-    "｟": {"pair": "｠", "type": "o"},
-    "｠": {"pair": "｟", "type": "c"},
-    "｢": {"pair": "｣", "type": "o"},
-    "｣": {"pair": "｢", "type": "c"},
+    "à¼º": {"pair": "à¼", "type": "o"},
+    "à¼": {"pair": "à¼º", "type": "c"},
+    "à¼¼": {"pair": "à¼½", "type": "o"},
+    "à¼½": {"pair": "à¼¼", "type": "c"},
+    "áš›": {"pair": "ášœ", "type": "o"},
+    "ášœ": {"pair": "áš›", "type": "c"},
+    "â…": {"pair": "â†", "type": "o"},
+    "â†": {"pair": "â…", "type": "c"},
+    "â½": {"pair": "â¾", "type": "o"},
+    "â¾": {"pair": "â½", "type": "c"},
+    "â‚": {"pair": "â‚Ž", "type": "o"},
+    "â‚Ž": {"pair": "â‚", "type": "c"},
+    "âŒˆ": {"pair": "âŒ‰", "type": "o"},
+    "âŒ‰": {"pair": "âŒˆ", "type": "c"},
+    "âŒŠ": {"pair": "âŒ‹", "type": "o"},
+    "âŒ‹": {"pair": "âŒŠ", "type": "c"},
+    "âŒ©": {"pair": "âŒª", "type": "o"},
+    "âŒª": {"pair": "âŒ©", "type": "c"},
+    "â¨": {"pair": "â©", "type": "o"},
+    "â©": {"pair": "â¨", "type": "c"},
+    "âª": {"pair": "â", "type": "o"},
+    "â": {"pair": "âª", "type": "c"},
+    "â¬": {"pair": "â­", "type": "o"},
+    "â­": {"pair": "â¬", "type": "c"},
+    "â®": {"pair": "â¯", "type": "o"},
+    "â¯": {"pair": "â®", "type": "c"},
+    "â°": {"pair": "â±", "type": "o"},
+    "â±": {"pair": "â°", "type": "c"},
+    "â²": {"pair": "â³", "type": "o"},
+    "â³": {"pair": "â²", "type": "c"},
+    "â´": {"pair": "âµ", "type": "o"},
+    "âµ": {"pair": "â´", "type": "c"},
+    "âŸ…": {"pair": "âŸ†", "type": "o"},
+    "âŸ†": {"pair": "âŸ…", "type": "c"},
+    "âŸ¦": {"pair": "âŸ§", "type": "o"},
+    "âŸ§": {"pair": "âŸ¦", "type": "c"},
+    "âŸ¨": {"pair": "âŸ©", "type": "o"},
+    "âŸ©": {"pair": "âŸ¨", "type": "c"},
+    "âŸª": {"pair": "âŸ", "type": "o"},
+    "âŸ": {"pair": "âŸª", "type": "c"},
+    "âŸ¬": {"pair": "âŸ­", "type": "o"},
+    "âŸ­": {"pair": "âŸ¬", "type": "c"},
+    "âŸ®": {"pair": "âŸ¯", "type": "o"},
+    "âŸ¯": {"pair": "âŸ®", "type": "c"},
+    "â¦ƒ": {"pair": "â¦„", "type": "o"},
+    "â¦„": {"pair": "â¦ƒ", "type": "c"},
+    "â¦…": {"pair": "â¦†", "type": "o"},
+    "â¦†": {"pair": "â¦…", "type": "c"},
+    "â¦‡": {"pair": "â¦ˆ", "type": "o"},
+    "â¦ˆ": {"pair": "â¦‡", "type": "c"},
+    "â¦‰": {"pair": "â¦Š", "type": "o"},
+    "â¦Š": {"pair": "â¦‰", "type": "c"},
+    "â¦‹": {"pair": "â¦Œ", "type": "o"},
+    "â¦Œ": {"pair": "â¦‹", "type": "c"},
+    "â¦": {"pair": "â¦", "type": "o"},
+    "â¦Ž": {"pair": "â¦", "type": "c"},
+    "â¦": {"pair": "â¦Ž", "type": "o"},
+    "â¦": {"pair": "â¦", "type": "c"},
+    "â¦‘": {"pair": "â¦’", "type": "o"},
+    "â¦’": {"pair": "â¦‘", "type": "c"},
+    "â¦“": {"pair": "â¦”", "type": "o"},
+    "â¦”": {"pair": "â¦“", "type": "c"},
+    "â¦•": {"pair": "â¦–", "type": "o"},
+    "â¦–": {"pair": "â¦•", "type": "c"},
+    "â¦—": {"pair": "â¦˜", "type": "o"},
+    "â¦˜": {"pair": "â¦—", "type": "c"},
+    "â§˜": {"pair": "â§™", "type": "o"},
+    "â§™": {"pair": "â§˜", "type": "c"},
+    "â§š": {"pair": "â§›", "type": "o"},
+    "â§›": {"pair": "â§š", "type": "c"},
+    "â§¼": {"pair": "â§½", "type": "o"},
+    "â§½": {"pair": "â§¼", "type": "c"},
+    "â¸¢": {"pair": "â¸£", "type": "o"},
+    "â¸£": {"pair": "â¸¢", "type": "c"},
+    "â¸¤": {"pair": "â¸¥", "type": "o"},
+    "â¸¥": {"pair": "â¸¤", "type": "c"},
+    "â¸¦": {"pair": "â¸§", "type": "o"},
+    "â¸§": {"pair": "â¸¦", "type": "c"},
+    "â¸¨": {"pair": "â¸©", "type": "o"},
+    "â¸©": {"pair": "â¸¨", "type": "c"},
+    "â¹•": {"pair": "â¹–", "type": "o"},
+    "â¹–": {"pair": "â¹•", "type": "c"},
+    "â¹—": {"pair": "â¹˜", "type": "o"},
+    "â¹˜": {"pair": "â¹—", "type": "c"},
+    "â¹™": {"pair": "â¹š", "type": "o"},
+    "â¹š": {"pair": "â¹™", "type": "c"},
+    "â¹›": {"pair": "â¹œ", "type": "o"},
+    "â¹œ": {"pair": "â¹›", "type": "c"},
+    "ã€ˆ": {"pair": "ã€‰", "type": "o"},
+    "ã€‰": {"pair": "ã€ˆ", "type": "c"},
+    "ã€Š": {"pair": "ã€‹", "type": "o"},
+    "ã€‹": {"pair": "ã€Š", "type": "c"},
+    "ã€Œ": {"pair": "ã€", "type": "o"},
+    "ã€": {"pair": "ã€Œ", "type": "c"},
+    "ã€Ž": {"pair": "ã€", "type": "o"},
+    "ã€": {"pair": "ã€Ž", "type": "c"},
+    "ã€": {"pair": "ã€‘", "type": "o"},
+    "ã€‘": {"pair": "ã€", "type": "c"},
+    "ã€”": {"pair": "ã€•", "type": "o"},
+    "ã€•": {"pair": "ã€”", "type": "c"},
+    "ã€–": {"pair": "ã€—", "type": "o"},
+    "ã€—": {"pair": "ã€–", "type": "c"},
+    "ã€˜": {"pair": "ã€™", "type": "o"},
+    "ã€™": {"pair": "ã€˜", "type": "c"},
+    "ã€š": {"pair": "ã€›", "type": "o"},
+    "ã€›": {"pair": "ã€š", "type": "c"},
+    "ï¹™": {"pair": "ï¹š", "type": "o"},
+    "ï¹š": {"pair": "ï¹™", "type": "c"},
+    "ï¹›": {"pair": "ï¹œ", "type": "o"},
+    "ï¹œ": {"pair": "ï¹›", "type": "c"},
+    "ï¹": {"pair": "ï¹ž", "type": "o"},
+    "ï¹ž": {"pair": "ï¹", "type": "c"},
+    "ï¼ˆ": {"pair": "ï¼‰", "type": "o"},
+    "ï¼‰": {"pair": "ï¼ˆ", "type": "c"},
+    "ï¼": {"pair": "ï¼½", "type": "o"},
+    "ï¼½": {"pair": "ï¼", "type": "c"},
+    "ï½›": {"pair": "ï½", "type": "o"},
+    "ï½": {"pair": "ï½›", "type": "c"},
+    "ï½Ÿ": {"pair": "ï½ ", "type": "o"},
+    "ï½ ": {"pair": "ï½Ÿ", "type": "c"},
+    "ï½¢": {"pair": "ï½£", "type": "o"},
+    "ï½£": {"pair": "ï½¢", "type": "c"},
 }
 
 
@@ -157,9 +157,7 @@ class BidiCharacter:
         "direction",
     ]
 
-    def __init__(
-        self, character_index: int, character: str, embedding_level: str, debug: bool
-    ):
+    def __init__(self, character_index: int, character: str, embedding_level: str, debug: bool):
         self.character_index = character_index
         self.character = character
         if debug and character.isupper():
@@ -218,8 +216,7 @@ class IsolatingRun:
                 else:
                     bidi_char.set_class(
                         "ON"
-                        if self.characters[i - 1].bidi_class
-                        in ("LRI", "RLI", "FSI", "PDI")
+                        if self.characters[i - 1].bidi_class in ("LRI", "RLI", "FSI", "PDI")
                         else self.characters[i - 1].bidi_class
                     )
 
@@ -251,8 +248,7 @@ class IsolatingRun:
             if (
                 bidi_char.bidi_class == "CS"
                 and self.characters[i - 1].bidi_class in ("AN", "EN")
-                and self.characters[i + 1].bidi_class
-                == self.characters[i - 1].bidi_class
+                and self.characters[i + 1].bidi_class == self.characters[i - 1].bidi_class
             ):
                 bidi_char.set_class(self.characters[i - 1].bidi_class)
 
@@ -311,8 +307,8 @@ class IsolatingRun:
                     for current_open_bracket in range(open_bracket_count, 0, -1):
                         open_char, open_index = open_brackets[current_open_bracket - 1]
                         if (BIDI_BRACKETS[open_char]["pair"] == char.character) or (
-                            BIDI_BRACKETS[open_char]["pair"] in ("〉", "〉")
-                            and char.character in ("〉", "〉")
+                            BIDI_BRACKETS[open_char]["pair"] in ("ã€‰", "âŒª")
+                            and char.character in ("ã€‰", "âŒª")
                         ):
                             bracket_pairs.append((open_index, index))
                             open_brackets = open_brackets[: current_open_bracket - 1]
@@ -350,8 +346,7 @@ class IsolatingRun:
                 resulting_direction = None
                 for index in range(b[0], b[1]):
                     if (
-                        self.characters[index].bidi_class == "L"
-                        and embedding_direction == "L"
+                        self.characters[index].bidi_class == "L" and embedding_direction == "L"
                     ) or (
                         self.characters[index].bidi_class in ("R", "AN", "EN")
                         and embedding_direction == "R"
@@ -359,8 +354,7 @@ class IsolatingRun:
                         strong_same_direction = True
                         break
                     if (
-                        self.characters[index].bidi_class == "L"
-                        and embedding_direction == "R"
+                        self.characters[index].bidi_class == "L" and embedding_direction == "R"
                     ) or (
                         self.characters[index].bidi_class in ("R", "AN", "EN")
                         and embedding_direction == "L"
@@ -379,10 +373,7 @@ class IsolatingRun:
                     self.characters[b[1]].bidi_class = resulting_direction
                     if len(self.characters) > b[1] + 1:
                         next_char = self.characters[b[1] + 1]
-                        if (
-                            next_char.original_bidi_class == "NSM"
-                            and next_char.bidi_class == "ON"
-                        ):
+                        if next_char.original_bidi_class == "NSM" and next_char.bidi_class == "ON":
                             next_char.bidi_class = resulting_direction
 
         for i, bidi_char in enumerate(self.characters):
@@ -454,9 +445,7 @@ def calculate_isolate_runs(paragraph: List[BidiCharacter]) -> List[IsolatingRun]
 
     for bidi_char in paragraph:
         if bidi_char.embedding_level != lr_embedding_level:
-            level_run.append(
-                {"level": lr_embedding_level, "text": lr, "complete": False}
-            )
+            level_run.append({"level": lr_embedding_level, "text": lr, "complete": False})
             lr = []
             lr_embedding_level = bidi_char.embedding_level
         lr.append(bidi_char)
@@ -482,9 +471,7 @@ def calculate_isolate_runs(paragraph: List[BidiCharacter]) -> List[IsolatingRun]
                 # X10 - last char is an isolator without matching PDI - set EOS to embedding level
                 eos = level_to_direction(lr["level"])
             else:
-                eos = level_to_direction(
-                    max(lr["level"], level_run[index + 1]["level"])
-                )
+                eos = level_to_direction(max(lr["level"], level_run[index + 1]["level"]))
         lr["sos"] = sos
         lr["eos"] = eos
 
@@ -499,10 +486,7 @@ def calculate_isolate_runs(paragraph: List[BidiCharacter]) -> List[IsolatingRun]
         lr["complete"] = True
         if lr["text"][-1].original_bidi_class in ("LRI", "RLI", "FSI"):
             for nlr in level_run[index + 1 :]:
-                if (
-                    nlr["level"] == lr["level"]
-                    and nlr["text"][0].original_bidi_class == "PDI"
-                ):
+                if nlr["level"] == lr["level"] and nlr["text"][0].original_bidi_class == "PDI":
                     lr["text"] += nlr["text"]
                     nlr["complete"] = True
                     eos = nlr["eos"]
@@ -522,14 +506,10 @@ class BidiParagraph:
         "characters",
     )
 
-    def __init__(
-        self, text: str, base_direction: TextDirection = None, debug: bool = False
-    ):
+    def __init__(self, text: str, base_direction: TextDirection = None, debug: bool = False):
         self.text = text
         self.base_direction = (
-            auto_detect_base_direction(self.text, debug)
-            if not base_direction
-            else base_direction
+            auto_detect_base_direction(self.text, debug) if not base_direction else base_direction
         )
         self.debug = debug
         self.base_embedding_level = (
@@ -577,9 +557,7 @@ class BidiParagraph:
 
         # Explicit embeddings. Process each character individually applying rules X2 through X8
         for index, char in enumerate(self.text):
-            bidi_char = BidiCharacter(
-                index, char, current_status.embedding_level, self.debug
-            )
+            bidi_char = BidiCharacter(index, char, current_status.embedding_level, self.debug)
             new_bidi_class = None
 
             if bidi_char.bidi_class == "FSI":
@@ -614,9 +592,7 @@ class BidiParagraph:
                 ):
                     current_status.embedding_level = new_embedding_level
                     current_status.directional_override_status = (
-                        bidi_char.bidi_class[0]
-                        if bidi_char.bidi_class[2] == "O"
-                        else "N"
+                        bidi_char.bidi_class[0] if bidi_char.bidi_class[2] == "O" else "N"
                     )
                     if bidi_char.bidi_class[2] == "I":
                         valid_isolate_count += 1
@@ -668,10 +644,7 @@ class BidiParagraph:
                     if overflow_embedding_count > 0:
                         overflow_embedding_count -= 1
                     else:
-                        if (
-                            not current_status.directional_isolate_status
-                            and len(stack) > 1
-                        ):
+                        if not current_status.directional_isolate_status and len(stack) > 1:
                             stack.pop()
                             current_status = replace(stack[-1])
 
@@ -709,11 +682,7 @@ class BidiParagraph:
                     bidi_fragments.append(
                         (
                             current_fragment,
-                            (
-                                TextDirection.RTL
-                                if current_direction == "R"
-                                else TextDirection.LTR
-                            ),
+                            (TextDirection.RTL if current_direction == "R" else TextDirection.LTR),
                         )
                     )
                 current_fragment = ""
@@ -723,11 +692,7 @@ class BidiParagraph:
             bidi_fragments.append(
                 (
                     current_fragment,
-                    (
-                        TextDirection.RTL
-                        if current_direction == "R"
-                        else TextDirection.LTR
-                    ),
+                    (TextDirection.RTL if current_direction == "R" else TextDirection.LTR),
                 )
             )
         return tuple(bidi_fragments)
@@ -759,10 +724,7 @@ class BidiParagraph:
 
             if bidi_char.embedding_level > max_level:
                 max_level = bidi_char.embedding_level
-            if (
-                bidi_char.embedding_level % 2 != 0
-                and bidi_char.embedding_level < min_odd_level
-            ):
+            if bidi_char.embedding_level % 2 != 0 and bidi_char.embedding_level < min_odd_level:
                 min_odd_level = bidi_char.embedding_level
 
         # Rule L2. From the highest level found in the text to the lowest odd level on each line,

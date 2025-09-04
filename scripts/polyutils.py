@@ -434,9 +434,7 @@ def _vander_nd(vander_fs, points, degrees):
     """
     n_dims = len(vander_fs)
     if n_dims != len(points):
-        raise ValueError(
-            f"Expected {n_dims} dimensions of sample points, got {len(points)}"
-        )
+        raise ValueError(f"Expected {n_dims} dimensions of sample points, got {len(points)}")
     if n_dims != len(degrees):
         raise ValueError(f"Expected {n_dims} dimensions of degrees, got {len(degrees)}")
     if n_dims == 0:
@@ -448,8 +446,7 @@ def _vander_nd(vander_fs, points, degrees):
     # produce the vandermonde matrix for each dimension, placing the last
     # axis of each in an independent trailing axis of the output
     vander_arrays = (
-        vander_fs[i](points[i], degrees[i])[(...,) + _nth_slice(i, n_dims)]
-        for i in range(n_dims)
+        vander_fs[i](points[i], degrees[i])[(...,) + _nth_slice(i, n_dims)] for i in range(n_dims)
     )
 
     # we checked this wasn't empty already, so no `initial` needed

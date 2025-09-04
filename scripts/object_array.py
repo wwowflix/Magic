@@ -36,9 +36,7 @@ class ObjectStringArrayMixin(BaseStringArrayMethods):
         # For typing, _str_map relies on the object being sized.
         raise NotImplementedError
 
-    def _str_map(
-        self, f, na_value=None, dtype: NpDtype | None = None, convert: bool = True
-    ):
+    def _str_map(self, f, na_value=None, dtype: NpDtype | None = None, convert: bool = True):
         """
         Map a callable over valid elements of the array.
 
@@ -192,9 +190,7 @@ class ObjectStringArrayMixin(BaseStringArrayMethods):
                 result = type(self)._from_sequence(result)
             return result
 
-    def _str_match(
-        self, pat: str, case: bool = True, flags: int = 0, na: Scalar | None = None
-    ):
+    def _str_match(self, pat: str, case: bool = True, flags: int = 0, na: Scalar | None = None):
         if not case:
             flags |= re.IGNORECASE
 

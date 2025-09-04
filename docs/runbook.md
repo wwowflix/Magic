@@ -1,4 +1,4 @@
-﻿# Runbook
+# Runbook
 
 ## Quick start
 - `python tools/e2e_smoketest.py`

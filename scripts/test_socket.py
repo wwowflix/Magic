@@ -720,10 +720,7 @@ async def test_SocketType_resolve(socket_type: AddressFamily, addrs: Addresses) 
                 pass
             else:
                 assert isinstance(netlink_sock, _SocketType)
-                assert (
-                    await netlink_sock._resolve_address_nocp("asdf", local=local)
-                    == "asdf"
-                )
+                assert await netlink_sock._resolve_address_nocp("asdf", local=local) == "asdf"
                 netlink_sock.close()
 
             address = r"^address should be a \(host, port(, \[flowinfo, \[scopeid\]\])*\) tuple$"

@@ -115,9 +115,7 @@ def as_strided(x, shape=None, strides=None, subok=False, writeable=True):
     return view
 
 
-def _sliding_window_view_dispatcher(
-    x, window_shape, axis=None, *, subok=None, writeable=None
-):
+def _sliding_window_view_dispatcher(x, window_shape, axis=None, *, subok=None, writeable=None):
     return (x,)
 
 
@@ -334,9 +332,7 @@ def sliding_window_view(x, window_shape, axis=None, *, subok=False, writeable=Fa
             raise ValueError("window shape cannot be larger than input array shape")
         x_shape_trimmed[ax] -= dim - 1
     out_shape = tuple(x_shape_trimmed) + window_shape
-    return as_strided(
-        x, strides=out_strides, shape=out_shape, subok=subok, writeable=writeable
-    )
+    return as_strided(x, strides=out_strides, shape=out_shape, subok=subok, writeable=writeable)
 
 
 def _broadcast_to(array, shape, subok, readonly):

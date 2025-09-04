@@ -22,8 +22,7 @@ class bdist_dumb(Command):
         (
             "plat-name=",
             "p",
-            "platform name to embed in generated filenames "
-            "(default: %s)" % get_platform(),
+            "platform name to embed in generated filenames " "(default: %s)" % get_platform(),
         ),
         (
             "format=",
@@ -33,8 +32,7 @@ class bdist_dumb(Command):
         (
             "keep-temp",
             "k",
-            "keep the pseudo-installation tree around after "
-            + "creating the distribution archive",
+            "keep the pseudo-installation tree around after " + "creating the distribution archive",
         ),
         ("dist-dir=", "d", "directory to put final built distributions in"),
         ("skip-build", None, "skip rebuilding everything (for testing/debugging)"),
@@ -80,8 +78,7 @@ class bdist_dumb(Command):
                 self.format = self.default_format[os.name]
             except KeyError:
                 raise DistutilsPlatformError(
-                    "don't know how to create dumb built distributions "
-                    "on platform %s" % os.name
+                    "don't know how to create dumb built distributions " "on platform %s" % os.name
                 )
 
         self.set_undefined_options(
@@ -105,9 +102,7 @@ class bdist_dumb(Command):
 
         # And make an archive relative to the root of the
         # pseudo-installation tree.
-        archive_basename = "{}.{}".format(
-            self.distribution.get_fullname(), self.plat_name
-        )
+        archive_basename = "{}.{}".format(self.distribution.get_fullname(), self.plat_name)
 
         pseudoinstall_root = os.path.join(self.dist_dir, archive_basename)
         if not self.relative:
@@ -122,9 +117,7 @@ class bdist_dumb(Command):
                     % (repr(install.install_base), repr(install.install_platbase))
                 )
             else:
-                archive_root = os.path.join(
-                    self.bdist_dir, ensure_relative(install.install_base)
-                )
+                archive_root = os.path.join(self.bdist_dir, ensure_relative(install.install_base))
 
         # Make the archive
         filename = self.make_archive(

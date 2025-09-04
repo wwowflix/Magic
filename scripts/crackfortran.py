@@ -319,9 +319,7 @@ def rmbadname(names):
 
 def undo_rmbadname1(name):
     if name in invbadnames:
-        errmess(
-            'undo_rmbadname1: Replacing "%s" with "%s".\n' % (name, invbadnames[name])
-        )
+        errmess('undo_rmbadname1: Replacing "%s" with "%s".\n' % (name, invbadnames[name]))
         return invbadnames[name]
     return name
 
@@ -364,9 +362,7 @@ def is_free_format(file):
         while n > 0 and line:
             if line[0] != "!" and line.strip():
                 n -= 1
-                if (line[0] != "\t" and _free_f90_start(line[:5])) or line[
-                    -2:-1
-                ] == "&":
+                if (line[0] != "\t" and _free_f90_start(line[:5])) or line[-2:-1] == "&":
                     result = 1
                     break
             line = f.readline()
@@ -426,9 +422,7 @@ def readfortrancode(ffile, dowithline=show, istop=1):
             strictf77 = 0
             sourcecodeform = "fix"
             ext = os.path.splitext(currentfilename)[1]
-            if is_f_file(currentfilename) and not (
-                _has_f90_header(l) or _has_fix_header(l)
-            ):
+            if is_f_file(currentfilename) and not (_has_f90_header(l) or _has_fix_header(l)):
                 strictf77 = 1
             elif is_free_format(currentfilename) and not _has_fix_header(l):
                 sourcecodeform = "free"
@@ -548,8 +542,7 @@ def readfortrancode(ffile, dowithline=show, istop=1):
             cont = r is not None
         else:
             raise ValueError(
-                "Flag sourcecodeform must be either 'fix' or 'free': %s"
-                % repr(sourcecodeform)
+                "Flag sourcecodeform must be either 'fix' or 'free': %s" % repr(sourcecodeform)
             )
         filepositiontext = 'Line #%d in %s:"%s"\n\t' % (
             fin.filelineno() - 1,
@@ -629,9 +622,7 @@ def readfortrancode(ffile, dowithline=show, istop=1):
 
 # Crack line
 beforethisafter = (
-    r"\s*(?P<before>%s(?=\s*(\b(%s)\b)))"
-    + r"\s*(?P<this>(\b(%s)\b))"
-    + r"\s*(?P<after>%s)\s*\Z"
+    r"\s*(?P<before>%s(?=\s*(\b(%s)\b)))" + r"\s*(?P<this>(\b(%s)\b))" + r"\s*(?P<after>%s)\s*\Z"
 )
 ##
 fortrantypes = r"character|logical|integer|real|complex|double\s*(precision\s*(complex|)|complex)|type(?=\s*\([\w\s,=(*)]*\))|byte"
@@ -658,9 +649,7 @@ functionpattern = (
     "begin",
 )
 subroutinepattern = (
-    re.compile(
-        beforethisafter % (r"[a-z\s]*?", "subroutine", "subroutine", ".*"), re.I
-    ),
+    re.compile(beforethisafter % (r"[a-z\s]*?", "subroutine", "subroutine", ".*"), re.I),
     "begin",
 )
 # modulepattern=re.compile(beforethisafter%('[a-z\s]*?','module','module','.*'),re.I),'begin'
@@ -698,9 +687,7 @@ implicitpattern = (
     "implicit",
 )
 dimensionpattern = (
-    re.compile(
-        beforethisafter % ("", "dimension|virtual", "dimension|virtual", ".*"), re.I
-    ),
+    re.compile(beforethisafter % ("", "dimension|virtual", "dimension|virtual", ".*"), re.I),
     "dimension",
 )
 externalpattern = (
@@ -858,8 +845,7 @@ def crackline(line, reset=0):
             fl = 2
         while groupcounter > fl:
             outmess(
-                "crackline: groupcounter=%s groupname=%s\n"
-                % (repr(groupcounter), repr(groupname))
+                "crackline: groupcounter=%s groupname=%s\n" % (repr(groupcounter), repr(groupname))
             )
             outmess(
                 'crackline: Mismatch of blocks encountered. Trying to fix it by assuming "end" statement.\n'
@@ -945,8 +931,7 @@ def crackline(line, reset=0):
                     m = callfunpattern[0].match(line)
                     if not m:
                         outmess(
-                            "crackline: could not resolve function call for line=%s.\n"
-                            % repr(line)
+                            "crackline: could not resolve function call for line=%s.\n" % repr(line)
                         )
                         return
                     analyzeline(m, "callfun", line)
@@ -962,8 +947,7 @@ def crackline(line, reset=0):
                 return
         if groupcounter <= 0:
             raise Exception(
-                "crackline: groupcounter(=%s) is nonpositive. "
-                "Check the blocks." % (groupcounter)
+                "crackline: groupcounter(=%s) is nonpositive. " "Check the blocks." % (groupcounter)
             )
         m1 = beginpattern[0].match((line))
         if (m1) and (not m1.group("this") == groupname[groupcounter]):
@@ -1085,13 +1069,9 @@ nameargspattern = re.compile(
     r"\s*(?P<name>\b[\w$]+\b)\s*(@\(@\s*(?P<args>[\w\s,]*)\s*@\)@|)\s*((result(\s*@\(@\s*(?P<result>\b[\w$]+\b)\s*@\)@|))|(bind\s*@\(@\s*(?P<bind>.*)\s*@\)@))*\s*\Z",
     re.I,
 )
-callnameargspattern = re.compile(
-    r"\s*(?P<name>\b[\w$]+\b)\s*@\(@\s*(?P<args>.*)\s*@\)@\s*\Z", re.I
-)
+callnameargspattern = re.compile(r"\s*(?P<name>\b[\w$]+\b)\s*@\(@\s*(?P<args>.*)\s*@\)@\s*\Z", re.I)
 real16pattern = re.compile(r"([-+]?(?:\d+(?:\.\d*)?|\d*\.\d+))[dD]((?:[-+]?\d+)?)")
-real8pattern = re.compile(
-    r"([-+]?((?:\d+(?:\.\d*)?|\d*\.\d+))[eE]((?:[-+]?\d+)?)|(\d+\.\d*))"
-)
+real8pattern = re.compile(r"([-+]?((?:\d+(?:\.\d*)?|\d*\.\d+))[eE]((?:[-+]?\d+)?)|(\d+\.\d*))")
 
 _intentcallbackpattern = re.compile(r"intent\s*\(.*?\bcallback\b", re.I)
 
@@ -1129,10 +1109,7 @@ def analyzeline(m, case, line):
         and groupcounter < 1
     ):
         newname = os.path.basename(currentfilename).split(".")[0]
-        outmess(
-            'analyzeline: no group yet. Creating program group with name "%s".\n'
-            % newname
-        )
+        outmess('analyzeline: no group yet. Creating program group with name "%s".\n' % newname)
         gotnextfile = 0
         groupcounter = groupcounter + 1
         groupname[groupcounter] = "program"
@@ -1199,9 +1176,7 @@ def analyzeline(m, case, line):
         grouplist[groupcounter] = []
         if needmodule:
             if verbose > 1:
-                outmess(
-                    "analyzeline: Creating module block %s\n" % repr(f77modulename), 0
-                )
+                outmess("analyzeline: Creating module block %s\n" % repr(f77modulename), 0)
             groupname[groupcounter] = "module"
             groupcache[groupcounter]["block"] = "python module"
             groupcache[groupcounter]["name"] = f77modulename
@@ -1271,9 +1246,7 @@ def analyzeline(m, case, line):
         if case in ["call", "callfun"]:  # set parents variables
             if name not in groupcache[groupcounter - 2]["externals"]:
                 groupcache[groupcounter - 2]["externals"].append(name)
-            groupcache[groupcounter]["vars"] = copy.deepcopy(
-                groupcache[groupcounter - 2]["vars"]
-            )
+            groupcache[groupcounter]["vars"] = copy.deepcopy(groupcache[groupcounter - 2]["vars"])
             try:
                 del groupcache[groupcounter]["vars"][name][
                     groupcache[groupcounter]["vars"][name]["attrspec"].index("external")
@@ -1303,9 +1276,7 @@ def analyzeline(m, case, line):
         if block == "function":
             t = typespattern[0].match(m.group("before") + " " + name)
             if t:
-                typespec, selector, attr, edecl = cracktypespec0(
-                    t.group("this"), t.group("after")
-                )
+                typespec, selector, attr, edecl = cracktypespec0(t.group("this"), t.group("after"))
                 updatevars(typespec, selector, attr, edecl)
 
         if case in ["call", "callfun"]:
@@ -1351,10 +1322,7 @@ def analyzeline(m, case, line):
             ll = ll[: i + 1] + "::" + ll[i + 1 :]
             i = ll.find("::")
             if ll[i:] == "::" and "args" in groupcache[groupcounter]:
-                outmess(
-                    "All arguments will have attribute %s%s\n"
-                    % (m.group("this"), ll[:i])
-                )
+                outmess("All arguments will have attribute %s%s\n" % (m.group("this"), ll[:i]))
                 ll = ll + ",".join(groupcache[groupcounter]["args"])
         if i < 0:
             i = 0
@@ -1395,23 +1363,19 @@ def analyzeline(m, case, line):
                     if k not in groupcache[groupcounter]["args"]:
                         if groupcounter > 1:
                             if "__user__" not in groupcache[groupcounter - 2]["name"]:
-                                outmess(
-                                    "analyzeline: missing __user__ module (could be nothing)\n"
-                                )
+                                outmess("analyzeline: missing __user__ module (could be nothing)\n")
                             # fixes ticket 1693
                             if k != groupcache[groupcounter]["name"]:
                                 outmess(
                                     "analyzeline: appending intent(callback) %s"
-                                    " to %s arguments\n"
-                                    % (k, groupcache[groupcounter]["name"])
+                                    " to %s arguments\n" % (k, groupcache[groupcounter]["name"])
                                 )
                                 groupcache[groupcounter]["args"].append(k)
                         else:
                             errmess("analyzeline: intent(callback) %s is ignored" % (k))
                     else:
                         errmess(
-                            "analyzeline: intent(callback) %s is already"
-                            " in argument list" % (k)
+                            "analyzeline: intent(callback) %s is already" " in argument list" % (k)
                         )
             if case in [
                 "optional",
@@ -1471,16 +1435,11 @@ def analyzeline(m, case, line):
                         )
                     initexpr = "".join(tt)
                 elif t.get("typespec") == "complex":
-                    initexpr = (
-                        initexpr[1:].lower().replace("d", "e").replace(",", "+1j*(")
-                    )
+                    initexpr = initexpr[1:].lower().replace("d", "e").replace(",", "+1j*(")
             try:
                 v = eval(initexpr, {}, params)
             except (SyntaxError, NameError, TypeError) as msg:
-                errmess(
-                    "analyzeline: Failed to evaluate %r. Ignoring: %s\n"
-                    % (initexpr, msg)
-                )
+                errmess("analyzeline: Failed to evaluate %r. Ignoring: %s\n" % (initexpr, msg))
                 continue
             edecl[k]["="] = repr(v)
             if "attrspec" in edecl[k]:
@@ -1598,20 +1557,14 @@ def analyzeline(m, case, line):
             if l[0][0] == ",":
                 l[0] = l[0][1:]
             if l[0][0] == "(":
-                outmess(
-                    'analyzeline: implied-DO list "%s" is not supported. Skipping.\n'
-                    % l[0]
-                )
+                outmess('analyzeline: implied-DO list "%s" is not supported. Skipping.\n' % l[0])
                 continue
             i = 0
             j = 0
             llen = len(l[1])
             for v in rmbadname([x.strip() for x in markoutercomma(l[0]).split("@,@")]):
                 if v[0] == "(":
-                    outmess(
-                        'analyzeline: implied-DO list "%s" is not supported. Skipping.\n'
-                        % v
-                    )
+                    outmess('analyzeline: implied-DO list "%s" is not supported. Skipping.\n' % v)
                     # XXX: subsequent init expressions may get wrong values.
                     # Ignoring since data statements are irrelevant for
                     # wrapping.
@@ -1703,10 +1656,7 @@ def analyzeline(m, case, line):
                         if m2:
                             rl[m2.group("local").strip()] = m2.group("use").strip()
                         else:
-                            outmess(
-                                "analyzeline: Not local=>use pattern found in %s\n"
-                                % repr(l)
-                            )
+                            outmess("analyzeline: Not local=>use pattern found in %s\n" % repr(l))
                     else:
                         rl[l] = l
                     groupcache[groupcounter]["use"][name]["map"] = rl
@@ -1796,9 +1746,7 @@ def removespaces(expr):
         return expr
     expr2 = expr[0]
     for i in range(1, len(expr) - 1):
-        if expr[i] == " " and (
-            (expr[i + 1] in "()[]{}=+-/* ") or (expr[i - 1] in "()[]{}=+-/* ")
-        ):
+        if expr[i] == " " and ((expr[i + 1] in "()[]{}=+-/* ") or (expr[i - 1] in "()[]{}=+-/* ")):
             continue
         expr2 = expr2 + expr[i]
     expr2 = expr2 + expr[-1]
@@ -1852,19 +1800,14 @@ def updatevars(typespec, selector, attrspec, entitydecl):
     for e in el:
         for e1 in [
             x.strip()
-            for x in markoutercomma(removespaces(markinnerspaces(e)), comma=" ").split(
-                "@ @"
-            )
+            for x in markoutercomma(removespaces(markinnerspaces(e)), comma=" ").split("@ @")
         ]:
             if e1:
                 el1.append(e1.replace("@_@", " "))
     for e in el1:
         m = namepattern.match(e)
         if not m:
-            outmess(
-                "updatevars: no name pattern found for entity=%s. Skipping.\n"
-                % (repr(e))
-            )
+            outmess("updatevars: no name pattern found for entity=%s. Skipping.\n" % (repr(e)))
             continue
         ename = rmbadname1(m.group("name"))
         edecl = {}
@@ -1929,10 +1872,7 @@ def updatevars(typespec, selector, attrspec, entitydecl):
             edecl["charselector"] = copy.copy(charselect)
             edecl["typename"] = typename
             edecl["attrspec"] = copy.copy(attrspec)
-        if (
-            "external" in (edecl.get("attrspec") or [])
-            and e in groupcache[groupcounter]["args"]
-        ):
+        if "external" in (edecl.get("attrspec") or []) and e in groupcache[groupcounter]["args"]:
             if "externals" not in groupcache[groupcounter]:
                 groupcache[groupcounter]["externals"] = []
             groupcache[groupcounter]["externals"].append(e)
@@ -2017,10 +1957,7 @@ def cracktypespec(typespec, selector):
         if typespec in ["complex", "integer", "logical", "real"]:
             kindselect = kindselector.match(selector)
             if not kindselect:
-                outmess(
-                    "cracktypespec: no kindselector pattern found for %s\n"
-                    % (repr(selector))
-                )
+                outmess("cracktypespec: no kindselector pattern found for %s\n" % (repr(selector)))
                 return
             kindselect = kindselect.groupdict()
             kindselect["*"] = kindselect["kind2"]
@@ -2033,10 +1970,7 @@ def cracktypespec(typespec, selector):
         elif typespec == "character":
             charselect = charselector.match(selector)
             if not charselect:
-                outmess(
-                    "cracktypespec: no charselector pattern found for %s\n"
-                    % (repr(selector))
-                )
+                outmess("cracktypespec: no charselector pattern found for %s\n" % (repr(selector)))
                 return
             charselect = charselect.groupdict()
             charselect["*"] = charselect["charlen"]
@@ -2060,10 +1994,7 @@ def cracktypespec(typespec, selector):
             if typename:
                 typename = typename.group("name")
             else:
-                outmess(
-                    "cracktypespec: no typename found in %s\n"
-                    % (repr(typespec + selector))
-                )
+                outmess("cracktypespec: no typename found in %s\n" % (repr(typespec + selector)))
         else:
             outmess("cracktypespec: no selector used for %s\n" % (repr(selector)))
     return kindselect, charselect, typename
@@ -2166,8 +2097,7 @@ def get_useparameters(block, param_map=None):
         usename = usename.lower()
         if usename not in f90modulevars:
             outmess(
-                "get_useparameters: no module %s info used by %s\n"
-                % (usename, block.get("name"))
+                "get_useparameters: no module %s info used by %s\n" % (usename, block.get("name"))
             )
             continue
         mvars = f90modulevars[usename]
@@ -2212,9 +2142,7 @@ def postcrack2(block, tab="", param_map=None):
                     val = kind["kind"]
                     if val in param_map:
                         kind["kind"] = param_map[val]
-    new_body = [
-        postcrack2(b, tab=tab + "\t", param_map=param_map) for b in block["body"]
-    ]
+    new_body = [postcrack2(b, tab=tab + "\t", param_map=param_map) for b in block["body"]]
     block["body"] = new_body
 
     return block
@@ -2370,24 +2298,16 @@ def analyzecommon(block):
             if m:
                 dims = []
                 if m.group("dims"):
-                    dims = [
-                        x.strip() for x in markoutercomma(m.group("dims")).split("@,@")
-                    ]
+                    dims = [x.strip() for x in markoutercomma(m.group("dims")).split("@,@")]
                 n = rmbadname1(m.group("name").strip())
                 if n in block["vars"]:
                     if "attrspec" in block["vars"][n]:
-                        block["vars"][n]["attrspec"].append(
-                            "dimension(%s)" % (",".join(dims))
-                        )
+                        block["vars"][n]["attrspec"].append("dimension(%s)" % (",".join(dims)))
                     else:
-                        block["vars"][n]["attrspec"] = [
-                            "dimension(%s)" % (",".join(dims))
-                        ]
+                        block["vars"][n]["attrspec"] = ["dimension(%s)" % (",".join(dims))]
                 else:
                     if dims:
-                        block["vars"][n] = {
-                            "attrspec": ["dimension(%s)" % (",".join(dims))]
-                        }
+                        block["vars"][n] = {"attrspec": ["dimension(%s)" % (",".join(dims))]}
                     else:
                         block["vars"][n] = {}
                 if n not in commonvars:
@@ -2423,9 +2343,7 @@ def analyzebody(block, args, tab=""):
                 continue
             if onlyfuncs and b["name"] not in onlyfuncs:
                 continue
-            b["saved_interface"] = crack2fortrangen(
-                b, "\n" + " " * 6, as_interface=True
-            )
+            b["saved_interface"] = crack2fortrangen(b, "\n" + " " * 6, as_interface=True)
 
         else:
             as_ = args
@@ -2451,8 +2369,7 @@ def buildimplicitrules(block):
             implicitrules = None
             if verbose > 1:
                 outmess(
-                    "buildimplicitrules: no implicit rules for routine %s.\n"
-                    % repr(block["name"])
+                    "buildimplicitrules: no implicit rules for routine %s.\n" % repr(block["name"])
                 )
         else:
             for k in list(block["implicit"].keys()):
@@ -2852,12 +2769,8 @@ def get_parameters(vars, global_params={}):
         if "attrspec" in vars[n] and "parameter" in vars[n]["attrspec"]:
             param_names.append(n)
     kind_re = re.compile(r"\bkind\s*\(\s*(?P<value>.*)\s*\)", re.I)
-    selected_int_kind_re = re.compile(
-        r"\bselected_int_kind\s*\(\s*(?P<value>.*)\s*\)", re.I
-    )
-    selected_kind_re = re.compile(
-        r"\bselected_(int|real)_kind\s*\(\s*(?P<value>.*)\s*\)", re.I
-    )
+    selected_int_kind_re = re.compile(r"\bselected_int_kind\s*\(\s*(?P<value>.*)\s*\)", re.I)
+    selected_kind_re = re.compile(r"\bselected_(int|real)_kind\s*\(\s*(?P<value>.*)\s*\)", re.I)
     for n in param_names:
         if "=" in vars[n]:
             v = vars[n]["="]
@@ -2903,9 +2816,7 @@ def get_parameters(vars, global_params={}):
             if isdouble(vars[n]):
                 tt = list(v)
                 for m in real16pattern.finditer(v):
-                    tt[m.start() : m.end()] = list(
-                        v[m.start() : m.end()].lower().replace("d", "e")
-                    )
+                    tt[m.start() : m.end()] = list(v[m.start() : m.end()].lower().replace("d", "e"))
                 v = "".join(tt)
 
             elif iscomplex(vars[n]):
@@ -2948,8 +2859,7 @@ def _eval_scalar(value, params):
         return value
     except Exception as msg:
         errmess(
-            '"%s" in evaluating %r '
-            "(available names: %s)\n" % (msg, value, list(params.keys()))
+            '"%s" in evaluating %r ' "(available names: %s)\n" % (msg, value, list(params.keys()))
         )
     return value
 
@@ -3072,9 +2982,7 @@ def analyzevars(block):
                 if depend is not None:
                     if "depend" not in vars[n]:
                         vars[n]["depend"] = []
-                    for c in rmbadname(
-                        [x.strip() for x in markoutercomma(depend).split("@,@")]
-                    ):
+                    for c in rmbadname([x.strip() for x in markoutercomma(depend).split("@,@")]):
                         if c not in vars[n]["depend"]:
                             vars[n]["depend"].append(c)
                     depend = None
@@ -3087,18 +2995,14 @@ def analyzevars(block):
                     check = None
             if dim and "dimension" not in vars[n]:
                 vars[n]["dimension"] = []
-                for d in rmbadname(
-                    [x.strip() for x in markoutercomma(dim).split("@,@")]
-                ):
+                for d in rmbadname([x.strip() for x in markoutercomma(dim).split("@,@")]):
                     star = "*"
                     if d == ":":
                         star = ":"
                     if d in params:
                         d = str(params[d])
                     for p in list(params.keys()):
-                        re_1 = re.compile(
-                            r"(?P<before>.*?)\b" + p + r"\b(?P<after>.*)", re.I
-                        )
+                        re_1 = re.compile(r"(?P<before>.*?)\b" + p + r"\b(?P<after>.*)", re.I)
                         m = re_1.match(d)
                         while m:
                             d = m.group("before") + str(params[p]) + m.group("after")
@@ -3232,9 +3136,7 @@ def analyzevars(block):
         if "=" in vars[n]:
             if "attrspec" not in vars[n]:
                 vars[n]["attrspec"] = []
-            if ("optional" not in vars[n]["attrspec"]) and (
-                "required" not in vars[n]["attrspec"]
-            ):
+            if ("optional" not in vars[n]["attrspec"]) and ("required" not in vars[n]["attrspec"]):
                 vars[n]["attrspec"].append("optional")
             if "depend" not in vars[n]:
                 vars[n]["depend"] = []
@@ -3266,16 +3168,12 @@ def analyzevars(block):
                         typespec, selector, attr, edecl = cracktypespec0(
                             m.group("this"), m.group("after")
                         )
-                        kindselect, charselect, typename = cracktypespec(
-                            typespec, selector
-                        )
+                        kindselect, charselect, typename = cracktypespec(typespec, selector)
                         vars[n]["typespec"] = typespec
                         if kindselect:
                             if "kind" in kindselect:
                                 try:
-                                    kindselect["kind"] = eval(
-                                        kindselect["kind"], {}, params
-                                    )
+                                    kindselect["kind"] = eval(kindselect["kind"], {}, params)
                                 except Exception:
                                     pass
                             vars[n]["kindselector"] = kindselect
@@ -3288,10 +3186,7 @@ def analyzevars(block):
                         if isrec:
                             vars[n] = setattrspec(vars[n], "recursive")
                     else:
-                        outmess(
-                            "analyzevars: prefix (%s) were not used\n"
-                            % repr(block["prefix"])
-                        )
+                        outmess("analyzevars: prefix (%s) were not used\n" % repr(block["prefix"]))
     if block["block"] not in ["module", "pythonmodule", "python module", "block data"]:
         if "commonvars" in block:
             neededvars = copy.copy(block["args"] + block["commonvars"])
@@ -3418,23 +3313,15 @@ def determineexprtype(expr, vars, rules={}):
     m = determineexprtype_re_2.match(expr)
     if m:
         if "name" in m.groupdict() and m.group("name"):
-            outmess(
-                "determineexprtype: selected kind types not supported (%s)\n"
-                % repr(expr)
-            )
+            outmess("determineexprtype: selected kind types not supported (%s)\n" % repr(expr))
         return {"typespec": "integer"}
     m = determineexprtype_re_3.match(expr)
     if m:
         if "name" in m.groupdict() and m.group("name"):
-            outmess(
-                "determineexprtype: selected kind types not supported (%s)\n"
-                % repr(expr)
-            )
+            outmess("determineexprtype: selected kind types not supported (%s)\n" % repr(expr))
         return {"typespec": "real"}
     for op in ["+", "-", "*", "/"]:
-        for e in [
-            x.strip() for x in markoutercomma(expr, comma=op).split("@" + op + "@")
-        ]:
+        for e in [x.strip() for x in markoutercomma(expr, comma=op).split("@" + op + "@")]:
             if e in vars:
                 return _ensure_exprdict(vars[e])
     t = {}
@@ -3453,10 +3340,7 @@ def determineexprtype(expr, vars, rules={}):
     if expr[0] in "'\"":
         return {"typespec": "character", "charselector": {"*": "*"}}
     if not t:
-        outmess(
-            "determineexprtype: could not determine expressions (%s) type.\n"
-            % (repr(expr))
-        )
+        outmess("determineexprtype: could not determine expressions (%s) type.\n" % (repr(expr)))
     return t
 
 
@@ -3527,9 +3411,7 @@ def crack2fortrangen(block, tab="\n", as_interface=False):
         if block["result"] not in argsl:
             argsl.append(block["result"])
     body = crack2fortrangen(block["body"], tab + tabchar, as_interface=as_interface)
-    vars = vars2fortran(
-        block, block["vars"], argsl, tab + tabchar, as_interface=as_interface
-    )
+    vars = vars2fortran(block, block["vars"], argsl, tab + tabchar, as_interface=as_interface)
     mess = ""
     if "from" in block and not as_interface:
         mess = "! in %s" % block["from"]

@@ -1,4 +1,4 @@
-﻿import json
+ï¿import json
 import subprocess
 import os
 
@@ -17,7 +17,7 @@ summary_lines = ["Script\tStatus\tErrorType"]
 for script_path in manifest:
     script_name = os.path.basename(script_path)
     log_path = os.path.join(log_dir, f"{script_name}.log")
-    print(f"▶ Running {script_path}")
+    print(f"â–¶ Running {script_path}")
 
     try:
         # Run script and capture both stdout and stderr
@@ -34,7 +34,7 @@ for script_path in manifest:
 
         if result.returncode == 0:
             summary_lines.append(f"{script_name}\tPASS\t-")
-            print(f"✅ Success: {script_name}")
+            print(f"âœ… Success: {script_name}")
         else:
             error_type = "UnknownError"
             if "FileNotFoundError" in result.stderr:
@@ -46,16 +46,16 @@ for script_path in manifest:
             elif "UnicodeEncodeError" in result.stderr:
                 error_type = "UnicodeEncodeError"
             summary_lines.append(f"{script_name}\tFAIL\t{error_type}")
-            print(f"❌ Error in {script_name}")
+            print(f"âŒ Error in {script_name}")
 
     except Exception as e:
         with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write(str(e))
         summary_lines.append(f"{script_name}\tFAIL\tRunnerException")
-        print(f"❌ Runner failed for {script_name}: {e}")
+        print(f"âŒ Runner failed for {script_name}: {e}")
 
 # Save final summary
 with open(summary_file, "w", encoding="utf-8") as sf:
     sf.write("\n".join(summary_lines))
 
-print(f"\n📜 Run complete. Summary saved to {summary_file}")
+print(f"\nðŸ“œ Run complete. Summary saved to {summary_file}")

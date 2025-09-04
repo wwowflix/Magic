@@ -46,9 +46,7 @@ def read(
     handle: StreamHandle,
     offset: typing.Optional[int] = None,
     size: typing.Optional[int] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.Optional[bool], str, bool]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.Optional[bool], str, bool]]:
     """
     Read a chunk of the stream
 

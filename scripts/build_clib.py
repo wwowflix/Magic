@@ -93,9 +93,7 @@ class build_clib(Command):
         # Yech -- this is cut 'n pasted from build_ext.py!
         from distutils.ccompiler import new_compiler
 
-        self.compiler = new_compiler(
-            compiler=self.compiler, dry_run=self.dry_run, force=self.force
-        )
+        self.compiler = new_compiler(compiler=self.compiler, dry_run=self.dry_run, force=self.force)
         customize_compiler(self.compiler)
 
         if self.include_dirs is not None:
@@ -137,8 +135,7 @@ class build_clib(Command):
 
             if "/" in name or (os.sep != "/" and os.sep in name):
                 raise DistutilsSetupError(
-                    "bad library name '%s': "
-                    "may not contain directory separators" % lib[0]
+                    "bad library name '%s': " "may not contain directory separators" % lib[0]
                 )
 
             if not isinstance(build_info, dict):

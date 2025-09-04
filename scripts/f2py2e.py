@@ -238,9 +238,7 @@ def scaninputline(inputline):
             cfuncs.outneeds["userincludes"].append(l[9:-1])
             cfuncs.userincludes[l[9:-1]] = "#include " + l[8:]
         elif l[:15] in "--include_paths":
-            outmess(
-                "f2py option --include_paths is deprecated, use --include-paths instead.\n"
-            )
+            outmess("f2py option --include_paths is deprecated, use --include-paths instead.\n")
             f7 = 1
         elif l[:15] in "--include-paths":
             f7 = 1
@@ -290,8 +288,7 @@ def scaninputline(inputline):
         signsfile = os.path.join(buildpath, signsfile)
     if signsfile and os.path.isfile(signsfile) and "h-overwrite" not in options:
         errmess(
-            'Signature file "%s" exists!!! Use --overwrite-signature to overwrite.\n'
-            % (signsfile)
+            'Signature file "%s" exists!!! Use --overwrite-signature to overwrite.\n' % (signsfile)
         )
         sys.exit()
 
@@ -439,10 +436,7 @@ def run_main(comline_list):
                     isusedby[u] = []
                 isusedby[u].append(postlist[i]["name"])
     for i in range(len(postlist)):
-        if (
-            postlist[i]["block"] == "python module"
-            and "__user__" in postlist[i]["name"]
-        ):
+        if postlist[i]["block"] == "python module" and "__user__" in postlist[i]["name"]:
             if postlist[i]["name"] in isusedby:
                 # if not quiet:
                 outmess(
@@ -454,9 +448,7 @@ def run_main(comline_list):
                 )
     if "signsfile" in options:
         if options["verbose"] > 1:
-            outmess(
-                "Stopping. Edit the signature file and then run f2py on the signature file: "
-            )
+            outmess("Stopping. Edit the signature file and then run f2py on the signature file: ")
             outmess("%s %s\n" % (os.path.basename(sys.argv[0]), options["signsfile"]))
         return
     for i in range(len(postlist)):
@@ -466,8 +458,7 @@ def run_main(comline_list):
                     "Tip: If your original code is Fortran source then you must use -m option.\n"
                 )
             raise TypeError(
-                "All blocks must be python module blocks but got %s"
-                % (repr(postlist[i]["block"]))
+                "All blocks must be python module blocks but got %s" % (repr(postlist[i]["block"]))
             )
     auxfuncs.debugoptions = options["debug"]
     f90mod_rules.options = options
@@ -551,9 +542,7 @@ def run_compile():
     _reg3 = re.compile(r"--((f(90)?compiler(-exec|)|compiler)=|help-compiler)")
     flib_flags = [_m for _m in sys.argv[1:] if _reg3.match(_m)]
     sys.argv = [_m for _m in sys.argv if _m not in flib_flags]
-    _reg4 = re.compile(
-        r"--((f(77|90)(flags|exec)|opt|arch)=|(debug|noopt|noarch|help-fcompiler))"
-    )
+    _reg4 = re.compile(r"--((f(77|90)(flags|exec)|opt|arch)=|(debug|noopt|noarch|help-fcompiler))")
     fc_flags = [_m for _m in sys.argv[1:] if _reg4.match(_m)]
     sys.argv = [_m for _m in sys.argv if _m not in fc_flags]
 
@@ -656,10 +645,7 @@ def run_compile():
         for n in sysinfo_flags:
             i = get_info(n)
             if not i:
-                outmess(
-                    "No %s resources found in system"
-                    " (try `f2py --help-link`)\n" % (repr(n))
-                )
+                outmess("No %s resources found in system" " (try `f2py --help-link`)\n" % (repr(n)))
             dict_append(ext_args, **i)
 
     ext = Extension(**ext_args)

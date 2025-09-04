@@ -89,9 +89,7 @@ class TestF77Callback(util.F2PyTest):
         r = t(a.mth)
         assert r == 9
 
-    @pytest.mark.skipif(
-        sys.platform == "win32", reason="Fails with MinGW64 Gfortran (Issue #9673)"
-    )
+    @pytest.mark.skipif(sys.platform == "win32", reason="Fails with MinGW64 Gfortran (Issue #9673)")
     def test_string_callback(self):
         def callback(code):
             if code == "r":
@@ -103,9 +101,7 @@ class TestF77Callback(util.F2PyTest):
         r = f(callback)
         assert r == 0
 
-    @pytest.mark.skipif(
-        sys.platform == "win32", reason="Fails with MinGW64 Gfortran (Issue #9673)"
-    )
+    @pytest.mark.skipif(sys.platform == "win32", reason="Fails with MinGW64 Gfortran (Issue #9673)")
     def test_string_callback_array(self):
         # See gh-10027
         cu1 = np.zeros((1,), "S8")
@@ -152,9 +148,7 @@ class TestF77Callback(util.F2PyTest):
                 errors.append(traceback.format_exc())
 
         threads = [
-            threading.Thread(target=runner, args=(arg,))
-            for arg in ("t", "t2")
-            for n in range(20)
+            threading.Thread(target=runner, args=(arg,)) for arg in ("t", "t2") for n in range(20)
         ]
 
         for t in threads:

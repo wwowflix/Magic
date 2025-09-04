@@ -58,9 +58,7 @@ class CacheControlAdapter(HTTPAdapter):
 
         return resp
 
-    def build_response(
-        self, request, response, from_cache=False, cacheable_methods=None
-    ):
+    def build_response(self, request, response, from_cache=False, cacheable_methods=None):
         """
         Build a response by making a request or using the cache.
 
@@ -80,9 +78,7 @@ class CacheControlAdapter(HTTPAdapter):
                 # that we've been expired already or that we simply
                 # have an etag. In either case, we want to try and
                 # update the cache if that is the case.
-                cached_response = self.controller.update_cached_response(
-                    request, response
-                )
+                cached_response = self.controller.update_cached_response(request, response)
 
                 if cached_response is not response:
                     from_cache = True
@@ -104,9 +100,7 @@ class CacheControlAdapter(HTTPAdapter):
                 #   response when the stream has been consumed.
                 response._fp = CallbackFileWrapper(
                     response._fp,
-                    functools.partial(
-                        self.controller.cache_response, request, response
-                    ),
+                    functools.partial(self.controller.cache_response, request, response),
                 )
                 if response.chunked:
                     super_update_chunk_length = response._update_chunk_length
@@ -116,9 +110,7 @@ class CacheControlAdapter(HTTPAdapter):
                         if self.chunk_left == 0:
                             self._fp._close()
 
-                    response._update_chunk_length = types.MethodType(
-                        _update_chunk_length, response
-                    )
+                    response._update_chunk_length = types.MethodType(_update_chunk_length, response)
 
         resp = super(CacheControlAdapter, self).build_response(request, response)
 

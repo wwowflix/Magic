@@ -1,4 +1,4 @@
-﻿# Set base project path
+# Set base project path
 $base = "D:\MAGIC"
 
 # Create folder structure

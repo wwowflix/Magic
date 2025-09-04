@@ -184,9 +184,7 @@ class CmdStanLaplace:
         CmdStanGQ.draws_xr
         """
         if not XARRAY_INSTALLED:
-            raise RuntimeError(
-                'Package "xarray" is not installed, cannot produce draws array.'
-            )
+            raise RuntimeError('Package "xarray" is not installed, cannot produce draws array.')
 
         if vars is None:
             vars_list = list(self._metadata.stan_vars.keys())
@@ -215,11 +213,7 @@ class CmdStanLaplace:
                 self._metadata.stan_vars[var],
                 self._draws[:, np.newaxis, :],
             )
-        return (
-            xr.Dataset(data, coords=coordinates, attrs=attrs)
-            .transpose("draw", ...)
-            .squeeze()
-        )
+        return xr.Dataset(data, coords=coordinates, attrs=attrs).transpose("draw", ...).squeeze()
 
     @property
     def mode(self) -> CmdStanMLE:

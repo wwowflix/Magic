@@ -40,14 +40,12 @@ class bdist_rpm(Command):
         (
             "python=",
             None,
-            "path to Python interpreter to hard-code in the .spec file "
-            '(default: "python")',
+            "path to Python interpreter to hard-code in the .spec file " '(default: "python")',
         ),
         (
             "fix-python",
             None,
-            "hard-code the exact path to the current Python interpreter in "
-            "the .spec file",
+            "hard-code the exact path to the current Python interpreter in " "the .spec file",
         ),
         ("spec-only", None, "only regenerate spec file"),
         ("source-only", None, "only generate source RPM"),
@@ -209,18 +207,14 @@ class bdist_rpm(Command):
             else:
                 self.python = "python3"
         elif self.fix_python:
-            raise DistutilsOptionError(
-                "--python and --fix-python are mutually exclusive options"
-            )
+            raise DistutilsOptionError("--python and --fix-python are mutually exclusive options")
 
         if os.name != "posix":
             raise DistutilsPlatformError(
                 "don't know how to create RPM " "distributions on platform %s" % os.name
             )
         if self.binary_only and self.source_only:
-            raise DistutilsOptionError(
-                "cannot supply both '--source-only' and '--binary-only'"
-            )
+            raise DistutilsOptionError("cannot supply both '--source-only' and '--binary-only'")
 
         # don't pass CFLAGS to pure python distributions
         if not self.distribution.has_ext_modules():
@@ -233,8 +227,7 @@ class bdist_rpm(Command):
         self.ensure_string("group", "Development/Libraries")
         self.ensure_string(
             "vendor",
-            "%s <%s>"
-            % (self.distribution.get_contact(), self.distribution.get_contact_email()),
+            "%s <%s>" % (self.distribution.get_contact(), self.distribution.get_contact_email()),
         )
         self.ensure_string("packager")
         self.ensure_string_list("doc_files")
@@ -298,9 +291,7 @@ class bdist_rpm(Command):
         # Spec file goes into 'dist_dir' if '--spec-only specified',
         # build/rpm.<plat> otherwise.
         spec_path = os.path.join(spec_dir, "%s.spec" % self.distribution.get_name())
-        self.execute(
-            write_file, (spec_path, self._make_spec_file()), "writing '%s'" % spec_path
-        )
+        self.execute(write_file, (spec_path, self._make_spec_file()), "writing '%s'" % spec_path)
 
         if self.spec_only:  # stop if requested
             return
@@ -402,9 +393,7 @@ class bdist_rpm(Command):
                     if os.path.exists(rpm):
                         self.move_file(rpm, self.dist_dir)
                         filename = os.path.join(self.dist_dir, os.path.basename(rpm))
-                        self.distribution.dist_files.append(
-                            ("bdist_rpm", pyversion, filename)
-                        )
+                        self.distribution.dist_files.append(("bdist_rpm", pyversion, filename))
 
     def _dist_path(self, path):
         return os.path.join(self.dist_dir, os.path.basename(path))
@@ -429,9 +418,7 @@ class bdist_rpm(Command):
         # Generate a potential replacement value for __os_install_post (whilst
         # normalizing the whitespace to simplify the test for whether the
         # invocation of brp-python-bytecompile passes in __python):
-        vendor_hook = "\n".join(
-            ["  %s \\" % line.strip() for line in vendor_hook.splitlines()]
-        )
+        vendor_hook = "\n".join(["  %s \\" % line.strip() for line in vendor_hook.splitlines()])
         problem = "brp-python-bytecompile \\\n"
         fixed = "brp-python-bytecompile %{__python} \\\n"
         fixed_hook = vendor_hook.replace(problem, fixed)

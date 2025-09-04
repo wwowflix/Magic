@@ -1,5 +1,5 @@
-﻿def main():
-    print("✅ [11Y_agent_uptime_monitor_READY.py] executed successfully (stub mode).")
+ï¿def main():
+    print("âœ… [11Y_agent_uptime_monitor_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

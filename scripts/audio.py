@@ -243,10 +243,7 @@ class AudioCaptcha:
         inters: t.List[int] = []
         for c in chars:
             voices.append(self._twist_pick(c))
-            i = (
-                secrets.randbelow(WAVE_SAMPLE_RATE * 3 - WAVE_SAMPLE_RATE + 1)
-                + WAVE_SAMPLE_RATE
-            )
+            i = secrets.randbelow(WAVE_SAMPLE_RATE * 3 - WAVE_SAMPLE_RATE + 1) + WAVE_SAMPLE_RATE
             inters.append(i)
 
         durations = map(lambda a: len(a), voices)

@@ -184,9 +184,7 @@ class _Config:
     conf_noopt = False
     conf_cache_factors = None
     conf_tmp_path = None
-    conf_check_path = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), "checks"
-    )
+    conf_check_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "checks")
     conf_target_groups = {}
     conf_c_prefix = "NPY_"
     conf_c_prefix_ = "NPY__"
@@ -235,9 +233,7 @@ class _Config:
         SSE41=dict(interest=5, implies="SSSE3", headers="smmintrin.h"),
         POPCNT=dict(interest=6, implies="SSE41", headers="popcntintrin.h"),
         SSE42=dict(interest=7, implies="POPCNT"),
-        AVX=dict(
-            interest=8, implies="SSE42", headers="immintrin.h", implies_detect=False
-        ),
+        AVX=dict(interest=8, implies="SSE42", headers="immintrin.h", implies_detect=False),
         XOP=dict(interest=9, implies="AVX", headers="x86intrin.h"),
         FMA4=dict(interest=10, implies="AVX", headers="x86intrin.h"),
         F16C=dict(interest=11, implies="AVX"),
@@ -272,9 +268,7 @@ class _Config:
             implies_detect=False,
             extra_checks="AVX512BW_MASK AVX512DQ_MASK",
         ),
-        AVX512_CLX=dict(
-            interest=43, implies="AVX512_SKX", group="AVX512VNNI", detect="AVX512_CLX"
-        ),
+        AVX512_CLX=dict(interest=43, implies="AVX512_SKX", group="AVX512VNNI", detect="AVX512_CLX"),
         AVX512_CNL=dict(
             interest=44,
             implies="AVX512_SKX",
@@ -343,9 +337,7 @@ class _Config:
                 AVX512F=dict(flags="-mavx512f"),
                 AVX512CD=dict(flags="-mavx512cd"),
                 AVX512_KNL=dict(flags="-mavx512er -mavx512pf"),
-                AVX512_KNM=dict(
-                    flags="-mavx5124fmaps -mavx5124vnniw -mavx512vpopcntdq"
-                ),
+                AVX512_KNM=dict(flags="-mavx5124fmaps -mavx5124vnniw -mavx512vpopcntdq"),
                 AVX512_SKX=dict(flags="-mavx512vl -mavx512bw -mavx512dq"),
                 AVX512_CLX=dict(flags="-mavx512vnni"),
                 AVX512_CNL=dict(flags="-mavx512ifma -mavx512vbmi"),
@@ -537,9 +529,7 @@ class _Distutils:
                 setattr(cc, "spawn", self._dist_test_spawn)
         test = False
         try:
-            self.dist_compile(
-                [source], flags, macros=macros, output_dir=self.conf_tmp_path
-            )
+            self.dist_compile([source], flags, macros=macros, output_dir=self.conf_tmp_path)
             test = True
         except CompileError as e:
             self.dist_log(str(e), stderr=True)
@@ -567,9 +557,7 @@ class _Distutils:
 
             platform = get_platform()
 
-        cc_info = getattr(
-            self._ccompiler, "compiler", getattr(self._ccompiler, "compiler_so", "")
-        )
+        cc_info = getattr(self._ccompiler, "compiler", getattr(self._ccompiler, "compiler_so", ""))
         if not cc_type or cc_type == "unix":
             if hasattr(cc_info, "__iter__"):
                 compiler = cc_info[0]
@@ -668,9 +656,7 @@ class _Distutils:
     def _dist_test_spawn(cmd, display=None):
 
         try:
-            o = subprocess.check_output(
-                cmd, stderr=subprocess.STDOUT, universal_newlines=True
-            )
+            o = subprocess.check_output(cmd, stderr=subprocess.STDOUT, universal_newlines=True)
             if o and re.match(_Distutils._dist_warn_regex, o):
                 _Distutils.dist_error(
                     "Flags in command",
@@ -685,9 +671,7 @@ class _Distutils:
             s = 127
         else:
             return None
-        _Distutils.dist_error(
-            "Command", cmd, "failed with exit status %d output -> \n%s" % (s, o)
-        )
+        _Distutils.dist_error("Command", cmd, "failed with exit status %d output -> \n%s" % (s, o))
 
 
 _share_cache = {}
@@ -739,9 +723,7 @@ class _Cache:
                 self.dist_log("load cache from file ->", cache_path)
                 cache_mod = self.dist_load_module("cache", cache_path)
                 if not cache_mod:
-                    self.dist_log(
-                        "unable to load the cache file as a module", stderr=True
-                    )
+                    self.dist_log("unable to load the cache file as a module", stderr=True)
                 elif not hasattr(cache_mod, "hash") or not hasattr(cache_mod, "data"):
                     self.dist_log("invalid cache file", stderr=True)
                 elif self._cache_hash == cache_mod.hash:
@@ -757,9 +739,7 @@ class _Cache:
             if other_cache:
                 self.dist_log("hit the memory cache")
                 for attr, val in other_cache.__dict__.items():
-                    if attr in other_cache.cache_private or re.match(
-                        self._cache_ignore, attr
-                    ):
+                    if attr in other_cache.cache_private or re.match(self._cache_ignore, attr):
                         continue
                     setattr(self, attr, val)
 
@@ -972,8 +952,7 @@ class _CCompiler:
         compiler_flags = self.conf_cc_flags.get(self.cc_name)
         if compiler_flags is None:
             self.dist_fatal(
-                "undefined flag for compiler '%s', "
-                "leave an empty dict instead" % self.cc_name
+                "undefined flag for compiler '%s', " "leave an empty dict instead" % self.cc_name
             )
         for name, flags in compiler_flags.items():
             self.cc_flags[name] = nflags = []
@@ -1050,9 +1029,7 @@ class _CCompiler:
             #        arch ver  subflag
             # -march=armv8.2-a+fp16fml
             tokens = f.split("+")
-            ver = float(
-                "0" + "".join(re.findall(self._cc_normalize_arch_ver, tokens[0]))
-            )
+            ver = float("0" + "".join(re.findall(self._cc_normalize_arch_ver, tokens[0])))
             return ver, tokens[0], tokens[1:]
 
         if len(flags) <= 1:
@@ -1100,10 +1077,7 @@ class _CCompiler:
             if not re.match(self._cc_normalize_win_mrgx, f):
                 continue
             i += 1
-            return (
-                list(filter(self._cc_normalize_win_frgx.search, flags[:-i]))
-                + flags[-i:]
-            )
+            return list(filter(self._cc_normalize_win_frgx.search, flags[:-i])) + flags[-i:]
         return flags
 
 
@@ -1133,9 +1107,7 @@ class _Feature:
             disabled = feature.get("disable")
             if disabled is not None:
                 pfeatures.pop(feature_name)
-                self.dist_log(
-                    "feature '%s' is disabled," % feature_name, disabled, stderr=True
-                )
+                self.dist_log("feature '%s' is disabled," % feature_name, disabled, stderr=True)
                 continue
             # list is used internally for these options
             for option in (
@@ -1176,9 +1148,7 @@ class _Feature:
         macros : list of tuples, optional
             A list of C macro definitions.
         """
-        assert names is None or (
-            not isinstance(names, str) and hasattr(names, "__iter__")
-        )
+        assert names is None or (not isinstance(names, str) and hasattr(names, "__iter__"))
         assert force_flags is None or isinstance(force_flags, list)
         if names is None:
             names = self.feature_supported.keys()
@@ -1348,9 +1318,7 @@ class _Feature:
         final = []
         for n in names:
             implies = self.feature_implies(n)
-            tied = [
-                nn for nn in final if nn in implies and n in self.feature_implies(nn)
-            ]
+            tied = [nn for nn in final if nn in implies and n in self.feature_implies(nn)]
             if tied:
                 tied = self.feature_sorted(tied + [n])
                 if n not in tied[1:]:
@@ -1436,18 +1404,14 @@ class _Feature:
         if force_flags is None:
             force_flags = self.feature_flags(name)
 
-        self.dist_log(
-            "testing feature '%s' with flags (%s)" % (name, " ".join(force_flags))
-        )
+        self.dist_log("testing feature '%s' with flags (%s)" % (name, " ".join(force_flags)))
         # Each CPU feature must have C source code contains at
         # least one intrinsic or instruction related to this feature.
         test_path = os.path.join(self.conf_check_path, "cpu_%s.c" % name.lower())
         if not os.path.exists(test_path):
             self.dist_fatal("feature test file is not exist", test_path)
 
-        test = self.dist_test(
-            test_path, force_flags + self.cc_flags["werror"], macros=macros
-        )
+        test = self.dist_test(test_path, force_flags + self.cc_flags["werror"], macros=macros)
         if not test:
             self.dist_log("testing failed", stderr=True)
         return test
@@ -1656,24 +1620,16 @@ class _Parse:
             cpu_baseline = self._parse_arg_features("cpu_baseline", cpu_baseline)
             baseline_names = self.feature_names(cpu_baseline)
             self.parse_baseline_flags = self.feature_flags(baseline_names)
-            self.parse_baseline_names = self.feature_sorted(
-                self.feature_implies_c(baseline_names)
-            )
+            self.parse_baseline_names = self.feature_sorted(self.feature_implies_c(baseline_names))
 
         self.dist_log("check requested dispatch-able features")
         if cpu_dispatch is not None:
             cpu_dispatch_ = self._parse_arg_features("cpu_dispatch", cpu_dispatch)
-            cpu_dispatch = {
-                f for f in cpu_dispatch_ if f not in self.parse_baseline_names
-            }
+            cpu_dispatch = {f for f in cpu_dispatch_ if f not in self.parse_baseline_names}
             conflict_baseline = cpu_dispatch_.difference(cpu_dispatch)
-            self.parse_dispatch_names = self.feature_sorted(
-                self.feature_names(cpu_dispatch)
-            )
+            self.parse_dispatch_names = self.feature_sorted(self.feature_names(cpu_dispatch))
             if len(conflict_baseline) > 0:
-                self.dist_log(
-                    "skip features", conflict_baseline, "since its part of baseline"
-                )
+                self.dist_log("skip features", conflict_baseline, "since its part of baseline")
 
         self.dist_log("initialize targets groups")
         for group_name, tokens in self.conf_target_groups.items():
@@ -1776,9 +1732,7 @@ class _Parse:
             elif TOK == "NATIVE":
                 native = self.cc_flags["native"]
                 if not native:
-                    self.dist_fatal(
-                        arg_name, "native option isn't supported by the compiler"
-                    )
+                    self.dist_fatal(arg_name, "native option isn't supported by the compiler")
                 features_to = self.feature_names(
                     force_flags=native, macros=[("DETECT_FEATURES", 1)]
                 )
@@ -1791,9 +1745,7 @@ class _Parse:
                     features_to.add(TOK)
                 else:
                     if not self.feature_is_exist(TOK):
-                        self.dist_fatal(
-                            arg_name, ", '%s' isn't a known feature or option" % tok
-                        )
+                        self.dist_fatal(arg_name, ", '%s' isn't a known feature or option" % tok)
             if append:
                 final_features = final_features.union(features_to)
             else:
@@ -1830,8 +1782,7 @@ class _Parse:
             elif ch == "$":
                 if multi_target is not None:
                     self.dist_fatal(
-                        "policies aren't allowed inside multi-target '()'"
-                        ", only CPU features"
+                        "policies aren't allowed inside multi-target '()'" ", only CPU features"
                     )
                 policies.add(self._parse_token_policy(TOK))
             elif ch == "#":
@@ -1862,9 +1813,7 @@ class _Parse:
             else:
                 if TOK == "BASELINE":
                     if multi_target is not None:
-                        self.dist_fatal(
-                            "baseline isn't allowed inside multi-target '()'"
-                        )
+                        self.dist_fatal("baseline isn't allowed inside multi-target '()'")
                     has_baseline = True
                     continue
 
@@ -1875,9 +1824,7 @@ class _Parse:
                 if not self.feature_is_exist(TOK):
                     self.dist_fatal("invalid target name '%s'" % TOK)
 
-                is_enabled = (
-                    TOK in self.parse_baseline_names or TOK in self.parse_dispatch_names
-                )
+                is_enabled = TOK in self.parse_baseline_names or TOK in self.parse_dispatch_names
                 if is_enabled:
                     if TOK not in final_targets:
                         final_targets.append(TOK)
@@ -1944,8 +1891,7 @@ class _Parse:
         )
         if gtargets is None:
             self.dist_fatal(
-                "'%s' is an invalid target group name, " % token
-                + "available target groups are",
+                "'%s' is an invalid target group name, " % token + "available target groups are",
                 self.parse_target_groups.keys(),
             )
         if ghas_baseline:
@@ -2069,9 +2015,7 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
     related to CPU features.
     """
 
-    def __init__(
-        self, ccompiler, cpu_baseline="min", cpu_dispatch="max", cache_path=None
-    ):
+    def __init__(self, ccompiler, cpu_baseline="min", cpu_dispatch="max", cache_path=None):
         _Config.__init__(self)
         _Distutils.__init__(self, ccompiler)
         _Cache.__init__(self, cache_path, self.dist_info(), cpu_baseline, cpu_dispatch)
@@ -2203,9 +2147,7 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
         #   among them.
         objects = []
         for flags, srcs in to_compile.items():
-            objects += self.dist_compile(
-                srcs, list(flags), ccompiler=ccompiler, **kwargs
-            )
+            objects += self.dist_compile(srcs, list(flags), ccompiler=ccompiler, **kwargs)
         return objects
 
     def generate_dispatch_header(self, header_path):
@@ -2323,9 +2265,7 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
         platform_rows.append(
             ("Architecture", ("unsupported" if self.cc_on_noarch else self.cc_march))
         )
-        platform_rows.append(
-            ("Compiler", ("unix-like" if self.cc_is_nocc else self.cc_name))
-        )
+        platform_rows.append(("Compiler", ("unix-like" if self.cc_is_nocc else self.cc_name)))
         ########## baseline ##########
         if self.cc_noopt:
             baseline_rows.append(("Requested", "optimization disabled"))
@@ -2333,19 +2273,13 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
             baseline_rows.append(("Requested", repr(self._requested_baseline)))
 
         baseline_names = self.cpu_baseline_names()
-        baseline_rows.append(
-            ("Enabled", (" ".join(baseline_names) if baseline_names else "none"))
-        )
+        baseline_rows.append(("Enabled", (" ".join(baseline_names) if baseline_names else "none")))
         baseline_flags = self.cpu_baseline_flags()
-        baseline_rows.append(
-            ("Flags", (" ".join(baseline_flags) if baseline_flags else "none"))
-        )
+        baseline_rows.append(("Flags", (" ".join(baseline_flags) if baseline_flags else "none")))
         extra_checks = []
         for name in baseline_names:
             extra_checks += self.feature_extra_checks(name)
-        baseline_rows.append(
-            ("Extra checks", (" ".join(extra_checks) if extra_checks else "none"))
-        )
+        baseline_rows.append(("Extra checks", (" ".join(extra_checks) if extra_checks else "none")))
 
         ########## dispatch ##########
         if self.cc_noopt:
@@ -2354,9 +2288,7 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
             dispatch_rows.append(("Requested", repr(self._requested_dispatch)))
 
         dispatch_names = self.cpu_dispatch_names()
-        dispatch_rows.append(
-            ("Enabled", (" ".join(dispatch_names) if dispatch_names else "none"))
-        )
+        dispatch_rows.append(("Enabled", (" ".join(dispatch_names) if dispatch_names else "none")))
         ########## Generated ##########
         # TODO:
         # - collect object names from 'try_dispatch()'
@@ -2491,9 +2423,7 @@ class CCompilerOpt(_Config, _Distutils, _Cache, _CCompiler, _Feature, _Parse):
         dispatch_calls = " \\\n".join(dispatch_calls)
 
         if has_baseline:
-            baseline_calls = (
-                "\t%sCPU_DISPATCH_EXPAND_(CB(__VA_ARGS__))"
-            ) % self.conf_c_prefix_
+            baseline_calls = ("\t%sCPU_DISPATCH_EXPAND_(CB(__VA_ARGS__))") % self.conf_c_prefix_
         else:
             baseline_calls = ""
 

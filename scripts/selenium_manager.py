@@ -84,11 +84,7 @@ class SeleniumManager:
                 ("openbsd", "x86_64"): "linux/selenium-manager",
             }
 
-            arch = (
-                platform.machine()
-                if sys.platform in ("linux", "freebsd", "openbsd")
-                else "any"
-            )
+            arch = platform.machine() if sys.platform in ("linux", "freebsd", "openbsd") else "any"
             if sys.platform in ["freebsd", "openbsd"]:
                 logger.warning(
                     "Selenium Manager binary may not be compatible with %s; verify settings",
@@ -104,9 +100,7 @@ class SeleniumManager:
             path = Path(__file__).parent.joinpath(location)
 
         if path is None or not path.is_file():
-            raise WebDriverException(
-                f"Unable to obtain working Selenium Manager binary; {path}"
-            )
+            raise WebDriverException(f"Unable to obtain working Selenium Manager binary; {path}")
 
         logger.debug("Selenium Manager binary found at: %s", path)
 
@@ -133,9 +127,7 @@ class SeleniumManager:
             stderr = completed_proc.stderr.decode("utf-8").rstrip("\n")
             output = json.loads(stdout) if stdout != "" else {"logs": [], "result": {}}
         except Exception as err:
-            raise WebDriverException(
-                f"Unsuccessful command executed: {command}"
-            ) from err
+            raise WebDriverException(f"Unsuccessful command executed: {command}") from err
 
         SeleniumManager._process_logs(output["logs"])
         result = output["result"]

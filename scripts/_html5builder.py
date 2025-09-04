@@ -78,9 +78,7 @@ class TreeBuilder(_base.TreeBuilder):
         if self.doctype and self.doctype.name:
             buf.append("<!DOCTYPE %s" % self.doctype.name)
             if self.doctype.publicId is not None or self.doctype.systemId is not None:
-                buf.append(
-                    ' PUBLIC "%s" "%s"' % (self.doctype.publicId, self.doctype.systemId)
-                )
+                buf.append(' PUBLIC "%s" "%s"' % (self.doctype.publicId, self.doctype.systemId))
             buf.append(">")
         buf.append("<html></html>")
         root = html.fromstring("".join(buf))

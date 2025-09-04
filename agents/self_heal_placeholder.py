@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 manifest_file = "phase_manifest.json"
 

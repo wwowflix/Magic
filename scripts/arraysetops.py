@@ -21,9 +21,7 @@ import numpy as np
 from numpy.core import overrides
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
 __all__ = [
@@ -142,16 +140,12 @@ def _unpack_tuple(x):
         return x
 
 
-def _unique_dispatcher(
-    ar, return_index=None, return_inverse=None, return_counts=None, axis=None
-):
+def _unique_dispatcher(ar, return_index=None, return_inverse=None, return_counts=None, axis=None):
     return (ar,)
 
 
 @array_function_dispatch(_unique_dispatcher)
-def unique(
-    ar, return_index=False, return_inverse=False, return_counts=False, axis=None
-):
+def unique(ar, return_index=False, return_inverse=False, return_counts=False, axis=None):
     """
     Find the unique elements of an array.
 
@@ -742,9 +736,9 @@ def isin(element, test_elements, assume_unique=False, invert=False):
            [ True, False]])
     """
     element = np.asarray(element)
-    return in1d(
-        element, test_elements, assume_unique=assume_unique, invert=invert
-    ).reshape(element.shape)
+    return in1d(element, test_elements, assume_unique=assume_unique, invert=invert).reshape(
+        element.shape
+    )
 
 
 def _union1d_dispatcher(ar1, ar2):

@@ -157,9 +157,7 @@ class Key:
             number=float(json["number"]) if "number" in json else None,
             string=str(json["string"]) if "string" in json else None,
             date=float(json["date"]) if "date" in json else None,
-            array=(
-                [Key.from_json(i) for i in json["array"]] if "array" in json else None
-            ),
+            array=([Key.from_json(i) for i in json["array"]] if "array" in json else None),
         )
 
 
@@ -391,9 +389,7 @@ def request_data(
     skip_count: int = None,
     page_size: int = None,
     key_range: typing.Optional[KeyRange] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[DataEntry], bool]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[DataEntry], bool]]:
     """
     Requests data from object store or index.
 

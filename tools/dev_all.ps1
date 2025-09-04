@@ -1,4 +1,4 @@
-﻿param([int]$Phase = 11)
+param([int]$Phase = 11)
 $ErrorActionPreference = "Stop"
 
 Write-Host "▶ Tests + coverage" -ForegroundColor Cyan

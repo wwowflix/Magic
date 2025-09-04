@@ -15,9 +15,7 @@ __all__ = ["Require", "find_module", "get_module_constant", "extract_constant"]
 class Require:
     """A prerequisite to building or installing a distribution"""
 
-    def __init__(
-        self, name, requested_version, module, homepage="", attribute=None, format=None
-    ):
+    def __init__(self, name, requested_version, module, homepage="", attribute=None, format=None):
 
         if format is None and requested_version is not None:
             format = version.Version

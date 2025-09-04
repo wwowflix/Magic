@@ -343,9 +343,7 @@ def parse_req_from_line(name: str, line_source: Optional[str]) -> RequirementPar
             if os.path.sep in req_as_string:
                 add_msg = "It looks like a path."
                 add_msg += deduce_helpful_msg(req_as_string)
-            elif "=" in req_as_string and not any(
-                op in req_as_string for op in operators
-            ):
+            elif "=" in req_as_string and not any(op in req_as_string for op in operators):
                 add_msg = "= is not a valid operator. Did you mean == ?"
             else:
                 add_msg = ""
@@ -426,12 +424,7 @@ def install_req_from_req_string(
         PyPI.file_storage_domain,
         TestPyPI.file_storage_domain,
     ]
-    if (
-        req.url
-        and comes_from
-        and comes_from.link
-        and comes_from.link.netloc in domains_not_allowed
-    ):
+    if req.url and comes_from and comes_from.link and comes_from.link.netloc in domains_not_allowed:
         # Explicitly disallow pypi packages that depend on external urls
         raise InstallationError(
             "Packages installed from PyPI cannot depend on packages "
@@ -482,9 +475,7 @@ def install_req_from_parsed_requirement(
     return req
 
 
-def install_req_from_link_and_ireq(
-    link: Link, ireq: InstallRequirement
-) -> InstallRequirement:
+def install_req_from_link_and_ireq(link: Link, ireq: InstallRequirement) -> InstallRequirement:
     return InstallRequirement(
         req=ireq.req,
         comes_from=ireq.comes_from,

@@ -140,10 +140,7 @@ class _Test_CCompilerOpt:
         has_baseline, targets = opt.sources_status[file]
         targets = targets + ["baseline"] if has_baseline else targets
         # convert tuple that represent multi-target into parentheses str format
-        targets = [
-            "(" + " ".join(tar) + ")" if isinstance(tar, tuple) else tar
-            for tar in targets
-        ]
+        targets = ["(" + " ".join(tar) + ")" if isinstance(tar, tuple) else tar for tar in targets]
         if len(targets) != len(gtargets) or not all(t in gtargets for t in targets):
             raise AssertionError(
                 "'sources_status' returns different targets than the compiled targets\n"
@@ -203,9 +200,7 @@ class _Test_CCompilerOpt:
                 raise AssertionError('expected empty features, not "%s"' % features)
             return
         if not re.match(match, features, re.IGNORECASE):
-            raise AssertionError(
-                'dispatch features "%s" not match "%s"' % (features, match)
-            )
+            raise AssertionError('dispatch features "%s" not match "%s"' % (features, match))
 
     def expect_baseline(self, baseline, dispatch="", **kwargs):
         match = self.arg_regex(**kwargs)
@@ -223,9 +218,7 @@ class _Test_CCompilerOpt:
                 raise AssertionError('expected empty features, not "%s"' % features)
             return
         if not re.match(match, features, re.IGNORECASE):
-            raise AssertionError(
-                'baseline features "%s" not match "%s"' % (features, match)
-            )
+            raise AssertionError('baseline features "%s" not match "%s"' % (features, match))
 
     def expect_flags(self, baseline, dispatch="", **kwargs):
         match = self.arg_regex(**kwargs)
@@ -271,9 +264,7 @@ class _Test_CCompilerOpt:
             flags = tar_flags[match_tar]
             if not match_flags:
                 if len(flags) != 0:
-                    raise AssertionError(
-                        'expected to find empty flags in target "%s"' % match_tar
-                    )
+                    raise AssertionError('expected to find empty flags in target "%s"' % match_tar)
             if not re.match(match_flags, flags):
                 raise AssertionError(
                     '"%s" flags "%s" not match "%s"' % (match_tar, flags, match_flags)
@@ -359,12 +350,8 @@ class _Test_CCompilerOpt:
             ("avx512f", "avx512cd"),
         ):
             diff = ".* sse42 .* %s .*%s$" % (f0, f1)
-            self.expect_baseline(
-                f0, x86_gcc=".* sse42 .* %s$" % f0, x86_icc=diff, x86_iccw=diff
-            )
-            self.expect_baseline(
-                f1, x86_gcc=".* avx .* %s$" % f1, x86_icc=diff, x86_iccw=diff
-            )
+            self.expect_baseline(f0, x86_gcc=".* sse42 .* %s$" % f0, x86_icc=diff, x86_iccw=diff)
+            self.expect_baseline(f1, x86_gcc=".* avx .* %s$" % f1, x86_icc=diff, x86_iccw=diff)
         # in msvc, following features can't be separated too
         for f in (("fma3", "avx2"), ("avx512f", "avx512cd", "avx512_skx")):
             for ff in f:
@@ -381,9 +368,7 @@ class _Test_CCompilerOpt:
         for o in ("max", "native"):
             if o == "native" and self.cc_name() == "msvc":
                 continue
-            self.expect(
-                o, trap_files=".*cpu_(sse|vsx|neon).c", x86="", ppc64="", armhf=""
-            )
+            self.expect(o, trap_files=".*cpu_(sse|vsx|neon).c", x86="", ppc64="", armhf="")
             self.expect(
                 o,
                 trap_files=".*cpu_(sse3|vsx2|neon_vfpv4).c",
@@ -530,9 +515,7 @@ class _Test_CCompilerOpt:
             SSE VSX NEON*/
             """,
         ):
-            self.expect_targets(
-                targets, x86="sse", ppc64="vsx", armhf="neon", unknown=""
-            )
+            self.expect_targets(targets, x86="sse", ppc64="vsx", armhf="neon", unknown="")
 
     def test_targets(self):
         # test skipping baseline features

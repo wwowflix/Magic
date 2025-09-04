@@ -1,4 +1,4 @@
-﻿# tools/gates/check_weeks.ps1  (minimal smoke check)
+# tools/gates/check_weeks.ps1  (minimal smoke check)
 $ErrorActionPreference = "Stop"
 $root   = (Resolve-Path "$PSScriptRoot\..\..").Path  # repo root
 $outDir = Join-Path $root "outputs\reports"

@@ -173,9 +173,7 @@ class CmdStanModel:
             )
             if not model_name.strip():
                 raise ValueError(
-                    'Invalid value for argument model name, found "{}"'.format(
-                        model_name
-                    )
+                    'Invalid value for argument model name, found "{}"'.format(model_name)
                 )
             self._name = model_name.strip()
 
@@ -235,16 +233,10 @@ class CmdStanModel:
                 # Add tbb to the $PATH on Windows
                 libtbb = os.environ.get("STAN_TBB")
                 if libtbb is None:
-                    libtbb = os.path.join(
-                        cmdstan_path(), "stan", "lib", "stan_math", "lib", "tbb"
-                    )
+                    libtbb = os.path.join(cmdstan_path(), "stan", "lib", "stan_math", "lib", "tbb")
                 get_logger().debug("Adding TBB (%s) to PATH", libtbb)
                 os.environ["PATH"] = ";".join(
-                    list(
-                        OrderedDict.fromkeys(
-                            [libtbb] + os.environ.get("PATH", "").split(";")
-                        )
-                    )
+                    list(OrderedDict.fromkeys([libtbb] + os.environ.get("PATH", "").split(";")))
                 )
             else:
                 get_logger().debug("TBB already found in load path")
@@ -435,11 +427,7 @@ class CmdStanModel:
             raise RuntimeError("Please specify source file")
 
         compiler_options = None
-        if (
-            stanc_options is not None
-            or cpp_options is not None
-            or user_header is not None
-        ):
+        if stanc_options is not None or cpp_options is not None or user_header is not None:
             compiler_options = compilation.CompilerOptions(
                 stanc_options=stanc_options,
                 cpp_options=cpp_options,
@@ -617,9 +605,7 @@ class CmdStanModel:
                 "in CmdStan 2.32 and above."
             )
 
-        with temp_single_json(data) as _data, temp_inits(
-            inits, allow_multiple=False
-        ) as _inits:
+        with temp_single_json(data) as _data, temp_inits(inits, allow_multiple=False) as _inits:
             args = CmdStanArgs(
                 self._name,
                 self._exe_file,
@@ -676,9 +662,7 @@ class CmdStanModel:
         save_warmup: bool = False,
         thin: Optional[int] = None,
         max_treedepth: Optional[int] = None,
-        metric: Union[
-            str, Dict[str, Any], List[str], List[Dict[str, Any]], None
-        ] = None,
+        metric: Union[str, Dict[str, Any], List[str], List[Dict[str, Any]], None] = None,
         step_size: Union[float, List[float], None] = None,
         adapt_engaged: bool = True,
         adapt_delta: Optional[float] = None,
@@ -902,9 +886,7 @@ class CmdStanModel:
         if chains is None:
             chains = 4
         if chains < 1:
-            raise ValueError(
-                "Chains must be a positive integer value, found {}.".format(chains)
-            )
+            raise ValueError("Chains must be a positive integer value, found {}.".format(chains))
 
         if parallel_chains is None:
             parallel_chains = max(min(cpu_count(), chains), 1)
@@ -974,8 +956,7 @@ class CmdStanModel:
             if isinstance(chain_ids, int):
                 if chain_ids < 1:
                     raise ValueError(
-                        "Chain_id must be a positive integer value,"
-                        " found {}.".format(chain_ids)
+                        "Chain_id must be a positive integer value," " found {}.".format(chain_ids)
                     )
                 chain_ids = [i + chain_ids for i in range(chains)]
             else:
@@ -989,9 +970,7 @@ class CmdStanModel:
                 if not len(chain_ids) == chains:
                     raise ValueError(
                         "Chain_ids must correspond to number of chains"
-                        " specified {} chains, found {} chain_ids.".format(
-                            chains, len(chain_ids)
-                        )
+                        " specified {} chains, found {} chain_ids.".format(chains, len(chain_ids))
                     )
                 for chain_id in chain_ids:
                     if chain_id < 0:
@@ -1017,14 +996,10 @@ class CmdStanModel:
             fixed_param=fixed_param,
         )
 
-        with temp_single_json(data) as _data, temp_inits(
-            inits, id=chain_ids[0]
-        ) as _inits:
+        with temp_single_json(data) as _data, temp_inits(inits, id=chain_ids[0]) as _inits:
             cmdstan_inits: Union[str, List[str], int, float, None]
             if one_process_per_chain and isinstance(inits, list):  # legacy
-                cmdstan_inits = [
-                    f"{_inits[:-5]}_{i}.json" for i in chain_ids  # type: ignore
-                ]
+                cmdstan_inits = [f"{_inits[:-5]}_{i}.json" for i in chain_ids]  # type: ignore
             else:
                 cmdstan_inits = _inits
 
@@ -1090,9 +1065,7 @@ class CmdStanModel:
                 progress_hook("Done", -1)  # -1 == all chains finished
 
                 # advance terminal window cursor past progress bars
-                term_size: os.terminal_size = shutil.get_terminal_size(
-                    fallback=(80, 24)
-                )
+                term_size: os.terminal_size = shutil.get_terminal_size(fallback=(80, 24))
                 if term_size is not None and term_size[0] > 0:
                     for i in range(chains):
                         sys.stdout.write(" " * term_size[0])
@@ -1220,12 +1193,10 @@ class CmdStanModel:
         if mcmc_sample is not None:
             if previous_fit:
                 raise ValueError(
-                    "Cannot supply both 'previous_fit' and "
-                    "deprecated argument 'mcmc_sample'"
+                    "Cannot supply both 'previous_fit' and " "deprecated argument 'mcmc_sample'"
                 )
             get_logger().warning(
-                "Argument name `mcmc_sample` is deprecated, please "
-                "rename to `previous_fit`."
+                "Argument name `mcmc_sample` is deprecated, please " "rename to `previous_fit`."
             )
 
             previous_fit = mcmc_sample  # type: ignore
@@ -1242,9 +1213,7 @@ class CmdStanModel:
             except ValueError as e:
                 raise ValueError(
                     "Invalid sample from Stan CSV files, error:\n\t{}\n\t"
-                    " while processing files\n\t{}".format(
-                        repr(e), "\n\t".join(previous_fit)
-                    )
+                    " while processing files\n\t{}".format(repr(e), "\n\t".join(previous_fit))
                 ) from e
         else:
             raise ValueError(
@@ -1262,8 +1231,7 @@ class CmdStanModel:
         elif isinstance(fit_object, CmdStanMLE):
             if cmdstan_version_before(2, 31):
                 raise RuntimeError(
-                    "Method generate_quantities was not "
-                    "available for non-HMC until CmdStan 2.31"
+                    "Method generate_quantities was not " "available for non-HMC until CmdStan 2.31"
                 )
             chains = 1
             chain_ids = [1]
@@ -1275,8 +1243,7 @@ class CmdStanModel:
         else:  # isinstance(fit_object, CmdStanVB)
             if cmdstan_version_before(2, 31):
                 raise RuntimeError(
-                    "Method generate_quantities was not "
-                    "available for non-HMC until CmdStan 2.31"
+                    "Method generate_quantities was not " "available for non-HMC until CmdStan 2.31"
                 )
             chains = 1
             chain_ids = [1]
@@ -1295,9 +1262,7 @@ class CmdStanModel:
                 method_args=generate_quantities_args,
                 refresh=refresh,
             )
-            runset = RunSet(
-                args=args, chains=chains, chain_ids=chain_ids, time_fmt=time_fmt
-            )
+            runset = RunSet(args=args, chains=chains, chain_ids=chain_ids, time_fmt=time_fmt)
 
             parallel_chains_avail = cpu_count()
             parallel_chains = max(min(parallel_chains_avail - 2, chains), 1)
@@ -1454,12 +1419,10 @@ class CmdStanModel:
         if output_samples is not None:
             if draws is not None:
                 raise ValueError(
-                    "Cannot supply both 'draws' and deprecated argument "
-                    "'output_samples'"
+                    "Cannot supply both 'draws' and deprecated argument " "'output_samples'"
                 )
             get_logger().warning(
-                "Argument name `output_samples` is deprecated, please "
-                "rename to `draws`."
+                "Argument name `output_samples` is deprecated, please " "rename to `draws`."
             )
 
             draws = output_samples
@@ -1477,9 +1440,7 @@ class CmdStanModel:
             output_samples=draws,
         )
 
-        with temp_single_json(data) as _data, temp_inits(
-            inits, allow_multiple=False
-        ) as _inits:
+        with temp_single_json(data) as _data, temp_inits(inits, allow_multiple=False) as _inits:
             args = CmdStanArgs(
                 self._name,
                 self._exe_file,
@@ -1537,9 +1498,7 @@ class CmdStanModel:
                     "current value is {}.".format(grad_samples)
                 )
             else:
-                msg = "Error during variational inference: {}".format(
-                    runset.get_err_msgs()
-                )
+                msg = "Error during variational inference: {}".format(runset.get_err_msgs())
             raise RuntimeError(msg)
         # pylint: disable=invalid-name
         vb = CmdStanVB(runset)
@@ -1697,9 +1656,7 @@ class CmdStanModel:
                 "Method 'pathfinder' not available for CmdStan versions " "before 2.33"
             )
 
-        if (not psis_resample or not calculate_lp) and cmdstan_version_before(
-            2, 34, exe_info
-        ):
+        if (not psis_resample or not calculate_lp) and cmdstan_version_before(2, 34, exe_info):
             raise ValueError(
                 "Arguments 'psis_resample' and 'calculate_lp' are only "
                 "available for CmdStan versions 2.34 and later"
@@ -1718,8 +1675,7 @@ class CmdStanModel:
                 num_single_draws = draws
             if draws is not None and num_single_draws != draws:
                 raise ValueError(
-                    "Cannot specify both 'draws' and 'num_single_draws'"
-                    " when 'num_paths' is 1"
+                    "Cannot specify both 'draws' and 'num_single_draws'" " when 'num_paths' is 1"
                 )
 
         pathfinder_args = PathfinderArgs(
@@ -1810,9 +1766,7 @@ class CmdStanModel:
         """
 
         if cmdstan_version_before(2, 31, self.exe_info()):
-            raise ValueError(
-                "Method 'log_prob' not available for CmdStan versions " "before 2.31"
-            )
+            raise ValueError("Method 'log_prob' not available for CmdStan versions " "before 2.31")
         with temp_single_json(data) as _data, temp_single_json(params) as _params:
             cmd = [
                 str(self.exe_file),
@@ -1920,8 +1874,7 @@ class CmdStanModel:
         """
         if cmdstan_version_before(2, 32, self.exe_info()):
             raise ValueError(
-                "Method 'laplace_sample' not available for CmdStan versions "
-                "before 2.32"
+                "Method 'laplace_sample' not available for CmdStan versions " "before 2.32"
             )
         if opt_args is not None and mode is not None:
             raise ValueError("Cannot specify both 'opt_args' and 'mode' arguments")
@@ -2089,9 +2042,7 @@ class CmdStanModel:
                 serror = os.strerror(retcode)
             except (ArithmeticError, ValueError):
                 pass
-            get_logger().error(
-                "%s error: %s %s", logger_prefix, retcode_summary, serror
-            )
+            get_logger().error("%s error: %s %s", logger_prefix, retcode_summary, serror)
 
     @staticmethod
     @progbar.wrap_callback

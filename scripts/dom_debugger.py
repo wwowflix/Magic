@@ -110,9 +110,7 @@ class EventListener:
             line_number=int(json["lineNumber"]),
             column_number=int(json["columnNumber"]),
             handler=(
-                runtime.RemoteObject.from_json(json["handler"])
-                if "handler" in json
-                else None
+                runtime.RemoteObject.from_json(json["handler"]) if "handler" in json else None
             ),
             original_handler=(
                 runtime.RemoteObject.from_json(json["originalHandler"])

@@ -50,9 +50,7 @@ class TestDataFrameReprInfoEtc:
 
     def test_assign_index_sequences(self):
         # GH#2200
-        df = DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]}).set_index(
-            ["a", "b"]
-        )
+        df = DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]}).set_index(["a", "b"])
         index = list(df.index)
         index[0] = ("faz", "boo")
         df.index = index
@@ -107,9 +105,7 @@ NaT   4"""
         repr(idf)
 
     def test_repr_name_coincide(self):
-        index = MultiIndex.from_tuples(
-            [("a", 0, "foo"), ("b", 1, "bar")], names=["a", "b", "c"]
-        )
+        index = MultiIndex.from_tuples([("a", 0, "foo"), ("b", 1, "bar")], names=["a", "b", "c"])
 
         df = DataFrame({"value": [0, 1]}, index=index)
 

@@ -168,9 +168,7 @@ def setup(**attr):
             elif is_string(item):
                 new_libraries.append(item)
             else:
-                raise TypeError(
-                    "invalid description of extension module " "library %r" % (item,)
-                )
+                raise TypeError("invalid description of extension module " "library %r" % (item,))
         ext.libraries = new_libraries
     if libraries:
         if "libraries" not in new_attr:
@@ -179,9 +177,7 @@ def setup(**attr):
             _check_append_library(new_attr["libraries"], item)
 
     # sources in ext_modules or libraries may contain header files
-    if (
-        "ext_modules" in new_attr or "libraries" in new_attr
-    ) and "headers" not in new_attr:
+    if ("ext_modules" in new_attr or "libraries" in new_attr) and "headers" not in new_attr:
         new_attr["headers"] = []
 
     # Use our custom NumpyDistribution class instead of distutils' one
@@ -198,16 +194,14 @@ def _check_append_library(libraries, item):
                     if item[1] is libitem[1]:
                         return
                     warnings.warn(
-                        "[0] libraries list contains %r with"
-                        " different build_info" % (item[0],),
+                        "[0] libraries list contains %r with" " different build_info" % (item[0],),
                         stacklevel=2,
                     )
                     break
             else:
                 if item == libitem[0]:
                     warnings.warn(
-                        "[1] libraries list contains %r with"
-                        " no build_info" % (item[0],),
+                        "[1] libraries list contains %r with" " no build_info" % (item[0],),
                         stacklevel=2,
                     )
                     break
@@ -215,8 +209,7 @@ def _check_append_library(libraries, item):
             if is_sequence(item):
                 if item[0] == libitem:
                     warnings.warn(
-                        "[2] libraries list contains %r with"
-                        " no build_info" % (item[0],),
+                        "[2] libraries list contains %r with" " no build_info" % (item[0],),
                         stacklevel=2,
                     )
                     break
@@ -233,8 +226,7 @@ def _check_append_ext_library(libraries, lib_name, build_info):
                 if item[1] is build_info:
                     return
                 warnings.warn(
-                    "[3] libraries list contains %r with"
-                    " different build_info" % (lib_name,),
+                    "[3] libraries list contains %r with" " different build_info" % (lib_name,),
                     stacklevel=2,
                 )
                 break

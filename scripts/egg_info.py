@@ -139,11 +139,7 @@ class InfoCommon:
         egg_info may be called more than once for a distribution,
         in which case the version string already contains all tags.
         """
-        return (
-            version
-            if self.vtags and self._already_tagged(version)
-            else version + self.vtags
-        )
+        return version if self.vtags and self._already_tagged(version) else version + self.vtags
 
     def _already_tagged(self, version: str) -> bool:
         # Depending on their format, tags may change with version normalization.
@@ -173,8 +169,7 @@ class egg_info(InfoCommon, Command):
         (
             "egg-base=",
             "e",
-            "directory containing .egg-info directories"
-            " (default: top of the source tree)",
+            "directory containing .egg-info directories" " (default: top of the source tree)",
         ),
         ("tag-date", "d", "Add date stamp (e.g. 20050528) to version number"),
         ("tag-build=", "b", "Specify explicit tag to add to version number"),
@@ -376,19 +371,14 @@ class FileList(_FileList):
         log_map = {
             "include": "warning: no files found matching '%s'",
             "exclude": ("warning: no previously-included files found " "matching '%s'"),
-            "global-include": (
-                "warning: no files found matching '%s' " "anywhere in distribution"
-            ),
+            "global-include": ("warning: no files found matching '%s' " "anywhere in distribution"),
             "global-exclude": (
                 "warning: no previously-included files matching "
                 "'%s' found anywhere in distribution"
             ),
-            "recursive-include": (
-                "warning: no files found matching '%s' " "under directory '%s'"
-            ),
+            "recursive-include": ("warning: no files found matching '%s' " "under directory '%s'"),
             "recursive-exclude": (
-                "warning: no previously-included files matching "
-                "'%s' found under directory '%s'"
+                "warning: no previously-included files matching " "'%s' found under directory '%s'"
             ),
             "graft": "warning: no directories found matching '%s'",
             "prune": "no previously-included directories found matching '%s'",
@@ -462,11 +452,7 @@ class FileList(_FileList):
 
     def graft(self, dir):
         """Include all files from 'dir/'."""
-        found = [
-            item
-            for match_dir in glob(dir)
-            for item in distutils.filelist.findall(match_dir)
-        ]
+        found = [item for match_dir in glob(dir) for item in distutils.filelist.findall(match_dir)]
         self.extend(found)
         return bool(found)
 
@@ -627,9 +613,7 @@ class manifest_maker(sdist):
         self.filelist.prune(build.build_base)
         self.filelist.prune(base_dir)
         sep = re.escape(os.sep)
-        self.filelist.exclude_pattern(
-            r"(^|" + sep + r")(RCS|CVS|\.svn)" + sep, is_regex=1
-        )
+        self.filelist.exclude_pattern(r"(^|" + sep + r")(RCS|CVS|\.svn)" + sep, is_regex=1)
 
     def _safe_data_files(self, build_py):
         """
@@ -721,9 +705,7 @@ def write_setup_requirements(cmd, basename, filename):
 
 
 def write_toplevel_names(cmd, basename, filename):
-    pkgs = dict.fromkeys(
-        [k.split(".", 1)[0] for k in cmd.distribution.iter_distribution_names()]
-    )
+    pkgs = dict.fromkeys([k.split(".", 1)[0] for k in cmd.distribution.iter_distribution_names()])
     cmd.write_file("top-level names", filename, "\n".join(sorted(pkgs)) + "\n")
 
 

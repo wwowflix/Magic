@@ -38,9 +38,7 @@ def calc_chunk_sizes(
         )
         > 1
     ):
-        raise ValueError(
-            "Only one of chunk_size, chunk_count and total_chunk_count should be set"
-        )
+        raise ValueError("Only one of chunk_size, chunk_count and total_chunk_count should be set")
 
     if nx < 2 or ny < 2:
         raise ValueError(f"(ny, nx) must be at least (2, 2), not ({ny}, {nx})")

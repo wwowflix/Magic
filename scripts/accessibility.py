@@ -166,9 +166,7 @@ class AXValueSource:
             value=AXValue.from_json(json["value"]) if "value" in json else None,
             attribute=str(json["attribute"]) if "attribute" in json else None,
             attribute_value=(
-                AXValue.from_json(json["attributeValue"])
-                if "attributeValue" in json
-                else None
+                AXValue.from_json(json["attributeValue"]) if "attributeValue" in json else None
             ),
             superseded=bool(json["superseded"]) if "superseded" in json else None,
             native_source=(
@@ -182,9 +180,7 @@ class AXValueSource:
                 else None
             ),
             invalid=bool(json["invalid"]) if "invalid" in json else None,
-            invalid_reason=(
-                str(json["invalidReason"]) if "invalidReason" in json else None
-            ),
+            invalid_reason=(str(json["invalidReason"]) if "invalidReason" in json else None),
         )
 
 
@@ -279,9 +275,7 @@ class AXValue:
                 else None
             ),
             sources=(
-                [AXValueSource.from_json(i) for i in json["sources"]]
-                if "sources" in json
-                else None
+                [AXValueSource.from_json(i) for i in json["sources"]] if "sources" in json else None
             ),
         )
 
@@ -430,37 +424,25 @@ class AXNode:
                 else None
             ),
             role=AXValue.from_json(json["role"]) if "role" in json else None,
-            chrome_role=(
-                AXValue.from_json(json["chromeRole"]) if "chromeRole" in json else None
-            ),
+            chrome_role=(AXValue.from_json(json["chromeRole"]) if "chromeRole" in json else None),
             name=AXValue.from_json(json["name"]) if "name" in json else None,
-            description=(
-                AXValue.from_json(json["description"])
-                if "description" in json
-                else None
-            ),
+            description=(AXValue.from_json(json["description"]) if "description" in json else None),
             value=AXValue.from_json(json["value"]) if "value" in json else None,
             properties=(
                 [AXProperty.from_json(i) for i in json["properties"]]
                 if "properties" in json
                 else None
             ),
-            parent_id=(
-                AXNodeId.from_json(json["parentId"]) if "parentId" in json else None
-            ),
+            parent_id=(AXNodeId.from_json(json["parentId"]) if "parentId" in json else None),
             child_ids=(
-                [AXNodeId.from_json(i) for i in json["childIds"]]
-                if "childIds" in json
-                else None
+                [AXNodeId.from_json(i) for i in json["childIds"]] if "childIds" in json else None
             ),
             backend_dom_node_id=(
                 dom.BackendNodeId.from_json(json["backendDOMNodeId"])
                 if "backendDOMNodeId" in json
                 else None
             ),
-            frame_id=(
-                page.FrameId.from_json(json["frameId"]) if "frameId" in json else None
-            ),
+            frame_id=(page.FrameId.from_json(json["frameId"]) if "frameId" in json else None),
         )
 
 

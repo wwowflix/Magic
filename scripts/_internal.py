@@ -117,8 +117,7 @@ def _array_descr(descriptor):
             offset += num
         elif field[1] < offset:
             raise ValueError(
-                "dtype.descr is not defined for types with overlapping or "
-                "out-of-order fields"
+                "dtype.descr is not defined for types with overlapping or " "out-of-order fields"
             )
         if len(field) > 3:
             name = (field[2], field[3])
@@ -183,8 +182,7 @@ def _commastring(astr):
                 mo = sep_re.match(astr, pos=startindex)
                 if not mo:
                     raise ValueError(
-                        'format number %d of "%s" is not recognized'
-                        % (len(result) + 1, astr)
+                        'format number %d of "%s" is not recognized' % (len(result) + 1, astr)
                     )
                 startindex = mo.end()
 
@@ -493,10 +491,7 @@ def _getfield_is_safe(oldtype, newtype, offset):
             return
         if oldtype.names is not None:
             for name in oldtype.names:
-                if (
-                    oldtype.fields[name][1] == offset
-                    and oldtype.fields[name][0] == newtype
-                ):
+                if oldtype.fields[name][1] == offset and oldtype.fields[name][0] == newtype:
                     return
         raise TypeError("Cannot get/set field of an object array")
     return
@@ -695,9 +690,7 @@ def __dtype_from_pep3118(stream, is_subdtype):
             if dtypechar in "USV":
                 dtypechar += "%d" % itemsize
                 itemsize = 1
-            numpy_byteorder = {"@": "=", "^": "="}.get(
-                stream.byteorder, stream.byteorder
-            )
+            numpy_byteorder = {"@": "=", "^": "="}.get(stream.byteorder, stream.byteorder)
             value = dtype(numpy_byteorder + dtypechar)
             align = value.alignment
         elif stream.next in _pep3118_unsupported_map:
@@ -798,9 +791,7 @@ def _fix_names(field_spec):
 def _add_trailing_padding(value, padding):
     """Inject the specified number of padding bytes at the end of a dtype"""
     if value.fields is None:
-        field_spec = dict(
-            names=["f0"], formats=[value], offsets=[0], itemsize=value.itemsize
-        )
+        field_spec = dict(names=["f0"], formats=[value], offsets=[0], itemsize=value.itemsize)
     else:
         fields = value.fields
         names = value.names
@@ -836,16 +827,13 @@ def _lcm(a, b):
 def array_ufunc_errmsg_formatter(dummy, ufunc, method, *inputs, **kwargs):
     """Format the error message for when __array_ufunc__ gives up."""
     args_string = ", ".join(
-        ["{!r}".format(arg) for arg in inputs]
-        + ["{}={!r}".format(k, v) for k, v in kwargs.items()]
+        ["{!r}".format(arg) for arg in inputs] + ["{}={!r}".format(k, v) for k, v in kwargs.items()]
     )
     args = inputs + kwargs.get("out", ())
     types_string = ", ".join(repr(type(arg).__name__) for arg in args)
     return (
         "operand type(s) all returned NotImplemented from "
-        "__array_ufunc__({!r}, {!r}, {}): {}".format(
-            ufunc, method, args_string, types_string
-        )
+        "__array_ufunc__({!r}, {!r}, {}): {}".format(ufunc, method, args_string, types_string)
     )
 
 

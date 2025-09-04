@@ -1,4 +1,4 @@
-﻿# === MAGIC Phase 6–10 Verifier (patched for script checks) ===
+# === MAGIC Phase 6–10 Verifier (patched for script checks) ===
 $ErrorActionPreference = "SilentlyContinue"
 
 function New-Row($phase,$step,$check,$ok,$details) {

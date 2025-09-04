@@ -355,9 +355,7 @@ class BCPPCompiler(CCompiler):
             # use normcase to make sure '.rc' is really '.rc' and not '.RC'
             (base, ext) = os.path.splitext(os.path.normcase(src_name))
             if ext not in (self.src_extensions + [".rc", ".res"]):
-                raise UnknownFileError(
-                    "unknown file type '{}' (from '{}')".format(ext, src_name)
-                )
+                raise UnknownFileError("unknown file type '{}' (from '{}')".format(ext, src_name))
             if strip_dir:
                 base = os.path.basename(base)
             if ext == ".res":

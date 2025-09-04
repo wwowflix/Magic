@@ -9,9 +9,7 @@ from .util import T_JSON_DICT
 import typing
 
 
-def clear_device_orientation_override() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def clear_device_orientation_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Clears the overridden Device Orientation.
     """

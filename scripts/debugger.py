@@ -192,18 +192,14 @@ class CallFrame:
             scope_chain=[Scope.from_json(i) for i in json["scopeChain"]],
             this=runtime.RemoteObject.from_json(json["this"]),
             function_location=(
-                Location.from_json(json["functionLocation"])
-                if "functionLocation" in json
-                else None
+                Location.from_json(json["functionLocation"]) if "functionLocation" in json else None
             ),
             return_value=(
                 runtime.RemoteObject.from_json(json["returnValue"])
                 if "returnValue" in json
                 else None
             ),
-            can_be_restarted=(
-                bool(json["canBeRestarted"]) if "canBeRestarted" in json else None
-            ),
+            can_be_restarted=(bool(json["canBeRestarted"]) if "canBeRestarted" in json else None),
         )
 
 
@@ -248,14 +244,10 @@ class Scope:
             object_=runtime.RemoteObject.from_json(json["object"]),
             name=str(json["name"]) if "name" in json else None,
             start_location=(
-                Location.from_json(json["startLocation"])
-                if "startLocation" in json
-                else None
+                Location.from_json(json["startLocation"]) if "startLocation" in json else None
             ),
             end_location=(
-                Location.from_json(json["endLocation"])
-                if "endLocation" in json
-                else None
+                Location.from_json(json["endLocation"]) if "endLocation" in json else None
             ),
         )
 
@@ -551,9 +543,7 @@ def get_possible_breakpoints(
 
 def get_script_source(
     script_id: runtime.ScriptId,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[str, typing.Optional[str]]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[str, typing.Optional[str]]]:
     """
     Returns source for the script with given id.
 
@@ -967,9 +957,7 @@ def set_breakpoint_by_url(
     script_hash: typing.Optional[str] = None,
     column_number: typing.Optional[int] = None,
     condition: typing.Optional[str] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[BreakpointId, typing.List[Location]]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[BreakpointId, typing.List[Location]]]:
     """
     Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
     command is issued, all existing parsed scripts will have breakpoints resolved and returned in
@@ -1142,11 +1130,7 @@ def set_script_source(
     }
     json = yield cmd_dict
     return (
-        (
-            [CallFrame.from_json(i) for i in json["callFrames"]]
-            if "callFrames" in json
-            else None
-        ),
+        ([CallFrame.from_json(i) for i in json["callFrames"]] if "callFrames" in json else None),
         bool(json["stackChanged"]) if "stackChanged" in json else None,
         (
             runtime.StackTrace.from_json(json["asyncStackTrace"])
@@ -1309,9 +1293,7 @@ class Paused:
             reason=str(json["reason"]),
             data=dict(json["data"]) if "data" in json else None,
             hit_breakpoints=(
-                [str(i) for i in json["hitBreakpoints"]]
-                if "hitBreakpoints" in json
-                else None
+                [str(i) for i in json["hitBreakpoints"]] if "hitBreakpoints" in json else None
             ),
             async_stack_trace=(
                 runtime.StackTrace.from_json(json["asyncStackTrace"])
@@ -1396,28 +1378,18 @@ class ScriptFailedToParse:
             start_column=int(json["startColumn"]),
             end_line=int(json["endLine"]),
             end_column=int(json["endColumn"]),
-            execution_context_id=runtime.ExecutionContextId.from_json(
-                json["executionContextId"]
-            ),
+            execution_context_id=runtime.ExecutionContextId.from_json(json["executionContextId"]),
             hash_=str(json["hash"]),
             build_id=str(json["buildId"]),
             execution_context_aux_data=(
-                dict(json["executionContextAuxData"])
-                if "executionContextAuxData" in json
-                else None
+                dict(json["executionContextAuxData"]) if "executionContextAuxData" in json else None
             ),
-            source_map_url=(
-                str(json["sourceMapURL"]) if "sourceMapURL" in json else None
-            ),
-            has_source_url=(
-                bool(json["hasSourceURL"]) if "hasSourceURL" in json else None
-            ),
+            source_map_url=(str(json["sourceMapURL"]) if "sourceMapURL" in json else None),
+            has_source_url=(bool(json["hasSourceURL"]) if "hasSourceURL" in json else None),
             is_module=bool(json["isModule"]) if "isModule" in json else None,
             length=int(json["length"]) if "length" in json else None,
             stack_trace=(
-                runtime.StackTrace.from_json(json["stackTrace"])
-                if "stackTrace" in json
-                else None
+                runtime.StackTrace.from_json(json["stackTrace"]) if "stackTrace" in json else None
             ),
             code_offset=int(json["codeOffset"]) if "codeOffset" in json else None,
             script_language=(
@@ -1491,29 +1463,19 @@ class ScriptParsed:
             start_column=int(json["startColumn"]),
             end_line=int(json["endLine"]),
             end_column=int(json["endColumn"]),
-            execution_context_id=runtime.ExecutionContextId.from_json(
-                json["executionContextId"]
-            ),
+            execution_context_id=runtime.ExecutionContextId.from_json(json["executionContextId"]),
             hash_=str(json["hash"]),
             build_id=str(json["buildId"]),
             execution_context_aux_data=(
-                dict(json["executionContextAuxData"])
-                if "executionContextAuxData" in json
-                else None
+                dict(json["executionContextAuxData"]) if "executionContextAuxData" in json else None
             ),
             is_live_edit=bool(json["isLiveEdit"]) if "isLiveEdit" in json else None,
-            source_map_url=(
-                str(json["sourceMapURL"]) if "sourceMapURL" in json else None
-            ),
-            has_source_url=(
-                bool(json["hasSourceURL"]) if "hasSourceURL" in json else None
-            ),
+            source_map_url=(str(json["sourceMapURL"]) if "sourceMapURL" in json else None),
+            has_source_url=(bool(json["hasSourceURL"]) if "hasSourceURL" in json else None),
             is_module=bool(json["isModule"]) if "isModule" in json else None,
             length=int(json["length"]) if "length" in json else None,
             stack_trace=(
-                runtime.StackTrace.from_json(json["stackTrace"])
-                if "stackTrace" in json
-                else None
+                runtime.StackTrace.from_json(json["stackTrace"]) if "stackTrace" in json else None
             ),
             code_offset=int(json["codeOffset"]) if "codeOffset" in json else None,
             script_language=(

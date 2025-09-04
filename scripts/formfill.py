@@ -189,8 +189,7 @@ def _find_form(el, form_id=None, form_index=None):
             return forms[form_index]
         except IndexError:
             raise FormNotFound(
-                "There is no form with the index %r (%i forms found)"
-                % (form_index, len(forms))
+                "There is no form with the index %r (%i forms found)" % (form_index, len(forms))
             )
 
 
@@ -235,9 +234,7 @@ class DefaultErrorCreator:
         if self.error_message_class:
             error_el.set("class", self.error_message_class)
         if is_block and self.error_block_class:
-            error_el.set(
-                "class", error_el.get("class", "") + " " + self.error_block_class
-            )
+            error_el.set("class", error_el.get("class", "") + " " + self.error_block_class)
         if message is None or message == "":
             message = self.default_message
         if isinstance(message, ElementBase):

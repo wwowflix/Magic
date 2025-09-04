@@ -172,9 +172,7 @@ class _timelex(object):
                     self.charstack.append(nextchar)
                     break  # emit token
 
-        if state in ("a.", "0.") and (
-            seenletters or token.count(".") > 1 or token[-1] in ".,"
-        ):
+        if state in ("a.", "0.") and (seenletters or token.count(".") > 1 or token[-1] in ".,"):
             l = self._split_decimal.split(token)
             token = l[0]
             for tok in l[1:]:
@@ -406,9 +404,7 @@ class parserinfo(object):
         if res.year is not None:
             res.year = self.convertyear(res.year, res.century_specified)
 
-        if (res.tzoffset == 0 and not res.tzname) or (
-            res.tzname == "Z" or res.tzname == "z"
-        ):
+        if (res.tzoffset == 0 and not res.tzname) or (res.tzname == "Z" or res.tzname == "z"):
             res.tzname = "UTC"
             res.tzoffset = 0
         elif res.tzoffset != 0 and res.tzname and self.utczone(res.tzname):
@@ -657,9 +653,7 @@ class parser(object):
         """
 
         if default is None:
-            default = datetime.datetime.now().replace(
-                hour=0, minute=0, second=0, microsecond=0
-            )
+            default = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
         res, skipped_tokens = self._parse(timestr, **kwargs)
 
@@ -804,9 +798,7 @@ class parser(object):
                             i += 2
 
                         elif (
-                            i + 4 < len_l
-                            and l[i + 1] == l[i + 3] == " "
-                            and info.pertain(l[i + 2])
+                            i + 4 < len_l and l[i + 1] == l[i + 3] == " " and info.pertain(l[i + 2])
                         ):
                             # Jan of 01
                             # In this case, 01 is clearly year
@@ -864,9 +856,7 @@ class parser(object):
                     elif i + 2 < len_l and l[i + 2] == ":":
                         # -03:00
                         hour_offset = int(l[i + 1])
-                        min_offset = int(
-                            l[i + 3]
-                        )  # TODO: Check that l[i+3] is minute-like?
+                        min_offset = int(l[i + 3])  # TODO: Check that l[i+3] is minute-like?
                         i += 2
                     elif len_li <= 2:
                         # -[0]3
@@ -936,10 +926,7 @@ class parser(object):
             len(ymd) == 3
             and len_li in (2, 4)
             and res.hour is None
-            and (
-                idx + 1 >= len_l
-                or (tokens[idx + 1] != ":" and info.hms(tokens[idx + 1]) is None)
-            )
+            and (idx + 1 >= len_l or (tokens[idx + 1] != ":" and info.hms(tokens[idx + 1]) is None))
         ):
             # 19990101T23[59]
             s = tokens[idx]
@@ -1118,10 +1105,7 @@ class parser(object):
             and tzname is None
             and tzoffset is None
             and len(token) <= 5
-            and (
-                all(x in string.ascii_uppercase for x in token)
-                or token in self.info.UTCZONE
-            )
+            and (all(x in string.ascii_uppercase for x in token) or token in self.info.UTCZONE)
         )
 
     def _ampm_valid(self, hour, ampm, fuzzy):
@@ -1233,9 +1217,7 @@ class parser(object):
         elif isinstance(tzdata, integer_types):
             tzinfo = tz.tzoffset(tzname, tzdata)
         else:
-            raise TypeError(
-                "Offset must be tzinfo subclass, tz string, " "or int offset."
-            )
+            raise TypeError("Offset must be tzinfo subclass, tz string, " "or int offset.")
         return tzinfo
 
     def _build_tzaware(self, naive, res, tzinfos):

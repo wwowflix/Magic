@@ -1,8 +1,8 @@
-﻿"""Scans for dead jobs and retries intelligently"""
+ï¿"""Scans for dead jobs and retries intelligently"""
 
 
 def main():
-    print("✅ Retry Dead Job Scanner running...")
+    print("âœ… Retry Dead Job Scanner running...")
 
 
 if __name__ == "__main__":

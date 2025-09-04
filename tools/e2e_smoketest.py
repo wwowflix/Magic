@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import argparse
 import csv
 import json
@@ -32,9 +32,7 @@ def _read_rows(summary_path: Path) -> List[Dict[str, str]]:
         return [dict(row) for row in reader]
 
 
-def _filter_rows(
-    rows: List[Dict[str, str]], phase: Optional[int]
-) -> List[Dict[str, str]]:
+def _filter_rows(rows: List[Dict[str, str]], phase: Optional[int]) -> List[Dict[str, str]]:
     if phase is None:
         return rows
     return [r for r in rows if str(r.get("Phase", "")).strip() == str(phase)]

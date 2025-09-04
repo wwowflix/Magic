@@ -62,9 +62,7 @@ class PackageIndex(object):
             # prompting for passwords
             for s in ("gpg", "gpg2"):
                 try:
-                    rc = subprocess.check_call(
-                        [s, "--version"], stdout=sink, stderr=sink
-                    )
+                    rc = subprocess.check_call([s, "--version"], stdout=sink, stderr=sink)
                     if rc == 0:
                         self.gpg = s
                         break
@@ -154,9 +152,7 @@ class PackageIndex(object):
             logger.debug("%s: %s" % (name, s))
         stream.close()
 
-    def get_sign_command(
-        self, filename, signer, sign_password, keystore=None
-    ):  # pragma: no cover
+    def get_sign_command(self, filename, signer, sign_password, keystore=None):  # pragma: no cover
         """
         Return a suitable command for signing a file.
 
@@ -228,9 +224,7 @@ class PackageIndex(object):
         t2.join()
         return p.returncode, stdout, stderr
 
-    def sign_file(
-        self, filename, signer, sign_password, keystore=None
-    ):  # pragma: no cover
+    def sign_file(self, filename, signer, sign_password, keystore=None):  # pragma: no cover
         """
         Sign a file.
 
@@ -379,9 +373,7 @@ class PackageIndex(object):
         :return: True if the signature was verified, else False.
         """
         if not self.gpg:
-            raise DistlibException(
-                "verification unavailable because gpg " "unavailable"
-            )
+            raise DistlibException("verification unavailable because gpg " "unavailable")
         cmd = self.get_verify_command(signature_filename, data_filename, keystore)
         rc, stdout, stderr = self.run_command(cmd)
         if rc not in (0, 1):
@@ -504,9 +496,7 @@ class PackageIndex(object):
                 parts.extend(
                     (
                         b"--" + boundary,
-                        ('Content-Disposition: form-data; name="%s"' % k).encode(
-                            "utf-8"
-                        ),
+                        ('Content-Disposition: form-data; name="%s"' % k).encode("utf-8"),
                         b"",
                         v.encode("utf-8"),
                     )
@@ -516,8 +506,7 @@ class PackageIndex(object):
                 (
                     b"--" + boundary,
                     (
-                        'Content-Disposition: form-data; name="%s"; filename="%s"'
-                        % (key, filename)
+                        'Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename)
                     ).encode("utf-8"),
                     b"",
                     value,

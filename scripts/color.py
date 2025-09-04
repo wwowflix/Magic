@@ -39,7 +39,9 @@ RGBA_PCT_PATTERN = (
 HEX_PATTERN = r"#([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})"
 HEX3_PATTERN = r"#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])"
 HSL_PATTERN = r"^\s*hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)\s*$"
-HSLA_PATTERN = r"^\s*hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(0|1|0\.\d+)\s*\)\s*$"
+HSLA_PATTERN = (
+    r"^\s*hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(0|1|0\.\d+)\s*\)\s*$"
+)
 
 
 class Color:
@@ -84,9 +86,7 @@ class Color:
         if m.match(RGBA_PATTERN, str_):
             return cls(*m.groups)
         if m.match(RGBA_PCT_PATTERN, str_):
-            rgba = tuple(
-                [float(each) / 100 * 255 for each in m.groups[:3]] + [m.groups[3]]
-            )
+            rgba = tuple([float(each) / 100 * 255 for each in m.groups[:3]] + [m.groups[3]])
             return cls(*rgba)
         if m.match(HEX_PATTERN, str_):
             rgb = tuple(int(each, 16) for each in m.groups)

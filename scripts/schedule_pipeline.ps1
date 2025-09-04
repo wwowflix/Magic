@@ -1,4 +1,4 @@
-﻿# schedule_pipeline.ps1
+# schedule_pipeline.ps1
 # ————————————————
 # Schedules full_pipeline.ps1 to run every day at 6:00 AM under your user account
 

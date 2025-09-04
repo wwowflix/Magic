@@ -20,9 +20,7 @@ def test_float_types(tp):
 
     """
     for x in [0, 1, -1, 1e20]:
-        assert_equal(
-            str(tp(x)), str(float(x)), err_msg=f"Failed str formatting for type {tp}"
-        )
+        assert_equal(str(tp(x)), str(float(x)), err_msg=f"Failed str formatting for type {tp}")
 
     if tp(1e16).itemsize > 4:
         assert_equal(
@@ -45,9 +43,7 @@ def test_nan_inf_float(tp):
 
     """
     for x in [np.inf, -np.inf, np.nan]:
-        assert_equal(
-            str(tp(x)), _REF[x], err_msg=f"Failed str formatting for type {tp}"
-        )
+        assert_equal(str(tp(x)), _REF[x], err_msg=f"Failed str formatting for type {tp}")
 
 
 @pytest.mark.parametrize("tp", [np.complex64, np.cdouble, np.clongdouble])
@@ -60,9 +56,7 @@ def test_complex_types(tp):
 
     """
     for x in [0, 1, -1, 1e20]:
-        assert_equal(
-            str(tp(x)), str(complex(x)), err_msg=f"Failed str formatting for type {tp}"
-        )
+        assert_equal(str(tp(x)), str(complex(x)), err_msg=f"Failed str formatting for type {tp}")
         assert_equal(
             str(tp(x * 1j)),
             str(complex(x * 1j)),
@@ -126,9 +120,7 @@ def _test_redirected_print(x, tp, ref=None):
     finally:
         sys.stdout = stdout
 
-    assert_equal(
-        file.getvalue(), file_tp.getvalue(), err_msg=f"print failed for type{tp}"
-    )
+    assert_equal(file.getvalue(), file_tp.getvalue(), err_msg=f"print failed for type{tp}")
 
 
 @pytest.mark.parametrize("tp", [np.float32, np.double, np.longdouble])

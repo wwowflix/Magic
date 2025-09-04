@@ -1,4 +1,4 @@
-﻿import csv
+import csv
 from datetime import datetime
 from googleapiclient.discovery import build
 
@@ -35,9 +35,7 @@ def save_youtube_trends_to_csv(response):
         "date",
     ]
 
-    with open(
-        "D:/MAGIC/outputs/youtube_scrape.csv", "w", newline="", encoding="utf-8"
-    ) as f:
+    with open("D:/MAGIC/outputs/youtube_scrape.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -52,9 +50,7 @@ def save_youtube_trends_to_csv(response):
                     "viewCount": stats.get("viewCount", "0"),
                     "likeCount": stats.get("likeCount", "0"),
                     "commentCount": stats.get("commentCount", "0"),
-                    "thumbnail_url": snippet.get("thumbnails", {})
-                    .get("high", {})
-                    .get("url", ""),
+                    "thumbnail_url": snippet.get("thumbnails", {}).get("high", {}).get("url", ""),
                     "date": snippet.get("publishedAt", datetime.utcnow().isoformat()),
                 }
             )

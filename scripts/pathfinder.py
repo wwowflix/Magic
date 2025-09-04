@@ -53,8 +53,7 @@ class CmdStanPathfinder:
         if chains == 1:
             draw = self._draws[idxs[0]]
             return {
-                name: var.extract_reshape(draw)
-                for name, var in self._metadata.stan_vars.items()
+                name: var.extract_reshape(draw) for name, var in self._metadata.stan_vars.items()
             }
         else:
             return [

@@ -308,9 +308,7 @@ class LatexFormatter(Formatter):
             if ndef["mono"]:
                 cmndef += r"\let\$$@ff=\textsf"
             if ndef["color"]:
-                cmndef += r"\def\$$@tc##1{\textcolor[rgb]{%s}{##1}}" % rgbcolor(
-                    ndef["color"]
-                )
+                cmndef += r"\def\$$@tc##1{\textcolor[rgb]{%s}{##1}}" % rgbcolor(ndef["color"])
             if ndef["border"]:
                 cmndef += (
                     r"\def\$$@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}"
@@ -358,9 +356,7 @@ class LatexFormatter(Formatter):
                     + (step and ",stepnumber=%d" % step or "")
                 )
             if self.mathescape or self.texcomments or self.escapeinside:
-                outfile.write(
-                    ",codes={\\catcode`\\$=3\\catcode`\\^=7" "\\catcode`\\_=8\\relax}"
-                )
+                outfile.write(",codes={\\catcode`\\$=3\\catcode`\\^=7" "\\catcode`\\_=8\\relax}")
             if self.verboptions:
                 outfile.write("," + self.verboptions)
             outfile.write("]\n")

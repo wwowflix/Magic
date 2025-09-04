@@ -71,8 +71,7 @@ if HAS_USER_SITE:
     INSTALL_SCHEMES["nt_user"] = {
         "purelib": "{usersite}",
         "platlib": "{usersite}",
-        "headers": "{userbase}/{implementation}{py_version_nodot_plat}"
-        "/Include/{dist_name}",
+        "headers": "{userbase}/{implementation}{py_version_nodot_plat}" "/Include/{dist_name}",
         "scripts": "{userbase}/{implementation}{py_version_nodot_plat}/Scripts",
         "data": "{userbase}",
     }
@@ -246,9 +245,7 @@ class install(Command):
     boolean_options = ["compile", "force", "skip-build"]
 
     if HAS_USER_SITE:
-        user_options.append(
-            ("user", None, "install in user site-package '%s'" % USER_SITE)
-        )
+        user_options.append(("user", None, "install in user site-package '%s'" % USER_SITE))
         boolean_options.append("user")
 
     negative_opt = {"no-compile": "compile"}
@@ -355,9 +352,7 @@ class install(Command):
             )
 
         if self.home and (self.prefix or self.exec_prefix):
-            raise DistutilsOptionError(
-                "must supply either home or prefix/exec-prefix -- not both"
-            )
+            raise DistutilsOptionError("must supply either home or prefix/exec-prefix -- not both")
 
         if self.user and (
             self.prefix
@@ -367,8 +362,7 @@ class install(Command):
             or self.install_platbase
         ):
             raise DistutilsOptionError(
-                "can't combine user with prefix, "
-                "exec_prefix/home, or install_(plat)base"
+                "can't combine user with prefix, " "exec_prefix/home, or install_(plat)base"
             )
 
         # Next, stuff that's wrong (or dubious) only on certain platforms.
@@ -497,9 +491,7 @@ class install(Command):
         # If a new root directory was supplied, make all the installation
         # dirs relative to it.
         if self.root is not None:
-            self.change_roots(
-                "libbase", "lib", "purelib", "platlib", "scripts", "data", "headers"
-            )
+            self.change_roots("libbase", "lib", "purelib", "platlib", "scripts", "data", "headers")
 
         self.dump_dirs("after prepending root")
 
@@ -562,9 +554,7 @@ class install(Command):
         else:
             if self.prefix is None:
                 if self.exec_prefix is not None:
-                    raise DistutilsOptionError(
-                        "must not supply exec-prefix without prefix"
-                    )
+                    raise DistutilsOptionError("must not supply exec-prefix without prefix")
 
                 # Allow Fedora to add components to the prefix
                 _prefix_addition = getattr(sysconfig, "_prefix_addition", "")
@@ -598,9 +588,7 @@ class install(Command):
             try:
                 self.select_scheme(os.name)
             except KeyError:
-                raise DistutilsPlatformError(
-                    "I don't know how to install stuff on '%s'" % os.name
-                )
+                raise DistutilsPlatformError("I don't know how to install stuff on '%s'" % os.name)
 
     def select_scheme(self, name):
         _select_scheme(self, name)
@@ -644,10 +632,7 @@ class install(Command):
             self.extra_path = self.distribution.extra_path
 
         if self.extra_path is not None:
-            log.warn(
-                "Distribution option extra_path is deprecated. "
-                "See issue27919 for details."
-            )
+            log.warn("Distribution option extra_path is deprecated. " "See issue27919 for details.")
             if isinstance(self.extra_path, str):
                 self.extra_path = self.extra_path.split(",")
 
@@ -745,9 +730,7 @@ class install(Command):
         """Creates the .pth file"""
         filename = os.path.join(self.install_libbase, self.path_file + ".pth")
         if self.install_path_file:
-            self.execute(
-                write_file, (filename, [self.extra_dirs]), "creating %s" % filename
-            )
+            self.execute(write_file, (filename, [self.extra_dirs]), "creating %s" % filename)
         else:
             self.warn("path file '%s' not created" % filename)
 
@@ -784,9 +767,7 @@ class install(Command):
     def has_lib(self):
         """Returns true if the current distribution has any Python
         modules to install."""
-        return (
-            self.distribution.has_pure_modules() or self.distribution.has_ext_modules()
-        )
+        return self.distribution.has_pure_modules() or self.distribution.has_ext_modules()
 
     def has_headers(self):
         """Returns true if the current distribution has any headers to

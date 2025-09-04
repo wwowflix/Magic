@@ -319,9 +319,7 @@ def seterrcall(func):
 
     """
     if func is not None and not isinstance(func, collections.abc.Callable):
-        if not hasattr(func, "write") or not isinstance(
-            func.write, collections.abc.Callable
-        ):
+        if not hasattr(func, "write") or not isinstance(func.write, collections.abc.Callable):
             raise ValueError("Only callable can be used as callback")
     pyvals = umath.geterrobj()
     old = geterrcall()

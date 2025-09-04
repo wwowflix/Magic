@@ -1,4 +1,4 @@
-﻿# -------------------------------------------------------------
+# -------------------------------------------------------------
 # apply_all_fixes.ps1
 # Automates:
 # - Creating cost_manager.py
@@ -86,7 +86,7 @@ class Orchestrator:
         Write-Host "â„¹ Orchestrator class already exists." -ForegroundColor Yellow
     }
 } else {
-    Write-Host "âš  orchestrator.py does not exist. Skipping orchestrator patch." -ForegroundColor Red
+    Write-Host "âš  orchestrator.py does not exist. Skipping orchestrator patch." -ForegroundColor Red
 }
 
 # 4. Replace placeholder imports in tests
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     scrape_google_trends(["Python", "AI"])
 "@ | Set-Content -Path $trendsScraperFile -Encoding UTF8
 } else {
-    Write-Host "âš  trends_scraper.py does not exist. Skipping patch." -ForegroundColor Red
+    Write-Host "âš  trends_scraper.py does not exist. Skipping patch." -ForegroundColor Red
 }
 
 Write-Host "`nðŸŽ‰ All fixes applied automatically!" -ForegroundColor Green

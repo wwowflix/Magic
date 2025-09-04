@@ -64,18 +64,12 @@ _convert_to_float = {
 # Parameters for creating MachAr / MachAr-like objects
 _title_fmt = "numpy {} precision floating point number"
 _MACHAR_PARAMS = {
-    ntypes.double: dict(
-        itype=ntypes.int64, fmt="%24.16e", title=_title_fmt.format("double")
-    ),
-    ntypes.single: dict(
-        itype=ntypes.int32, fmt="%15.7e", title=_title_fmt.format("single")
-    ),
+    ntypes.double: dict(itype=ntypes.int64, fmt="%24.16e", title=_title_fmt.format("double")),
+    ntypes.single: dict(itype=ntypes.int32, fmt="%15.7e", title=_title_fmt.format("single")),
     ntypes.longdouble: dict(
         itype=ntypes.longlong, fmt="%s", title=_title_fmt.format("long double")
     ),
-    ntypes.half: dict(
-        itype=ntypes.int16, fmt="%12.5e", title=_title_fmt.format("half")
-    ),
+    ntypes.half: dict(itype=ntypes.int16, fmt="%12.5e", title=_title_fmt.format("half")),
 }
 
 # Key to identify the floating point type.  Key is result of
@@ -183,12 +177,8 @@ def _register_known_types():
         tiny=tiny_f128,
     )
     # IEEE 754 128-bit binary float
-    _register_type(
-        float128_ma, b"\x9a\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\xfb\xbf"
-    )
-    _register_type(
-        float128_ma, b"\x9a\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\xfb\xbf"
-    )
+    _register_type(float128_ma, b"\x9a\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\xfb\xbf")
+    _register_type(float128_ma, b"\x9a\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\x99\xfb\xbf")
     _float_ma[128] = float128_ma
 
     # Known parameters for float80 (Intel 80-bit extended precision)
@@ -243,13 +233,9 @@ def _register_known_types():
         tiny=exp2(ld(-1022)),
     )
     # double double; low, high order (e.g. PPC 64)
-    _register_type(
-        float_dd_ma, b"\x9a\x99\x99\x99\x99\x99Y<\x9a\x99\x99\x99\x99\x99\xb9\xbf"
-    )
+    _register_type(float_dd_ma, b"\x9a\x99\x99\x99\x99\x99Y<\x9a\x99\x99\x99\x99\x99\xb9\xbf")
     # double double; high, low order (e.g. PPC 64 le)
-    _register_type(
-        float_dd_ma, b"\x9a\x99\x99\x99\x99\x99\xb9\xbf\x9a\x99\x99\x99\x99\x99Y<"
-    )
+    _register_type(float_dd_ma, b"\x9a\x99\x99\x99\x99\x99\xb9\xbf\x9a\x99\x99\x99\x99\x99Y<")
     _float_ma["dd"] = float_dd_ma
 
 

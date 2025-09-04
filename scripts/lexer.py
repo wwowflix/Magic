@@ -258,9 +258,7 @@ class DelegatingLexer(Lexer):
                 lng_buffer.append((i, t, v))
         if lng_buffer:
             insertions.append((len(buffered), lng_buffer))
-        return do_insertions(
-            insertions, self.root_lexer.get_tokens_unprocessed(buffered)
-        )
+        return do_insertions(insertions, self.root_lexer.get_tokens_unprocessed(buffered))
 
 
 # ------------------------------------------------------------------------------
@@ -346,9 +344,7 @@ def bygroups(*args):
                 if data is not None:
                     if ctx:
                         ctx.pos = match.start(i + 1)
-                    for item in action(
-                        lexer, _PseudoMatch(match.start(i + 1), data), ctx
-                    ):
+                    for item in action(lexer, _PseudoMatch(match.start(i + 1), data), ctx):
                         if item:
                             yield item
         if ctx:
@@ -534,8 +530,7 @@ class RegexLexerMeta(LexerMeta):
                 rex = cls._process_regex(tdef[0], rflags, state)
             except Exception as err:
                 raise ValueError(
-                    "uncompilable regex %r in state %r of %r: %s"
-                    % (tdef[0], state, cls, err)
+                    "uncompilable regex %r in state %r of %r: %s" % (tdef[0], state, cls, err)
                 ) from err
 
             token = cls._process_token(tdef[1])

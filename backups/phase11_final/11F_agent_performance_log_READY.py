@@ -1,8 +1,8 @@
-﻿"""Monitors agent speed, CPU, memory use"""
+ï¿"""Monitors agent speed, CPU, memory use"""
 
 
 def main():
-    print("✅ Agent Performance Log running...")
+    print("âœ… Agent Performance Log running...")
 
 
 if __name__ == "__main__":

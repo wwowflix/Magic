@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+ï¿from pathlib import Path
 
 
 def ensure_placeholder(path_str: str) -> None:
@@ -27,7 +27,7 @@ def main() -> None:
 
         ensure_placeholder(normalized_path)
 
-    print("✅ Placeholder recovery complete.")
+    print("âœ… Placeholder recovery complete.")
 
 
 if __name__ == "__main__":

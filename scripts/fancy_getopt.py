@@ -92,9 +92,7 @@ class FancyGetopt:
 
     def add_option(self, long_option, short_option=None, help_string=None):
         if long_option in self.option_index:
-            raise DistutilsGetoptError(
-                "option conflict: already an option '%s'" % long_option
-            )
+            raise DistutilsGetoptError("option conflict: already an option '%s'" % long_option)
         else:
             option = (long_option, short_option, help_string)
             self.option_table.append(option)
@@ -116,13 +114,11 @@ class FancyGetopt:
         for alias, opt in aliases.items():
             if alias not in self.option_index:
                 raise DistutilsGetoptError(
-                    ("invalid %s '%s': " "option '%s' not defined")
-                    % (what, alias, alias)
+                    ("invalid %s '%s': " "option '%s' not defined") % (what, alias, alias)
                 )
             if opt not in self.option_index:
                 raise DistutilsGetoptError(
-                    ("invalid %s '%s': " "aliased option '%s' not defined")
-                    % (what, alias, opt)
+                    ("invalid %s '%s': " "aliased option '%s' not defined") % (what, alias, opt)
                 )
 
     def set_aliases(self, alias):
@@ -162,14 +158,12 @@ class FancyGetopt:
             # Type- and value-check the option names
             if not isinstance(long, str) or len(long) < 2:
                 raise DistutilsGetoptError(
-                    ("invalid long option '%s': " "must be a string of length >= 2")
-                    % long
+                    ("invalid long option '%s': " "must be a string of length >= 2") % long
                 )
 
             if not ((short is None) or (isinstance(short, str) and len(short) == 1)):
                 raise DistutilsGetoptError(
-                    "invalid short option '%s': "
-                    "must a single character or None" % short
+                    "invalid short option '%s': " "must a single character or None" % short
                 )
 
             self.repeat[long] = repeat

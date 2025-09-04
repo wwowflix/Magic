@@ -53,9 +53,7 @@ from numpy.core.multiarray import normalize_axis_index
 from numpy.core import overrides
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy.fft"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy.fft")
 
 
 # `inv_norm` is a float by which the result of the transform needs to be
@@ -101,9 +99,7 @@ def _get_forward_norm(n, norm):
         return sqrt(n)
     elif norm == "forward":
         return n
-    raise ValueError(
-        f'Invalid norm value {norm}; should be "backward",' '"ortho" or "forward".'
-    )
+    raise ValueError(f'Invalid norm value {norm}; should be "backward",' '"ortho" or "forward".')
 
 
 def _get_backward_norm(n, norm):
@@ -116,9 +112,7 @@ def _get_backward_norm(n, norm):
         return sqrt(n)
     elif norm == "forward":
         return 1
-    raise ValueError(
-        f'Invalid norm value {norm}; should be "backward", ' '"ortho" or "forward".'
-    )
+    raise ValueError(f'Invalid norm value {norm}; should be "backward", ' '"ortho" or "forward".')
 
 
 _SWAP_DIRECTION_MAP = {

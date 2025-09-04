@@ -255,67 +255,35 @@ def isint1array(var):
 
 
 def isunsigned_chararray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "-1"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "-1"
 
 
 def isunsigned_shortarray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "-2"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "-2"
 
 
 def isunsignedarray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "-4"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "-4"
 
 
 def isunsigned_long_longarray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "-8"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "-8"
 
 
 def issigned_chararray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "1"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "1"
 
 
 def issigned_shortarray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "2"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "2"
 
 
 def issigned_array(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "4"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "4"
 
 
 def issigned_long_longarray(var):
-    return (
-        isarray(var)
-        and var.get("typespec") in ["integer", "logical"]
-        and get_kind(var) == "8"
-    )
+    return isarray(var) and var.get("typespec") in ["integer", "logical"] and get_kind(var) == "8"
 
 
 def isallocatable(var):
@@ -463,9 +431,7 @@ def hasvariables(rout):
 
 def isoptional(var):
     return (
-        "attrspec" in var
-        and "optional" in var["attrspec"]
-        and "required" not in var["attrspec"]
+        "attrspec" in var and "optional" in var["attrspec"] and "required" not in var["attrspec"]
     ) and isintent_nothide(var)
 
 
@@ -719,14 +685,7 @@ def getmultilineblock(rout, blockname, comment=1, counter=0):
         r = r[counter]
     if r[:3] == "'''":
         if comment:
-            r = (
-                "\t/* start "
-                + blockname
-                + " multiline ("
-                + repr(counter)
-                + ") */\n"
-                + r[3:]
-            )
+            r = "\t/* start " + blockname + " multiline (" + repr(counter) + ") */\n" + r[3:]
         else:
             r = r[3:]
         if r[-3:] == "'''":
@@ -735,9 +694,7 @@ def getmultilineblock(rout, blockname, comment=1, counter=0):
             else:
                 r = r[:-3]
         else:
-            errmess(
-                "%s multiline block should end with `'''`: %s\n" % (blockname, repr(r))
-            )
+            errmess("%s multiline block should end with `'''`: %s\n" % (blockname, repr(r)))
     return r
 
 
@@ -811,11 +768,7 @@ def getargs(rout):
 
 def getargs2(rout):
     sortargs, args = [], rout.get("args", [])
-    auxvars = [
-        a
-        for a in rout["vars"].keys()
-        if isintent_aux(rout["vars"][a]) and a not in args
-    ]
+    auxvars = [a for a in rout["vars"].keys() if isintent_aux(rout["vars"][a]) and a not in args]
     args = auxvars + args
     if "sortvars" in rout:
         for a in rout["sortvars"]:

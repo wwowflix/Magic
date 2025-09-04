@@ -426,11 +426,7 @@ class SensorReading:
     @classmethod
     def from_json(cls, json):
         return cls(
-            single=(
-                SensorReadingSingle.from_json(json["single"])
-                if "single" in json
-                else None
-            ),
+            single=(SensorReadingSingle.from_json(json["single"]) if "single" in json else None),
             xyz=SensorReadingXYZ.from_json(json["xyz"]) if "xyz" in json else None,
             quaternion=(
                 SensorReadingQuaternion.from_json(json["quaternion"])
@@ -761,9 +757,7 @@ def set_display_features_override(
     json = yield cmd_dict
 
 
-def clear_display_features_override() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
-):
+def clear_display_features_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Clears the display features override set with either setDeviceMetricsOverride()
     or setDisplayFeaturesOverride() and starts using display features from the
@@ -1199,9 +1193,7 @@ def set_virtual_time_policy(
     if budget is not None:
         params["budget"] = budget
     if max_virtual_time_task_starvation_count is not None:
-        params["maxVirtualTimeTaskStarvationCount"] = (
-            max_virtual_time_task_starvation_count
-        )
+        params["maxVirtualTimeTaskStarvationCount"] = max_virtual_time_task_starvation_count
     if initial_virtual_time is not None:
         params["initialVirtualTime"] = initial_virtual_time.to_json()
     cmd_dict: T_JSON_DICT = {
@@ -1249,9 +1241,7 @@ def set_timezone_override(
     json = yield cmd_dict
 
 
-def set_visible_size(
-    width: int, height: int
-) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
+def set_visible_size(width: int, height: int) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Resizes the frame/viewport of the page. Note that this does not affect the frame's container
     (e.g. browser window). Can be used to produce screenshots of the specified size. Not supported

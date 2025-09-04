@@ -1,6 +1,6 @@
-﻿def main():
+ï¿def main():
     print(
-        "✅ [11A_missing_module_detector_READY.py] executed successfully (stub mode)."
+        "âœ… [11A_missing_module_detector_READY.py] executed successfully (stub mode)."
     )
 
 

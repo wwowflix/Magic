@@ -247,9 +247,7 @@ def test_no_py312_distutils_fcompiler(capfd, hello_world_f90, monkeypatch):
     MNAME = "hi"
     foutl = get_io_paths(hello_world_f90, mname=MNAME)
     ipath = foutl.f90inp
-    monkeypatch.setattr(
-        sys, "argv", f"f2py {ipath} -c --fcompiler=gfortran -m {MNAME}".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py {ipath} -c --fcompiler=gfortran -m {MNAME}".split())
     with util.switchdir(ipath.parent):
         compiler_check_f2pycli()
         out, _ = capfd.readouterr()
@@ -260,9 +258,7 @@ def test_no_py312_distutils_fcompiler(capfd, hello_world_f90, monkeypatch):
         out, _ = capfd.readouterr()
         assert "Use --dep for meson builds" in out
     MNAME = "hi2"  # Needs to be different for a new -c
-    monkeypatch.setattr(
-        sys, "argv", f"f2py {ipath} -c -m {MNAME} --backend distutils".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py {ipath} -c -m {MNAME} --backend distutils".split())
     with util.switchdir(ipath.parent):
         f2pycli()
         out, _ = capfd.readouterr()
@@ -447,9 +443,7 @@ def test_build_dir(capfd, hello_world_f90, monkeypatch):
     ipath = Path(hello_world_f90)
     mname = "blah"
     odir = "tttmp"
-    monkeypatch.setattr(
-        sys, "argv", f"f2py -m {mname} {ipath} --build-dir {odir}".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py -m {mname} {ipath} --build-dir {odir}".split())
 
     with util.switchdir(ipath.parent):
         f2pycli()
@@ -463,9 +457,7 @@ def test_overwrite(capfd, hello_world_f90, monkeypatch):
     CLI :: --overwrite-signature
     """
     ipath = Path(hello_world_f90)
-    monkeypatch.setattr(
-        sys, "argv", f"f2py -h faker.pyf {ipath} --overwrite-signature".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py -h faker.pyf {ipath} --overwrite-signature".split())
 
     with util.switchdir(ipath.parent):
         Path("faker.pyf").write_text("Fake news", encoding="ascii")
@@ -622,9 +614,7 @@ def test_wrapfunc_def(capfd, hello_world_f90, monkeypatch):
     assert r"Fortran 77 wrappers are saved to" in out
 
     # Explicit
-    monkeypatch.setattr(
-        sys, "argv", f"f2py -m {mname} {ipath} --wrap-functions".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py -m {mname} {ipath} --wrap-functions".split())
 
     with util.switchdir(ipath.parent):
         f2pycli()
@@ -639,9 +629,7 @@ def test_nowrapfunc(capfd, hello_world_f90, monkeypatch):
     """
     ipath = Path(hello_world_f90)
     mname = "blah"
-    monkeypatch.setattr(
-        sys, "argv", f"f2py -m {mname} {ipath} --no-wrap-functions".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py -m {mname} {ipath} --no-wrap-functions".split())
 
     with util.switchdir(ipath.parent):
         f2pycli()
@@ -807,9 +795,7 @@ def test_freethreading_compatible(hello_world_f90, monkeypatch):
     CLI :: --freethreading_compatible
     """
     ipath = Path(hello_world_f90)
-    monkeypatch.setattr(
-        sys, "argv", f"f2py -m blah {ipath} -c --freethreading-compatible".split()
-    )
+    monkeypatch.setattr(sys, "argv", f"f2py -m blah {ipath} -c --freethreading-compatible".split())
 
     with util.switchdir(ipath.parent):
         compiler_check_f2pycli()

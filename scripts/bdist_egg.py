@@ -67,15 +67,13 @@ class bdist_egg(Command):
         (
             "plat-name=",
             "p",
-            "platform name to embed in generated filenames "
-            "(default: %s)" % get_build_platform(),
+            "platform name to embed in generated filenames " "(default: %s)" % get_build_platform(),
         ),
         ("exclude-source-files", None, "remove all .py files from the generated egg"),
         (
             "keep-temp",
             "k",
-            "keep the pseudo-installation tree around after "
-            + "creating the distribution archive",
+            "keep the pseudo-installation tree around after " + "creating the distribution archive",
         ),
         ("dist-dir=", "d", "directory to put final built distributions in"),
         ("skip-build", None, "skip rebuilding everything (for testing/debugging)"),
@@ -131,9 +129,7 @@ class bdist_egg(Command):
                 if os.path.isabs(item[0]):
                     realpath = os.path.realpath(item[0])
                     normalized = os.path.normcase(realpath)
-                    if normalized == site_packages or normalized.startswith(
-                        site_packages + os.sep
-                    ):
+                    if normalized == site_packages or normalized.startswith(site_packages + os.sep):
                         item = realpath[len(site_packages) + 1 :], item[1]
                         # XXX else: raise ???
             self.distribution.data_files.append(item)

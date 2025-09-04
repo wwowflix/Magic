@@ -16,14 +16,14 @@ if TYPE_CHECKING:
 class Box:
     """Defines characters to render boxes.
 
-    ┌─┬┐ top
-    │ ││ head
-    ├─┼┤ head_row
-    │ ││ mid
-    ├─┼┤ row
-    ├─┼┤ foot_row
-    │ ││ foot
-    └─┴┘ bottom
+    â”Œâ”€â”¬â” top
+    â”‚ â”‚â”‚ head
+    â”œâ”€â”¼â”¤ head_row
+    â”‚ â”‚â”‚ mid
+    â”œâ”€â”¼â”¤ row
+    â”œâ”€â”¼â”¤ foot_row
+    â”‚ â”‚â”‚ foot
+    â””â”€â”´â”˜ bottom
 
     Args:
         box (str): Characters making up box.
@@ -60,9 +60,7 @@ class Box:
         # foot
         self.foot_left, _, self.foot_vertical, self.foot_right = iter(line7)
         # bottom
-        self.bottom_left, self.bottom, self.bottom_divider, self.bottom_right = iter(
-            line8
-        )
+        self.bottom_left, self.bottom, self.bottom_divider, self.bottom_right = iter(line8)
 
     def __repr__(self) -> str:
         return "Box(...)"
@@ -232,67 +230,67 @@ ASCII_DOUBLE_HEAD: Box = Box(
 
 SQUARE: Box = Box(
     """\
-┌─┬┐
-│ ││
-├─┼┤
-│ ││
-├─┼┤
-├─┼┤
-│ ││
-└─┴┘
+â”Œâ”€â”¬â”
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â””â”€â”´â”˜
 """
 )
 
 SQUARE_DOUBLE_HEAD: Box = Box(
     """\
-┌─┬┐
-│ ││
-╞═╪╡
-│ ││
-├─┼┤
-├─┼┤
-│ ││
-└─┴┘
+â”Œâ”€â”¬â”
+â”‚ â”‚â”‚
+â•žâ•â•ªâ•¡
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â””â”€â”´â”˜
 """
 )
 
 MINIMAL: Box = Box(
     """\
-  ╷ 
-  │ 
-╶─┼╴
-  │ 
-╶─┼╴
-╶─┼╴
-  │ 
-  ╵ 
+  â•· 
+  â”‚ 
+â•¶â”€â”¼â•´
+  â”‚ 
+â•¶â”€â”¼â•´
+â•¶â”€â”¼â•´
+  â”‚ 
+  â•µ 
 """
 )
 
 
 MINIMAL_HEAVY_HEAD: Box = Box(
     """\
-  ╷ 
-  │ 
-╺━┿╸
-  │ 
-╶─┼╴
-╶─┼╴
-  │ 
-  ╵ 
+  â•· 
+  â”‚ 
+â•ºâ”â”¿â•¸
+  â”‚ 
+â•¶â”€â”¼â•´
+â•¶â”€â”¼â•´
+  â”‚ 
+  â•µ 
 """
 )
 
 MINIMAL_DOUBLE_HEAD: Box = Box(
     """\
-  ╷ 
-  │ 
- ═╪ 
-  │ 
- ─┼ 
- ─┼ 
-  │ 
-  ╵ 
+  â•· 
+  â”‚ 
+ â•â•ª 
+  â”‚ 
+ â”€â”¼ 
+ â”€â”¼ 
+  â”‚ 
+  â•µ 
 """
 )
 
@@ -301,10 +299,10 @@ SIMPLE: Box = Box(
     """\
     
     
- ── 
+ â”€â”€ 
     
     
- ── 
+ â”€â”€ 
     
     
 """
@@ -314,7 +312,7 @@ SIMPLE_HEAD: Box = Box(
     """\
     
     
- ── 
+ â”€â”€ 
     
     
     
@@ -328,10 +326,10 @@ SIMPLE_HEAVY: Box = Box(
     """\
     
     
- ━━ 
+ â”â” 
     
     
- ━━ 
+ â”â” 
     
     
 """
@@ -340,92 +338,92 @@ SIMPLE_HEAVY: Box = Box(
 
 HORIZONTALS: Box = Box(
     """\
- ── 
+ â”€â”€ 
     
- ── 
+ â”€â”€ 
     
- ── 
- ── 
+ â”€â”€ 
+ â”€â”€ 
     
- ── 
+ â”€â”€ 
 """
 )
 
 ROUNDED: Box = Box(
     """\
-╭─┬╮
-│ ││
-├─┼┤
-│ ││
-├─┼┤
-├─┼┤
-│ ││
-╰─┴╯
+â•­â”€â”¬â•®
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â•°â”€â”´â•¯
 """
 )
 
 HEAVY: Box = Box(
     """\
-┏━┳┓
-┃ ┃┃
-┣━╋┫
-┃ ┃┃
-┣━╋┫
-┣━╋┫
-┃ ┃┃
-┗━┻┛
+â”â”â”³â”“
+â”ƒ â”ƒâ”ƒ
+â”£â”â•‹â”
+â”ƒ â”ƒâ”ƒ
+â”£â”â•‹â”
+â”£â”â•‹â”
+â”ƒ â”ƒâ”ƒ
+â”—â”â”â”›
 """
 )
 
 HEAVY_EDGE: Box = Box(
     """\
-┏━┯┓
-┃ │┃
-┠─┼┨
-┃ │┃
-┠─┼┨
-┠─┼┨
-┃ │┃
-┗━┷┛
+â”â”â”¯â”“
+â”ƒ â”‚â”ƒ
+â” â”€â”¼â”¨
+â”ƒ â”‚â”ƒ
+â” â”€â”¼â”¨
+â” â”€â”¼â”¨
+â”ƒ â”‚â”ƒ
+â”—â”â”·â”›
 """
 )
 
 HEAVY_HEAD: Box = Box(
     """\
-┏━┳┓
-┃ ┃┃
-┡━╇┩
-│ ││
-├─┼┤
-├─┼┤
-│ ││
-└─┴┘
+â”â”â”³â”“
+â”ƒ â”ƒâ”ƒ
+â”¡â”â•‡â”©
+â”‚ â”‚â”‚
+â”œâ”€â”¼â”¤
+â”œâ”€â”¼â”¤
+â”‚ â”‚â”‚
+â””â”€â”´â”˜
 """
 )
 
 DOUBLE: Box = Box(
     """\
-╔═╦╗
-║ ║║
-╠═╬╣
-║ ║║
-╠═╬╣
-╠═╬╣
-║ ║║
-╚═╩╝
+â•”â•â•¦â•—
+â•‘ â•‘â•‘
+â• â•â•¬â•£
+â•‘ â•‘â•‘
+â• â•â•¬â•£
+â• â•â•¬â•£
+â•‘ â•‘â•‘
+â•šâ•â•©â•
 """
 )
 
 DOUBLE_EDGE: Box = Box(
     """\
-╔═╤╗
-║ │║
-╟─┼╢
-║ │║
-╟─┼╢
-╟─┼╢
-║ │║
-╚═╧╝
+â•”â•â•¤â•—
+â•‘ â”‚â•‘
+â•Ÿâ”€â”¼â•¢
+â•‘ â”‚â•‘
+â•Ÿâ”€â”¼â•¢
+â•Ÿâ”€â”¼â•¢
+â•‘ â”‚â•‘
+â•šâ•â•§â•
 """
 )
 
@@ -502,9 +500,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     columns = Columns(expand=True, padding=2)
     for box_name in sorted(BOXES):
-        table = Table(
-            show_footer=True, style="dim", border_style="not dim", expand=True
-        )
+        table = Table(show_footer=True, style="dim", border_style="not dim", expand=True)
         table.add_column("Header 1", "Footer 1")
         table.add_column("Header 2", "Footer 2")
         table.add_row("Cell", "Cell")

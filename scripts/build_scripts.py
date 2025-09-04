@@ -157,9 +157,7 @@ class build_scripts(Command):
         try:
             shebang.encode("utf-8")
         except UnicodeEncodeError:
-            raise ValueError(
-                "The shebang ({!r}) is not encodable " "to utf-8".format(shebang)
-            )
+            raise ValueError("The shebang ({!r}) is not encodable " "to utf-8".format(shebang))
 
         # If the script is encoded to a custom encoding (use a
         # #coding:xxx cookie), the shebang has to be encodable to

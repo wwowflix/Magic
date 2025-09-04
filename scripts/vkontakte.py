@@ -170,9 +170,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
         if not dateSpan:
             return None
         if "time" in dateSpan.attrs:
-            return datetime.datetime.fromtimestamp(
-                int(dateSpan["time"]), datetime.timezone.utc
-            )
+            return datetime.datetime.fromtimestamp(int(dateSpan["time"]), datetime.timezone.utc)
         if match := _datePattern.match(dateSpan.text):
             # Datetime information down to minutes
             tz = _timezone("Europe/Moscow")
@@ -187,9 +185,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                     or match.group("year2")
                     or datetime.datetime.now(tz=tz).year
                 )
-                month = (
-                    _months.index(match.group("month1") or match.group("month2")) + 1
-                )
+                month = _months.index(match.group("month1") or match.group("month2")) + 1
                 day = int(match.group("day1") or match.group("day2"))
             hour = int(match.group("hour"))
             # Damn AM/PM...
@@ -216,9 +212,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
             _logger.warning(f"Could not parse date string: {dateSpan.text!r}")
 
     def _post_div_to_item(self, post, isCopy=False):
-        postLink = post.find(
-            "a", class_="post_link" if not isCopy else "published_by_date"
-        )
+        postLink = post.find("a", class_="post_link" if not isCopy else "published_by_date")
         if not postLink:
             _logger.warning(f"Skipping post without link: {str(post)[:200]!r}")
             return
@@ -239,18 +233,14 @@ class VKontakteUserScraper(snscrape.base.Scraper):
             and url.rsplit("_", 1)[1].strip("0123456789") in ("", "?reply=")
         )
         if not isCopy:
-            dateSpan = post.find("div", class_="post_date").find(
-                "span", class_="rel_date"
-            )
+            dateSpan = post.find("div", class_="post_date").find("span", class_="rel_date")
         else:
             dateSpan = post.find("div", class_="copy_post_date").find(
                 "a", class_="published_by_date"
             )
         textDiv = post.find("div", class_="wall_post_text")
         outlinks = (
-            [h for a in textDiv.find_all("a") if (h := self._away_a_to_url(a))]
-            if textDiv
-            else []
+            [h for a in textDiv.find_all("a") if (h := self._away_a_to_url(a))] if textDiv else []
         )
         if (
             (mediaLinkDiv := post.find("div", class_="media_link"))
@@ -262,9 +252,9 @@ class VKontakteUserScraper(snscrape.base.Scraper):
         photos = None
         video = None
         if (
-            thumbsDiv := (
-                post.find("div", class_="wall_text") if not isCopy else post
-            ).find("div", class_="page_post_sized_thumbs")
+            thumbsDiv := (post.find("div", class_="wall_text") if not isCopy else post).find(
+                "div", class_="page_post_sized_thumbs"
+            )
         ) and not (
             not isCopy
             and thumbsDiv.parent.name == "div"
@@ -274,9 +264,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
             photos = []
             for a in thumbsDiv.find_all("a", class_="page_post_thumb_wrap"):
                 if not self.is_photo(a) and "data-video" not in a.attrs:
-                    _logger.warning(
-                        f"Skipping non-photo and non-video thumb wrap on {url}"
-                    )
+                    _logger.warning(f"Skipping non-photo and non-video thumb wrap on {url}")
                     continue
                 if "data-video" in a.attrs:
                     # Video
@@ -286,9 +274,9 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                         duration=int(a["data-duration"]),
                         url=f'https://vk.com{a["href"]}',
                         thumbUrl=a["style"][
-                            (
-                                begin := a["style"].find("background-image: url(") + 22
-                            ) : a["style"].find(")", begin)
+                            (begin := a["style"].find("background-image: url(") + 22) : a[
+                                "style"
+                            ].find(")", begin)
                         ],
                     )
                     continue
@@ -303,21 +291,15 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                         f"Photo thumb wrap on {url} has no or unexpected onclick, skipping"
                     )
                     continue
-                photoData = a["onclick"][
-                    a["onclick"].find('{"temp":') : -8
-                ]  # -8 = len(', event)')
+                photoData = a["onclick"][a["onclick"].find('{"temp":') : -8]  # -8 = len(', event)')
                 photoObj = json.loads(photoData)
                 singleLetterKeys = [
-                    k
-                    for k in photoObj["temp"].keys()
-                    if len(k) == 1 and 97 <= ord(k) <= 122
+                    k for k in photoObj["temp"].keys() if len(k) == 1 and 97 <= ord(k) <= 122
                 ]  # 97 = ord('a'), 122 = ord('z')
                 for x in singleLetterKeys:
                     # Merge base into URLs
                     if not photoObj["temp"][x].startswith("https://"):
-                        photoObj["temp"][
-                            x
-                        ] = f'{photoObj["temp"]["base"]}{photoObj["temp"][x]}'
+                        photoObj["temp"][x] = f'{photoObj["temp"]["base"]}{photoObj["temp"][x]}'
                     x_ = f"{x}_"
                     if not photoObj["temp"][x_][0].startswith("https://"):
                         photoObj["temp"][x_][
@@ -455,9 +437,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                         f"Encountered geoblock on offset {offset}, trying to work around the block but might be missing content"
                     )
                     for geoblockOffset in range(lastWorkingOffset + 1, offset + 10):
-                        geoPosts = self._get_wall_offset(
-                            fixedPostID, ownerID, geoblockOffset
-                        )
+                        geoPosts = self._get_wall_offset(fixedPostID, ownerID, geoblockOffset)
                         if geoPosts.startswith('<div class="page_block no_posts">'):
                             # No breaking the outer loop, it'll just make one extra request and exit as well
                             break
@@ -467,13 +447,9 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                             raise snscrape.base.ScraperException(
                                 f"Got an unknown response: {geoPosts[:200]!r}..."
                             )
-                        yield from _process_soup(
-                            soup=bs4.BeautifulSoup(geoPosts, "lxml")
-                        )
+                        yield from _process_soup(soup=bs4.BeautifulSoup(geoPosts, "lxml"))
                     continue
-                raise snscrape.base.ScraperException(
-                    f"Got an unknown response: {posts[:200]!r}..."
-                )
+                raise snscrape.base.ScraperException(f"Got an unknown response: {posts[:200]!r}...")
             lastWorkingOffset = offset
             soup = bs4.BeautifulSoup(posts, "lxml")
             yield from _process_soup(soup)
@@ -517,9 +493,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
 
         if infoDiv := soup.find("div", id="page_info_wrap"):
             websites = []
-            for rowDiv in infoDiv.find_all(
-                "div", class_=["profile_info_row", "group_info_row"]
-            ):
+            for rowDiv in infoDiv.find_all("div", class_=["profile_info_row", "group_info_row"]):
                 if "profile_info_row" in rowDiv["class"]:
                     labelDiv = rowDiv.find("div", class_="fl_l")
                     if not labelDiv or labelDiv.text != "Website:":
@@ -534,9 +508,7 @@ class VKontakteUserScraper(snscrape.base.Scraper):
                         _logger.warning(f'Skipping odd website link: {a["href"]!r}')
                         continue
                     websites.append(
-                        urllib.parse.unquote(
-                            a["href"].split("=", 1)[1].split("&", 1)[0]
-                        )
+                        urllib.parse.unquote(a["href"].split("=", 1)[1].split("&", 1)[0])
                     )
             if websites:
                 kwargs["websites"] = websites
@@ -572,9 +544,9 @@ class VKontakteUserScraper(snscrape.base.Scraper):
 
         # On public pages, this is where followers are listed
         if followersDiv := soup.find("div", id="public_followers"):
-            if (
-                topDiv := followersDiv.find("div", class_="header_top")
-            ) and topDiv.find("span", class_="header_label").text == "Followers":
+            if (topDiv := followersDiv.find("div", class_="header_top")) and topDiv.find(
+                "span", class_="header_label"
+            ).text == "Followers":
                 kwargs["followers"] = snscrape.base.IntWithGranularity(
                     *parse_num(topDiv.find("span", class_="header_count").text)
                 )

@@ -37,11 +37,7 @@ def get_unpatched(item):
     lookup = (
         get_unpatched_class
         if isinstance(item, type)
-        else (
-            get_unpatched_function
-            if isinstance(item, types.FunctionType)
-            else lambda item: None
-        )
+        else (get_unpatched_function if isinstance(item, types.FunctionType) else lambda item: None)
     )
     return lookup(item)
 
@@ -52,9 +48,7 @@ def get_unpatched_class(cls):
     Also ensures that no other distutils extension monkeypatched the distutils
     first.
     """
-    external_bases = (
-        cls for cls in _get_mro(cls) if not cls.__module__.startswith("setuptools")
-    )
+    external_bases = (cls for cls in _get_mro(cls) if not cls.__module__.startswith("setuptools"))
     base = next(external_bases)
     if not base.__module__.startswith("distutils"):
         msg = "distutils has already been patched by %r" % cls
@@ -91,9 +85,7 @@ def patch_all():
     distutils.core.Extension = setuptools.extension.Extension
     distutils.extension.Extension = setuptools.extension.Extension
     if "distutils.command.build_ext" in sys.modules:
-        sys.modules["distutils.command.build_ext"].Extension = (
-            setuptools.extension.Extension
-        )
+        sys.modules["distutils.command.build_ext"].Extension = setuptools.extension.Extension
 
     patch_for_msvc_specialized_compiler()
 

@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$Manifest = "phase_manifest.json",
     [switch]$CleanLogs
 )

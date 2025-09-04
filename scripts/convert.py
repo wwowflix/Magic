@@ -105,10 +105,7 @@ def _convert_filled_from_ChunkCombinedCode(
     if fill_type_to == FillType.ChunkCombinedCode:
         return filled
     elif fill_type_to == FillType.ChunkCombinedOffset:
-        codes = [
-            None if codes is None else arr.offsets_from_codes(codes)
-            for codes in filled[1]
-        ]
+        codes = [None if codes is None else arr.offsets_from_codes(codes) for codes in filled[1]]
         return (filled[0], codes)
     else:
         raise ValueError(
@@ -163,17 +160,14 @@ def _convert_filled_from_ChunkCombinedCodeOffset(
                     assert outer_offsets is not None
                 separate_points += arr.split_points_by_offsets(points, outer_offsets)
                 separate_codes = arr.split_codes_by_offsets(codes, outer_offsets)
-                separate_offsets += [
-                    arr.offsets_from_codes(codes) for codes in separate_codes
-                ]
+                separate_offsets += [arr.offsets_from_codes(codes) for codes in separate_codes]
         return (separate_points, separate_offsets)
     elif fill_type_to == FillType.ChunkCombinedCode:
         ret1: cpy.FillReturn_ChunkCombinedCode = (filled[0], filled[1])
         return ret1
     elif fill_type_to == FillType.ChunkCombinedOffset:
         all_offsets = [
-            None if codes is None else arr.offsets_from_codes(codes)
-            for codes in filled[1]
+            None if codes is None else arr.offsets_from_codes(codes) for codes in filled[1]
         ]
         ret2: cpy.FillReturn_ChunkCombinedOffset = (filled[0], all_offsets)
         return ret2
@@ -233,14 +227,11 @@ def _convert_filled_from_ChunkCombinedOffsetOffset(
                     assert outer_offsets is not None
                 if len(outer_offsets) > 2:
                     separate_offsets += [
-                        offsets[s : e + 1] - offsets[s]
-                        for s, e in pairwise(outer_offsets)
+                        offsets[s : e + 1] - offsets[s] for s, e in pairwise(outer_offsets)
                     ]
                 else:
                     separate_offsets.append(offsets)
-                separate_points += arr.split_points_by_offsets(
-                    points, offsets[outer_offsets]
-                )
+                separate_points += arr.split_points_by_offsets(points, offsets[outer_offsets])
         return (separate_points, separate_offsets)
     elif fill_type_to == FillType.ChunkCombinedCode:
         chunk_codes: list[cpy.CodeArray | None] = []
@@ -429,8 +420,7 @@ def _convert_lines_from_ChunkCombinedCode(
         return lines
     elif line_type_to == LineType.ChunkCombinedOffset:
         chunk_offsets = [
-            None if codes is None else arr.offsets_from_codes(codes)
-            for codes in lines[1]
+            None if codes is None else arr.offsets_from_codes(codes) for codes in lines[1]
         ]
         return (lines[0], chunk_offsets)
     elif line_type_to == LineType.ChunkCombinedNan:
@@ -502,9 +492,7 @@ def _convert_lines_from_ChunkCombinedNan(
         if line_type_to == LineType.Separate:
             return separate_lines
         else:
-            separate_codes = [
-                arr.codes_from_points(points) for points in separate_lines
-            ]
+            separate_codes = [arr.codes_from_points(points) for points in separate_lines]
             return (separate_lines, separate_codes)
     elif line_type_to == LineType.ChunkCombinedCode:
         chunk_points: list[cpy.PointArray | None] = []
@@ -619,9 +607,7 @@ def convert_multi_filled(
     fill_type_from = as_fill_type(fill_type_from)
     fill_type_to = as_fill_type(fill_type_to)
 
-    return [
-        convert_filled(filled, fill_type_from, fill_type_to) for filled in multi_filled
-    ]
+    return [convert_filled(filled, fill_type_from, fill_type_to) for filled in multi_filled]
 
 
 def convert_multi_lines(
