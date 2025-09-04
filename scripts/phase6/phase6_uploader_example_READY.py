@@ -1,14 +1,20 @@
-﻿import os, sys, json, time, argparse
+﻿import os
+import sys
+import time
+import argparse
 from datetime import datetime
+
 BASE = os.getcwd()
 LOG_DIR = os.path.join(BASE, "outputs", "logs", "phase6")
 os.makedirs(LOG_DIR, exist_ok=True)
+
 
 def log(msg):
     path = os.path.join(LOG_DIR, "phase6_uploader_example_READY.py.log")
     with open(path, "a", encoding="utf-8") as f:
         f.write(f"[{datetime.utcnow().isoformat()}Z] {msg}\n")
     print(msg)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -20,6 +26,7 @@ def main():
     if args.dry_run:
         log("dry-run: no external side effects")
     log("done: Phase 6 Uploader Example")
+
 
 if __name__ == "__main__":
     try:

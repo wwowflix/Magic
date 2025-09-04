@@ -1,10 +1,9 @@
 ﻿import pytest
-import os
-import json
 from orchestrator import Orchestrator
 
+
 def test_budget_blocking(tmp_path):
-    budget_file = tmp_path / 'budget.json'
+    budget_file = tmp_path / "budget.json"
     budget_file.write_text('{"spent": 0}')
     orch = Orchestrator()
     # Spend below budget should pass

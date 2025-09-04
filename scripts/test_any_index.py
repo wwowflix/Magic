@@ -1,6 +1,7 @@
 """
 Tests that can be parametrized over _any_ Index object.
 """
+
 import re
 
 import numpy as np
@@ -170,4 +171,3 @@ class TestReductions:
             index.min(axis=-2)
         with pytest.raises(ValueError, match=msg):
             index.max(axis=-3)
-

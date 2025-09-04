@@ -1,5 +1,4 @@
-﻿import re
-import os
+﻿import os
 
 log_path = r"D:\MAGIC\outputs\logs\master_orchestrator_log.txt"
 

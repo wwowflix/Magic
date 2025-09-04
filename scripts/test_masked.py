@@ -13,6 +13,7 @@ classes (if they are relevant for the extension interface for all dtypes), or
 be added to the array-specific tests in `pandas/tests/arrays/`.
 
 """
+
 import warnings
 
 import numpy as np
@@ -415,4 +416,3 @@ class TestMaskedArrays(base.ExtensionTests):
 
 class Test2DCompat(base.Dim2CompatTests):
     pass
-

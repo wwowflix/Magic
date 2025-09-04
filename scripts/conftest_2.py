@@ -177,7 +177,7 @@ def pytest_collection_modifyitems(items, config):
             item.add_marker(pytest.mark.arraymanager)
         item.add_marker(suppress_npdev_promotion_warning)
 
-        for (mark, kwd, skip_if_found, arg_name) in marks:
+        for mark, kwd, skip_if_found, arg_name in marks:
             if kwd in item.keywords:
                 # If we're skipping, no need to actually add the marker or look for
                 # other markers

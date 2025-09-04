@@ -1,7 +1,9 @@
 """Self-heal helpers used by tests."""
 
 from __future__ import annotations
-import os, sys, subprocess
+import os
+import sys
+import subprocess
 from typing import Any
 
 __all__ = [
@@ -12,11 +14,13 @@ __all__ = [
     "_run",
 ]
 
+
 def fix_unicode(s: str) -> str:
     """Remove common unicode line separators that break logs/parsers."""
     if not isinstance(s, str):
         return s
     return s.replace("\u2028", "").replace("\u2029", "")
+
 
 def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
     """Safely create a missing input file (or its parent dirs)."""
@@ -30,10 +34,14 @@ def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
         # Best-effort: ignore any OS errors in tests
         pass
 
-def _run(cmd: list[str] | tuple[str, ...], **kwargs: Any) -> subprocess.CompletedProcess:
+
+def _run(
+    cmd: list[str] | tuple[str, ...], **kwargs: Any
+) -> subprocess.CompletedProcess:
     """Wrapper for subprocess.run so tests can monkeypatch."""
     # Don't pass check=True here; tests provide a fake object with returncode
     return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
+
 
 def pip_install(package: str) -> bool:
     """
@@ -50,6 +58,7 @@ def pip_install(package: str) -> bool:
         return rc == 0
     except Exception:
         return False
+
 
 def apply_remediation(exc: Exception) -> bool:
     """
@@ -74,7 +83,11 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     # Import error
-    if isinstance(exc, ImportError) or "importerror" in lower or "no module named" in lower:
+    if (
+        isinstance(exc, ImportError)
+        or "importerror" in lower
+        or "no module named" in lower
+    ):
         # The tests monkeypatch pip_install → we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True

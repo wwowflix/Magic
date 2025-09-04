@@ -17,9 +17,7 @@ for phase in sorted(os.listdir(ROOT)):
         if not os.path.isdir(mod_dir):
             continue
 
-        ready_files = sorted(
-            f for f in os.listdir(mod_dir) if f.endswith("_READY.py")
-        )
+        ready_files = sorted(f for f in os.listdir(mod_dir) if f.endswith("_READY.py"))
         modules[module] = ready_files
 
     manifest[phase] = modules

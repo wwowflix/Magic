@@ -2,6 +2,7 @@
 import os
 import logging
 
+
 class StorageManager:
     def __init__(self):
         logging.info("StorageManager initialized.")
@@ -13,7 +14,5 @@ class StorageManager:
         else:
             logging.info(f"Folder already exists: {folder_path}")
 
+
 __all__ = ["StorageManager"]
-
-
-

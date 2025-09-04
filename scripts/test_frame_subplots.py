@@ -1,4 +1,4 @@
-""" Test cases for DataFrame.plot """
+"""Test cases for DataFrame.plot"""
 
 import string
 
@@ -750,4 +750,3 @@ class TestDataFramePlotsSubplots:
                 raise ValueError
 
         return axes
-

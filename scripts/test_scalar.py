@@ -1,4 +1,5 @@
-""" test scalar indexing, including at and iat """
+"""test scalar indexing, including at and iat"""
+
 from datetime import (
     datetime,
     timedelta,
@@ -301,4 +302,3 @@ class TestMultiIndexScalar:
         s2 = Series((0, 1), index=[[False, True]])
         result = s2.at[False]
         assert result == 0
-

@@ -1,6 +1,7 @@
-""""
+""" "
 Test module for testing ``pandas._testing.assert_produces_warning``.
 """
+
 import warnings
 
 import pytest
@@ -239,4 +240,3 @@ def test_passes_during_exception():
         with tm.assert_produces_warning(FutureWarning, match="FutureWarning"):
             warnings.warn("FutureWarning", FutureWarning)
             raise ValueError("Error")
-

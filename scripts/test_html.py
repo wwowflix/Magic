@@ -1454,8 +1454,7 @@ class TestReadHtml:
                 return True
 
             # GH 49036 pylint checks for presence of __next__ for iterators
-            def __next__(self):
-                ...
+            def __next__(self): ...
 
             def __iter__(self) -> Iterator:
                 # `is_file_like` depends on the presence of
@@ -1646,4 +1645,3 @@ class TestReadHtml:
         result = flavor_read_html(StringIO(data))[0]
         expected = DataFrame(data=[["A1", "B1"], ["A2", "B2"]], columns=["A", "B"])
         tm.assert_frame_equal(result, expected)
-

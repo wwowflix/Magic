@@ -2,10 +2,10 @@
 import shutil
 
 # CONFIG
-SEARCH_DIRS = ['.', 'configs/', 'settings/']
-TARGET_DIR = 'configs/central_config_hub/'
-ALLOWED_EXTENSIONS = ['.env', '.json', '.yaml', '.yml', '.ini', '.cfg']
-LOG_FILE = 'outputs/logs/config_migration_log.txt'
+SEARCH_DIRS = [".", "configs/", "settings/"]
+TARGET_DIR = "configs/central_config_hub/"
+ALLOWED_EXTENSIONS = [".env", ".json", ".yaml", ".yml", ".ini", ".cfg"]
+LOG_FILE = "outputs/logs/config_migration_log.txt"
 
 moved_files = []
 
@@ -25,7 +25,7 @@ for search_dir in SEARCH_DIRS:
 
 # Log the operation
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
-with open(LOG_FILE, 'w', encoding='utf-8') as f:
+with open(LOG_FILE, "w", encoding="utf-8") as f:
     if moved_files:
         f.write("📦 Config migration log:\n" + "\n".join(moved_files))
     else:

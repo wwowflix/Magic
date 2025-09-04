@@ -1,4 +1,4 @@
-""" Test cases for DataFrame.plot """
+"""Test cases for DataFrame.plot"""
 
 import pytest
 
@@ -70,4 +70,3 @@ class TestDataFramePlotsGroupby:
         )
         axes = df.groupby("c").boxplot(**kwargs)
         self._assert_xtickslabels_visibility(axes, expected)
-
