@@ -32,7 +32,9 @@ __all__ = [
 ]
 
 
-array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
+array_function_dispatch = functools.partial(
+    overrides.array_function_dispatch, module="numpy"
+)
 
 
 def _make_along_axis_idx(arr_shape, indices, axis):
@@ -381,7 +383,9 @@ def apply_along_axis(func1d, axis, arr, *args, **kwargs):
     try:
         ind0 = next(inds)
     except StopIteration:
-        raise ValueError("Cannot apply_along_axis when any iteration dimensions are 0") from None
+        raise ValueError(
+            "Cannot apply_along_axis when any iteration dimensions are 0"
+        ) from None
     res = asanyarray(func1d(inarr_view[ind0], *args, **kwargs))
 
     # build a buffer for storing evaluations of func1d.
@@ -506,7 +510,9 @@ def apply_over_axes(func, a, axes):
             if res.ndim == val.ndim:
                 val = res
             else:
-                raise ValueError("function is not returning " "an array of the correct shape")
+                raise ValueError(
+                    "function is not returning " "an array of the correct shape"
+                )
     return val
 
 
@@ -782,7 +788,9 @@ def array_split(ary, indices_or_sections, axis=0):
         if Nsections <= 0:
             raise ValueError("number sections must be larger than 0.") from None
         Neach_section, extras = divmod(Ntotal, Nsections)
-        section_sizes = [0] + extras * [Neach_section + 1] + (Nsections - extras) * [Neach_section]
+        section_sizes = (
+            [0] + extras * [Neach_section + 1] + (Nsections - extras) * [Neach_section]
+        )
         div_points = _nx.array(section_sizes, dtype=_nx.intp).cumsum()
 
     sub_arys = []
@@ -872,7 +880,9 @@ def split(ary, indices_or_sections, axis=0):
         sections = indices_or_sections
         N = ary.shape[axis]
         if N % sections:
-            raise ValueError("array split does not result in an equal division") from None
+            raise ValueError(
+                "array split does not result in an equal division"
+            ) from None
     return array_split(ary, indices_or_sections, axis)
 
 

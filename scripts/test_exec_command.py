@@ -167,7 +167,9 @@ class TestExecCommand:
         assert_(o == "posix")
 
     def check_basic(self, *kws):
-        s, o = exec_command.exec_command('"%s" -c "raise \'Ignore me.\'"' % self.pyexe, **kws)
+        s, o = exec_command.exec_command(
+            '"%s" -c "raise \'Ignore me.\'"' % self.pyexe, **kws
+        )
         assert_(s != 0)
         assert_(o != "")
 
@@ -179,11 +181,15 @@ class TestExecCommand:
         assert_(s == 0)
         assert_(o == "012")
 
-        s, o = exec_command.exec_command('"%s" -c "import sys;sys.exit(15)"' % self.pyexe, **kws)
+        s, o = exec_command.exec_command(
+            '"%s" -c "import sys;sys.exit(15)"' % self.pyexe, **kws
+        )
         assert_(s == 15)
         assert_(o == "")
 
-        s, o = exec_command.exec_command('"%s" -c "print(\'Heipa\'")' % self.pyexe, **kws)
+        s, o = exec_command.exec_command(
+            '"%s" -c "print(\'Heipa\'")' % self.pyexe, **kws
+        )
         assert_(s == 0)
         assert_(o == "Heipa")
 

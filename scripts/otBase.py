@@ -137,7 +137,11 @@ class BaseTTXConverter(DefaultTable):
                         self.tableTag,
                     )
 
-        if use_hb_repack in (None, True) and have_uharfbuzz and self.tableTag in ("GSUB", "GPOS"):
+        if (
+            use_hb_repack in (None, True)
+            and have_uharfbuzz
+            and self.tableTag in ("GSUB", "GPOS")
+        ):
             state = RepackerState.HB_FT
         else:
             state = RepackerState.PURE_FT
@@ -437,7 +441,9 @@ class OTTableWriter(object):
                         items[i] = packUShort(item.subWriter.pos - pos)
                     except struct.error:
                         # provide data to fix overflow problem.
-                        overflowErrorRecord = self.getOverflowErrorRecord(item.subWriter)
+                        overflowErrorRecord = self.getOverflowErrorRecord(
+                            item.subWriter
+                        )
 
                         raise OTLOffsetOverflowError(overflowErrorRecord)
                 elif item.offsetSize == 3:
@@ -499,7 +505,9 @@ class OTTableWriter(object):
             if hasattr(item, "getCountData"):
                 items[i] = item.getCountData()
             elif hasattr(item, "subWriter"):
-                item.subWriter._doneWriting(internedTables, shareExtension=shareExtension)
+                item.subWriter._doneWriting(
+                    internedTables, shareExtension=shareExtension
+                )
                 # At this point, all subwriters are hashable based on their items.
                 # (See hash and comparison magic methods above.) So the ``setdefault``
                 # call here will return the first writer object we've seen with
@@ -507,7 +515,9 @@ class OTTableWriter(object):
                 # seen yet. We therefore replace the subwriter object with an equivalent
                 # object, which deduplicates the tree.
                 if not dontShare:
-                    items[i].subWriter = internedTables.setdefault(item.subWriter, item.subWriter)
+                    items[i].subWriter = internedTables.setdefault(
+                        item.subWriter, item.subWriter
+                    )
         self.items = tuple(items)
 
     def _gatherTables(self, tables, extTables, done):
@@ -701,7 +711,9 @@ class OTTableWriter(object):
 
     def getSubWriter(self):
         subwriter = self.__class__(self.localState, self.tableTag)
-        subwriter.parent = self  # because some subtables have idential values, we discard
+        subwriter.parent = (
+            self  # because some subtables have idential values, we discard
+        )
         # the duplicates under the getAllData method. Hence some
         # subtable writers can have more than one parent writer.
         # But we just care about first one right now.
@@ -1026,7 +1038,9 @@ class BaseTable(object):
 
         self.writeFormat(writer)
         for conv in self.getConverters():
-            value = table.get(conv.name)  # TODO Handle defaults instead of defaulting to None!
+            value = table.get(
+                conv.name
+            )  # TODO Handle defaults instead of defaulting to None!
             if conv.repeat:
                 if value is None:
                     value = []

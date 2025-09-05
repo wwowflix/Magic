@@ -85,7 +85,8 @@ if t.TYPE_CHECKING or MYPY_EX is None:
                 return i
         else:
             raise ValueError(
-                "Failed to identify a `ImportFrom` instance " f"with the following id: {id!r}"
+                "Failed to identify a `ImportFrom` instance "
+                f"with the following id: {id!r}"
             )
 
     class _NumpyPlugin(Plugin):

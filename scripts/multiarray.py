@@ -1635,7 +1635,9 @@ def busday_offset(
 
 
 @array_function_from_c_func_and_dispatcher(_multiarray_umath.busday_count)
-def busday_count(begindates, enddates, weekmask=None, holidays=None, busdaycal=None, out=None):
+def busday_count(
+    begindates, enddates, weekmask=None, holidays=None, busdaycal=None, out=None
+):
     """
     busday_count(begindates, enddates, weekmask='1111100', holidays=[], busdaycal=None, out=None)
 

@@ -427,7 +427,10 @@ class ABCPolyBase(abc.ABC):
             term = f"{self._repr_latex_scalar(scale)}x"
             needs_parens = True
         else:
-            term = f"{self._repr_latex_scalar(off)} + " f"{self._repr_latex_scalar(scale)}x"
+            term = (
+                f"{self._repr_latex_scalar(off)} + "
+                f"{self._repr_latex_scalar(scale)}x"
+            )
             needs_parens = True
 
         mute = r"\color{{LightGray}}{{{}}}".format
@@ -527,7 +530,8 @@ class ABCPolyBase(abc.ABC):
         # It is hard to see where n would come from, though.
         if not isinstance(other, numbers.Number) or isinstance(other, bool):
             raise TypeError(
-                f"unsupported types for true division: " f"'{type(self)}', '{type(other)}'"
+                f"unsupported types for true division: "
+                f"'{type(self)}', '{type(other)}'"
             )
         return self.__floordiv__(other)
 

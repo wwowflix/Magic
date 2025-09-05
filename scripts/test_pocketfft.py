@@ -189,19 +189,29 @@ class TestFFT1D:
 
     def test_fft2(self):
         x = random((30, 20)) + 1j * random((30, 20))
-        assert_allclose(np.fft.fft(np.fft.fft(x, axis=1), axis=0), np.fft.fft2(x), atol=1e-6)
+        assert_allclose(
+            np.fft.fft(np.fft.fft(x, axis=1), axis=0), np.fft.fft2(x), atol=1e-6
+        )
         assert_allclose(np.fft.fft2(x), np.fft.fft2(x, norm="backward"), atol=1e-6)
-        assert_allclose(np.fft.fft2(x) / np.sqrt(30 * 20), np.fft.fft2(x, norm="ortho"), atol=1e-6)
-        assert_allclose(np.fft.fft2(x) / (30.0 * 20.0), np.fft.fft2(x, norm="forward"), atol=1e-6)
+        assert_allclose(
+            np.fft.fft2(x) / np.sqrt(30 * 20), np.fft.fft2(x, norm="ortho"), atol=1e-6
+        )
+        assert_allclose(
+            np.fft.fft2(x) / (30.0 * 20.0), np.fft.fft2(x, norm="forward"), atol=1e-6
+        )
 
     def test_ifft2(self):
         x = random((30, 20)) + 1j * random((30, 20))
-        assert_allclose(np.fft.ifft(np.fft.ifft(x, axis=1), axis=0), np.fft.ifft2(x), atol=1e-6)
+        assert_allclose(
+            np.fft.ifft(np.fft.ifft(x, axis=1), axis=0), np.fft.ifft2(x), atol=1e-6
+        )
         assert_allclose(np.fft.ifft2(x), np.fft.ifft2(x, norm="backward"), atol=1e-6)
         assert_allclose(
             np.fft.ifft2(x) * np.sqrt(30 * 20), np.fft.ifft2(x, norm="ortho"), atol=1e-6
         )
-        assert_allclose(np.fft.ifft2(x) * (30.0 * 20.0), np.fft.ifft2(x, norm="forward"), atol=1e-6)
+        assert_allclose(
+            np.fft.ifft2(x) * (30.0 * 20.0), np.fft.ifft2(x, norm="forward"), atol=1e-6
+        )
 
     def test_fftn(self):
         x = random((30, 20, 10)) + 1j * random((30, 20, 10))
@@ -250,13 +260,17 @@ class TestFFT1D:
                     np.fft.rfft(x, n=n, norm=norm),
                     atol=1e-6,
                 )
-            assert_allclose(np.fft.rfft(x, n=n), np.fft.rfft(x, n=n, norm="backward"), atol=1e-6)
+            assert_allclose(
+                np.fft.rfft(x, n=n), np.fft.rfft(x, n=n, norm="backward"), atol=1e-6
+            )
             assert_allclose(
                 np.fft.rfft(x, n=n) / np.sqrt(n),
                 np.fft.rfft(x, n=n, norm="ortho"),
                 atol=1e-6,
             )
-            assert_allclose(np.fft.rfft(x, n=n) / n, np.fft.rfft(x, n=n, norm="forward"), atol=1e-6)
+            assert_allclose(
+                np.fft.rfft(x, n=n) / n, np.fft.rfft(x, n=n, norm="forward"), atol=1e-6
+            )
 
     def test_rfft_even(self):
         x = np.arange(8)
@@ -275,8 +289,12 @@ class TestFFT1D:
         assert_allclose(
             x, np.fft.irfft(np.fft.rfft(x, norm="backward"), norm="backward"), atol=1e-6
         )
-        assert_allclose(x, np.fft.irfft(np.fft.rfft(x, norm="ortho"), norm="ortho"), atol=1e-6)
-        assert_allclose(x, np.fft.irfft(np.fft.rfft(x, norm="forward"), norm="forward"), atol=1e-6)
+        assert_allclose(
+            x, np.fft.irfft(np.fft.rfft(x, norm="ortho"), norm="ortho"), atol=1e-6
+        )
+        assert_allclose(
+            x, np.fft.irfft(np.fft.rfft(x, norm="forward"), norm="forward"), atol=1e-6
+        )
 
     def test_rfft2(self):
         x = random((30, 20))
@@ -285,7 +303,9 @@ class TestFFT1D:
         assert_allclose(
             np.fft.rfft2(x) / np.sqrt(30 * 20), np.fft.rfft2(x, norm="ortho"), atol=1e-6
         )
-        assert_allclose(np.fft.rfft2(x) / (30.0 * 20.0), np.fft.rfft2(x, norm="forward"), atol=1e-6)
+        assert_allclose(
+            np.fft.rfft2(x) / (30.0 * 20.0), np.fft.rfft2(x, norm="forward"), atol=1e-6
+        )
 
     def test_irfft2(self):
         x = random((30, 20))
@@ -295,7 +315,9 @@ class TestFFT1D:
             np.fft.irfft2(np.fft.rfft2(x, norm="backward"), norm="backward"),
             atol=1e-6,
         )
-        assert_allclose(x, np.fft.irfft2(np.fft.rfft2(x, norm="ortho"), norm="ortho"), atol=1e-6)
+        assert_allclose(
+            x, np.fft.irfft2(np.fft.rfft2(x, norm="ortho"), norm="ortho"), atol=1e-6
+        )
         assert_allclose(
             x, np.fft.irfft2(np.fft.rfft2(x, norm="forward"), norm="forward"), atol=1e-6
         )
@@ -318,7 +340,9 @@ class TestFFT1D:
         x = np.ones((2, 3))
         result = np.fft.rfftn(x, axes=(0, 0, 1), s=(10, 20, 40))
         assert result.shape == (10, 21)
-        expected = np.fft.fft(np.fft.fft(np.fft.rfft(x, axis=1, n=40), axis=0, n=20), axis=0, n=10)
+        expected = np.fft.fft(
+            np.fft.fft(np.fft.rfft(x, axis=1, n=40), axis=0, n=20), axis=0, n=10
+        )
         assert expected.shape == (10, 21)
         assert_allclose(result, expected, atol=1e-6)
 
@@ -330,7 +354,9 @@ class TestFFT1D:
             np.fft.irfftn(np.fft.rfftn(x, norm="backward"), norm="backward"),
             atol=1e-6,
         )
-        assert_allclose(x, np.fft.irfftn(np.fft.rfftn(x, norm="ortho"), norm="ortho"), atol=1e-6)
+        assert_allclose(
+            x, np.fft.irfftn(np.fft.rfftn(x, norm="ortho"), norm="ortho"), atol=1e-6
+        )
         assert_allclose(
             x, np.fft.irfftn(np.fft.rfftn(x, norm="forward"), norm="forward"), atol=1e-6
         )
@@ -340,13 +366,17 @@ class TestFFT1D:
         x_herm = np.concatenate((random(1), x, random(1)))
         x = np.concatenate((x_herm, x[::-1].conj()))
         assert_allclose(np.fft.fft(x), np.fft.hfft(x_herm), atol=1e-6)
-        assert_allclose(np.fft.hfft(x_herm), np.fft.hfft(x_herm, norm="backward"), atol=1e-6)
+        assert_allclose(
+            np.fft.hfft(x_herm), np.fft.hfft(x_herm, norm="backward"), atol=1e-6
+        )
         assert_allclose(
             np.fft.hfft(x_herm) / np.sqrt(30),
             np.fft.hfft(x_herm, norm="ortho"),
             atol=1e-6,
         )
-        assert_allclose(np.fft.hfft(x_herm) / 30.0, np.fft.hfft(x_herm, norm="forward"), atol=1e-6)
+        assert_allclose(
+            np.fft.hfft(x_herm) / 30.0, np.fft.hfft(x_herm, norm="forward"), atol=1e-6
+        )
 
     def test_ihfft(self):
         x = random(14) + 1j * random(14)
@@ -369,7 +399,9 @@ class TestFFT1D:
             atol=1e-6,
         )
 
-    @pytest.mark.parametrize("op", [np.fft.fftn, np.fft.ifftn, np.fft.rfftn, np.fft.irfftn])
+    @pytest.mark.parametrize(
+        "op", [np.fft.fftn, np.fft.ifftn, np.fft.rfftn, np.fft.irfftn]
+    )
     def test_axes(self, op):
         x = random((30, 20, 10))
         axes = [(0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 2, 0), (2, 0, 1), (2, 1, 0)]
@@ -378,13 +410,17 @@ class TestFFT1D:
             tr_op = np.transpose(op(x, axes=a), a)
             assert_allclose(op_tr, tr_op, atol=1e-6)
 
-    @pytest.mark.parametrize("op", [np.fft.fftn, np.fft.ifftn, np.fft.fft2, np.fft.ifft2])
+    @pytest.mark.parametrize(
+        "op", [np.fft.fftn, np.fft.ifftn, np.fft.fft2, np.fft.ifft2]
+    )
     def test_s_negative_1(self, op):
         x = np.arange(100).reshape(10, 10)
         # should use the whole input array along the first axis
         assert op(x, s=(-1, 5), axes=(0, 1)).shape == (10, 5)
 
-    @pytest.mark.parametrize("op", [np.fft.fftn, np.fft.ifftn, np.fft.rfftn, np.fft.irfftn])
+    @pytest.mark.parametrize(
+        "op", [np.fft.fftn, np.fft.ifftn, np.fft.rfftn, np.fft.irfftn]
+    )
     def test_s_axes_none(self, op):
         x = np.arange(100).reshape(10, 10)
         with pytest.warns(match="`axes` should not be `None` if `s`"):
@@ -551,7 +587,9 @@ class TestFFTThreadSafe:
         expected = func(*args)
 
         # Spin off a bunch of threads to call the same function simultaneously
-        t = [threading.Thread(target=worker, args=(args, q)) for i in range(self.threads)]
+        t = [
+            threading.Thread(target=worker, args=(args, q)) for i in range(self.threads)
+        ]
         [x.start() for x in t]
 
         [x.join() for x in t]

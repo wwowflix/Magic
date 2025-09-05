@@ -135,7 +135,9 @@ class TestSetOps:
         assert_array_equal([], ediff1d(one_elem))
         assert_array_equal([1], ediff1d(two_elem))
         assert_array_equal([7, 1, 9], ediff1d(two_elem, to_begin=7, to_end=9))
-        assert_array_equal([5, 6, 1, 7, 8], ediff1d(two_elem, to_begin=[5, 6], to_end=[7, 8]))
+        assert_array_equal(
+            [5, 6, 1, 7, 8], ediff1d(two_elem, to_begin=[5, 6], to_end=[7, 8])
+        )
         assert_array_equal([1, 9], ediff1d(two_elem, to_end=9))
         assert_array_equal([1, 7, 8], ediff1d(two_elem, to_end=[7, 8]))
         assert_array_equal([7, 1], ediff1d(two_elem, to_begin=7))
@@ -376,12 +378,16 @@ class TestSetOps:
         for mult in (1, 10):
             a = np.array([5, 4, 5, 3, 4, 4, 3, 4, 3, 5, 2, 1, 5, 5])
             b = [2, 3, 4] * mult
-            assert_array_equal(np.invert(isin(a, b, kind=kind)), isin(a, b, invert=True, kind=kind))
+            assert_array_equal(
+                np.invert(isin(a, b, kind=kind)), isin(a, b, invert=True, kind=kind)
+            )
 
         # float:
         if kind in {None, "sort"}:
             for mult in (1, 10):
-                a = np.array([5, 4, 5, 3, 4, 4, 3, 4, 3, 5, 2, 1, 5, 5], dtype=np.float32)
+                a = np.array(
+                    [5, 4, 5, 3, 4, 4, 3, 4, 3, 5, 2, 1, 5, 5], dtype=np.float32
+                )
                 b = [2, 3, 4] * mult
                 b = np.array(b, dtype=np.float32)
                 assert_array_equal(
@@ -966,7 +972,9 @@ class TestUnique:
             else:
                 expected_shape[axis] = 1
 
-            assert_array_equal(unique(multiple_zeros, axis=axis), np.empty(shape=expected_shape))
+            assert_array_equal(
+                unique(multiple_zeros, axis=axis), np.empty(shape=expected_shape)
+            )
 
     def test_unique_masked(self):
         # issue 8664
@@ -990,7 +998,9 @@ class TestUnique:
             assert_array_equal(a, b, fmt % dt)
 
     def _run_axis_tests(self, dtype):
-        data = np.array([[0, 1, 0, 0], [1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 0, 0]]).astype(dtype)
+        data = np.array(
+            [[0, 1, 0, 0], [1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 0, 0]]
+        ).astype(dtype)
 
         msg = "Unique with 1d array and axis=0 failed"
         result = np.array([0, 1])

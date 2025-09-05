@@ -231,7 +231,9 @@ class TestEvaluation:
         y1, y2, y3 = self.y
 
         # test exceptions
-        assert_raises_regex(ValueError, "incompatible", poly.polyval2d, x1, x2[:2], self.c2d)
+        assert_raises_regex(
+            ValueError, "incompatible", poly.polyval2d, x1, x2[:2], self.c2d
+        )
 
         # test values
         tgt = y1 * y2
@@ -248,7 +250,9 @@ class TestEvaluation:
         y1, y2, y3 = self.y
 
         # test exceptions
-        assert_raises_regex(ValueError, "incompatible", poly.polyval3d, x1, x2, x3[:2], self.c3d)
+        assert_raises_regex(
+            ValueError, "incompatible", poly.polyval3d, x1, x2, x3[:2], self.c3d
+        )
 
         # test values
         tgt = y1 * y2 * y3

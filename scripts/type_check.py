@@ -26,7 +26,9 @@ from numpy.core import overrides
 from .ufunclike import isneginf, isposinf
 
 
-array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
+array_function_dispatch = functools.partial(
+    overrides.array_function_dispatch, module="numpy"
+)
 
 
 _typecodes_by_elsize = "GDFgdfQqLlIiHhBb?"

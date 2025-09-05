@@ -48,7 +48,8 @@ class sdist(Command):
         (
             "use-defaults",
             None,
-            "include the default file set in the manifest " "[default; disable with --no-defaults]",
+            "include the default file set in the manifest "
+            "[default; disable with --no-defaults]",
         ),
         ("no-defaults", None, "don't include the default file set"),
         (
@@ -282,7 +283,9 @@ class sdist(Command):
                         break
 
                 if not got_it:
-                    self.warn("standard file not found: should have one of " + ", ".join(alts))
+                    self.warn(
+                        "standard file not found: should have one of " + ", ".join(alts)
+                    )
             else:
                 if self._cs_path_exists(fn):
                     self.filelist.append(fn)
@@ -372,7 +375,10 @@ class sdist(Command):
                 # malformed lines, or a ValueError from the lower-level
                 # convert_path function
                 except (DistutilsTemplateError, ValueError) as msg:
-                    self.warn("%s, line %d: %s" % (template.filename, template.current_line, msg))
+                    self.warn(
+                        "%s, line %d: %s"
+                        % (template.filename, template.current_line, msg)
+                    )
         finally:
             template.close()
 
@@ -405,7 +411,10 @@ class sdist(Command):
         named by 'self.manifest'.
         """
         if self._manifest_is_not_generated():
-            log.info("not writing to manually maintained " "manifest file '%s'" % self.manifest)
+            log.info(
+                "not writing to manually maintained "
+                "manifest file '%s'" % self.manifest
+            )
             return
 
         content = self.filelist.files[:]

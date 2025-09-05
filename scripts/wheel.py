@@ -156,7 +156,9 @@ class Wheel:
         install_requires = list(map(raw_req, dist.requires()))
         extras_require = {
             extra: [
-                req for req in map(raw_req, dist.requires((extra,))) if req not in install_requires
+                req
+                for req in map(raw_req, dist.requires((extra,)))
+                if req not in install_requires
             ]
             for extra in dist.extras
         }
@@ -199,7 +201,10 @@ class Wheel:
             os.rmdir(dist_data_scripts)
         for subdir in filter(
             os.path.exists,
-            (os.path.join(dist_data, d) for d in ("data", "headers", "purelib", "platlib")),
+            (
+                os.path.join(dist_data, d)
+                for d in ("data", "headers", "purelib", "platlib")
+            ),
         ):
             unpack(subdir, destination_eggdir)
         if os.path.exists(dist_data):

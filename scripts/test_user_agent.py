@@ -221,7 +221,9 @@ def responder(request):
         sock.bind(("localhost", 0))
         port = sock.getsockname()[1]
 
-    server_process = multiprocessing.Process(target=process_server, args=(request.param, port))
+    server_process = multiprocessing.Process(
+        target=process_server, args=(request.param, port)
+    )
     server_process.start()
     yield port
     server_process.join(10)

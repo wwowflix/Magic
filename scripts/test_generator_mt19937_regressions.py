@@ -189,7 +189,9 @@ class TestRegression:
         # Regression test for gh-17007.
         # When p = 1e-30, the probability that a sample will exceed 2**63-1
         # is 0.9999999999907766, so we expect the result to be all 2**63-1.
-        assert_array_equal(self.mt19937.geometric(p=1e-30, size=3), np.iinfo(np.int64).max)
+        assert_array_equal(
+            self.mt19937.geometric(p=1e-30, size=3), np.iinfo(np.int64).max
+        )
 
     def test_zipf_large_parameter(self):
         # Regression test for part of gh-9829: a call such as rng.zipf(10000)

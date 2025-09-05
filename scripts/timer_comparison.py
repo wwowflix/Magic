@@ -46,7 +46,9 @@ class ModuleTester:
             self.umath = module.core.umath
         self.testnames = []
 
-    def assert_array_compare(self, comparison, x, y, err_msg="", header="", fill_value=True):
+    def assert_array_compare(
+        self, comparison, x, y, err_msg="", header="", fill_value=True
+    ):
         """
         Assert that a comparison of two masked arrays is satisfied elementwise.
 
@@ -107,7 +109,9 @@ class ModuleTester:
         Checks the elementwise equality of two masked arrays.
 
         """
-        self.assert_array_compare(self.equal, x, y, err_msg=err_msg, header="Arrays are not equal")
+        self.assert_array_compare(
+            self.equal, x, y, err_msg=err_msg, header="Arrays are not equal"
+        )
 
     @np.errstate(all="ignore")
     def test_0(self):
@@ -115,7 +119,9 @@ class ModuleTester:
         Tests creation
 
         """
-        x = np.array([1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0])
+        x = np.array(
+            [1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0]
+        )
         m = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
         xm = self.masked_array(x, mask=m)
         xm[0]
@@ -126,7 +132,9 @@ class ModuleTester:
         Tests creation
 
         """
-        x = np.array([1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0])
+        x = np.array(
+            [1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0]
+        )
         y = np.array([5.0, 0.0, 3.0, 2.0, -1.0, -4.0, 0.0, -10.0, 10.0, 1.0, 0.0, 3.0])
         m1 = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
         m2 = [0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1]
@@ -224,8 +232,12 @@ class ModuleTester:
         y = y.reshape(2, 3, 4)
         assert self.allequal(np.transpose(y, (2, 0, 1)), self.transpose(x, (2, 0, 1)))
         assert self.allequal(np.take(y, (2, 0, 1), 1), self.take(x, (2, 0, 1), 1))
-        assert self.allequal(np.inner(self.filled(x, 0), self.filled(y, 0)), self.inner(x, y))
-        assert self.allequal(np.outer(self.filled(x, 0), self.filled(y, 0)), self.outer(x, y))
+        assert self.allequal(
+            np.inner(self.filled(x, 0), self.filled(y, 0)), self.inner(x, y)
+        )
+        assert self.allequal(
+            np.outer(self.filled(x, 0), self.filled(y, 0)), self.outer(x, y)
+        )
         y = self.array(["abc", 1, "def", 2, 3], object)
         y[2] = self.masked
         t = self.take(y, [0, 3, 4])
@@ -405,7 +417,9 @@ class ModuleTester:
         self.assert_array_equal(self.average(x, axis=0), 2.5)
         self.assert_array_equal(self.average(x, axis=0, weights=w1), 2.5)
         y = self.array([self.arange(6), 2.0 * self.arange(6)])
-        self.assert_array_equal(self.average(y, None), np.add.reduce(np.arange(6)) * 3.0 / 12.0)
+        self.assert_array_equal(
+            self.average(y, None), np.add.reduce(np.arange(6)) * 3.0 / 12.0
+        )
         self.assert_array_equal(self.average(y, axis=0), np.arange(6) * 3.0 / 2.0)
         self.assert_array_equal(
             self.average(y, axis=1),
@@ -427,10 +441,14 @@ class ModuleTester:
         self.assert_array_equal(self.average(self.masked_array(x, m1), axis=0), 2.5)
         self.assert_array_equal(self.average(self.masked_array(x, m2), axis=0), 2.5)
         self.assert_array_equal(self.average(self.masked_array(x, m5), axis=0), 0.0)
-        self.assert_array_equal(self.count(self.average(self.masked_array(x, m4), axis=0)), 0)
+        self.assert_array_equal(
+            self.count(self.average(self.masked_array(x, m4), axis=0)), 0
+        )
         z = self.masked_array(y, m3)
         self.assert_array_equal(self.average(z, None), 20.0 / 6.0)
-        self.assert_array_equal(self.average(z, axis=0), [0.0, 1.0, 99.0, 99.0, 4.0, 7.5])
+        self.assert_array_equal(
+            self.average(z, axis=0), [0.0, 1.0, 99.0, 99.0, 4.0, 7.5]
+        )
         self.assert_array_equal(self.average(z, axis=1), [2.5, 5.0])
         self.assert_array_equal(
             self.average(z, axis=0, weights=w2), [0.0, 1.0, 99.0, 99.0, 4.0, 10.0]
@@ -445,7 +463,9 @@ class ModuleTester:
 
 if __name__ == "__main__":
     setup_base = (
-        "from __main__ import ModuleTester \n" "import numpy\n" "tester = ModuleTester(module)\n"
+        "from __main__ import ModuleTester \n"
+        "import numpy\n"
+        "tester = ModuleTester(module)\n"
     )
     setup_cur = "import numpy.ma.core as module\n" + setup_base
     (nrepeat, nloop) = (10, 10)

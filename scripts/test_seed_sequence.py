@@ -63,7 +63,9 @@ def test_zero_padding():
 
     # Ensure backwards compatibility with the original 0.17 release for small
     # integers and no spawn key.
-    expected42 = np.array([3444837047, 2669555309, 2046530742, 3581440988], dtype=np.uint32)
+    expected42 = np.array(
+        [3444837047, 2669555309, 2046530742, 3581440988], dtype=np.uint32
+    )
     assert_array_equal(SeedSequence(42).generate_state(4), expected42)
 
     # Regression test for gh-16539 to ensure that the implicit 0s don't

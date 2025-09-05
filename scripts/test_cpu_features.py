@@ -81,7 +81,9 @@ class AbstractTest:
         self.load_flags()
         for gname, features in self.features_groups.items():
             test_features = [self.cpu_have(f) for f in features]
-            assert_features_equal(__cpu_features__.get(gname), all(test_features), gname)
+            assert_features_equal(
+                __cpu_features__.get(gname), all(test_features), gname
+            )
 
         for feature_name in self.features:
             cpu_have = self.cpu_have(feature_name)
@@ -133,7 +135,9 @@ class TestEnvPrivation:
     _enable = os.environ.pop("NPY_ENABLE_CPU_FEATURES", None)
     _disable = os.environ.pop("NPY_DISABLE_CPU_FEATURES", None)
     SUBPROCESS_ARGS = {"cwd": cwd, "capture_output": True, "text": True, "check": True}
-    unavailable_feats = [feat for feat in __cpu_dispatch__ if not __cpu_features__[feat]]
+    unavailable_feats = [
+        feat for feat in __cpu_dispatch__ if not __cpu_features__[feat]
+    ]
     UNAVAILABLE_FEAT = None if len(unavailable_feats) == 0 else unavailable_feats[0]
     BASELINE_FEAT = None if len(__cpu_baseline__) == 0 else __cpu_baseline__[0]
     SCRIPT = """
@@ -322,7 +326,9 @@ machine = platform.machine()
 is_x86 = re.match(r"^(amd64|x86|i386|i686)", machine, re.IGNORECASE)
 
 
-@pytest.mark.skipif(not (is_linux or is_cygwin) or not is_x86, reason="Only for Linux and x86")
+@pytest.mark.skipif(
+    not (is_linux or is_cygwin) or not is_x86, reason="Only for Linux and x86"
+)
 class Test_X86_Features(AbstractTest):
     features = [
         "MMX",
@@ -486,7 +492,9 @@ class Test_ARM_Features(AbstractTest):
 is_loongarch = re.match(r"^(loongarch)", machine, re.IGNORECASE)
 
 
-@pytest.mark.skipif(not is_linux or not is_loongarch, reason="Only for Linux and LoongArch")
+@pytest.mark.skipif(
+    not is_linux or not is_loongarch, reason="Only for Linux and LoongArch"
+)
 class Test_LOONGARCH_Features(AbstractTest):
     features = ["LSX"]
 

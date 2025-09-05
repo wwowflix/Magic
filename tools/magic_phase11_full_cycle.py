@@ -64,7 +64,9 @@ def main():
     )
 
     # 3️⃣ Notion Sync
-    run_command(f'"{sys.executable}" "{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker")
+    run_command(
+        f'"{sys.executable}" "{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker"
+    )
 
     print("\n=============================")
     print(" ✅ PHASE 11 FULL CYCLE COMPLETED")

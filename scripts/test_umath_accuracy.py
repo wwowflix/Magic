@@ -10,7 +10,9 @@ import numpy as np
 from numpy.testing import assert_array_max_ulp
 from numpy.testing._private.utils import _glibc_older_than
 
-UNARY_UFUNCS = [obj for obj in np._core.umath.__dict__.values() if isinstance(obj, np.ufunc)]
+UNARY_UFUNCS = [
+    obj for obj in np._core.umath.__dict__.values() if isinstance(obj, np.ufunc)
+]
 UNARY_OBJECT_UFUNCS = [uf for uf in UNARY_UFUNCS if "O->O" in uf.types]
 
 # Remove functions that do not support `floats`
@@ -89,14 +91,18 @@ class TestAccuracy:
                         maxulperr = data_subset["ulperr"].max()
                         assert_array_max_ulp(npfunc(inval), outval, maxulperr)
 
-    @pytest.mark.skipif(IS_AVX512FP16, reason="SVML FP16 have slightly higher ULP errors")
+    @pytest.mark.skipif(
+        IS_AVX512FP16, reason="SVML FP16 have slightly higher ULP errors"
+    )
     @pytest.mark.parametrize("ufunc", UNARY_OBJECT_UFUNCS)
     def test_validate_fp16_transcendentals(self, ufunc):
         with np.errstate(all="ignore"):
             arr = np.arange(65536, dtype=np.int16)
             datafp16 = np.frombuffer(arr.tobytes(), dtype=np.float16)
             datafp32 = datafp16.astype(np.float32)
-            assert_array_max_ulp(ufunc(datafp16), ufunc(datafp32), maxulp=1, dtype=np.float16)
+            assert_array_max_ulp(
+                ufunc(datafp16), ufunc(datafp32), maxulp=1, dtype=np.float16
+            )
 
     @pytest.mark.skipif(not IS_AVX512FP16, reason="lower ULP only apply for SVML FP16")
     def test_validate_svml_fp16(self):
@@ -130,4 +136,6 @@ class TestAccuracy:
             for func in max_ulp_err:
                 ufunc = getattr(np, func)
                 ulp = np.ceil(max_ulp_err[func])
-                assert_array_max_ulp(ufunc(datafp16), ufunc(datafp32), maxulp=ulp, dtype=np.float16)
+                assert_array_max_ulp(
+                    ufunc(datafp16), ufunc(datafp32), maxulp=ulp, dtype=np.float16
+                )

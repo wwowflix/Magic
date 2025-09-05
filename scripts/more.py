@@ -178,7 +178,8 @@ def first(iterable, default=_marker):
     except StopIteration as e:
         if default is _marker:
             raise ValueError(
-                "first() was called on an empty iterable, and no " "default value was provided."
+                "first() was called on an empty iterable, and no "
+                "default value was provided."
             ) from e
         return default
 
@@ -206,7 +207,8 @@ def last(iterable, default=_marker):
     except (IndexError, TypeError, StopIteration):
         if default is _marker:
             raise ValueError(
-                "last() was called on an empty iterable, and no default was " "provided."
+                "last() was called on an empty iterable, and no default was "
+                "provided."
             )
         return default
 
@@ -1938,9 +1940,13 @@ class numeric_range(abc.Sequence, abc.Hashable):
         elif argc == 3:
             self._start, self._stop, self._step = args
         elif argc == 0:
-            raise TypeError("numeric_range expected at least " "1 argument, got {}".format(argc))
+            raise TypeError(
+                "numeric_range expected at least " "1 argument, got {}".format(argc)
+            )
         else:
-            raise TypeError("numeric_range expected at most " "3 arguments, got {}".format(argc))
+            raise TypeError(
+                "numeric_range expected at most " "3 arguments, got {}".format(argc)
+            )
 
         self._zero = type(self._step)(0)
         if self._step == self._zero:
@@ -2050,7 +2056,9 @@ class numeric_range(abc.Sequence, abc.Hashable):
             )
 
     def __reversed__(self):
-        return iter(numeric_range(self._get_by_index(-1), self._start - self._step, -self._step))
+        return iter(
+            numeric_range(self._get_by_index(-1), self._start - self._step, -self._step)
+        )
 
     def count(self, value):
         return int(value in self)
@@ -3425,7 +3433,9 @@ class callback_iter:
         self._aborted = False
         self._future = None
         self._wait_seconds = wait_seconds
-        self._executor = __import__("concurrent.futures").futures.ThreadPoolExecutor(max_workers=1)
+        self._executor = __import__("concurrent.futures").futures.ThreadPoolExecutor(
+            max_workers=1
+        )
         self._iterator = self._reader()
 
     def __enter__(self):
@@ -3463,7 +3473,9 @@ class callback_iter:
 
             q.put((args, kwargs))
 
-        self._future = self._executor.submit(self._func, **{self._callback_kwd: callback})
+        self._future = self._executor.submit(
+            self._func, **{self._callback_kwd: callback}
+        )
 
         while True:
             try:

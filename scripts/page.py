@@ -445,7 +445,9 @@ class OriginTrialToken:
             trial_name=str(json["trialName"]),
             expiry_time=network.TimeSinceEpoch.from_json(json["expiryTime"]),
             is_third_party=bool(json["isThirdParty"]),
-            usage_restriction=OriginTrialUsageRestriction.from_json(json["usageRestriction"]),
+            usage_restriction=OriginTrialUsageRestriction.from_json(
+                json["usageRestriction"]
+            ),
         )
 
 
@@ -473,7 +475,9 @@ class OriginTrialTokenWithStatus:
             raw_token_text=str(json["rawTokenText"]),
             status=OriginTrialTokenStatus.from_json(json["status"]),
             parsed_token=(
-                OriginTrialToken.from_json(json["parsedToken"]) if "parsedToken" in json else None
+                OriginTrialToken.from_json(json["parsedToken"])
+                if "parsedToken" in json
+                else None
             ),
         )
 
@@ -499,7 +503,8 @@ class OriginTrial:
             trial_name=str(json["trialName"]),
             status=OriginTrialStatus.from_json(json["status"]),
             tokens_with_status=[
-                OriginTrialTokenWithStatus.from_json(i) for i in json["tokensWithStatus"]
+                OriginTrialTokenWithStatus.from_json(i)
+                for i in json["tokensWithStatus"]
             ],
         )
 
@@ -590,7 +595,9 @@ class Frame:
         json["securityOrigin"] = self.security_origin
         json["mimeType"] = self.mime_type
         json["secureContextType"] = self.secure_context_type.to_json()
-        json["crossOriginIsolatedContextType"] = self.cross_origin_isolated_context_type.to_json()
+        json["crossOriginIsolatedContextType"] = (
+            self.cross_origin_isolated_context_type.to_json()
+        )
         json["gatedAPIFeatures"] = [i.to_json() for i in self.gated_api_features]
         if self.parent_id is not None:
             json["parentId"] = self.parent_id.to_json()
@@ -619,8 +626,12 @@ class Frame:
             cross_origin_isolated_context_type=CrossOriginIsolatedContextType.from_json(
                 json["crossOriginIsolatedContextType"]
             ),
-            gated_api_features=[GatedAPIFeatures.from_json(i) for i in json["gatedAPIFeatures"]],
-            parent_id=(FrameId.from_json(json["parentId"]) if "parentId" in json else None),
+            gated_api_features=[
+                GatedAPIFeatures.from_json(i) for i in json["gatedAPIFeatures"]
+            ],
+            parent_id=(
+                FrameId.from_json(json["parentId"]) if "parentId" in json else None
+            ),
             name=str(json["name"]) if "name" in json else None,
             url_fragment=str(json["urlFragment"]) if "urlFragment" in json else None,
             security_origin_details=(
@@ -628,9 +639,13 @@ class Frame:
                 if "securityOriginDetails" in json
                 else None
             ),
-            unreachable_url=(str(json["unreachableUrl"]) if "unreachableUrl" in json else None),
+            unreachable_url=(
+                str(json["unreachableUrl"]) if "unreachableUrl" in json else None
+            ),
             ad_frame_status=(
-                AdFrameStatus.from_json(json["adFrameStatus"]) if "adFrameStatus" in json else None
+                AdFrameStatus.from_json(json["adFrameStatus"])
+                if "adFrameStatus" in json
+                else None
             ),
         )
 
@@ -894,7 +909,9 @@ class ScreencastFrameMetadata:
             scroll_offset_x=float(json["scrollOffsetX"]),
             scroll_offset_y=float(json["scrollOffsetY"]),
             timestamp=(
-                network.TimeSinceEpoch.from_json(json["timestamp"]) if "timestamp" in json else None
+                network.TimeSinceEpoch.from_json(json["timestamp"])
+                if "timestamp" in json
+                else None
             ),
         )
 
@@ -1409,10 +1426,14 @@ class FileHandler:
             name=str(json["name"]),
             launch_type=str(json["launchType"]),
             icons=(
-                [ImageResource.from_json(i) for i in json["icons"]] if "icons" in json else None
+                [ImageResource.from_json(i) for i in json["icons"]]
+                if "icons" in json
+                else None
             ),
             accepts=(
-                [FileFilter.from_json(i) for i in json["accepts"]] if "accepts" in json else None
+                [FileFilter.from_json(i) for i in json["accepts"]]
+                if "accepts" in json
+                else None
             ),
         )
 
@@ -1594,7 +1615,11 @@ class ShareTarget:
             title=str(json["title"]) if "title" in json else None,
             text=str(json["text"]) if "text" in json else None,
             url=str(json["url"]) if "url" in json else None,
-            files=([FileFilter.from_json(i) for i in json["files"]] if "files" in json else None),
+            files=(
+                [FileFilter.from_json(i) for i in json["files"]]
+                if "files" in json
+                else None
+            ),
         )
 
 
@@ -1707,7 +1732,9 @@ class WebAppManifest:
         if self.protocol_handlers is not None:
             json["protocolHandlers"] = [i.to_json() for i in self.protocol_handlers]
         if self.related_applications is not None:
-            json["relatedApplications"] = [i.to_json() for i in self.related_applications]
+            json["relatedApplications"] = [
+                i.to_json() for i in self.related_applications
+            ]
         if self.scope is not None:
             json["scope"] = self.scope
         if self.scope_extensions is not None:
@@ -1729,12 +1756,16 @@ class WebAppManifest:
     @classmethod
     def from_json(cls, json):
         return cls(
-            background_color=(str(json["backgroundColor"]) if "backgroundColor" in json else None),
+            background_color=(
+                str(json["backgroundColor"]) if "backgroundColor" in json else None
+            ),
             description=str(json["description"]) if "description" in json else None,
             dir_=str(json["dir"]) if "dir" in json else None,
             display=str(json["display"]) if "display" in json else None,
             display_overrides=(
-                [str(i) for i in json["displayOverrides"]] if "displayOverrides" in json else None
+                [str(i) for i in json["displayOverrides"]]
+                if "displayOverrides" in json
+                else None
             ),
             file_handlers=(
                 [FileHandler.from_json(i) for i in json["fileHandlers"]]
@@ -1742,12 +1773,16 @@ class WebAppManifest:
                 else None
             ),
             icons=(
-                [ImageResource.from_json(i) for i in json["icons"]] if "icons" in json else None
+                [ImageResource.from_json(i) for i in json["icons"]]
+                if "icons" in json
+                else None
             ),
             id_=str(json["id"]) if "id" in json else None,
             lang=str(json["lang"]) if "lang" in json else None,
             launch_handler=(
-                LaunchHandler.from_json(json["launchHandler"]) if "launchHandler" in json else None
+                LaunchHandler.from_json(json["launchHandler"])
+                if "launchHandler" in json
+                else None
             ),
             name=str(json["name"]) if "name" in json else None,
             orientation=str(json["orientation"]) if "orientation" in json else None,
@@ -1778,11 +1813,15 @@ class WebAppManifest:
                 else None
             ),
             share_target=(
-                ShareTarget.from_json(json["shareTarget"]) if "shareTarget" in json else None
+                ShareTarget.from_json(json["shareTarget"])
+                if "shareTarget" in json
+                else None
             ),
             short_name=str(json["shortName"]) if "shortName" in json else None,
             shortcuts=(
-                [Shortcut.from_json(i) for i in json["shortcuts"]] if "shortcuts" in json else None
+                [Shortcut.from_json(i) for i in json["shortcuts"]]
+                if "shortcuts" in json
+                else None
             ),
             start_url=str(json["startUrl"]) if "startUrl" in json else None,
             theme_color=str(json["themeColor"]) if "themeColor" in json else None,
@@ -1860,7 +1899,9 @@ class BackForwardCacheNotRestoredReason(enum.Enum):
     HAVE_INNER_CONTENTS = "HaveInnerContents"
     TIMEOUT_PUTTING_IN_CACHE = "TimeoutPuttingInCache"
     BACK_FORWARD_CACHE_DISABLED_BY_LOW_MEMORY = "BackForwardCacheDisabledByLowMemory"
-    BACK_FORWARD_CACHE_DISABLED_BY_COMMAND_LINE = "BackForwardCacheDisabledByCommandLine"
+    BACK_FORWARD_CACHE_DISABLED_BY_COMMAND_LINE = (
+        "BackForwardCacheDisabledByCommandLine"
+    )
     NETWORK_REQUEST_DATAPIPE_DRAINED_AS_BYTES_CONSUMER = (
         "NetworkRequestDatapipeDrainedAsBytesConsumer"
     )
@@ -1879,7 +1920,9 @@ class BackForwardCacheNotRestoredReason(enum.Enum):
     SERVICE_WORKER_UNREGISTRATION = "ServiceWorkerUnregistration"
     CACHE_CONTROL_NO_STORE = "CacheControlNoStore"
     CACHE_CONTROL_NO_STORE_COOKIE_MODIFIED = "CacheControlNoStoreCookieModified"
-    CACHE_CONTROL_NO_STORE_HTTP_ONLY_COOKIE_MODIFIED = "CacheControlNoStoreHTTPOnlyCookieModified"
+    CACHE_CONTROL_NO_STORE_HTTP_ONLY_COOKIE_MODIFIED = (
+        "CacheControlNoStoreHTTPOnlyCookieModified"
+    )
     NO_RESPONSE_HEAD = "NoResponseHead"
     UNKNOWN = "Unknown"
     ACTIVATION_NAVIGATIONS_DISALLOWED_FOR_BUG1234857 = (
@@ -1909,7 +1952,9 @@ class BackForwardCacheNotRestoredReason(enum.Enum):
     REQUESTED_MIDI_PERMISSION = "RequestedMIDIPermission"
     REQUESTED_AUDIO_CAPTURE_PERMISSION = "RequestedAudioCapturePermission"
     REQUESTED_VIDEO_CAPTURE_PERMISSION = "RequestedVideoCapturePermission"
-    REQUESTED_BACK_FORWARD_CACHE_BLOCKED_SENSORS = "RequestedBackForwardCacheBlockedSensors"
+    REQUESTED_BACK_FORWARD_CACHE_BLOCKED_SENSORS = (
+        "RequestedBackForwardCacheBlockedSensors"
+    )
     REQUESTED_BACKGROUND_WORK_PERMISSION = "RequestedBackgroundWorkPermission"
     BROADCAST_CHANNEL = "BroadcastChannel"
     WEB_XR = "WebXR"
@@ -1959,7 +2004,9 @@ class BackForwardCacheNotRestoredReason(enum.Enum):
     CONTENT_SCREEN_READER = "ContentScreenReader"
     CONTENT_DISCARDED = "ContentDiscarded"
     EMBEDDER_POPUP_BLOCKER_TAB_HELPER = "EmbedderPopupBlockerTabHelper"
-    EMBEDDER_SAFE_BROWSING_TRIGGERED_POPUP_BLOCKER = "EmbedderSafeBrowsingTriggeredPopupBlocker"
+    EMBEDDER_SAFE_BROWSING_TRIGGERED_POPUP_BLOCKER = (
+        "EmbedderSafeBrowsingTriggeredPopupBlocker"
+    )
     EMBEDDER_SAFE_BROWSING_THREAT_DETAILS = "EmbedderSafeBrowsingThreatDetails"
     EMBEDDER_APP_BANNER_MANAGER = "EmbedderAppBannerManager"
     EMBEDDER_DOM_DISTILLER_VIEWER_SOURCE = "EmbedderDomDistillerViewerSource"
@@ -1976,14 +2023,20 @@ class BackForwardCacheNotRestoredReason(enum.Enum):
     EMBEDDER_EXTENSIONS = "EmbedderExtensions"
     EMBEDDER_EXTENSION_MESSAGING = "EmbedderExtensionMessaging"
     EMBEDDER_EXTENSION_MESSAGING_FOR_OPEN_PORT = "EmbedderExtensionMessagingForOpenPort"
-    EMBEDDER_EXTENSION_SENT_MESSAGE_TO_CACHED_FRAME = "EmbedderExtensionSentMessageToCachedFrame"
+    EMBEDDER_EXTENSION_SENT_MESSAGE_TO_CACHED_FRAME = (
+        "EmbedderExtensionSentMessageToCachedFrame"
+    )
     REQUESTED_BY_WEB_VIEW_CLIENT = "RequestedByWebViewClient"
     POST_MESSAGE_BY_WEB_VIEW_CLIENT = "PostMessageByWebViewClient"
     CACHE_CONTROL_NO_STORE_DEVICE_BOUND_SESSION_TERMINATED = (
         "CacheControlNoStoreDeviceBoundSessionTerminated"
     )
-    CACHE_LIMIT_PRUNED_ON_MODERATE_MEMORY_PRESSURE = "CacheLimitPrunedOnModerateMemoryPressure"
-    CACHE_LIMIT_PRUNED_ON_CRITICAL_MEMORY_PRESSURE = "CacheLimitPrunedOnCriticalMemoryPressure"
+    CACHE_LIMIT_PRUNED_ON_MODERATE_MEMORY_PRESSURE = (
+        "CacheLimitPrunedOnModerateMemoryPressure"
+    )
+    CACHE_LIMIT_PRUNED_ON_CRITICAL_MEMORY_PRESSURE = (
+        "CacheLimitPrunedOnCriticalMemoryPressure"
+    )
 
     def to_json(self):
         return self.value
@@ -2106,10 +2159,12 @@ class BackForwardCacheNotRestoredExplanationTree:
         return cls(
             url=str(json["url"]),
             explanations=[
-                BackForwardCacheNotRestoredExplanation.from_json(i) for i in json["explanations"]
+                BackForwardCacheNotRestoredExplanation.from_json(i)
+                for i in json["explanations"]
             ],
             children=[
-                BackForwardCacheNotRestoredExplanationTree.from_json(i) for i in json["children"]
+                BackForwardCacheNotRestoredExplanationTree.from_json(i)
+                for i in json["children"]
             ],
         )
 
@@ -2251,7 +2306,9 @@ def clear_device_metrics_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT
     json = yield cmd_dict
 
 
-def clear_device_orientation_override() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
+def clear_device_orientation_override() -> (
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, None]
+):
     """
     Clears the overridden Device Orientation.
 
@@ -2300,7 +2357,9 @@ def create_isolated_world(
     return runtime.ExecutionContextId.from_json(json["executionContextId"])
 
 
-def delete_cookie(cookie_name: str, url: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
+def delete_cookie(
+    cookie_name: str, url: str
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Deletes browser cookie with given name, domain and path.
 
@@ -2388,7 +2447,11 @@ def get_app_manifest(
         str(json["url"]),
         [AppManifestError.from_json(i) for i in json["errors"]],
         str(json["data"]) if "data" in json else None,
-        (AppManifestParsedProperties.from_json(json["parsed"]) if "parsed" in json else None),
+        (
+            AppManifestParsedProperties.from_json(json["parsed"])
+            if "parsed" in json
+            else None
+        ),
         WebAppManifest.from_json(json["manifest"]),
     )
 
@@ -2410,7 +2473,9 @@ def get_installability_errors() -> (
     return [InstallabilityError.from_json(i) for i in json["installabilityErrors"]]
 
 
-def get_manifest_icons() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Optional[str]]:
+def get_manifest_icons() -> (
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Optional[str]]
+):
     """
     Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation.
 
@@ -2524,7 +2589,9 @@ def get_layout_metrics() -> typing.Generator[
 
 
 def get_navigation_history() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[NavigationEntry]]]
+    typing.Generator[
+        T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[NavigationEntry]]
+    ]
 ):
     """
     Returns navigation history for the current page.
@@ -2580,7 +2647,9 @@ def get_resource_content(
     return (str(json["content"]), bool(json["base64Encoded"]))
 
 
-def get_resource_tree() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, FrameResourceTree]:
+def get_resource_tree() -> (
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, FrameResourceTree]
+):
     """
     Returns present frame / resource tree structure.
 
@@ -2923,7 +2992,9 @@ def set_bypass_csp(enabled: bool) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, 
 
 def get_permissions_policy_state(
     frame_id: FrameId,
-) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[PermissionsPolicyFeatureState]]:
+) -> typing.Generator[
+    T_JSON_DICT, T_JSON_DICT, typing.List[PermissionsPolicyFeatureState]
+]:
     """
     Get Permissions Policy state on given frame.
 
@@ -3322,7 +3393,9 @@ def produce_compilation_cache(
     json = yield cmd_dict
 
 
-def add_compilation_cache(url: str, data: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
+def add_compilation_cache(
+    url: str, data: str
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
     """
     Seeds compilation cache for given url. Compilation cache does not survive
     cross-process navigation.
@@ -3531,7 +3604,9 @@ class FrameAttached:
         return cls(
             frame_id=FrameId.from_json(json["frameId"]),
             parent_frame_id=FrameId.from_json(json["parentFrameId"]),
-            stack=(runtime.StackTrace.from_json(json["stack"]) if "stack" in json else None),
+            stack=(
+                runtime.StackTrace.from_json(json["stack"]) if "stack" in json else None
+            ),
         )
 
 
@@ -3563,7 +3638,9 @@ class FrameDetached:
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> FrameDetached:
-        return cls(frame_id=FrameId.from_json(json["frameId"]), reason=str(json["reason"]))
+        return cls(
+            frame_id=FrameId.from_json(json["frameId"]), reason=str(json["reason"])
+        )
 
 
 @event_class("Page.frameSubtreeWillBeDetached")
@@ -3897,7 +3974,9 @@ class JavascriptDialogOpening:
             message=str(json["message"]),
             type_=DialogType.from_json(json["type"]),
             has_browser_handler=bool(json["hasBrowserHandler"]),
-            default_prompt=(str(json["defaultPrompt"]) if "defaultPrompt" in json else None),
+            default_prompt=(
+                str(json["defaultPrompt"]) if "defaultPrompt" in json else None
+            ),
         )
 
 
@@ -3945,7 +4024,9 @@ class BackForwardCacheNotUsed:
     #: Array of reasons why the page could not be cached. This must not be empty.
     not_restored_explanations: typing.List[BackForwardCacheNotRestoredExplanation]
     #: Tree structure of reasons why the page could not be cached for each frame.
-    not_restored_explanations_tree: typing.Optional[BackForwardCacheNotRestoredExplanationTree]
+    not_restored_explanations_tree: typing.Optional[
+        BackForwardCacheNotRestoredExplanationTree
+    ]
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> BackForwardCacheNotUsed:

@@ -66,7 +66,11 @@ if os.name == "nt":
     def _fix_pcbuild(d):
         # In a venv, sys._home will be inside BASE_PREFIX rather than PREFIX.
         prefixes = PREFIX, BASE_PREFIX
-        matched = (prefix for prefix in prefixes if _is_parent(d, os.path.join(prefix, "PCbuild")))
+        matched = (
+            prefix
+            for prefix in prefixes
+            if _is_parent(d, os.path.join(prefix, "PCbuild"))
+        )
         return next(matched, d)
 
     project_base = _fix_pcbuild(project_base)
@@ -120,7 +124,8 @@ def get_python_inc(plat_specific=0, prefix=None):
         getter = globals()[f"_get_python_inc_{os.name}"]
     except KeyError:
         raise DistutilsPlatformError(
-            "I don't know where Python installs its C header files " "on platform '%s'" % os.name
+            "I don't know where Python installs its C header files "
+            "on platform '%s'" % os.name
         )
     return getter(resolved_prefix, prefix, plat_specific)
 
@@ -184,7 +189,11 @@ def _get_python_inc_nt(prefix, spec_prefix, plat_specific):
     if python_build:
         # Include both the include and PC dir to ensure we can find
         # pyconfig.h
-        return os.path.join(prefix, "include") + os.path.pathsep + os.path.join(prefix, "PC")
+        return (
+            os.path.join(prefix, "include")
+            + os.path.pathsep
+            + os.path.join(prefix, "PC")
+        )
     return os.path.join(prefix, "include")
 
 
@@ -245,7 +254,8 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
             return os.path.join(prefix, "Lib", "site-packages")
     else:
         raise DistutilsPlatformError(
-            "I don't know where Python installs its library " "on platform '%s'" % os.name
+            "I don't know where Python installs its library "
+            "on platform '%s'" % os.name
         )
 
 
@@ -384,7 +394,9 @@ def parse_makefile(fn, g=None):  # noqa: C901
     """
     from distutils.text_file import TextFile
 
-    fp = TextFile(fn, strip_comments=1, skip_blanks=1, join_lines=1, errors="surrogateescape")
+    fp = TextFile(
+        fn, strip_comments=1, skip_blanks=1, join_lines=1, errors="surrogateescape"
+    )
 
     if g is None:
         g = {}

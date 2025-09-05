@@ -90,7 +90,9 @@ class TerminalFormatter(Formatter):
 
     def __init__(self, **options):
         Formatter.__init__(self, **options)
-        self.darkbg = get_choice_opt(options, "bg", ["light", "dark"], "light") == "dark"
+        self.darkbg = (
+            get_choice_opt(options, "bg", ["light", "dark"], "light") == "dark"
+        )
         self.colorscheme = options.get("colorscheme", None) or TERMINAL_COLORS
         self.linenos = options.get("linenos", False)
         self._lineno = 0

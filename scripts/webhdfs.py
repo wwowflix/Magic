@@ -132,7 +132,8 @@ class WebHDFS(AbstractFileSystem):
             self.pars["doas"] = proxy_to
         if kerberos and user is not None:
             raise ValueError(
-                "If using Kerberos auth, do not specify the " "user, this is handled by kinit."
+                "If using Kerberos auth, do not specify the "
+                "user, this is handled by kinit."
             )
 
         self.session_cert = session_cert

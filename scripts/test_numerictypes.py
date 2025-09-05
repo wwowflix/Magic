@@ -252,9 +252,15 @@ class ReadValuesPlain:
             assert_equal(h["z"], np.array(self._buffer[2], dtype="u1"))
         else:
             assert_(len(h) == 2)
-            assert_equal(h["x"], np.array([self._buffer[0][0], self._buffer[1][0]], dtype="i4"))
-            assert_equal(h["y"], np.array([self._buffer[0][1], self._buffer[1][1]], dtype="f8"))
-            assert_equal(h["z"], np.array([self._buffer[0][2], self._buffer[1][2]], dtype="u1"))
+            assert_equal(
+                h["x"], np.array([self._buffer[0][0], self._buffer[1][0]], dtype="i4")
+            )
+            assert_equal(
+                h["y"], np.array([self._buffer[0][1], self._buffer[1][1]], dtype="f8")
+            )
+            assert_equal(
+                h["z"], np.array([self._buffer[0][2], self._buffer[1][2]], dtype="u1")
+            )
 
 
 class TestReadValuesPlainSingle(ReadValuesPlain):
@@ -286,9 +292,15 @@ class ReadValuesNested:
             assert_equal(h["z"], np.array(self._buffer[5], dtype="u1"))
         else:
             assert_(len(h) == 2)
-            assert_equal(h["x"], np.array([self._buffer[0][0], self._buffer[1][0]], dtype="i4"))
-            assert_equal(h["y"], np.array([self._buffer[0][4], self._buffer[1][4]], dtype="f8"))
-            assert_equal(h["z"], np.array([self._buffer[0][5], self._buffer[1][5]], dtype="u1"))
+            assert_equal(
+                h["x"], np.array([self._buffer[0][0], self._buffer[1][0]], dtype="i4")
+            )
+            assert_equal(
+                h["y"], np.array([self._buffer[0][4], self._buffer[1][4]], dtype="f8")
+            )
+            assert_equal(
+                h["z"], np.array([self._buffer[0][5], self._buffer[1][5]], dtype="u1")
+            )
 
     def test_nested1_acessors(self):
         """Check reading the nested fields of a nested array (1st level)"""
@@ -324,15 +336,21 @@ class ReadValuesNested:
                 h["Info"]["Info2"]["value"],
                 np.array(self._buffer[1][2][1], dtype="c16"),
             )
-            assert_equal(h["Info"]["Info2"]["z3"], np.array(self._buffer[1][2][3], dtype="u4"))
+            assert_equal(
+                h["Info"]["Info2"]["z3"], np.array(self._buffer[1][2][3], dtype="u4")
+            )
         else:
             assert_equal(
                 h["Info"]["Info2"]["value"],
-                np.array([self._buffer[0][1][2][1], self._buffer[1][1][2][1]], dtype="c16"),
+                np.array(
+                    [self._buffer[0][1][2][1], self._buffer[1][1][2][1]], dtype="c16"
+                ),
             )
             assert_equal(
                 h["Info"]["Info2"]["z3"],
-                np.array([self._buffer[0][1][2][3], self._buffer[1][1][2][3]], dtype="u4"),
+                np.array(
+                    [self._buffer[0][1][2][3], self._buffer[1][1][2][3]], dtype="u4"
+                ),
             )
 
     def test_nested1_descriptor(self):
@@ -462,7 +480,9 @@ class TestIsDType:
         "integral": sctypes["int"] + sctypes["uint"],
         "real floating": sctypes["float"],
         "complex floating": sctypes["complex"],
-        "numeric": (sctypes["int"] + sctypes["uint"] + sctypes["float"] + sctypes["complex"]),
+        "numeric": (
+            sctypes["int"] + sctypes["uint"] + sctypes["float"] + sctypes["complex"]
+        ),
     }
 
     @pytest.mark.parametrize(
@@ -541,7 +561,9 @@ class TestMaximumSctype:
     def test_int(self, t):
         assert_equal(maximum_sctype(t), np._core.sctypes["int"][-1])
 
-    @pytest.mark.parametrize("t", [np.ubyte, np.ushort, np.uintc, np.ulong, np.ulonglong])
+    @pytest.mark.parametrize(
+        "t", [np.ubyte, np.ushort, np.uintc, np.ulong, np.ulonglong]
+    )
     def test_uint(self, t):
         assert_equal(maximum_sctype(t), np._core.sctypes["uint"][-1])
 

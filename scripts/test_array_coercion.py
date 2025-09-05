@@ -330,7 +330,9 @@ class TestScalarDiscovery:
                 with pytest.raises(Exception):  # noqa: B017
                     np.array(scalar, dtype=dtype)
 
-                if isinstance(scalar, rational) and np.issubdtype(dtype, np.signedinteger):
+                if isinstance(scalar, rational) and np.issubdtype(
+                    dtype, np.signedinteger
+                ):
                     return
 
                 with pytest.raises(Exception):  # noqa: B017
@@ -752,7 +754,9 @@ class TestArrayLikes:
             with pytest.raises(MemoryError):
                 np.array([arr])
 
-    @pytest.mark.parametrize("attribute", ["__array_interface__", "__array__", "__array_struct__"])
+    @pytest.mark.parametrize(
+        "attribute", ["__array_interface__", "__array__", "__array_struct__"]
+    )
     @pytest.mark.parametrize("error", [RecursionError, MemoryError])
     def test_bad_array_like_attributes(self, attribute, error):
         # RecursionError and MemoryError are considered fatal. All errors
@@ -825,7 +829,9 @@ class TestAsArray:
         # Create an equivalent descriptor with a new and distinct dtype
         # instance.
         equivalent_requirement = np.dtype("i", metadata={"spam": True})
-        annotated_int_array_alt = np.asarray(annotated_int_array, dtype=equivalent_requirement)
+        annotated_int_array_alt = np.asarray(
+            annotated_int_array, dtype=equivalent_requirement
+        )
         assert unequal_type == equivalent_requirement
         assert unequal_type is not equivalent_requirement
         assert annotated_int_array_alt is not annotated_int_array

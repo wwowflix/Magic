@@ -76,7 +76,9 @@ class Properties(PandasDelegate, PandasObject, NoNewAttributesMixin):
         elif is_period_dtype(data.dtype):
             return PeriodArray(data, copy=False)
 
-        raise TypeError(f"cannot convert an object of type {type(data)} to a datetimelike index")
+        raise TypeError(
+            f"cannot convert an object of type {type(data)} to a datetimelike index"
+        )
 
     def _delegate_property_get(self, name):
         from pandas import Series
@@ -127,7 +129,9 @@ class Properties(PandasDelegate, PandasObject, NoNewAttributesMixin):
         if not is_list_like(result):
             return result
 
-        result = Series(result, index=self._parent.index, name=self.name).__finalize__(self._parent)
+        result = Series(result, index=self._parent.index, name=self.name).__finalize__(
+            self._parent
+        )
 
         # setting this object will show a SettingWithCopyWarning/Error
         result._is_copy = (
@@ -139,8 +143,12 @@ class Properties(PandasDelegate, PandasObject, NoNewAttributesMixin):
         return result
 
 
-@delegate_names(delegate=DatetimeArray, accessors=DatetimeArray._datetimelike_ops, typ="property")
-@delegate_names(delegate=DatetimeArray, accessors=DatetimeArray._datetimelike_methods, typ="method")
+@delegate_names(
+    delegate=DatetimeArray, accessors=DatetimeArray._datetimelike_ops, typ="property"
+)
+@delegate_names(
+    delegate=DatetimeArray, accessors=DatetimeArray._datetimelike_methods, typ="method"
+)
 class DatetimeProperties(Properties):
     """
     Accessor object for datetimelike properties of the Series values.
@@ -295,7 +303,9 @@ class DatetimeProperties(Properties):
     week = weekofyear
 
 
-@delegate_names(delegate=TimedeltaArray, accessors=TimedeltaArray._datetimelike_ops, typ="property")
+@delegate_names(
+    delegate=TimedeltaArray, accessors=TimedeltaArray._datetimelike_ops, typ="property"
+)
 @delegate_names(
     delegate=TimedeltaArray,
     accessors=TimedeltaArray._datetimelike_methods,
@@ -390,7 +400,9 @@ class TimedeltaProperties(Properties):
         4     0      0        0        4             0             0            0
         """
         return (
-            self._get_values().components.set_index(self._parent.index).__finalize__(self._parent)
+            self._get_values()
+            .components.set_index(self._parent.index)
+            .__finalize__(self._parent)
         )
 
     @property
@@ -398,8 +410,12 @@ class TimedeltaProperties(Properties):
         return self._get_values().inferred_freq
 
 
-@delegate_names(delegate=PeriodArray, accessors=PeriodArray._datetimelike_ops, typ="property")
-@delegate_names(delegate=PeriodArray, accessors=PeriodArray._datetimelike_methods, typ="method")
+@delegate_names(
+    delegate=PeriodArray, accessors=PeriodArray._datetimelike_ops, typ="property"
+)
+@delegate_names(
+    delegate=PeriodArray, accessors=PeriodArray._datetimelike_methods, typ="method"
+)
 class PeriodProperties(Properties):
     """
     Accessor object for datetimelike properties of the Series values.
@@ -461,7 +477,9 @@ class PeriodProperties(Properties):
     """
 
 
-class CombinedDatetimelikeProperties(DatetimeProperties, TimedeltaProperties, PeriodProperties):
+class CombinedDatetimelikeProperties(
+    DatetimeProperties, TimedeltaProperties, PeriodProperties
+):
     def __new__(cls, data: Series):
         # CombinedDatetimelikeProperties isn't really instantiated. Instead
         # we need to choose which parent (datetime or timedelta) is

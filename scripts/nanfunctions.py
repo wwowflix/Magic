@@ -28,7 +28,9 @@ from numpy.lib import function_base
 from numpy.core import overrides
 
 
-array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
+array_function_dispatch = functools.partial(
+    overrides.array_function_dispatch, module="numpy"
+)
 
 
 __all__ = [
@@ -1261,7 +1263,9 @@ def nanpercentile(
     q = np.true_divide(q, 100.0)  # handles the asarray for us too
     if not function_base._quantile_is_valid(q):
         raise ValueError("Percentiles must be in the range [0, 100]")
-    return _nanquantile_unchecked(a, q, axis, out, overwrite_input, interpolation, keepdims)
+    return _nanquantile_unchecked(
+        a, q, axis, out, overwrite_input, interpolation, keepdims
+    )
 
 
 def _nanquantile_dispatcher(
@@ -1381,7 +1385,9 @@ def nanquantile(
     q = np.asanyarray(q)
     if not function_base._quantile_is_valid(q):
         raise ValueError("Quantiles must be in the range [0, 1]")
-    return _nanquantile_unchecked(a, q, axis, out, overwrite_input, interpolation, keepdims)
+    return _nanquantile_unchecked(
+        a, q, axis, out, overwrite_input, interpolation, keepdims
+    )
 
 
 def _nanquantile_unchecked(
@@ -1426,7 +1432,9 @@ def _nanquantile_ureduce_func(
         part = a.ravel()
         result = _nanquantile_1d(part, q, overwrite_input, interpolation)
     else:
-        result = np.apply_along_axis(_nanquantile_1d, axis, a, q, overwrite_input, interpolation)
+        result = np.apply_along_axis(
+            _nanquantile_1d, axis, a, q, overwrite_input, interpolation
+        )
         # apply_along_axis fills in collapsed axis with results.
         # Move that axis to the beginning to match percentile's
         # convention.
@@ -1549,7 +1557,9 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
     """
     arr, mask = _replace_nan(a, 0)
     if mask is None:
-        return np.var(arr, axis=axis, dtype=dtype, out=out, ddof=ddof, keepdims=keepdims)
+        return np.var(
+            arr, axis=axis, dtype=dtype, out=out, ddof=ddof, keepdims=keepdims
+        )
 
     if dtype is not None:
         dtype = np.dtype(dtype)
@@ -1590,7 +1600,9 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
 
     isbad = dof <= 0
     if np.any(isbad):
-        warnings.warn("Degrees of freedom <= 0 for slice.", RuntimeWarning, stacklevel=3)
+        warnings.warn(
+            "Degrees of freedom <= 0 for slice.", RuntimeWarning, stacklevel=3
+        )
         # NaN, inf, or negative numbers are all possible bad
         # values, so explicitly replace them with NaN.
         var = _copyto(var, np.nan, isbad)

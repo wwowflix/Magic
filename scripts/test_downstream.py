@@ -136,7 +136,9 @@ def test_oo_optimized_datetime_index_unpickle():
 def test_statsmodels():
     smf = pytest.importorskip("statsmodels.formula.api")
 
-    df = DataFrame({"Lottery": range(5), "Literacy": range(5), "Pop1831": range(100, 105)})
+    df = DataFrame(
+        {"Lottery": range(5), "Literacy": range(5), "Pop1831": range(100, 105)}
+    )
     smf.ols("Lottery ~ Literacy + np.log(Pop1831)", data=df).fit()
 
 
@@ -155,7 +157,9 @@ def test_scikit_learn():
 
 def test_seaborn():
     seaborn = pytest.importorskip("seaborn")
-    tips = DataFrame({"day": pd.date_range("2023", freq="D", periods=5), "total_bill": range(5)})
+    tips = DataFrame(
+        {"day": pd.date_range("2023", freq="D", periods=5), "total_bill": range(5)}
+    )
     seaborn.stripplot(x="day", y="total_bill", data=tips)
 
 
@@ -231,9 +235,9 @@ def test_frame_setitem_dask_array_into_new_col(request):
     try:
         dask = pytest.importorskip("dask")
         da = pytest.importorskip("dask.array")
-        if Version(dask.__version__) <= Version("2025.1.0") and Version(np.__version__) >= Version(
-            "2.1"
-        ):
+        if Version(dask.__version__) <= Version("2025.1.0") and Version(
+            np.__version__
+        ) >= Version("2.1"):
             request.applymarker(
                 pytest.mark.xfail(reason="loc.__setitem__ incorrectly mutated column c")
             )

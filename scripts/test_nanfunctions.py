@@ -218,7 +218,9 @@ class TestNanFunctions_MinMax:
                 warnings.simplefilter("always")
                 res = f(mine, axis=1)
                 assert_(isinstance(res, MyNDArray))
-                assert_(np.isnan(res[1]) and not np.isnan(res[0]) and not np.isnan(res[2]))
+                assert_(
+                    np.isnan(res[1]) and not np.isnan(res[0]) and not np.isnan(res[2])
+                )
                 assert_(len(w) == 1, "no warning raised")
                 assert_(issubclass(w[0].category, RuntimeWarning))
 
@@ -651,7 +653,9 @@ class TestNanFunctions_CumSumProd(SharedNanFunctionsTestsMixin):
 
     @pytest.mark.parametrize("axis", [None, 0, 1])
     @pytest.mark.parametrize("dtype", np.typecodes["AllFloat"])
-    @pytest.mark.parametrize("array", [np.array(np.nan), np.full((3, 3), np.nan)], ids=["0d", "2d"])
+    @pytest.mark.parametrize(
+        "array", [np.array(np.nan), np.full((3, 3), np.nan)], ids=["0d", "2d"]
+    )
     def test_allnans(self, axis, dtype, array):
         if axis is not None and array.ndim == 0:
             pytest.skip("`axis != None` not supported for 0d arrays")
@@ -907,7 +911,9 @@ class TestNanFunctions_Median:
             shape_out = (1,) * d.ndim
         else:
             axis_norm = normalize_axis_tuple(axis, d.ndim)
-            shape_out = tuple(1 if i in axis_norm else d.shape[i] for i in range(d.ndim))
+            shape_out = tuple(
+                1 if i in axis_norm else d.shape[i] for i in range(d.ndim)
+            )
         out = np.empty(shape_out)
         result = np.nanmedian(d, axis=axis, keepdims=True, out=out)
         assert result is out
@@ -1044,12 +1050,16 @@ class TestNanFunctions_Median:
                         a = np.array([([np.nan] * i) + ([inf] * j)] * 2)
                         assert_equal(np.nanmedian(a), inf)
                         assert_equal(np.nanmedian(a, axis=1), inf)
-                        assert_equal(np.nanmedian(a, axis=0), ([np.nan] * i) + [inf] * j)
+                        assert_equal(
+                            np.nanmedian(a, axis=0), ([np.nan] * i) + [inf] * j
+                        )
 
                         a = np.array([([np.nan] * i) + ([-inf] * j)] * 2)
                         assert_equal(np.nanmedian(a), -inf)
                         assert_equal(np.nanmedian(a, axis=1), -inf)
-                        assert_equal(np.nanmedian(a, axis=0), ([np.nan] * i) + [-inf] * j)
+                        assert_equal(
+                            np.nanmedian(a, axis=0), ([np.nan] * i) + [-inf] * j
+                        )
 
 
 class TestNanFunctions_Percentile:
@@ -1109,7 +1119,9 @@ class TestNanFunctions_Percentile:
             shape_out = (1,) * d.ndim
         else:
             axis_norm = normalize_axis_tuple(axis, d.ndim)
-            shape_out = tuple(1 if i in axis_norm else d.shape[i] for i in range(d.ndim))
+            shape_out = tuple(
+                1 if i in axis_norm else d.shape[i] for i in range(d.ndim)
+            )
         shape_out = np.shape(q) + shape_out
 
         out = np.empty(shape_out)
@@ -1172,9 +1184,13 @@ class TestNanFunctions_Percentile:
         res = nanpercentile(_ndat, 28, axis=1, weights=gen_weights(_ndat), out=out)
         assert_almost_equal(res, tgt)
         # Transpose the array to fit the output convention of numpy.percentile
-        tgt = np.transpose([percentile(d, (28, 98), weights=gen_weights(d)) for d in _rdat])
+        tgt = np.transpose(
+            [percentile(d, (28, 98), weights=gen_weights(d)) for d in _rdat]
+        )
         out = np.empty_like(tgt) if use_out else None
-        res = nanpercentile(_ndat, (28, 98), axis=1, weights=gen_weights(_ndat), out=out)
+        res = nanpercentile(
+            _ndat, (28, 98), axis=1, weights=gen_weights(_ndat), out=out
+        )
         assert_almost_equal(res, tgt)
 
     @pytest.mark.parametrize("axis", [None, 0, 1])
@@ -1239,11 +1255,15 @@ class TestNanFunctions_Percentile:
                 with suppress_warnings() as sup:
                     sup.filter(RuntimeWarning, "All-NaN slice encountered")
                     val = np.percentile(mat, perc, axis=axis, keepdims=keepdim)
-                    nan_val = np.nanpercentile(nan_mat, perc, axis=axis, keepdims=keepdim)
+                    nan_val = np.nanpercentile(
+                        nan_mat, perc, axis=axis, keepdims=keepdim
+                    )
                     assert_equal(nan_val.shape, val.shape)
 
                     val = np.percentile(large_mat, perc, axis=axis, keepdims=keepdim)
-                    nan_val = np.nanpercentile(large_mat, perc, axis=axis, keepdims=keepdim)
+                    nan_val = np.nanpercentile(
+                        large_mat, perc, axis=axis, keepdims=keepdim
+                    )
                     assert_equal(nan_val, val)
 
         megamat = np.ones((3, 4, 5, 6))
@@ -1281,18 +1301,24 @@ class TestNanFunctions_Percentile:
         # 0 (and no NaNs); not sure this is strictly identical but should be
         # sufficiently so (if a percentile lies exactly on a 0 value).
         weights[np.isnan(x)] = 0
-        p_expected = np.percentile(x_no_nan, p, axis=axis, weights=weights, method="inverted_cdf")
+        p_expected = np.percentile(
+            x_no_nan, p, axis=axis, weights=weights, method="inverted_cdf"
+        )
 
         p_unweighted = np.nanpercentile(x, p, axis=axis, method="inverted_cdf")
         # The normal and unweighted versions should be identical:
         assert_equal(p_unweighted, p_expected)
 
         weights[np.isnan(x)] = 1e200  # huge value, shouldn't matter
-        p_weighted = np.nanpercentile(x, p, axis=axis, weights=weights, method="inverted_cdf")
+        p_weighted = np.nanpercentile(
+            x, p, axis=axis, weights=weights, method="inverted_cdf"
+        )
         assert_equal(p_weighted, p_expected)
         # Also check with out passed:
         out = np.empty_like(p_weighted)
-        res = np.nanpercentile(x, p, axis=axis, weights=weights, out=out, method="inverted_cdf")
+        res = np.nanpercentile(
+            x, p, axis=axis, weights=weights, out=out, method="inverted_cdf"
+        )
 
         assert res is out
         assert_equal(out, p_expected)
@@ -1310,7 +1336,9 @@ class TestNanFunctions_Quantile:
         else:
             w_args = {}
 
-        assert_equal(np.nanquantile(ar, q=0.5, **w_args), np.nanpercentile(ar, q=50, **w_args))
+        assert_equal(
+            np.nanquantile(ar, q=0.5, **w_args), np.nanpercentile(ar, q=50, **w_args)
+        )
         assert_equal(
             np.nanquantile(ar, q=0.5, axis=0, **w_args),
             np.nanpercentile(ar, q=50, axis=0, **w_args),

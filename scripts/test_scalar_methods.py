@@ -50,7 +50,9 @@ class TestAsIntegerRatio:
         assert_equal(R(-1075, 512), R(*np.half(-2.1).as_integer_ratio()))
         assert_equal(R(4404019, 2097152), R(*np.single(2.1).as_integer_ratio()))
         assert_equal(R(-4404019, 2097152), R(*np.single(-2.1).as_integer_ratio()))
-        assert_equal(R(4728779608739021, 2251799813685248), R(*np.double(2.1).as_integer_ratio()))
+        assert_equal(
+            R(4728779608739021, 2251799813685248), R(*np.double(2.1).as_integer_ratio())
+        )
         assert_equal(
             R(-4728779608739021, 2251799813685248),
             R(*np.double(-2.1).as_integer_ratio()),

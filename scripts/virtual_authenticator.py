@@ -191,10 +191,14 @@ class Credential:
         private_key = urlsafe_b64decode(f"{data['privateKey']}==")
         sign_count = int(data["signCount"])
         user_handle = (
-            urlsafe_b64decode(f"{data['userHandle']}==") if data.get("userHandle", None) else None
+            urlsafe_b64decode(f"{data['userHandle']}==")
+            if data.get("userHandle", None)
+            else None
         )
 
-        return cls(_id, is_resident_credential, rp_id, user_handle, private_key, sign_count)
+        return cls(
+            _id, is_resident_credential, rp_id, user_handle, private_key, sign_count
+        )
 
     def __str__(self) -> str:
         return f"Credential(id={self.id}, is_resident_credential={self.is_resident_credential}, rp_id={self.rp_id},\
@@ -224,7 +228,9 @@ def required_virtual_authenticator(func):
     @required_chromium_based_browser
     def wrapper(self, *args, **kwargs):
         if not self.virtual_authenticator_id:
-            raise ValueError("This function requires a virtual authenticator to be set.")
+            raise ValueError(
+                "This function requires a virtual authenticator to be set."
+            )
         return func(self, *args, **kwargs)
 
     return wrapper

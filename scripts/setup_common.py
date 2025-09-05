@@ -536,8 +536,12 @@ _IEEE_QUAD_PREC_BE = [
     "000",
 ]
 _IEEE_QUAD_PREC_LE = _IEEE_QUAD_PREC_BE[::-1]
-_IBM_DOUBLE_DOUBLE_BE = ["301", "235", "157", "064", "124", "000", "000", "000"] + ["000"] * 8
-_IBM_DOUBLE_DOUBLE_LE = ["000", "000", "000", "124", "064", "157", "235", "301"] + ["000"] * 8
+_IBM_DOUBLE_DOUBLE_BE = ["301", "235", "157", "064", "124", "000", "000", "000"] + [
+    "000"
+] * 8
+_IBM_DOUBLE_DOUBLE_LE = ["000", "000", "000", "124", "064", "157", "235", "301"] + [
+    "000"
+] * 8
 
 
 def long_double_representation(lines):

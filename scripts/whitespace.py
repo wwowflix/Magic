@@ -19,7 +19,9 @@ class Filter(base.Filter):
         preserve = 0
         for token in base.Filter.__iter__(self):
             type = token["type"]
-            if type == "StartTag" and (preserve or token["name"] in self.spacePreserveElements):
+            if type == "StartTag" and (
+                preserve or token["name"] in self.spacePreserveElements
+            ):
                 preserve += 1
 
             elif type == "EndTag" and preserve:

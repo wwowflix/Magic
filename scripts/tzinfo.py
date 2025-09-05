@@ -193,7 +193,10 @@ class DstTzInfo(BaseTzInfo):
 
     def fromutc(self, dt):
         """See datetime.tzinfo.fromutc"""
-        if dt.tzinfo is not None and getattr(dt.tzinfo, "_tzinfos", None) is not self._tzinfos:
+        if (
+            dt.tzinfo is not None
+            and getattr(dt.tzinfo, "_tzinfos", None) is not self._tzinfos
+        ):
             raise ValueError("fromutc: dt.tzinfo is not self")
         dt = dt.replace(tzinfo=None)
         idx = max(0, bisect_right(self._utc_transition_times, dt) - 1)
@@ -343,12 +346,16 @@ class DstTzInfo(BaseTzInfo):
             # obtain the correct timezone by winding the clock forward a few
             # hours.
             elif is_dst:
-                return self.localize(dt + timedelta(hours=6), is_dst=True) - timedelta(hours=6)
+                return self.localize(dt + timedelta(hours=6), is_dst=True) - timedelta(
+                    hours=6
+                )
 
             # If we are forcing the post-DST side of the DST transition, we
             # obtain the correct timezone by winding the clock back.
             else:
-                return self.localize(dt - timedelta(hours=6), is_dst=False) + timedelta(hours=6)
+                return self.localize(dt - timedelta(hours=6), is_dst=False) + timedelta(
+                    hours=6
+                )
 
         # If we get this far, we have multiple possible timezones - this
         # is an ambiguous case occurring during the end-of-DST transition.
@@ -360,7 +367,9 @@ class DstTzInfo(BaseTzInfo):
 
         # Filter out the possiblilities that don't match the requested
         # is_dst
-        filtered_possible_loc_dt = [p for p in possible_loc_dt if bool(p.tzinfo._dst) == is_dst]
+        filtered_possible_loc_dt = [
+            p for p in possible_loc_dt if bool(p.tzinfo._dst) == is_dst
+        ]
 
         # Hopefully we only have one possibility left. Return it.
         if len(filtered_possible_loc_dt) == 1:

@@ -311,7 +311,9 @@ class TestCasting:
             to_dt = to_dt.values[0]
             cast = get_castingimpl(type(from_dt), type(to_dt))
 
-            casting, (from_res, to_res), view_off = cast._resolve_descriptors((from_dt, to_dt))
+            casting, (from_res, to_res), view_off = cast._resolve_descriptors(
+                (from_dt, to_dt)
+            )
 
             if from_res is not from_dt or to_res is not to_dt:
                 # Do not test this case, it is handled in multiple steps,
@@ -337,7 +339,9 @@ class TestCasting:
 
             # Check if alignment makes a difference, but only if supported
             # and only if the alignment can be wrong
-            if (from_dt.alignment == 1 and to_dt.alignment == 1) or not cast._supports_unaligned:
+            if (
+                from_dt.alignment == 1 and to_dt.alignment == 1
+            ) or not cast._supports_unaligned:
                 return
 
             arr1_o, arr2_o = self.get_data_variation(arr1, arr2, False, True)
@@ -371,7 +375,9 @@ class TestCasting:
         for time_dt in time_dtypes:
             cast = get_castingimpl(type(from_dt), type(time_dt))
 
-            casting, (from_res, to_res), view_off = cast._resolve_descriptors((from_dt, time_dt))
+            casting, (from_res, to_res), view_off = cast._resolve_descriptors(
+                (from_dt, time_dt)
+            )
 
             assert from_res is from_dt
             assert to_res is time_dt
@@ -447,7 +453,9 @@ class TestCasting:
             ),
         ],
     )
-    def test_time_to_time(self, from_dt, to_dt, expected_casting, expected_view_off, nom, denom):
+    def test_time_to_time(
+        self, from_dt, to_dt, expected_casting, expected_view_off, nom, denom
+    ):
         from_dt = np.dtype(from_dt)
         if to_dt is not None:
             to_dt = np.dtype(to_dt)
@@ -460,7 +468,9 @@ class TestCasting:
 
         DType = type(from_dt)
         cast = get_castingimpl(DType, DType)
-        casting, (from_res, to_res), view_off = cast._resolve_descriptors((from_dt, to_dt))
+        casting, (from_res, to_res), view_off = cast._resolve_descriptors(
+            (from_dt, to_dt)
+        )
         assert from_res is from_dt
         assert to_res is to_dt or to_dt is None
         assert casting == expected_casting
@@ -477,7 +487,9 @@ class TestCasting:
         orig_arr = values.view(from_dt)
         orig_out = np.empty_like(expected_out)
 
-        if casting == Casting.unsafe and (to_dt == "m8" or to_dt == "M8"):  # noqa: PLR1714
+        if casting == Casting.unsafe and (
+            to_dt == "m8" or to_dt == "M8"
+        ):  # noqa: PLR1714
             # Casting from non-generic to generic units is an error and should
             # probably be reported as an invalid cast earlier.
             with pytest.raises(ValueError):
@@ -508,7 +520,9 @@ class TestCasting:
         expected_length = get_expected_stringlength(other_dt)
         string_dt = np.dtype(f"{string_char}{expected_length}")
 
-        safety, (res_other_dt, res_dt), view_off = cast._resolve_descriptors((other_dt, None))
+        safety, (res_other_dt, res_dt), view_off = cast._resolve_descriptors(
+            (other_dt, None)
+        )
         assert res_dt.itemsize == expected_length * fact
         assert safety == Casting.safe  # we consider to string casts "safe"
         assert view_off is None
@@ -575,9 +589,15 @@ class TestCasting:
         assert not cast_back._supports_unaligned
 
         for contig in [True, False]:
-            other_arr, str_arr = self.get_data_variation(orig_arr, str_arr, True, contig)
-            _, str_arr_short = self.get_data_variation(orig_arr, str_arr_short.copy(), True, contig)
-            _, str_arr_long = self.get_data_variation(orig_arr, str_arr_long, True, contig)
+            other_arr, str_arr = self.get_data_variation(
+                orig_arr, str_arr, True, contig
+            )
+            _, str_arr_short = self.get_data_variation(
+                orig_arr, str_arr_short.copy(), True, contig
+            )
+            _, str_arr_long = self.get_data_variation(
+                orig_arr, str_arr_long, True, contig
+            )
 
             cast._simple_strided_call((other_arr, str_arr))
 
@@ -613,7 +633,9 @@ class TestCasting:
         expected_length = other_dt.itemsize // div
         string_dt = np.dtype(f"{string_char}{expected_length}")
 
-        safety, (res_other_dt, res_dt), view_off = cast._resolve_descriptors((other_dt, None))
+        safety, (res_other_dt, res_dt), view_off = cast._resolve_descriptors(
+            (other_dt, None)
+        )
         assert res_dt.itemsize == expected_length * fact
         assert isinstance(res_dt, string_DT)
 
@@ -685,7 +707,9 @@ class TestCasting:
         object_dtype = type(np.dtype(object))
         other_dtype = type(np.dtype(str))
         cast = get_castingimpl(object_dtype, other_dtype)
-        with pytest.raises(TypeError, match="casting from object to the parametric DType"):
+        with pytest.raises(
+            TypeError, match="casting from object to the parametric DType"
+        ):
             cast._resolve_descriptors((np.dtype("O"), None))
 
     @pytest.mark.parametrize("dtype", simple_dtype_instances())
@@ -694,7 +718,9 @@ class TestCasting:
         object_dtype = type(np.dtype(object))
         cast = get_castingimpl(object_dtype, type(dtype))
 
-        safety, (_, res_dt), view_off = cast._resolve_descriptors((np.dtype("O"), dtype))
+        safety, (_, res_dt), view_off = cast._resolve_descriptors(
+            (np.dtype("O"), dtype)
+        )
         assert safety == Casting.unsafe
         assert view_off is None
         assert res_dt is dtype
@@ -727,17 +753,23 @@ class TestCasting:
         ["to_dt", "expected_off"],
         [  # Same as `from_dt` but with both fields shifted:
             (
-                np.dtype({"names": ["a", "b"], "formats": ["i4", "f4"], "offsets": [0, 4]}),
+                np.dtype(
+                    {"names": ["a", "b"], "formats": ["i4", "f4"], "offsets": [0, 4]}
+                ),
                 2,
             ),
             # Additional change of the names
             (
-                np.dtype({"names": ["b", "a"], "formats": ["i4", "f4"], "offsets": [0, 4]}),
+                np.dtype(
+                    {"names": ["b", "a"], "formats": ["i4", "f4"], "offsets": [0, 4]}
+                ),
                 2,
             ),
             # Incompatible field offset change
             (
-                np.dtype({"names": ["b", "a"], "formats": ["i4", "f4"], "offsets": [0, 6]}),
+                np.dtype(
+                    {"names": ["b", "a"], "formats": ["i4", "f4"], "offsets": [0, 6]}
+                ),
                 None,
             ),
         ],
@@ -745,7 +777,9 @@ class TestCasting:
     def test_structured_field_offsets(self, to_dt, expected_off):
         # This checks the cast-safety and view offset for swapped and "shifted"
         # fields which are viewable
-        from_dt = np.dtype({"names": ["a", "b"], "formats": ["i4", "f4"], "offsets": [2, 6]})
+        from_dt = np.dtype(
+            {"names": ["a", "b"], "formats": ["i4", "f4"], "offsets": [2, 6]}
+        )
         cast = get_castingimpl(type(from_dt), type(to_dt))
         safety, _, view_off = cast._resolve_descriptors((from_dt, to_dt))
         if from_dt.names == to_dt.names:
@@ -822,7 +856,9 @@ class TestCasting:
         else:
             assert_array_equal(expected, arr_NULLs.astype(dtype))
 
-    @pytest.mark.parametrize("dtype", np.typecodes["AllInteger"] + np.typecodes["AllFloat"])
+    @pytest.mark.parametrize(
+        "dtype", np.typecodes["AllInteger"] + np.typecodes["AllFloat"]
+    )
     def test_nonstandard_bool_to_other(self, dtype):
         # simple test for casting bool_ to numeric types, which should not
         # expose the detail that NumPy bools can sometimes take values other

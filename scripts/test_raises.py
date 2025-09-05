@@ -285,7 +285,9 @@ def test_groupby_raises_string_np(
 
 
 @pytest.mark.parametrize("how", ["method", "agg", "transform"])
-def test_groupby_raises_datetime(how, by, groupby_series, groupby_func, df_with_datetime_col):
+def test_groupby_raises_datetime(
+    how, by, groupby_series, groupby_func, df_with_datetime_col
+):
     df = df_with_datetime_col
     args = get_groupby_method_args(groupby_func, df)
     gb = df.groupby(by=by)
@@ -369,7 +371,9 @@ def test_groupby_raises_datetime_udf(how, by, groupby_series, df_with_datetime_c
 
 @pytest.mark.parametrize("how", ["agg", "transform"])
 @pytest.mark.parametrize("groupby_func_np", [np.sum, np.mean])
-def test_groupby_raises_datetime_np(how, by, groupby_series, groupby_func_np, df_with_datetime_col):
+def test_groupby_raises_datetime_np(
+    how, by, groupby_series, groupby_func_np, df_with_datetime_col
+):
     # GH#50749
     df = df_with_datetime_col
     gb = df.groupby(by=by)
@@ -568,7 +572,9 @@ def test_groupby_raises_category_udf(how, by, groupby_series, df_with_cat_col):
 
 @pytest.mark.parametrize("how", ["agg", "transform"])
 @pytest.mark.parametrize("groupby_func_np", [np.sum, np.mean])
-def test_groupby_raises_category_np(how, by, groupby_series, groupby_func_np, df_with_cat_col):
+def test_groupby_raises_category_np(
+    how, by, groupby_series, groupby_func_np, df_with_cat_col
+):
     # GH#50749
     df = df_with_cat_col
     gb = df.groupby(by=by)
@@ -680,10 +686,14 @@ def test_groupby_raises_category_on_category(
         ),  # no-op with CoW
         "first": (None, ""),
         "idxmax": (
-            (ValueError, "empty group due to unobserved categories") if empty_groups else (None, "")
+            (ValueError, "empty group due to unobserved categories")
+            if empty_groups
+            else (None, "")
         ),
         "idxmin": (
-            (ValueError, "empty group due to unobserved categories") if empty_groups else (None, "")
+            (ValueError, "empty group due to unobserved categories")
+            if empty_groups
+            else (None, "")
         ),
         "last": (None, ""),
         "max": (None, ""),

@@ -127,7 +127,9 @@ def test_holiday_dates(holiday, start_date, end_date, expected):
 
     # Verify that timezone info is preserved.
     assert list(
-        holiday.dates(utc.localize(Timestamp(start_date)), utc.localize(Timestamp(end_date)))
+        holiday.dates(
+            utc.localize(Timestamp(start_date)), utc.localize(Timestamp(end_date))
+        )
     ) == [utc.localize(dt) for dt in expected]
 
 
@@ -191,12 +193,14 @@ def test_holidays_within_dates(holiday, start, expected):
     assert list(holiday.dates(start, start)) == expected
 
     # Verify that timezone info is preserved.
-    assert list(holiday.dates(utc.localize(Timestamp(start)), utc.localize(Timestamp(start)))) == [
-        utc.localize(dt) for dt in expected
-    ]
+    assert list(
+        holiday.dates(utc.localize(Timestamp(start)), utc.localize(Timestamp(start)))
+    ) == [utc.localize(dt) for dt in expected]
 
 
-@pytest.mark.parametrize("transform", [lambda x: x.strftime("%Y-%m-%d"), lambda x: Timestamp(x)])
+@pytest.mark.parametrize(
+    "transform", [lambda x: x.strftime("%Y-%m-%d"), lambda x: Timestamp(x)]
+)
 def test_argument_types(transform):
     start_date = datetime(2011, 1, 1)
     end_date = datetime(2020, 12, 31)
@@ -241,8 +245,12 @@ def test_get_calendar():
 
 
 def test_factory():
-    class_1 = HolidayCalendarFactory("MemorialDay", AbstractHolidayCalendar, USMemorialDay)
-    class_2 = HolidayCalendarFactory("Thanksgiving", AbstractHolidayCalendar, USThanksgivingDay)
+    class_1 = HolidayCalendarFactory(
+        "MemorialDay", AbstractHolidayCalendar, USMemorialDay
+    )
+    class_2 = HolidayCalendarFactory(
+        "Thanksgiving", AbstractHolidayCalendar, USThanksgivingDay
+    )
     class_3 = HolidayCalendarFactory("Combined", class_1, class_2)
 
     assert len(class_1.rules) == 1
@@ -315,7 +323,9 @@ def test_holidays_with_timezone_specified_but_no_occurences():
     # an empty list of holiday dates that had timezone information
     start_date = Timestamp("2018-01-01", tz="America/Chicago")
     end_date = Timestamp("2018-01-11", tz="America/Chicago")
-    test_case = USFederalHolidayCalendar().holidays(start_date, end_date, return_name=True)
+    test_case = USFederalHolidayCalendar().holidays(
+        start_date, end_date, return_name=True
+    )
     expected_results = Series("New Year's Day", index=[start_date])
     expected_results.index = expected_results.index.as_unit("ns")
 

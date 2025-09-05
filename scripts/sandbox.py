@@ -270,7 +270,9 @@ class AbstractSandbox:
 
     def __init__(self):
         self._attrs = [
-            name for name in dir(_os) if not name.startswith("_") and hasattr(self, name)
+            name
+            for name in dir(_os)
+            if not name.startswith("_") and hasattr(self, name)
         ]
 
     def _copy(self, source):
@@ -430,7 +432,9 @@ class DirectorySandbox(AbstractSandbox):
     def __init__(self, sandbox, exceptions=_EXCEPTIONS):
         self._sandbox = os.path.normcase(os.path.realpath(sandbox))
         self._prefix = os.path.join(self._sandbox, "")
-        self._exceptions = [os.path.normcase(os.path.realpath(path)) for path in exceptions]
+        self._exceptions = [
+            os.path.normcase(os.path.realpath(path)) for path in exceptions
+        ]
         AbstractSandbox.__init__(self)
 
     def _violation(self, operation, *args, **kw):
@@ -467,8 +471,12 @@ class DirectorySandbox(AbstractSandbox):
             self._active = active
 
     def _exempted(self, filepath):
-        start_matches = (filepath.startswith(exception) for exception in self._exceptions)
-        pattern_matches = (re.match(pattern, filepath) for pattern in self._exception_patterns)
+        start_matches = (
+            filepath.startswith(exception) for exception in self._exceptions
+        )
+        pattern_matches = (
+            re.match(pattern, filepath) for pattern in self._exception_patterns
+        )
         candidates = itertools.chain(start_matches, pattern_matches)
         return any(candidates)
 
@@ -493,7 +501,10 @@ class DirectorySandbox(AbstractSandbox):
 
 WRITE_FLAGS = functools.reduce(
     operator.or_,
-    [getattr(_os, a, 0) for a in "O_WRONLY O_RDWR O_APPEND O_CREAT O_TRUNC O_TEMPORARY".split()],
+    [
+        getattr(_os, a, 0)
+        for a in "O_WRONLY O_RDWR O_APPEND O_CREAT O_TRUNC O_TEMPORARY".split()
+    ],
 )
 
 

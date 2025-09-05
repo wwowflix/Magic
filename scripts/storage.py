@@ -382,7 +382,8 @@ class SharedStorageUrlWithMetadata:
         return cls(
             url=str(json["url"]),
             reporting_metadata=[
-                SharedStorageReportingMetadata.from_json(i) for i in json["reportingMetadata"]
+                SharedStorageReportingMetadata.from_json(i)
+                for i in json["reportingMetadata"]
             ],
         )
 
@@ -419,7 +420,9 @@ class SharedStorageAccessParams:
 
     #: Configures the private aggregation options.
     #: Present only for SharedStorageAccessMethods: run and selectURL.
-    private_aggregation_config: typing.Optional[SharedStoragePrivateAggregationConfig] = None
+    private_aggregation_config: typing.Optional[
+        SharedStoragePrivateAggregationConfig
+    ] = None
 
     #: The operation's serialized data in bytes (converted to a string).
     #: Present only for SharedStorageAccessMethods: run and selectURL.
@@ -428,7 +431,9 @@ class SharedStorageAccessParams:
 
     #: Array of candidate URLs' specs, along with any associated metadata.
     #: Present only for SharedStorageAccessMethod: selectURL.
-    urls_with_metadata: typing.Optional[typing.List[SharedStorageUrlWithMetadata]] = None
+    urls_with_metadata: typing.Optional[typing.List[SharedStorageUrlWithMetadata]] = (
+        None
+    )
 
     #: Spec of the URN:UUID generated for a selectURL call.
     #: Present only for SharedStorageAccessMethod: selectURL.
@@ -521,19 +526,30 @@ class SharedStorageAccessParams:
     @classmethod
     def from_json(cls, json):
         return cls(
-            script_source_url=(str(json["scriptSourceUrl"]) if "scriptSourceUrl" in json else None),
+            script_source_url=(
+                str(json["scriptSourceUrl"]) if "scriptSourceUrl" in json else None
+            ),
             data_origin=str(json["dataOrigin"]) if "dataOrigin" in json else None,
-            operation_name=(str(json["operationName"]) if "operationName" in json else None),
+            operation_name=(
+                str(json["operationName"]) if "operationName" in json else None
+            ),
             operation_id=str(json["operationId"]) if "operationId" in json else None,
             keep_alive=bool(json["keepAlive"]) if "keepAlive" in json else None,
             private_aggregation_config=(
-                SharedStoragePrivateAggregationConfig.from_json(json["privateAggregationConfig"])
+                SharedStoragePrivateAggregationConfig.from_json(
+                    json["privateAggregationConfig"]
+                )
                 if "privateAggregationConfig" in json
                 else None
             ),
-            serialized_data=(str(json["serializedData"]) if "serializedData" in json else None),
+            serialized_data=(
+                str(json["serializedData"]) if "serializedData" in json else None
+            ),
             urls_with_metadata=(
-                [SharedStorageUrlWithMetadata.from_json(i) for i in json["urlsWithMetadata"]]
+                [
+                    SharedStorageUrlWithMetadata.from_json(i)
+                    for i in json["urlsWithMetadata"]
+                ]
                 if "urlsWithMetadata" in json
                 else None
             ),
@@ -543,14 +559,18 @@ class SharedStorageAccessParams:
             ignore_if_present=(
                 bool(json["ignoreIfPresent"]) if "ignoreIfPresent" in json else None
             ),
-            worklet_ordinal=(int(json["workletOrdinal"]) if "workletOrdinal" in json else None),
+            worklet_ordinal=(
+                int(json["workletOrdinal"]) if "workletOrdinal" in json else None
+            ),
             worklet_target_id=(
                 target.TargetID.from_json(json["workletTargetId"])
                 if "workletTargetId" in json
                 else None
             ),
             with_lock=str(json["withLock"]) if "withLock" in json else None,
-            batch_update_id=(str(json["batchUpdateId"]) if "batchUpdateId" in json else None),
+            batch_update_id=(
+                str(json["batchUpdateId"]) if "batchUpdateId" in json else None
+            ),
             batch_size=int(json["batchSize"]) if "batchSize" in json else None,
         )
 
@@ -712,9 +732,12 @@ class AttributionReportingFilterConfig:
     def from_json(cls, json):
         return cls(
             filter_values=[
-                AttributionReportingFilterDataEntry.from_json(i) for i in json["filterValues"]
+                AttributionReportingFilterDataEntry.from_json(i)
+                for i in json["filterValues"]
             ],
-            lookback_window=(int(json["lookbackWindow"]) if "lookbackWindow" in json else None),
+            lookback_window=(
+                int(json["lookbackWindow"]) if "lookbackWindow" in json else None
+            ),
         )
 
 
@@ -733,8 +756,13 @@ class AttributionReportingFilterPair:
     @classmethod
     def from_json(cls, json):
         return cls(
-            filters=[AttributionReportingFilterConfig.from_json(i) for i in json["filters"]],
-            not_filters=[AttributionReportingFilterConfig.from_json(i) for i in json["notFilters"]],
+            filters=[
+                AttributionReportingFilterConfig.from_json(i) for i in json["filters"]
+            ],
+            not_filters=[
+                AttributionReportingFilterConfig.from_json(i)
+                for i in json["notFilters"]
+            ],
         )
 
 
@@ -939,7 +967,9 @@ class AttributionReportingSourceRegistration:
 
     destination_limit_priority: SignedInt64AsBase10
 
-    aggregatable_debug_reporting_config: AttributionReportingAggregatableDebugReportingConfig
+    aggregatable_debug_reporting_config: (
+        AttributionReportingAggregatableDebugReportingConfig
+    )
 
     max_event_level_reports: int
 
@@ -1000,7 +1030,8 @@ class AttributionReportingSourceRegistration:
             event_id=UnsignedInt64AsBase10.from_json(json["eventId"]),
             priority=SignedInt64AsBase10.from_json(json["priority"]),
             filter_data=[
-                AttributionReportingFilterDataEntry.from_json(i) for i in json["filterData"]
+                AttributionReportingFilterDataEntry.from_json(i)
+                for i in json["filterData"]
             ],
             aggregation_keys=[
                 AttributionReportingAggregationKeysEntry.from_json(i)
@@ -1017,12 +1048,15 @@ class AttributionReportingSourceRegistration:
             ),
             max_event_level_reports=int(json["maxEventLevelReports"]),
             named_budgets=[
-                AttributionReportingNamedBudgetDef.from_json(i) for i in json["namedBudgets"]
+                AttributionReportingNamedBudgetDef.from_json(i)
+                for i in json["namedBudgets"]
             ],
             debug_reporting=bool(json["debugReporting"]),
             event_level_epsilon=float(json["eventLevelEpsilon"]),
             debug_key=(
-                UnsignedInt64AsBase10.from_json(json["debugKey"]) if "debugKey" in json else None
+                UnsignedInt64AsBase10.from_json(json["debugKey"])
+                if "debugKey" in json
+                else None
             ),
             scopes_data=(
                 AttributionScopesData.from_json(json["scopesData"])
@@ -1048,7 +1082,9 @@ class AttributionReportingSourceRegistrationResult(enum.Enum):
     EXCEEDS_MAX_SCOPES_CHANNEL_CAPACITY = "exceedsMaxScopesChannelCapacity"
     EXCEEDS_MAX_TRIGGER_STATE_CARDINALITY = "exceedsMaxTriggerStateCardinality"
     EXCEEDS_MAX_EVENT_STATES_LIMIT = "exceedsMaxEventStatesLimit"
-    DESTINATION_PER_DAY_REPORTING_LIMIT_REACHED = "destinationPerDayReportingLimitReached"
+    DESTINATION_PER_DAY_REPORTING_LIMIT_REACHED = (
+        "destinationPerDayReportingLimitReached"
+    )
 
     def to_json(self):
         return self.value
@@ -1112,7 +1148,8 @@ class AttributionReportingAggregatableValueEntry:
     def from_json(cls, json):
         return cls(
             values=[
-                AttributionReportingAggregatableValueDictEntry.from_json(i) for i in json["values"]
+                AttributionReportingAggregatableValueDictEntry.from_json(i)
+                for i in json["values"]
             ],
             filters=AttributionReportingFilterPair.from_json(json["filters"]),
         )
@@ -1144,7 +1181,9 @@ class AttributionReportingEventTriggerData:
             priority=SignedInt64AsBase10.from_json(json["priority"]),
             filters=AttributionReportingFilterPair.from_json(json["filters"]),
             dedup_key=(
-                UnsignedInt64AsBase10.from_json(json["dedupKey"]) if "dedupKey" in json else None
+                UnsignedInt64AsBase10.from_json(json["dedupKey"])
+                if "dedupKey" in json
+                else None
             ),
         )
 
@@ -1191,7 +1230,9 @@ class AttributionReportingAggregatableDedupKey:
         return cls(
             filters=AttributionReportingFilterPair.from_json(json["filters"]),
             dedup_key=(
-                UnsignedInt64AsBase10.from_json(json["dedupKey"]) if "dedupKey" in json else None
+                UnsignedInt64AsBase10.from_json(json["dedupKey"])
+                if "dedupKey" in json
+                else None
             ),
         )
 
@@ -1235,7 +1276,9 @@ class AttributionReportingTriggerRegistration:
 
     source_registration_time_config: AttributionReportingSourceRegistrationTimeConfig
 
-    aggregatable_debug_reporting_config: AttributionReportingAggregatableDebugReportingConfig
+    aggregatable_debug_reporting_config: (
+        AttributionReportingAggregatableDebugReportingConfig
+    )
 
     scopes: typing.List[str]
 
@@ -1250,13 +1293,21 @@ class AttributionReportingTriggerRegistration:
     def to_json(self):
         json = dict()
         json["filters"] = self.filters.to_json()
-        json["aggregatableDedupKeys"] = [i.to_json() for i in self.aggregatable_dedup_keys]
+        json["aggregatableDedupKeys"] = [
+            i.to_json() for i in self.aggregatable_dedup_keys
+        ]
         json["eventTriggerData"] = [i.to_json() for i in self.event_trigger_data]
-        json["aggregatableTriggerData"] = [i.to_json() for i in self.aggregatable_trigger_data]
+        json["aggregatableTriggerData"] = [
+            i.to_json() for i in self.aggregatable_trigger_data
+        ]
         json["aggregatableValues"] = [i.to_json() for i in self.aggregatable_values]
-        json["aggregatableFilteringIdMaxBytes"] = self.aggregatable_filtering_id_max_bytes
+        json["aggregatableFilteringIdMaxBytes"] = (
+            self.aggregatable_filtering_id_max_bytes
+        )
         json["debugReporting"] = self.debug_reporting
-        json["sourceRegistrationTimeConfig"] = self.source_registration_time_config.to_json()
+        json["sourceRegistrationTimeConfig"] = (
+            self.source_registration_time_config.to_json()
+        )
         json["aggregatableDebugReportingConfig"] = (
             self.aggregatable_debug_reporting_config.to_json()
         )
@@ -1279,7 +1330,8 @@ class AttributionReportingTriggerRegistration:
                 for i in json["aggregatableDedupKeys"]
             ],
             event_trigger_data=[
-                AttributionReportingEventTriggerData.from_json(i) for i in json["eventTriggerData"]
+                AttributionReportingEventTriggerData.from_json(i)
+                for i in json["eventTriggerData"]
             ],
             aggregatable_trigger_data=[
                 AttributionReportingAggregatableTriggerData.from_json(i)
@@ -1289,7 +1341,9 @@ class AttributionReportingTriggerRegistration:
                 AttributionReportingAggregatableValueEntry.from_json(i)
                 for i in json["aggregatableValues"]
             ],
-            aggregatable_filtering_id_max_bytes=int(json["aggregatableFilteringIdMaxBytes"]),
+            aggregatable_filtering_id_max_bytes=int(
+                json["aggregatableFilteringIdMaxBytes"]
+            ),
             debug_reporting=bool(json["debugReporting"]),
             source_registration_time_config=AttributionReportingSourceRegistrationTimeConfig.from_json(
                 json["sourceRegistrationTimeConfig"]
@@ -1299,10 +1353,13 @@ class AttributionReportingTriggerRegistration:
             ),
             scopes=[str(i) for i in json["scopes"]],
             named_budgets=[
-                AttributionReportingNamedBudgetCandidate.from_json(i) for i in json["namedBudgets"]
+                AttributionReportingNamedBudgetCandidate.from_json(i)
+                for i in json["namedBudgets"]
             ],
             debug_key=(
-                UnsignedInt64AsBase10.from_json(json["debugKey"]) if "debugKey" in json else None
+                UnsignedInt64AsBase10.from_json(json["debugKey"])
+                if "debugKey" in json
+                else None
             ),
             aggregation_coordinator_origin=(
                 str(json["aggregationCoordinatorOrigin"])
@@ -1721,7 +1778,9 @@ def untrack_indexed_db_for_storage_key(
     json = yield cmd_dict
 
 
-def get_trust_tokens() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[TrustTokens]]:
+def get_trust_tokens() -> (
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[TrustTokens]]
+):
     """
     Returns the number of stored Trust Tokens per issuer for the
     current browsing context.
@@ -2065,7 +2124,9 @@ def set_attribution_reporting_tracking(
     json = yield cmd_dict
 
 
-def send_pending_attribution_reports() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, int]:
+def send_pending_attribution_reports() -> (
+    typing.Generator[T_JSON_DICT, T_JSON_DICT, int]
+):
     """
     Sends all pending Attribution Reports immediately, regardless of their
     scheduled report time.
@@ -2273,7 +2334,9 @@ class InterestGroupAccessed:
             owner_origin=str(json["ownerOrigin"]),
             name=str(json["name"]),
             component_seller_origin=(
-                str(json["componentSellerOrigin"]) if "componentSellerOrigin" in json else None
+                str(json["componentSellerOrigin"])
+                if "componentSellerOrigin" in json
+                else None
             ),
             bid=float(json["bid"]) if "bid" in json else None,
             bid_currency=str(json["bidCurrency"]) if "bidCurrency" in json else None,
@@ -2312,7 +2375,9 @@ class InterestGroupAuctionEventOccurred:
                 if "parentAuctionId" in json
                 else None
             ),
-            auction_config=(dict(json["auctionConfig"]) if "auctionConfig" in json else None),
+            auction_config=(
+                dict(json["auctionConfig"]) if "auctionConfig" in json else None
+            ),
         )
 
 
@@ -2405,7 +2470,9 @@ class SharedStorageWorkletOperationExecutionFinished:
     owner_origin: str
 
     @classmethod
-    def from_json(cls, json: T_JSON_DICT) -> SharedStorageWorkletOperationExecutionFinished:
+    def from_json(
+        cls, json: T_JSON_DICT
+    ) -> SharedStorageWorkletOperationExecutionFinished:
         return cls(
             finished_time=network.TimeSinceEpoch.from_json(json["finishedTime"]),
             execution_time=int(json["executionTime"]),
@@ -2452,8 +2519,12 @@ class AttributionReportingSourceRegistered:
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> AttributionReportingSourceRegistered:
         return cls(
-            registration=AttributionReportingSourceRegistration.from_json(json["registration"]),
-            result=AttributionReportingSourceRegistrationResult.from_json(json["result"]),
+            registration=AttributionReportingSourceRegistration.from_json(
+                json["registration"]
+            ),
+            result=AttributionReportingSourceRegistrationResult.from_json(
+                json["result"]
+            ),
         )
 
 
@@ -2473,9 +2544,15 @@ class AttributionReportingTriggerRegistered:
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> AttributionReportingTriggerRegistered:
         return cls(
-            registration=AttributionReportingTriggerRegistration.from_json(json["registration"]),
-            event_level=AttributionReportingEventLevelResult.from_json(json["eventLevel"]),
-            aggregatable=AttributionReportingAggregatableResult.from_json(json["aggregatable"]),
+            registration=AttributionReportingTriggerRegistration.from_json(
+                json["registration"]
+            ),
+            event_level=AttributionReportingEventLevelResult.from_json(
+                json["eventLevel"]
+            ),
+            aggregatable=AttributionReportingAggregatableResult.from_json(
+                json["aggregatable"]
+            ),
         )
 
 
@@ -2503,6 +2580,10 @@ class AttributionReportingReportSent:
             body=dict(json["body"]),
             result=AttributionReportingReportResult.from_json(json["result"]),
             net_error=int(json["netError"]) if "netError" in json else None,
-            net_error_name=(str(json["netErrorName"]) if "netErrorName" in json else None),
-            http_status_code=(int(json["httpStatusCode"]) if "httpStatusCode" in json else None),
+            net_error_name=(
+                str(json["netErrorName"]) if "netErrorName" in json else None
+            ),
+            http_status_code=(
+                int(json["httpStatusCode"]) if "httpStatusCode" in json else None
+            ),
         )

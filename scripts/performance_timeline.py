@@ -55,7 +55,11 @@ class LargestContentfulPaint:
             size=float(json["size"]),
             element_id=str(json["elementId"]) if "elementId" in json else None,
             url=str(json["url"]) if "url" in json else None,
-            node_id=(dom.BackendNodeId.from_json(json["nodeId"]) if "nodeId" in json else None),
+            node_id=(
+                dom.BackendNodeId.from_json(json["nodeId"])
+                if "nodeId" in json
+                else None
+            ),
         )
 
 
@@ -80,7 +84,11 @@ class LayoutShiftAttribution:
         return cls(
             previous_rect=dom.Rect.from_json(json["previousRect"]),
             current_rect=dom.Rect.from_json(json["currentRect"]),
-            node_id=(dom.BackendNodeId.from_json(json["nodeId"]) if "nodeId" in json else None),
+            node_id=(
+                dom.BackendNodeId.from_json(json["nodeId"])
+                if "nodeId" in json
+                else None
+            ),
         )
 
 

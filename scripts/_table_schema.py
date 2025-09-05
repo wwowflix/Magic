@@ -359,7 +359,9 @@ def parse_table_schema(json, precise_float):
 
     # No ISO constructor for Timedelta as of yet, so need to raise
     if "timedelta64" in dtypes.values():
-        raise NotImplementedError('table="orient" can not yet read ISO-formatted Timedelta data')
+        raise NotImplementedError(
+            'table="orient" can not yet read ISO-formatted Timedelta data'
+        )
 
     df = df.astype(dtypes)
 
@@ -369,6 +371,8 @@ def parse_table_schema(json, precise_float):
             if df.index.name == "index":
                 df.index.name = None
         else:
-            df.index.names = [None if x.startswith("level_") else x for x in df.index.names]
+            df.index.names = [
+                None if x.startswith("level_") else x for x in df.index.names
+            ]
 
     return df

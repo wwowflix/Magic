@@ -19,7 +19,9 @@ async def test_video_id_from_url():
         )
 
         expected_id = "7074717081563942186"
-        video = api.video(url="https://www.tiktok.com/@davidteathercodes/video/7074717081563942186")
+        video = api.video(
+            url="https://www.tiktok.com/@davidteathercodes/video/7074717081563942186"
+        )
 
         assert video.id == expected_id
 
@@ -41,7 +43,9 @@ async def test_video_info():
             headless=headless,
         )
         video_id = "7074717081563942186"
-        video = api.video(url="https://www.tiktok.com/@davidteathercodes/video/7074717081563942186")
+        video = api.video(
+            url="https://www.tiktok.com/@davidteathercodes/video/7074717081563942186"
+        )
 
         data = await video.info()
 

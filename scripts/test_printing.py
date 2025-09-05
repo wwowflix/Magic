@@ -290,7 +290,10 @@ class TestLinebreaking:
         assert_equal(len(str(p)), 74)
         assert_equal(
             str(p),
-            ("12345678.0 + 12345678.0 x + 12345678.0 x**2 + " "12345678.0 x**3 + 123.0 x**4"),
+            (
+                "12345678.0 + 12345678.0 x + 12345678.0 x**2 + "
+                "12345678.0 x**3 + 123.0 x**4"
+            ),
         )
 
     def test_num_chars_is_linewidth(self):
@@ -299,7 +302,10 @@ class TestLinebreaking:
         assert_equal(len(str(p)), 75)
         assert_equal(
             str(p),
-            ("12345678.0 + 12345678.0 x + 12345678.0 x**2 + " "12345678.0 x**3 +\n1234.0 x**4"),
+            (
+                "12345678.0 + 12345678.0 x + 12345678.0 x**2 + "
+                "12345678.0 x**3 +\n1234.0 x**4"
+            ),
         )
 
     def test_first_linebreak_multiline_one_less_than_linewidth(self):
@@ -465,7 +471,9 @@ def test_symbol(poly, tgt):
 class TestRepr:
     def test_polynomial_repr(self):
         res = repr(poly.Polynomial([0, 1]))
-        tgt = "Polynomial([0., 1.], domain=[-1.,  1.], window=[-1.,  1.], " "symbol='x')"
+        tgt = (
+            "Polynomial([0., 1.], domain=[-1.,  1.], window=[-1.,  1.], " "symbol='x')"
+        )
         assert_equal(res, tgt)
 
     def test_chebyshev_repr(self):
@@ -563,14 +571,20 @@ class TestLatexRepr:
         p = poly.Polynomial([1, 2, 3], domain=[-2, 0], symbol="z")
         assert_equal(
             self.as_latex(p),
-            (r"$z \mapsto 1.0 + 2.0\,\left(1.0 + z\right) + 3.0\," r"\left(1.0 + z\right)^{2}$"),
+            (
+                r"$z \mapsto 1.0 + 2.0\,\left(1.0 + z\right) + 3.0\,"
+                r"\left(1.0 + z\right)^{2}$"
+            ),
         )
 
         # scaled input
         p = poly.Polynomial([1, 2, 3], domain=[-0.5, 0.5], symbol="z")
         assert_equal(
             self.as_latex(p),
-            (r"$z \mapsto 1.0 + 2.0\,\left(2.0z\right) + 3.0\," r"\left(2.0z\right)^{2}$"),
+            (
+                r"$z \mapsto 1.0 + 2.0\,\left(2.0z\right) + 3.0\,"
+                r"\left(2.0z\right)^{2}$"
+            ),
         )
 
         # affine input
@@ -622,7 +636,9 @@ class TestPrintOptions:
         )
 
         with printoptions(precision=3):
-            assert_equal(str(p), "0.5 + 0.143 x + 14285714.286 x**2 " "+ (1.429e+08) x**3")
+            assert_equal(
+                str(p), "0.5 + 0.143 x + 14285714.286 x**2 " "+ (1.429e+08) x**3"
+            )
 
     def test_latex(self):
         p = poly.Polynomial([1 / 2, 1 / 7, 1 / 7 * 10**8, 1 / 7 * 10**9])
@@ -659,7 +675,9 @@ class TestPrintOptions:
     def test_non_finite(self):
         p = poly.Polynomial([nan, inf])
         assert str(p) == "nan + inf x"
-        assert p._repr_latex_() == r"$x \mapsto \text{nan} + \text{inf}\,x$"  # noqa: RUF027
+        assert (
+            p._repr_latex_() == r"$x \mapsto \text{nan} + \text{inf}\,x$"
+        )  # noqa: RUF027
         with printoptions(nanstr="NAN", infstr="INF"):
             assert str(p) == "NAN + INF x"
             assert p._repr_latex_() == r"$x \mapsto \text{NAN} + \text{INF}\,x$"

@@ -37,7 +37,9 @@ class Submission(snscrape.base.Item):
     title: str
     url: str
 
-    created = snscrape.base._DeprecatedProperty("created", lambda self: self.date, "date")
+    created = snscrape.base._DeprecatedProperty(
+        "created", lambda self: self.date, "date"
+    )
 
     def __str__(self):
         return self.url
@@ -53,7 +55,9 @@ class Comment(snscrape.base.Item):
     subreddit: typing.Optional[str]
     url: str
 
-    created = snscrape.base._DeprecatedProperty("created", lambda self: self.date, "date")
+    created = snscrape.base._DeprecatedProperty(
+        "created", lambda self: self.date, "date"
+    )
 
     def __str__(self):
         return self.url
@@ -119,7 +123,9 @@ class _RedditPushshiftScraper(snscrape.base.Scraper):
             # E.g. comment dovj2v7
             permalink = d.get("permalink_url")
             if permalink is None:
-                if "link_id" in d and d["link_id"].startswith("t3_"):  # E.g. comment doraazf
+                if "link_id" in d and d["link_id"].startswith(
+                    "t3_"
+                ):  # E.g. comment doraazf
                     if "subreddit" in d:
                         permalink = f'/r/{d["subreddit"]}/comments/{d["link_id"][3:]}/_/{d["id"]}/'
                     else:  # E.g. submission 617p51 but can likely happen for comments as well
@@ -130,20 +136,27 @@ class _RedditPushshiftScraper(snscrape.base.Scraper):
 
         kwargs = {
             "author": d.get("author"),
-            "date": datetime.datetime.fromtimestamp(d["created_utc"], datetime.timezone.utc),
+            "date": datetime.datetime.fromtimestamp(
+                d["created_utc"], datetime.timezone.utc
+            ),
             "url": f"https://old.reddit.com{permalink}",
             "subreddit": d.get("subreddit"),
         }
         if cls is Submission:
             kwargs["selftext"] = d.get("selftext") or None
             kwargs["link"] = (
-                (d["url"] if not d["url"].startswith("/") else f'https://old.reddit.com{d["url"]}')
+                (
+                    d["url"]
+                    if not d["url"].startswith("/")
+                    else f'https://old.reddit.com{d["url"]}'
+                )
                 if not kwargs["selftext"]
                 else None
             )
             if (
                 kwargs["link"] == kwargs["url"]
-                or kwargs["url"].replace("//old.reddit.com/", "//www.reddit.com/") == kwargs["link"]
+                or kwargs["url"].replace("//old.reddit.com/", "//www.reddit.com/")
+                == kwargs["link"]
             ):
                 kwargs["link"] = None
             kwargs["title"] = d["title"]
@@ -253,7 +266,9 @@ class _RedditPushshiftSearchScraper(_RedditPushshiftScraper):
                     break
 
     def get_items(self):
-        yield from self._iter_api_submissions_and_comments({type(self)._apiField: self._name})
+        yield from self._iter_api_submissions_and_comments(
+            {type(self)._apiField: self._name}
+        )
 
     @classmethod
     def _cli_setup_parser(cls, subparser):
@@ -335,7 +350,9 @@ class RedditSubmissionScraper(_RedditPushshiftScraper):
         if not obj["data"]:
             return
         if len(obj["data"]) != 1:
-            raise snscrape.base.ScraperException(f'Got {len(obj["data"])} results instead of 1')
+            raise snscrape.base.ScraperException(
+                f'Got {len(obj["data"])} results instead of 1'
+            )
         yield self._api_obj_to_item(obj["data"][0])
 
         # Upstream bug: link_id must be provided in decimal https://old.reddit.com/r/pushshift/comments/zkggt0/update_on_colo_switchover_bug_fixes_reindexing/

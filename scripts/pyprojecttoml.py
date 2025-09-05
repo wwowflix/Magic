@@ -305,7 +305,9 @@ class _ConfigExpander:
             )
             raise OptionError(msg)
 
-    def _expand_directive(self, specifier: str, directive, package_dir: Mapping[str, str]):
+    def _expand_directive(
+        self, specifier: str, directive, package_dir: Mapping[str, str]
+    ):
         with _ignore_errors(self.ignore_option_errors):
             root_dir = self.root_dir
             if "file" in directive:
@@ -410,7 +412,9 @@ class _ConfigExpander:
 
 def _parse_requirements_list(value):
     return [
-        line for line in value.splitlines() if line.strip() and not line.strip().startswith("#")
+        line
+        for line in value.splitlines()
+        if line.strip() and not line.strip().startswith("#")
     ]
 
 
@@ -427,7 +431,9 @@ def _ignore_errors(ignore_option_errors: bool):
 
 
 class _EnsurePackagesDiscovered(_expand.EnsurePackagesDiscovered):
-    def __init__(self, distribution: "Distribution", project_cfg: dict, setuptools_cfg: dict):
+    def __init__(
+        self, distribution: "Distribution", project_cfg: dict, setuptools_cfg: dict
+    ):
         super().__init__(distribution)
         self._project_cfg = project_cfg
         self._setuptools_cfg = setuptools_cfg

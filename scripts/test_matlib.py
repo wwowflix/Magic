@@ -10,13 +10,17 @@ def test_empty():
 
 
 def test_ones():
-    assert_array_equal(numpy.matlib.ones((2, 3)), np.matrix([[1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]))
+    assert_array_equal(
+        numpy.matlib.ones((2, 3)), np.matrix([[1.0, 1.0, 1.0], [1.0, 1.0, 1.0]])
+    )
 
     assert_array_equal(numpy.matlib.ones(2), np.matrix([[1.0, 1.0]]))
 
 
 def test_zeros():
-    assert_array_equal(numpy.matlib.zeros((2, 3)), np.matrix([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]))
+    assert_array_equal(
+        numpy.matlib.zeros((2, 3)), np.matrix([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
+    )
 
     assert_array_equal(numpy.matlib.zeros(2), np.matrix([[0.0, 0.0]]))
 

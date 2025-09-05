@@ -15,7 +15,9 @@ from setup_common import *  # noqa: F403
 
 # Set to True to enable relaxed strides checking. This (mostly) means
 # that `strides[dim]` is ignored if `shape[dim] == 1` when setting flags.
-NPY_RELAXED_STRIDES_CHECKING = os.environ.get("NPY_RELAXED_STRIDES_CHECKING", "1") != "0"
+NPY_RELAXED_STRIDES_CHECKING = (
+    os.environ.get("NPY_RELAXED_STRIDES_CHECKING", "1") != "0"
+)
 
 # Put NPY_RELAXED_STRIDES_DEBUG=1 in the environment if you want numpy to use a
 # bogus value for affected strides in order to help smoke out bad stride usage
@@ -97,7 +99,10 @@ def win32_checks(deflist):
     a = get_build_architecture()
 
     # Distutils hack on AMD64 on windows
-    print("BUILD_ARCHITECTURE: %r, os.name=%r, sys.platform=%r" % (a, os.name, sys.platform))
+    print(
+        "BUILD_ARCHITECTURE: %r, os.name=%r, sys.platform=%r"
+        % (a, os.name, sys.platform)
+    )
     if a == "AMD64":
         deflist.append("DISTUTILS_USE_SDK")
 
@@ -114,7 +119,9 @@ def check_math_capabilities(config, ext, moredefs, mathlibs):
 
     def check_funcs_once(funcs_name):
         decl = dict([(f, True) for f in funcs_name])
-        st = config.check_funcs_once(funcs_name, libraries=mathlibs, decl=decl, call=decl)
+        st = config.check_funcs_once(
+            funcs_name, libraries=mathlibs, decl=decl, call=decl
+        )
         if st:
             moredefs.extend([(fname2def(f), 1) for f in funcs_name])
         return st
@@ -179,7 +186,9 @@ def check_math_capabilities(config, ext, moredefs, mathlibs):
                     and config.check_compiler_gcc()
                     and not config.check_gcc_version_at_least(8, 4)
                 ):
-                    ext.extra_compile_args.extend(["-ffixed-xmm%s" % n for n in range(16, 32)])
+                    ext.extra_compile_args.extend(
+                        ["-ffixed-xmm%s" % n for n in range(16, 32)]
+                    )
 
     for dec, fn, code, header in OPTIONAL_FUNCTION_ATTRIBUTES_WITH_INTRINSICS:
         if config.check_gcc_function_attribute_with_intrinsics(dec, fn, code, header):
@@ -221,7 +230,9 @@ def check_complex(config, mathlibs):
         def check_prec(prec):
             flist = [f + prec for f in C99_COMPLEX_FUNCS]
             decl = dict([(f, True) for f in flist])
-            if not config.check_funcs_once(flist, call=decl, decl=decl, libraries=mathlibs):
+            if not config.check_funcs_once(
+                flist, call=decl, decl=decl, libraries=mathlibs
+            ):
                 for f in flist:
                     if config.check_func(f, call=True, decl=True, libraries=mathlibs):
                         priv.append((fname2def(f), 1))
@@ -314,7 +325,9 @@ def check_types(config_cmd, ext, build_dir):
     for type in ("short", "int", "long"):
         res = config_cmd.check_decl("SIZEOF_%s" % sym2def(type), headers=["Python.h"])
         if res:
-            public_defines.append(("NPY_SIZEOF_%s" % sym2def(type), "SIZEOF_%s" % sym2def(type)))
+            public_defines.append(
+                ("NPY_SIZEOF_%s" % sym2def(type), "SIZEOF_%s" % sym2def(type))
+            )
         else:
             res = config_cmd.check_type_size(type, expected=expected[type])
             if res >= 0:
@@ -323,7 +336,9 @@ def check_types(config_cmd, ext, build_dir):
                 raise SystemError("Checking sizeof (%s) failed !" % type)
 
     for type in ("float", "double", "long double"):
-        already_declared = config_cmd.check_decl("SIZEOF_%s" % sym2def(type), headers=["Python.h"])
+        already_declared = config_cmd.check_decl(
+            "SIZEOF_%s" % sym2def(type), headers=["Python.h"]
+        )
         res = config_cmd.check_type_size(type, expected=expected[type])
         if res >= 0:
             public_defines.append(("NPY_SIZEOF_%s" % sym2def(type), "%d" % res))
@@ -336,7 +351,9 @@ def check_types(config_cmd, ext, build_dir):
         # definition is binary compatible with C99 complex type (check done at
         # build time in npy_common.h)
         complex_def = "struct {%s __x; %s __y;}" % (type, type)
-        res = config_cmd.check_type_size(complex_def, expected=[2 * x for x in expected[type]])
+        res = config_cmd.check_type_size(
+            complex_def, expected=[2 * x for x in expected[type]]
+        )
         if res >= 0:
             public_defines.append(("NPY_SIZEOF_COMPLEX_%s" % sym2def(type), "%d" % res))
         else:
@@ -366,7 +383,9 @@ def check_types(config_cmd, ext, build_dir):
         )
         if res >= 0:
             private_defines.append(("SIZEOF_%s" % sym2def("PY_LONG_LONG"), "%d" % res))
-            public_defines.append(("NPY_SIZEOF_%s" % sym2def("PY_LONG_LONG"), "%d" % res))
+            public_defines.append(
+                ("NPY_SIZEOF_%s" % sym2def("PY_LONG_LONG"), "%d" % res)
+            )
         else:
             raise SystemError("Checking sizeof (%s) failed !" % "PY_LONG_LONG")
 
@@ -378,7 +397,9 @@ def check_types(config_cmd, ext, build_dir):
             raise SystemError("Checking sizeof (%s) failed !" % "long long")
 
     if not config_cmd.check_decl("CHAR_BIT", headers=["Python.h"]):
-        raise RuntimeError("Config wo CHAR_BIT is not supported" ", please contact the maintainers")
+        raise RuntimeError(
+            "Config wo CHAR_BIT is not supported" ", please contact the maintainers"
+        )
 
     return private_defines, public_defines
 
@@ -396,7 +417,9 @@ def check_mathlib(config_cmd):
             break
     else:
         raise EnvironmentError(
-            "math library missing; rerun " "setup.py after setting the " "MATHLIB env variable"
+            "math library missing; rerun "
+            "setup.py after setting the "
+            "MATHLIB env variable"
         )
     return mathlibs
 
@@ -428,7 +451,9 @@ def configuration(parent_package="", top_path=None):
 
     generate_umath_py = join(codegen_dir, "generate_umath.py")
     n = dot_join(config.name, "generate_umath")
-    generate_umath = npy_load_module("_".join(n.split(".")), generate_umath_py, (".py", "U", 1))
+    generate_umath = npy_load_module(
+        "_".join(n.split(".")), generate_umath_py, (".py", "U", 1)
+    )
 
     header_dir = "include/numpy"  # this is relative to config.path_in_package
 
@@ -627,7 +652,9 @@ def configuration(parent_package="", top_path=None):
             try:
                 m = __import__(module_name)
                 log.info("executing %s", script)
-                h_file, c_file, doc_file = m.generate_api(os.path.join(build_dir, header_dir))
+                h_file, c_file, doc_file = m.generate_api(
+                    os.path.join(build_dir, header_dir)
+                )
             finally:
                 del sys.path[0]
             config.add_data_files((header_dir, h_file), (header_dir, doc_file))
@@ -706,9 +733,9 @@ def configuration(parent_package="", top_path=None):
 
     # Must be true for CRT compilers but not MinGW/cygwin. See gh-9977.
     # Intel and Clang also don't seem happy with /GL
-    is_msvc = platform.platform().startswith("Windows") and platform.python_compiler().startswith(
-        "MS"
-    )
+    is_msvc = platform.platform().startswith(
+        "Windows"
+    ) and platform.python_compiler().startswith("MS")
     config.add_installed_library(
         "npymath",
         sources=npymath_sources + [get_mathlib_info],
@@ -939,7 +966,11 @@ def configuration(parent_package="", top_path=None):
         script = generate_umath_py
         if newer(script, target):
             with open(target, "w") as f:
-                f.write(generate_umath.make_code(generate_umath.defdict, generate_umath.__file__))
+                f.write(
+                    generate_umath.make_code(
+                        generate_umath.defdict, generate_umath.__file__
+                    )
+                )
         return []
 
     umath_src = [
@@ -1014,7 +1045,9 @@ def configuration(parent_package="", top_path=None):
     #                   custom rational dtype module                      #
     #######################################################################
 
-    config.add_extension("_rational_tests", sources=[join("src", "umath", "_rational_tests.c.src")])
+    config.add_extension(
+        "_rational_tests", sources=[join("src", "umath", "_rational_tests.c.src")]
+    )
 
     #######################################################################
     #                        struct_ufunc_test module                     #

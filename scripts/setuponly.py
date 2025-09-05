@@ -51,7 +51,9 @@ def pytest_fixture_setup(
             _show_fixture_action(fixturedef, request.config, "SETUP")
 
 
-def pytest_fixture_post_finalizer(fixturedef: FixtureDef[object], request: SubRequest) -> None:
+def pytest_fixture_post_finalizer(
+    fixturedef: FixtureDef[object], request: SubRequest
+) -> None:
     if fixturedef.cached_result is not None:
         config = request.config
         if config.option.setupshow:
@@ -60,7 +62,9 @@ def pytest_fixture_post_finalizer(fixturedef: FixtureDef[object], request: SubRe
                 del fixturedef.cached_param
 
 
-def _show_fixture_action(fixturedef: FixtureDef[object], config: Config, msg: str) -> None:
+def _show_fixture_action(
+    fixturedef: FixtureDef[object], config: Config, msg: str
+) -> None:
     capman = config.pluginmanager.getplugin("capturemanager")
     if capman:
         capman.suspend_global_capture()

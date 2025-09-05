@@ -237,7 +237,9 @@ class TestCustomBusinessMonthBegin:
                 },
             ),
             (
-                CBMonthBegin(n=1, holidays=["2021-04-01", "2021-04-02"], offset=timedelta(days=1)),
+                CBMonthBegin(
+                    n=1, holidays=["2021-04-01", "2021-04-02"], offset=timedelta(days=1)
+                ),
                 {
                     datetime(2021, 3, 2): datetime(2021, 4, 5) + timedelta(days=1),
                 },

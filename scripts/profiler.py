@@ -107,7 +107,9 @@ class Profile:
             start_time=float(json["startTime"]),
             end_time=float(json["endTime"]),
             samples=[int(i) for i in json["samples"]] if "samples" in json else None,
-            time_deltas=([int(i) for i in json["timeDeltas"]] if "timeDeltas" in json else None),
+            time_deltas=(
+                [int(i) for i in json["timeDeltas"]] if "timeDeltas" in json else None
+            ),
         )
 
 
@@ -342,7 +344,9 @@ def stop_precise_coverage() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, None]:
 
 
 def take_precise_coverage() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[ScriptCoverage], float]]
+    typing.Generator[
+        T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[ScriptCoverage], float]
+    ]
 ):
     """
     Collect coverage data for the current isolate, and resets execution counters. Precise code

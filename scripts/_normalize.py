@@ -105,7 +105,9 @@ def nested_to_record(
             # current dict level  < maximum level provided and
             # only dicts gets recurse-flattened
             # only at level>1 do we rename the rest of the keys
-            if not isinstance(v, dict) or (max_level is not None and level >= max_level):
+            if not isinstance(v, dict) or (
+                max_level is not None and level >= max_level
+            ):
                 if level != 0:  # so we skip copying for top level, common case
                     v = new_d.pop(k)
                     new_d[newkey] = v
@@ -151,7 +153,9 @@ def _normalise_json(
                 # to avoid adding the separator to the start of every key
                 # GH#43831 avoid adding key if key_string blank
                 key_string=(
-                    new_key if new_key[: len(separator)] != separator else new_key[len(separator) :]
+                    new_key
+                    if new_key[: len(separator)] != separator
+                    else new_key[len(separator) :]
                 ),
                 normalized_dict=normalized_dict,
                 separator=separator,
@@ -426,7 +430,8 @@ def _json_normalize(
                 result = []
             else:
                 raise TypeError(
-                    f"{js} has non list value {result} for path {spec}. " "Must be list or null."
+                    f"{js} has non list value {result} for path {spec}. "
+                    "Must be list or null."
                 )
         return result
 
@@ -527,7 +532,9 @@ def _json_normalize(
             k = meta_prefix + k
 
         if k in result:
-            raise ValueError(f"Conflicting metadata name {k}, need distinguishing prefix ")
+            raise ValueError(
+                f"Conflicting metadata name {k}, need distinguishing prefix "
+            )
         result[k] = np.array(v, dtype=object).repeat(lengths)
     return result
 

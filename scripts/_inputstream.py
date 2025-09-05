@@ -27,7 +27,10 @@ if _utils.supports_lone_surrogates:
     # eval. Not using this indirection would introduce an illegal
     # unicode literal on platforms not supporting such lone
     # surrogates.
-    assert invalid_unicode_no_surrogate[-1] == "]" and invalid_unicode_no_surrogate.count("]") == 1
+    assert (
+        invalid_unicode_no_surrogate[-1] == "]"
+        and invalid_unicode_no_surrogate.count("]") == 1
+    )
     invalid_unicode_re = re.compile(
         invalid_unicode_no_surrogate[:-1]
         + eval('"\\uD800-\\uDFFF"')  # pylint:disable=eval-used
@@ -110,7 +113,9 @@ class BufferedStream(object):
     def read(self, bytes):
         if not self.buffer:
             return self._readStream(bytes)
-        elif self.position[0] == len(self.buffer) and self.position[1] == len(self.buffer[-1]):
+        elif self.position[0] == len(self.buffer) and self.position[1] == len(
+            self.buffer[-1]
+        ):
             return self._readStream(bytes)
         else:
             return self._readFromBuffer(bytes)
@@ -173,7 +178,9 @@ def HTMLInputStream(source, **kwargs):
     if isUnicode:
         encodings = [x for x in kwargs if x.endswith("_encoding")]
         if encodings:
-            raise TypeError("Cannot set an encoding with a unicode input, set %r" % encodings)
+            raise TypeError(
+                "Cannot set an encoding with a unicode input, set %r" % encodings
+            )
 
         return HTMLUnicodeInputStream(source, **kwargs)
     else:
@@ -362,7 +369,9 @@ class HTMLUnicodeInputStream(object):
             regex = "".join(["\\x%02x" % ord(c) for c in characters])
             if not opposite:
                 regex = "^%s" % regex
-            chars = charsUntilRegEx[(characters, opposite)] = re.compile("[%s]+" % regex)
+            chars = charsUntilRegEx[(characters, opposite)] = re.compile(
+                "[%s]+" % regex
+            )
 
         rv = []
 
@@ -467,7 +476,9 @@ class HTMLBinaryInputStream(HTMLUnicodeInputStream):
         self.reset()
 
     def reset(self):
-        self.dataStream = self.charEncoding[0].codec_info.streamreader(self.rawStream, "replace")
+        self.dataStream = self.charEncoding[0].codec_info.streamreader(
+            self.rawStream, "replace"
+        )
         HTMLUnicodeInputStream.reset(self)
 
     def openStream(self, source):
@@ -513,7 +524,9 @@ class HTMLBinaryInputStream(HTMLUnicodeInputStream):
 
         # Parent document encoding
         charEncoding = lookupEncoding(self.same_origin_parent_encoding), "tentative"
-        if charEncoding[0] is not None and not charEncoding[0].name.startswith("utf-16"):
+        if charEncoding[0] is not None and not charEncoding[0].name.startswith(
+            "utf-16"
+        ):
             return charEncoding
 
         # "likely" encoding

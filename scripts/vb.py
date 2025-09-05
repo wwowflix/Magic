@@ -114,7 +114,9 @@ class CmdStanVB:
         """
         return self._metadata
 
-    def stan_variable(self, var: str, *, mean: Optional[bool] = None) -> Union[np.ndarray, float]:
+    def stan_variable(
+        self, var: str, *, mean: Optional[bool] = None
+    ) -> Union[np.ndarray, float]:
         """
         Return a numpy.ndarray which contains the estimates for the
         for the named Stan program variable where the dimensions of the
@@ -184,7 +186,9 @@ class CmdStanVB:
                 "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
-    def stan_variables(self, *, mean: Optional[bool] = None) -> Dict[str, Union[np.ndarray, float]]:
+    def stan_variables(
+        self, *, mean: Optional[bool] = None
+    ) -> Dict[str, Union[np.ndarray, float]]:
         """
         Return a dictionary mapping Stan program variables names
         to the corresponding numpy.ndarray containing the inferred values.

@@ -373,7 +373,9 @@ class TestRandomDist:
             warnings.simplefilter("error", DeprecationWarning)
 
             # DeprecationWarning raised with high == None
-            assert_raises(DeprecationWarning, np.random.random_integers, np.iinfo("l").max)
+            assert_raises(
+                DeprecationWarning, np.random.random_integers, np.iinfo("l").max
+            )
 
             # DeprecationWarning raised with high != None
             assert_raises(
@@ -431,7 +433,9 @@ class TestRandomDist:
         assert_raises(ValueError, sample, 3.0, 3)
         assert_raises(ValueError, sample, [[1, 2], [3, 4]], 3)
         assert_raises(ValueError, sample, [], 3)
-        assert_raises(ValueError, sample, [1, 2, 3, 4], 3, p=[[0.25, 0.25], [0.25, 0.25]])
+        assert_raises(
+            ValueError, sample, [1, 2, 3, 4], 3, p=[[0.25, 0.25], [0.25, 0.25]]
+        )
         assert_raises(ValueError, sample, [1, 2], 3, p=[0.4, 0.4, 0.2])
         assert_raises(ValueError, sample, [1, 2], 3, p=[1.1, -0.1])
         assert_raises(ValueError, sample, [1, 2], 3, p=[0.4, 0.4])
@@ -512,7 +516,11 @@ class TestRandomDist:
             lambda x: np.asarray([[i, i] for i in x]),
             lambda x: np.vstack([x, x]).T,
             # gh-11442
-            lambda x: (np.asarray([(i, i) for i in x], [("a", int), ("b", int)]).view(np.recarray)),
+            lambda x: (
+                np.asarray([(i, i) for i in x], [("a", int), ("b", int)]).view(
+                    np.recarray
+                )
+            ),
             # gh-4270
             lambda x: np.asarray([(i, i) for i in x], [("a", object), ("b", np.int32)]),
         ]:
@@ -541,7 +549,9 @@ class TestRandomDist:
     def test_shuffle_untyped_warning(self, random):
         # Create a dict works like a sequence but isn't one
         values = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
-        with pytest.warns(UserWarning, match="you are shuffling a 'dict' object") as rec:
+        with pytest.warns(
+            UserWarning, match="you are shuffling a 'dict' object"
+        ) as rec:
             random.shuffle(values)
         assert "test_random" in rec[0].filename
 
@@ -855,10 +865,14 @@ class TestRandomDist:
         assert_warns(RuntimeWarning, np.random.multivariate_normal, mean, cov)
 
         # and that it doesn't warn with RuntimeWarning check_valid='ignore'
-        assert_no_warnings(np.random.multivariate_normal, mean, cov, check_valid="ignore")
+        assert_no_warnings(
+            np.random.multivariate_normal, mean, cov, check_valid="ignore"
+        )
 
         # and that it raises with RuntimeWarning check_valid='raises'
-        assert_raises(ValueError, np.random.multivariate_normal, mean, cov, check_valid="raise")
+        assert_raises(
+            ValueError, np.random.multivariate_normal, mean, cov, check_valid="raise"
+        )
 
         cov = np.array([[1, 0.1], [0.1, 1]], dtype=np.float32)
         with suppress_warnings() as sup:
@@ -1190,7 +1204,9 @@ class TestBroadcast:
         low = [0]
         high = [1]
         uniform = np.random.uniform
-        desired = np.array([0.53283302478975902, 0.53413660089041659, 0.50955303552646702])
+        desired = np.array(
+            [0.53283302478975902, 0.53413660089041659, 0.50955303552646702]
+        )
 
         self.setSeed()
         actual = uniform(low * 3, high)
@@ -1223,7 +1239,9 @@ class TestBroadcast:
         bad_a = [-1]
         bad_b = [-2]
         beta = np.random.beta
-        desired = np.array([0.19843558305989056, 0.075230336409423643, 0.24976865978980844])
+        desired = np.array(
+            [0.19843558305989056, 0.075230336409423643, 0.24976865978980844]
+        )
 
         self.setSeed()
         actual = beta(a * 3, b)
@@ -1241,7 +1259,9 @@ class TestBroadcast:
         scale = [1]
         bad_scale = [-1]
         exponential = np.random.exponential
-        desired = np.array([0.76106853658845242, 0.76386282278691653, 0.71243813125891797])
+        desired = np.array(
+            [0.76106853658845242, 0.76386282278691653, 0.71243813125891797]
+        )
 
         self.setSeed()
         actual = exponential(scale * 3)
@@ -1252,7 +1272,9 @@ class TestBroadcast:
         shape = [1]
         bad_shape = [-1]
         std_gamma = np.random.standard_gamma
-        desired = np.array([0.76106853658845242, 0.76386282278691653, 0.71243813125891797])
+        desired = np.array(
+            [0.76106853658845242, 0.76386282278691653, 0.71243813125891797]
+        )
 
         self.setSeed()
         actual = std_gamma(shape * 3)
@@ -1285,7 +1307,9 @@ class TestBroadcast:
         bad_dfnum = [-1]
         bad_dfden = [-2]
         f = np.random.f
-        desired = np.array([0.80038951638264799, 0.86768719635363512, 2.7251095168386801])
+        desired = np.array(
+            [0.80038951638264799, 0.86768719635363512, 2.7251095168386801]
+        )
 
         self.setSeed()
         actual = f(dfnum * 3, dfden)
@@ -1340,7 +1364,9 @@ class TestBroadcast:
         df = [1]
         bad_df = [-1]
         chisquare = np.random.chisquare
-        desired = np.array([0.57022801133088286, 0.51947702108840776, 0.1320969254923558])
+        desired = np.array(
+            [0.57022801133088286, 0.51947702108840776, 0.1320969254923558]
+        )
 
         self.setSeed()
         actual = chisquare(df * 3)
@@ -1383,7 +1409,9 @@ class TestBroadcast:
         kappa = [1]
         bad_kappa = [-1]
         vonmises = np.random.vonmises
-        desired = np.array([2.9883443664201312, -2.7064099483995943, -1.8672476700665914])
+        desired = np.array(
+            [2.9883443664201312, -2.7064099483995943, -1.8672476700665914]
+        )
 
         self.setSeed()
         actual = vonmises(mu * 3, kappa)
@@ -1410,7 +1438,9 @@ class TestBroadcast:
         a = [1]
         bad_a = [-1]
         weibull = np.random.weibull
-        desired = np.array([0.76106853658845242, 0.76386282278691653, 0.71243813125891797])
+        desired = np.array(
+            [0.76106853658845242, 0.76386282278691653, 0.71243813125891797]
+        )
 
         self.setSeed()
         actual = weibull(a * 3)
@@ -1421,7 +1451,9 @@ class TestBroadcast:
         a = [1]
         bad_a = [-1]
         power = np.random.power
-        desired = np.array([0.53283302478975902, 0.53413660089041659, 0.50955303552646702])
+        desired = np.array(
+            [0.53283302478975902, 0.53413660089041659, 0.50955303552646702]
+        )
 
         self.setSeed()
         actual = power(a * 3)
@@ -1433,7 +1465,9 @@ class TestBroadcast:
         scale = [1]
         bad_scale = [-1]
         laplace = np.random.laplace
-        desired = np.array([0.067921356028507157, 0.070715642226971326, 0.019290950698972624])
+        desired = np.array(
+            [0.067921356028507157, 0.070715642226971326, 0.019290950698972624]
+        )
 
         self.setSeed()
         actual = laplace(loc * 3, scale)
@@ -1450,7 +1484,9 @@ class TestBroadcast:
         scale = [1]
         bad_scale = [-1]
         gumbel = np.random.gumbel
-        desired = np.array([0.2730318639556768, 0.26936705726291116, 0.33906220393037939])
+        desired = np.array(
+            [0.2730318639556768, 0.26936705726291116, 0.33906220393037939]
+        )
 
         self.setSeed()
         actual = gumbel(loc * 3, scale)
@@ -1467,7 +1503,9 @@ class TestBroadcast:
         scale = [1]
         bad_scale = [-1]
         logistic = np.random.logistic
-        desired = np.array([0.13152135837586171, 0.13675915696285773, 0.038216792802833396])
+        desired = np.array(
+            [0.13152135837586171, 0.13675915696285773, 0.038216792802833396]
+        )
 
         self.setSeed()
         actual = logistic(loc * 3, scale)
@@ -1513,7 +1551,9 @@ class TestBroadcast:
         bad_mean = [0]
         bad_scale = [-2]
         wald = np.random.wald
-        desired = np.array([0.11873681120271318, 0.12450084820795027, 0.9096122728408238])
+        desired = np.array(
+            [0.11873681120271318, 0.12450084820795027, 0.9096122728408238]
+        )
 
         self.setSeed()
         actual = wald(mean * 3, scale)

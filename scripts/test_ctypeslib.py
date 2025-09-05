@@ -18,17 +18,23 @@ else:
     test_cdll = None
     if hasattr(sys, "gettotalrefcount"):
         try:
-            cdll = load_library("_multiarray_umath_d", np._core._multiarray_umath.__file__)
+            cdll = load_library(
+                "_multiarray_umath_d", np._core._multiarray_umath.__file__
+            )
         except OSError:
             pass
         try:
-            test_cdll = load_library("_multiarray_tests", np._core._multiarray_tests.__file__)
+            test_cdll = load_library(
+                "_multiarray_tests", np._core._multiarray_tests.__file__
+            )
         except OSError:
             pass
     if cdll is None:
         cdll = load_library("_multiarray_umath", np._core._multiarray_umath.__file__)
     if test_cdll is None:
-        test_cdll = load_library("_multiarray_tests", np._core._multiarray_tests.__file__)
+        test_cdll = load_library(
+            "_multiarray_tests", np._core._multiarray_tests.__file__
+        )
 
     c_forward_pointer = test_cdll.forward_pointer
 
@@ -52,7 +58,9 @@ class TestLoadLibrary:
         # (including extension) does not work.
         try:
             so_ext = sysconfig.get_config_var("EXT_SUFFIX")
-            load_library(f"_multiarray_umath{so_ext}", np._core._multiarray_umath.__file__)
+            load_library(
+                f"_multiarray_umath{so_ext}", np._core._multiarray_umath.__file__
+            )
         except ImportError as e:
             msg = (
                 "ctypes is not available on this python: skipping the test"
@@ -126,7 +134,9 @@ class TestNdpointer:
         assert_(ndpointer(ndim=2) is not ndpointer(shape=2))
 
 
-@pytest.mark.skipif(ctypes is None, reason="ctypes not available on this python installation")
+@pytest.mark.skipif(
+    ctypes is None, reason="ctypes not available on this python installation"
+)
 class TestNdpointerCFunc:
     def test_arguments(self):
         """Test that arguments are coerced from arrays"""
@@ -178,7 +188,9 @@ class TestNdpointerCFunc:
         assert_(isinstance(ret, ptr_type))
 
 
-@pytest.mark.skipif(ctypes is None, reason="ctypes not available on this python installation")
+@pytest.mark.skipif(
+    ctypes is None, reason="ctypes not available on this python installation"
+)
 class TestAsArray:
     def test_array(self):
         from ctypes import c_int
@@ -275,7 +287,9 @@ class TestAsArray:
         c_arr[0][0][0]
 
 
-@pytest.mark.skipif(ctypes is None, reason="ctypes not available on this python installation")
+@pytest.mark.skipif(
+    ctypes is None, reason="ctypes not available on this python installation"
+)
 class TestAsCtypesType:
     """Test conversion from dtypes to ctypes types"""
 
@@ -338,7 +352,9 @@ class TestAsCtypesType:
         )
 
     def test_union(self):
-        dt = np.dtype({"names": ["a", "b"], "offsets": [0, 0], "formats": [np.uint16, np.uint32]})
+        dt = np.dtype(
+            {"names": ["a", "b"], "offsets": [0, 0], "formats": [np.uint16, np.uint32]}
+        )
 
         ct = np.ctypeslib.as_ctypes_type(dt)
         assert_(issubclass(ct, ctypes.Union))
@@ -374,5 +390,7 @@ class TestAsCtypesType:
         )
 
     def test_overlapping(self):
-        dt = np.dtype({"names": ["a", "b"], "offsets": [0, 2], "formats": [np.uint32, np.uint32]})
+        dt = np.dtype(
+            {"names": ["a", "b"], "offsets": [0, 2], "formats": [np.uint32, np.uint32]}
+        )
         assert_raises(NotImplementedError, np.ctypeslib.as_ctypes_type, dt)

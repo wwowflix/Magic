@@ -14,7 +14,9 @@ T_co = TypeVar("T_co", covariant=True)
 T_contra = TypeVar("T_contra", contravariant=True)
 
 
-class UnreliableObjectReceiveStream(Generic[T_co], AsyncResource, TypedAttributeProvider):
+class UnreliableObjectReceiveStream(
+    Generic[T_co], AsyncResource, TypedAttributeProvider
+):
     """
     An interface for receiving objects.
 
@@ -47,7 +49,9 @@ class UnreliableObjectReceiveStream(Generic[T_co], AsyncResource, TypedAttribute
         """
 
 
-class UnreliableObjectSendStream(Generic[T_contra], AsyncResource, TypedAttributeProvider):
+class UnreliableObjectSendStream(
+    Generic[T_contra], AsyncResource, TypedAttributeProvider
+):
     """
     An interface for sending objects.
 
@@ -168,7 +172,9 @@ class ByteStream(ByteReceiveStream, ByteSendStream):
 
 
 #: Type alias for all unreliable bytes-oriented receive streams.
-AnyUnreliableByteReceiveStream = Union[UnreliableObjectReceiveStream[bytes], ByteReceiveStream]
+AnyUnreliableByteReceiveStream = Union[
+    UnreliableObjectReceiveStream[bytes], ByteReceiveStream
+]
 #: Type alias for all unreliable bytes-oriented send streams.
 AnyUnreliableByteSendStream = Union[UnreliableObjectSendStream[bytes], ByteSendStream]
 #: Type alias for all unreliable bytes-oriented streams.

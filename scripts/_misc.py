@@ -38,7 +38,9 @@ def table(ax, data, rowLabels=None, colLabels=None, **kwargs):
     matplotlib table object
     """
     plot_backend = _get_plot_backend("matplotlib")
-    return plot_backend.table(ax=ax, data=data, rowLabels=None, colLabels=None, **kwargs)
+    return plot_backend.table(
+        ax=ax, data=data, rowLabels=None, colLabels=None, **kwargs
+    )
 
 
 def register() -> None:
@@ -378,7 +380,9 @@ def bootstrap_plot(
         <Figure size 640x480 with 6 Axes>
     """
     plot_backend = _get_plot_backend("matplotlib")
-    return plot_backend.bootstrap_plot(series=series, fig=fig, size=size, samples=samples, **kwds)
+    return plot_backend.bootstrap_plot(
+        series=series, fig=fig, size=size, samples=samples, **kwds
+    )
 
 
 def parallel_coordinates(

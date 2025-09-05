@@ -170,7 +170,9 @@ CASES += apply_tag(
         LinalgCase(
             "cdouble_2",
             array([[1.0 + 2j, 2 + 3j], [3 + 4j, 4 + 5j]], dtype=cdouble),
-            array([[2.0 + 1j, 1.0 + 2j, 1 + 3j], [1 - 2j, 1 - 3j, 1 - 6j]], dtype=cdouble),
+            array(
+                [[2.0 + 1j, 1.0 + 2j, 1 + 3j], [1 - 2j, 1 - 3j, 1 - 6j]], dtype=cdouble
+            ),
         ),
         LinalgCase(
             "0x0",
@@ -273,8 +275,12 @@ CASES += apply_tag(
     [
         LinalgCase("hsingle", array([[1.0, 2.0], [2.0, 1.0]], dtype=single), None),
         LinalgCase("hdouble", array([[1.0, 2.0], [2.0, 1.0]], dtype=double), None),
-        LinalgCase("hcsingle", array([[1.0, 2 + 3j], [2 - 3j, 1]], dtype=csingle), None),
-        LinalgCase("hcdouble", array([[1.0, 2 + 3j], [2 - 3j, 1]], dtype=cdouble), None),
+        LinalgCase(
+            "hcsingle", array([[1.0, 2 + 3j], [2 - 3j, 1]], dtype=csingle), None
+        ),
+        LinalgCase(
+            "hcdouble", array([[1.0, 2 + 3j], [2 - 3j, 1]], dtype=cdouble), None
+        ),
         LinalgCase("hempty", np.empty((0, 0), dtype=double), None, tags={"size-0"}),
         LinalgCase("hnonarray", [[1, 2], [2, 1]], None),
         LinalgCase("matrix_b_only", array([[1.0, 2.0], [2.0, 1.0]]), None),
@@ -300,17 +306,23 @@ def _make_generalized_cases():
             b = case.b
         else:
             b = np.array([case.b, 7 * case.b, 6 * case.b])
-        new_case = LinalgCase(case.name + "_tile3", a, b, tags=case.tags | {"generalized"})
+        new_case = LinalgCase(
+            case.name + "_tile3", a, b, tags=case.tags | {"generalized"}
+        )
         new_cases.append(new_case)
 
         a = np.array([case.a] * 2 * 3).reshape((3, 2) + case.a.shape)
         if case.b is None:
             b = None
         elif case.b.ndim == 1:
-            b = np.array([case.b] * 2 * 3 * a.shape[-1]).reshape((3, 2) + case.a.shape[-2:])
+            b = np.array([case.b] * 2 * 3 * a.shape[-1]).reshape(
+                (3, 2) + case.a.shape[-2:]
+            )
         else:
             b = np.array([case.b] * 2 * 3).reshape((3, 2) + case.b.shape)
-        new_case = LinalgCase(case.name + "_tile213", a, b, tags=case.tags | {"generalized"})
+        new_case = LinalgCase(
+            case.name + "_tile213", a, b, tags=case.tags | {"generalized"}
+        )
         new_cases.append(new_case)
 
     return new_cases
@@ -471,7 +483,9 @@ class HermitianGeneralizedTestCase(LinalgTestCase):
 
     @pytest.mark.slow
     def test_generalized_empty_herm_cases(self):
-        self.check_cases(require={"generalized", "hermitian", "size-0"}, exclude={"none"})
+        self.check_cases(
+            require={"generalized", "hermitian", "size-0"}, exclude={"none"}
+        )
 
 
 def identity_like_generalized(a):
@@ -861,7 +875,9 @@ class TestCond(CondCases):
         for A, p in itertools.product(As, p_neg):
             linalg.cond(A, p)
 
-    @pytest.mark.xfail(True, run=False, reason="Platform/LAPACK-dependent failure, " "see gh-18914")
+    @pytest.mark.xfail(
+        True, run=False, reason="Platform/LAPACK-dependent failure, " "see gh-18914"
+    )
     def test_nan(self):
         # nans should be passed through, not converted to infs
         ps = [None, 1, -1, 2, -2, "fro"]
@@ -913,7 +929,9 @@ class PinvCases(
         a_ginv = linalg.pinv(a)
         # `a @ a_ginv == I` does not hold if a is singular
         dot = matmul
-        assert_almost_equal(dot(dot(a, a_ginv), a), a, single_decimal=5, double_decimal=11)
+        assert_almost_equal(
+            dot(dot(a, a_ginv), a), a, single_decimal=5, double_decimal=11
+        )
         assert_(consistent_subclass(a_ginv, a))
 
 
@@ -927,7 +945,9 @@ class PinvHermitianCases(HermitianTestCase, HermitianGeneralizedTestCase):
         a_ginv = linalg.pinv(a, hermitian=True)
         # `a @ a_ginv == I` does not hold if a is singular
         dot = matmul
-        assert_almost_equal(dot(dot(a, a_ginv), a), a, single_decimal=5, double_decimal=11)
+        assert_almost_equal(
+            dot(dot(a, a_ginv), a), a, single_decimal=5, double_decimal=11
+        )
         assert_(consistent_subclass(a_ginv, a))
 
 
@@ -1399,7 +1419,9 @@ class _TestNormGeneral(_TestNormBase):
             np.testing.assert_almost_equal(norm(v, 1), 10.0, decimal=self.dec)
             np.testing.assert_almost_equal(norm(v, -1), 12.0 / 25, decimal=self.dec)
             np.testing.assert_almost_equal(norm(v, 2), 30**0.5, decimal=self.dec)
-            np.testing.assert_almost_equal(norm(v, -2), ((205.0 / 144) ** -0.5), decimal=self.dec)
+            np.testing.assert_almost_equal(
+                norm(v, -2), ((205.0 / 144) ** -0.5), decimal=self.dec
+            )
             np.testing.assert_almost_equal(norm(v, 0), 4, decimal=self.dec)
 
         for v in (
@@ -1466,7 +1488,9 @@ class _TestNormGeneral(_TestNormBase):
         # check the order=None, axis=None case
         expected = norm(A, ord=None, axis=None)
         found = norm(A, ord=None, axis=None, keepdims=True)
-        assert_allclose(np.squeeze(found), expected, err_msg=allclose_err.format(None, None))
+        assert_allclose(
+            np.squeeze(found), expected, err_msg=allclose_err.format(None, None)
+        )
         expected_shape = (1, 1, 1)
         assert_(
             found.shape == expected_shape,
@@ -1478,7 +1502,9 @@ class _TestNormGeneral(_TestNormBase):
             for k in range(A.ndim):
                 expected = norm(A, ord=order, axis=k)
                 found = norm(A, ord=order, axis=k, keepdims=True)
-                assert_allclose(np.squeeze(found), expected, err_msg=allclose_err.format(order, k))
+                assert_allclose(
+                    np.squeeze(found), expected, err_msg=allclose_err.format(order, k)
+                )
                 expected_shape = list(A.shape)
                 expected_shape[k] = 1
                 expected_shape = tuple(expected_shape)
@@ -1492,7 +1518,9 @@ class _TestNormGeneral(_TestNormBase):
             for k in itertools.permutations(range(A.ndim), 2):
                 expected = norm(A, ord=order, axis=k)
                 found = norm(A, ord=order, axis=k, keepdims=True)
-                assert_allclose(np.squeeze(found), expected, err_msg=allclose_err.format(order, k))
+                assert_allclose(
+                    np.squeeze(found), expected, err_msg=allclose_err.format(order, k)
+                )
                 expected_shape = list(A.shape)
                 expected_shape[k[0]] = 1
                 expected_shape[k[1]] = 1
@@ -1885,7 +1913,9 @@ class TestQR:
 class TestCholesky:
 
     @pytest.mark.parametrize("shape", [(1, 1), (2, 2), (3, 3), (50, 50), (3, 10, 10)])
-    @pytest.mark.parametrize("dtype", (np.float32, np.float64, np.complex64, np.complex128))
+    @pytest.mark.parametrize(
+        "dtype", (np.float32, np.float64, np.complex64, np.complex128)
+    )
     @pytest.mark.parametrize("upper", [False, True])
     def test_basic_property(self, shape, dtype, upper):
         np.random.seed(1)
@@ -2314,7 +2344,9 @@ def test_blas64_dot():
     assert_equal(c[0, -1], 1)
 
 
-@pytest.mark.xfail(not HAS_LAPACK64, reason="Numpy not compiled with 64-bit BLAS/LAPACK")
+@pytest.mark.xfail(
+    not HAS_LAPACK64, reason="Numpy not compiled with 64-bit BLAS/LAPACK"
+)
 def test_blas64_geqrf_lwork_smoketest():
     # Smoke test LAPACK geqrf lwork call with 64-bit integers
     dtype = np.float64

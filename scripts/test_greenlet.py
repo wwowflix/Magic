@@ -478,7 +478,8 @@ class TestGreenlet(TestCase):
         if not wait_for_cleanup:
             s = str(exc.exception)
             self.assertTrue(
-                s == "cannot switch to a different thread (which happens to have exited)"
+                s
+                == "cannot switch to a different thread (which happens to have exited)"
                 or "Cannot switch" in s
             )
         else:
@@ -1020,12 +1021,16 @@ class TestGreenletSetParentErrors(TestCase):
         #
         # We need to wait for the cleanup to happen, but we're
         # deliberately leaking a main greenlet here.
-        self.wait_for_pending_cleanups(initial_main_greenlets=self.main_greenlets_before_test + 1)
+        self.wait_for_pending_cleanups(
+            initial_main_greenlets=self.main_greenlets_before_test + 1
+        )
 
         class convoluted(RawGreenlet):
             def __getattribute__(self, name):
                 if name == "run":
-                    self.parent = another[0]  # pylint:disable=attribute-defined-outside-init
+                    self.parent = another[
+                        0
+                    ]  # pylint:disable=attribute-defined-outside-init
                 return RawGreenlet.__getattribute__(self, name)
 
         g = convoluted(lambda: None)
@@ -1054,7 +1059,9 @@ class TestGreenletSetParentErrors(TestCase):
         class convoluted(RawGreenlet):
             def __getattribute__(self, name):
                 if name == "run":
-                    self.parent = another[0]  # pylint:disable=attribute-defined-outside-init
+                    self.parent = another[
+                        0
+                    ]  # pylint:disable=attribute-defined-outside-init
                 return RawGreenlet.__getattribute__(self, name)
 
         t = threading.Thread(target=worker)
@@ -1104,7 +1111,8 @@ class TestGreenletSetParentErrors(TestCase):
 
                 self.assertEqual(
                     str(exc.exception),
-                    "GreenletChecker: Expected any type of greenlet, not " + type(p).__name__,
+                    "GreenletChecker: Expected any type of greenlet, not "
+                    + type(p).__name__,
                 )
 
         # First, not running
@@ -1300,7 +1308,9 @@ class TestBrokenGreenlets(TestCase):
         ex = self.assertScriptRaises("fail_slp_switch.py")
 
         self.assertIn("fail_slp_switch is running", ex.output)
-        self.assertIn(ex.returncode, self.get_expected_returncodes_for_aborted_process())
+        self.assertIn(
+            ex.returncode, self.get_expected_returncodes_for_aborted_process()
+        )
 
     def test_reentrant_switch_two_greenlets(self):
         # Before we started capturing the arguments in g_switch_finish, this could crash.

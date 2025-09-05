@@ -26,7 +26,9 @@ def disable_importlib_metadata_finder(metadata):
     if importlib_metadata is metadata:
         return
     to_remove = [
-        ob for ob in sys.meta_path if isinstance(ob, importlib_metadata.MetadataPathFinder)
+        ob
+        for ob in sys.meta_path
+        if isinstance(ob, importlib_metadata.MetadataPathFinder)
     ]
     for item in to_remove:
         sys.meta_path.remove(item)

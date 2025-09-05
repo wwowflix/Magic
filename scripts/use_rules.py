@@ -71,9 +71,14 @@ def buildusevars(m, r):
                 if revmap[r["map"][v]] == v:
                     varsmap[v] = r["map"][v]
                 else:
-                    outmess('\t\t\tIgnoring map "%s=>%s". See above.\n' % (v, r["map"][v]))
+                    outmess(
+                        '\t\t\tIgnoring map "%s=>%s". See above.\n' % (v, r["map"][v])
+                    )
             else:
-                outmess('\t\t\tNo definition for variable "%s=>%s". Skipping.\n' % (v, r["map"][v]))
+                outmess(
+                    '\t\t\tNo definition for variable "%s=>%s". Skipping.\n'
+                    % (v, r["map"][v])
+                )
     else:
         for v in m["vars"].keys():
             if v in revmap:
@@ -86,7 +91,10 @@ def buildusevars(m, r):
 
 
 def buildusevar(name, realname, vars, usemodulename):
-    outmess('\t\t\tConstructing wrapper function for variable "%s=>%s"...\n' % (name, realname))
+    outmess(
+        '\t\t\tConstructing wrapper function for variable "%s=>%s"...\n'
+        % (name, realname)
+    )
     ret = {}
     vrd = {
         "name": name,

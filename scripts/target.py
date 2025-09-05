@@ -97,9 +97,13 @@ class TargetInfo:
             url=str(json["url"]),
             attached=bool(json["attached"]),
             can_access_opener=bool(json["canAccessOpener"]),
-            opener_id=(TargetID.from_json(json["openerId"]) if "openerId" in json else None),
+            opener_id=(
+                TargetID.from_json(json["openerId"]) if "openerId" in json else None
+            ),
             opener_frame_id=(
-                page.FrameId.from_json(json["openerFrameId"]) if "openerFrameId" in json else None
+                page.FrameId.from_json(json["openerFrameId"])
+                if "openerFrameId" in json
+                else None
             ),
             browser_context_id=(
                 browser.BrowserContextID.from_json(json["browserContextId"])
@@ -674,7 +678,9 @@ class DetachedFromTarget:
     def from_json(cls, json: T_JSON_DICT) -> DetachedFromTarget:
         return cls(
             session_id=SessionID.from_json(json["sessionId"]),
-            target_id=(TargetID.from_json(json["targetId"]) if "targetId" in json else None),
+            target_id=(
+                TargetID.from_json(json["targetId"]) if "targetId" in json else None
+            ),
         )
 
 
@@ -697,7 +703,9 @@ class ReceivedMessageFromTarget:
         return cls(
             session_id=SessionID.from_json(json["sessionId"]),
             message=str(json["message"]),
-            target_id=(TargetID.from_json(json["targetId"]) if "targetId" in json else None),
+            target_id=(
+                TargetID.from_json(json["targetId"]) if "targetId" in json else None
+            ),
         )
 
 

@@ -108,7 +108,9 @@ numpy array values are different \\(25\\.0 %\\)
 \\[right\\]: \\[\\[1, 3\\], \\[3, 4\\]\\]"""
 
     with pytest.raises(AssertionError, match=msg):
-        tm.assert_numpy_array_equal(np.array([[1, 2], [3, 4]]), np.array([[1, 3], [3, 4]]))
+        tm.assert_numpy_array_equal(
+            np.array([[1, 2], [3, 4]]), np.array([[1, 3], [3, 4]])
+        )
 
 
 def test_assert_numpy_array_equal_shape_mismatch_override():
@@ -134,7 +136,9 @@ numpy array values are different \\(33\\.33333 %\\)
 \\[right\\]: \\[á, à, å\\]"""
 
     with pytest.raises(AssertionError, match=msg):
-        tm.assert_numpy_array_equal(np.array(["á", "à", "ä"]), np.array(["á", "à", "å"]))
+        tm.assert_numpy_array_equal(
+            np.array(["á", "à", "ä"]), np.array(["á", "à", "å"])
+        )
 
 
 def test_numpy_array_equal_object():

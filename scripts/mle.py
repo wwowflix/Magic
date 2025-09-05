@@ -217,7 +217,9 @@ class CmdStanMLE:
                 "Available variables are " + ", ".join(self._metadata.stan_vars.keys())
             )
 
-    def stan_variables(self, inc_iterations: bool = False) -> Dict[str, Union[np.ndarray, float]]:
+    def stan_variables(
+        self, inc_iterations: bool = False
+    ) -> Dict[str, Union[np.ndarray, float]]:
         """
         Return a dictionary mapping Stan program variables names
         to the corresponding numpy.ndarray containing the inferred values.
@@ -241,7 +243,9 @@ class CmdStanMLE:
             get_logger().warning("Invalid estimate, optimization failed to converge.")
         result = {}
         for name in self._metadata.stan_vars:
-            result[name] = self.stan_variable(name, inc_iterations=inc_iterations, warn=False)
+            result[name] = self.stan_variable(
+                name, inc_iterations=inc_iterations, warn=False
+            )
         return result
 
     def save_csvfiles(self, dir: Optional[str] = None) -> None:

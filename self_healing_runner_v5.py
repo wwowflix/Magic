@@ -1,4 +1,5 @@
 from concurrent.futures import ProcessPoolExecutor
+
 # self_healing_runner_v5.py
 from __future__ import annotations
 import argparse
@@ -218,6 +219,7 @@ def apply_remediation_ai(error_msg: str, script_path: Optional[str] = None) -> b
     except Exception:
         return False
 
+
 # --- Week 6.3: optional parallel probe (no-op) ---
 def _parallel_probe(paths=None):
     # This function intentionally does nothing heavy; it just references
@@ -226,4 +228,6 @@ def _parallel_probe(paths=None):
         paths = []
     with ProcessPoolExecutor(max_workers=2) as _ex:
         list(_ex.map(lambda _p: 0, paths))
+
+
 # -------------------------------------------------

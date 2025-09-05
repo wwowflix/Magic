@@ -94,7 +94,9 @@ class VGenericEngine(object):
         return library
 
     def _get_declarations(self):
-        lst = [(key, tp) for (key, (tp, qual)) in self.ffi._parser._declarations.items()]
+        lst = [
+            (key, tp) for (key, (tp, qual)) in self.ffi._parser._declarations.items()
+        ]
         lst.sort()
         return lst
 
@@ -154,7 +156,10 @@ class VGenericEngine(object):
                 indirection = "*"
             argnames.append("%sx%d" % (indirection, i))
         context = "argument of %s" % name
-        arglist = [type.get_c_name(" %s" % arg, context) for type, arg in zip(tp.args, argnames)]
+        arglist = [
+            type.get_c_name(" %s" % arg, context)
+            for type, arg in zip(tp.args, argnames)
+        ]
         tpresult = tp.result
         if isinstance(tpresult, model.StructOrUnion):
             arglist.insert(0, tpresult.get_c_name(" *r", context))
@@ -190,9 +195,9 @@ class VGenericEngine(object):
         else:
             indirections = []
             base_tp = tp
-            if any(isinstance(typ, model.StructOrUnion) for typ in tp.args) or isinstance(
-                tp.result, model.StructOrUnion
-            ):
+            if any(
+                isinstance(typ, model.StructOrUnion) for typ in tp.args
+            ) or isinstance(tp.result, model.StructOrUnion):
                 indirect_args = []
                 for i, typ in enumerate(tp.args):
                     if isinstance(typ, model.StructOrUnion):
@@ -210,7 +215,9 @@ class VGenericEngine(object):
                     indirect_args.insert(0, indirect_result)
                     indirections.insert(0, ("result", indirect_result))
                     indirect_result = model.void_type
-                tp = model.FunctionPtrType(tuple(indirect_args), indirect_result, tp.ellipsis)
+                tp = model.FunctionPtrType(
+                    tuple(indirect_args), indirect_result, tp.ellipsis
+                )
             BFunc = self.ffi._get_cached_btype(tp)
             wrappername = "_cffi_f_%s" % name
             newfunction = module.load_function(BFunc, wrappername)
@@ -355,7 +362,8 @@ class VGenericEngine(object):
             def check(realvalue, expectedvalue, msg):
                 if realvalue != expectedvalue:
                     raise VerificationError(
-                        "%s (we have %d, but C compiler says %d)" % (msg, expectedvalue, realvalue)
+                        "%s (we have %d, but C compiler says %d)"
+                        % (msg, expectedvalue, realvalue)
                     )
 
             ffi = self.ffi
@@ -407,7 +415,9 @@ class VGenericEngine(object):
     # ----------
     # constants, likely declared with '#define'
 
-    def _generate_gen_const(self, is_int, name, tp=None, category="const", check_value=None):
+    def _generate_gen_const(
+        self, is_int, name, tp=None, category="const", check_value=None
+    ):
         prnt = self._prnt
         funcname = "_cffi_%s_%s" % (category, name)
         self.export_symbols.append(funcname)
@@ -491,7 +501,10 @@ class VGenericEngine(object):
         if value <= 0:
             prnt("  if ((%s) > 0 || (long)(%s) != %dL) {" % (name, name, value))
         else:
-            prnt("  if ((%s) <= 0 || (unsigned long)(%s) != %dUL) {" % (name, name, value))
+            prnt(
+                "  if ((%s) <= 0 || (unsigned long)(%s) != %dUL) {"
+                % (name, name, value)
+            )
         prnt("    char buf[64];")
         prnt("    if ((%s) <= 0)" % name)
         prnt('        sprintf(buf, "%%ld", (long)(%s));' % name)
@@ -538,7 +551,8 @@ class VGenericEngine(object):
     def _loading_gen_enum(self, tp, name, module, prefix="enum"):
         if tp.partial:
             enumvalues = [
-                self._load_constant(True, tp, enumerator, module) for enumerator in tp.enumerators
+                self._load_constant(True, tp, enumerator, module)
+                for enumerator in tp.enumerators
             ]
             tp.enumvalues = tuple(enumvalues)
             tp.partial_resolved = True
@@ -605,7 +619,8 @@ class VGenericEngine(object):
                 length, rest = divmod(size, self.ffi.sizeof(BItemType))
                 if rest != 0:
                     raise VerificationError(
-                        "bad size: %r does not seem to be an array of %s" % (name, tp.item)
+                        "bad size: %r does not seem to be an array of %s"
+                        % (name, tp.item)
                     )
                 tp = tp.resolve_length(length)
             tp_ptr = model.PointerType(tp.item)

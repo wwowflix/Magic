@@ -15,7 +15,9 @@ class Theme:
 
     styles: Dict[str, Style]
 
-    def __init__(self, styles: Optional[Mapping[str, StyleType]] = None, inherit: bool = True):
+    def __init__(
+        self, styles: Optional[Mapping[str, StyleType]] = None, inherit: bool = True
+    ):
         self.styles = DEFAULT_STYLES.copy() if inherit else {}
         if styles is not None:
             self.styles.update(
@@ -91,7 +93,9 @@ class ThemeStack:
             inherit (boolean, optional): Inherit styles from current top of stack.
         """
         styles: Dict[str, Style]
-        styles = {**self._entries[-1], **theme.styles} if inherit else theme.styles.copy()
+        styles = (
+            {**self._entries[-1], **theme.styles} if inherit else theme.styles.copy()
+        )
         self._entries.append(styles)
         self.get = self._entries[-1].get
 

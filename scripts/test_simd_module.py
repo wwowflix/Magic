@@ -24,7 +24,9 @@ int_sfx = unsigned_sfx + signed_sfx
 all_sfx = unsigned_sfx + int_sfx
 
 
-@pytest.mark.skipif(not npyv, reason="could not find any SIMD extension with NPYV support")
+@pytest.mark.skipif(
+    not npyv, reason="could not find any SIMD extension with NPYV support"
+)
 class Test_SIMD_MODULE:
 
     @pytest.mark.parametrize("sfx", all_sfx)

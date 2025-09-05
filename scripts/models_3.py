@@ -115,7 +115,9 @@ def normalizeLocation(location, axes, extrapolate=False, *, validate=False):
     {'wght': 0.0}
     """
     if validate:
-        assert set(location.keys()) <= set(axes.keys()), set(location.keys()) - set(axes.keys())
+        assert set(location.keys()) <= set(axes.keys()), set(location.keys()) - set(
+            axes.keys()
+        )
     out = {}
     for tag, triple in axes.items():
         v = location.get(tag, triple[1])
@@ -254,7 +256,9 @@ class VariationModel(object):
         7: 0.6666666666666667}]
     """
 
-    def __init__(self, locations, axisOrder=None, extrapolate=False, *, axisRanges=None):
+    def __init__(
+        self, locations, axisOrder=None, extrapolate=False, *, axisRanges=None
+    ):
         if len(set(tuple(sorted(l.items())) for l in locations)) != len(locations):
             raise VariationModelError("Locations must be unique.")
 
@@ -270,7 +274,9 @@ class VariationModel(object):
         self.axisRanges = axisRanges
 
         locations = [{k: v for k, v in loc.items() if v != 0.0} for loc in locations]
-        keyFunc = self.getMasterLocationsSortKeyFunc(locations, axisOrder=self.axisOrder)
+        keyFunc = self.getMasterLocationsSortKeyFunc(
+            locations, axisOrder=self.axisOrder
+        )
         self.locations = sorted(locations, key=keyFunc)
 
         # Mapping from user's master order to our master order
@@ -319,7 +325,9 @@ class VariationModel(object):
             value = loc[axis]
             if axis not in axisPoints:
                 axisPoints[axis] = {0.0}
-            assert value not in axisPoints[axis], 'Value "%s" in axisPoints["%s"] -->  %s' % (
+            assert (
+                value not in axisPoints[axis]
+            ), 'Value "%s" in axisPoints["%s"] -->  %s' % (
                 value,
                 axis,
                 axisPoints,
@@ -338,7 +346,9 @@ class VariationModel(object):
                     if axis in axisPoints and value in axisPoints[axis]
                 ]
                 orderedAxes = [axis for axis in axisOrder if axis in loc]
-                orderedAxes.extend([axis for axis in sorted(loc.keys()) if axis not in axisOrder])
+                orderedAxes.extend(
+                    [axis for axis in sorted(loc.keys()) if axis not in axisOrder]
+                )
                 return (
                     rank,  # First, order by increasing rank
                     -len(onPointAxes),  # Next, by decreasing number of onPoint axes
@@ -347,7 +357,9 @@ class VariationModel(object):
                         for axis in orderedAxes
                     ),  # Next, by known axes
                     tuple(orderedAxes),  # Next, by all axes
-                    tuple(sign(loc[axis]) for axis in orderedAxes),  # Next, by signs of axis values
+                    tuple(
+                        sign(loc[axis]) for axis in orderedAxes
+                    ),  # Next, by signs of axis values
                     tuple(
                         abs(loc[axis]) for axis in orderedAxes
                     ),  # Next, by absolute value of axis values
@@ -363,7 +375,9 @@ class VariationModel(object):
         # recomputing supports and deltaWeights.
         new_list = [master_list[idx] for idx in mapping]
         self.origLocations = [self.origLocations[idx] for idx in mapping]
-        locations = [{k: v for k, v in loc.items() if v != 0.0} for loc in self.origLocations]
+        locations = [
+            {k: v for k, v in loc.items() if v != 0.0} for loc in self.origLocations
+        ]
         self.mapping = [self.locations.index(l) for l in locations]
         self.reverseMapping = [locations.index(l) for l in self.locations]
         self._subModels = {}
@@ -382,7 +396,10 @@ class VariationModel(object):
                 # If it's NOT in the current box, it does not participate
                 relevant = True
                 for axis, (lower, peak, upper) in region.items():
-                    if not (prev_region[axis][1] == peak or lower < prev_region[axis][1] < upper):
+                    if not (
+                        prev_region[axis][1] == peak
+                        or lower < prev_region[axis][1] < upper
+                    ):
                         relevant = False
                         break
                 if not relevant:
@@ -475,7 +492,9 @@ class VariationModel(object):
         this function allows speed up by fetching the scalars once
         and using them with interpolateFromMastersAndScalars()."""
         return [
-            supportScalar(loc, support, extrapolate=self.extrapolate, axisRanges=self.axisRanges)
+            supportScalar(
+                loc, support, extrapolate=self.extrapolate, axisRanges=self.axisRanges
+            )
             for support in self.supports
         ]
 
@@ -607,7 +626,9 @@ def main(args=None):
         pprint(locs)
     else:
         axes = [chr(c) for c in range(ord("A"), ord("Z") + 1)]
-        locs = [dict(zip(axes, (float(v) for v in s.split(",")))) for s in args.locations]
+        locs = [
+            dict(zip(axes, (float(v) for v in s.split(",")))) for s in args.locations
+        ]
 
     model = VariationModel(locs)
     print("Sorted locations:")

@@ -25,8 +25,8 @@ def _std_string(s):
 def build_tzinfo(zone, fp):
     head_fmt = ">4s c 15x 6l"
     head_size = calcsize(head_fmt)
-    (magic, format, ttisgmtcnt, ttisstdcnt, leapcnt, timecnt, typecnt, charcnt) = unpack(
-        head_fmt, fp.read(head_size)
+    (magic, format, ttisgmtcnt, ttisstdcnt, leapcnt, timecnt, typecnt, charcnt) = (
+        unpack(head_fmt, fp.read(head_size))
     )
 
     # Make sure it is a tzfile(5) file

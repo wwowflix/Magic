@@ -228,7 +228,9 @@ def test_multiiter_fields(install_temp, arrays):
     assert bcast.numiter == checks.get_multiiter_num_of_iterators(bcast)
     assert bcast.shape == checks.get_multiiter_shape(bcast)
     assert bcast.index == checks.get_multiiter_current_index(bcast)
-    assert all(x.base is y.base for x, y in zip(bcast.iters, checks.get_multiiter_iters(bcast)))
+    assert all(
+        x.base is y.base for x, y in zip(bcast.iters, checks.get_multiiter_iters(bcast))
+    )
 
 
 def test_dtype_flags(install_temp):
@@ -279,7 +281,9 @@ def test_npyiter_api(install_temp):
     assert checks.get_npyiter_size(it) == it.itersize == 12
     assert checks.get_npyiter_ndim(it) == it.ndim == 3
     assert all(x is y for x, y in zip(checks.get_npyiter_operands(it), it.operands))
-    assert all(np.allclose(x, y) for x, y in zip(checks.get_npyiter_itviews(it), it.itviews))
+    assert all(
+        np.allclose(x, y) for x, y in zip(checks.get_npyiter_itviews(it), it.itviews)
+    )
 
 
 def test_fillwithbytes(install_temp):
@@ -341,7 +345,9 @@ def test_npystring_allocators_other_dtype(install_temp):
     assert checks.npystring_allocators_other_types(arr1, arr2) == 0
 
 
-@pytest.mark.skipif(sysconfig.get_platform() == "win-arm64", reason="no checks module on win-arm64")
+@pytest.mark.skipif(
+    sysconfig.get_platform() == "win-arm64", reason="no checks module on win-arm64"
+)
 def test_npy_uintp_type_enum():
     import checks
 

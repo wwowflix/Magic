@@ -394,7 +394,9 @@ def test_escapechar(all_parsers):
 "SLAGBORD, \\"Bergslagen\\", IKEA:s 1700-tals series","http://www.ikea.com/se/sv/catalog/categories/departments/living_room/10475/?se%7cps%7cnonbranded%7cvardagsrum%7cgoogle%7ctv_bord"'''
 
     parser = all_parsers
-    result = parser.read_csv(StringIO(data), escapechar="\\", quotechar='"', encoding="utf-8")
+    result = parser.read_csv(
+        StringIO(data), escapechar="\\", quotechar='"', encoding="utf-8"
+    )
 
     assert result["SEARCH_TERM"][2] == 'SLAGBORD, "Bergslagen", IKEA:s 1700-tals series'
 
@@ -507,11 +509,15 @@ def test_trailing_spaces(all_parsers, kwargs, expected):
     if parser.engine == "pyarrow":
         msg = "The 'delim_whitespace' option is not supported with the 'pyarrow' engine"
         with pytest.raises(ValueError, match=msg):
-            with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+            with tm.assert_produces_warning(
+                FutureWarning, match=depr_msg, check_stacklevel=False
+            ):
                 parser.read_csv(StringIO(data.replace(",", "  ")), **kwargs)
         return
 
-    with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+    with tm.assert_produces_warning(
+        FutureWarning, match=depr_msg, check_stacklevel=False
+    ):
         result = parser.read_csv(StringIO(data.replace(",", "  ")), **kwargs)
     tm.assert_frame_equal(result, expected)
 
@@ -523,7 +529,9 @@ def test_raise_on_sep_with_delim_whitespace(all_parsers):
 
     depr_msg = "The 'delim_whitespace' keyword in pd.read_csv is deprecated"
     with pytest.raises(ValueError, match="you can only specify one"):
-        with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+        with tm.assert_produces_warning(
+            FutureWarning, match=depr_msg, check_stacklevel=False
+        ):
             parser.read_csv(StringIO(data), sep=r"\s", delim_whitespace=True)
 
 
@@ -552,7 +560,9 @@ b\n"""
     if parser.engine == "pyarrow":
         msg = "The 'skipinitialspace' option is not supported with the 'pyarrow' engine"
         with pytest.raises(ValueError, match=msg):
-            with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+            with tm.assert_produces_warning(
+                FutureWarning, match=depr_msg, check_stacklevel=False
+            ):
                 parser.read_csv(
                     StringIO(data),
                     skipinitialspace=True,
@@ -560,7 +570,9 @@ b\n"""
                 )
         return
 
-    with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+    with tm.assert_produces_warning(
+        FutureWarning, match=depr_msg, check_stacklevel=False
+    ):
         result = parser.read_csv(
             StringIO(data), skipinitialspace=True, delim_whitespace=delim_whitespace
         )
@@ -604,7 +616,9 @@ A,B,C
         if parser.engine == "pyarrow":
             msg = "the 'pyarrow' engine does not support regex separators"
             with pytest.raises(ValueError, match=msg):
-                parser.read_csv(StringIO(data), sep=sep, skip_blank_lines=skip_blank_lines)
+                parser.read_csv(
+                    StringIO(data), sep=sep, skip_blank_lines=skip_blank_lines
+                )
             return
 
     result = parser.read_csv(StringIO(data), sep=sep, skip_blank_lines=skip_blank_lines)
@@ -766,7 +780,9 @@ def test_blank_lines_between_header_and_data_rows(all_parsers, nrows):
     if parser.engine == "pyarrow":
         msg = "The 'nrows' option is not supported with the 'pyarrow' engine"
         with pytest.raises(ValueError, match=msg):
-            parser.read_csv(StringIO(csv), header=3, nrows=nrows, skip_blank_lines=False)
+            parser.read_csv(
+                StringIO(csv), header=3, nrows=nrows, skip_blank_lines=False
+            )
         return
 
     df = parser.read_csv(StringIO(csv), header=3, nrows=nrows, skip_blank_lines=False)
@@ -812,10 +828,14 @@ def test_read_table_delim_whitespace_default_sep(all_parsers):
     if parser.engine == "pyarrow":
         msg = "The 'delim_whitespace' option is not supported with the 'pyarrow' engine"
         with pytest.raises(ValueError, match=msg):
-            with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+            with tm.assert_produces_warning(
+                FutureWarning, match=depr_msg, check_stacklevel=False
+            ):
                 parser.read_table(f, delim_whitespace=True)
         return
-    with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+    with tm.assert_produces_warning(
+        FutureWarning, match=depr_msg, check_stacklevel=False
+    ):
         result = parser.read_table(f, delim_whitespace=True)
     expected = DataFrame({"a": [1, 4], "b": [-2, 5], "c": [-3, 6]})
     tm.assert_frame_equal(result, expected)
@@ -831,7 +851,9 @@ def test_read_csv_delim_whitespace_non_default_sep(all_parsers, delimiter):
         "delim_whitespace=True; you can only specify one."
     )
     depr_msg = "The 'delim_whitespace' keyword in pd.read_csv is deprecated"
-    with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+    with tm.assert_produces_warning(
+        FutureWarning, match=depr_msg, check_stacklevel=False
+    ):
         with pytest.raises(ValueError, match=msg):
             parser.read_csv(f, delim_whitespace=True, sep=delimiter)
 
@@ -874,7 +896,9 @@ def test_read_table_delim_whitespace_non_default_sep(all_parsers, delimiter):
         "delim_whitespace=True; you can only specify one."
     )
     depr_msg = "The 'delim_whitespace' keyword in pd.read_table is deprecated"
-    with tm.assert_produces_warning(FutureWarning, match=depr_msg, check_stacklevel=False):
+    with tm.assert_produces_warning(
+        FutureWarning, match=depr_msg, check_stacklevel=False
+    ):
         with pytest.raises(ValueError, match=msg):
             parser.read_table(f, delim_whitespace=True, sep=delimiter)
 
@@ -906,7 +930,9 @@ def test_encoding_surrogatepass(all_parsers):
     expected.index.name = decoded * 2
 
     with tm.ensure_clean() as path:
-        Path(path).write_bytes(content * 2 + b"," + content + b"\n" + content * 2 + b"," + content)
+        Path(path).write_bytes(
+            content * 2 + b"," + content + b"\n" + content * 2 + b"," + content
+        )
         df = parser.read_csv(path, encoding_errors="surrogatepass", index_col=0)
         tm.assert_frame_equal(df, expected)
         with pytest.raises(UnicodeDecodeError, match="'utf-8' codec can't decode byte"):

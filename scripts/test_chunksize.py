@@ -191,7 +191,9 @@ def test_read_chunksize_jagged_names(all_parsers):
     if parser.engine == "pyarrow":
         msg = "The 'chunksize' option is not supported with the 'pyarrow' engine"
         with pytest.raises(ValueError, match=msg):
-            with parser.read_csv(StringIO(data), names=range(10), chunksize=4) as reader:
+            with parser.read_csv(
+                StringIO(data), names=range(10), chunksize=4
+            ) as reader:
                 concat(reader)
         return
 
@@ -273,7 +275,9 @@ def test_empty_with_nrows_chunksize(all_parsers, iterator):
     data = StringIO("foo,bar\n")
 
     if parser.engine == "pyarrow":
-        msg = "The '(nrows|chunksize)' option is not supported with the 'pyarrow' engine"
+        msg = (
+            "The '(nrows|chunksize)' option is not supported with the 'pyarrow' engine"
+        )
         with pytest.raises(ValueError, match=msg):
             if iterator:
                 with parser.read_csv(data, chunksize=nrows) as reader:

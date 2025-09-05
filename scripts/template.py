@@ -261,7 +261,9 @@ class FlexTemplate:
         self.keys = [val["name"].lower() for val in self.elements]
 
     def __setitem__(self, name, value):
-        assert isinstance(name, str), f"name must be of type 'str', not '{type(name).__name__}'."
+        assert isinstance(
+            name, str
+        ), f"name must be of type 'str', not '{type(name).__name__}'."
         # value has too many valid types to reasonably check here
         if name.lower() not in self.keys:
             raise FPDFException(f"Element not loaded, cannot set item: {name}")
@@ -271,11 +273,15 @@ class FlexTemplate:
     set = __setitem__
 
     def __contains__(self, name):
-        assert isinstance(name, str), f"name must be of type 'str', not '{type(name).__name__}'."
+        assert isinstance(
+            name, str
+        ), f"name must be of type 'str', not '{type(name).__name__}'."
         return name.lower() in self.keys
 
     def __getitem__(self, name):
-        assert isinstance(name, str), f"name must be of type 'str', not '{type(name).__name__}'."
+        assert isinstance(
+            name, str
+        ), f"name must be of type 'str', not '{type(name).__name__}'."
         if name not in self.keys:
             raise KeyError(name)
         key = name.lower()
@@ -283,7 +289,9 @@ class FlexTemplate:
             # text for this page:
             return self.texts[key]
         # find first element for default text:
-        return next((x["text"] for x in self.elements if x["name"].lower() == key), None)
+        return next(
+            (x["text"] for x in self.elements if x["name"].lower() == key), None
+        )
 
     def split_multicell(self, text, element_name):
         """
@@ -301,7 +309,9 @@ class FlexTemplate:
             when rendered in the element font style and size.
         """
         element = next(
-            element for element in self.elements if element["name"].lower() == element_name.lower()
+            element
+            for element in self.elements
+            if element["name"].lower() == element_name.lower()
         )
         if not self.splitting_pdf:
             self.splitting_pdf = FPDF()

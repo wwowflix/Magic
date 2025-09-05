@@ -22,7 +22,9 @@ if TYPE_CHECKING:
 class Renderer(ABC):
     """Abstract base class for renderers."""
 
-    def _grid_as_2d(self, x: ArrayLike, y: ArrayLike) -> tuple[CoordinateArray, CoordinateArray]:
+    def _grid_as_2d(
+        self, x: ArrayLike, y: ArrayLike
+    ) -> tuple[CoordinateArray, CoordinateArray]:
         x = np.asarray(x)
         y = np.asarray(y)
         if x.ndim == 1:

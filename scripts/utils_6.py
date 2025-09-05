@@ -200,7 +200,9 @@ if os.name == "nt":
 
         if format is None:
             format = win32pdh.PDH_FMT_LONG
-        path = win32pdh.MakeCounterPath((machine, object, instance, None, inum, counter))
+        path = win32pdh.MakeCounterPath(
+            (machine, object, instance, None, inum, counter)
+        )
         hq = win32pdh.OpenQuery()
         try:
             hc = win32pdh.AddCounter(hq, path)
@@ -458,7 +460,9 @@ def assert_equal(actual, desired, err_msg="", verbose=True):
             # Now it succeeds but comparison to scalar with a different type
             # emits a DeprecationWarning.
             # Avoid that by skipping the next check
-            raise NotImplementedError("cannot compare to a scalar " "with a different type")
+            raise NotImplementedError(
+                "cannot compare to a scalar " "with a different type"
+            )
 
         if desired == 0 and actual == 0:
             if not signbit(desired) == signbit(actual):
@@ -625,7 +629,9 @@ def assert_almost_equal(actual, desired, decimal=7, err_msg="", verbose=True):
         except AssertionError:
             raise AssertionError(_build_err_msg())
 
-    if isinstance(actual, (ndarray, tuple, list)) or isinstance(desired, (ndarray, tuple, list)):
+    if isinstance(actual, (ndarray, tuple, list)) or isinstance(
+        desired, (ndarray, tuple, list)
+    ):
         return assert_array_almost_equal(actual, desired, decimal, err_msg)
     try:
         # If one of desired/actual is not finite, handle it specially here:
@@ -841,8 +847,12 @@ def assert_array_compare(
                 flagged = func_assert_same_pos(x, y, func=isnan, hasval="nan")
 
             if equal_inf:
-                flagged |= func_assert_same_pos(x, y, func=lambda xy: xy == +inf, hasval="+inf")
-                flagged |= func_assert_same_pos(x, y, func=lambda xy: xy == -inf, hasval="-inf")
+                flagged |= func_assert_same_pos(
+                    x, y, func=lambda xy: xy == +inf, hasval="+inf"
+                )
+                flagged |= func_assert_same_pos(
+                    x, y, func=lambda xy: xy == -inf, hasval="-inf"
+                )
 
         elif istime(x) and istime(y):
             # If one is datetime64 and the other timedelta64 there is no point
@@ -889,7 +899,9 @@ def assert_array_compare(
                     if getattr(error, "dtype", object_) == object_:
                         remarks.append("Max absolute difference: " + str(max_abs_error))
                     else:
-                        remarks.append("Max absolute difference: " + array2string(max_abs_error))
+                        remarks.append(
+                            "Max absolute difference: " + array2string(max_abs_error)
+                        )
 
                     # note: this definition of relative error matches that one
                     # used by assert_allclose (found in np.isclose)
@@ -902,7 +914,9 @@ def assert_array_compare(
                     if getattr(error, "dtype", object_) == object_:
                         remarks.append("Max relative difference: " + str(max_rel_error))
                     else:
-                        remarks.append("Max relative difference: " + array2string(max_rel_error))
+                        remarks.append(
+                            "Max relative difference: " + array2string(max_rel_error)
+                        )
 
             err_msg += "\n" + "\n".join(remarks)
             msg = build_err_msg(
@@ -1268,7 +1282,9 @@ def assert_string_equal(actual, desired):
     if desired == actual:
         return
 
-    diff = list(difflib.Differ().compare(actual.splitlines(True), desired.splitlines(True)))
+    diff = list(
+        difflib.Differ().compare(actual.splitlines(True), desired.splitlines(True))
+    )
     diff_list = []
     while diff:
         d1 = diff.pop(0)
@@ -1572,7 +1588,9 @@ def _assert_valid_refcount(op):
     del d  # for pyflakes
 
 
-def assert_allclose(actual, desired, rtol=1e-7, atol=0, equal_nan=True, err_msg="", verbose=True):
+def assert_allclose(
+    actual, desired, rtol=1e-7, atol=0, equal_nan=True, err_msg="", verbose=True
+):
     """
     Raises an AssertionError if two objects are not equal up to desired
     tolerance.
@@ -1805,7 +1823,9 @@ def nulp_diff(x, y, dtype=None):
     y[np.isnan(y)] = np.nan
 
     if not x.shape == y.shape:
-        raise ValueError("x and y do not have the same shape: %s - %s" % (x.shape, y.shape))
+        raise ValueError(
+            "x and y do not have the same shape: %s - %s" % (x.shape, y.shape)
+        )
 
     def _diff(rx, ry, vdt):
         diff = np.asarray(rx - ry, dtype=vdt)
@@ -2350,7 +2370,9 @@ class suppress_warnings:
         When added within a context, filters are only added inside
         the context and will be forgotten when the context is exited.
         """
-        return self._filter(category=category, message=message, module=module, record=True)
+        return self._filter(
+            category=category, message=message, module=module, record=True
+        )
 
     def __enter__(self):
         if self._entered:
@@ -2374,7 +2396,9 @@ class suppress_warnings:
                 warnings.filterwarnings("always", category=cat, message=mess)
             else:
                 module_regex = mod.__name__.replace(".", r"\.") + "$"
-                warnings.filterwarnings("always", category=cat, message=mess, module=module_regex)
+                warnings.filterwarnings(
+                    "always", category=cat, message=mess, module=module_regex
+                )
                 self._tmp_modules.add(mod)
         warnings.showwarning = self._showwarning
         self._clear_registries()
@@ -2389,13 +2413,19 @@ class suppress_warnings:
         del self._orig_show
         del self._filters
 
-    def _showwarning(self, message, category, filename, lineno, *args, use_warnmsg=None, **kwargs):
-        for cat, _, pattern, mod, rec in (self._suppressions + self._tmp_suppressions)[::-1]:
+    def _showwarning(
+        self, message, category, filename, lineno, *args, use_warnmsg=None, **kwargs
+    ):
+        for cat, _, pattern, mod, rec in (self._suppressions + self._tmp_suppressions)[
+            ::-1
+        ]:
             if issubclass(category, cat) and pattern.match(message.args[0]) is not None:
                 if mod is None:
                     # Message and category match, either recorded or ignored
                     if rec is not None:
-                        msg = WarningMessage(message, category, filename, lineno, **kwargs)
+                        msg = WarningMessage(
+                            message, category, filename, lineno, **kwargs
+                        )
                         self.log.append(msg)
                         rec.append(msg)
                     return
@@ -2404,7 +2434,9 @@ class suppress_warnings:
                 elif mod.__file__.startswith(filename):
                     # The message and module (filename) match
                     if rec is not None:
-                        msg = WarningMessage(message, category, filename, lineno, **kwargs)
+                        msg = WarningMessage(
+                            message, category, filename, lineno, **kwargs
+                        )
                         self.log.append(msg)
                         rec.append(msg)
                     return
@@ -2603,7 +2635,9 @@ def check_free_memory(free_bytes):
             )
             mem_free = -1
         else:
-            msg = f"{free_bytes/1e9} GB memory required, but {mem_free/1e9} GB available"
+            msg = (
+                f"{free_bytes/1e9} GB memory required, but {mem_free/1e9} GB available"
+            )
 
     return msg if mem_free < free_bytes else None
 
@@ -2627,7 +2661,9 @@ def _parse_size(size_str):
         "tib": 1024**4,
     }
 
-    size_re = re.compile(r"^\s*(\d+|\d+\.\d+)\s*({0})\s*$".format("|".join(suffixes.keys())), re.I)
+    size_re = re.compile(
+        r"^\s*(\d+|\d+\.\d+)\s*({0})\s*$".format("|".join(suffixes.keys())), re.I
+    )
 
     m = size_re.match(size_str.lower())
     if not m or m.group(2) not in suffixes:

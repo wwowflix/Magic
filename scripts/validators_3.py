@@ -177,9 +177,7 @@ def matches_re(regex, flags=0, func=None):
 
     if isinstance(regex, Pattern):
         if flags:
-            msg = (
-                "'flags' can only be used with a string pattern; pass flags to re.compile() instead"
-            )
+            msg = "'flags' can only be used with a string pattern; pass flags to re.compile() instead"
             raise TypeError(msg)
         pattern = regex
     else:
@@ -296,7 +294,9 @@ class _IsCallableValidator:
         We use a callable class to be able to change the ``__repr__``.
         """
         if not callable(value):
-            message = "'{name}' must be callable " "(got {value!r} that is a {actual!r})."
+            message = (
+                "'{name}' must be callable " "(got {value!r} that is a {actual!r})."
+            )
             raise NotCallableError(
                 msg=message.format(name=attr.name, value=value, actual=value.__class__),
                 value=value,

@@ -45,7 +45,9 @@ class Serializer(object):
         data = {
             "response": {
                 "body": body,  # Empty bytestring if body is stored separately
-                "headers": dict((text_type(k), text_type(v)) for k, v in response.headers.items()),
+                "headers": dict(
+                    (text_type(k), text_type(v)) for k, v in response.headers.items()
+                ),
                 "status": response.status,
                 "version": response.version,
                 "reason": text_type(response.reason),

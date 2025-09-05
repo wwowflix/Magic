@@ -20,7 +20,9 @@ if st.button("Generate PDF Report"):
     pdf.cell(200, 10, txt="Trend Report", ln=True, align="C")
 
     for i, row in df.head(10).iterrows():
-        pdf.cell(200, 10, txt=f"{row['date']} - {row['keyword']} - {row['value']}", ln=True)
+        pdf.cell(
+            200, 10, txt=f"{row['date']} - {row['keyword']} - {row['value']}", ln=True
+        )
 
     pdf.output("trend_report.pdf")
     st.success("[OK] PDF saved: trend_report.pdf")

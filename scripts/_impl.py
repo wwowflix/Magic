@@ -64,7 +64,9 @@ _IS_TRIO_MULTI_ERROR: Final = tuple(map(int, version("trio").split(".")[:2])) < 
 if _IS_TRIO_MULTI_ERROR:
     _TRIO_EXC_GROUP_TYPE = trio.MultiError  # type: ignore[attr-defined] # pylint: disable=no-member
 else:
-    _TRIO_EXC_GROUP_TYPE = BaseExceptionGroup  # pylint: disable=possibly-used-before-assignment
+    _TRIO_EXC_GROUP_TYPE = (
+        BaseExceptionGroup  # pylint: disable=possibly-used-before-assignment
+    )
 
 CONN_TIMEOUT: Final = 60  # default connect & disconnect timeout, in seconds
 MESSAGE_QUEUE_SIZE: Final = 1
@@ -120,7 +122,9 @@ class _preserve_current_exception:
         elif isinstance(
             value, BaseExceptionGroup
         ):  # pylint: disable=possibly-used-before-assignment
-            filtered_exception = value.subgroup(lambda exc: not isinstance(exc, trio.Cancelled))
+            filtered_exception = value.subgroup(
+                lambda exc: not isinstance(exc, trio.Cancelled)
+            )
         else:
             filtered_exception = _ignore_cancel(value)
         return filtered_exception is None
@@ -303,7 +307,10 @@ async def open_websocket(
             # there's technically loss of info here, with __suppress_context__=True you
             # still have original __context__ available, just not printed. But we delete
             # it completely because we can't partially suppress the group
-            if user_error.__context__ is not None and not user_error.__suppress_context__:
+            if (
+                user_error.__context__ is not None
+                and not user_error.__suppress_context__
+            ):
                 exceptions.append(user_error.__context__)
                 eg_substr = " and the context for the user exception"
             eg_str = (
@@ -1116,13 +1123,15 @@ class WebSocketConnection(trio.abc.AsyncResource):
         self._reject_status = 0
         self._reject_headers: tuple[tuple[bytes, bytes], ...] = ()
         self._reject_body = b""
-        self._send_channel, self._recv_channel = trio.open_memory_channel[Union[bytes, str]](
-            message_queue_size
-        )
+        self._send_channel, self._recv_channel = trio.open_memory_channel[
+            Union[bytes, str]
+        ](message_queue_size)
         self._pings: OrderedDict[bytes, trio.Event] = OrderedDict()
         # Set when the server has received a connection request event. This
         # future is never set on client connections.
-        self._connection_proposal: Future[WebSocketRequest] | None = Future[WebSocketRequest]()
+        self._connection_proposal: Future[WebSocketRequest] | None = Future[
+            WebSocketRequest
+        ]()
         # Set once the WebSocket open handshake takes place, i.e.
         # ConnectionRequested for server or ConnectedEstablished for client.
         self._open_handshake = trio.Event()
@@ -1466,7 +1475,9 @@ class WebSocketConnection(trio.abc.AsyncResource):
         assert self._connection_proposal is not None
         self._connection_proposal.set_value(proposal)
 
-    async def _handle_accept_connection_event(self, event: wsproto.events.AcceptConnection) -> None:
+    async def _handle_accept_connection_event(
+        self, event: wsproto.events.AcceptConnection
+    ) -> None:
         """
         Handle an AcceptConnection event.
 
@@ -1476,7 +1487,9 @@ class WebSocketConnection(trio.abc.AsyncResource):
         self._handshake_headers = tuple(event.extra_headers)
         self._open_handshake.set()
 
-    async def _handle_reject_connection_event(self, event: wsproto.events.RejectConnection) -> None:
+    async def _handle_reject_connection_event(
+        self, event: wsproto.events.RejectConnection
+    ) -> None:
         """
         Handle a RejectConnection event.
 
@@ -1485,7 +1498,9 @@ class WebSocketConnection(trio.abc.AsyncResource):
         self._reject_status = event.status_code
         self._reject_headers = tuple(event.headers)
         if not event.has_body:
-            raise ConnectionRejected(self._reject_status, self._reject_headers, body=None)
+            raise ConnectionRejected(
+                self._reject_status, self._reject_headers, body=None
+            )
 
     async def _handle_reject_data_event(self, event: wsproto.events.RejectData) -> None:
         """
@@ -1499,7 +1514,9 @@ class WebSocketConnection(trio.abc.AsyncResource):
                 self._reject_status, self._reject_headers, body=self._reject_body
             )
 
-    async def _handle_close_connection_event(self, event: wsproto.events.CloseConnection) -> None:
+    async def _handle_close_connection_event(
+        self, event: wsproto.events.CloseConnection
+    ) -> None:
         """
         Handle a close event.
 
@@ -1632,7 +1649,9 @@ class WebSocketConnection(trio.abc.AsyncResource):
                         # if-else or case block for every type individually.
                         await handler(event)  # type: ignore[operator]
                     except KeyError:
-                        logger.warning('%s received unknown event type: "%s"', self, event_type)
+                        logger.warning(
+                            '%s received unknown event type: "%s"', self, event_type
+                        )
                     except ConnectionClosed:
                         self._reader_running = False
                         break
@@ -1780,12 +1799,16 @@ class WebSocketServer:
         listener must be socket-based.
         """
         if len(self._listeners) > 1:
-            raise RuntimeError("Cannot get port because this server has" " more than 1 listener.")
+            raise RuntimeError(
+                "Cannot get port because this server has" " more than 1 listener."
+            )
         listener = self.listeners[0]
         try:
             return listener.port  # type: ignore[union-attr]
         except AttributeError:
-            raise RuntimeError(f"This socket does not have a port: {repr(listener)}") from None
+            raise RuntimeError(
+                f"This socket does not have a port: {repr(listener)}"
+            ) from None
 
     @property
     def listeners(self) -> list[Endpoint | str]:

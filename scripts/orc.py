@@ -145,7 +145,9 @@ def to_orc(
             or is_period_dtype(dtype)
             or is_unsigned_integer_dtype(dtype)
         ):
-            raise NotImplementedError("The dtype of one or more columns is not supported yet.")
+            raise NotImplementedError(
+                "The dtype of one or more columns is not supported yet."
+            )
 
     if engine != "pyarrow":
         raise ValueError("engine must be 'pyarrow'")

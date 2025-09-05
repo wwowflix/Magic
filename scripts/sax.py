@@ -28,7 +28,9 @@ def to_sax(walker, handler):
             continue
         elif type in ("StartTag", "EmptyTag"):
             attrs = AttributesNSImpl(token["data"], unadjustForeignAttributes)
-            handler.startElementNS((token["namespace"], token["name"]), token["name"], attrs)
+            handler.startElementNS(
+                (token["namespace"], token["name"]), token["name"], attrs
+            )
             if type == "EmptyTag":
                 handler.endElementNS((token["namespace"], token["name"]), token["name"])
         elif type == "EndTag":

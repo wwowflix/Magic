@@ -38,7 +38,9 @@ def preprocess_weights(obj: NDFrame, weights, axis: int) -> np.ndarray:
                 try:
                     weights = obj[weights]
                 except KeyError as err:
-                    raise KeyError("String passed to weights not a valid column") from err
+                    raise KeyError(
+                        "String passed to weights not a valid column"
+                    ) from err
             else:
                 raise ValueError(
                     "Strings can only be passed to "
@@ -46,7 +48,9 @@ def preprocess_weights(obj: NDFrame, weights, axis: int) -> np.ndarray:
                     "a DataFrame"
                 )
         else:
-            raise ValueError("Strings cannot be passed as weights when sampling from a Series.")
+            raise ValueError(
+                "Strings cannot be passed as weights when sampling from a Series."
+            )
 
     if isinstance(obj, ABCSeries):
         func = obj._constructor
@@ -72,7 +76,9 @@ def preprocess_weights(obj: NDFrame, weights, axis: int) -> np.ndarray:
     return weights
 
 
-def process_sampling_size(n: int | None, frac: float | None, replace: bool) -> int | None:
+def process_sampling_size(
+    n: int | None, frac: float | None, replace: bool
+) -> int | None:
     """
     Process and validate the `n` and `frac` arguments to `NDFrame.sample` and
     `.GroupBy.sample`.
@@ -87,17 +93,22 @@ def process_sampling_size(n: int | None, frac: float | None, replace: bool) -> i
         raise ValueError("Please enter a value for `frac` OR `n`, not both")
     elif n is not None:
         if n < 0:
-            raise ValueError("A negative number of rows requested. Please provide `n` >= 0.")
+            raise ValueError(
+                "A negative number of rows requested. Please provide `n` >= 0."
+            )
         if n % 1 != 0:
             raise ValueError("Only integers accepted as `n` values")
     else:
         assert frac is not None  # for mypy
         if frac > 1 and not replace:
             raise ValueError(
-                "Replace has to be set to `True` when " "upsampling the population `frac` > 1."
+                "Replace has to be set to `True` when "
+                "upsampling the population `frac` > 1."
             )
         if frac < 0:
-            raise ValueError("A negative number of rows requested. Please provide `frac` >= 0.")
+            raise ValueError(
+                "A negative number of rows requested. Please provide `frac` >= 0."
+            )
 
     return n
 

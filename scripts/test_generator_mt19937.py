@@ -270,7 +270,9 @@ class TestMultivariateHypergeometric:
         random = Generator(MT19937(self.seed))
 
         colors = np.array([10, 5, 20, 25])
-        sample = random.multivariate_hypergeometric(colors, nsample, size, method=method)
+        sample = random.multivariate_hypergeometric(
+            colors, nsample, size, method=method
+        )
         if isinstance(size, int):
             expected_shape = (size,) + colors.shape
         else:
@@ -278,7 +280,9 @@ class TestMultivariateHypergeometric:
         assert_equal(sample.shape, expected_shape)
         assert_((sample >= 0).all())
         assert_((sample <= colors).all())
-        assert_array_equal(sample.sum(axis=-1), np.full(size, fill_value=nsample, dtype=int))
+        assert_array_equal(
+            sample.sum(axis=-1), np.full(size, fill_value=nsample, dtype=int)
+        )
         if isinstance(size, int) and size >= 100000:
             # This sample is large enough to compare its mean to
             # the expected values.
@@ -291,19 +295,27 @@ class TestMultivariateHypergeometric:
 
     def test_repeatability1(self):
         random = Generator(MT19937(self.seed))
-        sample = random.multivariate_hypergeometric([3, 4, 5], 5, size=5, method="count")
+        sample = random.multivariate_hypergeometric(
+            [3, 4, 5], 5, size=5, method="count"
+        )
         expected = np.array([[2, 1, 2], [2, 1, 2], [1, 1, 3], [2, 0, 3], [2, 1, 2]])
         assert_array_equal(sample, expected)
 
     def test_repeatability2(self):
         random = Generator(MT19937(self.seed))
-        sample = random.multivariate_hypergeometric([20, 30, 50], 50, size=5, method="marginals")
-        expected = np.array([[9, 17, 24], [7, 13, 30], [9, 15, 26], [9, 17, 24], [12, 14, 24]])
+        sample = random.multivariate_hypergeometric(
+            [20, 30, 50], 50, size=5, method="marginals"
+        )
+        expected = np.array(
+            [[9, 17, 24], [7, 13, 30], [9, 15, 26], [9, 17, 24], [12, 14, 24]]
+        )
         assert_array_equal(sample, expected)
 
     def test_repeatability3(self):
         random = Generator(MT19937(self.seed))
-        sample = random.multivariate_hypergeometric([20, 30, 50], 12, size=5, method="marginals")
+        sample = random.multivariate_hypergeometric(
+            [20, 30, 50], 12, size=5, method="marginals"
+        )
         expected = np.array([[2, 3, 7], [5, 3, 4], [2, 5, 5], [5, 3, 4], [1, 5, 6]])
         assert_array_equal(sample, expected)
 
@@ -368,16 +380,30 @@ class TestIntegers:
             lbnd = 0 if dt is bool else np.iinfo(dt).min
             ubnd = 2 if dt is bool else np.iinfo(dt).max + 1
             ubnd = ubnd - 1 if endpoint else ubnd
-            assert_raises(ValueError, self.rfunc, lbnd - 1, ubnd, endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, lbnd, ubnd + 1, endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, ubnd, lbnd, endpoint=endpoint, dtype=dt)
+            assert_raises(
+                ValueError, self.rfunc, lbnd - 1, ubnd, endpoint=endpoint, dtype=dt
+            )
+            assert_raises(
+                ValueError, self.rfunc, lbnd, ubnd + 1, endpoint=endpoint, dtype=dt
+            )
+            assert_raises(
+                ValueError, self.rfunc, ubnd, lbnd, endpoint=endpoint, dtype=dt
+            )
             assert_raises(ValueError, self.rfunc, 1, 0, endpoint=endpoint, dtype=dt)
 
-            assert_raises(ValueError, self.rfunc, [lbnd - 1], ubnd, endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, [lbnd], [ubnd + 1], endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, [ubnd], [lbnd], endpoint=endpoint, dtype=dt)
+            assert_raises(
+                ValueError, self.rfunc, [lbnd - 1], ubnd, endpoint=endpoint, dtype=dt
+            )
+            assert_raises(
+                ValueError, self.rfunc, [lbnd], [ubnd + 1], endpoint=endpoint, dtype=dt
+            )
+            assert_raises(
+                ValueError, self.rfunc, [ubnd], [lbnd], endpoint=endpoint, dtype=dt
+            )
             assert_raises(ValueError, self.rfunc, 1, [0], endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, [ubnd + 1], [ubnd], endpoint=endpoint, dtype=dt)
+            assert_raises(
+                ValueError, self.rfunc, [ubnd + 1], [ubnd], endpoint=endpoint, dtype=dt
+            )
 
     def test_bounds_checking_array(self, endpoint):
         for dt in self.itype:
@@ -400,8 +426,12 @@ class TestIntegers:
                 endpoint=endpoint,
                 dtype=dt,
             )
-            assert_raises(ValueError, self.rfunc, ubnd, [lbnd] * 2, endpoint=endpoint, dtype=dt)
-            assert_raises(ValueError, self.rfunc, [1] * 2, 0, endpoint=endpoint, dtype=dt)
+            assert_raises(
+                ValueError, self.rfunc, ubnd, [lbnd] * 2, endpoint=endpoint, dtype=dt
+            )
+            assert_raises(
+                ValueError, self.rfunc, [1] * 2, 0, endpoint=endpoint, dtype=dt
+            )
 
     def test_rng_zero_and_extremes(self, endpoint):
         for dt in self.itype:
@@ -416,7 +446,9 @@ class TestIntegers:
                 tgt,
             )
             assert_equal(
-                self.rfunc([tgt], tgt + is_open, size=1000, endpoint=endpoint, dtype=dt),
+                self.rfunc(
+                    [tgt], tgt + is_open, size=1000, endpoint=endpoint, dtype=dt
+                ),
                 tgt,
             )
 
@@ -426,7 +458,9 @@ class TestIntegers:
                 tgt,
             )
             assert_equal(
-                self.rfunc(tgt, [tgt + is_open], size=1000, endpoint=endpoint, dtype=dt),
+                self.rfunc(
+                    tgt, [tgt + is_open], size=1000, endpoint=endpoint, dtype=dt
+                ),
                 tgt,
             )
 
@@ -436,7 +470,9 @@ class TestIntegers:
                 tgt,
             )
             assert_equal(
-                self.rfunc([tgt], [tgt + is_open], size=1000, endpoint=endpoint, dtype=dt),
+                self.rfunc(
+                    [tgt], [tgt + is_open], size=1000, endpoint=endpoint, dtype=dt
+                ),
                 tgt,
             )
 
@@ -450,17 +486,23 @@ class TestIntegers:
             tgt = ubnd - 1
             assert_equal(self.rfunc([tgt], [tgt + 1], size=size, dtype=dt), tgt)
             assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, dtype=dt), tgt)
-            assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt)
+            assert_equal(
+                self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt
+            )
 
             tgt = lbnd
             assert_equal(self.rfunc([tgt], [tgt + 1], size=size, dtype=dt), tgt)
             assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, dtype=dt), tgt)
-            assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt)
+            assert_equal(
+                self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt
+            )
 
             tgt = (lbnd + ubnd) // 2
             assert_equal(self.rfunc([tgt], [tgt + 1], size=size, dtype=dt), tgt)
             assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, dtype=dt), tgt)
-            assert_equal(self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt)
+            assert_equal(
+                self.rfunc([tgt] * size, [tgt + 1] * size, size=size, dtype=dt), tgt
+            )
 
     def test_full_range(self, endpoint):
         # Test for ticket #1690
@@ -502,7 +544,9 @@ class TestIntegers:
 
         for dt in self.itype[1:]:
             for ubnd in [4, 8, 16]:
-                vals = self.rfunc(2, ubnd - endpoint, size=2**16, endpoint=endpoint, dtype=dt)
+                vals = self.rfunc(
+                    2, ubnd - endpoint, size=2**16, endpoint=endpoint, dtype=dt
+                )
                 assert_(vals.max() < ubnd)
                 assert_(vals.min() >= 2)
 
@@ -521,7 +565,9 @@ class TestIntegers:
             scalar = random.integers(lbnd, ubnd, size=size, endpoint=endpoint, dtype=dt)
 
             random = Generator(MT19937(1234))
-            scalar_array = random.integers([lbnd], [ubnd], size=size, endpoint=endpoint, dtype=dt)
+            scalar_array = random.integers(
+                [lbnd], [ubnd], size=size, endpoint=endpoint, dtype=dt
+            )
 
             random = Generator(MT19937(1234))
             array = random.integers(
@@ -551,7 +597,9 @@ class TestIntegers:
 
             # view as little endian for hash
             if sys.byteorder == "little":
-                val = random.integers(0, 6 - endpoint, size=1000, endpoint=endpoint, dtype=dt)
+                val = random.integers(
+                    0, 6 - endpoint, size=1000, endpoint=endpoint, dtype=dt
+                )
             else:
                 val = random.integers(
                     0, 6 - endpoint, size=1000, endpoint=endpoint, dtype=dt
@@ -562,9 +610,9 @@ class TestIntegers:
 
         # bools do not depend on endianness
         random = Generator(MT19937(1234))
-        val = random.integers(0, 2 - endpoint, size=1000, endpoint=endpoint, dtype=bool).view(
-            np.int8
-        )
+        val = random.integers(
+            0, 2 - endpoint, size=1000, endpoint=endpoint, dtype=bool
+        ).view(np.int8)
         res = hashlib.sha256(val).hexdigest()
         assert_(tgt[np.dtype(bool).name] == res)
 
@@ -584,7 +632,9 @@ class TestIntegers:
             assert_array_equal(val, val_bc)
 
             random = Generator(MT19937(1234))
-            val_bc = random.integers([lbnd] * 1000, [ubnd] * 1000, endpoint=endpoint, dtype=dt)
+            val_bc = random.integers(
+                [lbnd] * 1000, [ubnd] * 1000, endpoint=endpoint, dtype=dt
+            )
 
             assert_array_equal(val, val_bc)
 
@@ -673,7 +723,9 @@ class TestIntegers:
         )
         for size in [None, (5, 3, 3)]:
             random = Generator(MT19937(12345))
-            x = random.integers([[-1], [0], [1]], [2**32 - 1, 2**32, 2**32 + 1], size=size)
+            x = random.integers(
+                [[-1], [0], [1]], [2**32 - 1, 2**32, 2**32 + 1], size=size
+            )
             assert_array_equal(x, desired if size is not None else desired[0])
 
     def test_int64_uint64_broadcast_exceptions(self, endpoint):
@@ -984,7 +1036,9 @@ class TestRandomDist:
         assert_raises(ValueError, sample, -1, 3)
         assert_raises(ValueError, sample, 3.0, 3)
         assert_raises(ValueError, sample, [], 3)
-        assert_raises(ValueError, sample, [1, 2, 3, 4], 3, p=[[0.25, 0.25], [0.25, 0.25]])
+        assert_raises(
+            ValueError, sample, [1, 2, 3, 4], 3, p=[[0.25, 0.25], [0.25, 0.25]]
+        )
         assert_raises(ValueError, sample, [1, 2], 3, p=[0.4, 0.4, 0.2])
         assert_raises(ValueError, sample, [1, 2], 3, p=[1.1, -0.1])
         assert_raises(ValueError, sample, [1, 2], 3, p=[0.4, 0.4])
@@ -1102,9 +1156,15 @@ class TestRandomDist:
             lambda x: np.asarray([[i, i] for i in x]),
             lambda x: np.vstack([x, x]).T,
             # gh-11442
-            lambda x: (np.asarray([(i, i) for i in x], [("a", int), ("b", int)]).view(np.recarray)),
+            lambda x: (
+                np.asarray([(i, i) for i in x], [("a", int), ("b", int)]).view(
+                    np.recarray
+                )
+            ),
             # gh-4270
-            lambda x: np.asarray([(i, i) for i in x], [("a", object, (1,)), ("b", np.int32, (1,))]),
+            lambda x: np.asarray(
+                [(i, i) for i in x], [("a", object, (1,)), ("b", np.int32, (1,))]
+            ),
         ]:
             random = Generator(MT19937(self.seed))
             alist = conv([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
@@ -1117,7 +1177,9 @@ class TestRandomDist:
         random = Generator(MT19937(self.seed))
         actual = np.arange(16).reshape((4, 4))
         random.shuffle(actual, axis=1)
-        desired = np.array([[0, 3, 1, 2], [4, 7, 5, 6], [8, 11, 9, 10], [12, 15, 13, 14]])
+        desired = np.array(
+            [[0, 3, 1, 2], [4, 7, 5, 6], [8, 11, 9, 10], [12, 15, 13, 14]]
+        )
         assert_array_equal(actual, desired)
         random = Generator(MT19937(self.seed))
         actual = np.arange(16).reshape((4, 4))
@@ -1202,7 +1264,9 @@ class TestRandomDist:
 
     def test_permutation_custom_axis(self):
         a = np.arange(16).reshape((4, 4))
-        desired = np.array([[0, 3, 1, 2], [4, 7, 5, 6], [8, 11, 9, 10], [12, 15, 13, 14]])
+        desired = np.array(
+            [[0, 3, 1, 2], [4, 7, 5, 6], [8, 11, 9, 10], [12, 15, 13, 14]]
+        )
         random = Generator(MT19937(self.seed))
         actual = random.permutation(a, axis=1)
         assert_array_equal(actual, desired)
@@ -1628,20 +1692,28 @@ class TestRandomDist:
         # check_valid='raises' if using default svd method.
         mean = [0, 0]
         cov = [[1, 2], [1, 2]]
-        assert_raises(ValueError, random.multivariate_normal, mean, cov, check_valid="raise")
+        assert_raises(
+            ValueError, random.multivariate_normal, mean, cov, check_valid="raise"
+        )
 
         # Check that non positive-semidefinite covariance warns with
         # RuntimeWarning
         cov = [[1, 2], [2, 1]]
         assert_warns(RuntimeWarning, random.multivariate_normal, mean, cov)
-        assert_warns(RuntimeWarning, random.multivariate_normal, mean, cov, method="eigh")
-        assert_raises(LinAlgError, random.multivariate_normal, mean, cov, method="cholesky")
+        assert_warns(
+            RuntimeWarning, random.multivariate_normal, mean, cov, method="eigh"
+        )
+        assert_raises(
+            LinAlgError, random.multivariate_normal, mean, cov, method="cholesky"
+        )
 
         # and that it doesn't warn with RuntimeWarning check_valid='ignore'
         assert_no_warnings(random.multivariate_normal, mean, cov, check_valid="ignore")
 
         # and that it raises with RuntimeWarning check_valid='raises'
-        assert_raises(ValueError, random.multivariate_normal, mean, cov, check_valid="raise")
+        assert_raises(
+            ValueError, random.multivariate_normal, mean, cov, check_valid="raise"
+        )
         assert_raises(
             ValueError,
             random.multivariate_normal,
@@ -1657,7 +1729,9 @@ class TestRandomDist:
             samples = random.multivariate_normal(mean, cov, size=(3, 2), method=method)
             assert_array_almost_equal(samples[..., 0], samples[..., 1], decimal=6)
         else:
-            assert_raises(LinAlgError, random.multivariate_normal, mean, cov, method="cholesky")
+            assert_raises(
+                LinAlgError, random.multivariate_normal, mean, cov, method="cholesky"
+            )
 
         cov = np.array([[1, 0.1], [0.1, 1]], dtype=np.float32)
         with suppress_warnings() as sup:
@@ -1667,7 +1741,9 @@ class TestRandomDist:
 
         mu = np.zeros(2)
         cov = np.eye(2)
-        assert_raises(ValueError, random.multivariate_normal, mean, cov, check_valid="other")
+        assert_raises(
+            ValueError, random.multivariate_normal, mean, cov, check_valid="other"
+        )
         assert_raises(ValueError, random.multivariate_normal, np.zeros((2, 1, 1)), cov)
         assert_raises(ValueError, random.multivariate_normal, mu, np.empty((3, 2)))
         assert_raises(ValueError, random.multivariate_normal, mu, np.eye(3))

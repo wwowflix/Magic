@@ -51,9 +51,17 @@ def buffer_subst(buffer, placeholder, value):
 def escape_parens(s):
     """Add a backslash character before , ( and )"""
     if isinstance(s, str):
-        return s.replace("\\", "\\\\").replace(")", "\\)").replace("(", "\\(").replace("\r", "\\r")
+        return (
+            s.replace("\\", "\\\\")
+            .replace(")", "\\)")
+            .replace("(", "\\(")
+            .replace("\r", "\\r")
+        )
     return (
-        s.replace(b"\\", b"\\\\").replace(b")", b"\\)").replace(b"(", b"\\(").replace(b"\r", b"\\r")
+        s.replace(b"\\", b"\\\\")
+        .replace(b")", b"\\)")
+        .replace(b"(", b"\\(")
+        .replace(b"\r", b"\\r")
     )
 
 
@@ -175,7 +183,12 @@ def get_process_rss_as_mib() -> Union[Number, None]:
     pid = os.getpid()
     try:
         with open(f"/proc/{pid}/statm", encoding="utf8") as statm:
-            return int(statm.readline().split()[1]) * os.sysconf("SC_PAGE_SIZE") / 1024 / 1024
+            return (
+                int(statm.readline().split()[1])
+                * os.sysconf("SC_PAGE_SIZE")
+                / 1024
+                / 1024
+            )
     except FileNotFoundError:  # /proc files only exist under Linux
         return None
 

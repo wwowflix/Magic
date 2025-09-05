@@ -46,7 +46,9 @@ class TestLogicalOps(BaseOpsUtil):
         result = getattr(a, op_name)(pd.NA)
         tm.assert_extension_array_equal(a, result)
 
-    @pytest.mark.parametrize("other", ["a", pd.Timestamp(2017, 1, 1, 12), np.timedelta64(4)])
+    @pytest.mark.parametrize(
+        "other", ["a", pd.Timestamp(2017, 1, 1, 12), np.timedelta64(4)]
+    )
     def test_eq_mismatched_type(self, other):
         # GH-44499
         arr = pd.array([True, False])
@@ -103,7 +105,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(
             a, pd.array([True] * 3 + [False] * 3 + [None] * 3, dtype="boolean")
         )
-        tm.assert_extension_array_equal(b, pd.array([True, False, None] * 3, dtype="boolean"))
+        tm.assert_extension_array_equal(
+            b, pd.array([True, False, None] * 3, dtype="boolean")
+        )
 
     @pytest.mark.parametrize(
         "other, expected",
@@ -126,7 +130,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(result, expected)
 
         # ensure we haven't mutated anything inplace
-        tm.assert_extension_array_equal(a, pd.array([True, False, None], dtype="boolean"))
+        tm.assert_extension_array_equal(
+            a, pd.array([True, False, None], dtype="boolean")
+        )
 
     def test_kleene_and(self):
         # A clear test of behavior.
@@ -145,7 +151,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(
             a, pd.array([True] * 3 + [False] * 3 + [None] * 3, dtype="boolean")
         )
-        tm.assert_extension_array_equal(b, pd.array([True, False, None] * 3, dtype="boolean"))
+        tm.assert_extension_array_equal(
+            b, pd.array([True, False, None] * 3, dtype="boolean")
+        )
 
     @pytest.mark.parametrize(
         "other, expected",
@@ -167,7 +175,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(result, expected)
 
         # ensure we haven't mutated anything inplace
-        tm.assert_extension_array_equal(a, pd.array([True, False, None], dtype="boolean"))
+        tm.assert_extension_array_equal(
+            a, pd.array([True, False, None], dtype="boolean")
+        )
 
     def test_kleene_xor(self):
         a = pd.array([True] * 3 + [False] * 3 + [None] * 3, dtype="boolean")
@@ -185,7 +195,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(
             a, pd.array([True] * 3 + [False] * 3 + [None] * 3, dtype="boolean")
         )
-        tm.assert_extension_array_equal(b, pd.array([True, False, None] * 3, dtype="boolean"))
+        tm.assert_extension_array_equal(
+            b, pd.array([True, False, None] * 3, dtype="boolean")
+        )
 
     @pytest.mark.parametrize(
         "other, expected",
@@ -206,7 +218,9 @@ class TestLogicalOps(BaseOpsUtil):
         tm.assert_extension_array_equal(result, expected)
 
         # ensure we haven't mutated anything inplace
-        tm.assert_extension_array_equal(a, pd.array([True, False, None], dtype="boolean"))
+        tm.assert_extension_array_equal(
+            a, pd.array([True, False, None], dtype="boolean")
+        )
 
     @pytest.mark.parametrize("other", [True, False, pd.NA, [True, False, None] * 3])
     def test_no_masked_assumptions(self, other, all_logical_operators):

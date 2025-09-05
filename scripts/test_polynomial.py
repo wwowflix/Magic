@@ -28,7 +28,9 @@ class TestPolynomial:
         assert_equal(str(q), "   2\n" "3 x + 2 x + 1")
 
         r = np.poly1d([1.89999 + 2j, -3j, -5.12345678, 2 + 1j])
-        assert_equal(str(r), "            3      2\n" "(1.9 + 2j) x - 3j x - 5.123 x + (2 + 1j)")
+        assert_equal(
+            str(r), "            3      2\n" "(1.9 + 2j) x - 3j x - 5.123 x + (2 + 1j)"
+        )
 
         assert_equal(str(np.poly1d([-3, -2, -1])), "    2\n" "-3 x - 2 x - 1")
 
@@ -53,7 +55,9 @@ class TestPolynomial:
         assert_equal(p * q, np.poly1d([3.0, 8.0, 14.0, 8.0, 3.0]))
         assert_equal(p + q, np.poly1d([4.0, 4.0, 4.0]))
         assert_equal(p - q, np.poly1d([-2.0, 0.0, 2.0]))
-        assert_equal(p**4, np.poly1d([1.0, 8.0, 36.0, 104.0, 214.0, 312.0, 324.0, 216.0, 81.0]))
+        assert_equal(
+            p**4, np.poly1d([1.0, 8.0, 36.0, 104.0, 214.0, 312.0, 324.0, 216.0, 81.0])
+        )
         assert_equal(p(q), np.poly1d([9.0, 12.0, 16.0, 8.0, 6.0]))
         assert_equal(q(p), np.poly1d([3.0, 12.0, 32.0, 40.0, 34.0]))
         assert_equal(p.deriv(), np.poly1d([2.0, 2.0]))
@@ -99,7 +103,11 @@ class TestPolynomial:
 
         # Should produce real output for perfect conjugates
         assert_(np.isrealobj(np.poly([+1.082j, +2.613j, -2.613j, -1.082j])))
-        assert_(np.isrealobj(np.poly([0 + 1j, -0 + -1j, 1 + 2j, 1 - 2j, 1.0 + 3.5j, 1 - 3.5j])))
+        assert_(
+            np.isrealobj(
+                np.poly([0 + 1j, -0 + -1j, 1 + 2j, 1 - 2j, 1.0 + 3.5j, 1 - 3.5j])
+            )
+        )
         assert_(np.isrealobj(np.poly([1j, -1j, 1 + 2j, 1 - 2j, 1 + 3j, 1 - 3.0j])))
         assert_(np.isrealobj(np.poly([1j, -1j, 1 + 2j, 1 - 2j])))
         assert_(np.isrealobj(np.poly([1j, -1j, 2j, -2j])))
@@ -246,7 +254,10 @@ class TestPolynomial:
         p = np.poly1d([3, 2, 1])
         p2 = p.integ(3, k=[9, 7, 6])
         assert_(
-            (p2.coeffs == [1 / 4.0 / 5.0, 1 / 3.0 / 4.0, 1 / 2.0 / 3.0, 9 / 1.0 / 2.0, 7, 6]).all()
+            (
+                p2.coeffs
+                == [1 / 4.0 / 5.0, 1 / 3.0 / 4.0, 1 / 2.0 / 3.0, 9 / 1.0 / 2.0, 7, 6]
+            ).all()
         )
 
     def test_zero_dims(self):

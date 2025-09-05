@@ -62,7 +62,9 @@ __all__ = [
 ]
 
 
-array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
+array_function_dispatch = functools.partial(
+    overrides.array_function_dispatch, module="numpy"
+)
 
 
 class BagObj:
@@ -470,12 +472,15 @@ def load(file, mmap_mode=None, allow_pickle=False, fix_imports=True, encoding="A
             # Try a pickle
             if not allow_pickle:
                 raise ValueError(
-                    "Cannot load file containing pickled data " "when allow_pickle=False"
+                    "Cannot load file containing pickled data "
+                    "when allow_pickle=False"
                 )
             try:
                 return pickle.load(fid, **pickle_kwargs)
             except Exception as e:
-                raise IOError("Failed to interpret file %s as a pickle" % repr(file)) from e
+                raise IOError(
+                    "Failed to interpret file %s as a pickle" % repr(file)
+                ) from e
 
 
 def _save_dispatcher(file, arr, allow_pickle=None, fix_imports=None):
@@ -749,7 +754,9 @@ def _savez(file, args, kwds, compress, allow_pickle=True, pickle_kwargs=None):
         val = np.asanyarray(val)
         # always force zip64, gh-10776
         with zipf.open(fname, "w", force_zip64=True) as fid:
-            format.write_array(fid, val, allow_pickle=allow_pickle, pickle_kwargs=pickle_kwargs)
+            format.write_array(
+                fid, val, allow_pickle=allow_pickle, pickle_kwargs=pickle_kwargs
+            )
 
     zipf.close()
 
@@ -1195,7 +1202,8 @@ def loadtxt(
                 converters[i] = conv
 
         converters = [
-            conv if conv is not bytes else lambda x: x.encode(fencoding) for conv in converters
+            conv if conv is not bytes else lambda x: x.encode(fencoding)
+            for conv in converters
         ]
 
         # read data in chunks and fill it into an array via resize
@@ -2141,7 +2149,9 @@ def genfromtxt(
                 # Set to a default converter (but w/ different missing values)
                 zipit = zip(missing_values, filling_values)
                 converters = [
-                    StringConverter(dtype, locked=True, missing_values=miss, default=fill)
+                    StringConverter(
+                        dtype, locked=True, missing_values=miss, default=fill
+                    )
                     for (miss, fill) in zipit
                 ]
         # Update the converters to use the user-defined ones
@@ -2233,7 +2243,9 @@ def genfromtxt(
             # Store the values
             append_to_rows(tuple(values))
             if usemask:
-                append_to_masks(tuple([v.strip() in m for (v, m) in zip(values, missing_values)]))
+                append_to_masks(
+                    tuple([v.strip() in m for (v, m) in zip(values, missing_values)])
+                )
             if len(rows) == max_rows:
                 break
 
@@ -2353,9 +2365,14 @@ def genfromtxt(
                 (uniform_type,) = base
                 (ddtype, mdtype) = (uniform_type, bool)
             else:
-                ddtype = [(defaultfmt % i, dt) for (i, dt) in enumerate(sized_column_types)]
+                ddtype = [
+                    (defaultfmt % i, dt) for (i, dt) in enumerate(sized_column_types)
+                ]
                 if usemask:
-                    mdtype = [(defaultfmt % i, bool) for (i, dt) in enumerate(sized_column_types)]
+                    mdtype = [
+                        (defaultfmt % i, bool)
+                        for (i, dt) in enumerate(sized_column_types)
+                    ]
         else:
             ddtype = list(zip(names, sized_column_types))
             mdtype = list(zip(names, [bool] * len(sized_column_types)))
@@ -2384,7 +2401,9 @@ def genfromtxt(
                 output = rows.view(dtype)
             # Now, process the rowmasks the same way
             if usemask:
-                rowmasks = np.array(masks, dtype=np.dtype([("", bool) for t in dtype_flat]))
+                rowmasks = np.array(
+                    masks, dtype=np.dtype([("", bool) for t in dtype_flat])
+                )
                 # Construct the new dtype
                 mdtype = make_mask_descr(dtype)
                 outputmask = rowmasks.view(mdtype)

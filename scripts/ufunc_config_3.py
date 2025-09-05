@@ -11,10 +11,14 @@ class Write:
 
 
 reveal_type(np.seterr(all=None))  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
-reveal_type(np.seterr(divide="ignore"))  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
+reveal_type(
+    np.seterr(divide="ignore")
+)  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
 reveal_type(np.seterr(over="warn"))  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
 reveal_type(np.seterr(under="call"))  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
-reveal_type(np.seterr(invalid="raise"))  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
+reveal_type(
+    np.seterr(invalid="raise")
+)  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
 reveal_type(np.geterr())  # E: TypedDict('numpy.core._ufunc_config._ErrDict'
 
 reveal_type(np.setbufsize(4096))  # E: int

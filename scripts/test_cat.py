@@ -91,7 +91,9 @@ def test_str_cat_raises_intuitive_error(index_or_series):
 @pytest.mark.parametrize("sep", ["", None])
 @pytest.mark.parametrize("dtype_target", ["object", "category"])
 @pytest.mark.parametrize("dtype_caller", ["object", "category"])
-def test_str_cat_categorical(index_or_series, dtype_caller, dtype_target, sep, infer_string):
+def test_str_cat_categorical(
+    index_or_series, dtype_caller, dtype_target, sep, infer_string
+):
     box = index_or_series
 
     with option_context("future.infer_string", infer_string):
@@ -105,7 +107,9 @@ def test_str_cat_categorical(index_or_series, dtype_caller, dtype_target, sep, i
         expected = (
             expected
             if box == Index
-            else Series(expected, index=Index(s, dtype=dtype_caller), dtype=expected.dtype)
+            else Series(
+                expected, index=Index(s, dtype=dtype_caller), dtype=expected.dtype
+            )
         )
 
         # Series/Index with unaligned Index -> t.values
@@ -383,7 +387,9 @@ def test_str_cat_special_cases():
 
 def test_cat_on_filtered_index():
     df = DataFrame(
-        index=MultiIndex.from_product([[2011, 2012], [1, 2, 3]], names=["year", "month"])
+        index=MultiIndex.from_product(
+            [[2011, 2012], [1, 2, 3]], names=["year", "month"]
+        )
     )
 
     df = df.reset_index()

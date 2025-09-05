@@ -42,7 +42,9 @@ class TestTimestampRendering:
         assert date in repr(date_freq)
         assert tz_repr not in repr(date_freq)
         assert freq_repr in repr(date_freq)
-        with tm.assert_produces_warning(FutureWarning, match=msg, check_stacklevel=False):
+        with tm.assert_produces_warning(
+            FutureWarning, match=msg, check_stacklevel=False
+        ):
             assert date_freq == eval(repr(date_freq))
 
         with tm.assert_produces_warning(FutureWarning, match=msg):
@@ -50,7 +52,9 @@ class TestTimestampRendering:
         assert date in repr(date_tz_freq)
         assert tz_repr in repr(date_tz_freq)
         assert freq_repr in repr(date_tz_freq)
-        with tm.assert_produces_warning(FutureWarning, match=msg, check_stacklevel=False):
+        with tm.assert_produces_warning(
+            FutureWarning, match=msg, check_stacklevel=False
+        ):
             assert date_tz_freq == eval(repr(date_tz_freq))
 
     def test_repr_utcoffset(self):

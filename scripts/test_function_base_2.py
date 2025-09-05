@@ -126,7 +126,9 @@ class TestRot90:
         assert_equal(rot90(a, axes=(1, 2)), a_rot90_12)
 
         for k in range(1, 5):
-            assert_equal(rot90(a, k=k, axes=(2, 0)), rot90(a_rot90_20, k=k - 1, axes=(2, 0)))
+            assert_equal(
+                rot90(a, k=k, axes=(2, 0)), rot90(a_rot90_20, k=k - 1, axes=(2, 0))
+            )
 
 
 class TestFlip:
@@ -485,8 +487,12 @@ class TestInsert:
 
         # negative axis value
         a = np.arange(24).reshape((2, 3, 4))
-        assert_equal(insert(a, 1, a[:, :, 3], axis=-1), insert(a, 1, a[:, :, 3], axis=2))
-        assert_equal(insert(a, 1, a[:, 2, :], axis=-2), insert(a, 1, a[:, 2, :], axis=1))
+        assert_equal(
+            insert(a, 1, a[:, :, 3], axis=-1), insert(a, 1, a[:, :, 3], axis=2)
+        )
+        assert_equal(
+            insert(a, 1, a[:, 2, :], axis=-2), insert(a, 1, a[:, 2, :], axis=1)
+        )
 
         # invalid axis value
         assert_raises(np.AxisError, insert, a, 1, a[:, 2, :], axis=3)
@@ -494,8 +500,12 @@ class TestInsert:
 
         # negative axis value
         a = np.arange(24).reshape((2, 3, 4))
-        assert_equal(insert(a, 1, a[:, :, 3], axis=-1), insert(a, 1, a[:, :, 3], axis=2))
-        assert_equal(insert(a, 1, a[:, 2, :], axis=-2), insert(a, 1, a[:, 2, :], axis=1))
+        assert_equal(
+            insert(a, 1, a[:, :, 3], axis=-1), insert(a, 1, a[:, :, 3], axis=2)
+        )
+        assert_equal(
+            insert(a, 1, a[:, 2, :], axis=-2), insert(a, 1, a[:, 2, :], axis=1)
+        )
 
     def test_0d(self):
         a = np.array(1)
@@ -524,7 +534,9 @@ class TestInsert:
         assert_equal(x, np.array([1, 1, 1]))
 
     def test_structured_array(self):
-        a = np.array([(1, "a"), (2, "b"), (3, "c")], dtype=[("foo", "i"), ("bar", "a1")])
+        a = np.array(
+            [(1, "a"), (2, "b"), (3, "c")], dtype=[("foo", "i"), ("bar", "a1")]
+        )
         val = (4, "d")
         b = np.insert(a, 0, val)
         assert_array_equal(b[0], np.array(val, dtype=b.dtype))
@@ -660,7 +672,9 @@ class TestCumprod:
                 )
                 assert_array_equal(
                     np.cumprod(a2, axis=-1),
-                    np.array([[1, 2, 6, 24], [5, 30, 210, 1890], [10, 30, 120, 600]], ctype),
+                    np.array(
+                        [[1, 2, 6, 24], [5, 30, 210, 1890], [10, 30, 120, 600]], ctype
+                    ),
                 )
 
 
@@ -1537,9 +1551,13 @@ class TestVectorize:
     def test_parse_gufunc_signature(self):
         assert_equal(nfb._parse_gufunc_signature("(x)->()"), ([("x",)], [()]))
         assert_equal(nfb._parse_gufunc_signature("(x,y)->()"), ([("x", "y")], [()]))
-        assert_equal(nfb._parse_gufunc_signature("(x),(y)->()"), ([("x",), ("y",)], [()]))
+        assert_equal(
+            nfb._parse_gufunc_signature("(x),(y)->()"), ([("x",), ("y",)], [()])
+        )
         assert_equal(nfb._parse_gufunc_signature("(x)->(y)"), ([("x",)], [("y",)]))
-        assert_equal(nfb._parse_gufunc_signature("(x)->(y),()"), ([("x",)], [("y",), ()]))
+        assert_equal(
+            nfb._parse_gufunc_signature("(x)->(y),()"), ([("x",)], [("y",), ()])
+        )
         assert_equal(
             nfb._parse_gufunc_signature("(),(a,b,c),(d)->(d,e)"),
             ([(), ("a", "b", "c"), ("d",)], [("d", "e")]),
@@ -1800,7 +1818,9 @@ class TestDigitize:
         x = 2**54  # loses precision in a float
         assert_equal(np.digitize(x, [x - 1, x + 1]), 1)
 
-    @pytest.mark.xfail(reason="gh-11022: np.core.multiarray._monoticity loses precision")
+    @pytest.mark.xfail(
+        reason="gh-11022: np.core.multiarray._monoticity loses precision"
+    )
     def test_large_integers_decreasing(self):
         # gh-11022
         x = 2**54  # loses precision in a float
@@ -2007,7 +2027,9 @@ class TestCorrCoef:
     )
 
     def test_non_array(self):
-        assert_almost_equal(np.corrcoef([0, 1, 0], [1, 0, 1]), [[1.0, -1.0], [-1.0, 1.0]])
+        assert_almost_equal(
+            np.corrcoef([0, 1, 0], [1, 0, 1]), [[1.0, -1.0], [-1.0, 1.0]]
+        )
 
     def test_simple(self):
         tgt1 = corrcoef(self.A)
@@ -2056,7 +2078,9 @@ class TestCorrCoef:
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always", RuntimeWarning)
             assert_array_equal(corrcoef(np.array([])), np.nan)
-            assert_array_equal(corrcoef(np.array([]).reshape(0, 2)), np.array([]).reshape(0, 0))
+            assert_array_equal(
+                corrcoef(np.array([]).reshape(0, 2)), np.array([]).reshape(0, 0)
+            )
             assert_array_equal(
                 corrcoef(np.array([]).reshape(2, 0)),
                 np.array([[np.nan, np.nan], [np.nan, np.nan]]),
@@ -2069,7 +2093,9 @@ class TestCorrCoef:
         assert_array_almost_equal(c, np.array([[1.0, -1.0], [-1.0, 1.0]]))
         assert_(np.all(np.abs(c) <= 1.0))
 
-    @pytest.mark.parametrize("test_type", [np.half, np.single, np.double, np.longdouble])
+    @pytest.mark.parametrize(
+        "test_type", [np.half, np.single, np.double, np.longdouble]
+    )
     def test_corrcoef_dtype(self, test_type):
         cast_A = self.A.astype(test_type)
         res = corrcoef(cast_A, dtype=test_type)
@@ -2107,7 +2133,9 @@ class TestCov:
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always", RuntimeWarning)
             assert_array_equal(cov(np.array([])), np.nan)
-            assert_array_equal(cov(np.array([]).reshape(0, 2)), np.array([]).reshape(0, 0))
+            assert_array_equal(
+                cov(np.array([]).reshape(0, 2)), np.array([]).reshape(0, 0)
+            )
             assert_array_equal(
                 cov(np.array([]).reshape(2, 0)),
                 np.array([[np.nan, np.nan], [np.nan, np.nan]]),
@@ -2181,7 +2209,9 @@ class TestCov:
             self.res1,
         )
 
-    @pytest.mark.parametrize("test_type", [np.half, np.single, np.double, np.longdouble])
+    @pytest.mark.parametrize(
+        "test_type", [np.half, np.single, np.double, np.longdouble]
+    )
     def test_cov_dtype(self, test_type):
         cast_x1 = self.x1.astype(test_type)
         res = cov(cast_x1, dtype=test_type)
@@ -2195,7 +2225,9 @@ class Test_I0:
 
         # need at least one test above 8, as the implementation is piecewise
         A = np.array([0.49842636, 0.6969809, 0.22011976, 0.0155549, 10.0])
-        expected = np.array([1.06307822, 1.12518299, 1.01214991, 1.00006049, 2815.71662847])
+        expected = np.array(
+            [1.06307822, 1.12518299, 1.01214991, 1.00006049, 2815.71662847]
+        )
         assert_almost_equal(i0(A), expected)
         assert_almost_equal(i0(-A), expected)
 
@@ -3036,15 +3068,25 @@ class TestPercentile:
         assert_array_equal(np.percentile(d, 50, axis=-3).shape, (11, 2, 1))
         assert_array_equal(np.percentile(d, 50, axis=-4).shape, (1, 2, 1))
 
-        assert_array_equal(np.percentile(d, 50, axis=2, interpolation="midpoint").shape, (11, 1, 1))
+        assert_array_equal(
+            np.percentile(d, 50, axis=2, interpolation="midpoint").shape, (11, 1, 1)
+        )
         assert_array_equal(
             np.percentile(d, 50, axis=-2, interpolation="midpoint").shape, (11, 1, 1)
         )
 
-        assert_array_equal(np.array(np.percentile(d, [10, 50], axis=0)).shape, (2, 1, 2, 1))
-        assert_array_equal(np.array(np.percentile(d, [10, 50], axis=1)).shape, (2, 11, 2, 1))
-        assert_array_equal(np.array(np.percentile(d, [10, 50], axis=2)).shape, (2, 11, 1, 1))
-        assert_array_equal(np.array(np.percentile(d, [10, 50], axis=3)).shape, (2, 11, 1, 2))
+        assert_array_equal(
+            np.array(np.percentile(d, [10, 50], axis=0)).shape, (2, 1, 2, 1)
+        )
+        assert_array_equal(
+            np.array(np.percentile(d, [10, 50], axis=1)).shape, (2, 11, 2, 1)
+        )
+        assert_array_equal(
+            np.array(np.percentile(d, [10, 50], axis=2)).shape, (2, 11, 1, 1)
+        )
+        assert_array_equal(
+            np.array(np.percentile(d, [10, 50], axis=3)).shape, (2, 11, 1, 2)
+        )
 
     def test_percentile_no_overwrite(self):
         a = np.array([2, 3, 4, 1])
@@ -3085,7 +3127,9 @@ class TestPercentile:
             np.percentile(x, [25, 60], axis=(0, 1, 2)),
             np.percentile(x, [25, 60], axis=None),
         )
-        assert_equal(np.percentile(x, [25, 60], axis=(0,)), np.percentile(x, [25, 60], axis=0))
+        assert_equal(
+            np.percentile(x, [25, 60], axis=(0,)), np.percentile(x, [25, 60], axis=0)
+        )
 
         d = np.arange(3 * 5 * 7 * 11).reshape((3, 5, 7, 11))
         np.random.shuffle(d.ravel())
@@ -3132,17 +3176,27 @@ class TestPercentile:
     def test_keepdims(self):
         d = np.ones((3, 5, 7, 11))
         assert_equal(np.percentile(d, 7, axis=None, keepdims=True).shape, (1, 1, 1, 1))
-        assert_equal(np.percentile(d, 7, axis=(0, 1), keepdims=True).shape, (1, 1, 7, 11))
-        assert_equal(np.percentile(d, 7, axis=(0, 3), keepdims=True).shape, (1, 5, 7, 1))
+        assert_equal(
+            np.percentile(d, 7, axis=(0, 1), keepdims=True).shape, (1, 1, 7, 11)
+        )
+        assert_equal(
+            np.percentile(d, 7, axis=(0, 3), keepdims=True).shape, (1, 5, 7, 1)
+        )
         assert_equal(np.percentile(d, 7, axis=(1,), keepdims=True).shape, (3, 1, 7, 11))
-        assert_equal(np.percentile(d, 7, (0, 1, 2, 3), keepdims=True).shape, (1, 1, 1, 1))
-        assert_equal(np.percentile(d, 7, axis=(0, 1, 3), keepdims=True).shape, (1, 1, 7, 1))
+        assert_equal(
+            np.percentile(d, 7, (0, 1, 2, 3), keepdims=True).shape, (1, 1, 1, 1)
+        )
+        assert_equal(
+            np.percentile(d, 7, axis=(0, 1, 3), keepdims=True).shape, (1, 1, 7, 1)
+        )
 
         assert_equal(
             np.percentile(d, [1, 7], axis=(0, 1, 3), keepdims=True).shape,
             (2, 1, 1, 7, 1),
         )
-        assert_equal(np.percentile(d, [1, 7], axis=(0, 3), keepdims=True).shape, (2, 1, 5, 7, 1))
+        assert_equal(
+            np.percentile(d, [1, 7], axis=(0, 3), keepdims=True).shape, (2, 1, 5, 7, 1)
+        )
 
     def test_out(self):
         o = np.zeros((4,))
@@ -3216,7 +3270,9 @@ class TestPercentile:
         b[2] = np.nan
         assert_equal(np.percentile(a, 0.3, (0, 2)), b)
         # axis02 not zerod
-        b = np.percentile(np.arange(24, dtype=float).reshape(2, 3, 4), [0.3, 0.6], (0, 2))
+        b = np.percentile(
+            np.arange(24, dtype=float).reshape(2, 3, 4), [0.3, 0.6], (0, 2)
+        )
         b[:, 1] = np.nan
         b[:, 2] = np.nan
         assert_equal(np.percentile(a, [0.3, 0.6], (0, 2)), b)
@@ -3330,8 +3386,12 @@ class TestLerp:
     @hypothesis.given(
         t0=st.floats(allow_nan=False, allow_infinity=False, min_value=0, max_value=1),
         t1=st.floats(allow_nan=False, allow_infinity=False, min_value=0, max_value=1),
-        a=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
-        b=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
+        a=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
+        b=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
     )
     def test_lerp_monotonic(self, t0, t1, a, b):
         l0 = np.lib.function_base._lerp(a, b, t0)
@@ -3345,8 +3405,12 @@ class TestLerp:
 
     @hypothesis.given(
         t=st.floats(allow_nan=False, allow_infinity=False, min_value=0, max_value=1),
-        a=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
-        b=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
+        a=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
+        b=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
     )
     def test_lerp_bounded(self, t, a, b):
         if a <= b:
@@ -3356,8 +3420,12 @@ class TestLerp:
 
     @hypothesis.given(
         t=st.floats(allow_nan=False, allow_infinity=False, min_value=0, max_value=1),
-        a=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
-        b=st.floats(allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300),
+        a=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
+        b=st.floats(
+            allow_nan=False, allow_infinity=False, min_value=-1e300, max_value=1e300
+        ),
     )
     def test_lerp_symmetric(self, t, a, b):
         # double subtraction is needed to remove the extra precision of t < 0.5
@@ -3419,7 +3487,9 @@ class TestMedian:
         assert_allclose(np.median(a0.copy(), overwrite_input=True), 1)
         assert_allclose(np.median(a1.copy(), overwrite_input=True), 0.5)
         assert_allclose(np.median(a2.copy(), overwrite_input=True), 2.5)
-        assert_allclose(np.median(a2.copy(), overwrite_input=True, axis=0), [1.5, 2.5, 3.5])
+        assert_allclose(
+            np.median(a2.copy(), overwrite_input=True, axis=0), [1.5, 2.5, 3.5]
+        )
         assert_allclose(np.median(a2.copy(), overwrite_input=True, axis=1), [1, 4])
         assert_allclose(np.median(a2.copy(), overwrite_input=True, axis=None), 2.5)
         assert_allclose(np.median(a3.copy(), overwrite_input=True, axis=0), [3, 4])
@@ -3431,9 +3501,15 @@ class TestMedian:
             np.median(a4, axis=None),
             np.median(a4.copy(), axis=None, overwrite_input=True),
         )
-        assert_allclose(np.median(a4, axis=0), np.median(a4.copy(), axis=0, overwrite_input=True))
-        assert_allclose(np.median(a4, axis=1), np.median(a4.copy(), axis=1, overwrite_input=True))
-        assert_allclose(np.median(a4, axis=2), np.median(a4.copy(), axis=2, overwrite_input=True))
+        assert_allclose(
+            np.median(a4, axis=0), np.median(a4.copy(), axis=0, overwrite_input=True)
+        )
+        assert_allclose(
+            np.median(a4, axis=1), np.median(a4.copy(), axis=1, overwrite_input=True)
+        )
+        assert_allclose(
+            np.median(a4, axis=2), np.median(a4.copy(), axis=2, overwrite_input=True)
+        )
 
     def test_array_like(self):
         x = [1, 2, 3]
@@ -3560,13 +3636,27 @@ class TestMedian:
 
         d = np.arange(3 * 5 * 7 * 11).reshape((3, 5, 7, 11))
         np.random.shuffle(d.ravel())
-        assert_equal(np.median(d, axis=(0, 1, 2))[0], np.median(d[:, :, :, 0].flatten()))
-        assert_equal(np.median(d, axis=(0, 1, 3))[1], np.median(d[:, :, 1, :].flatten()))
-        assert_equal(np.median(d, axis=(3, 1, -4))[2], np.median(d[:, :, 2, :].flatten()))
-        assert_equal(np.median(d, axis=(3, 1, 2))[2], np.median(d[2, :, :, :].flatten()))
-        assert_equal(np.median(d, axis=(3, 2))[2, 1], np.median(d[2, 1, :, :].flatten()))
-        assert_equal(np.median(d, axis=(1, -2))[2, 1], np.median(d[2, :, :, 1].flatten()))
-        assert_equal(np.median(d, axis=(1, 3))[2, 2], np.median(d[2, :, 2, :].flatten()))
+        assert_equal(
+            np.median(d, axis=(0, 1, 2))[0], np.median(d[:, :, :, 0].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(0, 1, 3))[1], np.median(d[:, :, 1, :].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(3, 1, -4))[2], np.median(d[:, :, 2, :].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(3, 1, 2))[2], np.median(d[2, :, :, :].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(3, 2))[2, 1], np.median(d[2, 1, :, :].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(1, -2))[2, 1], np.median(d[2, :, :, 1].flatten())
+        )
+        assert_equal(
+            np.median(d, axis=(1, 3))[2, 2], np.median(d[2, :, 2, :].flatten())
+        )
 
     def test_extended_axis_invalid(self):
         d = np.ones((3, 5, 7, 11))

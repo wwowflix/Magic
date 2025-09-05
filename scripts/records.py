@@ -685,7 +685,9 @@ def fromarrays(
 
     # Determine shape from data-type.
     if len(descr) != len(arrayList):
-        raise ValueError("mismatch between the number of fields " "and the number of arrays")
+        raise ValueError(
+            "mismatch between the number of fields " "and the number of arrays"
+        )
 
     d0 = descr[0].shape
     nn = len(d0)
@@ -998,7 +1000,9 @@ def fromfile(
         nbytes = shapeprod * itemsize
 
         if nbytes > size:
-            raise ValueError("Not enough bytes left in file for specified shape and type")
+            raise ValueError(
+                "Not enough bytes left in file for specified shape and type"
+            )
 
         # create the array
         _array = recarray(shape, descr)
@@ -1110,7 +1114,8 @@ def array(
         and dtype is None
     ):
         raise ValueError(
-            "Must define formats (or dtype) if object is " "None, string, or an open file"
+            "Must define formats (or dtype) if object is "
+            "None, string, or an open file"
         )
 
     kwds = {}

@@ -169,7 +169,9 @@ class WrappedCythonOp:
     #  works at the class level and not the instance level
     @classmethod
     @functools.lru_cache(maxsize=None)
-    def _get_cython_function(cls, kind: str, how: str, dtype: np.dtype, is_numeric: bool):
+    def _get_cython_function(
+        cls, kind: str, how: str, dtype: np.dtype, is_numeric: bool
+    ):
 
         dtype_str = dtype.name
         ftype = cls._CYTHON_FUNCTIONS[kind][how]
@@ -221,7 +223,9 @@ class WrappedCythonOp:
             values = ensure_float64(values)
 
         elif values.dtype.kind in ["i", "u"]:
-            if how in ["var", "mean"] or (self.kind == "transform" and self.has_dropped_na):
+            if how in ["var", "mean"] or (
+                self.kind == "transform" and self.has_dropped_na
+            ):
                 # result may still include NaN, so we have to cast
                 values = ensure_float64(values)
 
@@ -413,7 +417,9 @@ class WrappedCythonOp:
             # StringArray
             npvalues = values.to_numpy(object, na_value=np.nan)
         else:
-            raise NotImplementedError(f"function is not implemented for this dtype: {values.dtype}")
+            raise NotImplementedError(
+                f"function is not implemented for this dtype: {values.dtype}"
+            )
         return npvalues
 
     # TODO: general case implementation overridable by EAs.
@@ -769,7 +775,9 @@ class BaseGrouper:
     def nkeys(self) -> int:
         return len(self.groupings)
 
-    def get_iterator(self, data: NDFrameT, axis: int = 0) -> Iterator[tuple[Hashable, NDFrameT]]:
+    def get_iterator(
+        self, data: NDFrameT, axis: int = 0
+    ) -> Iterator[tuple[Hashable, NDFrameT]]:
         """
         Groupby iterator
 
@@ -813,7 +821,9 @@ class BaseGrouper:
             return get_flattened_list(ids, ngroups, self.levels, self.codes)
 
     @final
-    def apply(self, f: Callable, data: DataFrame | Series, axis: int = 0) -> tuple[list, bool]:
+    def apply(
+        self, f: Callable, data: DataFrame | Series, axis: int = 0
+    ) -> tuple[list, bool]:
         mutated = self.mutated
         splitter = self._get_splitter(data, axis=axis)
         group_keys = self.group_keys_seq
@@ -863,7 +873,9 @@ class BaseGrouper:
         # Original indices are where group_index would go via sorting.
         # But when dropna is true, we need to remove null values while accounting for
         # any gaps that then occur because of them.
-        group_index = get_group_index(self.codes, self.shape, sort=self._sort, xnull=True)
+        group_index = get_group_index(
+            self.codes, self.shape, sort=self._sort, xnull=True
+        )
         group_index, _ = compress_group_index(group_index, sort=self._sort)
 
         if self.has_dropped_na:
@@ -983,7 +995,9 @@ class BaseGrouper:
 
         codes = self.reconstructed_codes
         levels = [ping.result_index for ping in self.groupings]
-        return MultiIndex(levels=levels, codes=codes, verify_integrity=False, names=self.names)
+        return MultiIndex(
+            levels=levels, codes=codes, verify_integrity=False, names=self.names
+        )
 
     @final
     def get_group_levels(self) -> list[ArrayLike]:
@@ -1033,7 +1047,9 @@ class BaseGrouper:
         )
 
     @final
-    def agg_series(self, obj: Series, func: Callable, preserve_dtype: bool = False) -> ArrayLike:
+    def agg_series(
+        self, obj: Series, func: Callable, preserve_dtype: bool = False
+    ) -> ArrayLike:
         """
         Parameters
         ----------
@@ -1073,7 +1089,9 @@ class BaseGrouper:
         return out
 
     @final
-    def _aggregate_series_pure_python(self, obj: Series, func: Callable) -> npt.NDArray[np.object_]:
+    def _aggregate_series_pure_python(
+        self, obj: Series, func: Callable
+    ) -> npt.NDArray[np.object_]:
         ids, _, ngroups = self.group_info
 
         counts = np.zeros(ngroups, dtype=int)
@@ -1152,7 +1170,11 @@ class BinGrouper(BaseGrouper):
         """dict {group name -> group labels}"""
         # this is mainly for compat
         # GH 3881
-        result = {key: value for key, value in zip(self.binlabels, self.bins) if key is not NaT}
+        result = {
+            key: value
+            for key, value in zip(self.binlabels, self.bins)
+            if key is not NaT
+        }
         return result
 
     @property
@@ -1252,7 +1274,9 @@ class BinGrouper(BaseGrouper):
 
     def _aggregate_series_fast(self, obj: Series, func: Callable) -> NoReturn:
         # -> np.ndarray[object]
-        raise NotImplementedError("This should not be reached; use _aggregate_series_pure_python")
+        raise NotImplementedError(
+            "This should not be reached; use _aggregate_series_pure_python"
+        )
 
 
 def _is_indexed_like(obj, axes, axis: int) -> bool:
@@ -1336,7 +1360,9 @@ class FrameSplitter(DataSplitter):
         return df.__finalize__(sdata, method="groupby")
 
 
-def get_splitter(data: NDFrame, labels: np.ndarray, ngroups: int, axis: int = 0) -> DataSplitter:
+def get_splitter(
+    data: NDFrame, labels: np.ndarray, ngroups: int, axis: int = 0
+) -> DataSplitter:
     if isinstance(data, Series):
         klass: type[DataSplitter] = SeriesSplitter
     else:

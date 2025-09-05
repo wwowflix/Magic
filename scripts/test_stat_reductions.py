@@ -221,7 +221,9 @@ class TestSeriesStatReductions:
         self._check_stat_op("sem", alt, string_series)
 
         result = datetime_series.sem(ddof=4)
-        expected = np.std(datetime_series.values, ddof=4) / np.sqrt(len(datetime_series.values))
+        expected = np.std(datetime_series.values, ddof=4) / np.sqrt(
+            len(datetime_series.values)
+        )
         tm.assert_almost_equal(result, expected)
 
         # 1 - element series with ddof=1

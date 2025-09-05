@@ -146,7 +146,9 @@ class TestCharacterString(util.F2PyTest):
             ],
             dtype="S",
         )
-        expected = np.array([[list(item) for item in row] for row in a], dtype="u1", order="F")
+        expected = np.array(
+            [[list(item) for item in row] for row in a], dtype="u1", order="F"
+        )
         assert_array_equal(f(a), expected)
 
 
@@ -320,8 +322,12 @@ class TestCharacter(util.F2PyTest):
 
     def test_array_input_varia(self):
         f = getattr(self.module, self.fprefix + "_array_input")
-        assert_array_equal(f(["a", "b", "c"]), np.array(list(map(ord, "abc")), dtype="i1"))
-        assert_array_equal(f([b"a", b"b", b"c"]), np.array(list(map(ord, "abc")), dtype="i1"))
+        assert_array_equal(
+            f(["a", "b", "c"]), np.array(list(map(ord, "abc")), dtype="i1")
+        )
+        assert_array_equal(
+            f([b"a", b"b", b"c"]), np.array(list(map(ord, "abc")), dtype="i1")
+        )
 
         try:
             f(["a", "b", "c", "d"])

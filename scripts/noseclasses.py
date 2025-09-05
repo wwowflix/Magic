@@ -62,7 +62,9 @@ class NumpyDocTestFinder(doctest.DocTestFinder):
         add them to `tests`.
         """
 
-        doctest.DocTestFinder._find(self, tests, obj, name, module, source_lines, globs, seen)
+        doctest.DocTestFinder._find(
+            self, tests, obj, name, module, source_lines, globs, seen
+        )
 
         # Below we re-run pieces of the above method with manual modifications,
         # because the original code is buggy and fails to correctly identify
@@ -90,7 +92,10 @@ class NumpyDocTestFinder(doctest.DocTestFinder):
 
                 # Recurse to methods, properties, and nested classes.
                 if (
-                    isfunction(val) or isclass(val) or ismethod(val) or isinstance(val, property)
+                    isfunction(val)
+                    or isclass(val)
+                    or ismethod(val)
+                    or isinstance(val, property)
                 ) and self._from_module(module, val):
                     valname = f"{name}.{valname}"
                     self._find(tests, val, valname, module, source_lines, globs, seen)
@@ -187,7 +192,9 @@ class NumpyDoctest(npd.Doctest):
             # both.  In practice the Unplugger plugin above would cover us when
             # run from a standard numpy.test() call; this is just in case
             # someone wants to run our plugin outside the numpy.test() machinery
-            config.plugins.plugins = [p for p in config.plugins.plugins if p.name != "doctest"]
+            config.plugins.plugins = [
+                p for p in config.plugins.plugins if p.name != "doctest"
+            ]
 
     def set_test_context(self, test):
         """Configure `test` object to set test context
@@ -292,7 +299,9 @@ class Unplugger:
 
     def configure(self, options, config):
         # Pull named plugin out of plugins list
-        config.plugins.plugins = [p for p in config.plugins.plugins if p.name != self.to_unplug]
+        config.plugins.plugins = [
+            p for p in config.plugins.plugins if p.name != self.to_unplug
+        ]
 
 
 class KnownFailurePlugin(ErrorClassPlugin):

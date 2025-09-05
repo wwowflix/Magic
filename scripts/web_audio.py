@@ -300,7 +300,9 @@ class AudioNode:
             number_of_outputs=float(json["numberOfOutputs"]),
             channel_count=float(json["channelCount"]),
             channel_count_mode=ChannelCountMode.from_json(json["channelCountMode"]),
-            channel_interpretation=ChannelInterpretation.from_json(json["channelInterpretation"]),
+            channel_interpretation=ChannelInterpretation.from_json(
+                json["channelInterpretation"]
+            ),
         )
 
 
@@ -551,10 +553,14 @@ class NodesConnected:
             source_id=GraphObjectId.from_json(json["sourceId"]),
             destination_id=GraphObjectId.from_json(json["destinationId"]),
             source_output_index=(
-                float(json["sourceOutputIndex"]) if "sourceOutputIndex" in json else None
+                float(json["sourceOutputIndex"])
+                if "sourceOutputIndex" in json
+                else None
             ),
             destination_input_index=(
-                float(json["destinationInputIndex"]) if "destinationInputIndex" in json else None
+                float(json["destinationInputIndex"])
+                if "destinationInputIndex" in json
+                else None
             ),
         )
 
@@ -579,10 +585,14 @@ class NodesDisconnected:
             source_id=GraphObjectId.from_json(json["sourceId"]),
             destination_id=GraphObjectId.from_json(json["destinationId"]),
             source_output_index=(
-                float(json["sourceOutputIndex"]) if "sourceOutputIndex" in json else None
+                float(json["sourceOutputIndex"])
+                if "sourceOutputIndex" in json
+                else None
             ),
             destination_input_index=(
-                float(json["destinationInputIndex"]) if "destinationInputIndex" in json else None
+                float(json["destinationInputIndex"])
+                if "destinationInputIndex" in json
+                else None
             ),
         )
 
@@ -606,7 +616,9 @@ class NodeParamConnected:
             source_id=GraphObjectId.from_json(json["sourceId"]),
             destination_id=GraphObjectId.from_json(json["destinationId"]),
             source_output_index=(
-                float(json["sourceOutputIndex"]) if "sourceOutputIndex" in json else None
+                float(json["sourceOutputIndex"])
+                if "sourceOutputIndex" in json
+                else None
             ),
         )
 
@@ -630,6 +642,8 @@ class NodeParamDisconnected:
             source_id=GraphObjectId.from_json(json["sourceId"]),
             destination_id=GraphObjectId.from_json(json["destinationId"]),
             source_output_index=(
-                float(json["sourceOutputIndex"]) if "sourceOutputIndex" in json else None
+                float(json["sourceOutputIndex"])
+                if "sourceOutputIndex" in json
+                else None
             ),
         )

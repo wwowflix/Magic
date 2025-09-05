@@ -408,7 +408,9 @@ class TestSaveTxt:
 
     def test_structured_padded(self):
         # gh-13297
-        a = np.array([(1, 2, 3), (4, 5, 6)], dtype=[("foo", "i4"), ("bar", "i4"), ("baz", "i4")])
+        a = np.array(
+            [(1, 2, 3), (4, 5, 6)], dtype=[("foo", "i4"), ("bar", "i4"), ("baz", "i4")]
+        )
         c = BytesIO()
         np.savetxt(c, a[["foo", "baz"]], fmt="%d")
         c.seek(0)
@@ -476,13 +478,17 @@ class TestSaveTxt:
         commentstr = "% "
         np.savetxt(c, a, fmt="%1d", header=test_header_footer, comments=commentstr)
         c.seek(0)
-        assert_equal(c.read(), asbytes(commentstr + test_header_footer + "\n" + "1 2\n3 4\n"))
+        assert_equal(
+            c.read(), asbytes(commentstr + test_header_footer + "\n" + "1 2\n3 4\n")
+        )
         # Test the commentstr keyword argument used on the footer
         c = BytesIO()
         commentstr = "% "
         np.savetxt(c, a, fmt="%1d", footer=test_header_footer, comments=commentstr)
         c.seek(0)
-        assert_equal(c.read(), asbytes("1 2\n3 4\n" + commentstr + test_header_footer + "\n"))
+        assert_equal(
+            c.read(), asbytes("1 2\n3 4\n" + commentstr + test_header_footer + "\n")
+        )
 
     @pytest.mark.parametrize("filename_type", [Path, str])
     def test_file_roundtrip(self, filename_type):
@@ -576,7 +582,9 @@ class TestSaveTxt:
         a = np.array([utf8], dtype=np.str_)
         with tempdir() as tmpdir:
             # set encoding as on windows it may not be unicode even on py3
-            np.savetxt(os.path.join(tmpdir, "test.csv"), a, fmt=["%s"], encoding="UTF-8")
+            np.savetxt(
+                os.path.join(tmpdir, "test.csv"), a, fmt=["%s"], encoding="UTF-8"
+            )
 
     def test_unicode_roundtrip(self):
         utf8 = b"\xcf\x96".decode("UTF-8")
@@ -640,7 +648,10 @@ class TestSaveTxt:
                 # The test takes at least 6GB of memory, writes a file larger
                 # than 4GB. This tests the ``allowZip64`` kwarg to ``zipfile``
                 test_data = np.asarray(
-                    [np.random.rand(np.random.randint(50, 100), 4) for i in range(800000)],
+                    [
+                        np.random.rand(np.random.randint(50, 100), 4)
+                        for i in range(800000)
+                    ],
                     dtype=object,
                 )
                 with tempdir() as tmpdir:
@@ -665,7 +676,9 @@ class TestSaveTxt:
             raise MemoryError("Child process raised a MemoryError exception")
         # -9 indicates a SIGKILL, probably an OOM.
         if p.exitcode == -9:
-            pytest.xfail("subprocess got a SIGKILL, apparently free memory was not sufficient")
+            pytest.xfail(
+                "subprocess got a SIGKILL, apparently free memory was not sufficient"
+            )
         assert p.exitcode == 0
 
 
@@ -808,7 +821,9 @@ class TestLoadTxt(LoadTxtBase):
         c = TextIO()
         c.write("1,2,3,,5\n")
         c.seek(0)
-        x = np.loadtxt(c, dtype=int, delimiter=",", converters={3: lambda s: int(s or -999)})
+        x = np.loadtxt(
+            c, dtype=int, delimiter=",", converters={3: lambda s: int(s or -999)}
+        )
         a = np.array([1, 2, 3, -999, 5], int)
         assert_array_equal(x, a)
 
@@ -869,7 +884,9 @@ class TestLoadTxt(LoadTxtBase):
         c = TextIO()
         c.write("*/ comment\n1,2,3,5\n")
         c.seek(0)
-        assert_raises(ValueError, np.loadtxt, c, dtype=int, delimiter=",", comments="/*")
+        assert_raises(
+            ValueError, np.loadtxt, c, dtype=int, delimiter=",", comments="/*"
+        )
 
     def test_skiprows(self):
         c = TextIO()
@@ -991,14 +1008,18 @@ class TestLoadTxt(LoadTxtBase):
 
     def test_shaped_dtype(self):
         c = TextIO("aaaa  1.0  8.0  1 2 3 4 5 6")
-        dt = np.dtype([("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 3))])
+        dt = np.dtype(
+            [("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 3))]
+        )
         x = np.loadtxt(c, dtype=dt)
         a = np.array([("aaaa", 1.0, 8.0, [[1, 2, 3], [4, 5, 6]])], dtype=dt)
         assert_array_equal(x, a)
 
     def test_3d_shaped_dtype(self):
         c = TextIO("aaaa  1.0  8.0  1 2 3 4 5 6 7 8 9 10 11 12")
-        dt = np.dtype([("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 2, 3))])
+        dt = np.dtype(
+            [("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 2, 3))]
+        )
         x = np.loadtxt(c, dtype=dt)
         a = np.array(
             [("aaaa", 1.0, 8.0, [[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])],
@@ -1042,8 +1063,12 @@ class TestLoadTxt(LoadTxtBase):
         ndtype = [("idx", int), ("code", object)]
         func = lambda s: strptime(s.strip(), "%Y-%m-%d")
         converters = {1: func}
-        test = np.loadtxt(TextIO(data), delimiter=";", dtype=ndtype, converters=converters)
-        control = np.array([(1, datetime(2001, 1, 1)), (2, datetime(2002, 1, 31))], dtype=ndtype)
+        test = np.loadtxt(
+            TextIO(data), delimiter=";", dtype=ndtype, converters=converters
+        )
+        control = np.array(
+            [(1, datetime(2001, 1, 1)), (2, datetime(2002, 1, 31))], dtype=ndtype
+        )
         assert_equal(test, control)
 
     def test_uint64_type(self):
@@ -1085,7 +1110,9 @@ class TestLoadTxt(LoadTxtBase):
         is not called by default. Regression test related to gh-19598.
         """
         c = TextIO("a b c")
-        with pytest.raises(ValueError, match=".*convert string 'a' to float64 at row 0, column 1"):
+        with pytest.raises(
+            ValueError, match=".*convert string 'a' to float64 at row 0, column 1"
+        ):
             np.loadtxt(c)
 
     @pytest.mark.skipif(
@@ -1098,7 +1125,9 @@ class TestLoadTxt(LoadTxtBase):
         conversion is correct. Regression test related to gh-19598.
         """
         c = TextIO("qrs tuv")  # Invalid values for default float converter
-        with pytest.raises(ValueError, match="could not convert string 'qrs' to float64"):
+        with pytest.raises(
+            ValueError, match="could not convert string 'qrs' to float64"
+        ):
             np.loadtxt(c)
 
     def test_from_complex(self):
@@ -1309,7 +1338,9 @@ class TestLoadTxt(LoadTxtBase):
     )
     def test_max_rows_empty_lines(self, skip, data):
         with pytest.warns(UserWarning, match=f"Input line 3.*max_rows={3 - skip}"):
-            res = np.loadtxt(data, dtype=int, skiprows=skip, delimiter=",", max_rows=3 - skip)
+            res = np.loadtxt(
+                data, dtype=int, skiprows=skip, delimiter=",", max_rows=3 - skip
+            )
             assert_array_equal(res, [[-1, 0], [1, 2], [3, 4]][skip:])
 
         if isinstance(data, StringIO):
@@ -1318,7 +1349,9 @@ class TestLoadTxt(LoadTxtBase):
         with warnings.catch_warnings():
             warnings.simplefilter("error", UserWarning)
             with pytest.raises(UserWarning):
-                np.loadtxt(data, dtype=int, skiprows=skip, delimiter=",", max_rows=3 - skip)
+                np.loadtxt(
+                    data, dtype=int, skiprows=skip, delimiter=",", max_rows=3 - skip
+                )
 
 
 class Testfromregex:
@@ -1618,7 +1651,9 @@ M   33  21.99
                 data, usecols=("A", "C", "D"), names=True, dtype=None, encoding="bytes"
             )
             assert_(w[0].category is VisibleDeprecationWarning)
-        control = np.array(("aaaa", 45, 9.1), dtype=[("A", "|S4"), ("C", int), ("D", float)])
+        control = np.array(
+            ("aaaa", 45, 9.1), dtype=[("A", "|S4"), ("C", int), ("D", float)]
+        )
         assert_equal(test, control)
 
     def test_converters_with_usecols(self):
@@ -1651,7 +1686,9 @@ M   33  21.99
                 converters={"C": lambda s: 2 * int(s)},
             )
             assert_(w[0].category is VisibleDeprecationWarning)
-        control = np.array(("aaaa", 90, 9.1), dtype=[("A", "|S4"), ("C", int), ("D", float)])
+        control = np.array(
+            ("aaaa", 90, 9.1), dtype=[("A", "|S4"), ("C", int), ("D", float)]
+        )
         assert_equal(test, control)
 
     def test_converters_cornercases(self):
@@ -1700,10 +1737,12 @@ M   33  21.99
 
     def test_invalid_converter(self):
         strip_rand = lambda x: float(
-            (b"r" in x.lower() and x.split()[-1]) or ((b"r" not in x.lower() and x.strip()) or 0.0)
+            (b"r" in x.lower() and x.split()[-1])
+            or ((b"r" not in x.lower() and x.strip()) or 0.0)
         )
         strip_per = lambda x: float(
-            (b"%" in x.lower() and x.split()[0]) or ((b"%" not in x.lower() and x.strip()) or 0.0)
+            (b"%" in x.lower() and x.split()[0])
+            or ((b"%" not in x.lower() and x.strip()) or 0.0)
         )
         s = TextIO(
             "D01N01,10/1/2003 ,1 %,R 75,400,600\r\n"
@@ -1769,7 +1808,9 @@ M   33  21.99
             converters=conv,
             encoding="bytes",
         )
-        control = np.rec.array([(1, 5, -1, 0), (2, 8, -1, 1), (3, 3, -2, 3)], dtype=dtyp)
+        control = np.rec.array(
+            [(1, 5, -1, 0), (2, 8, -1, 1), (3, 3, -2, 3)], dtype=dtyp
+        )
         assert_equal(test, control)
         dtyp = [("e1", "i4"), ("e2", "i4"), ("n", "i1")]
         test = recfromcsv(
@@ -1793,18 +1834,30 @@ M   33  21.99
         ndtype = [("idx", int), ("code", object)]
         func = lambda s: strptime(s.strip(), "%Y-%m-%d")
         converters = {1: func}
-        test = np.genfromtxt(TextIO(data), delimiter=";", dtype=ndtype, converters=converters)
-        control = np.array([(1, datetime(2001, 1, 1)), (2, datetime(2002, 1, 31))], dtype=ndtype)
+        test = np.genfromtxt(
+            TextIO(data), delimiter=";", dtype=ndtype, converters=converters
+        )
+        control = np.array(
+            [(1, datetime(2001, 1, 1)), (2, datetime(2002, 1, 31))], dtype=ndtype
+        )
         assert_equal(test, control)
 
         ndtype = [("nest", [("idx", int), ("code", object)])]
-        with assert_raises_regex(NotImplementedError, "Nested fields.* not supported.*"):
-            test = np.genfromtxt(TextIO(data), delimiter=";", dtype=ndtype, converters=converters)
+        with assert_raises_regex(
+            NotImplementedError, "Nested fields.* not supported.*"
+        ):
+            test = np.genfromtxt(
+                TextIO(data), delimiter=";", dtype=ndtype, converters=converters
+            )
 
         # nested but empty fields also aren't supported
         ndtype = [("idx", int), ("code", object), ("nest", [])]
-        with assert_raises_regex(NotImplementedError, "Nested fields.* not supported.*"):
-            test = np.genfromtxt(TextIO(data), delimiter=";", dtype=ndtype, converters=converters)
+        with assert_raises_regex(
+            NotImplementedError, "Nested fields.* not supported.*"
+        ):
+            test = np.genfromtxt(
+                TextIO(data), delimiter=";", dtype=ndtype, converters=converters
+            )
 
     def test_dtype_with_object_no_converter(self):
         # Object without a converter uses bytes:
@@ -1958,7 +2011,9 @@ M   33  21.99
 
     def test_shaped_dtype(self):
         c = TextIO("aaaa  1.0  8.0  1 2 3 4 5 6")
-        dt = np.dtype([("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 3))])
+        dt = np.dtype(
+            [("name", "S4"), ("x", float), ("y", float), ("block", int, (2, 3))]
+        )
         x = np.genfromtxt(c, dtype=dt)
         a = np.array([("aaaa", 1.0, 8.0, [[1, 2, 3], [4, 5, 6]])], dtype=dt)
         assert_array_equal(x, a)
@@ -2166,7 +2221,9 @@ M   33  21.99
     def test_default_field_format(self):
         # Test default format
         data = "0, 1, 2.3\n4, 5, 6.7"
-        mtest = np.genfromtxt(TextIO(data), delimiter=",", dtype=None, defaultfmt="f%02i")
+        mtest = np.genfromtxt(
+            TextIO(data), delimiter=",", dtype=None, defaultfmt="f%02i"
+        )
         ctrl = np.array(
             [(0, 1, 2.3), (4, 5, 6.7)],
             dtype=[("f00", int), ("f01", int), ("f02", float)],
@@ -2176,7 +2233,9 @@ M   33  21.99
     def test_single_dtype_wo_names(self):
         # Test single dtype w/o names
         data = "0, 1, 2.3\n4, 5, 6.7"
-        mtest = np.genfromtxt(TextIO(data), delimiter=",", dtype=float, defaultfmt="f%02i")
+        mtest = np.genfromtxt(
+            TextIO(data), delimiter=",", dtype=float, defaultfmt="f%02i"
+        )
         ctrl = np.array([[0.0, 1.0, 2.3], [4.0, 5.0, 6.7]], dtype=float)
         assert_equal(mtest, ctrl)
 
@@ -2184,14 +2243,18 @@ M   33  21.99
         # Test single dtype w explicit names
         data = "0, 1, 2.3\n4, 5, 6.7"
         mtest = np.genfromtxt(TextIO(data), delimiter=",", dtype=float, names="a, b, c")
-        ctrl = np.array([(0.0, 1.0, 2.3), (4.0, 5.0, 6.7)], dtype=[(_, float) for _ in "abc"])
+        ctrl = np.array(
+            [(0.0, 1.0, 2.3), (4.0, 5.0, 6.7)], dtype=[(_, float) for _ in "abc"]
+        )
         assert_equal(mtest, ctrl)
 
     def test_single_dtype_w_implicit_names(self):
         # Test single dtype w implicit names
         data = "a, b, c\n0, 1, 2.3\n4, 5, 6.7"
         mtest = np.genfromtxt(TextIO(data), delimiter=",", dtype=float, names=True)
-        ctrl = np.array([(0.0, 1.0, 2.3), (4.0, 5.0, 6.7)], dtype=[(_, float) for _ in "abc"])
+        ctrl = np.array(
+            [(0.0, 1.0, 2.3), (4.0, 5.0, 6.7)], dtype=[(_, float) for _ in "abc"]
+        )
         assert_equal(mtest, ctrl)
 
     def test_easy_structured_dtype(self):
@@ -2250,7 +2313,9 @@ M   33  21.99
         ctrl = np.array((1, 2, 3.14), dtype=ctrl_dtype)
         assert_equal(test, ctrl)
         # Test: no delete (spaces are replaced by _)
-        test = np.genfromtxt(TextIO(txt), delimiter=",", names=True, dtype=None, deletechars="")
+        test = np.genfromtxt(
+            TextIO(txt), delimiter=",", names=True, dtype=None, deletechars=""
+        )
         ctrl_dtype = [("A.A", int), ("B_(B)", int), ("C:C", float)]
         ctrl = np.array((1, 2, 3.14), dtype=ctrl_dtype)
         assert_equal(test, ctrl)
@@ -2276,7 +2341,9 @@ M   33  21.99
         ctrl = np.array((1, 2, 3), dtype=ctrl_dtype)
         assert_equal(test, ctrl)
         # Test: no delete (spaces are replaced by _)
-        test = np.genfromtxt(TextIO(txt), delimiter=",", names=True, dtype=int, deletechars="")
+        test = np.genfromtxt(
+            TextIO(txt), delimiter=",", names=True, dtype=int, deletechars=""
+        )
         ctrl_dtype = [("A.A", int), ("B_(B)", int), ("C:C", int)]
         ctrl = np.array((1, 2, 3), dtype=ctrl_dtype)
         assert_equal(test, ctrl)
@@ -2286,18 +2353,24 @@ M   33  21.99
         data = "A,,C\n0,1,2\n3,4,5"
         kwargs = {"delimiter": ",", "names": True}
         # w/ dtype=None
-        ctrl = np.array([(0, 1, 2), (3, 4, 5)], dtype=[(_, int) for _ in ("A", "f0", "C")])
+        ctrl = np.array(
+            [(0, 1, 2), (3, 4, 5)], dtype=[(_, int) for _ in ("A", "f0", "C")]
+        )
         test = np.genfromtxt(TextIO(data), dtype=None, **kwargs)
         assert_equal(test, ctrl)
         # w/ default dtype
-        ctrl = np.array([(0, 1, 2), (3, 4, 5)], dtype=[(_, float) for _ in ("A", "f0", "C")])
+        ctrl = np.array(
+            [(0, 1, 2), (3, 4, 5)], dtype=[(_, float) for _ in ("A", "f0", "C")]
+        )
         test = np.genfromtxt(TextIO(data), **kwargs)
 
     def test_names_auto_completion(self):
         # Make sure that names are properly completed
         data = "1 2 3\n 4 5 6"
         test = np.genfromtxt(TextIO(data), dtype=(int, float, int), names="a")
-        ctrl = np.array([(1, 2, 3), (4, 5, 6)], dtype=[("a", int), ("f0", float), ("f1", int)])
+        ctrl = np.array(
+            [(1, 2, 3), (4, 5, 6)], dtype=[("a", int), ("f0", float), ("f1", int)]
+        )
         assert_equal(test, ctrl)
 
     def test_names_with_usecols_bug1636(self):
@@ -2331,12 +2404,16 @@ M   33  21.99
         # Test fix-width w/ names
         data = "    A    B   C\n    0    1 2.3\n   45   67   9."
         kwargs = {"delimiter": (5, 5, 4), "names": True, "dtype": None}
-        ctrl = np.array([(0, 1, 2.3), (45, 67, 9.0)], dtype=[("A", int), ("B", int), ("C", float)])
+        ctrl = np.array(
+            [(0, 1, 2.3), (45, 67, 9.0)], dtype=[("A", int), ("B", int), ("C", float)]
+        )
         test = np.genfromtxt(TextIO(data), **kwargs)
         assert_equal(test, ctrl)
         #
         kwargs = {"delimiter": 5, "names": True, "dtype": None}
-        ctrl = np.array([(0, 1, 2.3), (45, 67, 9.0)], dtype=[("A", int), ("B", int), ("C", float)])
+        ctrl = np.array(
+            [(0, 1, 2.3), (45, 67, 9.0)], dtype=[("A", int), ("B", int), ("C", float)]
+        )
         test = np.genfromtxt(TextIO(data), **kwargs)
         assert_equal(test, ctrl)
 
@@ -2387,7 +2464,9 @@ M   33  21.99
         assert_equal(test[1, 0], b"test1")
         assert_equal(test[1, 1], b"testNonethe" + latin1)
         assert_equal(test[1, 2], b"test3")
-        test = np.genfromtxt(TextIO(s), dtype=None, comments=None, delimiter=",", encoding="latin1")
+        test = np.genfromtxt(
+            TextIO(s), dtype=None, comments=None, delimiter=",", encoding="latin1"
+        )
         assert_equal(test[1, 0], "test1")
         assert_equal(test[1, 1], "testNonethe" + latin1.decode("latin1"))
         assert_equal(test[1, 2], "test3")
@@ -2435,7 +2514,9 @@ M   33  21.99
         with temppath() as path:
             with open(path, "wb") as f:
                 f.write((b"test1,testNonethe" + utf8 + b",test3\n") * 2)
-            test = np.genfromtxt(path, dtype=None, comments=None, delimiter=",", encoding="UTF-8")
+            test = np.genfromtxt(
+                path, dtype=None, comments=None, delimiter=",", encoding="UTF-8"
+            )
             ctl = np.array(
                 [
                     ["test1", "testNonethe" + utf8.decode("UTF-8"), "test3"],
@@ -2448,7 +2529,9 @@ M   33  21.99
             # test a mixed dtype
             with open(path, "wb") as f:
                 f.write(b"0,testNonethe" + utf8)
-            test = np.genfromtxt(path, dtype=None, comments=None, delimiter=",", encoding="UTF-8")
+            test = np.genfromtxt(
+                path, dtype=None, comments=None, delimiter=",", encoding="UTF-8"
+            )
             assert_equal(test["f0"], 0)
             assert_equal(test["f1"], "testNonethe" + utf8.decode("UTF-8"))
 
@@ -2582,7 +2665,9 @@ M   33  21.99
         assert_equal(test, control)
 
         # Test keywords conflict
-        assert_raises(ValueError, np.genfromtxt, TextIO(data), skip_footer=1, max_rows=4)
+        assert_raises(
+            ValueError, np.genfromtxt, TextIO(data), skip_footer=1, max_rows=4
+        )
 
         # Test with invalid value
         assert_raises(ValueError, np.genfromtxt, TextIO(data), max_rows=4)
@@ -2605,7 +2690,9 @@ M   33  21.99
         # Test with header, names and comments
         txt = TextIO(data)
         test = np.genfromtxt(txt, skip_header=1, max_rows=3, names=True)
-        control = np.array([(1.0, 1.0), (2.0, 2.0), (3.0, 3.0)], dtype=[("c", "<f8"), ("d", "<f8")])
+        control = np.array(
+            [(1.0, 1.0), (2.0, 2.0), (3.0, 3.0)], dtype=[("c", "<f8"), ("d", "<f8")]
+        )
         assert_equal(test, control)
         # To continue reading the same "file", don't use skip_header or
         # names, and use the previously determined dtype.

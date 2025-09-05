@@ -82,7 +82,9 @@ def _find_vc2017():
     try:
         path = subprocess.check_output(
             [
-                os.path.join(root, "Microsoft Visual Studio", "Installer", "vswhere.exe"),
+                os.path.join(
+                    root, "Microsoft Visual Studio", "Installer", "vswhere.exe"
+                ),
                 "-latest",
                 "-prerelease",
                 "-requires",
@@ -241,7 +243,9 @@ class MSVCCompiler(CCompiler):
             plat_name = get_platform()
         # sanity check for platforms to prevent obscure errors later.
         if plat_name not in PLAT_TO_VCVARS:
-            raise DistutilsPlatformError(f"--plat-name must be one of {tuple(PLAT_TO_VCVARS)}")
+            raise DistutilsPlatformError(
+                f"--plat-name must be one of {tuple(PLAT_TO_VCVARS)}"
+            )
 
         # Get the vcvarsall.bat spec for the requested platform.
         plat_spec = PLAT_TO_VCVARS[plat_name]
@@ -318,7 +322,10 @@ class MSVCCompiler(CCompiler):
     def out_extensions(self):
         return {
             **super().out_extensions,
-            **{ext: self.res_extension for ext in self._rc_extensions + self._mc_extensions},
+            **{
+                ext: self.res_extension
+                for ext in self._rc_extensions + self._mc_extensions
+            },
         }
 
     def compile(  # noqa: C901
@@ -463,7 +470,8 @@ class MSVCCompiler(CCompiler):
 
         if runtime_library_dirs:
             self.warn(
-                "I don't know what to do with 'runtime_library_dirs': " + str(runtime_library_dirs)
+                "I don't know what to do with 'runtime_library_dirs': "
+                + str(runtime_library_dirs)
             )
 
         lib_opts = gen_lib_options(self, library_dirs, runtime_library_dirs, libraries)
@@ -475,7 +483,9 @@ class MSVCCompiler(CCompiler):
 
             export_opts = ["/EXPORT:" + sym for sym in (export_symbols or [])]
 
-            ld_args = ldflags + lib_opts + export_opts + objects + ["/OUT:" + output_filename]
+            ld_args = (
+                ldflags + lib_opts + export_opts + objects + ["/OUT:" + output_filename]
+            )
 
             # The MSVC linker generates .lib and .exp files, which cannot be
             # suppressed by any linker switches. The .lib files may even be
@@ -484,7 +494,9 @@ class MSVCCompiler(CCompiler):
             # builds, they can go into the same directory.
             build_temp = os.path.dirname(objects[0])
             if export_symbols is not None:
-                (dll_name, dll_ext) = os.path.splitext(os.path.basename(output_filename))
+                (dll_name, dll_ext) = os.path.splitext(
+                    os.path.basename(output_filename)
+                )
                 implib_file = os.path.join(build_temp, self.library_filename(dll_name))
                 ld_args.append("/IMPLIB:" + implib_file)
 
@@ -536,7 +548,9 @@ class MSVCCompiler(CCompiler):
         return "/LIBPATH:" + dir
 
     def runtime_library_dir_option(self, dir):
-        raise DistutilsPlatformError("don't know how to set runtime library search path for MSVC")
+        raise DistutilsPlatformError(
+            "don't know how to set runtime library search path for MSVC"
+        )
 
     def library_option(self, lib):
         return self.library_filename(lib)

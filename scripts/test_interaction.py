@@ -100,7 +100,9 @@ def test_iter_allocate_output_subtype():
     # matrix vs ndarray
     a = np.matrix([[1, 2], [3, 4]])
     b = np.arange(4).reshape(2, 2).T
-    i = np.nditer([a, b, None], [], [["readonly"], ["readonly"], ["writeonly", "allocate"]])
+    i = np.nditer(
+        [a, b, None], [], [["readonly"], ["readonly"], ["writeonly", "allocate"]]
+    )
     assert_(type(i.operands[2]) is np.matrix)
     assert_(type(i.operands[2]) is not np.ndarray)
     assert_equal(i.operands[2].shape, (2, 2))
@@ -199,7 +201,11 @@ def test_nanfunctions_matrices():
             warnings.simplefilter("always")
             res = f(mat, axis=1)
             assert_(isinstance(res, np.matrix))
-            assert_(np.isnan(res[1, 0]) and not np.isnan(res[0, 0]) and not np.isnan(res[2, 0]))
+            assert_(
+                np.isnan(res[1, 0])
+                and not np.isnan(res[0, 0])
+                and not np.isnan(res[2, 0])
+            )
             assert_(len(w) == 1, "no warning raised")
             assert_(issubclass(w[0].category, RuntimeWarning))
 

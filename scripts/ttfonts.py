@@ -184,7 +184,9 @@ class TTFontFile:
         return pack(">H", val)
 
     def splice(self, stream, offset, value):
-        return substr(stream, 0, offset) + value + substr(stream, offset + strlen(value))
+        return (
+            substr(stream, 0, offset) + value + substr(stream, offset + strlen(value))
+        )
 
     def _set_ushort(self, stream, offset, value):
         up = pack(">H", value)
@@ -444,7 +446,9 @@ class TTFontFile:
                     if not unicode_cmap_offset12:
                         unicode_cmap_offset12 = cmap_offset + offset
                     break
-            if (platformID == 3 and encodingID == 1) or platformID == 0:  # Microsoft, Unicode
+            if (
+                platformID == 3 and encodingID == 1
+            ) or platformID == 0:  # Microsoft, Unicode
                 format = self.get_ushort(cmap_offset + offset)
                 if format == 4:
                     if not unicode_cmap_offset:
@@ -532,7 +536,9 @@ class TTFontFile:
                     if not unicode_cmap_offset12:
                         unicode_cmap_offset12 = cmap_offset + offset
                     break
-            if (platformID == 3 and encodingID == 1) or platformID == 0:  # Microsoft, Unicode
+            if (
+                platformID == 3 and encodingID == 1
+            ) or platformID == 0:  # Microsoft, Unicode
                 format = self.get_ushort(cmap_offset + offset)
                 if format == 4:
                     unicode_cmap_offset = cmap_offset + offset
@@ -572,8 +578,12 @@ class TTFontFile:
         for code in subset:
             if code in self.charToGlyph:
                 if (self.charToGlyph[code], code) not in subsetglyphs:
-                    subsetglyphs.append((self.charToGlyph[code], code))  # Old Glyph ID => Unicode
-                subsetCharToGlyph[code] = self.charToGlyph[code]  # Unicode to old GlyphID
+                    subsetglyphs.append(
+                        (self.charToGlyph[code], code)
+                    )  # Old Glyph ID => Unicode
+                subsetCharToGlyph[code] = self.charToGlyph[
+                    code
+                ]  # Unicode to old GlyphID
             self.maxUni = max(self.maxUni, code)
         (start, dummy) = self.get_table_pos("glyf")
 
@@ -691,7 +701,9 @@ class TTFontFile:
         cmap.append(1)  # idDelta of last Segment
         # idRangeOffset(s)
         for subrange in range_:
-            cmap.append(0)  # idRangeOffset[segCount]      Offset in bytes to glyph indexArray, or 0
+            cmap.append(
+                0
+            )  # idRangeOffset[segCount]      Offset in bytes to glyph indexArray, or 0
 
         cmap.append(0)  # idRangeOffset of last Segment
         for subrange, glidx in range_:
@@ -733,7 +745,9 @@ class TTFontFile:
         maxComponentPoints = 0  # points in compound glyph
         maxComponentContours = 0  # contours in compound glyph
         maxComponentElements = 0  # number of glyphs referenced at top level
-        maxComponentDepth = 0  # levels of recursion, set to 0 if font has only simple glyphs
+        maxComponentDepth = (
+            0  # levels of recursion, set to 0 if font has only simple glyphs
+        )
         self.glyphdata = {}
 
         for originalGlyphIdx, uni in subsetglyphs:
@@ -775,7 +789,9 @@ class TTFontFile:
                         "compGlyphs", []
                     ).append(glyphIdx)
                     try:
-                        data = self._set_ushort(data, pos_in_glyph + 2, glyphSet[glyphIdx])
+                        data = self._set_ushort(
+                            data, pos_in_glyph + 2, glyphSet[glyphIdx]
+                        )
                     except KeyError:
                         data = 0
                         warnings.warn("missing glyph data %s" % glyphIdx)
@@ -934,7 +950,9 @@ class TTFontFile:
 
                 for char in glyphToChar[glyph]:
                     if char != 0 and char != 65535:
-                        w = int(round(scale * aw + 0.001))  # ROUND_HALF_UP in PY3K (like php)
+                        w = int(
+                            round(scale * aw + 0.001)
+                        )  # ROUND_HALF_UP in PY3K (like php)
                         if w == 0:
                             w = 65535
                         if char < 196608:
@@ -949,7 +967,9 @@ class TTFontFile:
             if glyph in glyphToChar:
                 for char in glyphToChar[glyph]:
                     if char != 0 and char != 65535:
-                        w = int(round(scale * aw + 0.001))  # ROUND_HALF_UP in PY3K (like php)
+                        w = int(
+                            round(scale * aw + 0.001)
+                        )  # ROUND_HALF_UP in PY3K (like php)
                         if w == 0:
                             w = 65535
                         if char < 196608:

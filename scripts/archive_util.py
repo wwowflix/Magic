@@ -85,7 +85,8 @@ def make_tarball(
     # flags for compression program, each element of list will be an argument
     if compress is not None and compress not in compress_ext.keys():
         raise ValueError(
-            "bad value for 'compress': must be None, 'gzip', 'bzip2', " "'xz' or 'compress'"
+            "bad value for 'compress': must be None, 'gzip', 'bzip2', "
+            "'xz' or 'compress'"
         )
 
     archive_name = base_name + ".tar"
@@ -172,7 +173,9 @@ def make_zipfile(base_name, base_dir, verbose=0, dry_run=0):  # noqa: C901
 
         if not dry_run:
             try:
-                zip = zipfile.ZipFile(zip_filename, "w", compression=zipfile.ZIP_DEFLATED)
+                zip = zipfile.ZipFile(
+                    zip_filename, "w", compression=zipfile.ZIP_DEFLATED
+                )
             except RuntimeError:
                 zip = zipfile.ZipFile(zip_filename, "w", compression=zipfile.ZIP_STORED)
 

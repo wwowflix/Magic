@@ -71,7 +71,9 @@ class TestMemmap:
     def test_attributes(self):
         offset = 1
         mode = "w+"
-        fp = memmap(self.tmpfp, dtype=self.dtype, mode=mode, shape=self.shape, offset=offset)
+        fp = memmap(
+            self.tmpfp, dtype=self.dtype, mode=mode, shape=self.shape, offset=offset
+        )
         assert_equal(offset, fp.offset)
         assert_equal(mode, fp.mode)
         del fp

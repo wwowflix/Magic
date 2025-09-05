@@ -165,10 +165,14 @@ class BaseXMLFormatter:
             * If value is not a list and less then length of nodes.
         """
         if self.attr_cols and not is_list_like(self.attr_cols):
-            raise TypeError(f"{type(self.attr_cols).__name__} is not a valid type for attr_cols")
+            raise TypeError(
+                f"{type(self.attr_cols).__name__} is not a valid type for attr_cols"
+            )
 
         if self.elem_cols and not is_list_like(self.elem_cols):
-            raise TypeError(f"{type(self.elem_cols).__name__} is not a valid type for elem_cols")
+            raise TypeError(
+                f"{type(self.elem_cols).__name__} is not a valid type for elem_cols"
+            )
 
     def validate_encoding(self) -> None:
         """
@@ -339,7 +343,9 @@ class EtreeXMLFormatter(BaseXMLFormatter):
             tostring,
         )
 
-        self.root = Element(f"{self.prefix_uri}{self.root_name}", attrib=self.other_namespaces())
+        self.root = Element(
+            f"{self.prefix_uri}{self.root_name}", attrib=self.other_namespaces()
+        )
 
         for d in self.frame_dicts.values():
             elem_row = SubElement(self.root, f"{self.prefix_uri}{self.row_name}")
@@ -363,7 +369,9 @@ class EtreeXMLFormatter(BaseXMLFormatter):
             self.out_xml = self.remove_declaration()
 
         if self.stylesheet is not None:
-            raise ValueError("To use stylesheet, you need lxml installed and selected as parser.")
+            raise ValueError(
+                "To use stylesheet, you need lxml installed and selected as parser."
+            )
 
         return self.out_xml
 
@@ -539,7 +547,9 @@ class LxmlXMLFormatter(BaseXMLFormatter):
             curr_parser = XMLParser(encoding=self.encoding)
 
             if isinstance(xml_data, io.StringIO):
-                xsl_doc = fromstring(xml_data.getvalue().encode(self.encoding), parser=curr_parser)
+                xsl_doc = fromstring(
+                    xml_data.getvalue().encode(self.encoding), parser=curr_parser
+                )
             else:
                 xsl_doc = parse(xml_data, parser=curr_parser)
 

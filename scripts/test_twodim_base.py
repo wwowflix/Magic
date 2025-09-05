@@ -40,7 +40,9 @@ def get_mat(n):
 
 class TestEye:
     def test_basic(self):
-        assert_equal(eye(4), array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]))
+        assert_equal(
+            eye(4), array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+        )
 
         assert_equal(
             eye(4, dtype="f"),
@@ -58,7 +60,9 @@ class TestEye:
         )
 
     def test_diag(self):
-        assert_equal(eye(4, k=1), array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]))
+        assert_equal(
+            eye(4, k=1), array([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]])
+        )
 
         assert_equal(
             eye(4, k=-1),
@@ -73,7 +77,9 @@ class TestEye:
     def test_diag2d(self):
         assert_equal(eye(3, 4, k=2), array([[0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]))
 
-        assert_equal(eye(4, 3, k=-2), array([[0, 0, 0], [0, 0, 0], [1, 0, 0], [0, 1, 0]]))
+        assert_equal(
+            eye(4, 3, k=-2), array([[0, 0, 0], [0, 0, 0], [1, 0, 0], [0, 1, 0]])
+        )
 
     def test_eye_bounds(self):
         assert_equal(eye(2, 2, 1), [[0, 1], [0, 0]])
@@ -463,13 +469,17 @@ class TestTriuIndices:
 
         # Both for indexing:
         assert_array_equal(a[iu1], array([1, 2, 3, 4, 6, 7, 8, 11, 12, 16]))
-        assert_array_equal(b[iu3], array([1, 2, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 19, 20]))
+        assert_array_equal(
+            b[iu3], array([1, 2, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 19, 20])
+        )
 
         # And for assigning values:
         a[iu1] = -1
         assert_array_equal(
             a,
-            array([[-1, -1, -1, -1], [5, -1, -1, -1], [9, 10, -1, -1], [13, 14, 15, -1]]),
+            array(
+                [[-1, -1, -1, -1], [5, -1, -1, -1], [9, 10, -1, -1], [13, 14, 15, -1]]
+            ),
         )
         b[iu3] = -1
         assert_array_equal(
@@ -530,7 +540,9 @@ class TestVander:
     def test_basic(self):
         c = np.array([0, 1, -2, 3])
         v = vander(c)
-        powers = np.array([[0, 0, 0, 0, 1], [1, 1, 1, 1, 1], [16, -8, 4, -2, 1], [81, 27, 9, 3, 1]])
+        powers = np.array(
+            [[0, 0, 0, 0, 1], [1, 1, 1, 1, 1], [16, -8, 4, -2, 1], [81, 27, 9, 3, 1]]
+        )
         # Check default value of N:
         assert_array_equal(v, powers[:, 1:])
         # Check a range of N values, including 0 and 5 (greater than default)

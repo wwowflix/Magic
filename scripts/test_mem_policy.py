@@ -361,8 +361,12 @@ async def async_test_context_locality(get_module):
 
     event = asyncio.Event()
     # the child contexts inherit the parent policy
-    concurrent_task1 = asyncio.create_task(concurrent_context1(get_module, orig_policy_name, event))
-    concurrent_task2 = asyncio.create_task(concurrent_context2(get_module, orig_policy_name, event))
+    concurrent_task1 = asyncio.create_task(
+        concurrent_context1(get_module, orig_policy_name, event)
+    )
+    concurrent_task2 = asyncio.create_task(
+        concurrent_context2(get_module, orig_policy_name, event)
+    )
     await concurrent_task1
     await concurrent_task2
 
@@ -395,8 +399,12 @@ def test_thread_locality(get_module):
 
     event = threading.Event()
     # the child threads do not inherit the parent policy
-    concurrent_task1 = threading.Thread(target=concurrent_thread1, args=(get_module, event))
-    concurrent_task2 = threading.Thread(target=concurrent_thread2, args=(get_module, event))
+    concurrent_task1 = threading.Thread(
+        target=concurrent_thread1, args=(get_module, event)
+    )
+    concurrent_task2 = threading.Thread(
+        target=concurrent_thread2, args=(get_module, event)
+    )
     concurrent_task1.start()
     concurrent_task2.start()
     concurrent_task1.join()

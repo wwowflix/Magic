@@ -215,7 +215,12 @@ class PSInterpreter(PSOperators):
         except:
             if self.tokenizer is not None:
                 log.debug(
-                    "ps error:\n" "- - - - - - -\n" "%s\n" ">>>\n" "%s\n" "- - - - - - -",
+                    "ps error:\n"
+                    "- - - - - - -\n"
+                    "%s\n"
+                    ">>>\n"
+                    "%s\n"
+                    "- - - - - - -",
                     self.tokenizer.buf[self.tokenizer.pos - 50 : self.tokenizer.pos],
                     self.tokenizer.buf[self.tokenizer.pos : self.tokenizer.pos + 50],
                 )
@@ -328,7 +333,9 @@ class PSInterpreter(PSOperators):
         object = stack[-1]
         if types:
             if object.type not in types:
-                raise PSError("typecheck, expected %s, found %s" % (repr(types), object.type))
+                raise PSError(
+                    "typecheck, expected %s, found %s" % (repr(types), object.type)
+                )
         del stack[-1]
         return object
 
@@ -373,7 +380,9 @@ def suckfont(data, encoding="ascii"):
     else:
         fontName = None
     interpreter = PSInterpreter(encoding=encoding)
-    interpreter.interpret(b"/Helvetica 4 dict dup /Encoding StandardEncoding put definefont pop")
+    interpreter.interpret(
+        b"/Helvetica 4 dict dup /Encoding StandardEncoding put definefont pop"
+    )
     interpreter.interpret(data)
     fontdir = interpreter.dictstack[0]["FontDirectory"].value
     if fontName in fontdir:

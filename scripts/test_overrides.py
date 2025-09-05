@@ -99,8 +99,12 @@ class TestGetImplementingArgs:
         subarray = np.array(1).view(OverrideSub)
         other = Other()
 
-        assert_equal(_get_implementing_args([array, subarray, other]), [subarray, array, other])
-        assert_equal(_get_implementing_args([array, other, subarray]), [subarray, array, other])
+        assert_equal(
+            _get_implementing_args([array, subarray, other]), [subarray, array, other]
+        )
+        assert_equal(
+            _get_implementing_args([array, other, subarray]), [subarray, array, other]
+        )
 
     def test_many_duck_arrays(self):
 
@@ -205,7 +209,9 @@ class TestNDArrayArrayFunction:
         # we just call the function in that case.
         array = np.array(1)
         func = lambda x: x * 2
-        result = array.__array_function__(func=func, types=(np.ndarray,), args=(array,), kwargs={})
+        result = array.__array_function__(
+            func=func, types=(np.ndarray,), args=(array,), kwargs={}
+        )
         assert_equal(result, array * 2)
 
     def test_wrong_arguments(self):
@@ -221,7 +227,9 @@ class TestArrayFunctionDispatch:
 
     def test_pickle(self):
         for proto in range(2, pickle.HIGHEST_PROTOCOL + 1):
-            roundtripped = pickle.loads(pickle.dumps(dispatched_one_arg, protocol=proto))
+            roundtripped = pickle.loads(
+                pickle.dumps(dispatched_one_arg, protocol=proto)
+            )
             assert_(roundtripped is dispatched_one_arg)
 
     def test_name_and_docstring(self):
@@ -407,7 +415,10 @@ class TestArrayFunctionImplementation:
             if exc.args[0].startswith("_dispatcher"):
                 # We replace the qualname currently, but it used `__name__`
                 # (relevant functions have the same name and qualname anyway)
-                pytest.skip("Python version is not using __qualname__ for " "TypeError formatting.")
+                pytest.skip(
+                    "Python version is not using __qualname__ for "
+                    "TypeError formatting."
+                )
 
             assert exc.args == expected_exception.args
 
@@ -537,7 +548,9 @@ class TestNumPyFunctions:
         proxy.value.__array_function__.return_value = 1
         result = np.sum(proxy)
         assert_equal(result, 1)
-        proxy.value.__array_function__.assert_called_once_with(np.sum, (ArrayProxy,), (proxy,), {})
+        proxy.value.__array_function__.assert_called_once_with(
+            np.sum, (ArrayProxy,), (proxy,), {}
+        )
         proxy.value.__array__.assert_not_called()
 
     def test_sum_forwarding_implementation(self):

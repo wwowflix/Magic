@@ -100,7 +100,8 @@ class PythonLexer(RegexLexer):
         return [
             # the old style '%s' % (...) string formatting (still valid in Py3)
             (
-                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?" "[hlL]?[E-GXc-giorsaux%]",
+                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?"
+                "[hlL]?[E-GXc-giorsaux%]",
                 String.Interpol,
             ),
             # the new style '{}'.format(...) string formatting
@@ -699,7 +700,9 @@ class PythonLexer(RegexLexer):
             include("rfstringescape"),
             include("stringescape"),
         ],
-        "bytesescape": [(r'\\([\\abfnrtv"\']|\n|x[a-fA-F0-9]{2}|[0-7]{1,3})', String.Escape)],
+        "bytesescape": [
+            (r'\\([\\abfnrtv"\']|\n|x[a-fA-F0-9]{2}|[0-7]{1,3})', String.Escape)
+        ],
         "stringescape": [
             (r"\\(N\{.*?\}|u[a-fA-F0-9]{4}|U[a-fA-F0-9]{8})", String.Escape),
             include("bytesescape"),
@@ -777,7 +780,8 @@ class Python2Lexer(RegexLexer):
         return [
             # the old style '%s' % (...) string formatting
             (
-                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?" "[hlL]?[E-GXc-giorsux%]",
+                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?"
+                "[hlL]?[E-GXc-giorsux%]",
                 String.Interpol,
             ),
             # backslashes, quotes and formatting signs must be parsed one at a time
@@ -1310,7 +1314,9 @@ class PythonConsoleLexer(Lexer):
                 curcode += line[3:]
             else:
                 if curcode:
-                    yield from do_insertions(insertions, pylexer.get_tokens_unprocessed(curcode))
+                    yield from do_insertions(
+                        insertions, pylexer.get_tokens_unprocessed(curcode)
+                    )
                     curcode = ""
                     insertions = []
                 if line.startswith("Traceback (most recent call last):") or re.match(
@@ -1331,7 +1337,9 @@ class PythonConsoleLexer(Lexer):
                 else:
                     yield match.start(), Generic.Output, line
         if curcode:
-            yield from do_insertions(insertions, pylexer.get_tokens_unprocessed(curcode))
+            yield from do_insertions(
+                insertions, pylexer.get_tokens_unprocessed(curcode)
+            )
         if curtb:
             for i, t, v in tblexer.get_tokens_unprocessed(curtb):
                 yield tbindex + i, t, v
@@ -1358,11 +1366,13 @@ class PythonTracebackLexer(RegexLexer):
             (r"\n", Text),
             (r"^Traceback \(most recent call last\):\n", Generic.Traceback, "intb"),
             (
-                r"^During handling of the above exception, another " r"exception occurred:\n\n",
+                r"^During handling of the above exception, another "
+                r"exception occurred:\n\n",
                 Generic.Traceback,
             ),
             (
-                r"^The above exception was the direct cause of the " r"following exception:\n\n",
+                r"^The above exception was the direct cause of the "
+                r"following exception:\n\n",
                 Generic.Traceback,
             ),
             (r'^(?=  File "[^"]+", line \d+)', Generic.Traceback, "intb"),
@@ -1487,7 +1497,9 @@ class CythonLexer(RegexLexer):
             (r"!=|==|<<|>>|[-~+/*%=<>&^|.?]", Operator),
             (
                 r"(from)(\d+)(<=)(\s+)(<)(\d+)(:)",
-                bygroups(Keyword, Number.Integer, Operator, Name, Operator, Name, Punctuation),
+                bygroups(
+                    Keyword, Number.Integer, Operator, Name, Operator, Name, Punctuation
+                ),
             ),
             include("keywords"),
             (r"(def|property)(\s+)", bygroups(Keyword, Text), "funcname"),
@@ -1946,7 +1958,8 @@ class DgLexer(RegexLexer):
         ],
         "string": [
             (
-                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?" "[hlL]?[E-GXc-giorsux%]",
+                r"%(\(\w+\))?[-#0 +]*([0-9]+|[*])?(\.([0-9]+|[*]))?"
+                "[hlL]?[E-GXc-giorsux%]",
                 String.Interpol,
             ),
             (r'[^\\\'"%\n]+', String),
@@ -2376,6 +2389,6 @@ class NumPyLexer(PythonLexer):
 
     def analyse_text(text):
         ltext = text[:1000]
-        return (shebang_matches(text, r"pythonw?(3(\.\d)?)?") or "import " in ltext) and (
-            "import numpy" in ltext or "from numpy import" in ltext
-        )
+        return (
+            shebang_matches(text, r"pythonw?(3(\.\d)?)?") or "import " in ltext
+        ) and ("import numpy" in ltext or "from numpy import" in ltext)

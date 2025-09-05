@@ -84,7 +84,9 @@ class Animation:
             start_time=float(json["startTime"]),
             current_time=float(json["currentTime"]),
             type_=str(json["type"]),
-            source=(AnimationEffect.from_json(json["source"]) if "source" in json else None),
+            source=(
+                AnimationEffect.from_json(json["source"]) if "source" in json else None
+            ),
             css_id=str(json["cssId"]) if "cssId" in json else None,
             view_or_scroll_timeline=(
                 ViewOrScrollTimeline.from_json(json["viewOrScrollTimeline"])
@@ -223,7 +225,9 @@ class AnimationEffect:
                 else None
             ),
             keyframes_rule=(
-                KeyframesRule.from_json(json["keyframesRule"]) if "keyframesRule" in json else None
+                KeyframesRule.from_json(json["keyframesRule"])
+                if "keyframesRule" in json
+                else None
             ),
         )
 

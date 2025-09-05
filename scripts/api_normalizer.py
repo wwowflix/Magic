@@ -13,7 +13,9 @@ def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
     api_df["platform"] = "YouTube"
 
     if "date" in api_df.columns:
-        api_df["date"] = pd.to_datetime(api_df["date"], errors="coerce").dt.tz_localize(None)
+        api_df["date"] = pd.to_datetime(api_df["date"], errors="coerce").dt.tz_localize(
+            None
+        )
     else:
         print("âŒ 'date' column missing in API CSV")
         return
@@ -26,7 +28,9 @@ def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
     print("âœ… Autocomplete CSV loaded")
 
     auto_df["author"] = auto_df.get("author", "")
-    auto_df["date"] = pd.to_datetime(auto_df["date"], errors="coerce").dt.tz_localize(None)
+    auto_df["date"] = pd.to_datetime(auto_df["date"], errors="coerce").dt.tz_localize(
+        None
+    )
     auto_df = auto_df[["date", "keyword", "platform", "metric", "author"]]
     print("âœ… Autocomplete data cleaned")
 

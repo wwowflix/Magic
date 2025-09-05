@@ -248,7 +248,9 @@ def build_dashboard(
 
     # Chart 1: Passing scripts per module
     pass_mask = df["__status_norm"] == "PASS"
-    pass_per_module = df[pass_mask].groupby("__module").size().sort_values(ascending=False)
+    pass_per_module = (
+        df[pass_mask].groupby("__module").size().sort_values(ascending=False)
+    )
     plt.figure()
     pass_per_module.plot(kind="bar")
     plt.title("Number of Passing Scripts per Module")
@@ -301,7 +303,10 @@ def build_dashboard(
         {
             "module": totals_per_module.index,
             "total": totals_per_module.values.astype(int),
-            "pass": passes_per_module.reindex(totals_per_module.index).fillna(0).astype(int).values,
+            "pass": passes_per_module.reindex(totals_per_module.index)
+            .fillna(0)
+            .astype(int)
+            .values,
             "success_rate_pct": rates.reindex(totals_per_module.index).fillna(0).values,
         }
     ).sort_values(["success_rate_pct", "pass"], ascending=[False, False])
@@ -310,7 +315,9 @@ def build_dashboard(
 
     # Top failing scripts (first 50 rows)
     cols = [c for c in ["Filename", "Folder", "Status", "Phase"] if c in df.columns]
-    fail_tbl = df[df["__status_norm"] == "FAIL"][["__module", "__phase"] + cols].head(50)
+    fail_tbl = df[df["__status_norm"] == "FAIL"][["__module", "__phase"] + cols].head(
+        50
+    )
     fail_tbl_path = os.path.join(outdir, "top_failing_scripts.tsv")
     fail_tbl.to_csv(fail_tbl_path, sep="\t", index=False)
 
@@ -341,7 +348,9 @@ def build_dashboard(
             "top_failing_scripts_tsv": os.path.abspath(fail_tbl_path),
         },
     }
-    with open(os.path.join(outdir, "dashboard_summary.json"), "w", encoding="utf-8") as f:
+    with open(
+        os.path.join(outdir, "dashboard_summary.json"), "w", encoding="utf-8"
+    ) as f:
         json.dump(summary, f, indent=2)
 
     # ---------------- HTML ----------------

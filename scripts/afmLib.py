@@ -284,7 +284,8 @@ class AFM(object):
 
         for charnum, (charname, width, (l, b, r, t)) in items:
             lines.append(
-                "C %d ; WX %d ; N %s ; B %d %d %d %d ;" % (charnum, width, charname, l, b, r, t)
+                "C %d ; WX %d ; N %s ; B %d %d %d %d ;"
+                % (charnum, width, charname, l, b, r, t)
             )
         lines.append("EndCharMetrics")
 

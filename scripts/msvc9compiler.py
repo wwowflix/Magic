@@ -370,9 +370,15 @@ class MSVCCompiler(CCompiler):
         # sanity check for platforms to prevent obscure errors later.
         ok_plats = "win32", "win-amd64"
         if plat_name not in ok_plats:
-            raise DistutilsPlatformError("--plat-name must be one of {}".format(ok_plats))
+            raise DistutilsPlatformError(
+                "--plat-name must be one of {}".format(ok_plats)
+            )
 
-        if "DISTUTILS_USE_SDK" in os.environ and "MSSdk" in os.environ and self.find_exe("cl.exe"):
+        if (
+            "DISTUTILS_USE_SDK" in os.environ
+            and "MSSdk" in os.environ
+            and self.find_exe("cl.exe")
+        ):
             # Assume that the SDK set up everything alright; don't try to be
             # smarter
             self.cc = "cl.exe"
@@ -390,7 +396,9 @@ class MSVCCompiler(CCompiler):
                 plat_spec = PLAT_TO_VCVARS[plat_name]
             else:
                 # cross compile from win32 -> some 64bit
-                plat_spec = PLAT_TO_VCVARS[get_platform()] + "_" + PLAT_TO_VCVARS[plat_name]
+                plat_spec = (
+                    PLAT_TO_VCVARS[get_platform()] + "_" + PLAT_TO_VCVARS[plat_name]
+                )
 
             vc_env = query_vcvarsall(VERSION, plat_spec)
 
@@ -557,12 +565,18 @@ class MSVCCompiler(CCompiler):
                 continue
             else:
                 # how to handle this file?
-                raise CompileError("Don't know how to compile {} to {}".format(src, obj))
+                raise CompileError(
+                    "Don't know how to compile {} to {}".format(src, obj)
+                )
 
             output_opt = "/Fo" + obj
             try:
                 self.spawn(
-                    [self.cc] + compile_opts + pp_opts + [input_opt, output_opt] + extra_postargs
+                    [self.cc]
+                    + compile_opts
+                    + pp_opts
+                    + [input_opt, output_opt]
+                    + extra_postargs
                 )
             except DistutilsExecError as msg:
                 raise CompileError(msg)
@@ -614,7 +628,8 @@ class MSVCCompiler(CCompiler):
 
         if runtime_library_dirs:
             self.warn(
-                "I don't know what to do with 'runtime_library_dirs': " + str(runtime_library_dirs)
+                "I don't know what to do with 'runtime_library_dirs': "
+                + str(runtime_library_dirs)
             )
 
         lib_opts = gen_lib_options(self, library_dirs, runtime_library_dirs, libraries)
@@ -637,7 +652,9 @@ class MSVCCompiler(CCompiler):
             for sym in export_symbols or []:
                 export_opts.append("/EXPORT:" + sym)
 
-            ld_args = ldflags + lib_opts + export_opts + objects + ["/OUT:" + output_filename]
+            ld_args = (
+                ldflags + lib_opts + export_opts + objects + ["/OUT:" + output_filename]
+            )
 
             # The MSVC linker generates .lib and .exp files, which cannot be
             # suppressed by any linker switches. The .lib files may even be
@@ -646,7 +663,9 @@ class MSVCCompiler(CCompiler):
             # builds, they can go into the same directory.
             build_temp = os.path.dirname(objects[0])
             if export_symbols is not None:
-                (dll_name, dll_ext) = os.path.splitext(os.path.basename(output_filename))
+                (dll_name, dll_ext) = os.path.splitext(
+                    os.path.basename(output_filename)
+                )
                 implib_file = os.path.join(build_temp, self.library_filename(dll_name))
                 ld_args.append("/IMPLIB:" + implib_file)
 
@@ -686,7 +705,9 @@ class MSVCCompiler(CCompiler):
         # (currently at http://msdn2.microsoft.com/en-us/library/ms235591(VS.80).aspx)
         # Ask the linker to generate the manifest in the temp dir, so
         # we can check it, and possibly embed it, later.
-        temp_manifest = os.path.join(build_temp, os.path.basename(output_filename) + ".manifest")
+        temp_manifest = os.path.join(
+            build_temp, os.path.basename(output_filename) + ".manifest"
+        )
         ld_args.append("/MANIFESTFILE:" + temp_manifest)
 
     def manifest_get_embed_info(self, target_desc, ld_args):
@@ -763,7 +784,9 @@ class MSVCCompiler(CCompiler):
         return "/LIBPATH:" + dir
 
     def runtime_library_dir_option(self, dir):
-        raise DistutilsPlatformError("don't know how to set runtime library search path for MSVC++")
+        raise DistutilsPlatformError(
+            "don't know how to set runtime library search path for MSVC++"
+        )
 
     def library_option(self, lib):
         return self.library_filename(lib)

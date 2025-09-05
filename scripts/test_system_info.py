@@ -180,7 +180,9 @@ class TestSystemInfoReading:
         self.c_default = site_and_parse(get_class("default"), self._sitecfg)
         self.c_temp1 = site_and_parse(get_class("temp1"), self._sitecfg)
         self.c_temp2 = site_and_parse(get_class("temp2"), self._sitecfg)
-        self.c_dup_options = site_and_parse(get_class("duplicate_options"), self._sitecfg)
+        self.c_dup_options = site_and_parse(
+            get_class("duplicate_options"), self._sitecfg
+        )
 
     def teardown(self):
         # Do each removal separately
@@ -229,7 +231,9 @@ class TestSystemInfoReading:
     def test_duplicate_options(self):
         # Ensure that duplicates are raising an AliasedOptionError
         tsi = self.c_dup_options
-        assert_raises(AliasedOptionError, tsi.get_option_single, "mylib_libs", "libraries")
+        assert_raises(
+            AliasedOptionError, tsi.get_option_single, "mylib_libs", "libraries"
+        )
         assert_equal(tsi.get_libs("mylib_libs", [self._lib1]), [self._lib1])
         assert_equal(tsi.get_libs("libraries", [self._lib2]), [self._lib2])
 

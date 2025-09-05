@@ -234,7 +234,8 @@ class WOFF2Writer(SFNTWriter):
         """All tags must have been specified. Now write the table data and directory."""
         if len(self.tables) != self.numTables:
             raise TTLibError(
-                "wrong number of tables; expected %d, found %d" % (self.numTables, len(self.tables))
+                "wrong number of tables; expected %d, found %d"
+                % (self.numTables, len(self.tables))
             )
 
         if self.sfntVersion in ("\x00\x01\x00\x00", "true"):
@@ -250,7 +251,11 @@ class WOFF2Writer(SFNTWriter):
         # See:
         # https://github.com/khaledhosny/ots/issues/60
         # https://github.com/google/woff2/issues/15
-        if isTrueType and "glyf" in self.flavorData.transformedTables and "glyf" in self.tables:
+        if (
+            isTrueType
+            and "glyf" in self.flavorData.transformedTables
+            and "glyf" in self.tables
+        ):
             self._normaliseGlyfAndLoca(padding=4)
         self._setHeadTransformFlag()
 
@@ -395,7 +400,9 @@ class WOFF2Writer(SFNTWriter):
             checksums.append(self.tables[tags[i]].checkSum)
 
         # Create a SFNT directory for checksum calculation purposes
-        self.searchRange, self.entrySelector, self.rangeShift = getSearchRange(self.numTables, 16)
+        self.searchRange, self.entrySelector, self.rangeShift = getSearchRange(
+            self.numTables, 16
+        )
         directory = sstruct.pack(sfntDirectoryFormat, self)
         tables = sorted(self.tables.items())
         for tag, entry in tables:
@@ -438,7 +445,9 @@ class WOFF2Writer(SFNTWriter):
         if data.metaData:
             self.metaOrigLength = len(data.metaData)
             self.metaOffset = offset
-            self.compressedMetaData = brotli.compress(data.metaData, mode=brotli.MODE_TEXT)
+            self.compressedMetaData = brotli.compress(
+                data.metaData, mode=brotli.MODE_TEXT
+            )
             self.metaLength = len(self.compressedMetaData)
             offset += self.metaLength
         else:
@@ -597,7 +606,9 @@ woff2UnknownTagSize = sstruct.calcsize(woff2UnknownTagFormat)
 woff2UnknownTagIndex = 0x3F
 
 woff2Base128MaxSize = 5
-woff2DirectoryEntryMaxSize = woff2FlagsSize + woff2UnknownTagSize + 2 * woff2Base128MaxSize
+woff2DirectoryEntryMaxSize = (
+    woff2FlagsSize + woff2UnknownTagSize + 2 * woff2Base128MaxSize
+)
 
 woff2TransformedTableTags = ("glyf", "loca")
 
@@ -732,7 +743,9 @@ class WOFF2LocaTable(getTableClass("loca")):
                 if max_location >= 0x20000:
                     raise TTLibError("indexFormat is 0 but local offsets > 0x20000")
                 if not all(l % 2 == 0 for l in self.locations):
-                    raise TTLibError("indexFormat is 0 but local offsets not multiples of 2")
+                    raise TTLibError(
+                        "indexFormat is 0 but local offsets not multiples of 2"
+                    )
                 locations = array.array("H")
                 for i in range(len(self.locations)):
                     locations.append(self.locations[i] // 2)
@@ -971,13 +984,19 @@ class WOFF2GlyfTable(getTableClass("glyf")):
             elif flag < 120:
                 b0 = flag - 84
                 dx = withSign(flag, 1 + ((b0 // 12) << 8) + triplets[tripletIndex])
-                dy = withSign(flag >> 1, 1 + (((b0 % 12) >> 2) << 8) + triplets[tripletIndex + 1])
+                dy = withSign(
+                    flag >> 1, 1 + (((b0 % 12) >> 2) << 8) + triplets[tripletIndex + 1]
+                )
             elif flag < 124:
                 b2 = triplets[tripletIndex + 1]
                 dx = withSign(flag, (triplets[tripletIndex] << 4) + (b2 >> 4))
-                dy = withSign(flag >> 1, ((b2 & 0x0F) << 8) + triplets[tripletIndex + 2])
+                dy = withSign(
+                    flag >> 1, ((b2 & 0x0F) << 8) + triplets[tripletIndex + 2]
+                )
             else:
-                dx = withSign(flag, (triplets[tripletIndex] << 8) + triplets[tripletIndex + 1])
+                dx = withSign(
+                    flag, (triplets[tripletIndex] << 8) + triplets[tripletIndex + 1]
+                )
                 dy = withSign(
                     flag >> 1,
                     (triplets[tripletIndex + 2] << 8) + triplets[tripletIndex + 3],
@@ -1077,7 +1096,11 @@ class WOFF2GlyfTable(getTableClass("glyf")):
                 triplets.append(absX & 0xFF)
             elif absX < 65 and absY < 65:
                 flags.append(
-                    onCurveBit + 20 + ((absX - 1) & 0x30) + (((absY - 1) & 0x30) >> 2) + xySignBits
+                    onCurveBit
+                    + 20
+                    + ((absX - 1) & 0x30)
+                    + (((absY - 1) & 0x30) >> 2)
+                    + xySignBits
                 )
                 triplets.append((((absX - 1) & 0xF) << 4) | ((absY - 1) & 0xF))
             elif absX < 769 and absY < 769:
@@ -1122,7 +1145,8 @@ class WOFF2HmtxTable(getTableClass("hmtx")):
         hasLeftSideBearingArray = flags & 2 == 0
         if hasLsbArray and hasLeftSideBearingArray:
             raise TTLibError(
-                "either bits 0 or 1 (or both) must set in transformed '%s' flags" % self.tableTag
+                "either bits 0 or 1 (or both) must set in transformed '%s' flags"
+                % self.tableTag
             )
 
         glyfTable = ttFont["glyf"]
@@ -1250,7 +1274,10 @@ class WOFF2HmtxTable(getTableClass("hmtx")):
         if hasLeftSideBearingArray:
             leftSideBearingArray = array.array(
                 "h",
-                [self.metrics[glyphOrder[i]][1] for i in range(numberOfHMetrics, len(glyphOrder))],
+                [
+                    self.metrics[glyphOrder[i]][1]
+                    for i in range(numberOfHMetrics, len(glyphOrder))
+                ],
             )
             if sys.byteorder != "big":
                 leftSideBearingArray.byteswap()
@@ -1286,7 +1313,9 @@ class WOFF2FlavorData(WOFFFlavorData):
             if data is not None:
                 raise TypeError("'reader' and 'data' arguments are mutually exclusive")
             if transformedTables is not None:
-                raise TypeError("'reader' and 'transformedTables' arguments are mutually exclusive")
+                raise TypeError(
+                    "'reader' and 'transformedTables' arguments are mutually exclusive"
+                )
 
         if transformedTables is not None and (
             "glyf" in transformedTables
@@ -1297,7 +1326,9 @@ class WOFF2FlavorData(WOFFFlavorData):
             raise ValueError("'glyf' and 'loca' must be transformed (or not) together")
         super(WOFF2FlavorData, self).__init__(reader=reader)
         if reader:
-            transformedTables = [tag for tag, entry in reader.tables.items() if entry.transformed]
+            transformedTables = [
+                tag for tag, entry in reader.tables.items() if entry.transformed
+            ]
         elif data:
             self.majorVersion = data.majorVersion
             self.majorVersion = data.minorVersion
@@ -1486,7 +1517,9 @@ def compress(input_file, output_file, transform_tables=None):
     font.flavor = "woff2"
 
     if transform_tables is not None:
-        font.flavorData = WOFF2FlavorData(data=font.flavorData, transformedTables=transform_tables)
+        font.flavorData = WOFF2FlavorData(
+            data=font.flavorData, transformedTables=transform_tables
+        )
 
     font.save(output_file, reorderTables=False)
 
@@ -1538,7 +1571,9 @@ def main(args=None):
         prog="fonttools ttLib.woff2", description=main.__doc__, add_help=False
     )
 
-    parser.add_argument("-h", "--help", action=_HelpAction, help="show this help message and exit")
+    parser.add_argument(
+        "-h", "--help", action=_HelpAction, help="show this help message and exit"
+    )
 
     parser_group = parser.add_subparsers(title="sub-commands")
     parser_compress = parser_group.add_parser(

@@ -60,7 +60,9 @@ class TestConvertDtypes:
         result = df.convert_dtypes(dtype_backend="pyarrow")
         expected = pd.DataFrame(
             {
-                "a": pd.arrays.ArrowExtensionArray(pa.array([1, 2, 3], type=pa.int32())),
+                "a": pd.arrays.ArrowExtensionArray(
+                    pa.array([1, 2, 3], type=pa.int32())
+                ),
                 "b": pd.arrays.ArrowExtensionArray(pa.array(["x", "y", None])),
                 "c": pd.arrays.ArrowExtensionArray(pa.array([True, False, None])),
                 "d": pd.arrays.ArrowExtensionArray(pa.array([None, 100.5, 200.0])),
@@ -117,7 +119,9 @@ class TestConvertDtypes:
         result = df.convert_dtypes(dtype_backend="pyarrow")
         expected = pd.DataFrame(
             {
-                "a": pd.arrays.ArrowExtensionArray(pa.array([1, 2, None], type=pa.int32())),
+                "a": pd.arrays.ArrowExtensionArray(
+                    pa.array([1, 2, None], type=pa.int32())
+                ),
                 "b": pd.arrays.ArrowExtensionArray(pa.array(["x", "y", None])),
                 "c": pd.arrays.ArrowExtensionArray(pa.array([True, False, None])),
                 "d": pd.arrays.ArrowExtensionArray(pa.array([None, 100.5, 200.0])),
@@ -135,7 +139,10 @@ class TestConvertDtypes:
     def test_pyarrow_engine_lines_false(self):
         # GH 48893
         df = pd.DataFrame({"a": [1, 2, 3]})
-        msg = "dtype_backend numpy is invalid, only 'numpy_nullable' and " "'pyarrow' are allowed."
+        msg = (
+            "dtype_backend numpy is invalid, only 'numpy_nullable' and "
+            "'pyarrow' are allowed."
+        )
         with pytest.raises(ValueError, match=msg):
             df.convert_dtypes(dtype_backend="numpy")
 

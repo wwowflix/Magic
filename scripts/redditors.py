@@ -77,7 +77,9 @@ class Redditors(PRAWBase):
         :class:`.ListingGenerator`.
 
         """
-        return ListingGenerator(self._reddit, API_PATH["users_popular"], **generator_kwargs)
+        return ListingGenerator(
+            self._reddit, API_PATH["users_popular"], **generator_kwargs
+        )
 
     def search(
         self, query: str, **generator_kwargs: str | int | dict[str, str]
@@ -93,7 +95,9 @@ class Redditors(PRAWBase):
 
         """
         self._safely_add_arguments(arguments=generator_kwargs, key="params", q=query)
-        return ListingGenerator(self._reddit, API_PATH["users_search"], **generator_kwargs)
+        return ListingGenerator(
+            self._reddit, API_PATH["users_search"], **generator_kwargs
+        )
 
     def stream(
         self, **stream_options: str | int | dict[str, str]

@@ -110,7 +110,9 @@ class tzutc(datetime.tzinfo):
         if not isinstance(other, (tzutc, tzoffset)):
             return NotImplemented
 
-        return isinstance(other, tzutc) or (isinstance(other, tzoffset) and other._offset == ZERO)
+        return isinstance(other, tzutc) or (
+            isinstance(other, tzoffset) and other._offset == ZERO
+        )
 
     __hash__ = None
 
@@ -304,10 +306,15 @@ class tzlocal(_tzinfo):
 
     def __eq__(self, other):
         if isinstance(other, tzlocal):
-            return self._std_offset == other._std_offset and self._dst_offset == other._dst_offset
+            return (
+                self._std_offset == other._std_offset
+                and self._dst_offset == other._dst_offset
+            )
         elif isinstance(other, tzutc):
             return (
-                not self._hasdst and self._tznames[0] in {"UTC", "GMT"} and self._std_offset == ZERO
+                not self._hasdst
+                and self._tznames[0] in {"UTC", "GMT"}
+                and self._std_offset == ZERO
             )
         elif isinstance(other, tzoffset):
             return (
@@ -543,7 +550,9 @@ class tzfile(_tzinfo):
         # change.
 
         if timecnt:
-            out.trans_list_utc = list(struct.unpack(">%dl" % timecnt, fileobj.read(timecnt * 4)))
+            out.trans_list_utc = list(
+                struct.unpack(">%dl" % timecnt, fileobj.read(timecnt * 4))
+            )
         else:
             out.trans_list_utc = []
 
@@ -696,7 +705,11 @@ class tzfile(_tzinfo):
             # why this is true, but I haven't really thought about it enough.
             baseoffset = offset - dstoffset
             adjustment = baseoffset
-            if lastbaseoffset is not None and baseoffset != lastbaseoffset and tti.isdst != lastdst:
+            if (
+                lastbaseoffset is not None
+                and baseoffset != lastbaseoffset
+                and tti.isdst != lastdst
+            ):
                 # The base DST has changed
                 adjustment = lastbaseoffset
 
@@ -1437,7 +1450,11 @@ class tzical(object):
                         # values under RFC 5545.
                         for parm in parms:
                             if parm != "VALUE=DATE-TIME":
-                                msg = "Unsupported DTSTART param in " + "VTIMEZONE: " + parm
+                                msg = (
+                                    "Unsupported DTSTART param in "
+                                    + "VTIMEZONE: "
+                                    + parm
+                                )
                                 raise ValueError(msg)
                         rrulelines.append(line)
                         founddtstart = True
@@ -1445,7 +1462,9 @@ class tzical(object):
                         rrulelines.append(line)
                     elif name == "TZOFFSETFROM":
                         if parms:
-                            raise ValueError("unsupported %s parm: %s " % (name, parms[0]))
+                            raise ValueError(
+                                "unsupported %s parm: %s " % (name, parms[0])
+                            )
                         tzoffsetfrom = self._parse_offset(value)
                     elif name == "TZOFFSETTO":
                         if parms:
@@ -1579,7 +1598,9 @@ def __get_gettz():
 
                 if rv is None:
                     rv = self.nocache(name=name)
-                    if not (name is None or isinstance(rv, tzlocal_classes) or rv is None):
+                    if not (
+                        name is None or isinstance(rv, tzlocal_classes) or rv is None
+                    ):
                         # tzlocal is slightly more complicated than the other
                         # time zone providers because it depends on environment
                         # at construction time, so don't cache that.

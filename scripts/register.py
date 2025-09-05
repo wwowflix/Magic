@@ -184,7 +184,10 @@ Your selection [default 1]: """,
                     self.distribution.password = password
                 else:
                     self.announce(
-                        ("I can store your PyPI login so future " "submissions will be faster."),
+                        (
+                            "I can store your PyPI login so future "
+                            "submissions will be faster."
+                        ),
                         log.INFO,
                     )
                     self.announce(
@@ -261,7 +264,9 @@ Your selection [default 1]: """,
     def post_to_server(self, data, auth=None):  # noqa: C901
         """Post a query to the server, and return a string response."""
         if "name" in data:
-            self.announce("Registering {} to {}".format(data["name"], self.repository), log.INFO)
+            self.announce(
+                "Registering {} to {}".format(data["name"], self.repository), log.INFO
+            )
         # Build up the MIME payload for the urllib2 POST data
         boundary = "--------------GHSKFJDLGDS7543FJKLFHRE75642756743254"
         sep_boundary = "\n--" + boundary
@@ -285,13 +290,16 @@ Your selection [default 1]: """,
 
         # build the Request
         headers = {
-            "Content-type": "multipart/form-data; boundary=%s; charset=utf-8" % boundary,
+            "Content-type": "multipart/form-data; boundary=%s; charset=utf-8"
+            % boundary,
             "Content-length": str(len(body)),
         }
         req = urllib.request.Request(self.repository, body, headers)
 
         # handle HTTP and include the Basic Auth handler
-        opener = urllib.request.build_opener(urllib.request.HTTPBasicAuthHandler(password_mgr=auth))
+        opener = urllib.request.build_opener(
+            urllib.request.HTTPBasicAuthHandler(password_mgr=auth)
+        )
         data = ""
         try:
             result = opener.open(req)

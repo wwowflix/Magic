@@ -115,7 +115,9 @@ class TestConstructor(SoupTest):
                 ignored_value=True,
             )
         msg = str(w[0].message)
-        assert msg.startswith("Keyword arguments to the BeautifulSoup constructor will be ignored.")
+        assert msg.startswith(
+            "Keyword arguments to the BeautifulSoup constructor will be ignored."
+        )
         assert builder == soup.builder
         assert kwargs == builder.called_with
 
@@ -163,7 +165,9 @@ class TestConstructor(SoupTest):
             with warnings.catch_warnings(record=True):
                 # This will create a warning about not explicitly
                 # specifying a parser, but we'll ignore it.
-                soup = self.soup(markup, builder=None, multi_valued_attributes=switcheroo)
+                soup = self.soup(
+                    markup, builder=None, multi_valued_attributes=switcheroo
+                )
             a = soup.a
             assert ["an", "id"] == a["id"]
             assert " a class " == a["class"]
@@ -191,7 +195,9 @@ class TestConstructor(SoupTest):
 
         # The tree was built with TagPlus, StringPlus, and CommentPlus objects,
         # rather than Tag, String, and Comment objects.
-        assert all(isinstance(x, (TagPlus, StringPlus, CommentPlus)) for x in soup.descendants)
+        assert all(
+            isinstance(x, (TagPlus, StringPlus, CommentPlus)) for x in soup.descendants
+        )
 
     def test_alternate_string_containers(self):
         # Test the ability to customize the string containers for
@@ -251,11 +257,14 @@ class TestOutput(SoupTest):
         # bytestring.
         soup = self.soup("<tag></tag>")
         soup.is_xml = True
-        assert f'<?xml version="1.0" encoding="{actual_encoding}"?>\n<tag></tag>' == soup.decode(
-            eventual_encoding=eventual_encoding
+        assert (
+            f'<?xml version="1.0" encoding="{actual_encoding}"?>\n<tag></tag>'
+            == soup.decode(eventual_encoding=eventual_encoding)
         )
 
-    @pytest.mark.parametrize("eventual_encoding", [x for x in PYTHON_SPECIFIC_ENCODINGS] + [None])
+    @pytest.mark.parametrize(
+        "eventual_encoding", [x for x in PYTHON_SPECIFIC_ENCODINGS] + [None]
+    )
     def test_decode_xml_declaration_with_missing_or_python_internal_eventual_encoding(
         self, eventual_encoding
     ):
@@ -477,7 +486,9 @@ class TestNewTag(SoupTest):
         new_tag = soup.new_tag("foo", string="")
         assert "" == new_tag.string
 
-    @pytest.mark.skipif(not LXML_PRESENT, reason="lxml not installed, cannot parse XML document")
+    @pytest.mark.skipif(
+        not LXML_PRESENT, reason="lxml not installed, cannot parse XML document"
+    )
     def test_xml_tag_inherits_self_closing_rules_from_builder(self):
         xml_soup = BeautifulSoup("", "xml")
         xml_br = xml_soup.new_tag("br")

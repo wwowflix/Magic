@@ -156,7 +156,10 @@ class tzwinbase(tzrangebase):
         """Return a list of all time zones known to the system."""
         with winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE) as handle:
             with winreg.OpenKey(handle, TZKEYNAME) as tzkey:
-                result = [winreg.EnumKey(tzkey, i) for i in range(winreg.QueryInfoKey(tzkey)[0])]
+                result = [
+                    winreg.EnumKey(tzkey, i)
+                    for i in range(winreg.QueryInfoKey(tzkey)[0])
+                ]
         return result
 
     def display(self):
@@ -302,7 +305,9 @@ class tzwinlocal(tzwinbase):
             self._dst_abbr = keydict["DaylightName"]
 
             try:
-                tzkeyname = text_type("{kn}\\{sn}").format(kn=TZKEYNAME, sn=self._std_abbr)
+                tzkeyname = text_type("{kn}\\{sn}").format(
+                    kn=TZKEYNAME, sn=self._std_abbr
+                )
                 with winreg.OpenKey(handle, tzkeyname) as tzkey:
                     _keydict = valuestodict(tzkey)
                     self._display = _keydict["Display"]

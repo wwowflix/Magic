@@ -138,7 +138,9 @@ class Axis(object):
         sstruct.unpack2(FVAR_AXIS_FORMAT, data, self)
 
     def toXML(self, writer, ttFont):
-        name = ttFont["name"].getDebugName(self.axisNameID) if "name" in ttFont else None
+        name = (
+            ttFont["name"].getDebugName(self.axisNameID) if "name" in ttFont else None
+        )
         if name is not None:
             writer.newline()
             writer.comment(name)
@@ -203,12 +205,20 @@ class NamedInstance(object):
             self.postscriptNameID = 0xFFFF
 
     def toXML(self, writer, ttFont):
-        name = ttFont["name"].getDebugName(self.subfamilyNameID) if "name" in ttFont else None
+        name = (
+            ttFont["name"].getDebugName(self.subfamilyNameID)
+            if "name" in ttFont
+            else None
+        )
         if name is not None:
             writer.newline()
             writer.comment(name)
             writer.newline()
-        psname = ttFont["name"].getDebugName(self.postscriptNameID) if "name" in ttFont else None
+        psname = (
+            ttFont["name"].getDebugName(self.postscriptNameID)
+            if "name" in ttFont
+            else None
+        )
         if psname is not None:
             writer.comment("PostScript: " + psname)
             writer.newline()

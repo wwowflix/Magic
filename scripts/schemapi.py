@@ -191,7 +191,9 @@ def _get_errors_from_spec(
     # it is not a valid URI reference due to the characters such as '<'.
 
     json_schema_draft_url = _get_json_schema_draft_url(rootschema or schema)
-    validator_cls = jsonschema.validators.validator_for({"$schema": json_schema_draft_url})
+    validator_cls = jsonschema.validators.validator_for(
+        {"$schema": json_schema_draft_url}
+    )
     validator_kwargs: dict[str, Any] = {}
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
@@ -205,7 +207,9 @@ def _get_errors_from_spec(
     else:
         # No resolver is necessary if the schema is already the full schema
         validator_kwargs["resolver"] = (
-            jsonschema.RefResolver.from_schema(rootschema) if rootschema is not None else None
+            jsonschema.RefResolver.from_schema(rootschema)
+            if rootschema is not None
+            else None
         )
 
     validator = validator_cls(schema, **validator_kwargs)
@@ -277,7 +281,9 @@ def _get_referencing_registry(
 
     specification = referencing.jsonschema.specification_with(json_schema_draft_url)
     resource = specification.create_resource(rootschema)
-    return referencing.Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
+    return referencing.Registry().with_resource(
+        uri=_VEGA_LITE_ROOT_URI, resource=resource
+    )
 
 
 def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
@@ -509,7 +515,9 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
         if obj.time() != dt.time.min:
             us = obj.microsecond
             ms = us if us == 0 else us // 1_000
-            result.update(hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms)
+            result.update(
+                hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
+            )
         if tzinfo := obj.tzinfo:
             if tzinfo is dt.timezone.utc:
                 result["utc"] = True
@@ -545,7 +553,9 @@ def _todict(
         return [_todict(v, context, np_opt, pd_opt) for v in obj]
     elif isinstance(obj, dict):
         return {
-            k: _todict(v, context, np_opt, pd_opt) for k, v in obj.items() if v is not Undefined
+            k: _todict(v, context, np_opt, pd_opt)
+            for k, v in obj.items()
+            if v is not Undefined
         }
     elif isinstance(obj, SchemaLike):
         return obj.to_dict()
@@ -570,7 +580,9 @@ def _resolve_references(
         # library
         referencing_resolver = registry.resolver()
         while "$ref" in schema:
-            schema = referencing_resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
+            schema = referencing_resolver.lookup(
+                _VEGA_LITE_ROOT_URI + schema["$ref"]
+            ).contents
     else:
         resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
         while "$ref" in schema:
@@ -701,7 +713,11 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         param_names: tuple[str, ...]
         name_lengths: tuple[int, ...]
         param_names, name_lengths = zip(
-            *[(name, len(name)) for name in param_dict_keys if name not in {"kwds", "self"}]
+            *[
+                (name, len(name))
+                for name in param_dict_keys
+                if name not in {"kwds", "self"}
+            ]
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
@@ -724,7 +740,9 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         last_end_idx: int = 0
         for ch in column_heights:
             param_names_columns.append(param_names[last_end_idx : last_end_idx + ch])
-            column_max_widths.append(max(len(param_name) for param_name in param_names_columns[-1]))
+            column_max_widths.append(
+                max(len(param_name) for param_name in param_names_columns[-1])
+            )
             last_end_idx = ch + last_end_idx
 
         # Transpose the param name columns into rows to facilitate looping
@@ -1026,7 +1044,9 @@ class SchemaBase:
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
 
-    def copy(self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None) -> Self:
+    def copy(
+        self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
+    ) -> Self:
         """
         Return a copy of the object.
 
@@ -1065,7 +1085,9 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
+                _getattr = (
+                    super().__getattr__
+                )  # pyright: ignore[reportAttributeAccessIssue]
             except AttributeError:
                 _getattr = super().__getattribute__
             return _getattr(attr)
@@ -1090,7 +1112,11 @@ class SchemaBase:
             return f"{name}({self._args[0]!r})"
 
     def __eq__(self, other: Any) -> bool:
-        return type(self) is type(other) and self._args == other._args and self._kwds == other._kwds
+        return (
+            type(self) is type(other)
+            and self._args == other._args
+            and self._kwds == other._kwds
+        )
 
     def to_dict(
         self,
@@ -1136,9 +1162,7 @@ class SchemaBase:
             if (mark := kwds.get("mark")) and isinstance(mark, str):
                 kwds["mark"] = {"type": mark}
         else:
-            msg = (
-                f"{type(self)} instance has both a value and properties : cannot serialize to dict"
-            )
+            msg = f"{type(self)} instance has both a value and properties : cannot serialize to dict"
             raise ValueError(msg)
         result = _todict(kwds, context=context, **opts)
         if validate:
@@ -1253,7 +1277,9 @@ class SchemaBase:
         return cls.from_dict(dct, validate=validate)  # type: ignore[return-value]
 
     @classmethod
-    def validate(cls, instance: dict[str, Any], schema: dict[str, Any] | None = None) -> None:
+    def validate(
+        cls, instance: dict[str, Any], schema: dict[str, Any] | None = None
+    ) -> None:
         """Validate the instance against the class schema in the context of the rootschema."""
         if schema is None:
             schema = cls._schema
@@ -1273,12 +1299,16 @@ class SchemaBase:
         )
 
     @classmethod
-    def validate_property(cls, name: str, value: Any, schema: dict[str, Any] | None = None) -> None:
+    def validate_property(
+        cls, name: str, value: Any, schema: dict[str, Any] | None = None
+    ) -> None:
         """Validate a property against property schema in the context of the rootschema."""
         opts = _get_optional_modules(np_opt="numpy", pd_opt="pandas")
         value = _todict(value, context={}, **opts)
         props = cls.resolve_references(schema or cls._schema).get("properties", {})
-        validate_jsonschema(value, props.get(name, {}), rootschema=cls._rootschema or cls._schema)
+        validate_jsonschema(
+            value, props.get(name, {}), rootschema=cls._rootschema or cls._schema
+        )
 
     def __dir__(self) -> list[str]:
         return sorted(chain(super().__dir__(), self._kwds))
@@ -1341,7 +1371,11 @@ def _replace_parsed_shorthand(
     ):
         parsed_shorthand.pop("sort")
 
-    kwds.update((k, v) for k, v in parsed_shorthand.items() if kwds.get(k, Undefined) is Undefined)
+    kwds.update(
+        (k, v)
+        for k, v in parsed_shorthand.items()
+        if kwds.get(k, Undefined) is Undefined
+    )
     return kwds
 
 
@@ -1405,7 +1439,11 @@ class _FromDict:
         to be slightly faster in several benchmarks.
         """
         if cls._hash_exclude_keys and isinstance(schema, dict):
-            schema = {key: val for key, val in schema.items() if key not in cls._hash_exclude_keys}
+            schema = {
+                key: val
+                for key, val in schema.items()
+                if key not in cls._hash_exclude_keys
+            }
         if use_json:
             s = json.dumps(schema, sort_keys=True)
             return hash(s)
@@ -1439,7 +1477,9 @@ class _FromDict:
         tp: Any = ...,
         schema: Any = ...,
         rootschema: Any = ...,
-        default_class: type[TSchemaBase] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
+        default_class: type[
+            TSchemaBase
+        ] = ...,  # pyright: ignore[reportInvalidTypeVarUse]
     ) -> TSchemaBase: ...
     @overload
     def from_dict(
@@ -1513,7 +1553,10 @@ class _FromDict:
         if _is_dict(dct):
             # TODO: handle schemas for additionalProperties/patternProperties
             props: dict[str, Any] = resolved.get("properties", {})
-            kwds = {k: (from_dict(v, schema=props[k]) if k in props else v) for k, v in dct.items()}
+            kwds = {
+                k: (from_dict(v, schema=props[k]) if k in props else v)
+                for k, v in dct.items()
+            }
             return target_tp(**kwds)
         elif _is_list(dct):
             item_schema: dict[str, Any] = resolved.get("items", {})
@@ -1545,11 +1588,15 @@ class _PropertySetter:
                 self.__doc__ = (
                     altair_prop.__doc__[:parameter_index].replace("    ", "")
                     + self.__doc__
-                    + textwrap.dedent(f"\n\n    {altair_prop.__doc__[parameter_index:]}")
+                    + textwrap.dedent(
+                        f"\n\n    {altair_prop.__doc__[parameter_index:]}"
+                    )
                 )
             # For short docstrings such as Aggregate, Stack, et
             else:
-                self.__doc__ = altair_prop.__doc__.replace("    ", "") + "\n" + self.__doc__
+                self.__doc__ = (
+                    altair_prop.__doc__.replace("    ", "") + "\n" + self.__doc__
+                )
             # Add signatures and tab completion for the method and parameter names
             self.__signature__ = inspect.signature(altair_prop)
             self.__wrapped__ = inspect.getfullargspec(altair_prop)

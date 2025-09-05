@@ -160,7 +160,9 @@ class MultiVarStoreInstancer(object):
         self.fvar_axes = fvar_axes
         assert multivarstore is None or multivarstore.Format == 1
         self._varData = multivarstore.MultiVarData if multivarstore else []
-        self._regions = multivarstore.SparseVarRegionList.Region if multivarstore else []
+        self._regions = (
+            multivarstore.SparseVarRegionList.Region if multivarstore else []
+        )
         self.setLocation(location)
 
     def setLocation(self, location):

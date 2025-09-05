@@ -389,7 +389,9 @@ class TestNanToNum:
 
         # perform the same tests but with nan, posinf and neginf keywords
         with np.errstate(divide="ignore", invalid="ignore"):
-            vals = nan_to_num(np.array((-1.0, 0, 1)) / 0.0, nan=10, posinf=20, neginf=30)
+            vals = nan_to_num(
+                np.array((-1.0, 0, 1)) / 0.0, nan=10, posinf=20, neginf=30
+            )
         assert_equal(vals, [30, 10, 20])
         assert_all(np.isfinite(vals[[0, 2]]))
         assert_equal(type(vals), np.ndarray)

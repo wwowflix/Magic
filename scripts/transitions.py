@@ -14,7 +14,9 @@ class SplitTransition(Transition):
             )
         self.dimension = dimension
         if direction not in ("I", "O"):
-            raise ValueError(f"Unsupported direction '{direction}', must be I(nward) or O(utward)")
+            raise ValueError(
+                f"Unsupported direction '{direction}', must be I(nward) or O(utward)"
+            )
         self.direction = direction
 
     def serialize(self, _security_handler=None, _obj_id=None):
@@ -36,7 +38,9 @@ class BlindsTransition(Transition):
 class BoxTransition(Transition):
     def __init__(self, direction):
         if direction not in ("I", "O"):
-            raise ValueError(f"Unsupported direction '{direction}', must be I(nward) or O(utward)")
+            raise ValueError(
+                f"Unsupported direction '{direction}', must be I(nward) or O(utward)"
+            )
         self.direction = direction
 
     def serialize(self, _security_handler=None, _obj_id=None):
@@ -46,7 +50,9 @@ class BoxTransition(Transition):
 class WipeTransition(Transition):
     def __init__(self, direction):
         if direction not in (0, 90, 180, 270):
-            raise ValueError(f"Unsupported direction '{direction}', must 0, 90, 180 or 270")
+            raise ValueError(
+                f"Unsupported direction '{direction}', must 0, 90, 180 or 270"
+            )
         self.direction = direction
 
     def serialize(self, _security_handler=None, _obj_id=None):
@@ -76,11 +82,15 @@ class FlyTransition(Transition):
             )
         self.dimension = dimension
         if direction not in (0, 270, None):
-            raise ValueError(f"Unsupported direction '{direction}', must 0, 270 or None")
+            raise ValueError(
+                f"Unsupported direction '{direction}', must 0, 270 or None"
+            )
         self.direction = direction
 
     def serialize(self, _security_handler=None, _obj_id=None):
-        return f"<</Type /Trans /S /Glitter /M /{self.dimension} /Di /{self.direction}>>"
+        return (
+            f"<</Type /Trans /S /Glitter /M /{self.dimension} /Di /{self.direction}>>"
+        )
 
 
 class PushTransition(Transition):

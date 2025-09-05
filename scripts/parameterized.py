@@ -102,7 +102,8 @@ class param(_param):
             if "after * must be" not in str(e):
                 raise
             raise TypeError(
-                "Parameters must be tuples, but %r is not (hint: use '(%r, )')" % (args, args),
+                "Parameters must be tuples, but %r is not (hint: use '(%r, )')"
+                % (args, args),
             )
 
     def __repr__(self):
@@ -156,7 +157,9 @@ def parameterized_argument_value_pairs(func, p):
 
     seen_arg_names = {n for (n, _) in result}
     keywords = dict(
-        sorted([(name, p.kwargs[name]) for name in p.kwargs if name not in seen_arg_names])
+        sorted(
+            [(name, p.kwargs[name]) for name in p.kwargs if name not in seen_arg_names]
+        )
     )
 
     if varargs:
@@ -230,7 +233,8 @@ def set_test_runner(name):
     global _test_runner_override
     if name not in _test_runners:
         raise TypeError(
-            "Invalid test runner: %r (must be one of: %s)" % (name, ", ".join(_test_runners)),
+            "Invalid test runner: %r (must be one of: %s)"
+            % (name, ", ".join(_test_runners)),
         )
     _test_runner_override = name
 
@@ -293,7 +297,9 @@ class parameterized:
             original_doc = wrapper.__doc__
             for num, args in enumerate(wrapper.parameterized_input):
                 p = param.from_decorator(args)
-                unbound_func, nose_tuple = self.param_as_nose_tuple(test_self, test_func, num, p)
+                unbound_func, nose_tuple = self.param_as_nose_tuple(
+                    test_self, test_func, num, p
+                )
                 try:
                     wrapper.__doc__ = nose_tuple[0].__doc__
                     # Nose uses `getattr(instance, test_func.__name__)` to get

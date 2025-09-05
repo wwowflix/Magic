@@ -62,11 +62,17 @@ class TestEinsum:
         assert_raises(ValueError, einsum_fn, "i->ij", [0, 0], optimize=do_opt)
 
         # output subscripts may only be specified once
-        assert_raises(ValueError, einsum_fn, "ij->jij", [[0, 0], [0, 0]], optimize=do_opt)
+        assert_raises(
+            ValueError, einsum_fn, "ij->jij", [[0, 0], [0, 0]], optimize=do_opt
+        )
 
         # dimensions must match when being collapsed
-        assert_raises(ValueError, einsum_fn, "ii", np.arange(6).reshape(2, 3), optimize=do_opt)
-        assert_raises(ValueError, einsum_fn, "ii->i", np.arange(6).reshape(2, 3), optimize=do_opt)
+        assert_raises(
+            ValueError, einsum_fn, "ii", np.arange(6).reshape(2, 3), optimize=do_opt
+        )
+        assert_raises(
+            ValueError, einsum_fn, "ii->i", np.arange(6).reshape(2, 3), optimize=do_opt
+        )
 
         with assert_raises_regex(ValueError, "'b'"):
             # gh-11221 - 'c' erroneously appeared in the error message
@@ -82,13 +88,15 @@ class TestEinsum:
         output_indices1 = path1.split("->")[-1].strip()  # Extract output indices
         # Assert indices are only uppercase letters and sorted correctly
         assert all(c.isupper() for c in output_indices1), (
-            "Output indices for n=26 should use uppercase letters only: " f"{output_indices1}"
+            "Output indices for n=26 should use uppercase letters only: "
+            f"{output_indices1}"
         )
         assert_equal(
             output_indices1,
             "".join(sorted(output_indices1)),
             err_msg=(
-                "Output indices for n=26 are not lexicographically sorted: " f"{output_indices1}"
+                "Output indices for n=26 are not lexicographically sorted: "
+                f"{output_indices1}"
             ),
         )
 
@@ -99,14 +107,16 @@ class TestEinsum:
         output_indices2 = path2.split("->")[-1].strip()
         # Assert indices include both uppercase and lowercase letters
         assert any(c.islower() for c in output_indices2), (
-            "Output indices for n=27 should include uppercase letters: " f"{output_indices2}"
+            "Output indices for n=27 should include uppercase letters: "
+            f"{output_indices2}"
         )
         # Assert output indices are sorted uppercase before lowercase
         assert_equal(
             output_indices2,
             "".join(sorted(output_indices2)),
             err_msg=(
-                "Output indices for n=27 are not lexicographically sorted: " f"{output_indices2}"
+                "Output indices for n=27 are not lexicographically sorted: "
+                f"{output_indices2}"
             ),
         )
 
@@ -136,13 +146,17 @@ class TestEinsum:
         assert_raises(ValueError, np.einsum, "", 0, casting="blah", optimize=do_opt)
 
         # dtype parameter must be a valid dtype
-        assert_raises(TypeError, np.einsum, "", 0, dtype="bad_data_type", optimize=do_opt)
+        assert_raises(
+            TypeError, np.einsum, "", 0, dtype="bad_data_type", optimize=do_opt
+        )
 
         # other keyword arguments are rejected
         assert_raises(TypeError, np.einsum, "", 0, bad_arg=0, optimize=do_opt)
 
         # broadcasting to new dimensions must be enabled explicitly
-        assert_raises(ValueError, np.einsum, "i", np.arange(6).reshape(2, 3), optimize=do_opt)
+        assert_raises(
+            ValueError, np.einsum, "i", np.arange(6).reshape(2, 3), optimize=do_opt
+        )
         assert_raises(
             ValueError,
             np.einsum,
@@ -203,13 +217,17 @@ class TestEinsum:
                 else:
                     return self.__mul__(other)
 
-        a = np.array([DestructoBox(i, 5) for i in range(1, 10)], dtype="object").reshape(3, 3)
+        a = np.array(
+            [DestructoBox(i, 5) for i in range(1, 10)], dtype="object"
+        ).reshape(3, 3)
 
         # raised from unbuffered_loop_nop1_ndim2
         assert_raises(CustomException, np.einsum, "ij->i", a)
 
         # raised from unbuffered_loop_nop1_ndim3
-        b = np.array([DestructoBox(i, 100) for i in range(27)], dtype="object").reshape(3, 3, 3)
+        b = np.array([DestructoBox(i, 100) for i in range(27)], dtype="object").reshape(
+            3, 3, 3
+        )
         assert_raises(CustomException, np.einsum, "i...k->...", b)
 
         # raised from unbuffered_loop_nop2_ndim2
@@ -414,7 +432,9 @@ class TestEinsum:
         for n in range(1, 17):
             a = np.arange(3 * n, dtype=dtype).reshape(3, n)
             b = np.arange(2 * 3 * n, dtype=dtype).reshape(2, 3, n)
-            assert_equal(np.einsum("..., ...", a, b, optimize=do_opt), np.multiply(a, b))
+            assert_equal(
+                np.einsum("..., ...", a, b, optimize=do_opt), np.multiply(a, b)
+            )
             assert_equal(
                 np.einsum(a, [Ellipsis], b, [Ellipsis], optimize=do_opt),
                 np.multiply(a, b),
@@ -433,7 +453,9 @@ class TestEinsum:
         for n in range(1, 11):
             a = np.arange(n * 3 * 2, dtype=dtype).reshape(n, 3, 2)
             b = np.arange(n, dtype=dtype)
-            assert_equal(np.einsum("i..., i...", a, b, optimize=do_opt), np.inner(a.T, b.T).T)
+            assert_equal(
+                np.einsum("i..., i...", a, b, optimize=do_opt), np.inner(a.T, b.T).T
+            )
             assert_equal(
                 np.einsum(a, [0, Ellipsis], b, [0, Ellipsis], optimize=do_opt),
                 np.inner(a.T, b.T).T,
@@ -455,10 +477,14 @@ class TestEinsum:
                 a = np.arange(4 * n, dtype=dtype).reshape(4, n)
                 b = np.arange(n, dtype=dtype)
                 assert_equal(np.einsum("ij, j", a, b, optimize=do_opt), np.dot(a, b))
-                assert_equal(np.einsum(a, [0, 1], b, [1], optimize=do_opt), np.dot(a, b))
+                assert_equal(
+                    np.einsum(a, [0, 1], b, [1], optimize=do_opt), np.dot(a, b)
+                )
 
                 c = np.arange(4, dtype=dtype)
-                np.einsum("ij,j", a, b, out=c, dtype="f8", casting="unsafe", optimize=do_opt)
+                np.einsum(
+                    "ij,j", a, b, out=c, dtype="f8", casting="unsafe", optimize=do_opt
+                )
                 assert_equal(c, np.dot(a.astype("f8"), b.astype("f8")).astype(dtype))
                 c[...] = 0
                 np.einsum(
@@ -476,8 +502,12 @@ class TestEinsum:
             for n in range(1, 17):
                 a = np.arange(4 * n, dtype=dtype).reshape(4, n)
                 b = np.arange(n, dtype=dtype)
-                assert_equal(np.einsum("ji,j", a.T, b.T, optimize=do_opt), np.dot(b.T, a.T))
-                assert_equal(np.einsum(a.T, [1, 0], b.T, [1], optimize=do_opt), np.dot(b.T, a.T))
+                assert_equal(
+                    np.einsum("ji,j", a.T, b.T, optimize=do_opt), np.dot(b.T, a.T)
+                )
+                assert_equal(
+                    np.einsum(a.T, [1, 0], b.T, [1], optimize=do_opt), np.dot(b.T, a.T)
+                )
 
                 c = np.arange(4, dtype=dtype)
                 np.einsum(
@@ -489,7 +519,9 @@ class TestEinsum:
                     casting="unsafe",
                     optimize=do_opt,
                 )
-                assert_equal(c, np.dot(b.T.astype("f8"), a.T.astype("f8")).astype(dtype))
+                assert_equal(
+                    c, np.dot(b.T.astype("f8"), a.T.astype("f8")).astype(dtype)
+                )
                 c[...] = 0
                 np.einsum(
                     a.T,
@@ -501,21 +533,29 @@ class TestEinsum:
                     casting="unsafe",
                     optimize=do_opt,
                 )
-                assert_equal(c, np.dot(b.T.astype("f8"), a.T.astype("f8")).astype(dtype))
+                assert_equal(
+                    c, np.dot(b.T.astype("f8"), a.T.astype("f8")).astype(dtype)
+                )
 
             # matmat(a,b) / a.dot(b) where a is matrix, b is matrix
             for n in range(1, 17):
                 if n < 8 or dtype != "f2":
                     a = np.arange(4 * n, dtype=dtype).reshape(4, n)
                     b = np.arange(n * 6, dtype=dtype).reshape(n, 6)
-                    assert_equal(np.einsum("ij,jk", a, b, optimize=do_opt), np.dot(a, b))
-                    assert_equal(np.einsum(a, [0, 1], b, [1, 2], optimize=do_opt), np.dot(a, b))
+                    assert_equal(
+                        np.einsum("ij,jk", a, b, optimize=do_opt), np.dot(a, b)
+                    )
+                    assert_equal(
+                        np.einsum(a, [0, 1], b, [1, 2], optimize=do_opt), np.dot(a, b)
+                    )
 
             for n in range(1, 17):
                 a = np.arange(4 * n, dtype=dtype).reshape(4, n)
                 b = np.arange(n * 6, dtype=dtype).reshape(n, 6)
                 c = np.arange(24, dtype=dtype).reshape(4, 6)
-                np.einsum("ij,jk", a, b, out=c, dtype="f8", casting="unsafe", optimize=do_opt)
+                np.einsum(
+                    "ij,jk", a, b, out=c, dtype="f8", casting="unsafe", optimize=do_opt
+                )
                 assert_equal(c, np.dot(a.astype("f8"), b.astype("f8")).astype(dtype))
                 c[...] = 0
                 np.einsum(
@@ -536,7 +576,9 @@ class TestEinsum:
             b = np.arange(20, dtype=dtype).reshape(4, 5)
             c = np.arange(30, dtype=dtype).reshape(5, 6)
             if dtype != "f2":
-                assert_equal(np.einsum("ij,jk,kl", a, b, c, optimize=do_opt), a.dot(b).dot(c))
+                assert_equal(
+                    np.einsum("ij,jk,kl", a, b, c, optimize=do_opt), a.dot(b).dot(c)
+                )
                 assert_equal(
                     np.einsum(a, [0, 1], b, [1, 2], c, [2, 3], optimize=do_opt),
                     a.dot(b).dot(c),
@@ -599,9 +641,9 @@ class TestEinsum:
                 )
                 assert_equal(
                     c,
-                    np.tensordot(a.astype("f8"), b.astype("f8"), axes=([1, 0], [0, 1])).astype(
-                        dtype
-                    ),
+                    np.tensordot(
+                        a.astype("f8"), b.astype("f8"), axes=([1, 0], [0, 1])
+                    ).astype(dtype),
                 )
                 c[...] = 0
                 np.einsum(
@@ -617,9 +659,9 @@ class TestEinsum:
                 )
                 assert_equal(
                     c,
-                    np.tensordot(a.astype("f8"), b.astype("f8"), axes=([1, 0], [0, 1])).astype(
-                        dtype
-                    ),
+                    np.tensordot(
+                        a.astype("f8"), b.astype("f8"), axes=([1, 0], [0, 1])
+                    ).astype(dtype),
                 )
 
         # logical_and(logical_and(a!=0, b!=0), c!=0)
@@ -629,7 +671,9 @@ class TestEinsum:
         c = np.array([True, True, False, True, True, False, True, True])
 
         assert_equal(
-            np.einsum("i,i,i->i", a, b, c, dtype="?", casting="unsafe", optimize=do_opt),
+            np.einsum(
+                "i,i,i->i", a, b, c, dtype="?", casting="unsafe", optimize=do_opt
+            ),
             np.logical_and(np.logical_and(a != 0, b != 0), c != 0),
         )
         assert_equal(
@@ -647,7 +691,9 @@ class TestEinsum:
         for n in range(1, 25):
             a = np.arange(n, dtype=dtype)
             if np.dtype(dtype).itemsize > 1:
-                assert_equal(np.einsum("...,...", a, a, optimize=do_opt), np.multiply(a, a))
+                assert_equal(
+                    np.einsum("...,...", a, a, optimize=do_opt), np.multiply(a, a)
+                )
                 assert_equal(np.einsum("i,i", a, a, optimize=do_opt), np.dot(a, a))
                 assert_equal(np.einsum("i,->i", a, 2, optimize=do_opt), 2 * a)
                 assert_equal(np.einsum(",i->i", 2, a, optimize=do_opt), 2 * a)
@@ -664,8 +710,12 @@ class TestEinsum:
                 )
                 assert_equal(np.einsum("i,->i", a[1:], 2, optimize=do_opt), 2 * a[1:])
                 assert_equal(np.einsum(",i->i", 2, a[1:], optimize=do_opt), 2 * a[1:])
-                assert_equal(np.einsum("i,->", a[1:], 2, optimize=do_opt), 2 * np.sum(a[1:]))
-                assert_equal(np.einsum(",i->", 2, a[1:], optimize=do_opt), 2 * np.sum(a[1:]))
+                assert_equal(
+                    np.einsum("i,->", a[1:], 2, optimize=do_opt), 2 * np.sum(a[1:])
+                )
+                assert_equal(
+                    np.einsum(",i->", 2, a[1:], optimize=do_opt), 2 * np.sum(a[1:])
+                )
 
         # An object array, summed as the data type
         a = np.arange(9, dtype=object)
@@ -794,12 +844,16 @@ class TestEinsum:
         # Regression test for issue #10369 (test unicode inputs with Python 2)
         assert_equal(np.einsum("ij...,j...->i...", a, b), [[[2], [2]]])
         assert_equal(np.einsum("...i,...i", [1, 2, 3], [2, 3, 4]), 20)
-        assert_equal(np.einsum("...i,...i", [1, 2, 3], [2, 3, 4], optimize="greedy"), 20)
+        assert_equal(
+            np.einsum("...i,...i", [1, 2, 3], [2, 3, 4], optimize="greedy"), 20
+        )
 
         # The iterator had an issue with buffering this reduction
         a = np.ones((5, 12, 4, 2, 3), np.int64)
         b = np.ones((5, 12, 11), np.int64)
-        assert_equal(np.einsum("ijklm,ijn,ijn->", a, b, b), np.einsum("ijklm,ijn->", a, b))
+        assert_equal(
+            np.einsum("ijklm,ijn,ijn->", a, b, b), np.einsum("ijklm,ijn->", a, b)
+        )
         assert_equal(
             np.einsum("ijklm,ijn,ijn->", a, b, b, optimize=True),
             np.einsum("ijklm,ijn->", a, b, optimize=True),
@@ -885,8 +939,12 @@ class TestEinsum:
         for opt in [True, False]:
             assert_equal(np.einsum("ik...,k...->i...", A, B, optimize=opt), ref)
             assert_equal(np.einsum("ik...,...kj->i...j", A, B, optimize=opt), ref)
-            assert_equal(np.einsum("...k,kj", A, B, optimize=opt), ref)  # used to raise error
-            assert_equal(np.einsum("ik,k...->i...", A, B, optimize=opt), ref)  # used to raise error
+            assert_equal(
+                np.einsum("...k,kj", A, B, optimize=opt), ref
+            )  # used to raise error
+            assert_equal(
+                np.einsum("ik,k...->i...", A, B, optimize=opt), ref
+            )  # used to raise error
 
         dims = [2, 3, 4, 5]
         a = np.arange(np.prod(dims)).reshape(dims)
@@ -894,7 +952,9 @@ class TestEinsum:
         ref = np.einsum("ijkl,k->ijl", a, v, optimize=False)
         for opt in [True, False]:
             assert_equal(np.einsum("ijkl,k", a, v, optimize=opt), ref)
-            assert_equal(np.einsum("...kl,k", a, v, optimize=opt), ref)  # used to raise error
+            assert_equal(
+                np.einsum("...kl,k", a, v, optimize=opt), ref
+            )  # used to raise error
             assert_equal(np.einsum("...kl,k...", a, v, optimize=opt), ref)
 
         J, K, M = 160, 160, 120
@@ -977,7 +1037,9 @@ class TestEinsum:
         np.einsum("ij,jk->ik", x, x, out=out)
         assert_array_equal(out.base, correct_base)
 
-    @pytest.mark.parametrize("dtype", np.typecodes["AllFloat"] + np.typecodes["AllInteger"])
+    @pytest.mark.parametrize(
+        "dtype", np.typecodes["AllFloat"] + np.typecodes["AllInteger"]
+    )
     def test_different_paths(self, dtype):
         # Test originally added to cover broken float16 path: gh-20305
         # Likely most are covered elsewhere, at least partially.

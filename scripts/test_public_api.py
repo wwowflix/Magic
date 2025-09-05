@@ -93,7 +93,9 @@ def test_NPY_NO_EXPORT():
     cdll = ctypes.CDLL(np._core._multiarray_tests.__file__)
     # Make sure an arbitrary NPY_NO_EXPORT function is actually hidden
     f = getattr(cdll, "test_not_exported", None)
-    assert f is None, "'test_not_exported' is mistakenly exported, " "NPY_NO_EXPORT does not work"
+    assert f is None, (
+        "'test_not_exported' is mistakenly exported, " "NPY_NO_EXPORT does not work"
+    )
 
 
 # Historically NumPy has not used leading underscores for private submodules
@@ -385,7 +387,8 @@ def test_all_modules_are_expected_2():
 
     if unexpected_members:
         raise AssertionError(
-            "Found unexpected object(s) that look like " f"modules: {unexpected_members}"
+            "Found unexpected object(s) that look like "
+            f"modules: {unexpected_members}"
         )
 
 
@@ -423,7 +426,9 @@ def test_api_importable():
             module_names.append(module_name)
 
     if module_names:
-        raise AssertionError("Modules in the public API that were not " f"found: {module_names}")
+        raise AssertionError(
+            "Modules in the public API that were not " f"found: {module_names}"
+        )
 
     with warnings.catch_warnings(record=True) as w:
         warnings.filterwarnings("always", category=DeprecationWarning)
@@ -483,7 +488,10 @@ def test_array_api_entry_point():
         return
 
     xp = ep.load()
-    msg = f"numpy entry point value '{ep.value}' " "does not point to our Array API implementation"
+    msg = (
+        f"numpy entry point value '{ep.value}' "
+        "does not point to our Array API implementation"
+    )
     assert xp is numpy, msg
 
 
@@ -506,11 +514,14 @@ def test_main_namespace_all_dir_coherence():
     dir_members = _remove_exceptions(dir_members)
 
     assert all_members == dir_members, (
-        "Members that break symmetry: " f"{all_members.symmetric_difference(dir_members)}"
+        "Members that break symmetry: "
+        f"{all_members.symmetric_difference(dir_members)}"
     )
 
 
-@pytest.mark.filterwarnings(r"ignore:numpy.core(\.\w+)? is deprecated:DeprecationWarning")
+@pytest.mark.filterwarnings(
+    r"ignore:numpy.core(\.\w+)? is deprecated:DeprecationWarning"
+)
 def test_core_shims_coherence():
     """
     Check that all "semi-public" members of `numpy._core` are also accessible
@@ -535,7 +546,11 @@ def test_core_shims_coherence():
         # that are available in the "real" modules in np._core, with
         # the exception of the namespace packages (__spec__.origin is None),
         # like numpy._core.include, or numpy._core.lib.pkgconfig.
-        if inspect.ismodule(member) and member.__spec__ and member.__spec__.origin is not None:
+        if (
+            inspect.ismodule(member)
+            and member.__spec__
+            and member.__spec__.origin is not None
+        ):
             submodule = member
             submodule_name = member_name
             for submodule_member_name in dir(submodule):
@@ -548,7 +563,9 @@ def test_core_shims_coherence():
                     f"numpy.core.{submodule_name}", fromlist=[submodule_member_name]
                 )
 
-                assert submodule_member is getattr(core_submodule, submodule_member_name)
+                assert submodule_member is getattr(
+                    core_submodule, submodule_member_name
+                )
 
         else:
             assert member is getattr(core, member_name)
@@ -602,7 +619,9 @@ def test_functions_single_location():
                 visited_modules.add(member)
 
             # else check if we got a function-like object
-            elif inspect.isfunction(member) or isinstance(member, (dispatched_function, np.ufunc)):
+            elif inspect.isfunction(member) or isinstance(
+                member, (dispatched_function, np.ufunc)
+            ):
                 if member in visited_functions:
 
                     # skip main namespace functions with aliases
@@ -814,7 +833,8 @@ def test___qualname___and___module___attribute():
                 inspect.ismodule(member)  # it's a module
                 and "numpy" in member.__name__  # inside NumPy
                 and not member_name.startswith("_")  # not private
-                and member_name not in {"tests", "typing"}  # 2024-12: type names don't match
+                and member_name
+                not in {"tests", "typing"}  # 2024-12: type names don't match
                 and "numpy._core" not in member.__name__  # outside _core
                 and member not in visited_modules  # not visited yet
             ):

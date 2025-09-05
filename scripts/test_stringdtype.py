@@ -86,7 +86,9 @@ def test_dtype_repr(dtype):
     elif not hasattr(dtype, "na_object"):
         assert repr(dtype) == "StringDType(coerce=False)"
     else:
-        assert repr(dtype) == f"StringDType(na_object={dtype.na_object!r}, coerce=False)"
+        assert (
+            repr(dtype) == f"StringDType(na_object={dtype.na_object!r}, coerce=False)"
+        )
 
 
 def test_create_with_na(dtype):
@@ -1162,7 +1164,9 @@ def test_nat_casts():
             output_object = na_object
 
         for arr in [dt_array, td_array]:
-            assert_array_equal(arr.astype(dtype), np.array([output_object] * arr.size, dtype=dtype))
+            assert_array_equal(
+                arr.astype(dtype), np.array([output_object] * arr.size, dtype=dtype)
+            )
 
 
 def test_nat_conversion():
@@ -1329,7 +1333,9 @@ def test_unary(string_array, unicode_array, function_name):
         assert res[0] == func(dtype.na_object)
 
 
-unicode_bug_fail = pytest.mark.xfail(reason="unicode output width is buggy", strict=True)
+unicode_bug_fail = pytest.mark.xfail(
+    reason="unicode output width is buggy", strict=True
+)
 
 # None means that the argument is a string array
 BINARY_FUNCTIONS = [
@@ -1621,7 +1627,9 @@ class TestImplementation:
         self.s_short = "01234"
         self.s_medium = "abcdefghijklmnopqrstuvwxyz"
         self.s_long = "-=+" * 100
-        self.a = np.array([self.s_empty, self.s_short, self.s_medium, self.s_long], self.dtype)
+        self.a = np.array(
+            [self.s_empty, self.s_short, self.s_medium, self.s_long], self.dtype
+        )
 
     def get_view(self, a):
         # Cannot view a StringDType as anything else directly, since
@@ -1646,7 +1654,10 @@ class TestImplementation:
         return self.get_flags(a) & self.MISSING == self.MISSING
 
     def in_arena(self, a):
-        return self.get_flags(a) & (self.INITIALIZED | self.OUTSIDE_ARENA) == self.INITIALIZED
+        return (
+            self.get_flags(a) & (self.INITIALIZED | self.OUTSIDE_ARENA)
+            == self.INITIALIZED
+        )
 
     def test_setup(self):
         is_short = self.is_short(self.a)
@@ -1658,7 +1669,9 @@ class TestImplementation:
         view = self.get_view(self.a)
         sizes = np.where(is_short, view["size_and_flags"] & 0xF, view["size"])
         assert_array_equal(sizes, np.strings.str_len(self.a))
-        assert_array_equal(view["xsiz"][2:], np.void(b"\x00" * (self.sizeofstr // 4 - 1)))
+        assert_array_equal(
+            view["xsiz"][2:], np.void(b"\x00" * (self.sizeofstr // 4 - 1))
+        )
         # Check that the medium string uses only 1 byte for its length
         # in the arena, while the long string takes 8 (or 4).
         offsets = view["offset"]

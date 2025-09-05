@@ -95,7 +95,9 @@ class TestS3:
     def test_parse_private_s3_bucket(self, s3_private_bucket_with_data, tips_df, s3so):
         # Read public file from bucket with not-public contents
         pytest.importorskip("s3fs")
-        df = read_csv(f"s3://{s3_private_bucket_with_data.name}/tips.csv", storage_options=s3so)
+        df = read_csv(
+            f"s3://{s3_private_bucket_with_data.name}/tips.csv", storage_options=s3so
+        )
         assert isinstance(df, DataFrame)
         assert not df.empty
         tm.assert_frame_equal(df, tips_df)
@@ -122,7 +124,9 @@ class TestS3:
         assert not df.empty
         tm.assert_frame_equal(tips_df.iloc[:10], df)
 
-    def test_parse_public_s3_bucket_nrows(self, s3_public_bucket_with_data, tips_df, s3so):
+    def test_parse_public_s3_bucket_nrows(
+        self, s3_public_bucket_with_data, tips_df, s3so
+    ):
         for ext, comp in [("", None), (".gz", "gzip"), (".bz2", "bz2")]:
             df = read_csv(
                 f"s3://{s3_public_bucket_with_data.name}/tips.csv" + ext,
@@ -134,7 +138,9 @@ class TestS3:
             assert not df.empty
             tm.assert_frame_equal(tips_df.iloc[:10], df)
 
-    def test_parse_public_s3_bucket_chunked(self, s3_public_bucket_with_data, tips_df, s3so):
+    def test_parse_public_s3_bucket_chunked(
+        self, s3_public_bucket_with_data, tips_df, s3so
+    ):
         # Read with a chunksize
         chunksize = 5
         for ext, comp in [("", None), (".gz", "gzip"), (".bz2", "bz2")]:
@@ -151,10 +157,14 @@ class TestS3:
                     df = df_reader.get_chunk()
                     assert isinstance(df, DataFrame)
                     assert not df.empty
-                    true_df = tips_df.iloc[chunksize * i_chunk : chunksize * (i_chunk + 1)]
+                    true_df = tips_df.iloc[
+                        chunksize * i_chunk : chunksize * (i_chunk + 1)
+                    ]
                     tm.assert_frame_equal(true_df, df)
 
-    def test_parse_public_s3_bucket_chunked_python(self, s3_public_bucket_with_data, tips_df, s3so):
+    def test_parse_public_s3_bucket_chunked_python(
+        self, s3_public_bucket_with_data, tips_df, s3so
+    ):
         # Read with a chunksize using the Python parser
         chunksize = 5
         for ext, comp in [("", None), (".gz", "gzip"), (".bz2", "bz2")]:
@@ -171,10 +181,14 @@ class TestS3:
                     df = df_reader.get_chunk()
                     assert isinstance(df, DataFrame)
                     assert not df.empty
-                    true_df = tips_df.iloc[chunksize * i_chunk : chunksize * (i_chunk + 1)]
+                    true_df = tips_df.iloc[
+                        chunksize * i_chunk : chunksize * (i_chunk + 1)
+                    ]
                     tm.assert_frame_equal(true_df, df)
 
-    def test_parse_public_s3_bucket_python(self, s3_public_bucket_with_data, tips_df, s3so):
+    def test_parse_public_s3_bucket_python(
+        self, s3_public_bucket_with_data, tips_df, s3so
+    ):
         for ext, comp in [("", None), (".gz", "gzip"), (".bz2", "bz2")]:
             df = read_csv(
                 f"s3://{s3_public_bucket_with_data.name}/tips.csv" + ext,
@@ -198,7 +212,9 @@ class TestS3:
             assert not df.empty
             tm.assert_frame_equal(df, tips_df)
 
-    def test_parse_public_s3_bucket_nrows_python(self, s3_public_bucket_with_data, tips_df, s3so):
+    def test_parse_public_s3_bucket_nrows_python(
+        self, s3_public_bucket_with_data, tips_df, s3so
+    ):
         for ext, comp in [("", None), (".gz", "gzip"), (".bz2", "bz2")]:
             df = read_csv(
                 f"s3://{s3_public_bucket_with_data.name}/tips.csv" + ext,
@@ -235,7 +251,9 @@ class TestS3:
         error = (FileNotFoundError, botocore.exceptions.ClientError)
 
         with pytest.raises(error, match="The specified bucket does not exist"):
-            tips_df.to_csv("s3://an_s3_bucket_data_doesnt_exit/not_real.csv", storage_options=s3so)
+            tips_df.to_csv(
+                "s3://an_s3_bucket_data_doesnt_exit/not_real.csv", storage_options=s3so
+            )
 
     @pytest.mark.xfail(reason="GH#39155 s3fs upgrade", strict=False)
     def test_write_s3_parquet_fails(self, tips_df, s3so):
@@ -256,7 +274,9 @@ class TestS3:
             )
 
     @pytest.mark.single_cpu
-    def test_read_csv_handles_boto_s3_object(self, s3_public_bucket_with_data, tips_file):
+    def test_read_csv_handles_boto_s3_object(
+        self, s3_public_bucket_with_data, tips_file
+    ):
         # see gh-16135
 
         s3_object = s3_public_bucket_with_data.Object("tips.csv")
@@ -295,7 +315,9 @@ class TestS3:
         )
         tm.assert_frame_equal(tips_df, result)
 
-    def test_read_feather_s3_file_path(self, s3_public_bucket_with_data, feather_file, s3so):
+    def test_read_feather_s3_file_path(
+        self, s3_public_bucket_with_data, feather_file, s3so
+    ):
         # GH 29055
         pytest.importorskip("pyarrow")
         expected = read_feather(feather_file)

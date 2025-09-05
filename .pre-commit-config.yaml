@@ -5,6 +5,7 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
+        exclude: |           (?x)           ^scripts/.*_2\.py$           | ^scripts/.*_3\.py$           | ^scripts/core\.py$           | ^scripts/constants_2\.py$           | ^scripts/deduplicate_records_2\.py$
     exclude: |
       (?x)
       ^scripts/.*_2\.py$

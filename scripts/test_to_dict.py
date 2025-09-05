@@ -48,7 +48,9 @@ class TestDataFrameToDict:
         }
 
         tm.assert_dict_equal(test_data.to_dict(orient="series"), expected_series)
-        tm.assert_dict_equal(test_data_mixed.to_dict(orient="series"), expected_series_mixed)
+        tm.assert_dict_equal(
+            test_data_mixed.to_dict(orient="series"), expected_series_mixed
+        )
 
         expected_split = {
             "index": [0, 1],
@@ -62,7 +64,9 @@ class TestDataFrameToDict:
         }
 
         tm.assert_dict_equal(test_data.to_dict(orient="split"), expected_split)
-        tm.assert_dict_equal(test_data_mixed.to_dict(orient="split"), expected_split_mixed)
+        tm.assert_dict_equal(
+            test_data_mixed.to_dict(orient="split"), expected_split_mixed
+        )
 
     def test_to_dict_index_not_unique_with_index_orient(self):
         # GH#22801
@@ -418,7 +422,9 @@ class TestDataFrameToDict:
             )
         elif orient == "list":
             assertion_iterator = (
-                (i, key, value) for key, values in result.items() for i, value in enumerate(values)
+                (i, key, value)
+                for key, values in result.items()
+                for i, value in enumerate(values)
             )
         elif orient in {"split", "tight"}:
             assertion_iterator = (
@@ -428,11 +434,15 @@ class TestDataFrameToDict:
             )
         elif orient == "records":
             assertion_iterator = (
-                (i, key, value) for i, record in enumerate(result) for key, value in record.items()
+                (i, key, value)
+                for i, record in enumerate(result)
+                for key, value in record.items()
             )
         elif orient == "index":
             assertion_iterator = (
-                (i, key, value) for i, record in result.items() for key, value in record.items()
+                (i, key, value)
+                for i, record in result.items()
+                for key, value in record.items()
             )
 
         for i, key, value in assertion_iterator:

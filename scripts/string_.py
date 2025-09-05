@@ -102,9 +102,13 @@ class StringDtype(StorageExtensionDtype):
         if storage is None:
             storage = get_option("mode.string_storage")
         if storage not in {"python", "pyarrow"}:
-            raise ValueError(f"Storage must be 'python' or 'pyarrow'. Got {storage} instead.")
+            raise ValueError(
+                f"Storage must be 'python' or 'pyarrow'. Got {storage} instead."
+            )
         if storage == "pyarrow" and pa_version_under1p01:
-            raise ImportError("pyarrow>=1.0.0 is required for PyArrow backed StringArray.")
+            raise ImportError(
+                "pyarrow>=1.0.0 is required for PyArrow backed StringArray."
+            )
         self.storage = storage
 
     @property
@@ -140,7 +144,9 @@ class StringDtype(StorageExtensionDtype):
             If the string is not a valid option.
         """
         if not isinstance(string, str):
-            raise TypeError(f"'construct_from_string' expects a string, got {type(string)}")
+            raise TypeError(
+                f"'construct_from_string' expects a string, got {type(string)}"
+            )
         if string == "string":
             return cls()
         elif string == "string[python]":
@@ -170,7 +176,9 @@ class StringDtype(StorageExtensionDtype):
         else:
             return ArrowStringArray
 
-    def __from_arrow__(self, array: pyarrow.Array | pyarrow.ChunkedArray) -> BaseStringArray:
+    def __from_arrow__(
+        self, array: pyarrow.Array | pyarrow.ChunkedArray
+    ) -> BaseStringArray:
         """
         Construct StringArray from pyarrow Array/ChunkedArray.
         """
@@ -345,7 +353,9 @@ class StringArray(BaseStringArray, PandasArray):
         return new_string_array
 
     @classmethod
-    def _from_sequence_of_strings(cls, strings, *, dtype: Dtype | None = None, copy=False):
+    def _from_sequence_of_strings(
+        cls, strings, *, dtype: Dtype | None = None, copy=False
+    ):
         return cls._from_sequence(strings, dtype=dtype, copy=copy)
 
     @classmethod
@@ -390,7 +400,9 @@ class StringArray(BaseStringArray, PandasArray):
             if isna(value):
                 value = libmissing.NA
             elif not isinstance(value, str):
-                raise ValueError(f"Cannot set non-string value '{value}' into a StringArray.")
+                raise ValueError(
+                    f"Cannot set non-string value '{value}' into a StringArray."
+                )
         else:
             if not is_array_like(value):
                 value = np.asarray(value, dtype=object)
@@ -439,7 +451,9 @@ class StringArray(BaseStringArray, PandasArray):
 
         return super().astype(dtype, copy)
 
-    def _reduce(self, name: str, *, skipna: bool = True, axis: int | None = 0, **kwargs):
+    def _reduce(
+        self, name: str, *, skipna: bool = True, axis: int | None = 0, **kwargs
+    ):
         if name in ["min", "max"]:
             return getattr(self, name)(skipna=skipna, axis=axis)
 
@@ -447,12 +461,16 @@ class StringArray(BaseStringArray, PandasArray):
 
     def min(self, axis=None, skipna: bool = True, **kwargs) -> Scalar:
         nv.validate_min((), kwargs)
-        result = masked_reductions.min(values=self.to_numpy(), mask=self.isna(), skipna=skipna)
+        result = masked_reductions.min(
+            values=self.to_numpy(), mask=self.isna(), skipna=skipna
+        )
         return self._wrap_reduction_result(axis, result)
 
     def max(self, axis=None, skipna: bool = True, **kwargs) -> Scalar:
         nv.validate_max((), kwargs)
-        result = masked_reductions.max(values=self.to_numpy(), mask=self.isna(), skipna=skipna)
+        result = masked_reductions.max(
+            values=self.to_numpy(), mask=self.isna(), skipna=skipna
+        )
         return self._wrap_reduction_result(axis, result)
 
     def value_counts(self, dropna: bool = True) -> Series:
@@ -480,7 +498,9 @@ class StringArray(BaseStringArray, PandasArray):
         if not lib.is_scalar(other):
             if len(other) != len(self):
                 # prevent improper broadcasting when other is 2D
-                raise ValueError(f"Lengths of operands do not match: {len(self)} != {len(other)}")
+                raise ValueError(
+                    f"Lengths of operands do not match: {len(self)} != {len(other)}"
+                )
 
             other = np.asarray(other)
             other = other[valid]
@@ -504,7 +524,9 @@ class StringArray(BaseStringArray, PandasArray):
     # base class "PandasArray" defined the type as "float")
     _str_na_value = libmissing.NA  # type: ignore[assignment]
 
-    def _str_map(self, f, na_value=None, dtype: Dtype | None = None, convert: bool = True):
+    def _str_map(
+        self, f, na_value=None, dtype: Dtype | None = None, convert: bool = True
+    ):
         from pandas.arrays import BooleanArray
 
         if dtype is None:

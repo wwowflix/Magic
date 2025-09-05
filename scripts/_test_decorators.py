@@ -104,7 +104,11 @@ def skip_if_no(package: str, min_version: str | None = None) -> pytest.MarkDecor
     if min_version:
         msg += f" satisfying a min_version of {min_version}"
     return pytest.mark.skipif(
-        not bool(import_optional_dependency(package, errors="ignore", min_version=min_version)),
+        not bool(
+            import_optional_dependency(
+                package, errors="ignore", min_version=min_version
+            )
+        ),
         reason=msg,
     )
 

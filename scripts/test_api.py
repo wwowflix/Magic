@@ -141,9 +141,15 @@ def test_array_array():
         np.full((10, 10), np.nan, dtype=np.float64),
     )
 
-    assert_equal(np.array([1.0] * 10, dtype=np.float64), np.ones((10,), dtype=np.float64))
-    assert_equal(np.array([[1.0]] * 10, dtype=np.float64), np.ones((10, 1), dtype=np.float64))
-    assert_equal(np.array([[1.0] * 10], dtype=np.float64), np.ones((1, 10), dtype=np.float64))
+    assert_equal(
+        np.array([1.0] * 10, dtype=np.float64), np.ones((10,), dtype=np.float64)
+    )
+    assert_equal(
+        np.array([[1.0]] * 10, dtype=np.float64), np.ones((10, 1), dtype=np.float64)
+    )
+    assert_equal(
+        np.array([[1.0] * 10], dtype=np.float64), np.ones((1, 10), dtype=np.float64)
+    )
     assert_equal(
         np.array([[1.0] * 10] * 10, dtype=np.float64),
         np.ones((10, 10), dtype=np.float64),
@@ -167,9 +173,15 @@ def test_array_array():
         np.full((10, 10), np.nan, dtype=np.float64),
     )
 
-    assert_equal(np.array((1.0,) * 10, dtype=np.float64), np.ones((10,), dtype=np.float64))
-    assert_equal(np.array([(1.0,)] * 10, dtype=np.float64), np.ones((10, 1), dtype=np.float64))
-    assert_equal(np.array([(1.0,) * 10], dtype=np.float64), np.ones((1, 10), dtype=np.float64))
+    assert_equal(
+        np.array((1.0,) * 10, dtype=np.float64), np.ones((10,), dtype=np.float64)
+    )
+    assert_equal(
+        np.array([(1.0,)] * 10, dtype=np.float64), np.ones((10, 1), dtype=np.float64)
+    )
+    assert_equal(
+        np.array([(1.0,) * 10], dtype=np.float64), np.ones((1, 10), dtype=np.float64)
+    )
     assert_equal(
         np.array([(1.0,) * 10] * 10, dtype=np.float64),
         np.ones((10, 10), dtype=np.float64),
@@ -350,8 +362,12 @@ def test_array_astype_warning(t):
 )
 def test_string_to_boolean_cast(dtype, out_dtype):
     # Only the last two (empty) strings are falsy (the `\0` is stripped):
-    arr = np.array(["10", "10\0\0\0", "0\0\0", "0", "False", " ", "", "\0"], dtype=dtype)
-    expected = np.array([True, True, True, True, True, True, False, False], dtype=out_dtype)
+    arr = np.array(
+        ["10", "10\0\0\0", "0\0\0", "0", "False", " ", "", "\0"], dtype=dtype
+    )
+    expected = np.array(
+        [True, True, True, True, True, True, False, False], dtype=out_dtype
+    )
     assert_array_equal(arr.astype(out_dtype), expected)
     # As it's similar, check that nonzero behaves the same (structs are
     # nonzero if all entries are)
@@ -621,8 +637,12 @@ def test_broadcast_arrays():
     a = np.array([(1, 2, 3)], dtype="u4,u4,u4")
     b = np.array([(1, 2, 3), (4, 5, 6), (7, 8, 9)], dtype="u4,u4,u4")
     result = np.broadcast_arrays(a, b)
-    assert_equal(result[0], np.array([(1, 2, 3), (1, 2, 3), (1, 2, 3)], dtype="u4,u4,u4"))
-    assert_equal(result[1], np.array([(1, 2, 3), (4, 5, 6), (7, 8, 9)], dtype="u4,u4,u4"))
+    assert_equal(
+        result[0], np.array([(1, 2, 3), (1, 2, 3), (1, 2, 3)], dtype="u4,u4,u4")
+    )
+    assert_equal(
+        result[1], np.array([(1, 2, 3), (4, 5, 6), (7, 8, 9)], dtype="u4,u4,u4")
+    )
 
 
 @pytest.mark.parametrize(

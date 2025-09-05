@@ -63,7 +63,8 @@ class _UFuncNoLoopError(UFuncTypeError):
 
     def __str__(self):
         return (
-            "ufunc {!r} did not contain a loop with signature matching types " "{!r} -> {!r}"
+            "ufunc {!r} did not contain a loop with signature matching types "
+            "{!r} -> {!r}"
         ).format(
             self.ufunc.__name__,
             _unpack_tuple(self.dtypes[: self.ufunc.nin]),
@@ -108,7 +109,8 @@ class _UFuncOutputCastingError(_UFuncCastingError):
         # only show the number if more than one output exists
         i_str = "{} ".format(self.out_i) if self.ufunc.nout != 1 else ""
         return (
-            "Cannot cast ufunc {!r} output {}from {!r} to {!r} with casting " "rule {!r}"
+            "Cannot cast ufunc {!r} output {}from {!r} to {!r} with casting "
+            "rule {!r}"
         ).format(self.ufunc.__name__, i_str, self.from_, self.to, self.casting)
 
 
@@ -129,7 +131,9 @@ class AxisError(ValueError, IndexError):
 
         # do the string formatting here, to save work in the C code
         else:
-            msg = "axis {} is out of bounds for array of dimension {}".format(axis, ndim)
+            msg = "axis {} is out of bounds for array of dimension {}".format(
+                axis, ndim
+            )
             if msg_prefix is not None:
                 msg = "{}: {}".format(msg_prefix, msg)
 
@@ -190,6 +194,8 @@ class _ArrayMemoryError(MemoryError):
 
     def __str__(self):
         size_str = self._size_to_string(self._total_size)
-        return "Unable to allocate {} for an array with shape {} and data type {}".format(
-            size_str, self.shape, self.dtype
+        return (
+            "Unable to allocate {} for an array with shape {} and data type {}".format(
+                size_str, self.shape, self.dtype
+            )
         )

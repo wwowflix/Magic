@@ -9,7 +9,9 @@ VERSION_BASE = 0x2601
 VERSION_EMBEDDED = 0x2701
 VERSION_CHAR16CHAR32 = 0x2801
 
-USE_LIMITED_API = sys.platform != "win32" or sys.version_info < (3, 0) or sys.version_info >= (3, 5)
+USE_LIMITED_API = (
+    sys.platform != "win32" or sys.version_info < (3, 0) or sys.version_info >= (3, 5)
+)
 
 
 class GlobalExpr:
@@ -256,7 +258,9 @@ class Recompiler:
             if isinstance(tp, model.FunctionPtrType):
                 self._do_collect_type(tp.as_raw_function())
             elif isinstance(tp, model.StructOrUnion):
-                if tp.fldtypes is not None and (tp not in self.ffi._parser._included_declarations):
+                if tp.fldtypes is not None and (
+                    tp not in self.ffi._parser._included_declarations
+                ):
                     for name1, tp1, _, _ in self._enum_fields(tp):
                         self._do_collect_type(self._field_type(tp, name1, tp1))
             else:
@@ -353,7 +357,10 @@ class Recompiler:
             self._print_string_literal_in_array(self.ffi._embedding)
             prnt("0 };")
             prnt("#ifdef PYPY_VERSION")
-            prnt("# define _CFFI_PYTHON_STARTUP_FUNC  _cffi_pypyinit_%s" % (base_module_name,))
+            prnt(
+                "# define _CFFI_PYTHON_STARTUP_FUNC  _cffi_pypyinit_%s"
+                % (base_module_name,)
+            )
             prnt("#elif PY_MAJOR_VERSION >= 3")
             prnt("# define _CFFI_PYTHON_STARTUP_FUNC  PyInit_%s" % (base_module_name,))
             prnt("#else")
@@ -397,7 +404,10 @@ class Recompiler:
             lst = self._lsts[step_name]
             nums[step_name] = len(lst)
             if nums[step_name] > 0:
-                prnt("static const struct _cffi_%s_s _cffi_%ss[] = {" % (step_name, step_name))
+                prnt(
+                    "static const struct _cffi_%s_s _cffi_%ss[] = {"
+                    % (step_name, step_name)
+                )
                 for entry in lst:
                     prnt(entry.as_c_expr())
                 prnt("};")
@@ -408,7 +418,9 @@ class Recompiler:
             prnt("static const char * const _cffi_includes[] = {")
             for ffi_to_include in self.ffi._included_ffis:
                 try:
-                    included_module_name, included_source = ffi_to_include._assigned_source[:2]
+                    included_module_name, included_source = (
+                        ffi_to_include._assigned_source[:2]
+                    )
                 except AttributeError:
                     raise VerificationError(
                         "ffi object %r includes %r, but the latter has not "
@@ -497,7 +509,10 @@ class Recompiler:
         prnt("PyMODINIT_FUNC")
         prnt("init%s(void)" % (base_module_name,))
         prnt("{")
-        prnt('  _cffi_init("%s", 0x%x, &_cffi_type_context);' % (self.module_name, self._version))
+        prnt(
+            '  _cffi_init("%s", 0x%x, &_cffi_type_context);'
+            % (self.module_name, self._version)
+        )
         prnt("}")
         prnt("#endif")
         prnt()
@@ -529,7 +544,9 @@ class Recompiler:
         for i in range(num_includes):
             ffi_to_include = self.ffi._included_ffis[i]
             try:
-                included_module_name, included_source = ffi_to_include._assigned_source[:2]
+                included_module_name, included_source = ffi_to_include._assigned_source[
+                    :2
+                ]
             except AttributeError:
                 raise VerificationError(
                     "ffi object %r includes %r, but the latter has not "
@@ -565,7 +582,8 @@ class Recompiler:
         # the '_includes' keyword argument
         if num_includes > 0:
             prnt(
-                "    _includes = (%s,)," % (", ".join(["_ffi%d" % i for i in range(num_includes)]),)
+                "    _includes = (%s,),"
+                % (", ".join(["_ffi%d" % i for i in range(num_includes)]),)
             )
         #
         # the footer
@@ -598,7 +616,9 @@ class Recompiler:
             self._convert_funcarg_to_c_ptr_or_array(tp, fromvar, tovar, errcode)
             return
         #
-        elif isinstance(tp, model.StructOrUnionOrEnum) or isinstance(tp, model.BasePrimitiveType):
+        elif isinstance(tp, model.StructOrUnionOrEnum) or isinstance(
+            tp, model.BasePrimitiveType
+        ):
             # a struct (not a struct pointer) as a function argument;
             # or, a complex (the same code works)
             self._prnt(
@@ -617,7 +637,10 @@ class Recompiler:
             raise NotImplementedError(tp)
         #
         self._prnt("  %s = %s(%s%s);" % (tovar, converter, fromvar, extraarg))
-        self._prnt("  if (%s == (%s)%s && PyErr_Occurred())" % (tovar, tp.get_c_name(""), errvalue))
+        self._prnt(
+            "  if (%s == (%s)%s && PyErr_Occurred())"
+            % (tovar, tp.get_c_name(""), errvalue)
+        )
         self._prnt("    %s;" % errcode)
 
     def _extra_local_variables(self, tp, localvars, freelines):
@@ -625,13 +648,15 @@ class Recompiler:
             localvars.add("Py_ssize_t datasize")
             localvars.add("struct _cffi_freeme_s *large_args_free = NULL")
             freelines.add(
-                "if (large_args_free != NULL)" " _cffi_free_array_arguments(large_args_free);"
+                "if (large_args_free != NULL)"
+                " _cffi_free_array_arguments(large_args_free);"
             )
 
     def _convert_funcarg_to_c_ptr_or_array(self, tp, fromvar, tovar, errcode):
         self._prnt("  datasize = _cffi_prepare_pointer_call_argument(")
         self._prnt(
-            "      _cffi_type(%d), %s, (char **)&%s);" % (self._gettypenum(tp), fromvar, tovar)
+            "      _cffi_type(%d), %s, (char **)&%s);"
+            % (self._gettypenum(tp), fromvar, tovar)
         )
         self._prnt("  if (datasize != 0) {")
         self._prnt(
@@ -674,7 +699,9 @@ class Recompiler:
             )
         elif isinstance(tp, model.StructOrUnion):
             if tp.fldnames is None:
-                raise TypeError("'%s' is used as %s, but is opaque" % (tp._get_c_name(), context))
+                raise TypeError(
+                    "'%s' is used as %s, but is opaque" % (tp._get_c_name(), context)
+                )
             return "_cffi_from_c_struct((char *)&%s, _cffi_type(%d))" % (
                 var,
                 self._gettypenum(tp),
@@ -709,7 +736,9 @@ class Recompiler:
         if getattr(tp, "origin", None) == "unknown_type":
             self._struct_ctx(tp, tp.name, approxname=None)
         elif isinstance(tp, model.NamedPointerType):
-            self._struct_ctx(tp.totype, tp.totype.name, approxname=tp.name, named_ptr=tp)
+            self._struct_ctx(
+                tp.totype, tp.totype.name, approxname=tp.name, named_ptr=tp
+            )
 
     # ----------
     # function declarations
@@ -818,7 +847,10 @@ class Recompiler:
         if numargs == 0:
             prnt("  (void)noarg; /* unused */")
         if result_code:
-            prnt("  pyresult = %s;" % self._convert_expr_from_c(tp.result, "result", "result type"))
+            prnt(
+                "  pyresult = %s;"
+                % self._convert_expr_from_c(tp.result, "result", "result type")
+            )
             for freeline in freelines:
                 prnt("  " + freeline)
             prnt("  return pyresult;")
@@ -975,7 +1007,8 @@ class Recompiler:
             flags.append("_CFFI_F_OPAQUE")
             reason_for_not_expanding = "opaque"
         if tp not in self.ffi._parser._included_declarations and (
-            named_ptr is None or named_ptr not in self.ffi._parser._included_declarations
+            named_ptr is None
+            or named_ptr not in self.ffi._parser._included_declarations
         ):
             if tp.fldtypes is None:
                 pass  # opaque
@@ -1071,7 +1104,9 @@ class Recompiler:
         while isinstance(tp, model.ArrayType):
             tp = tp.item
         if isinstance(tp, model.StructOrUnion) and tp.fldtypes is None:
-            raise TypeError("%s is of an opaque type (not declared in cdef())" % location)
+            raise TypeError(
+                "%s is of an opaque type (not declared in cdef())" % location
+            )
 
     def _add_missing_struct_unions(self):
         # not very nice, but some struct declarations might be missing
@@ -1144,9 +1179,13 @@ class Recompiler:
     # ----------
     # constants, declared with "static const ..."
 
-    def _generate_cpy_const(self, is_int, name, tp=None, category="const", check_value=None):
+    def _generate_cpy_const(
+        self, is_int, name, tp=None, category="const", check_value=None
+    ):
         if (category, name) in self._seen_constants:
-            raise VerificationError("duplicate declaration of %s '%s'" % (category, name))
+            raise VerificationError(
+                "duplicate declaration of %s '%s'" % (category, name)
+            )
         self._seen_constants.add((category, name))
         #
         prnt = self._prnt
@@ -1306,7 +1345,9 @@ class Recompiler:
             op = OP_GLOBAL_VAR
         else:
             op = OP_GLOBAL_VAR_F
-        self._lsts["global"].append(GlobalExpr(name, "_cffi_var_%s" % name, CffiOp(op, type_index)))
+        self._lsts["global"].append(
+            GlobalExpr(name, "_cffi_var_%s" % name, CffiOp(op, type_index))
+        )
 
     # ----------
     # extern "Python"
@@ -1315,9 +1356,9 @@ class Recompiler:
         assert isinstance(tp, model.FunctionPtrType)
         self._do_collect_type(tp)
 
-    _generate_cpy_dllexport_python_collecttype = _generate_cpy_extern_python_plus_c_collecttype = (
-        _generate_cpy_extern_python_collecttype
-    )
+    _generate_cpy_dllexport_python_collecttype = (
+        _generate_cpy_extern_python_plus_c_collecttype
+    ) = _generate_cpy_extern_python_collecttype
 
     def _extern_python_decl(self, tp, name, tag_and_space):
         prnt = self._prnt
@@ -1390,7 +1431,9 @@ class Recompiler:
             raise NotImplementedError('a vararg function is extern "Python"')
         type_index = self._typesdict[tp]
         type_op = CffiOp(OP_EXTERN_PYTHON, type_index)
-        self._lsts["global"].append(GlobalExpr(name, "&_cffi_externpy__%s" % name, type_op, name))
+        self._lsts["global"].append(
+            GlobalExpr(name, "&_cffi_externpy__%s" % name, type_op, name)
+        )
 
     _generate_cpy_dllexport_python_ctx = _generate_cpy_extern_python_plus_c_ctx = (
         _generate_cpy_extern_python_ctx
@@ -1657,7 +1700,8 @@ def recompile(
     if preamble is not None:
         if call_c_compiler and _is_file_like(c_file):
             raise TypeError(
-                "Writing to file-like objects is not supported " "with call_c_compiler=True"
+                "Writing to file-like objects is not supported "
+                "with call_c_compiler=True"
             )
         embedding = ffi._embedding is not None
         if embedding:
@@ -1680,7 +1724,9 @@ def recompile(
             ext = ffiplatform.get_extension(ext_c_file, module_name, **kwds)
         else:
             ext = None
-        updated = make_c_source(ffi, module_name, preamble, c_file, verbose=compiler_verbose)
+        updated = make_c_source(
+            ffi, module_name, preamble, c_file, verbose=compiler_verbose
+        )
         if call_c_compiler:
             patchlist = []
             cwd = os.getcwd()

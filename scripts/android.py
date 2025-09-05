@@ -31,7 +31,9 @@ class Android(PlatformDirsABC):
         """
         :return: config directory tied to the user, e.g. ``/data/user/<userid>/<packagename>/shared_prefs/<AppName>``
         """
-        return self._append_app_name_and_version(cast(str, _android_folder()), "shared_prefs")
+        return self._append_app_name_and_version(
+            cast(str, _android_folder()), "shared_prefs"
+        )
 
     @property
     def site_config_dir(self) -> str:

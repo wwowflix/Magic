@@ -96,7 +96,9 @@ def visit(visitor, obj, attr, value):
     setattr(obj, attr, visitor.scale(value))
 
 
-@ScalerVisitor.register_attr((ttLib.getTableClass("hmtx"), ttLib.getTableClass("vmtx")), "metrics")
+@ScalerVisitor.register_attr(
+    (ttLib.getTableClass("hmtx"), ttLib.getTableClass("vmtx")), "metrics"
+)
 def visit(visitor, obj, attr, metrics):
     for g in metrics:
         advance, lsb = metrics[g]
@@ -251,7 +253,9 @@ def _cff_scale(visitor, args):
             arg[-1] = num_blends
 
 
-@ScalerVisitor.register_attr((ttLib.getTableClass("CFF "), ttLib.getTableClass("CFF2")), "cff")
+@ScalerVisitor.register_attr(
+    (ttLib.getTableClass("CFF "), ttLib.getTableClass("CFF2")), "cff"
+)
 def visit(visitor, obj, attr, cff):
     cff.desubroutinize()
     topDict = cff.topDictIndex[0]
@@ -265,7 +269,9 @@ def visit(visitor, obj, attr, cff):
             c, _ = cs.getItemAndSelector(g)
             privates.add(c.private)
 
-            commands = cffSpecializer.programToCommands(c.program, getNumRegions=getNumRegions)
+            commands = cffSpecializer.programToCommands(
+                c.program, getNumRegions=getNumRegions
+            )
             for op, args in commands:
                 if op == "vsindex":
                     continue
@@ -401,8 +407,12 @@ def main(args=None):
         "fonttools ttLib.scaleUpem", description="Change the units-per-EM of fonts"
     )
     parser.add_argument("font", metavar="font", help="Font file.")
-    parser.add_argument("new_upem", metavar="new-upem", help="New units-per-EM integer value.")
-    parser.add_argument("--output-file", metavar="path", default=None, help="Output file.")
+    parser.add_argument(
+        "new_upem", metavar="new-upem", help="New units-per-EM integer value."
+    )
+    parser.add_argument(
+        "--output-file", metavar="path", default=None, help="Output file."
+    )
 
     options = parser.parse_args(args)
 

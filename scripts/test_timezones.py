@@ -114,7 +114,9 @@ class TestDatetimeIndexTimezones:
         tm.assert_index_equal(result, expected)
 
     def test_date_range_localize(self, unit):
-        rng = date_range("3/11/2012 03:00", periods=15, freq="h", tz="US/Eastern", unit=unit)
+        rng = date_range(
+            "3/11/2012 03:00", periods=15, freq="h", tz="US/Eastern", unit=unit
+        )
         rng2 = DatetimeIndex(
             ["3/11/2012 03:00", "3/11/2012 04:00"], dtype=f"M8[{unit}, US/Eastern]"
         )
@@ -134,7 +136,9 @@ class TestDatetimeIndexTimezones:
 
     def test_date_range_localize2(self, unit):
         # Right before the DST transition
-        rng = date_range("3/11/2012 00:00", periods=2, freq="h", tz="US/Eastern", unit=unit)
+        rng = date_range(
+            "3/11/2012 00:00", periods=2, freq="h", tz="US/Eastern", unit=unit
+        )
         rng2 = DatetimeIndex(
             ["3/11/2012 00:00", "3/11/2012 01:00"],
             dtype=f"M8[{unit}, US/Eastern]",
@@ -148,7 +152,9 @@ class TestDatetimeIndexTimezones:
         assert exp.hour == 1
         assert rng[1] == exp
 
-        rng = date_range("3/11/2012 00:00", periods=10, freq="h", tz="US/Eastern", unit=unit)
+        rng = date_range(
+            "3/11/2012 00:00", periods=10, freq="h", tz="US/Eastern", unit=unit
+        )
         assert rng[2].hour == 3
 
     def test_timestamp_equality_different_timezones(self):
@@ -196,7 +202,9 @@ class TestDatetimeIndexTimezones:
         rng_eastern = rng.tz_convert(tzstr)
         # test not valid for dateutil timezones.
         # assert 'EDT' in repr(rng_eastern[0].tzinfo)
-        assert "EDT" in repr(rng_eastern[0].tzinfo) or "tzfile" in repr(rng_eastern[0].tzinfo)
+        assert "EDT" in repr(rng_eastern[0].tzinfo) or "tzfile" in repr(
+            rng_eastern[0].tzinfo
+        )
 
     @pytest.mark.parametrize("tz", [pytz.timezone("US/Central"), gettz("US/Central")])
     def test_with_tz(self, tz):

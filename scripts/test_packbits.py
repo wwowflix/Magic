@@ -492,7 +492,9 @@ def test_packbits_large(bitorder):
 
         # check last byte of different remainders (16 byte vectorization)
         b = [np.packbits(arr[:-i], axis=None)[-1] for i in range(1, 16)]
-        assert_array_equal(b, [128, 128, 128, 31, 30, 28, 24, 16, 0, 0, 0, 199, 198, 196, 192])
+        assert_array_equal(
+            b, [128, 128, 128, 31, 30, 28, 24, 16, 0, 0, 0, 199, 198, 196, 192]
+        )
 
         arr = arr.reshape(36, 25)
         b = np.packbits(arr, axis=0)

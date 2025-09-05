@@ -65,7 +65,9 @@ class sdist_add_defaults:
                         break
 
                 if not got_it:
-                    self.warn("standard file not found: should have one of " + ", ".join(alts))
+                    self.warn(
+                        "standard file not found: should have one of " + ", ".join(alts)
+                    )
             else:
                 if self._cs_path_exists(fn):
                     self.filelist.append(fn)

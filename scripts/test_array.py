@@ -104,17 +104,23 @@ def test_dt64_array(dtype_unit):
         (
             [1, 2],
             np.dtype("datetime64[ns]"),
-            DatetimeArray._from_sequence(np.array([1, 2], dtype="M8[ns]"), dtype="M8[ns]"),
+            DatetimeArray._from_sequence(
+                np.array([1, 2], dtype="M8[ns]"), dtype="M8[ns]"
+            ),
         ),
         (
             [1, 2],
             np.dtype("datetime64[s]"),
-            DatetimeArray._from_sequence(np.array([1, 2], dtype="M8[s]"), dtype="M8[s]"),
+            DatetimeArray._from_sequence(
+                np.array([1, 2], dtype="M8[s]"), dtype="M8[s]"
+            ),
         ),
         (
             np.array([1, 2], dtype="datetime64[ns]"),
             None,
-            DatetimeArray._from_sequence(np.array([1, 2], dtype="M8[ns]"), dtype="M8[ns]"),
+            DatetimeArray._from_sequence(
+                np.array([1, 2], dtype="M8[ns]"), dtype="M8[ns]"
+            ),
         ),
         (
             pd.DatetimeIndex(["2000", "2001"]),
@@ -135,7 +141,9 @@ def test_dt64_array(dtype_unit):
         (
             ["2000", "2001"],
             pd.DatetimeTZDtype(tz="CET"),
-            DatetimeArray._from_sequence(["2000", "2001"], dtype=pd.DatetimeTZDtype(tz="CET")),
+            DatetimeArray._from_sequence(
+                ["2000", "2001"], dtype=pd.DatetimeTZDtype(tz="CET")
+            ),
         ),
         # Timedelta
         (
@@ -151,7 +159,9 @@ def test_dt64_array(dtype_unit):
         (
             np.array([1, 2], dtype="m8[s]"),
             np.dtype("timedelta64[s]"),
-            TimedeltaArray._from_sequence(np.array([1, 2], dtype="m8[s]"), dtype="m8[s]"),
+            TimedeltaArray._from_sequence(
+                np.array([1, 2], dtype="m8[s]"), dtype="m8[s]"
+            ),
         ),
         (
             pd.TimedeltaIndex(["1h", "2h"]),
@@ -326,7 +336,9 @@ cet = pytz.timezone("CET")
         ),
         (
             np.array([1, 2], dtype="M8[us]"),
-            DatetimeArray._simple_new(np.array([1, 2], dtype="M8[us]"), dtype=np.dtype("M8[us]")),
+            DatetimeArray._simple_new(
+                np.array([1, 2], dtype="M8[us]"), dtype=np.dtype("M8[us]")
+            ),
         ),
         # datetimetz
         (
@@ -449,7 +461,9 @@ def test_dataframe_raises():
 
 def test_bounds_check():
     # GH21796
-    with pytest.raises(TypeError, match=r"cannot safely cast non-equivalent int(32|64) to uint16"):
+    with pytest.raises(
+        TypeError, match=r"cannot safely cast non-equivalent int(32|64) to uint16"
+    ):
         pd.array([-1, 2, 3], dtype="UInt16")
 
 
@@ -489,7 +503,9 @@ def test_array_unboxes(index_or_series):
     data = box([decimal.Decimal("1"), decimal.Decimal("2")])
     dtype = DecimalDtype2()
     # make sure it works
-    with pytest.raises(TypeError, match="scalars should not be of type pd.Series or pd.Index"):
+    with pytest.raises(
+        TypeError, match="scalars should not be of type pd.Series or pd.Index"
+    ):
         DecimalArray2._from_sequence(data, dtype=dtype)
 
     result = pd.array(data, dtype="decimal2")

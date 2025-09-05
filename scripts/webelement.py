@@ -176,7 +176,9 @@ class WebElement(BaseWebElement):
             return self._execute(Command.GET_ELEMENT_PROPERTY, {"name": name})["value"]
         except WebDriverException:
             # if we hit an end point that doesn't understand getElementProperty lets fake it
-            return self.parent.execute_script("return arguments[0][arguments[1]]", self, name)
+            return self.parent.execute_script(
+                "return arguments[0][arguments[1]]", self, name
+            )
 
     def get_dom_attribute(self, name) -> str:
         """Gets the given attribute of the element. Unlike
@@ -295,7 +297,9 @@ class WebElement(BaseWebElement):
         if self.parent._is_remote:
             local_files = list(
                 map(
-                    lambda keys_to_send: self.parent.file_detector.is_local_file(str(keys_to_send)),
+                    lambda keys_to_send: self.parent.file_detector.is_local_file(
+                        str(keys_to_send)
+                    ),
                     "".join(map(str, value)).split("\n"),
                 )
             )
@@ -608,7 +612,9 @@ class WebElement(BaseWebElement):
             The first matching `WebElement` found on the page.
         """
         by, value = self._parent.locator_converter.convert(by, value)
-        return self._execute(Command.FIND_CHILD_ELEMENT, {"using": by, "value": value})["value"]
+        return self._execute(Command.FIND_CHILD_ELEMENT, {"using": by, "value": value})[
+            "value"
+        ]
 
     def find_elements(self, by=By.ID, value=None) -> list[WebElement]:
         """Find elements given a By strategy and locator.
@@ -637,7 +643,9 @@ class WebElement(BaseWebElement):
             list of `WebElements` matching locator strategy found on the page.
         """
         by, value = self._parent.locator_converter.convert(by, value)
-        return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+        return self._execute(
+            Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value}
+        )["value"]
 
     def __hash__(self) -> int:
         return int(md5_hash(self._id.encode("utf-8")).hexdigest(), 16)

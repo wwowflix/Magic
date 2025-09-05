@@ -36,7 +36,9 @@ class _IncrementalFileWriter(object):
             # Normalise None prefix (lxml's default namespace prefix) -> "", as
             # required for incremental_tree
             if "" in nsmap and nsmap[""] != nsmap[None]:
-                raise ValueError('Found None and "" as default nsmap prefixes with different URIs')
+                raise ValueError(
+                    'Found None and "" as default nsmap prefixes with different URIs'
+                )
             nsmap = nsmap.copy()
             nsmap[""] = nsmap.pop(None)
 
@@ -148,7 +150,9 @@ class xmlfile(object):
         self.writer_cm = None
 
     def __enter__(self):
-        self.writer_cm = incremental_tree._get_writer(self._file, encoding=self.encoding)
+        self.writer_cm = incremental_tree._get_writer(
+            self._file, encoding=self.encoding
+        )
         writer, declared_encoding = self.writer_cm.__enter__()
         return _IncrementalFileWriter(writer)
 

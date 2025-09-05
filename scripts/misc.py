@@ -179,7 +179,9 @@ def ask_path_exists(message: str, options: Iterable[str]) -> str:
 def _check_no_input(message: str) -> None:
     """Raise an error if no input is allowed."""
     if os.environ.get("PIP_NO_INPUT"):
-        raise Exception(f"No input was expected ($PIP_NO_INPUT set); question: {message}")
+        raise Exception(
+            f"No input was expected ($PIP_NO_INPUT set); question: {message}"
+        )
 
 
 def ask(message: str, options: Iterable[str]) -> str:
@@ -267,7 +269,9 @@ def is_installable_dir(path: str) -> bool:
     return False
 
 
-def read_chunks(file: BinaryIO, size: int = io.DEFAULT_BUFFER_SIZE) -> Generator[bytes, None, None]:
+def read_chunks(
+    file: BinaryIO, size: int = io.DEFAULT_BUFFER_SIZE
+) -> Generator[bytes, None, None]:
     """Yield pieces of data from a file-like object until EOF."""
     while True:
         chunk = file.read(size)
@@ -467,7 +471,9 @@ def redact_netloc(netloc: str) -> str:
     else:
         user = urllib.parse.quote(user)
         password = ":****"
-    return "{user}{password}@{netloc}".format(user=user, password=password, netloc=netloc)
+    return "{user}{password}@{netloc}".format(
+        user=user, password=password, netloc=netloc
+    )
 
 
 def _transform_url(
@@ -570,7 +576,9 @@ def protect_pip_from_modification_on_windows(modifying_pip: bool) -> None:
     if should_show_use_python_msg:
         new_command = [sys.executable, "-m", "pip"] + sys.argv[1:]
         raise CommandError(
-            "To modify pip, please run the following command:\n{}".format(" ".join(new_command))
+            "To modify pip, please run the following command:\n{}".format(
+                " ".join(new_command)
+            )
         )
 
 
@@ -653,7 +661,9 @@ class ConfiguredBuildBackendHookCaller(BuildBackendHookCaller):
         runner: Optional[Callable[..., None]] = None,
         python_executable: Optional[str] = None,
     ):
-        super().__init__(source_dir, build_backend, backend_path, runner, python_executable)
+        super().__init__(
+            source_dir, build_backend, backend_path, runner, python_executable
+        )
         self.config_holder = config_holder
 
     def build_wheel(

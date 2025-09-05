@@ -95,8 +95,14 @@ class HTTPError(ProxyError):
 
 SOCKS4_ERRORS = {
     0x5B: "Request rejected or failed",
-    0x5C: ("Request rejected because SOCKS server cannot connect to identd on" " the client"),
-    0x5D: ("Request rejected because the client program and identd report" " different user-ids"),
+    0x5C: (
+        "Request rejected because SOCKS server cannot connect to identd on"
+        " the client"
+    ),
+    0x5D: (
+        "Request rejected because the client program and identd report"
+        " different user-ids"
+    ),
 }
 
 SOCKS5_ERRORS = {
@@ -273,7 +279,9 @@ class socksocket(_BaseSocket):
 
     default_proxy = None
 
-    def __init__(self, family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0, *args, **kwargs):
+    def __init__(
+        self, family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0, *args, **kwargs
+    ):
         if type not in (socket.SOCK_STREAM, socket.SOCK_DGRAM):
             msg = "Socket type must be stream or datagram, not {!r}"
             raise ValueError(msg.format(type))
@@ -473,7 +481,9 @@ class socksocket(_BaseSocket):
     def _negotiate_SOCKS5(self, *dest_addr):
         """Negotiates a stream connection through a SOCKS5 server."""
         CONNECT = b"\x01"
-        self.proxy_peername, self.proxy_sockname = self._SOCKS5_request(self, CONNECT, dest_addr)
+        self.proxy_peername, self.proxy_sockname = self._SOCKS5_request(
+            self, CONNECT, dest_addr
+        )
 
     def _SOCKS5_request(self, conn, cmd, dst):
         """
@@ -708,7 +718,13 @@ class socksocket(_BaseSocket):
         addr = dest_addr if rdns else socket.gethostbyname(dest_addr)
 
         http_headers = [
-            (b"CONNECT " + addr.encode("idna") + b":" + str(dest_port).encode() + b" HTTP/1.1"),
+            (
+                b"CONNECT "
+                + addr.encode("idna")
+                + b":"
+                + str(dest_port).encode()
+                + b" HTTP/1.1"
+            ),
             b"Host: " + dest_addr.encode("idna"),
         ]
 
@@ -830,7 +846,9 @@ class socksocket(_BaseSocket):
                 proxy_server = "{}:{}".format(proxy_addr, proxy_port)
                 printable_type = PRINTABLE_PROXY_TYPES[proxy_type]
 
-                msg = "Error connecting to {} proxy {}".format(printable_type, proxy_server)
+                msg = "Error connecting to {} proxy {}".format(
+                    printable_type, proxy_server
+                )
                 log.debug("%s due to: %s", msg, error)
                 raise ProxyConnectionError(msg, error)
             else:

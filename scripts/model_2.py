@@ -41,7 +41,8 @@ class BaseTypeByIdentity(object):
         result = result.replace("&", replace_with)
         if "$" in result:
             raise VerificationError(
-                "cannot generate '%s' in %s: unknown type name" % (self._get_c_name(), context)
+                "cannot generate '%s' in %s: unknown type name"
+                % (self._get_c_name(), context)
             )
         return result
 
@@ -73,7 +74,10 @@ class BaseTypeByIdentity(object):
 class BaseType(BaseTypeByIdentity):
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__ and self._get_items() == other._get_items()
+        return (
+            self.__class__ == other.__class__
+            and self._get_items() == other._get_items()
+        )
 
     def __ne__(self, other):
         return not self == other
@@ -224,7 +228,9 @@ class BaseFunctionType(BaseType):
         replace_with = self._base_pattern % (", ".join(reprargs),)
         if abi is not None:
             replace_with = replace_with[:1] + abi + " " + replace_with[1:]
-        self.c_name_with_marker = self.result.c_name_with_marker.replace("&", replace_with)
+        self.c_name_with_marker = self.result.c_name_with_marker.replace(
+            "&", replace_with
+        )
 
 
 class RawFunctionType(BaseFunctionType):
@@ -260,7 +266,13 @@ class FunctionPtrType(BaseFunctionType):
                 except AttributeError:
                     pass
         return global_cache(
-            self, ffi, "new_function_type", tuple(args), result, self.ellipsis, *abi_args
+            self,
+            ffi,
+            "new_function_type",
+            tuple(args),
+            result,
+            self.ellipsis,
+            *abi_args
         )
 
     def as_raw_function(self):
@@ -380,7 +392,11 @@ class StructOrUnion(StructOrUnionOrEnum):
         for name, type, bitsize, quals in zip(
             self.fldnames, self.fldtypes, self.fldbitsize, fldquals
         ):
-            if name == "" and isinstance(type, StructOrUnion) and expand_anonymous_struct_union:
+            if (
+                name == ""
+                and isinstance(type, StructOrUnion)
+                and expand_anonymous_struct_union
+            ):
                 # nested anonymous struct/union
                 for result in type.enumfields():
                     yield result
@@ -434,7 +450,9 @@ class StructOrUnion(StructOrUnionOrEnum):
                     extra_flags = (8,)  # SF_PACKED
                 else:
                     extra_flags = (0, self.packed)
-            ffi._backend.complete_struct_or_union(BType, lst, self, -1, -1, *extra_flags)
+            ffi._backend.complete_struct_or_union(
+                BType, lst, self, -1, -1, *extra_flags
+            )
             #
         else:
             fldtypes = []
@@ -453,7 +471,9 @@ class StructOrUnion(StructOrUnionOrEnum):
                             % (self.name, self.fldnames[i] or "{}")
                         )
                     ftype = ftype.resolve_length(nlen)
-                    self.fldtypes = self.fldtypes[:i] + (ftype,) + self.fldtypes[i + 1 :]
+                    self.fldtypes = (
+                        self.fldtypes[:i] + (ftype,) + self.fldtypes[i + 1 :]
+                    )
                 #
                 BFieldType = ftype.get_cached_btype(ffi, finishlist)
                 if isinstance(ftype, ArrayType) and ftype.length is None:
@@ -469,7 +489,9 @@ class StructOrUnion(StructOrUnionOrEnum):
                 fldtypes.append(BFieldType)
             #
             lst = list(zip(self.fldnames, fldtypes, self.fldbitsize, fieldofs))
-            ffi._backend.complete_struct_or_union(BType, lst, self, totalsize, totalalignment)
+            ffi._backend.complete_struct_or_union(
+                BType, lst, self, totalsize, totalalignment
+            )
         self.completed = 2
 
     def _verification_error(self, msg):
@@ -575,7 +597,8 @@ class EnumType(StructOrUnionOrEnum):
         ):
             return btype2
         raise CDefError(
-            "%s values don't all fit into either 'long' " "or 'unsigned long'" % self._get_c_name()
+            "%s values don't all fit into either 'long' "
+            "or 'unsigned long'" % self._get_c_name()
         )
 
 

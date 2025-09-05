@@ -35,7 +35,9 @@ def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
         pass
 
 
-def _run(cmd: list[str] | tuple[str, ...], **kwargs: Any) -> subprocess.CompletedProcess:
+def _run(
+    cmd: list[str] | tuple[str, ...], **kwargs: Any
+) -> subprocess.CompletedProcess:
     """Wrapper for subprocess.run so tests can monkeypatch."""
     # Don't pass check=True here; tests provide a fake object with returncode
     return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
@@ -81,7 +83,11 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     # Import error
-    if isinstance(exc, ImportError) or "importerror" in lower or "no module named" in lower:
+    if (
+        isinstance(exc, ImportError)
+        or "importerror" in lower
+        or "no module named" in lower
+    ):
         # The tests monkeypatch pip_install → we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True

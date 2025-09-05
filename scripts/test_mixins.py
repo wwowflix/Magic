@@ -29,7 +29,9 @@ class ArrayLike(np.lib.mixins.NDArrayOperatorsMixin):
         # Defer to the implementation of the ufunc on unwrapped values.
         inputs = tuple(x.value if isinstance(x, ArrayLike) else x for x in inputs)
         if out:
-            kwargs["out"] = tuple(x.value if isinstance(x, ArrayLike) else x for x in out)
+            kwargs["out"] = tuple(
+                x.value if isinstance(x, ArrayLike) else x for x in out
+            )
         result = getattr(ufunc, method)(*inputs, **kwargs)
 
         if type(result) is tuple:

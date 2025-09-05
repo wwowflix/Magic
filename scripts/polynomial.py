@@ -32,7 +32,9 @@ from numpy.lib.type_check import iscomplex, real, imag, mintypecode
 from numpy.linalg import eigvals, lstsq, inv
 
 
-array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
+array_function_dispatch = functools.partial(
+    overrides.array_function_dispatch, module="numpy"
+)
 
 
 @set_module("numpy")
@@ -684,7 +686,8 @@ def polyfit(x, y, deg, rcond=None, full=False, w=None, cov=False):
         else:
             if len(x) <= order:
                 raise ValueError(
-                    "the number of data points must exceed order " "to scale the covariance matrix"
+                    "the number of data points must exceed order "
+                    "to scale the covariance matrix"
                 )
             # note, this used to be: fac = resids / (len(x) - order - 2.0)
             # it was deciced that the "- 2" (originally justified by "Bayesian

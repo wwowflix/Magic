@@ -87,7 +87,10 @@ def install_temp(tmpdir_factory):
 @pytest.mark.skipif(IS_WASM, reason="Can't start subprocess")
 @pytest.mark.xfail(
     sysconfig.get_config_var("Py_DEBUG"),
-    reason=("Py_LIMITED_API is incompatible with Py_DEBUG, Py_TRACE_REFS, " "and Py_REF_DEBUG"),
+    reason=(
+        "Py_LIMITED_API is incompatible with Py_DEBUG, Py_TRACE_REFS, "
+        "and Py_REF_DEBUG"
+    ),
 )
 @pytest.mark.xfail(
     NOGIL_BUILD,

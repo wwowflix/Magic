@@ -264,9 +264,13 @@ class ElementTreeProducer:
             prefix = preferred_prefix
         else:
             # Pick the first matching prefix, in alphabetical order.
-            candidates = [pfx for (pfx, uri) in nsmap.items() if pfx is not None and uri == ns_uri]
+            candidates = [
+                pfx for (pfx, uri) in nsmap.items() if pfx is not None and uri == ns_uri
+            ]
             prefix = (
-                candidates[0] if len(candidates) == 1 else min(candidates) if candidates else None
+                candidates[0]
+                if len(candidates) == 1
+                else min(candidates) if candidates else None
             )
 
         if prefix is None:

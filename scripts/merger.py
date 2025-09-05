@@ -68,11 +68,12 @@ class Merger(object):
                 done.append(clazz)
                 mergers = celf.mergers.setdefault(clazz, {})
                 for attr in attrs:
-                    assert (
-                        attr not in mergers
-                    ), "Oops, class '%s' has merge function for '%s' defined already." % (
-                        clazz.__name__,
-                        attr,
+                    assert attr not in mergers, (
+                        "Oops, class '%s' has merge function for '%s' defined already."
+                        % (
+                            clazz.__name__,
+                            attr,
+                        )
                     )
                     mergers[attr] = method
             return None
@@ -102,7 +103,9 @@ class Merger(object):
                 item.ensureDecompiled(recurse=False)
         keys = sorted(vars(out).keys())
         if not all(keys == sorted(vars(v).keys()) for v in lst):
-            raise KeysDiffer(self, expected=keys, got=[sorted(vars(v).keys()) for v in lst])
+            raise KeysDiffer(
+                self, expected=keys, got=[sorted(vars(v).keys()) for v in lst]
+            )
         mergers = self.mergersFor(out)
         defaultMerger = mergers.get("*", self.__class__.mergeThings)
         try:
@@ -184,7 +187,9 @@ def merge(merger, self, lst):
     for k in allKeys:
         allValues = nonNone(l.get(k) for l in lst)
         if not allEqual(allValues):
-            raise ShouldBeConstant(merger, expected=allValues[0], got=lst, stack=["." + k])
+            raise ShouldBeConstant(
+                merger, expected=allValues[0], got=lst, stack=["." + k]
+            )
         if not allValues:
             self[k] = None
         else:
@@ -230,7 +235,8 @@ def _merge_GlyphOrders(font, lst, values_lst=None, default=None):
     paddedValues = None
     if values_lst is None:
         padded = [
-            [glyph if glyph in dict_set else default for glyph in order] for dict_set in dict_sets
+            [glyph if glyph in dict_set else default for glyph in order]
+            for dict_set in dict_sets
         ]
     else:
         assert len(lst) == len(values_lst)
@@ -275,7 +281,9 @@ def _Lookup_SinglePos_get_effective_value(merger, subtables, glyph):
     return None
 
 
-def _Lookup_PairPos_get_effective_value_pair(merger, subtables, firstGlyph, secondGlyph):
+def _Lookup_PairPos_get_effective_value_pair(
+    merger, subtables, firstGlyph, secondGlyph
+):
     for self in subtables:
         if (
             self is None
@@ -308,7 +316,9 @@ def merge(merger, self, lst):
 
     # If all have same coverage table and all are format 1,
     coverageGlyphs = self.Coverage.glyphs
-    if all(v.Format == 1 for v in lst) and all(coverageGlyphs == v.Coverage.glyphs for v in lst):
+    if all(v.Format == 1 for v in lst) and all(
+        coverageGlyphs == v.Coverage.glyphs for v in lst
+    ):
         self.Value = otBase.ValueRecord(valueFormat, self.Value)
         if valueFormat != 0:
             # If v.Value is None, it means a kerning of 0; we want
@@ -342,7 +352,9 @@ def merge(merger, self, lst):
             # Note!!! This *might* result in behavior change if ValueFormat2-zeroedness
             # is different between used subtable and current subtable!
             # TODO(behdad) Check and warn if that happens?
-            v = _Lookup_SinglePos_get_effective_value(merger, merger.lookup_subtables[i], glyph)
+            v = _Lookup_SinglePos_get_effective_value(
+                merger, merger.lookup_subtables[i], glyph
+            )
             if v is None:
                 v = otBase.ValueRecord(valueFormat)
             values[j] = v
@@ -353,7 +365,9 @@ def merge(merger, self, lst):
     merger.mergeObjects(
         self, lst, exclude=("Format", "Coverage", "Value", "ValueCount", "ValueFormat")
     )
-    self.ValueFormat = reduce(int.__or__, [v.getEffectiveFormat() for v in self.Value], 0)
+    self.ValueFormat = reduce(
+        int.__or__, [v.getEffectiveFormat() for v in self.Value], 0
+    )
 
 
 @AligningMerger.merger(ot.PairSet)
@@ -369,8 +383,12 @@ def merge(merger, self, lst):
     for glyph in glyphs:
         pvr = ot.PairValueRecord()
         pvr.SecondGlyph = glyph
-        pvr.Value1 = otBase.ValueRecord(merger.valueFormat1) if merger.valueFormat1 else None
-        pvr.Value2 = otBase.ValueRecord(merger.valueFormat2) if merger.valueFormat2 else None
+        pvr.Value1 = (
+            otBase.ValueRecord(merger.valueFormat1) if merger.valueFormat1 else None
+        )
+        pvr.Value2 = (
+            otBase.ValueRecord(merger.valueFormat2) if merger.valueFormat2 else None
+        )
         pvrs.append(pvr)
     self.PairValueCount = len(self.PairValueRecord)
 
@@ -391,10 +409,14 @@ def merge(merger, self, lst):
                 v1 = getattr(vpair, "Value1", None)
                 v2 = getattr(vpair, "Value2", None)
             v.Value1 = (
-                otBase.ValueRecord(merger.valueFormat1, src=v1) if merger.valueFormat1 else None
+                otBase.ValueRecord(merger.valueFormat1, src=v1)
+                if merger.valueFormat1
+                else None
             )
             v.Value2 = (
-                otBase.ValueRecord(merger.valueFormat2, src=v2) if merger.valueFormat2 else None
+                otBase.ValueRecord(merger.valueFormat2, src=v2)
+                if merger.valueFormat2
+                else None
             )
             values[j] = v
     del self._firstGlyph
@@ -522,10 +544,14 @@ def _PairPosFormat2_align_matrices(self, lst, font, transparent=False):
                         else:
                             rec2 = ot.Class2Record()
                             rec2.Value1 = (
-                                otBase.ValueRecord(self.ValueFormat1) if self.ValueFormat1 else None
+                                otBase.ValueRecord(self.ValueFormat1)
+                                if self.ValueFormat1
+                                else None
                             )
                             rec2.Value2 = (
-                                otBase.ValueRecord(self.ValueFormat2) if self.ValueFormat2 else None
+                                otBase.ValueRecord(self.ValueFormat2)
+                                if self.ValueFormat2
+                                else None
                             )
                         class2records.append(rec2)
                 rec1 = nullRow
@@ -607,8 +633,12 @@ def _PairPosFormat2_merge(self, lst, merger):
 
 @AligningMerger.merger(ot.PairPos)
 def merge(merger, self, lst):
-    merger.valueFormat1 = self.ValueFormat1 = reduce(int.__or__, [l.ValueFormat1 for l in lst], 0)
-    merger.valueFormat2 = self.ValueFormat2 = reduce(int.__or__, [l.ValueFormat2 for l in lst], 0)
+    merger.valueFormat1 = self.ValueFormat1 = reduce(
+        int.__or__, [l.ValueFormat1 for l in lst], 0
+    )
+    merger.valueFormat2 = self.ValueFormat2 = reduce(
+        int.__or__, [l.ValueFormat2 for l in lst], 0
+    )
 
     if self.Format == 1:
         _PairPosFormat1_merge(self, lst, merger)
@@ -711,7 +741,9 @@ def _MarkBasePosFormat1_merge(self, lst, merger, Mark="Mark", Base="Base"):
             rec = getattr(ot, Base + "Record")()
             anchors = []
             setattr(rec, Base + "Anchor", anchors)
-            glyphAnchors = [[] if r is None else getattr(r, Base + "Anchor") for r in glyphRecords]
+            glyphAnchors = [
+                [] if r is None else getattr(r, Base + "Anchor") for r in glyphRecords
+            ]
             for l in glyphAnchors:
                 l.extend([None] * (self.ClassCount - len(l)))
             for allAnchors in zip(*glyphAnchors):
@@ -802,7 +834,8 @@ def _Lookup_PairPosFormat1_subtables_flatten(lst, font):
 
     self.Coverage.glyphs = glyphs
     self.PairSet = [
-        _PairSet_flatten([v for v in values if v is not None], font) for values in zip(*padded)
+        _PairSet_flatten([v for v in values if v is not None], font)
+        for values in zip(*padded)
     ]
     self.PairSetCount = len(self.PairSet)
     return self
@@ -944,7 +977,9 @@ def merge(merger, self, lst):
         # AFDKO and feaLib sometimes generate two Format1 subtables instead of one.
         # Merge those before continuing.
         # https://github.com/fonttools/fonttools/issues/719
-        self.SubTable = _Lookup_PairPos_subtables_canonicalize(self.SubTable, merger.font)
+        self.SubTable = _Lookup_PairPos_subtables_canonicalize(
+            self.SubTable, merger.font
+        )
         subtables = merger.lookup_subtables = [
             _Lookup_PairPos_subtables_canonicalize(st, merger.font) for st in subtables
         ]
@@ -963,7 +998,8 @@ def merge(merger, self, lst):
                     self.SubTable, merger.font, mirf
                 )
                 subtables = merger.lookup_subtables = [
-                    _Lookup_SinglePos_subtables_flatten(st, merger.font, mirf) for st in subtables
+                    _Lookup_SinglePos_subtables_flatten(st, merger.font, mirf)
+                    for st in subtables
                 ]
                 flattened = True
             else:
@@ -1006,7 +1042,9 @@ def merge(merger, self, lst):
         singlePosMapping = {
             gname: valRecord for gname, valRecord in zip(glyphs, singlePosTable.Value)
         }
-        self.SubTable = buildSinglePos(singlePosMapping, merger.font.getReverseGlyphMap())
+        self.SubTable = buildSinglePos(
+            singlePosMapping, merger.font.getReverseGlyphMap()
+        )
     merger.mergeObjects(self, lst, exclude=["SubTable", "SubTableCount"])
 
     del merger.lookup_subtables
@@ -1034,7 +1072,9 @@ def merge(merger, self, lst):
     Coords = [a.Coordinate for a in lst]
     model = merger.model
     masterScalars = merger.masterScalars
-    self.Coordinate = otRound(model.interpolateFromValuesAndScalars(Coords, masterScalars))
+    self.Coordinate = otRound(
+        model.interpolateFromValuesAndScalars(Coords, masterScalars)
+    )
 
 
 @InstancerMerger.merger(ot.Anchor)
@@ -1044,8 +1084,12 @@ def merge(merger, self, lst):
     YCoords = [a.YCoordinate for a in lst]
     model = merger.model
     masterScalars = merger.masterScalars
-    self.XCoordinate = otRound(model.interpolateFromValuesAndScalars(XCoords, masterScalars))
-    self.YCoordinate = otRound(model.interpolateFromValuesAndScalars(YCoords, masterScalars))
+    self.XCoordinate = otRound(
+        model.interpolateFromValuesAndScalars(XCoords, masterScalars)
+    )
+    self.YCoordinate = otRound(
+        model.interpolateFromValuesAndScalars(YCoords, masterScalars)
+    )
 
 
 @InstancerMerger.merger(otBase.ValueRecord)
@@ -1063,7 +1107,9 @@ def merge(merger, self, lst):
 
         if hasattr(self, name):
             values = [getattr(a, name, 0) for a in lst]
-            value = otRound(model.interpolateFromValuesAndScalars(values, masterScalars))
+            value = otRound(
+                model.interpolateFromValuesAndScalars(values, masterScalars)
+            )
             setattr(self, name, value)
 
 
@@ -1431,7 +1477,9 @@ class COLRVariationMerger(VariationMerger):
         for path in dfs_base_table(
             table,
             skip_root=True,
-            predicate=lambda path: (getattr(type(path[-1].value), "VarType", None) is not None),
+            predicate=lambda path: (
+                getattr(type(path[-1].value), "VarType", None) is not None
+            ),
         ):
             st = path[-1]
             subTable = st.value
@@ -1540,7 +1588,8 @@ def _merge_PaintColrLayers(self, out, lst):
     # before matching each master PaintColrLayers to its respective COLR by position
     assert len(self.ttfs) == len(lst)
     master_layerses = [
-        list(_flatten_layers(lst[i], self.ttfs[i]["COLR"].table)) for i in range(len(lst))
+        list(_flatten_layers(lst[i], self.ttfs[i]["COLR"].table))
+        for i in range(len(lst))
     ]
 
     try:

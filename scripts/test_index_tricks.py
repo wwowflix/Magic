@@ -66,10 +66,14 @@ class TestRavelUnravelIndex:
         assert_equal(np.ravel_multi_index(arr, (7, 6)), [22, 41, 37])
         assert_equal(np.ravel_multi_index(arr, (7, 6), order="F"), [31, 41, 13])
         assert_equal(np.ravel_multi_index(arr, (4, 6), mode="clip"), [22, 23, 19])
-        assert_equal(np.ravel_multi_index(arr, (4, 4), mode=("clip", "wrap")), [12, 13, 13])
+        assert_equal(
+            np.ravel_multi_index(arr, (4, 4), mode=("clip", "wrap")), [12, 13, 13]
+        )
         assert_equal(np.ravel_multi_index((3, 1, 4, 1), (6, 7, 8, 9)), 1621)
 
-        assert_equal(np.unravel_index(np.array([22, 41, 37]), (7, 6)), [[3, 6, 6], [4, 5, 1]])
+        assert_equal(
+            np.unravel_index(np.array([22, 41, 37]), (7, 6)), [[3, 6, 6], [4, 5, 1]]
+        )
         assert_equal(
             np.unravel_index(np.array([31, 41, 13]), (7, 6), order="F"),
             [[3, 6, 6], [4, 5, 1]],
@@ -82,14 +86,20 @@ class TestRavelUnravelIndex:
         assert_raises_regex(TypeError, msg1, np.unravel_index, [], (10, 3, 5))
         assert_raises_regex(TypeError, msg1, np.unravel_index, (), (10, 3, 5))
         assert_raises_regex(TypeError, msg2, np.unravel_index, np.array([]), (10, 3, 5))
-        assert_equal(np.unravel_index(np.array([], dtype=int), (10, 3, 5)), [[], [], []])
+        assert_equal(
+            np.unravel_index(np.array([], dtype=int), (10, 3, 5)), [[], [], []]
+        )
         assert_raises_regex(TypeError, msg1, np.ravel_multi_index, ([], []), (10, 3))
-        assert_raises_regex(TypeError, msg1, np.ravel_multi_index, ([], ["abc"]), (10, 3))
+        assert_raises_regex(
+            TypeError, msg1, np.ravel_multi_index, ([], ["abc"]), (10, 3)
+        )
         assert_raises_regex(
             TypeError, msg2, np.ravel_multi_index, (np.array([]), np.array([])), (5, 3)
         )
         assert_equal(
-            np.ravel_multi_index((np.array([], dtype=int), np.array([], dtype=int)), (5, 3)),
+            np.ravel_multi_index(
+                (np.array([], dtype=int), np.array([], dtype=int)), (5, 3)
+            ),
             [],
         )
         assert_equal(np.ravel_multi_index(np.array([[], []], dtype=int), (5, 3)), [])
@@ -112,7 +122,9 @@ class TestRavelUnravelIndex:
         assert_equal(np.ravel_multi_index(dummy_arr, (half_max, 2)), [0])
         assert_raises(ValueError, np.ravel_multi_index, dummy_arr, (half_max + 1, 2))
         assert_equal(np.ravel_multi_index(dummy_arr, (half_max, 2), order="F"), [0])
-        assert_raises(ValueError, np.ravel_multi_index, dummy_arr, (half_max + 1, 2), order="F")
+        assert_raises(
+            ValueError, np.ravel_multi_index, dummy_arr, (half_max + 1, 2), order="F"
+        )
 
     def test_dtypes(self):
         # Test with different data types
@@ -168,7 +180,9 @@ class TestRavelUnravelIndex:
 
     @pytest.mark.parametrize("mode", ["clip", "wrap", "raise"])
     def test_empty_array_ravel(self, mode):
-        res = np.ravel_multi_index(np.zeros((3, 0), dtype=np.intp), (2, 1, 0), mode=mode)
+        res = np.ravel_multi_index(
+            np.zeros((3, 0), dtype=np.intp), (2, 1, 0), mode=mode
+        )
         assert res.shape == (0,)
 
         with assert_raises(ValueError):
@@ -277,10 +291,14 @@ class TestGrid:
 
     def test_accepts_npcomplexfloating(self):
         # Related to #16466
-        assert_array_almost_equal(mgrid[0.1:0.3:3j,], mgrid[0.1 : 0.3 : np.complex64(3j),])
+        assert_array_almost_equal(
+            mgrid[0.1:0.3:3j,], mgrid[0.1 : 0.3 : np.complex64(3j),]
+        )
 
         # different code path for single slice
-        assert_array_almost_equal(mgrid[0.1:0.3:3j], mgrid[0.1 : 0.3 : np.complex64(3j)])
+        assert_array_almost_equal(
+            mgrid[0.1:0.3:3j], mgrid[0.1 : 0.3 : np.complex64(3j)]
+        )
 
         # Related to #16945
         grid64_a = mgrid[0.1:0.3:3.3j]
@@ -339,7 +357,9 @@ class TestConcatenator:
 class TestNdenumerate:
     def test_basic(self):
         a = np.array([[1, 2], [3, 4]])
-        assert_equal(list(ndenumerate(a)), [((0, 0), 1), ((0, 1), 2), ((1, 0), 3), ((1, 1), 4)])
+        assert_equal(
+            list(ndenumerate(a)), [((0, 0), 1), ((0, 1), 2), ((1, 0), 3), ((1, 1), 4)]
+        )
 
 
 class TestIndexExpression:

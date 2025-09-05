@@ -16,7 +16,9 @@ if RUN_MYPY and RUN_MYPY not in ("0", "", "false"):
     RUN_MYPY = True
 
 # Skips all functions in this file
-pytestmark = pytest.mark.skipif(not RUN_MYPY, reason="`NPY_RUN_MYPY_IN_TESTSUITE` not set")
+pytestmark = pytest.mark.skipif(
+    not RUN_MYPY, reason="`NPY_RUN_MYPY_IN_TESTSUITE` not set"
+)
 
 
 try:

@@ -49,7 +49,9 @@ def save_trends(data, source_name="unknown"):
                 writer.writeheader()
                 writer.writerows(data)
         else:
-            raise ValueError("Unsupported data format. Must be list[dict] or DataFrame.")
+            raise ValueError(
+                "Unsupported data format. Must be list[dict] or DataFrame."
+            )
         print(f"✅ Trends saved to {filepath}")
     except Exception as e:
         print(f"❌ Error saving trends: {e}")

@@ -90,7 +90,9 @@ def test_fromstring():
     o = 1 + LD_INFO.eps
     s = (" " + str(o)) * 5
     a = np.array([o] * 5)
-    assert_equal(np.fromstring(s, sep=" ", dtype=np.longdouble), a, err_msg=f"reading '{s}'")
+    assert_equal(
+        np.fromstring(s, sep=" ", dtype=np.longdouble), a, err_msg=f"reading '{s}'"
+    )
 
 
 def test_fromstring_complex():
@@ -178,7 +180,9 @@ class TestFileBased:
                     f.write("1+1j,2-2j, -3+3j,  -4e1+4j\n")
 
                 res = np.fromfile(path, dtype=ctype, sep=",")
-            assert_equal(res, np.array([1.0 + 1.0j, 2.0 - 2.0j, -3.0 + 3.0j, -40.0 + 4j]))
+            assert_equal(
+                res, np.array([1.0 + 1.0j, 2.0 - 2.0j, -3.0 + 3.0j, -40.0 + 4j])
+            )
 
             # Spaces at wrong places
             with temppath() as path:

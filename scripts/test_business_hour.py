@@ -289,7 +289,9 @@ class TestBusinessHour:
         assert _offset(5).rollback(dt) == dt
 
     def testRollback2(self, _offset):
-        assert _offset(-3).rollback(datetime(2014, 7, 5, 15, 0)) == datetime(2014, 7, 4, 17, 0)
+        assert _offset(-3).rollback(datetime(2014, 7, 5, 15, 0)) == datetime(
+            2014, 7, 4, 17, 0
+        )
 
     def testRollforward1(
         self,
@@ -332,7 +334,9 @@ class TestBusinessHour:
         assert _offset(5).rollforward(dt) == dt
 
     def testRollforward2(self, _offset):
-        assert _offset(-3).rollforward(datetime(2014, 7, 5, 16, 0)) == datetime(2014, 7, 7, 9)
+        assert _offset(-3).rollforward(datetime(2014, 7, 5, 16, 0)) == datetime(
+            2014, 7, 7, 9
+        )
 
     def test_roll_date_object(self):
         offset = BusinessHour()

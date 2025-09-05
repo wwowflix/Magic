@@ -96,7 +96,8 @@ class TestSymbolic(util.F2PyTest):
         b = as_array((n,))
         assert a.op == Op.ARRAY
         assert repr(a) == (
-            "Expr(Op.ARRAY, (Expr(Op.INTEGER, (123, 4))," " Expr(Op.INTEGER, (456, 4))))"
+            "Expr(Op.ARRAY, (Expr(Op.INTEGER, (123, 4)),"
+            " Expr(Op.INTEGER, (456, 4))))"
         )
         assert a == a
         assert a != b
@@ -188,13 +189,19 @@ class TestSymbolic(util.F2PyTest):
         n = as_number(123)
 
         assert Expr(Op.FACTORS, {x: 2}).tostring(language=language) == "x * x"
-        assert Expr(Op.FACTORS, {x + y: 2}).tostring(language=language) == "(x + y) * (x + y)"
+        assert (
+            Expr(Op.FACTORS, {x + y: 2}).tostring(language=language)
+            == "(x + y) * (x + y)"
+        )
         assert Expr(Op.FACTORS, {x: 12}).tostring(language=language) == "pow(x, 12)"
 
         assert as_apply(ArithOp.DIV, x, y).tostring(language=language) == "x / y"
-        assert as_apply(ArithOp.DIV, x, x + y).tostring(language=language) == "x / (x + y)"
         assert (
-            as_apply(ArithOp.DIV, x - y, x + y).tostring(language=language) == "(x - y) / (x + y)"
+            as_apply(ArithOp.DIV, x, x + y).tostring(language=language) == "x / (x + y)"
+        )
+        assert (
+            as_apply(ArithOp.DIV, x - y, x + y).tostring(language=language)
+            == "(x - y) / (x + y)"
         )
         assert (x + (x - y) / (x + y) + n).tostring(
             language=language
@@ -249,8 +256,12 @@ class TestSymbolic(util.F2PyTest):
         assert (5 * x / 2) == as_apply(ArithOp.DIV, 5 * x, as_number(2))
         assert (6 * x / 2) == 3 * x
         assert ((3 * 5) * x / 6) == as_apply(ArithOp.DIV, 5 * x, as_number(2))
-        assert (30 * x**2 * y**4 / (24 * x**3 * y**3)) == as_apply(ArithOp.DIV, 5 * y, 4 * x)
-        assert ((15 * x / 6) / 5) == as_apply(ArithOp.DIV, x, as_number(2)), (15 * x / 6) / 5
+        assert (30 * x**2 * y**4 / (24 * x**3 * y**3)) == as_apply(
+            ArithOp.DIV, 5 * y, 4 * x
+        )
+        assert ((15 * x / 6) / 5) == as_apply(ArithOp.DIV, x, as_number(2)), (
+            15 * x / 6
+        ) / 5
         assert (x / (5 / x)) == as_apply(ArithOp.DIV, x**2, as_number(5))
 
         assert (x / 2.0) == Expr(Op.TERMS, {x: 0.5})
@@ -312,7 +323,10 @@ class TestSymbolic(util.F2PyTest):
         assert fromstring("f[x][y]") == f[x][y]
 
         assert fromstring('"ABC"') == s
-        assert normalize(fromstring('"ABC" // "123" ', language=Language.Fortran)) == s // t
+        assert (
+            normalize(fromstring('"ABC" // "123" ', language=Language.Fortran))
+            == s // t
+        )
         assert fromstring('f("ABC")') == f(s)
         assert fromstring('MYSTRKIND_"ABC"') == as_string('"ABC"', "MYSTRKIND")
 
@@ -340,7 +354,9 @@ class TestSymbolic(util.F2PyTest):
 
         assert fromstring("[1, 2]") == as_array((as_number(1), as_number(2)))
 
-        assert fromstring("POINT(x, y=1)") == as_apply(as_symbol("POINT"), x, y=as_number(1))
+        assert fromstring("POINT(x, y=1)") == as_apply(
+            as_symbol("POINT"), x, y=as_number(1)
+        )
         assert fromstring('PERSON(name="John", age=50, shape=(/34, 23/))') == as_apply(
             as_symbol("PERSON"),
             name=as_string('"John"'),

@@ -83,7 +83,9 @@ def sliding_var(
     compensation_remove = 0.0
 
     min_periods = max(min_periods, 1)
-    is_monotonic_increasing_bounds = is_monotonic_increasing(start) and is_monotonic_increasing(end)
+    is_monotonic_increasing_bounds = is_monotonic_increasing(
+        start
+    ) and is_monotonic_increasing(end)
 
     output = np.empty(N, dtype=np.float64)
 

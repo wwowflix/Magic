@@ -36,7 +36,9 @@ class TestAsArray:
         df = DataFrame(arr)
 
         msg = "The behavior of DataFrame.sum with axis=None is deprecated"
-        with tm.assert_produces_warning(FutureWarning, match=msg, check_stacklevel=False):
+        with tm.assert_produces_warning(
+            FutureWarning, match=msg, check_stacklevel=False
+        ):
             res = np.sum(df)
 
         with tm.assert_produces_warning(FutureWarning, match=msg):
@@ -70,7 +72,10 @@ class TestAsArray:
         tm.assert_numpy_array_equal(result, expected)
 
         result = np.ravel(
-            [DataFrame(batch.reshape(1, 3), columns=["x1", "x2", "x3"]) for batch in arr]
+            [
+                DataFrame(batch.reshape(1, 3), columns=["x1", "x2", "x3"])
+                for batch in arr
+            ]
         )
         expected = np.array(
             [

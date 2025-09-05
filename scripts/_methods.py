@@ -47,11 +47,15 @@ def _amin(a, axis=None, out=None, keepdims=False, initial=_NoValue, where=True):
     return umr_minimum(a, axis, None, out, keepdims, initial, where)
 
 
-def _sum(a, axis=None, dtype=None, out=None, keepdims=False, initial=_NoValue, where=True):
+def _sum(
+    a, axis=None, dtype=None, out=None, keepdims=False, initial=_NoValue, where=True
+):
     return umr_sum(a, axis, dtype, out, keepdims, initial, where)
 
 
-def _prod(a, axis=None, dtype=None, out=None, keepdims=False, initial=_NoValue, where=True):
+def _prod(
+    a, axis=None, dtype=None, out=None, keepdims=False, initial=_NoValue, where=True
+):
     return umr_prod(a, axis, dtype, out, keepdims, initial, where)
 
 
@@ -162,9 +166,13 @@ def _clip(a, min=None, max=None, out=None, *, casting=None, **kwargs):
             )
 
     if min is None:
-        return _clip_dep_invoke_with_casting(um.minimum, a, max, out=out, casting=casting, **kwargs)
+        return _clip_dep_invoke_with_casting(
+            um.minimum, a, max, out=out, casting=casting, **kwargs
+        )
     elif max is None:
-        return _clip_dep_invoke_with_casting(um.maximum, a, min, out=out, casting=casting, **kwargs)
+        return _clip_dep_invoke_with_casting(
+            um.maximum, a, min, out=out, casting=casting, **kwargs
+        )
     else:
         return _clip_dep_invoke_with_casting(
             um.clip, a, min, max, out=out, casting=casting, **kwargs
@@ -229,7 +237,9 @@ def _var(a, axis=None, dtype=None, out=None, ddof=0, keepdims=False, *, where=Tr
         # matching rcount to arrmean when where is specified as array
         div = rcount.reshape(arrmean.shape)
     if isinstance(arrmean, mu.ndarray):
-        arrmean = um.true_divide(arrmean, div, out=arrmean, casting="unsafe", subok=False)
+        arrmean = um.true_divide(
+            arrmean, div, out=arrmean, casting="unsafe", subok=False
+        )
     else:
         arrmean = arrmean.dtype.type(arrmean / rcount)
 
@@ -267,7 +277,9 @@ def _var(a, axis=None, dtype=None, out=None, ddof=0, keepdims=False, *, where=Tr
 
 
 def _std(a, axis=None, dtype=None, out=None, ddof=0, keepdims=False, *, where=True):
-    ret = _var(a, axis=axis, dtype=dtype, out=out, ddof=ddof, keepdims=keepdims, where=where)
+    ret = _var(
+        a, axis=axis, dtype=dtype, out=out, ddof=ddof, keepdims=keepdims, where=where
+    )
 
     if isinstance(ret, mu.ndarray):
         ret = um.sqrt(ret, out=ret)

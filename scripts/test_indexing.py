@@ -771,7 +771,9 @@ class TestFancyIndexingCast:
         assert_equal(zero_array[0, 1], 1)
 
         # Fancy indexing works, although we get a cast warning.
-        assert_warns(ComplexWarning, zero_array.__setitem__, ([0], [1]), np.array([2 + 1j]))
+        assert_warns(
+            ComplexWarning, zero_array.__setitem__, ([0], [1]), np.array([2 + 1j])
+        )
         assert_equal(zero_array[0, 1], 2)  # No complex part
 
         # Cast complex to float, throwing away the imaginary portion.
@@ -953,7 +955,9 @@ class TestMultiIndexingAutomated:
                     raise IndexError
                 in_indices[i] = indx
             elif indx.dtype.kind not in "bi":
-                raise IndexError("arrays used as indices must be of " "integer (or boolean) type")
+                raise IndexError(
+                    "arrays used as indices must be of " "integer (or boolean) type"
+                )
             if indx.ndim != 0:
                 no_copy = False
             ndim += 1
@@ -971,7 +975,9 @@ class TestMultiIndexingAutomated:
             return arr.copy(), no_copy
 
         if ellipsis_pos is not None:
-            in_indices[ellipsis_pos : ellipsis_pos + 1] = [slice(None, None)] * (arr.ndim - ndim)
+            in_indices[ellipsis_pos : ellipsis_pos + 1] = [slice(None, None)] * (
+                arr.ndim - ndim
+            )
 
         for ax, indx in enumerate(in_indices):
             if isinstance(indx, slice):
@@ -1089,7 +1095,9 @@ class TestMultiIndexingAutomated:
                         # Work around for a crash or IndexError with 'wrap'
                         # in some 0-sized cases.
                         try:
-                            mi = np.ravel_multi_index(indx[1:], orig_slice, mode="raise")
+                            mi = np.ravel_multi_index(
+                                indx[1:], orig_slice, mode="raise"
+                            )
                         except Exception:
                             # This happens with 0-sized orig_slice (sometimes?)
                             # here it is a ValueError, but indexing gives a:

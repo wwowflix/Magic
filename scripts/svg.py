@@ -137,7 +137,8 @@ class SvgFormatter(Formatter):
             )
             outfile.write('<svg xmlns="http://www.w3.org/2000/svg">\n')
             outfile.write(
-                '<g font-family="%s" font-size="%s">\n' % (self.fontfamily, self.fontsize)
+                '<g font-family="%s" font-size="%s">\n'
+                % (self.fontfamily, self.fontsize)
             )
 
         counter = self.linenostart
@@ -174,7 +175,9 @@ class SvgFormatter(Formatter):
                     )
 
                 counter += 1
-                outfile.write('<text x="%s" y="%s" ' 'xml:space="preserve">' % (line_x, y))
+                outfile.write(
+                    '<text x="%s" y="%s" ' 'xml:space="preserve">' % (line_x, y)
+                )
             outfile.write(tspan + parts[-1] + tspanend)
         outfile.write("</text>")
 
