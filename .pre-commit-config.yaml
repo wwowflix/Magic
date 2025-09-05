@@ -1,30 +1,24 @@
-﻿exclude: '^(backups/|quarantine/|venv/|\.venv/)'
-
-repos:
+﻿repos:
   - repo: https://github.com/psf/black
-    rev: 25.1.0
+    rev: 24.8.0
     hooks:
       - id: black
-        exclude: |           (?x)           ^scripts/.*_2\.py$           | ^scripts/.*_3\.py$           | ^scripts/core\.py$           | ^scripts/constants_2\.py$           | ^scripts/deduplicate_records_2\.py$
-    exclude: |
-      (?x)
-      ^scripts/.*_2\.py$
-      | ^scripts/.*_3\.py$
-      | ^scripts/core\.py$
-      | ^scripts/constants_2\.py$
-      | ^scripts/deduplicate_records_2\.py$        args: [--line-length=100]
-        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'
+        language_version: python3
+        exclude: |
+          (?x)
+          ^scripts/.*_2\.py$
+          | ^scripts/.*_3\.py$
+          | ^scripts/core\.py$
+          | ^scripts/constants_2\.py$
+          | ^scripts/deduplicate_records_2\.py$
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.11
+    rev: v0.6.9
     hooks:
       - id: ruff
         args: [--fix]
-        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.17.1
+    rev: v1.11.2
     hooks:
       - id: mypy
-        args: ["--config-file","mypy.ini"]
-        files: '^(agents/|scripts/|tools/|tests?/).*\.py$'
