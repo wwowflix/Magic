@@ -1,3 +1,4 @@
+exclude: '^(?:clean_env|venv|\.venv|.*site-packages)(?:/|\\)'
 repos:
   - repo: https://github.com/psf/black
     rev: 25.1.0
