@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 25.1.0
     hooks:
       - id: black
         files: '\.py$'
         exclude: '^(scripts/|quarantine/|backups/|outputs/|venv/|\.hooks/)'
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
+    rev: v1.17.1
     hooks:
       - id: mypy
         additional_dependencies: [types-requests, types-urllib3]
