@@ -448,7 +448,7 @@ def _makeMacName(name, nameID, language, font=None):
     create a Macintosh NameRecord that is understood by old applications
     (platform ID 1 and an old-style Macintosh language enum). If this
     is not possible, we create a Unicode NameRecord (platform ID 0)
-    whose language points to the font’s 'ltag' table. The latter
+    whose language points to the font's 'ltag' table. The latter
     can encode any string in any language, but legacy applications
     might not recognize the format (in which case they will ignore
     those names).
@@ -458,7 +458,7 @@ def _makeMacName(name, nameID, language, font=None):
     in that case, the result will be None for names that need to
     be encoded with an 'ltag' table.
 
-    See the section “The language identifier” in Apple’s specification:
+    See the section "The language identifier" in Apple's specification:
     https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
     """
     macLang = _MAC_LANGUAGE_CODES.get(language.lower())
@@ -480,8 +480,8 @@ def _makeMacName(name, nameID, language, font=None):
         ltag = font.tables.get("ltag")
         if ltag is None:
             ltag = font["ltag"] = newTable("ltag")
-        # 0 = Unicode; 4 = “Unicode 2.0 or later semantics (non-BMP characters allowed)”
-        # “The preferred platform-specific code for Unicode would be 3 or 4.”
+        # 0 = Unicode; 4 = "Unicode 2.0 or later semantics (non-BMP characters allowed)"
+        # "The preferred platform-specific code for Unicode would be 3 or 4."
         # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
         return makeName(name, nameID, 0, 4, ltag.addTag(language))
     else:
@@ -679,9 +679,9 @@ class NameRecord(object):
 # Windows language ID → IETF BCP-47 language tag
 #
 # While Microsoft indicates a region/country for all its language
-# IDs, we follow Unicode practice by omitting “most likely subtags”
-# as per Unicode CLDR. For example, English is simply “en” and not
-# “en-Latn” because according to Unicode, the default script
+# IDs, we follow Unicode practice by omitting "most likely subtags"
+# as per Unicode CLDR. For example, English is simply "en" and not
+# "en-Latn" because according to Unicode, the default script
 # for English is Latin.
 #
 # http://www.unicode.org/cldr/charts/latest/supplemental/likely_subtags.html
@@ -864,12 +864,12 @@ _WINDOWS_LANGUAGES = {
     0x280A: "es-PE",
     0x500A: "es-PR",
     # Microsoft has defined two different language codes for
-    # “Spanish with modern sorting” and “Spanish with traditional
-    # sorting”. This makes sense for collation APIs, and it would be
+    # "Spanish with modern sorting" and "Spanish with traditional
+    # sorting". This makes sense for collation APIs, and it would be
     # possible to express this in BCP 47 language tags via Unicode
-    # extensions (eg., “es-u-co-trad” is “Spanish with traditional
-    # sorting”). However, for storing names in fonts, this distinction
-    # does not make sense, so we use “es” in both cases.
+    # extensions (eg., "es-u-co-trad" is "Spanish with traditional
+    # sorting"). However, for storing names in fonts, this distinction
+    # does not make sense, so we use "es" in both cases.
     0x0C0A: "es",
     0x040A: "es",
     0x540A: "es-US",
@@ -1040,7 +1040,7 @@ _MAC_LANGUAGE_CODES = {lang.lower(): code for code, lang in _MAC_LANGUAGES.items
 # is a special Icelandic version of the normal Macintosh Roman encoding.
 # As another example, Inuktitut uses an 8-bit encoding for Canadian Aboriginal
 # Syllables but MacOS had run out of available script codes, so this was
-# done as a (pretty radical) “modification” of Ethiopic.
+# done as a (pretty radical) "modification" of Ethiopic.
 #
 # http://unicode.org/Public/MAPPINGS/VENDORS/APPLE/Readme.txt
 _MAC_LANGUAGE_TO_SCRIPT = {

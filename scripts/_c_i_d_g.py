@@ -10,8 +10,8 @@ class table__c_i_d_g(BaseTTXConverter):
 
     It is useful for fonts that may be used by a PDF renderer in lieu of
     a font reference with a known glyph collection but no subsetted
-    glyphs.  For instance, a PDF can say “please use a font conforming
-    to Adobe-Japan-1”; the ``cidg`` mapping is necessary if the font is,
+    glyphs.  For instance, a PDF can say "please use a font conforming
+    to Adobe-Japan-1"; the ``cidg`` mapping is necessary if the font is,
     say, a TrueType font.  ``gidc`` is lossy for this purpose and is
     obsoleted by ``cidg``.
 

@@ -685,7 +685,7 @@ class AreaConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -755,25 +755,25 @@ class AreaConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -926,12 +926,12 @@ class AreaConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -2556,7 +2556,7 @@ class BarConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -2626,25 +2626,25 @@ class BarConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -2775,12 +2775,12 @@ class BarConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -3728,25 +3728,25 @@ class BoxPlotDef(CompositeMarkDef):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -5846,12 +5846,12 @@ class Encoding(VegaLiteSchema):
         Text of the ``text`` mark.
     theta : dict, :class:`PolarDef`, :class:`PositionValueDef`, :class:`PositionDatumDefBase`, :class:`PositionFieldDefBase`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
@@ -7020,12 +7020,12 @@ class FacetedEncoding(VegaLiteSchema):
         Text of the ``text`` mark.
     theta : dict, :class:`PolarDef`, :class:`PositionValueDef`, :class:`PositionDatumDefBase`, :class:`PositionFieldDefBase`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, :class:`DatumDef`, :class:`Position2Def`, :class:`PositionValueDef`, :class:`SecondaryFieldDef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     tooltip : dict, :class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`, Sequence[dict, :class:`StringFieldDef`], None
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides
@@ -10482,7 +10482,7 @@ class LineConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -10552,25 +10552,25 @@ class LineConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -10713,12 +10713,12 @@ class LineConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -11213,7 +11213,7 @@ class MarkConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -11283,25 +11283,25 @@ class MarkConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -11430,12 +11430,12 @@ class MarkConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -11789,7 +11789,7 @@ class MarkDef(AnyMark):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
@@ -11861,25 +11861,25 @@ class MarkDef(AnyMark):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -12049,12 +12049,12 @@ class MarkDef(AnyMark):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     theta2Offset : dict, float, :class:`ExprRef`
         Offset for theta2.
@@ -14179,7 +14179,7 @@ class OverlayMarkDef(VegaLiteSchema):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -14249,25 +14249,25 @@ class OverlayMarkDef(VegaLiteSchema):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -14414,12 +14414,12 @@ class OverlayMarkDef(VegaLiteSchema):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     theta2Offset : dict, float, :class:`ExprRef`
         Offset for theta2.
@@ -16551,7 +16551,7 @@ class Projection(VegaLiteSchema):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710…``.
+        which defaults to ``√0.5 ≅ 0.70710...``.
     radius : dict, float, :class:`ExprRef`
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -16728,7 +16728,7 @@ class ProjectionConfig(VegaLiteSchema):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710…``.
+        which defaults to ``√0.5 ≅ 0.70710...``.
     radius : dict, float, :class:`ExprRef`
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -17154,7 +17154,7 @@ class RectConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -17224,25 +17224,25 @@ class RectConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -17373,12 +17373,12 @@ class RectConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     timeUnitBandPosition : float
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -18141,7 +18141,7 @@ class Scale(VegaLiteSchema):
         Extending the domain so that it starts and ends on nice round values. This method
         typically modifies the scale's domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
-        irregular. For example, for a domain of *[0.201479…, 0.996679…]*, a nice domain
+        irregular. For example, for a domain of *[0.201479..., 0.996679...]*, a nice domain
         might be *[0.2, 1.0]*.
 
         For quantitative scales such as linear, ``nice`` can be either a boolean flag or a
@@ -19525,7 +19525,7 @@ class ScaleInvalidDataShowAsValuetheta(ScaleInvalidDataShowAstheta):
     ----------
     value : float
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
@@ -23153,7 +23153,7 @@ class TickConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"..."``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -23223,25 +23223,25 @@ class TickConfig(AnyMarkConfig):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` - *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` - Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` - Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` - Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) - This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -23370,12 +23370,12 @@ class TickConfig(AnyMarkConfig):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     thickness : float
         Thickness of the tick mark.

@@ -5146,7 +5146,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "uni" (U+0075,
     # U+006E, and U+0069) followed by a sequence of uppercase
-    # hexadecimal digits (0–9 and A–F, meaning U+0030 through
+    # hexadecimal digits (0-9 and A-F, meaning U+0030 through
     # U+0039 and U+0041 through U+0046), if the length of that
     # sequence is a multiple of four, and if each group of four
     # digits represents a value in the ranges 0000 through D7FF
@@ -5161,7 +5161,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "u" (U+0075)
     # followed by a sequence of four to six uppercase hexadecimal
-    # digits (0–9 and A–F, meaning U+0030 through U+0039 and
+    # digits (0-9 and A-F, meaning U+0030 through U+0039 and
     # U+0041 through U+0046), and those digits represents a value
     # in the ranges 0000 through D7FF or E000 through 10FFFF, then
     # interpret it as a Unicode scalar value and map the component
