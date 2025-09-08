@@ -17,8 +17,7 @@ from gettext import gettext as _
 from gettext import ngettext
 from itertools import repeat
 from types import TracebackType
-
-from . import types
+from scripts import types
 from .exceptions import Abort
 from .exceptions import BadParameter
 from .exceptions import ClickException

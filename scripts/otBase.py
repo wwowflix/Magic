@@ -86,7 +86,7 @@ class BaseTTXConverter(DefaultTable):
 
     def decompile(self, data, font):
         """Create an object from the binary data. Called automatically on access."""
-        from . import otTables
+from scripts import otTables
 
         reader = OTTableReader(data, tableTag=self.tableTag)
         tableClass = getattr(otTables, self.tableTag)
@@ -241,7 +241,7 @@ class BaseTTXConverter(DefaultTable):
         self.table.toXML2(writer, font)
 
     def fromXML(self, name, attrs, content, font):
-        from . import otTables
+from scripts import otTables
 
         if not hasattr(self, "table"):
             tableClass = getattr(otTables, self.tableTag)
@@ -1358,7 +1358,7 @@ class ValueRecordFactory(object):
                 value = reader.readUShort()
             if isDevice:
                 if value:
-                    from . import otTables
+from scripts import otTables
 
                     subReader = reader.getSubReader(value)
                     value = getattr(otTables, name)()
@@ -1440,7 +1440,7 @@ class ValueRecord(object):
             xmlWriter.newline()
 
     def fromXML(self, name, attrs, content, font):
-        from . import otTables
+from scripts import otTables
 
         for k, v in attrs.items():
             setattr(self, k, int(v))

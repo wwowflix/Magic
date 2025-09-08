@@ -4,8 +4,7 @@ import contextlib
 import signal
 import socket
 import warnings
-
-from .. import _core
+from scripts import _core
 from .._util import is_main_thread
 
 

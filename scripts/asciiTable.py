@@ -1,5 +1,5 @@
 from fontTools.misc.textTools import strjoin, tobytes, tostr
-from . import DefaultTable
+from scripts import DefaultTable
 
 
 class asciiTable(DefaultTable.DefaultTable):

@@ -15,8 +15,7 @@ If no paths are provided, it takes its input from stdin.
 import argparse
 import sys
 from typing import Iterable, List, Optional
-
-from .. import __version__
+from scripts import __version__
 from ..universaldetector import UniversalDetector
 
 

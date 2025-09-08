@@ -26,8 +26,7 @@ except ImportError:
     )
     # nosemgrep: python.lang.security.use-defused-xml.use-defused-xml
     from xml.etree.ElementTree import fromstring as parse_xml_str  # nosec
-
-from . import html
+from scripts import html
 from .drawing import (
     color_from_hex_string,
     color_from_rgb_string,

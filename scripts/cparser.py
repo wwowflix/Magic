@@ -1,9 +1,9 @@
-from . import model
+from scripts import model
 from .commontypes import COMMON_TYPES, resolve_common_type
 from .error import FFIError, CDefError
 
 try:
-    from . import _pycparser as pycparser
+from scripts import _pycparser as pycparser
 except ImportError:
     import pycparser
 import weakref

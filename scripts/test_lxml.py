@@ -3,7 +3,7 @@
 import pickle
 import pytest
 import warnings
-from . import LXML_PRESENT, LXML_VERSION
+from scripts import LXML_PRESENT, LXML_VERSION
 
 if LXML_PRESENT:
     from bs4.builder._lxml import LXMLTreeBuilder, LXMLTreeBuilderForXML

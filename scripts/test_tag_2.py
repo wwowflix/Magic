@@ -3,7 +3,7 @@ from bs4.element import (
     Comment,
     NavigableString,
 )
-from . import SoupTest
+from scripts import SoupTest
 
 
 class TestTag(SoupTest):

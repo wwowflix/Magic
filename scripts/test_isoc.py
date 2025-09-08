@@ -2,8 +2,7 @@ import pytest
 
 import numpy as np
 from numpy.testing import assert_allclose
-
-from . import util
+from scripts import util
 
 
 class TestISOC(util.F2PyTest):

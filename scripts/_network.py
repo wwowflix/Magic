@@ -1,4 +1,4 @@
-from .. import socket as tsocket
+from scripts import socket as tsocket
 from .._highlevel_socket import SocketListener, SocketStream
 
 

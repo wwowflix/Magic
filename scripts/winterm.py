@@ -7,7 +7,7 @@ except ImportError:
         raise OSError("This isn't windows!")
 
 
-from . import win32
+from scripts import win32
 
 
 # from wincon.h

@@ -3,7 +3,7 @@
 # Google Author(s): Behdad Esfahbod
 
 from fontTools.misc.textTools import bytesjoin, safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 import array
 from collections import namedtuple
 import struct

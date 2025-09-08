@@ -1,8 +1,7 @@
 import pytest
 
 from numpy import array
-
-from . import util
+from scripts import util
 
 
 class TestReturnLogical(util.F2PyTest):

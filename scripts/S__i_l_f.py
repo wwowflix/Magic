@@ -3,8 +3,8 @@ from fontTools.misc.fixedTools import floatToFixedToStr
 from fontTools.misc.textTools import byteord, safeEval
 
 # from itertools import *
-from . import DefaultTable
-from . import grUtils
+from scripts import DefaultTable
+from scripts import grUtils
 from array import array
 from functools import reduce
 import struct

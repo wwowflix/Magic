@@ -426,8 +426,7 @@ class NoseTester:
 
         # cap verbosity at 3 because nose becomes *very* verbose beyond that
         verbose = min(verbose, 3)
-
-        from . import utils
+from scripts import utils
 
         utils.verbose = verbose
 

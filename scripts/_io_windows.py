@@ -15,8 +15,7 @@ from typing import (
 
 import attrs
 from outcome import Value
-
-from .. import _core
+from scripts import _core
 from ._io_common import wake_all
 from ._run import _public
 from ._windows_cffi import (

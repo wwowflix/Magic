@@ -45,7 +45,7 @@ def getVariationNameIDs(varfont):
 
 @contextmanager
 def pruningUnusedNames(varfont):
-    from . import log
+from scripts import log
 
     origNameIDs = getVariationNameIDs(varfont)
 
@@ -101,7 +101,7 @@ def updateNameTable(varfont, axisLimits):
     https://docs.microsoft.com/en-us/typography/opentype/spec/stat
     https://docs.microsoft.com/en-us/typography/opentype/spec/name#name-ids
     """
-    from . import AxisLimits, axisValuesFromAxisLimits
+from scripts import AxisLimits, axisValuesFromAxisLimits
 
     if "STAT" not in varfont:
         raise ValueError("Cannot update name table since there is no STAT table.")

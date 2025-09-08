@@ -6,8 +6,7 @@ default values.
 """
 
 from functools import partial
-
-from . import setters
+from scripts import setters
 from ._funcs import asdict as _asdict
 from ._funcs import astuple as _astuple
 from ._make import (

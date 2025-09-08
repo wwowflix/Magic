@@ -1,5 +1,5 @@
-from . import DefaultTable
-from . import ttProgram
+from scripts import DefaultTable
+from scripts import ttProgram
 
 
 class table__f_p_g_m(DefaultTable.DefaultTable):

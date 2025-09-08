@@ -6,11 +6,11 @@ import warnings
 
 from .machar import MachAr
 from .overrides import set_module
-from . import numeric
-from . import numerictypes as ntypes
+from scripts import numeric
+from scripts import numerictypes as ntypes
 from .numeric import array, inf
 from .umath import log10, exp2
-from . import umath
+from scripts import umath
 
 
 def _fr0(a):

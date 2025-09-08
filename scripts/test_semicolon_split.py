@@ -3,8 +3,7 @@ import platform
 import pytest
 
 from numpy.testing import IS_64BIT
-
-from . import util
+from scripts import util
 
 
 @pytest.mark.skipif(

@@ -7,8 +7,7 @@ from enum import Enum as _Enum
 from typing import TYPE_CHECKING, Any, ClassVar, Final as TFinal, Generic, TypeVar
 
 import trio
-
-from . import _sync
+from scripts import _sync
 from ._highlevel_generic import aclose_forcefully
 from ._util import ConflictDetector, final
 from .abc import Listener, Stream

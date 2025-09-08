@@ -18,8 +18,7 @@ try:
 except ImportError:  # pragma: no cover
     import dummy_threading as threading
 import zlib
-
-from . import DistlibException
+from scripts import DistlibException
 from .compat import (
     urljoin,
     urlparse,

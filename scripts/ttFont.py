@@ -145,7 +145,7 @@ class TTFont(object):
             # assume file is a string
             if res_name_or_index is not None:
                 # see if it contains 'sfnt' resources in the resource or data fork
-                from . import macUtils
+from scripts import macUtils
 
                 if res_name_or_index == 0:
                     if macUtils.getSFNTResIndices(file):
@@ -882,7 +882,7 @@ def getTableModule(tag):
     """Fetch the packer/unpacker module for a table.
     Return None when no module is found.
     """
-    from . import tables
+from scripts import tables
 
     pyTag = tagToIdentifier(tag)
     try:

@@ -7,8 +7,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from trio.testing import RaisesGroup
-
-from .. import _core, sleep, socket as tsocket
+from scripts import _core, sleep, socket as tsocket
 from .._core._tests.tutil import can_bind_ipv6
 from .._highlevel_generic import StapledStream, aclose_forcefully
 from .._highlevel_socket import SocketListener

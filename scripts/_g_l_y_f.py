@@ -15,8 +15,8 @@ from fontTools.misc.fixedTools import (
 from fontTools.misc.roundTools import noRound, otRound
 from fontTools.misc.vector import Vector
 from numbers import Number
-from . import DefaultTable
-from . import ttProgram
+from scripts import DefaultTable
+from scripts import ttProgram
 import sys
 import struct
 import array

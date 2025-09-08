@@ -384,7 +384,7 @@ class LRParser:
 
         # If no lexer was given, we will try to use the lex module
         if not lexer:
-            from . import lex
+from scripts import lex
 
             lexer = lex.lexer
 
@@ -769,7 +769,7 @@ class LRParser:
 
         # If no lexer was given, we will try to use the lex module
         if not lexer:
-            from . import lex
+from scripts import lex
 
             lexer = lex.lexer
 
@@ -1087,7 +1087,7 @@ class LRParser:
 
         # If no lexer was given, we will try to use the lex module
         if not lexer:
-            from . import lex
+from scripts import lex
 
             lexer = lex.lexer
 

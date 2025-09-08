@@ -17,8 +17,7 @@
 from typing import Union
 
 from selenium.webdriver.remote.webelement import WebElement
-
-from . import interaction
+from scripts import interaction
 from .input_device import InputDevice
 
 

@@ -15,8 +15,7 @@ try:
     from threading import Thread
 except ImportError:  # pragma: no cover
     from dummy_threading import Thread
-
-from . import DistlibException
+from scripts import DistlibException
 from .compat import (
     HTTPBasicAuthHandler,
     Request,

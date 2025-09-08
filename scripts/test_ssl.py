@@ -33,8 +33,7 @@ except ImportError as error:
     skip_if_optional_else_raise(error)
 
 import trio
-
-from .. import _core, socket as tsocket
+from scripts import _core, socket as tsocket
 from .._abc import Stream
 from .._core import BrokenResourceError, ClosedResourceError
 from .._core._tests.tutil import slow

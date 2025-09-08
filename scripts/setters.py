@@ -3,8 +3,7 @@
 """
 Commonly used hooks for on_setattr.
 """
-
-from . import _config
+from scripts import _config
 from .exceptions import FrozenAttributeError
 
 

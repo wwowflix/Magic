@@ -57,8 +57,7 @@ import typing
 from io import BytesIO
 from socket import socket as socket_cls
 from socket import timeout
-
-from .. import util
+from scripts import util
 
 if typing.TYPE_CHECKING:
     from OpenSSL.crypto import X509  # type: ignore[import-untyped]

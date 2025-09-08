@@ -2,8 +2,7 @@
 import html.entities
 import re
 import typing
-
-from . import __diag__
+from scripts import __diag__
 from .core import *
 from .util import _bslash, _flatten, _escape_regex_range_chars
 

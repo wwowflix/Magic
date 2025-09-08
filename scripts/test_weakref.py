@@ -3,7 +3,7 @@ import weakref
 
 
 import greenlet
-from . import TestCase
+from scripts import TestCase
 
 
 class WeakRefTests(TestCase):

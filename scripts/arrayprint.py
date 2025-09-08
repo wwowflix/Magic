@@ -40,9 +40,9 @@ except ImportError:
     from _dummy_thread import get_ident
 
 import numpy as np
-from . import numerictypes as _nt
+from scripts import numerictypes as _nt
 from .umath import absolute, isinf, isfinite, isnat
-from . import multiarray
+from scripts import multiarray
 from .multiarray import (
     array,
     dragon4_positional,

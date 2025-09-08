@@ -6,8 +6,7 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING, NoReturn
 
 import attrs
-
-from .. import _core
+from scripts import _core
 from .._util import NoPublicConstructor, final
 from ._wakeup_socketpair import WakeupSocketpair
 

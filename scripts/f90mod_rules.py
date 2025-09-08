@@ -18,9 +18,8 @@ __version__ = "$Revision: 1.27 $"[10:-1]
 f2py_version = "See `f2py -v`"
 
 import numpy as np
-
-from . import capi_maps
-from . import func2subr
+from scripts import capi_maps
+from scripts import func2subr
 from .crackfortran import undo_rmbadname, undo_rmbadname1
 
 # The environment provided by auxfuncs.py is needed for some calls to eval.
@@ -89,7 +88,7 @@ fgetdims2_sa = """\
 
 
 def buildhooks(pymod):
-    from . import rules
+from scripts import rules
 
     ret = {
         "f90modhooks": [],

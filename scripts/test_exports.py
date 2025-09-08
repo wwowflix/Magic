@@ -20,8 +20,7 @@ import pytest
 import trio
 import trio.testing
 from trio._tests.pytest_plugin import RUN_SLOW, skip_if_optional_else_raise
-
-from .. import _core, _util
+from scripts import _core, _util
 from .._core._tests.tutil import slow
 
 if TYPE_CHECKING:

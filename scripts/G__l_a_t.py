@@ -4,8 +4,8 @@ from fontTools.misc.textTools import safeEval
 
 # from itertools import *
 from functools import partial
-from . import DefaultTable
-from . import grUtils
+from scripts import DefaultTable
+from scripts import grUtils
 import struct
 
 

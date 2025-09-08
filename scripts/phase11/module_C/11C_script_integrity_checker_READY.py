@@ -1,4 +1,4 @@
-﻿# 11C_script_integrity_checker_READY.py
+# 11C_script_integrity_checker_READY.py
 import os
 import sys
 import ast

@@ -11,8 +11,7 @@ import logging
 import sys
 
 from fontTools.misc.textTools import safeEval
-
-from . import DefaultTable
+from scripts import DefaultTable
 
 log = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@
 # Google Author(s): Behdad Esfahbod
 
 from fontTools.misc.textTools import safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 
 
 class table_C_O_L_R_(DefaultTable.DefaultTable):
@@ -42,7 +42,7 @@ class table_C_O_L_R_(DefaultTable.DefaultTable):
         return colorLayerLists
 
     def _toOTTable(self, ttFont):
-        from . import otTables
+from scripts import otTables
         from fontTools.colorLib.builder import populateCOLRv0
 
         tableClass = getattr(otTables, self.tableTag)
@@ -61,7 +61,7 @@ class table_C_O_L_R_(DefaultTable.DefaultTable):
 
     def decompile(self, data, ttFont):
         from .otBase import OTTableReader
-        from . import otTables
+from scripts import otTables
 
         # We use otData to decompile, but we adapt the decompiled otTables to the
         # existing COLR v0 API for backward compatibility.
@@ -122,7 +122,7 @@ class table_C_O_L_R_(DefaultTable.DefaultTable):
                 layers.append(layer)
             self.ColorLayers[glyphName] = layers
         else:  # new COLR v1 API
-            from . import otTables
+from scripts import otTables
 
             if not hasattr(self, "table"):
                 tableClass = getattr(otTables, self.tableTag)

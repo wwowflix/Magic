@@ -1,6 +1,6 @@
 from io import BytesIO
 from fontTools import cffLib
-from . import DefaultTable
+from scripts import DefaultTable
 
 
 class table_C_F_F_(DefaultTable.DefaultTable):

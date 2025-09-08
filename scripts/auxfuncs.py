@@ -18,9 +18,8 @@ import pprint
 import sys
 import types
 from functools import reduce
-
-from . import __version__
-from . import cfuncs
+from scripts import __version__
+from scripts import cfuncs
 
 __all__ = [
     "applyrules",

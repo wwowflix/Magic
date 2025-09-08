@@ -5,8 +5,7 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
 import attrs
-
-from .. import Event, _core, _util
+from scripts import Event, _core, _util
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator

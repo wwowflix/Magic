@@ -1,6 +1,5 @@
 import pytest
-
-from . import util
+from scripts import util
 
 
 class TestValueAttr(util.F2PyTest):

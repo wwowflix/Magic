@@ -1,8 +1,8 @@
 from fontTools.misc import sstruct
 from fontTools.misc.fixedTools import floatToFixedToStr
 from fontTools.misc.textTools import safeEval
-from . import DefaultTable
-from . import grUtils
+from scripts import DefaultTable
+from scripts import grUtils
 import struct
 
 Feat_hdr_format = """

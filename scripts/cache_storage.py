@@ -9,7 +9,7 @@ from .util import T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import storage
+from scripts import storage
 
 
 class CacheId(str):

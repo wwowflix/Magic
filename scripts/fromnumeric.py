@@ -5,11 +5,11 @@ import types
 import warnings
 
 import numpy as np
-from . import multiarray as mu
-from . import overrides
-from . import numerictypes as nt
+from scripts import multiarray as mu
+from scripts import overrides
+from scripts import numerictypes as nt
 from .multiarray import asarray, array, asanyarray, concatenate
-from . import _methods
+from scripts import _methods
 
 _dt_ = nt.sctype2char
 

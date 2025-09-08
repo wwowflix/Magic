@@ -19,8 +19,7 @@ from typing import (
     Union,
     cast,
 )
-
-from . import _manylinux, _musllinux
+from scripts import _manylinux, _musllinux
 
 logger = logging.getLogger(__name__)
 

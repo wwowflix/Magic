@@ -4,8 +4,7 @@ import pytest
 
 from numpy import array
 from numpy.testing import IS_64BIT
-
-from . import util
+from scripts import util
 
 
 @pytest.mark.slow

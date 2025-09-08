@@ -2,8 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Sequence
 
 if TYPE_CHECKING:
     from pip._vendor.rich.console import ConsoleRenderable
-
-from . import get_console
+from scripts import get_console
 from .segment import Segment
 from .terminal_theme import DEFAULT_TERMINAL_THEME
 

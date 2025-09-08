@@ -3,8 +3,7 @@ from __future__ import annotations
 import operator
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, TypeVar
-
-from .. import _core, _util
+from scripts import _core, _util
 from .._highlevel_generic import StapledStream
 from ..abc import ReceiveStream, SendStream
 

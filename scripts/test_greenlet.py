@@ -9,10 +9,10 @@ from abc import abstractmethod
 
 import greenlet
 from greenlet import greenlet as RawGreenlet
-from . import TestCase
-from . import RUNNING_ON_MANYLINUX
-from . import PY313
-from . import PY314
+from scripts import TestCase
+from scripts import RUNNING_ON_MANYLINUX
+from scripts import PY313
+from scripts import PY314
 from .leakcheck import fails_leakcheck
 
 
@@ -924,7 +924,7 @@ class TestGreenlet(TestCase):
 
     def test_get_stack_with_nested_c_calls(self):
         from functools import partial
-        from . import _test_extension_cpp
+from scripts import _test_extension_cpp
 
         def recurse(v):
             if v > 0:

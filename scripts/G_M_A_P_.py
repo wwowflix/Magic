@@ -1,6 +1,6 @@
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import tobytes, tostr, safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 
 GMAPFormat = """
 		>	# big endian

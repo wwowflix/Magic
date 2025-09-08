@@ -2,7 +2,7 @@ import ctypes
 import ctypes.util
 import operator
 import sys
-from . import model
+from scripts import model
 
 if sys.version_info < (3,):
     bytechr = chr

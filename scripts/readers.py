@@ -1,8 +1,7 @@
 import collections
 import pathlib
 import operator
-
-from . import abc
+from scripts import abc
 
 from ._itertools import unique_everseen
 from ._compat import ZipPath

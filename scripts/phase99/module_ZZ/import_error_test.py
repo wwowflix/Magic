@@ -1,1 +1,1 @@
-﻿# ImportError stub
+# ImportError stub

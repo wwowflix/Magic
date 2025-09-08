@@ -1,6 +1,6 @@
 from fontTools.misc.textTools import bytesjoin, strjoin, tobytes, tostr, safeEval
 from fontTools.misc import sstruct
-from . import DefaultTable
+from scripts import DefaultTable
 import base64
 
 DSIG_HeaderFormat = """

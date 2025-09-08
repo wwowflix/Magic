@@ -1,4 +1,4 @@
-﻿from secrets import *
+from secrets import *
 
 print("🔐 Testing secrets.py values...\n")
 

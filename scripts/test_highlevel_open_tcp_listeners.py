@@ -18,8 +18,7 @@ from trio import (
 )
 from trio.abc import HostnameResolver, SendStream, SocketFactory
 from trio.testing import open_stream_to_socket_listener
-
-from .. import socket as tsocket
+from scripts import socket as tsocket
 from .._core._tests.tutil import binds_ipv6, slow
 
 if sys.version_info < (3, 11):

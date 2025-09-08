@@ -37,9 +37,8 @@ Record arrays allow us to access fields as properties::
 import warnings
 from collections import Counter
 from contextlib import nullcontext
-
-from . import numeric as sb
-from . import numerictypes as nt
+from scripts import numeric as sb
+from scripts import numerictypes as nt
 from numpy.compat import os_fspath
 from numpy.core.overrides import set_module
 from .arrayprint import get_printoptions

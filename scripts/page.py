@@ -9,12 +9,12 @@ from .util import event_class, T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import debugger
-from . import dom
-from . import emulation
-from . import io
-from . import network
-from . import runtime
+from scripts import debugger
+from scripts import dom
+from scripts import emulation
+from scripts import io
+from scripts import network
+from scripts import runtime
 
 
 class FrameId(str):

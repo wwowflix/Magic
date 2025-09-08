@@ -10,8 +10,7 @@ from typing import (
     Generic,
     TypeVar,
 )
-
-from .. import CancelScope, _core
+from scripts import CancelScope, _core
 from .._abc import AsyncResource, HalfCloseableStream, ReceiveStream, SendStream, Stream
 from .._highlevel_generic import aclose_forcefully
 from ._checkpoints import assert_checkpoints

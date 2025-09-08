@@ -10,7 +10,7 @@ from bs4.builder._htmlparser import (
 )
 from bs4.exceptions import ParserRejectedMarkup
 from typing import Any
-from . import HTMLTreeBuilderSmokeTest
+from scripts import HTMLTreeBuilderSmokeTest
 
 
 class TestHTMLParserTreeBuilder(HTMLTreeBuilderSmokeTest):

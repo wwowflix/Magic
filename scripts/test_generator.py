@@ -1,6 +1,5 @@
 from greenlet import greenlet
-
-from . import TestCase
+from scripts import TestCase
 
 
 class genlet(greenlet):

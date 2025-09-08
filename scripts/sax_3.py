@@ -8,8 +8,7 @@ from __future__ import print_function, absolute_import
 
 from xml.sax import InputSource as _InputSource
 from xml.sax import ErrorHandler as _ErrorHandler
-
-from . import expatreader
+from scripts import expatreader
 
 __origin__ = "xml.sax"
 

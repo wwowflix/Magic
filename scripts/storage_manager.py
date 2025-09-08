@@ -1,4 +1,4 @@
-﻿# storage_manager.py
+# storage_manager.py
 
 import os
 import logging

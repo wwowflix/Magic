@@ -13,13 +13,13 @@ $Date: 2005/05/06 10:57:33 $
 Pearu Peterson
 
 """
-from . import __version__
+from scripts import __version__
 
 f2py_version = __version__.version
 
 from .auxfuncs import hasbody, hascommon, hasnote, isintent_hide, outmess
-from . import capi_maps
-from . import func2subr
+from scripts import capi_maps
+from scripts import func2subr
 from .crackfortran import rmbadname
 
 

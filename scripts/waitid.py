@@ -3,8 +3,7 @@ import math
 import os
 import sys
 from typing import TYPE_CHECKING
-
-from .. import _core, _subprocess
+from scripts import _core, _subprocess
 from .._sync import CapacityLimiter, Event
 from .._threads import to_thread_run_sync
 

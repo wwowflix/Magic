@@ -59,8 +59,7 @@ __all__ = [
 
 import itertools
 import warnings
-
-from . import core as ma
+from scripts import core as ma
 from .core import (
     MaskedArray,
     MAError,

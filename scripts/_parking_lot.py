@@ -78,8 +78,7 @@ from typing import TYPE_CHECKING
 
 import attrs
 import outcome
-
-from .. import _core
+from scripts import _core
 from .._util import final
 
 if TYPE_CHECKING:

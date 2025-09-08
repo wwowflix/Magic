@@ -7,10 +7,9 @@ from six import text_type
 import re
 
 from copy import copy
-
-from . import base
-from .. import _ihatexml
-from .. import constants
+from scripts import base
+from scripts import _ihatexml
+from scripts import constants
 from ..constants import namespaces
 from .._utils import moduleFactoryFactory
 

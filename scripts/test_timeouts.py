@@ -7,8 +7,7 @@ import outcome
 import pytest
 
 import trio
-
-from .. import _core
+from scripts import _core
 from .._core._tests.tutil import slow
 from .._timeouts import (
     TooSlowError,

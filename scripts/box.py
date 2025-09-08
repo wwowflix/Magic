@@ -467,8 +467,7 @@ if __name__ == "__main__":  # pragma: no cover
 
     from pip._vendor.rich.columns import Columns
     from pip._vendor.rich.panel import Panel
-
-    from . import box as box
+from scripts import box as box
     from .console import Console
     from .table import Table
     from .text import Text

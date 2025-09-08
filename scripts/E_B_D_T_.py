@@ -15,7 +15,7 @@ from .BitmapGlyphMetrics import (
     SmallGlyphMetrics,
     smallGlyphMetricsFormat,
 )
-from . import DefaultTable
+from scripts import DefaultTable
 import itertools
 import os
 import struct

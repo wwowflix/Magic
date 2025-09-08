@@ -3,8 +3,7 @@ from __future__ import annotations
 import select
 import sys
 from typing import TYPE_CHECKING
-
-from .. import _core, _subprocess
+from scripts import _core, _subprocess
 
 assert (sys.platform != "win32" and sys.platform != "linux") or not TYPE_CHECKING
 

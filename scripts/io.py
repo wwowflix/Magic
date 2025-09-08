@@ -7,7 +7,7 @@
 from __future__ import annotations
 from .util import T_JSON_DICT
 import typing
-from . import runtime
+from scripts import runtime
 
 
 class StreamHandle(str):

@@ -6,8 +6,7 @@
 # Eli Bendersky [https://eli.thegreenplace.net/]
 # License: BSD
 # ------------------------------------------------------------------------------
-
-from . import c_ast
+from scripts import c_ast
 
 
 def fix_switch_cases(switch_node):

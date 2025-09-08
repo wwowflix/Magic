@@ -23,8 +23,7 @@ from typing import (
     Generic,
     overload,
 )
-
-from .. import to_thread
+from scripts import to_thread
 from ..abc import AsyncResource
 
 if TYPE_CHECKING:

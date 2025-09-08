@@ -4,8 +4,7 @@ import socket
 import threading
 import time
 from typing import Any, Callable, Optional, Union
-
-from . import _logging
+from scripts import _logging
 from ._abnf import ABNF
 from ._core import WebSocket, getdefaulttimeout
 from ._exceptions import (

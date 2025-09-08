@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from contextlib import AbstractContextManager, contextmanager
 from typing import TYPE_CHECKING
-
-from .. import _core
+from scripts import _core
 
 if TYPE_CHECKING:
     from collections.abc import Generator

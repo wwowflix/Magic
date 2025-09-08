@@ -18,15 +18,14 @@ import sys
 import os
 import pprint
 import re
-
-from . import crackfortran
-from . import rules
-from . import cb_rules
-from . import auxfuncs
-from . import cfuncs
-from . import f90mod_rules
-from . import __version__
-from . import capi_maps
+from scripts import crackfortran
+from scripts import rules
+from scripts import cb_rules
+from scripts import auxfuncs
+from scripts import cfuncs
+from scripts import f90mod_rules
+from scripts import __version__
+from scripts import capi_maps
 
 f2py_version = __version__.version
 numpy_version = __version__.version

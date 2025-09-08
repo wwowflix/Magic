@@ -3,8 +3,7 @@
 import sys
 
 import pytest
-
-from . import util
+from scripts import util
 
 
 class TestQuotedCharacter(util.F2PyTest):

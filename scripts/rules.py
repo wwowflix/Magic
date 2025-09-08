@@ -55,7 +55,7 @@ import time
 import copy
 
 # __version__.version is now the same as the NumPy version
-from . import __version__
+from scripts import __version__
 
 f2py_version = __version__.version
 numpy_version = __version__.version
@@ -124,13 +124,12 @@ from .auxfuncs import (
     stripcomma,
     requiresf90wrapper,
 )
-
-from . import capi_maps
-from . import cfuncs
-from . import common_rules
-from . import use_rules
-from . import f90mod_rules
-from . import func2subr
+from scripts import capi_maps
+from scripts import cfuncs
+from scripts import common_rules
+from scripts import use_rules
+from scripts import f90mod_rules
+from scripts import func2subr
 
 options = {}
 sepdict = {}

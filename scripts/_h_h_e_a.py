@@ -4,7 +4,7 @@ from fontTools.misc.fixedTools import (
     ensureVersionIsLong as fi2ve,
     versionToFixed as ve2fi,
 )
-from . import DefaultTable
+from scripts import DefaultTable
 import math
 
 

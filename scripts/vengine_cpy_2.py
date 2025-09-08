@@ -2,9 +2,9 @@
 # DEPRECATED: implementation for ffi.verify()
 #
 import sys
-from . import model
+from scripts import model
 from .error import VerificationError
-from . import _imp_emulation as imp
+from scripts import _imp_emulation as imp
 
 
 class VCPythonEngine(object):

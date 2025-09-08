@@ -1,7 +1,7 @@
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import bytesjoin, strjoin, readHex
 from fontTools.ttLib import TTLibError
-from . import DefaultTable
+from scripts import DefaultTable
 
 # Apple's documentation of 'meta':
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6meta.html

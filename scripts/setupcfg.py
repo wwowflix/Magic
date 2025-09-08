@@ -31,8 +31,7 @@ from setuptools.extern.packaging.requirements import Requirement, InvalidRequire
 from setuptools.extern.packaging.version import Version, InvalidVersion
 from setuptools.extern.packaging.specifiers import SpecifierSet
 from setuptools._deprecation_warning import SetuptoolsDeprecationWarning
-
-from . import expand
+from scripts import expand
 
 if TYPE_CHECKING:
     from setuptools.dist import Distribution  # noqa

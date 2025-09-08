@@ -10,8 +10,7 @@ from typing import TYPE_CHECKING, Any, Callable, NoReturn, Union, cast
 
 import attrs
 import outcome
-
-from . import _run
+from scripts import _run
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Generator

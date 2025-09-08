@@ -11,8 +11,7 @@ from xml.etree.ElementTree import (
     Element,
     _escape_cdata,
 )
-
-from . import incremental_tree
+from scripts import incremental_tree
 
 
 class LxmlSyntaxError(Exception):

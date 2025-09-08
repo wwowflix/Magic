@@ -5,8 +5,7 @@ import types
 import warnings
 
 from typing import Union, Iterable, ContextManager, BinaryIO, TextIO
-
-from . import _common
+from scripts import _common
 
 Package = Union[types.ModuleType, str]
 Resource = str

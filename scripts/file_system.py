@@ -8,8 +8,8 @@ from __future__ import annotations
 from .util import T_JSON_DICT
 from dataclasses import dataclass
 import typing
-from . import network
-from . import storage
+from scripts import network
+from scripts import storage
 
 
 @dataclass

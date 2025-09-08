@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 from datetime import datetime
-from . import util
+from scripts import util
 import re
-from . import css_types as ct
+from scripts import css_types as ct
 import unicodedata
 import bs4
 from typing import (

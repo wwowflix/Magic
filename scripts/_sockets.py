@@ -138,7 +138,7 @@ class SocketListener(Listener[SocketStream], _SocketProvider):
         handler: Callable[[SocketStream], Any],
         task_group: TaskGroup | None = None,
     ) -> None:
-        from .. import create_task_group
+from scripts import create_task_group
 
         async with AsyncExitStack() as stack:
             if task_group is None:

@@ -9,8 +9,7 @@ from numpy.f2py.crackfortran import (
 from numpy.f2py.crackfortran import (
     _selected_real_kind_func as selected_real_kind,
 )
-
-from . import util
+from scripts import util
 
 
 class TestKind(util.F2PyTest):

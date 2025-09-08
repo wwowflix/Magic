@@ -1,4 +1,4 @@
-﻿import snscrape.modules.twitter as sntwitter
+import snscrape.modules.twitter as sntwitter
 import time
 from random import randint
 

@@ -11,8 +11,7 @@ from ipaddress import IPv6Address, ip_address
 from os import PathLike, chmod
 from socket import AddressFamily, SocketKind
 from typing import TYPE_CHECKING, Any, Literal, cast, overload
-
-from .. import to_thread
+from scripts import to_thread
 from ..abc import (
     ConnectedUDPSocket,
     ConnectedUNIXDatagramSocket,

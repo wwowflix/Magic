@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING, Protocol
 import attrs
 
 import trio
-
-from . import _core
+from scripts import _core
 from ._core import (
     Abort,
     ParkingLot,

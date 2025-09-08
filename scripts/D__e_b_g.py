@@ -1,7 +1,6 @@
 import json
 from textwrap import indent
-
-from . import DefaultTable
+from scripts import DefaultTable
 from fontTools.misc.textTools import tostr
 
 
