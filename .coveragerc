@@ -1,8 +1,0 @@
-[run]
-branch = True
-parallel = True
-concurrency = multiprocessing
-source = tools
-
-[report]
-fail_under = 85
