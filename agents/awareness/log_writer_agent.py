@@ -1,52 +1,29 @@
 #!/usr/bin/env python3
-"""
-MAGIC Project â€“ Log Writer Auto-Fix Script
-Author: ChatGPT Assistant
-Purpose:
-    - Check if target script exists
-    - Create placeholder if missing
-    - Write a timestamped log entry
-    - Ensure D:\MAGIC\logs exists and log file is updated
-"""
+from __future__ import annotations
 
-import os
-from datetime import datetime
+from pathlib import Path
+import time
 
-# ------------------------------
-# CONFIGURATION
-# ------------------------------
-PROJECT_ROOT = r"D:\MAGIC"
-LOGS_DIR = os.path.join(PROJECT_ROOT, "logs")
-TARGET_SCRIPT = os.path.join(
-    PROJECT_ROOT, "scripts", "phase11", "module_l", "11L_rate_limit_guard_READY.py"
-)
-MASTER_LOG = os.path.join(LOGS_DIR, "magic_master_log.txt")
+LOG_DIR = Path("logs")
+LOG_FILE = LOG_DIR / "magic.log"
 
-# ------------------------------
-# 1ï¸�â�'£ Ensure logs directory exists
-# ------------------------------
-os.makedirs(LOGS_DIR, exist_ok=True)
 
-# ------------------------------
-# 2ï¸�â�'£ Ensure target script exists
-# ------------------------------
-if not os.path.exists(TARGET_SCRIPT):
-    os.makedirs(os.path.dirname(TARGET_SCRIPT), exist_ok=True)
-    with open(TARGET_SCRIPT, "w", encoding="utf-8") as f:
-        f.write("# Auto-created placeholder script\n")
-        f.write("print('11L_rate_limit_guard_READY is running...')\n")
-    print(f"ðŸ� • Created missing script: {TARGET_SCRIPT}")
-else:
-    print(f"â�"… Script found: {TARGET_SCRIPT}")
+def ensure_log_dir() -> None:
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-# ------------------------------
-# 3ï¸�â�'£ Write to log
-# ------------------------------
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-log_entry = f"[{timestamp}] â�"… Checked & ensured script exists: {TARGET_SCRIPT}\n"
 
-with open(MASTER_LOG, "a", encoding="utf-8") as log:
-    log.write(log_entry)
+def log(message: str) -> None:
+    ensure_log_dir()
+    ts = time.strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {message}\n"
+    print(line.strip())
+    with LOG_FILE.open("a", encoding="utf-8") as fh:
+        fh.write(line)
 
-print(f"ðŸ“� Log updated: {MASTER_LOG}")
-print("â�"… Fix Log Writer Agent process completed.")
+
+def main() -> None:
+    log("Log writer agent ready.")
+
+
+if __name__ == "__main__":
+    main()
