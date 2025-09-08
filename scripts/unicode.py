@@ -15,8 +15,7 @@ class _lazyclassproperty:
         if cls is None:
             cls = type(obj)
         if not hasattr(cls, "_intern") or any(
-            cls._intern is getattr(superclass, "_intern", [])
-            for superclass in cls.__mro__[1:]
+            cls._intern is getattr(superclass, "_intern", []) for superclass in cls.__mro__[1:]
         ):
             cls._intern = {}
         attrname = self.fn.__name__
@@ -90,7 +89,7 @@ class unicode_set:
                 set(
                     "".join(filter(str.isidentifier, cls._chars_for_ranges))
                     + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzªµº"
-                    + "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ"
+                    + "À�ÂÃÄ�...ÆÇÈÉÊËÌ�Î���'�'�"�"Õ�-ØÙÚÛÜ�Þß� áâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ"
                     + "_"
                 )
             )
@@ -107,9 +106,7 @@ class unicode_set:
                 set(
                     cls.identchars
                     + "0123456789"
-                    + "".join(
-                        [c for c in cls._chars_for_ranges if ("_" + c).isidentifier()]
-                    )
+                    + "".join([c for c in cls._chars_for_ranges if ("_" + c).isidentifier()])
                 )
             )
         )
@@ -339,14 +336,14 @@ pyparsing_unicode.BMP = pyparsing_unicode.BasicMultilingualPlane
 
 # add language identifiers using language Unicode
 pyparsing_unicode.العربية = pyparsing_unicode.Arabic
-pyparsing_unicode.中文 = pyparsing_unicode.Chinese
+pyparsing_unicode.中�-� = pyparsing_unicode.Chinese
 pyparsing_unicode.кириллица = pyparsing_unicode.Cyrillic
 pyparsing_unicode.Ελληνικά = pyparsing_unicode.Greek
-pyparsing_unicode.עִברִית = pyparsing_unicode.Hebrew
-pyparsing_unicode.日本語 = pyparsing_unicode.Japanese
-pyparsing_unicode.Japanese.漢字 = pyparsing_unicode.Japanese.Kanji
+pyparsing_unicode.עִ�'רִית = pyparsing_unicode.Hebrew
+pyparsing_unicode.�-�本語 = pyparsing_unicode.Japanese
+pyparsing_unicode.Japanese.漢�- = pyparsing_unicode.Japanese.Kanji
 pyparsing_unicode.Japanese.カタカナ = pyparsing_unicode.Japanese.Katakana
-pyparsing_unicode.Japanese.ひらがな = pyparsing_unicode.Japanese.Hiragana
-pyparsing_unicode.한국어 = pyparsing_unicode.Korean
-pyparsing_unicode.ไทย = pyparsing_unicode.Thai
-pyparsing_unicode.देवनागरी = pyparsing_unicode.Devanagari
+pyparsing_unicode.Japanese.�ら�� = pyparsing_unicode.Japanese.Hiragana
+pyparsing_unicode.한국�-� = pyparsing_unicode.Korean
+pyparsing_unicode.ไ�-ย = pyparsing_unicode.Thai
+pyparsing_unicode.देवना�-री = pyparsing_unicode.Devanagari

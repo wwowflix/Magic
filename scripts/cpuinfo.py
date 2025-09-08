@@ -47,9 +47,7 @@ def command_info(successful_status=(0,), stacklevel=1, **kw):
 
 
 def command_by_line(cmd, successful_status=(0,), stacklevel=1):
-    ok, output = getoutput(
-        cmd, successful_status=successful_status, stacklevel=stacklevel + 1
-    )
+    ok, output = getoutput(cmd, successful_status=successful_status, stacklevel=stacklevel + 1)
     if not ok:
         return
     for line in output.splitlines():
@@ -221,9 +219,7 @@ class LinuxCPUInfo(CPUInfoBase):
         return re.match(r".*?Pentium.*?III\b", self.info[0]["model name"]) is not None
 
     def _is_PentiumIV(self):
-        return (
-            re.match(r".*?Pentium.*?(IV|4)\b", self.info[0]["model name"]) is not None
-        )
+        return re.match(r".*?Pentium.*?(IV|4)\b", self.info[0]["model name"]) is not None
 
     def _is_PentiumM(self):
         return re.match(r".*?Pentium.*?M\b", self.info[0]["model name"]) is not None
@@ -234,9 +230,7 @@ class LinuxCPUInfo(CPUInfoBase):
     def _is_Nocona(self):
         return (
             self.is_Intel()
-            and (
-                self.info[0]["cpu family"] == "6" or self.info[0]["cpu family"] == "15"
-            )
+            and (self.info[0]["cpu family"] == "6" or self.info[0]["cpu family"] == "15")
             and (self.has_sse3() and not self.has_ssse3())
             and re.match(r".*?\blm\b", self.info[0]["flags"]) is not None
         )
@@ -252,10 +246,7 @@ class LinuxCPUInfo(CPUInfoBase):
         return re.match(r".*?Itanium\b", self.info[0]["family"]) is not None
 
     def _is_XEON(self):
-        return (
-            re.match(r".*?XEON\b", self.info[0]["model name"], re.IGNORECASE)
-            is not None
-        )
+        return re.match(r".*?XEON\b", self.info[0]["model name"], re.IGNORECASE) is not None
 
     _is_Xeon = _is_XEON
 
@@ -611,8 +602,7 @@ class Win32CPUInfo(CPUInfoBase):
             import winreg
 
             prgx = re.compile(
-                r"family\s+(?P<FML>\d+)\s+model\s+(?P<MDL>\d+)"
-                r"\s+stepping\s+(?P<STP>\d+)",
+                r"family\s+(?P<FML>\d+)\s+model\s+(?P<MDL>\d+)" r"\s+stepping\s+(?P<STP>\d+)",
                 re.IGNORECASE,
             )
             chnd = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, self.pkey)
@@ -661,27 +651,17 @@ class Win32CPUInfo(CPUInfoBase):
 
     def _is_AMDK5(self):
         return (
-            self.is_AMD()
-            and self.info[0]["Family"] == 5
-            and self.info[0]["Model"] in [0, 1, 2, 3]
+            self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] in [0, 1, 2, 3]
         )
 
     def _is_AMDK6(self):
-        return (
-            self.is_AMD()
-            and self.info[0]["Family"] == 5
-            and self.info[0]["Model"] in [6, 7]
-        )
+        return self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] in [6, 7]
 
     def _is_AMDK6_2(self):
-        return (
-            self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] == 8
-        )
+        return self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] == 8
 
     def _is_AMDK6_3(self):
-        return (
-            self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] == 9
-        )
+        return self.is_AMD() and self.info[0]["Family"] == 5 and self.info[0]["Model"] == 9
 
     def _is_AMDK7(self):
         return self.is_AMD() and self.info[0]["Family"] == 6
@@ -714,24 +694,14 @@ class Win32CPUInfo(CPUInfoBase):
         return self.is_Intel() and self.info[0]["Family"] == 5
 
     def _is_PentiumMMX(self):
-        return (
-            self.is_Intel()
-            and self.info[0]["Family"] == 5
-            and self.info[0]["Model"] == 4
-        )
+        return self.is_Intel() and self.info[0]["Family"] == 5 and self.info[0]["Model"] == 4
 
     def _is_PentiumPro(self):
-        return (
-            self.is_Intel()
-            and self.info[0]["Family"] == 6
-            and self.info[0]["Model"] == 1
-        )
+        return self.is_Intel() and self.info[0]["Family"] == 6 and self.info[0]["Model"] == 1
 
     def _is_PentiumII(self):
         return (
-            self.is_Intel()
-            and self.info[0]["Family"] == 6
-            and self.info[0]["Model"] in [3, 5, 6]
+            self.is_Intel() and self.info[0]["Family"] == 6 and self.info[0]["Model"] in [3, 5, 6]
         )
 
     def _is_PentiumIII(self):
@@ -746,9 +716,7 @@ class Win32CPUInfo(CPUInfoBase):
 
     def _is_PentiumM(self):
         return (
-            self.is_Intel()
-            and self.info[0]["Family"] == 6
-            and self.info[0]["Model"] in [9, 13, 14]
+            self.is_Intel() and self.info[0]["Family"] == 6 and self.info[0]["Model"] in [9, 13, 14]
         )
 
     def _is_Core2(self):
@@ -779,8 +747,7 @@ class Win32CPUInfo(CPUInfoBase):
     def _has_sse(self):
         if self.is_Intel():
             return (
-                self.info[0]["Family"] == 6
-                and self.info[0]["Model"] in [7, 8, 9, 10, 11]
+                self.info[0]["Family"] == 6 and self.info[0]["Model"] in [7, 8, 9, 10, 11]
             ) or self.info[0]["Family"] == 15
         elif self.is_AMD():
             return (

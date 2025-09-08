@@ -99,9 +99,7 @@ _label_xpath = etree.XPath(
     "//label[@for=$id]|//x:label[@for=$id]", namespaces={"x": XHTML_NAMESPACE}
 )
 _archive_re = re.compile(r"[^ ]+")
-_parse_meta_refresh_url = re.compile(
-    r"[^;=]*;\s*(?:url\s*=\s*)?(?P<url>.*)$", re.I
-).search
+_parse_meta_refresh_url = re.compile(r"[^;=]*;\s*(?:url\s*=\s*)?(?P<url>.*)$", re.I).search
 
 
 def _unquote_match(s, pos):
@@ -318,13 +316,9 @@ class HtmlMixin:
     def label(self, label):
         id = self.get("id")
         if not id:
-            raise TypeError(
-                "You cannot set a label for an element (%r) that has no id" % self
-            )
+            raise TypeError("You cannot set a label for an element (%r) that has no id" % self)
         if _nons(label.tag) != "label":
-            raise TypeError(
-                "You can only assign label to a label element (not %r)" % label
-            )
+            raise TypeError("You can only assign label to a label element (not %r)" % label)
         label.set("for", id)
 
     @label.deleter
@@ -439,9 +433,7 @@ class HtmlMixin:
     ## Link functions
     ########################################
 
-    def make_links_absolute(
-        self, base_url=None, resolve_base_href=True, handle_failures=None
-    ):
+    def make_links_absolute(self, base_url=None, resolve_base_href=True, handle_failures=None):
         """
         Make all links in the document absolute, given the
         ``base_url`` for the document (the full URL where the document
@@ -485,9 +477,7 @@ class HtmlMixin:
                 return urljoin(base_url, href)
 
         else:
-            raise ValueError(
-                "unexpected value for handle_failures: %r" % handle_failures
-            )
+            raise ValueError("unexpected value for handle_failures: %r" % handle_failures)
 
         self.rewrite_links(link_repl)
 
@@ -502,9 +492,7 @@ class HtmlMixin:
         are ignored.  If set to 'discard', failing URLs will be removed.
         """
         base_href = None
-        basetags = self.xpath(
-            "//base[@href]|//x:base[@href]", namespaces={"x": XHTML_NAMESPACE}
-        )
+        basetags = self.xpath("//base[@href]|//x:base[@href]", namespaces={"x": XHTML_NAMESPACE})
         for b in basetags:
             base_href = b.get("href")
             b.drop_tree()
@@ -586,10 +574,7 @@ class HtmlMixin:
                     # (start_pos, url)
                     _unquote_match(match.group(1), match.start(1))[::-1]
                     for match in _iter_css_urls(el.text)
-                ] + [
-                    (match.start(1), match.group(1))
-                    for match in _iter_css_imports(el.text)
-                ]
+                ] + [(match.start(1), match.group(1)) for match in _iter_css_imports(el.text)]
                 if urls:
                     # sort by start pos to bring both match sets back into order
                     # and reverse the list to report correct positions despite
@@ -859,8 +844,7 @@ def fragment_fromstring(html, create_parent=False, base_url=None, parser=None, *
         raise etree.ParserError("No elements found")
     if len(elements) > 1:
         raise etree.ParserError(
-            "Multiple elements found (%s)"
-            % ", ".join([_element_name(e) for e in elements])
+            "Multiple elements found (%s)" % ", ".join([_element_name(e) for e in elements])
         )
     el = elements[0]
     if el.tail and el.tail.strip():
@@ -1326,9 +1310,7 @@ class TextareaElement(InputMixin, HtmlElement):
             serialisation_method = "html"
         for el in self:
             # it's rare that we actually get here, so let's not use ''.join()
-            content += etree.tostring(
-                el, method=serialisation_method, encoding="unicode"
-            )
+            content += etree.tostring(el, method=serialisation_method, encoding="unicode")
         return content
 
     @value.setter
@@ -1371,14 +1353,10 @@ class SelectElement(InputMixin, HtmlElement):
         options = _options_xpath(self)
 
         try:
-            selected_option = next(
-                el for el in reversed(options) if el.get("selected") is not None
-            )
+            selected_option = next(el for el in reversed(options) if el.get("selected") is not None)
         except StopIteration:
             try:
-                selected_option = next(
-                    el for el in options if el.get("disabled") is None
-                )
+                selected_option = next(el for el in options if el.get("disabled") is None)
             except StopIteration:
                 return None
         value = selected_option.get("value")
@@ -1634,9 +1612,7 @@ class CheckboxValues(SetMixin):
                 if "checked" in el.attrib:
                     del el.attrib["checked"]
                 else:
-                    raise KeyError(
-                        "The checkbox with value %r was already unchecked" % value
-                    )
+                    raise KeyError("The checkbox with value %r was already unchecked" % value)
                 break
         else:
             raise KeyError("No checkbox with value %r" % value)
@@ -1818,12 +1794,8 @@ def xhtml_to_html(xhtml):
 
 # This isn't a general match, but it's a match for what libxml2
 # specifically serialises:
-__str_replace_meta_content_type = re.compile(
-    r'<meta http-equiv="Content-Type"[^>]*>'
-).sub
-__bytes_replace_meta_content_type = re.compile(
-    rb'<meta http-equiv="Content-Type"[^>]*>'
-).sub
+__str_replace_meta_content_type = re.compile(r'<meta http-equiv="Content-Type"[^>]*>').sub
+__bytes_replace_meta_content_type = re.compile(rb'<meta http-equiv="Content-Type"[^>]*>').sub
 
 
 def tostring(
@@ -1930,9 +1902,7 @@ def open_in_browser(doc, encoding=None):
     handle, fn = tempfile.mkstemp(suffix=".html")
     f = os.fdopen(handle, "wb")
     try:
-        doc.write(
-            f, method="html", encoding=encoding or doc.docinfo.encoding or "UTF-8"
-        )
+        doc.write(f, method="html", encoding=encoding or doc.docinfo.encoding or "UTF-8")
     finally:
         # we leak the file itself here, but we should at least close it
         f.close()

@@ -533,9 +533,7 @@ class LegacyMetadata(object):
         """Control then set a metadata field."""
         name = self._convert_name(name)
 
-        if (name in _ELEMENTSFIELD or name == "Platform") and not isinstance(
-            value, (list, tuple)
-        ):
+        if (name in _ELEMENTSFIELD or name == "Platform") and not isinstance(value, (list, tuple)):
             if isinstance(value, string_types):
                 value = [v.strip() for v in value.split(",")]
             else:
@@ -883,8 +881,7 @@ class Metadata(object):
                 m = pattern.match(value)
                 if not m:
                     raise MetadataInvalidError(
-                        "'%s' is an invalid value for "
-                        "the '%s' property" % (value, key)
+                        "'%s' is an invalid value for " "the '%s' property" % (value, key)
                     )
 
     def __setattr__(self, key, value):

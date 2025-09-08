@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11S_mitigation_suggestion_engine_READY.py
 Description: Recommends action plans when risks are detected
 Phase 11 - Module S (Risk Scoring & Decision Logic)

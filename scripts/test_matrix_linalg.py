@@ -33,9 +33,7 @@ CASES += apply_tag(
             np.empty((0, 1), dtype=np.double).view(np.matrix),
             tags={"size-0"},
         ),
-        LinalgCase(
-            "matrix_b_only", np.array([[1.0, 2.0], [3.0, 4.0]]), np.matrix([2.0, 1.0]).T
-        ),
+        LinalgCase("matrix_b_only", np.array([[1.0, 2.0], [3.0, 4.0]]), np.matrix([2.0, 1.0]).T),
         LinalgCase(
             "matrix_a_and_b",
             np.matrix([[1.0, 2.0], [3.0, 4.0]]),

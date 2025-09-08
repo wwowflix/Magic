@@ -134,18 +134,14 @@ class Select:
             for candidate in candidates:
                 if text == candidate.text:
                     if not self._has_css_property_and_visible(candidate):
-                        raise NoSuchElementException(
-                            f"Invisible option with text: {text}"
-                        )
+                        raise NoSuchElementException(f"Invisible option with text: {text}")
                     self._set_selected(candidate)
                     if not self.is_multiple:
                         return
                     matched = True
 
         if not matched:
-            raise NoSuchElementException(
-                f"Could not locate element with visible text: {text}"
-            )
+            raise NoSuchElementException(f"Could not locate element with visible text: {text}")
 
     def deselect_all(self) -> None:
         """Clear all selected entries.
@@ -155,9 +151,7 @@ class Select:
         multiple selections
         """
         if not self.is_multiple:
-            raise NotImplementedError(
-                "You may only deselect all options of a multi-select"
-            )
+            raise NotImplementedError("You may only deselect all options of a multi-select")
         for opt in self.options:
             self._unset_selected(opt)
 
@@ -181,9 +175,7 @@ class Select:
             self._unset_selected(opt)
             matched = True
         if not matched:
-            raise NoSuchElementException(
-                f"Could not locate element with value: {value}"
-            )
+            raise NoSuchElementException(f"Could not locate element with value: {value}")
 
     def deselect_by_index(self, index: int) -> None:
         """Deselect the option at the given index. This is done by examining
@@ -222,9 +214,7 @@ class Select:
             self._unset_selected(opt)
             matched = True
         if not matched:
-            raise NoSuchElementException(
-                f"Could not locate element with visible text: {text}"
-            )
+            raise NoSuchElementException(f"Could not locate element with visible text: {text}")
 
     def _set_selected(self, option) -> None:
         if not option.is_selected():

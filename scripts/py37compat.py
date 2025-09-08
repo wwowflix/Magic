@@ -24,8 +24,6 @@ def compose(f1, f2):
 
 pythonlib = (
     compose(list, _pythonlib_compat)
-    if sys.version_info < (3, 8)
-    and sys.platform != "darwin"
-    and sys.platform[:3] != "aix"
+    if sys.version_info < (3, 8) and sys.platform != "darwin" and sys.platform[:3] != "aix"
     else list
 )

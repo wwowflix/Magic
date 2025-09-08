@@ -12,8 +12,7 @@ try:
     import cssselect as external_cssselect
 except ImportError:
     raise ImportError(
-        "cssselect does not seem to be installed. "
-        "See https://pypi.org/project/cssselect/"
+        "cssselect does not seem to be installed. " "See https://pypi.org/project/cssselect/"
     )
 
 
@@ -35,8 +34,7 @@ class LxmlTranslator(external_cssselect.GenericTranslator):
         # http://www.w3.org/TR/2001/CR-css3-selectors-20011113/#content-selectors
         if function.argument_types() not in (["STRING"], ["IDENT"]):
             raise ExpressionError(
-                "Expected a single string or ident for :contains(), got %r"
-                % function.arguments
+                "Expected a single string or ident for :contains(), got %r" % function.arguments
             )
         value = function.arguments[0].value
         return xpath.add_condition(

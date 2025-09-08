@@ -1,4 +1,4 @@
-ï¿import os
+import os
 import time
 
 TRIGGER_FOLDER = "D:/MAGIC/inbox"

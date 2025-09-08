@@ -66,9 +66,7 @@ async def wait_kevent(
     <https://github.com/python-trio/trio/issues/26>`__.
     """
     try:
-        return await GLOBAL_RUN_CONTEXT.runner.io_manager.wait_kevent(
-            ident, filter, abort_func
-        )
+        return await GLOBAL_RUN_CONTEXT.runner.io_manager.wait_kevent(ident, filter, abort_func)
     except AttributeError:
         raise RuntimeError("must be called from async context") from None
 
@@ -130,7 +128,7 @@ def notify_closing(fd: int | _HasFileNo) -> None:
     calls on the given object to immediately wake up and raise
     `~trio.ClosedResourceError`.
 
-    This doesn't actually close the object – you still have to do that
+    This doesn't actually close the object â€" you still have to do that
     yourself afterwards. Also, you want to be careful to make sure no
     new tasks start waiting on the object in between when you call this
     and when it's actually closed. So to close something properly, you

@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print(
         "âœ… [11D_orchestration_consistency_check_READY.py] executed successfully (stub mode)."
     )

@@ -101,8 +101,7 @@ class TestArrayFromScalar:
         elif isinstance(arg, tuple):
             if t1 is np.clongdouble:
                 pytest.xfail(
-                    "creating a clongdouble from real and "
-                    "imaginary parts isn't supported"
+                    "creating a clongdouble from real and " "imaginary parts isn't supported"
                 )
             x = t1(*arg)
         else:

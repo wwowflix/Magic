@@ -1,4 +1,4 @@
-ï¿"""Monitors agent speed, CPU, memory use"""
+"""Monitors agent speed, CPU, memory use"""
 
 
 def main():

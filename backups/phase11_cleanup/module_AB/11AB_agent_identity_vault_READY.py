@@ -1,4 +1,4 @@
-ï¿"""Stores and manages identity metadata for all agents"""
+"""Stores and manages identity metadata for all agents"""
 
 
 def main():

@@ -183,9 +183,7 @@ if sys.version_info[:2] >= (3, 7):
             return test
 
         else:
-            raise AttributeError(
-                "module {!r} has no attribute " "{!r}".format(__name__, attr)
-            )
+            raise AttributeError("module {!r} has no attribute " "{!r}".format(__name__, attr))
 
     def __dir__():
         return list(globals().keys() | {"f2py_testing", "test"})

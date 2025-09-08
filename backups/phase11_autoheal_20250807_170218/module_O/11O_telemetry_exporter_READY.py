@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11O_telemetry_exporter_READY.py] executed successfully (stub mode).")
 
 

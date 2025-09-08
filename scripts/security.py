@@ -174,9 +174,7 @@ class CertificateSecurityState:
             ),
             mac=str(json["mac"]) if "mac" in json else None,
             certificate_network_error=(
-                str(json["certificateNetworkError"])
-                if "certificateNetworkError" in json
-                else None
+                str(json["certificateNetworkError"]) if "certificateNetworkError" in json else None
             ),
         )
 
@@ -255,9 +253,7 @@ class VisibleSecurityState:
                 else None
             ),
             safety_tip_info=(
-                SafetyTipInfo.from_json(json["safetyTipInfo"])
-                if "safetyTipInfo" in json
-                else None
+                SafetyTipInfo.from_json(json["safetyTipInfo"]) if "safetyTipInfo" in json else None
             ),
         )
 
@@ -311,9 +307,7 @@ class SecurityStateExplanation:
             mixed_content_type=MixedContentType.from_json(json["mixedContentType"]),
             certificate=[str(i) for i in json["certificate"]],
             recommendations=(
-                [str(i) for i in json["recommendations"]]
-                if "recommendations" in json
-                else None
+                [str(i) for i in json["recommendations"]] if "recommendations" in json else None
             ),
         )
 
@@ -353,9 +347,7 @@ class InsecureContentStatus:
         json["ranContentWithCertErrors"] = self.ran_content_with_cert_errors
         json["displayedContentWithCertErrors"] = self.displayed_content_with_cert_errors
         json["ranInsecureContentStyle"] = self.ran_insecure_content_style.to_json()
-        json["displayedInsecureContentStyle"] = (
-            self.displayed_insecure_content_style.to_json()
-        )
+        json["displayedInsecureContentStyle"] = self.displayed_insecure_content_style.to_json()
         return json
 
     @classmethod
@@ -365,12 +357,8 @@ class InsecureContentStatus:
             displayed_mixed_content=bool(json["displayedMixedContent"]),
             contained_mixed_form=bool(json["containedMixedForm"]),
             ran_content_with_cert_errors=bool(json["ranContentWithCertErrors"]),
-            displayed_content_with_cert_errors=bool(
-                json["displayedContentWithCertErrors"]
-            ),
-            ran_insecure_content_style=SecurityState.from_json(
-                json["ranInsecureContentStyle"]
-            ),
+            displayed_content_with_cert_errors=bool(json["displayedContentWithCertErrors"]),
+            ran_insecure_content_style=SecurityState.from_json(json["ranInsecureContentStyle"]),
             displayed_insecure_content_style=SecurityState.from_json(
                 json["displayedInsecureContentStyle"]
             ),
@@ -509,9 +497,7 @@ class VisibleSecurityStateChanged:
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> VisibleSecurityStateChanged:
         return cls(
-            visible_security_state=VisibleSecurityState.from_json(
-                json["visibleSecurityState"]
-            )
+            visible_security_state=VisibleSecurityState.from_json(json["visibleSecurityState"])
         )
 
 
@@ -539,11 +525,7 @@ class SecurityStateChanged:
         return cls(
             security_state=SecurityState.from_json(json["securityState"]),
             scheme_is_cryptographic=bool(json["schemeIsCryptographic"]),
-            explanations=[
-                SecurityStateExplanation.from_json(i) for i in json["explanations"]
-            ],
-            insecure_content_status=InsecureContentStatus.from_json(
-                json["insecureContentStatus"]
-            ),
+            explanations=[SecurityStateExplanation.from_json(i) for i in json["explanations"]],
+            insecure_content_status=InsecureContentStatus.from_json(json["insecureContentStatus"]),
             summary=str(json["summary"]) if "summary" in json else None,
         )

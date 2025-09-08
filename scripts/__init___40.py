@@ -337,8 +337,7 @@ class FCompiler(CCompiler):
         def verify_command_form(name, value):
             if value is not None and not is_sequence_of_strings(value):
                 raise ValueError(
-                    "%s value %r is invalid in class %s"
-                    % (name, value, self.__class__.__name__)
+                    "%s value %r is invalid in class %s" % (name, value, self.__class__.__name__)
                 )
 
         def set_exe(exe_key, f77=None, f90=None):
@@ -629,8 +628,7 @@ class FCompiler(CCompiler):
             compiler = self.compiler_f90
             if compiler is None:
                 raise DistutilsExecError(
-                    "f90 not supported by %s needed for %s"
-                    % (self.__class__.__name__, src)
+                    "f90 not supported by %s needed for %s" % (self.__class__.__name__, src)
                 )
             extra_compile_args = self.extra_f90_compile_args or []
         else:
@@ -638,8 +636,7 @@ class FCompiler(CCompiler):
             compiler = self.compiler_fix
             if compiler is None:
                 raise DistutilsExecError(
-                    "f90 (fixed) not supported by %s needed for %s"
-                    % (self.__class__.__name__, src)
+                    "f90 (fixed) not supported by %s needed for %s" % (self.__class__.__name__, src)
                 )
             extra_compile_args = self.extra_f90_compile_args or []
         if self.object_switch[-1] == " ":
@@ -651,22 +648,14 @@ class FCompiler(CCompiler):
         s_args = [self.compile_switch, src]
 
         if extra_compile_args:
-            log.info(
-                "extra %s options: %r" % (flavor[1:], " ".join(extra_compile_args))
-            )
+            log.info("extra %s options: %r" % (flavor[1:], " ".join(extra_compile_args)))
 
         extra_flags = src_flags.get(self.compiler_type, [])
         if extra_flags:
             log.info("using compile options from source: %r" % " ".join(extra_flags))
 
         command = (
-            compiler
-            + cc_args
-            + extra_flags
-            + s_args
-            + o_args
-            + extra_postargs
-            + extra_compile_args
+            compiler + cc_args + extra_flags + s_args + o_args + extra_postargs + extra_compile_args
         )
 
         display = "%s: %s" % (os.path.basename(compiler[0]) + flavor, src)
@@ -938,9 +927,7 @@ def _find_existing_fcompiler(
     for compiler_type in compiler_types:
         v = None
         try:
-            c = new_fcompiler(
-                plat=platform, compiler=compiler_type, c_compiler=c_compiler
-            )
+            c = new_fcompiler(plat=platform, compiler=compiler_type, c_compiler=c_compiler)
             c.customize(dist)
             v = c.get_version()
             if requiref90 and c.compiler_f90 is None:
@@ -951,17 +938,14 @@ def _find_existing_fcompiler(
                         "Trying %r compiler as suggested by %r "
                         "compiler for f90 support." % (compiler_type, new_compiler)
                     )
-                    c = new_fcompiler(
-                        plat=platform, compiler=new_compiler, c_compiler=c_compiler
-                    )
+                    c = new_fcompiler(plat=platform, compiler=new_compiler, c_compiler=c_compiler)
                     c.customize(dist)
                     v = c.get_version()
                     if v is not None:
                         compiler_type = new_compiler
             if requiref90 and c.compiler_f90 is None:
                 raise ValueError(
-                    "%s does not support compiling f90 codes, "
-                    "skipping." % (c.__class__.__name__)
+                    "%s does not support compiling f90 codes, " "skipping." % (c.__class__.__name__)
                 )
         except DistutilsModuleError:
             log.debug(
@@ -969,9 +953,7 @@ def _find_existing_fcompiler(
                 compiler_type,
             )
         except CompilerNotFound:
-            log.debug(
-                "_find_existing_fcompiler: compiler_type='%s' not found", compiler_type
-            )
+            log.debug("_find_existing_fcompiler: compiler_type='%s' not found", compiler_type)
         if v is not None:
             return compiler_type
     return None
@@ -993,9 +975,7 @@ def available_fcompilers_for_platform(osname=None, platform=None):
     return matching_compiler_types
 
 
-def get_default_fcompiler(
-    osname=None, platform=None, requiref90=False, c_compiler=None
-):
+def get_default_fcompiler(osname=None, platform=None, requiref90=False, c_compiler=None):
     """Determine the default Fortran compiler to use for the given
     platform."""
     matching_compiler_types = available_fcompilers_for_platform(osname, platform)
@@ -1035,9 +1015,7 @@ def new_fcompiler(
     if plat is None:
         plat = os.name
     if compiler is None:
-        compiler = get_default_fcompiler(
-            plat, requiref90=requiref90, c_compiler=c_compiler
-        )
+        compiler = get_default_fcompiler(plat, requiref90=requiref90, c_compiler=c_compiler)
     if compiler in fcompiler_class:
         module_name, klass, long_description = fcompiler_class[compiler]
     elif compiler in fcompiler_aliases:
@@ -1046,9 +1024,7 @@ def new_fcompiler(
         msg = "don't know how to compile Fortran code on platform '%s'" % plat
         if compiler is not None:
             msg = msg + " with '%s' compiler." % compiler
-            msg = msg + " Supported compilers are: %s)" % (
-                ",".join(fcompiler_class.keys())
-            )
+            msg = msg + " Supported compilers are: %s)" % (",".join(fcompiler_class.keys()))
         log.warn(msg)
         failed_fcompilers.add(fcompiler_key)
         return None
@@ -1094,9 +1070,7 @@ def show_fcompilers(dist=None):
             log.debug(repr(e))
 
         if v is None:
-            compilers_na.append(
-                ("fcompiler=" + compiler, None, fcompiler_class[compiler][2])
-            )
+            compilers_na.append(("fcompiler=" + compiler, None, fcompiler_class[compiler][2]))
         else:
             c.dump_properties()
             compilers.append(
@@ -1108,9 +1082,7 @@ def show_fcompilers(dist=None):
             )
 
     compilers_ni = list(set(fcompiler_class.keys()) - set(platform_compilers))
-    compilers_ni = [
-        ("fcompiler=" + fc, None, fcompiler_class[fc][2]) for fc in compilers_ni
-    ]
+    compilers_ni = [("fcompiler=" + fc, None, fcompiler_class[fc][2]) for fc in compilers_ni]
 
     compilers.sort()
     compilers_na.sort()
@@ -1118,9 +1090,7 @@ def show_fcompilers(dist=None):
     pretty_printer = FancyGetopt(compilers)
     pretty_printer.print_help("Fortran compilers found:")
     pretty_printer = FancyGetopt(compilers_na)
-    pretty_printer.print_help(
-        "Compilers available for this " "platform, but not found:"
-    )
+    pretty_printer.print_help("Compilers available for this " "platform, but not found:")
     if compilers_ni:
         pretty_printer = FancyGetopt(compilers_ni)
         pretty_printer.print_help("Compilers not available on this platform:")
@@ -1171,9 +1141,7 @@ def has_f90_header(src):
     return _has_f90_header(line) or _has_fix_header(line)
 
 
-_f77flags_re = re.compile(
-    r"(c|)f77flags\s*\(\s*(?P<fcname>\w+)\s*\)\s*=\s*(?P<fflags>.*)", re.I
-)
+_f77flags_re = re.compile(r"(c|)f77flags\s*\(\s*(?P<fcname>\w+)\s*\)\s*=\s*(?P<fflags>.*)", re.I)
 
 
 def get_f77flags(src):

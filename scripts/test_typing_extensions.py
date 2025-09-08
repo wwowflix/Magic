@@ -31,6 +31,4 @@ def test_no_typing_extensions() -> None:
     """
     p = subprocess.run([sys.executable, "-c", CODE], capture_output=True)
     if p.returncode:
-        raise AssertionError(
-            f"Non-zero return code: {p.returncode!r}\n\n{p.stderr.decode()}"
-        )
+        raise AssertionError(f"Non-zero return code: {p.returncode!r}\n\n{p.stderr.decode()}")

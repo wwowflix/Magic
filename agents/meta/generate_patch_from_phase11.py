@@ -1,4 +1,4 @@
-﻿import os
+import os
 import csv
 
 PHASE_DIR = "scripts/phase11"

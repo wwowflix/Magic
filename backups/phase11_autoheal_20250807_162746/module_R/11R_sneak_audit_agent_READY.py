@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11R_sneak_audit_agent_READY.py] executed successfully (stub mode).")
 
 

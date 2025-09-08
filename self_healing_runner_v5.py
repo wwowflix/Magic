@@ -1,13 +1,13 @@
-from concurrent.futures import ProcessPoolExecutor
-
 # self_healing_runner_v5.py
 from __future__ import annotations
+
 import argparse
 import json
 import os
-import sys
 import subprocess
+import sys
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -114,18 +114,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         description="Patch 2: Normalize + filter manifest entries with diagnostics"
     )
     ap.add_argument("--manifest", required=True, help="Path to phase_manifest.json")
-    ap.add_argument(
-        "--phases", nargs="+", type=int, help="Phases to include (e.g., 11 99)"
-    )
-    ap.add_argument(
-        "--modules", nargs="+", help="Modules to include (e.g., C D E or ZZ)"
-    )
-    ap.add_argument(
-        "--list", action="store_true", help="Print selected entries and exit"
-    )
-    ap.add_argument(
-        "--dry-run", action="store_true", help="Do not execute, only report"
-    )
+    ap.add_argument("--phases", nargs="+", type=int, help="Phases to include (e.g., 11 99)")
+    ap.add_argument("--modules", nargs="+", help="Modules to include (e.g., C D E or ZZ)")
+    ap.add_argument("--list", action="store_true", help="Print selected entries and exit")
+    ap.add_argument("--dry-run", action="store_true", help="Do not execute, only report")
     ap.add_argument(
         "--summary-dir",
         default=os.path.join(ROOT, "outputs", "summaries"),
@@ -202,8 +194,8 @@ except Exception:
 # Week11: AI remediation stub (logs a suggestion)
 def apply_remediation_ai(error_msg: str, script_path: Optional[str] = None) -> bool:
     try:
-        import os
         import json
+        import os
 
         os.makedirs("outputs/ai", exist_ok=True)
         with open("outputs/ai/suggestion.json", "w", encoding="utf-8") as f:

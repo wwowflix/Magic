@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11M_api_abuse_detector_READY.py] executed successfully (stub mode).")
 
 

@@ -24,9 +24,7 @@ reveal_type(nd.astype("float"))  # E: numpy.ndarray[Any, numpy.dtype[Any]]
 reveal_type(nd.astype(float))  # E: numpy.ndarray[Any, numpy.dtype[Any]]
 reveal_type(nd.astype(np.float64))  # E: numpy.ndarray[Any, numpy.dtype[{float64}]]
 reveal_type(nd.astype(np.float64, "K"))  # E: numpy.ndarray[Any, numpy.dtype[{float64}]]
-reveal_type(
-    nd.astype(np.float64, "K", "unsafe")
-)  # E: numpy.ndarray[Any, numpy.dtype[{float64}]]
+reveal_type(nd.astype(np.float64, "K", "unsafe"))  # E: numpy.ndarray[Any, numpy.dtype[{float64}]]
 reveal_type(
     nd.astype(np.float64, "K", "unsafe", True)
 )  # E: numpy.ndarray[Any, numpy.dtype[{float64}]]

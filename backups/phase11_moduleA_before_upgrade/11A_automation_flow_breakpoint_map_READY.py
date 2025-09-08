@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print(
         "âœ… [11A_automation_flow_breakpoint_map_READY.py] executed successfully (stub mode)."
     )

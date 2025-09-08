@@ -694,7 +694,7 @@ class FFI(object):
             extradir=tmpdir,
             source_extension=source_extension,
             call_c_compiler=False,
-            **kwds
+            **kwds,
         )
         if verbose:
             if updated:
@@ -722,7 +722,7 @@ class FFI(object):
             c_file=filename,
             call_c_compiler=False,
             uses_ffiplatform=False,
-            **kwds
+            **kwds,
         )
 
     def emit_python_code(self, filename):
@@ -744,7 +744,7 @@ class FFI(object):
             c_file=filename,
             call_c_compiler=False,
             uses_ffiplatform=False,
-            **kwds
+            **kwds,
         )
 
     def compile(self, tmpdir=".", verbose=0, target=None, debug=None):
@@ -772,7 +772,7 @@ class FFI(object):
             source_extension=source_extension,
             compiler_verbose=verbose,
             debug=debug,
-            **kwds
+            **kwds,
         )
 
     def init_once(self, func, tag):

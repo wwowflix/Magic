@@ -1,4 +1,4 @@
-ï¿"""Scans for dead jobs and retries intelligently"""
+"""Scans for dead jobs and retries intelligently"""
 
 
 def main():

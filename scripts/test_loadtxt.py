@@ -19,14 +19,9 @@ from numpy.testing import HAS_REFCOUNT, IS_PYPY, assert_array_equal
 def test_scientific_notation():
     """Test that both 'e' and 'E' are parsed correctly."""
     data = StringIO(
-        "1.0e-1,2.0E1,3.0\n"
-        "4.0e-2,5.0E-1,6.0\n"
-        "7.0e-3,8.0E1,9.0\n"
-        "0.0e-4,1.0E-1,2.0"
+        "1.0e-1,2.0E1,3.0\n" "4.0e-2,5.0E-1,6.0\n" "7.0e-3,8.0E1,9.0\n" "0.0e-4,1.0E-1,2.0"
     )
-    expected = np.array(
-        [[0.1, 20.0, 3.0], [0.04, 0.5, 6], [0.007, 80.0, 9], [0, 0.1, 2]]
-    )
+    expected = np.array([[0.1, 20.0, 3.0], [0.04, 0.5, 6], [0.007, 80.0, 9], [0, 0.1, 2]])
     assert_array_equal(np.loadtxt(data, delimiter=","), expected)
 
 
@@ -52,9 +47,7 @@ def mixed_types_structured():
         "5001;4.4;epsilon;-99\n"
         "6543;7.8;omega;-1\n"
     )
-    dtype = np.dtype(
-        [("f0", np.uint16), ("f1", np.float64), ("f2", "S7"), ("f3", np.int8)]
-    )
+    dtype = np.dtype([("f0", np.uint16), ("f1", np.float64), ("f2", "S7"), ("f3", np.int8)])
     expected = np.array(
         [
             (1000, 2.4, "alpha", -34),
@@ -165,16 +158,13 @@ def test_bad_ndmin(badval):
         " ",  # space
         "\t",  # tab
         "\u2003",  # em
-        "\u00a0",  # non-break
+        "\ ",  # non-break
         "\u3000",  # ideographic space
     ),
 )
 def test_blank_lines_spaces_delimit(ws):
     txt = StringIO(
-        f"1 2{ws}30\n\n{ws}\n"
-        f"4 5 60{ws}\n  {ws}  \n"
-        f"7 8 {ws} 90\n  # comment\n"
-        f"3 2 1"
+        f"1 2{ws}30\n\n{ws}\n" f"4 5 60{ws}\n  {ws}  \n" f"7 8 {ws} 90\n  # comment\n" f"3 2 1"
     )
     # NOTE: It is unclear that the `  # comment` should succeed. Except
     #       for delimiter=None, which should use any whitespace (and maybe
@@ -242,9 +232,7 @@ def test_converters_negative_indices_with_usecols():
 
 def test_ragged_error():
     rows = ["1,2,3", "1,2,3", "4,3,2,1"]
-    with pytest.raises(
-        ValueError, match="the number of columns changed from 3 to 4 at row 3"
-    ):
+    with pytest.raises(ValueError, match="the number of columns changed from 3 to 4 at row 3"):
         np.loadtxt(rows, delimiter=",")
 
 
@@ -256,9 +244,7 @@ def test_ragged_usecols():
     assert_equal(res, expected)
 
     txt = StringIO("0,0,XXX\n0\n0,XXX,XXX,0,XXX\n")
-    with pytest.raises(
-        ValueError, match="invalid column index -2 at row 2 with 1 columns"
-    ):
+    with pytest.raises(ValueError, match="invalid column index -2 at row 2 with 1 columns"):
         # There is no -2 column in the second row:
         np.loadtxt(txt, dtype=float, delimiter=",", usecols=[0, -2])
 
@@ -270,8 +256,8 @@ def test_empty_usecols():
     assert res.dtype == np.dtype([])
 
 
-@pytest.mark.parametrize("c1", ["a", "の", "🫕"])
-@pytest.mark.parametrize("c2", ["a", "の", "🫕"])
+@pytest.mark.parametrize("c1", ["a", "�", "🫕"])
+@pytest.mark.parametrize("c2", ["a", "�", "🫕"])
 def test_large_unicode_characters(c1, c2):
     # c1 and c2 span ascii, 16bit and 32bit range.
     txt = StringIO(f"a,{c1},c,1.0\ne,{c2},2.0,g")
@@ -285,10 +271,8 @@ def test_large_unicode_characters(c1, c2):
 def test_unicode_with_converter():
     txt = StringIO("cat,dog\nαβγ,δεζ\nabc,def\n")
     conv = {0: lambda s: s.upper()}
-    res = np.loadtxt(
-        txt, dtype=np.dtype("U12"), converters=conv, delimiter=",", encoding=None
-    )
-    expected = np.array([["CAT", "dog"], ["ΑΒΓ", "δεζ"], ["ABC", "def"]])
+    res = np.loadtxt(txt, dtype=np.dtype("U12"), converters=conv, delimiter=",", encoding=None)
+    expected = np.array([["CAT", "dog"], ["�'�'�"", "δεζ"], ["ABC", "def"]])
     assert_equal(res, expected)
 
 
@@ -297,9 +281,7 @@ def test_converter_with_structured_dtype():
     dt = np.dtype([("m", np.int32), ("r", np.float32), ("code", "U8")])
     conv = {0: lambda s: int(10 * float(s)), -1: lambda s: s.upper()}
     res = np.loadtxt(txt, dtype=dt, delimiter=",", converters=conv)
-    expected = np.array(
-        [(15, 2.5, "ABC"), (30, 4.0, "DEF"), (55, 6.0, "GHI")], dtype=dt
-    )
+    expected = np.array([(15, 2.5, "ABC"), (30, 4.0, "DEF"), (55, 6.0, "GHI")], dtype=dt)
     assert_equal(res, expected)
 
 
@@ -314,9 +296,7 @@ def test_converter_with_unicode_dtype():
     """
     txt = StringIO("abc,def\nrst,xyz")
     conv = bytes.upper
-    res = np.loadtxt(
-        txt, dtype=np.dtype("U3"), converters=conv, delimiter=",", encoding="bytes"
-    )
+    res = np.loadtxt(txt, dtype=np.dtype("U3"), converters=conv, delimiter=",", encoding="bytes")
     expected = np.array([["ABC", "DEF"], ["RST", "XYZ"]])
     assert_equal(res, expected)
 
@@ -353,9 +333,7 @@ def test_string_no_length_given(given_dtype, expected_dtype):
     """
     txt = StringIO("AAA,5-1\nBBBBB,0-3\nC,4-9\n")
     res = np.loadtxt(txt, dtype=given_dtype, delimiter=",")
-    expected = np.array(
-        [["AAA", "5-1"], ["BBBBB", "0-3"], ["C", "4-9"]], dtype=expected_dtype
-    )
+    expected = np.array([["AAA", "5-1"], ["BBBBB", "0-3"], ["C", "4-9"]], dtype=expected_dtype)
     assert_equal(res, expected)
     assert_equal(res.dtype, expected_dtype)
 
@@ -487,7 +465,7 @@ def test_object_cleanup_on_read_error():
 )
 def test_character_not_bytes_compatible():
     """Test exception when a character cannot be encoded as 'S'."""
-    data = StringIO("–")  # == \u2013
+    data = StringIO("�"")  # == \u2013
     with pytest.raises(ValueError):
         np.loadtxt(data, dtype="S5")
 
@@ -521,9 +499,7 @@ def test_converters_dict_raises_non_col_key(bad_col_ind):
 
 
 def test_converters_dict_raises_val_not_callable():
-    with pytest.raises(
-        TypeError, match="values of the converters dictionary must be callable"
-    ):
+    with pytest.raises(TypeError, match="values of the converters dictionary must be callable"):
         np.loadtxt(StringIO("1 2\n3 4"), converters={0: 1})
 
 
@@ -531,9 +507,7 @@ def test_converters_dict_raises_val_not_callable():
 def test_quoted_field(q):
     txt = StringIO(f"{q}alpha, x{q}, 2.5\n{q}beta, y{q}, 4.5\n{q}gamma, z{q}, 5.0\n")
     dtype = np.dtype([("f0", "U8"), ("f1", np.float64)])
-    expected = np.array(
-        [("alpha, x", 2.5), ("beta, y", 4.5), ("gamma, z", 5.0)], dtype=dtype
-    )
+    expected = np.array([("alpha, x", 2.5), ("beta, y", 4.5), ("gamma, z", 5.0)], dtype=dtype)
 
     res = np.loadtxt(txt, dtype=dtype, delimiter=",", quotechar=q)
     assert_array_equal(res, expected)
@@ -543,9 +517,7 @@ def test_quoted_field(q):
 def test_quoted_field_with_whitepace_delimiter(q):
     txt = StringIO(f"{q}alpha, x{q}     2.5\n{q}beta, y{q} 4.5\n{q}gamma, z{q}   5.0\n")
     dtype = np.dtype([("f0", "U8"), ("f1", np.float64)])
-    expected = np.array(
-        [("alpha, x", 2.5), ("beta, y", 4.5), ("gamma, z", 5.0)], dtype=dtype
-    )
+    expected = np.array([("alpha, x", 2.5), ("beta, y", 4.5), ("gamma, z", 5.0)], dtype=dtype)
 
     res = np.loadtxt(txt, dtype=dtype, delimiter=None, quotechar=q)
     assert_array_equal(res, expected)
@@ -556,9 +528,7 @@ def test_quote_support_default():
     txt = StringIO('"lat,long", 45, 30\n')
     dtype = np.dtype([("f0", "U24"), ("f1", np.float64), ("f2", np.float64)])
 
-    with pytest.raises(
-        ValueError, match="the dtype passed requires 3 columns but 4 were"
-    ):
+    with pytest.raises(ValueError, match="the dtype passed requires 3 columns but 4 were"):
         np.loadtxt(txt, dtype=dtype, delimiter=",")
 
     # Enable quoting support with non-None value for quotechar param
@@ -583,8 +553,7 @@ def test_quotechar_multichar_error():
 def test_comment_multichar_error_with_quote():
     txt = StringIO("1,2\n3,4")
     msg = (
-        "when multiple comments or a multi-character comment is given, "
-        "quotes are not supported."
+        "when multiple comments or a multi-character comment is given, " "quotes are not supported."
     )
     with pytest.raises(ValueError, match=msg):
         np.loadtxt(txt, delimiter=",", comments="123", quotechar='"')
@@ -605,9 +574,7 @@ def test_structured_dtype_with_quotes():
         "5001;4.4;'epsilon';-99\n"
         "6543;7.8;'omega';-1\n"
     )
-    dtype = np.dtype(
-        [("f0", np.uint16), ("f1", np.float64), ("f2", "S7"), ("f3", np.int8)]
-    )
+    dtype = np.dtype([("f0", np.uint16), ("f1", np.float64), ("f2", "S7"), ("f3", np.int8)])
     expected = np.array(
         [
             (1000, 2.4, "alpha", -34),
@@ -891,18 +858,14 @@ class TestCReaderUnitTests:
             )
 
     def test_not_an_iter(self):
-        with pytest.raises(
-            TypeError, match="error reading from object, expected an iterable"
-        ):
+        with pytest.raises(TypeError, match="error reading from object, expected an iterable"):
             np._core._multiarray_umath._load_from_filelike(
                 object(), dtype=np.dtype("i"), filelike=False
             )
 
     def test_bad_type(self):
         with pytest.raises(TypeError, match="internal error: dtype must"):
-            np._core._multiarray_umath._load_from_filelike(
-                object(), dtype="i", filelike=False
-            )
+            np._core._multiarray_umath._load_from_filelike(object(), dtype="i", filelike=False)
 
     def test_bad_encoding(self):
         with pytest.raises(TypeError, match="encoding must be a unicode"):
@@ -946,9 +909,7 @@ def test_comment_quotechar_collision_raises():
 
 
 def test_delimiter_and_multiple_comments_collision_raises():
-    with pytest.raises(
-        TypeError, match="Comment characters.*cannot include the delimiter"
-    ):
+    with pytest.raises(TypeError, match="Comment characters.*cannot include the delimiter"):
         np.loadtxt(StringIO("1, 2, 3"), delimiter=",", comments=["#", ","])
 
 
@@ -958,7 +919,7 @@ def test_delimiter_and_multiple_comments_collision_raises():
         " ",  # space
         "\t",  # tab
         "\u2003",  # em
-        "\u00a0",  # non-break
+        "\ ",  # non-break
         "\u3000",  # ideographic space
     ),
 )
@@ -989,9 +950,7 @@ def test_control_character_newline_raises(nl):
     ],
 )
 @pytest.mark.parametrize("nrows", (10, 50000, 60000))  # lt, eq, gt chunksize
-def test_parametric_unit_discovery(
-    generic_data, long_datum, unitless_dtype, expected_dtype, nrows
-):
+def test_parametric_unit_discovery(generic_data, long_datum, unitless_dtype, expected_dtype, nrows):
     """Check that the correct unit (e.g. month, day, second) is discovered from
     the data when a user specifies a unitless datetime."""
     # Unit should be "D" (days) due to last entry

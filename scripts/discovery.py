@@ -8,32 +8,32 @@ For the purposes of this module, the following nomenclature is used:
   distribution when packaging the project. Example::
 
     .
-    â”œâ”€â”€ tox.ini
-    â”œâ”€â”€ pyproject.toml
-    â””â”€â”€ src/
-        â””â”€â”€ mypkg/
-            â”œâ”€â”€ __init__.py
-            â”œâ”€â”€ mymodule.py
-            â””â”€â”€ my_data_file.txt
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ tox.ini
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ pyproject.toml
+    Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ src/
+        Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ mypkg/
+            Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ __init__.py
+            Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ mymodule.py
+            Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ my_data_file.txt
 
 - "flat-layout": a Python project that does not use "src-layout" but instead
   have a directory under the project root for each package::
 
     .
-    â”œâ”€â”€ tox.ini
-    â”œâ”€â”€ pyproject.toml
-    â””â”€â”€ mypkg/
-        â”œâ”€â”€ __init__.py
-        â”œâ”€â”€ mymodule.py
-        â””â”€â”€ my_data_file.txt
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ tox.ini
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ pyproject.toml
+    Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ mypkg/
+        Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ __init__.py
+        Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ mymodule.py
+        Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ my_data_file.txt
 
 - "single-module": a project that contains a single Python script direct under
   the project root (no directory used)::
 
     .
-    â”œâ”€â”€ tox.ini
-    â”œâ”€â”€ pyproject.toml
-    â””â”€â”€ mymodule.py
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ tox.ini
+    Ã¢â€Å"Ã¢â€â‚¬Ã¢â€â‚¬ pyproject.toml
+    Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ mymodule.py
 
 """
 

@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11J_load_spike_simulator_READY.py
 Description: Simulates CPU and traffic spikes to test system handling
 Phase 11 - Module J (Chaos Engineering & Stress Simulation)

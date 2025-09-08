@@ -49,9 +49,7 @@ class Trending:
             )
 
             if resp is None:
-                raise InvalidResponseException(
-                    resp, "TikTok returned an invalid response."
-                )
+                raise InvalidResponseException(resp, "TikTok returned an invalid response.")
 
             for video in resp.get("itemList", []):
                 yield Trending.parent.video(data=video)

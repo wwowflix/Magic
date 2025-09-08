@@ -279,9 +279,7 @@ class NameValidator:
     defaultexcludelist = ["return", "file", "print"]
     defaultdeletechars = set(r"""~!@#$%^&*()-=+~\|]}[{';: /?.>,<""")
 
-    def __init__(
-        self, excludelist=None, deletechars=None, case_sensitive=None, replace_space="_"
-    ):
+    def __init__(self, excludelist=None, deletechars=None, case_sensitive=None, replace_space="_"):
         # Process the exclusion list ..
         if excludelist is None:
             excludelist = []
@@ -604,9 +602,7 @@ class StringConverter:
 
         raise LookupError
 
-    def __init__(
-        self, dtype_or_func=None, default=None, missing_values=None, locked=False
-    ):
+    def __init__(self, dtype_or_func=None, default=None, missing_values=None, locked=False):
         # Defines a lock for upgrade
         self._locked = bool(locked)
         # No input dtype: minimal initialization
@@ -774,9 +770,7 @@ class StringConverter:
             self._do_upgrade()
             self.iterupgrade(value)
 
-    def update(
-        self, func, default=None, testing_value=None, missing_values="", locked=False
-    ):
+    def update(self, func, default=None, testing_value=None, missing_values="", locked=False):
         """
         Set StringConverter attributes directly.
 
@@ -895,9 +889,7 @@ def easy_dtype(ndtype, names=None, defaultfmt="f%i", **validationargs):
                 ndtype = np.dtype(list(zip(names, formats)))
             # Structured dtype: just validate the names as needed
             else:
-                ndtype.names = validate(
-                    names, nbfields=len(ndtype.names), defaultfmt=defaultfmt
-                )
+                ndtype.names = validate(names, nbfields=len(ndtype.names), defaultfmt=defaultfmt)
         # No implicit names
         elif ndtype.names is not None:
             validate = NameValidator(**validationargs)

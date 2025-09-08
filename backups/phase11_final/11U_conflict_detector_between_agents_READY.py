@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11U_conflict_detector_between_agents_READY.py
 Description: Detects conflicting actions or overrides between agents
 Phase 11 - Module U (Multi-Agent Conflict Resolution)

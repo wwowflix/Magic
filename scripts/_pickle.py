@@ -32,9 +32,7 @@ def __generator_ctor(bit_generator_name="MT19937"):
     if bit_generator_name in BitGenerators:
         bit_generator = BitGenerators[bit_generator_name]
     else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
+        raise ValueError(str(bit_generator_name) + " is not a known " "BitGenerator module.")
 
     return Generator(bit_generator())
 
@@ -56,9 +54,7 @@ def __bit_generator_ctor(bit_generator_name="MT19937"):
     if bit_generator_name in BitGenerators:
         bit_generator = BitGenerators[bit_generator_name]
     else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
+        raise ValueError(str(bit_generator_name) + " is not a known " "BitGenerator module.")
 
     return bit_generator()
 
@@ -80,8 +76,6 @@ def __randomstate_ctor(bit_generator_name="MT19937"):
     if bit_generator_name in BitGenerators:
         bit_generator = BitGenerators[bit_generator_name]
     else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
+        raise ValueError(str(bit_generator_name) + " is not a known " "BitGenerator module.")
 
     return RandomState(bit_generator())

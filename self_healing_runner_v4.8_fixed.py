@@ -1,5 +1,5 @@
-import json
 import argparse
+import json
 import subprocess
 
 
@@ -23,9 +23,7 @@ def load_manifest(filename):
 def filter_manifest(manifest, phases, modules):
     filtered = []
     for entry in manifest:
-        print(
-            f"Processing entry: {entry}"
-        )  # Debugging line to show each entry being processed
+        print(f"Processing entry: {entry}")  # Debugging line to show each entry being processed
 
         # If the entry is a string, attempt to parse it as a JSON object
         if isinstance(entry, str):
@@ -37,13 +35,9 @@ def filter_manifest(manifest, phases, modules):
                 continue  # Skip invalid JSON strings
 
         if isinstance(entry, dict):
-            entry_phase = (
-                entry.get("Phase") or entry.get("PhaseNumber") or entry.get("phase")
-            )
+            entry_phase = entry.get("Phase") or entry.get("PhaseNumber") or entry.get("phase")
             entry_module = entry.get("Module") or entry.get("module")
-            print(
-                f"Entry Phase: {entry_phase}, Entry Module: {entry_module}"
-            )  # Debug output
+            print(f"Entry Phase: {entry_phase}, Entry Module: {entry_module}")  # Debug output
 
             if entry_phase in phases and entry_module in modules:
                 filtered.append(entry)
@@ -57,18 +51,10 @@ def filter_manifest(manifest, phases, modules):
 def main():
     # Argument parsing setup
     parser = argparse.ArgumentParser(description="Process a phase manifest.")
-    parser.add_argument(
-        "--manifest", required=True, help="Path to the manifest JSON file"
-    )
-    parser.add_argument(
-        "--phases", required=True, nargs="+", help="List of phases to filter by"
-    )
-    parser.add_argument(
-        "--modules", required=True, nargs="+", help="List of modules to filter by"
-    )
-    parser.add_argument(
-        "--dry-run", action="store_true", help="Dry run without making changes"
-    )
+    parser.add_argument("--manifest", required=True, help="Path to the manifest JSON file")
+    parser.add_argument("--phases", required=True, nargs="+", help="List of phases to filter by")
+    parser.add_argument("--modules", required=True, nargs="+", help="List of modules to filter by")
+    parser.add_argument("--dry-run", action="store_true", help="Dry run without making changes")
 
     args = parser.parse_args()
 

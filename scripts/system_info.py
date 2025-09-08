@@ -282,23 +282,16 @@ class GPUInfo:
             devices=[GPUDevice.from_json(i) for i in json["devices"]],
             driver_bug_workarounds=[str(i) for i in json["driverBugWorkarounds"]],
             video_decoding=[
-                VideoDecodeAcceleratorCapability.from_json(i)
-                for i in json["videoDecoding"]
+                VideoDecodeAcceleratorCapability.from_json(i) for i in json["videoDecoding"]
             ],
             video_encoding=[
-                VideoEncodeAcceleratorCapability.from_json(i)
-                for i in json["videoEncoding"]
+                VideoEncodeAcceleratorCapability.from_json(i) for i in json["videoEncoding"]
             ],
             image_decoding=[
-                ImageDecodeAcceleratorCapability.from_json(i)
-                for i in json["imageDecoding"]
+                ImageDecodeAcceleratorCapability.from_json(i) for i in json["imageDecoding"]
             ],
-            aux_attributes=(
-                dict(json["auxAttributes"]) if "auxAttributes" in json else None
-            ),
-            feature_status=(
-                dict(json["featureStatus"]) if "featureStatus" in json else None
-            ),
+            aux_attributes=(dict(json["auxAttributes"]) if "auxAttributes" in json else None),
+            feature_status=(dict(json["featureStatus"]) if "featureStatus" in json else None),
         )
 
 
@@ -334,9 +327,7 @@ class ProcessInfo:
         )
 
 
-def get_info() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[GPUInfo, str, str, str]]
-):
+def get_info() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[GPUInfo, str, str, str]]:
     """
     Returns information about the system.
 
@@ -378,9 +369,7 @@ def get_feature_state(
     return bool(json["featureEnabled"])
 
 
-def get_process_info() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[ProcessInfo]]
-):
+def get_process_info() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[ProcessInfo]]:
     """
     Returns information about all running processes.
 

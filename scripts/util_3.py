@@ -12,9 +12,7 @@ def _add_method(*clazzes):
                 continue  # Support multiple names of a clazz
             done.append(clazz)
             assert clazz.__name__ != "DefaultTable", "Oops, table class not found."
-            assert not hasattr(
-                clazz, method.__name__
-            ), "Oops, class '%s' has method '%s'." % (
+            assert not hasattr(clazz, method.__name__), "Oops, class '%s' has method '%s'." % (
                 clazz.__name__,
                 method.__name__,
             )

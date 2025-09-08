@@ -100,26 +100,16 @@ class TestRealScalars:
         assert_equal(fsci32("-10.234", precision=0), "-1.e+01")
         assert_equal(fpos32("10.234", precision=2), "10.23")
         assert_equal(fsci32("-10.234", precision=2), "-1.02e+01")
-        assert_equal(
-            fsci64("9.9999999999999995e-08", **preckwd(16)), "9.9999999999999995e-08"
-        )
-        assert_equal(
-            fsci64("9.8813129168249309e-324", **preckwd(16)), "9.8813129168249309e-324"
-        )
-        assert_equal(
-            fsci64("9.9999999999999694e-311", **preckwd(16)), "9.9999999999999694e-311"
-        )
+        assert_equal(fsci64("9.9999999999999995e-08", **preckwd(16)), "9.9999999999999995e-08")
+        assert_equal(fsci64("9.8813129168249309e-324", **preckwd(16)), "9.8813129168249309e-324")
+        assert_equal(fsci64("9.9999999999999694e-311", **preckwd(16)), "9.9999999999999694e-311")
 
         # test rounding
         # 3.1415927410 is closest float32 to np.pi
         assert_equal(fpos32("3.14159265358979323846", **preckwd(10)), "3.1415927410")
-        assert_equal(
-            fsci32("3.14159265358979323846", **preckwd(10)), "3.1415927410e+00"
-        )
+        assert_equal(fsci32("3.14159265358979323846", **preckwd(10)), "3.1415927410e+00")
         assert_equal(fpos64("3.14159265358979323846", **preckwd(10)), "3.1415926536")
-        assert_equal(
-            fsci64("3.14159265358979323846", **preckwd(10)), "3.1415926536e+00"
-        )
+        assert_equal(fsci64("3.14159265358979323846", **preckwd(10)), "3.1415926536e+00")
         # 299792448 is closest float32 to 299792458
         assert_equal(fpos32("299792458.0", **preckwd(5)), "299792448.00000")
         assert_equal(fsci32("299792458.0", **preckwd(5)), "2.99792e+08")
@@ -169,9 +159,7 @@ class TestRealScalars:
 
         # largest numbers
         f32x = np.finfo(np.float32).max
-        assert_equal(
-            fpos32(f32x, **preckwd(0)), "340282346638528859811704183484516925440."
-        )
+        assert_equal(fpos32(f32x, **preckwd(0)), "340282346638528859811704183484516925440.")
         assert_equal(
             fpos64(np.finfo(np.float64).max, **preckwd(0)),
             "1797693134862315708145274237317043567980705675258449965989"
@@ -209,9 +197,7 @@ class TestRealScalars:
             fpos32(f32x, unique=True, fractional=True, min_digits=4, precision=4),
             "340282346638528859811704183484516925440.0000",
         )
-        assert_raises(
-            ValueError, fpos32, f32x, unique=True, fractional=False, precision=0
-        )
+        assert_raises(ValueError, fpos32, f32x, unique=True, fractional=False, precision=0)
         assert_equal(
             fpos32(f32x, unique=True, fractional=False, precision=4),
             "340300000000000000000000000000000000000.",
@@ -266,9 +252,7 @@ class TestRealScalars:
         assert_equal(fsci32("1.5", unique=False, precision=3), "1.500e+00")
         assert_equal(fsci64("1.5", unique=False, precision=3), "1.500e+00")
         # gh-10713
-        assert_equal(
-            fpos64("324", unique=False, precision=5, fractional=False), "324.00"
-        )
+        assert_equal(fpos64("324", unique=False, precision=5, fractional=False), "324.00")
 
     available_float_dtypes = (
         [np.float16, np.float32, np.float64, np.float128]

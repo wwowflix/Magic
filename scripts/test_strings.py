@@ -87,9 +87,7 @@ def test_string_comparisons(op, ufunc, sym, dtypes, aligned):
 
 
 @pytest.mark.parametrize(["op", "ufunc", "sym"], COMPARISONS)
-@pytest.mark.parametrize(
-    "dtypes", [("S2", "S2"), ("S2", "S10"), ("<U1", "<U1"), ("<U1", ">U10")]
-)
+@pytest.mark.parametrize("dtypes", [("S2", "S2"), ("S2", "S10"), ("<U1", "<U1"), ("<U1", ">U10")])
 def test_string_comparisons_empty(op, ufunc, sym, dtypes):
     arr = np.empty((1, 0, 1, 5), dtype=dtypes[0])
     arr2 = np.empty((100, 1, 0, 1), dtype=dtypes[1])
@@ -422,9 +420,7 @@ class TestMethods:
                 30000,
                 id="30000*a+100*b-100*b-0-None-30000",
             ),
-            pytest.param(
-                30000 * "a", 100 * "b", 0, None, -1, id="30000*a-100*b-0-None--1"
-            ),
+            pytest.param(30000 * "a", 100 * "b", 0, None, -1, id="30000*a-100*b-0-None--1"),
             pytest.param(
                 15000 * "a" + 15000 * "b",
                 15000 * "b",
@@ -444,9 +440,7 @@ class TestMethods:
             (["abcdefghiabc", "rrarrrrrrrrra"], ["def", "arr"], [0, 3], None, [3, -1]),
             ("Ae¢☃€ 😊" * 2, "😊", 0, None, 6),
             ("Ae¢☃€ 😊" * 2, "😊", 7, None, 13),
-            pytest.param(
-                "A" * (2**17), r"[\w]+\Z", 0, None, -1, id=r"A*2**17-[\w]+\Z-0-None--1"
-            ),
+            pytest.param("A" * (2**17), r"[\w]+\Z", 0, None, -1, id=r"A*2**17-[\w]+\Z-0-None--1"),
         ],
     )
     def test_find(self, a, sub, start, end, out, dt):
@@ -509,9 +503,7 @@ class TestMethods:
                 1,
                 id="30000*a+100*b-100*b-0-None-1",
             ),
-            pytest.param(
-                30000 * "a", 100 * "b", 0, None, 0, id="30000*a-100*b-0-None-0"
-            ),
+            pytest.param(30000 * "a", 100 * "b", 0, None, 0, id="30000*a-100*b-0-None-0"),
             pytest.param(
                 30000 * "a" + 100 * "ab",
                 "ab",
@@ -1127,9 +1119,7 @@ class TestMethods:
         buf = np.array(["hello", "world"], dtype=dt)
         act = np.strings.slice(buf, *args)
         bcast_args = tuple(np.broadcast_to(arg, buf.shape) for arg in args)
-        res = np.array(
-            [s[slice(*arg)] for s, arg in zip(buf, zip(*bcast_args))], dtype=dt
-        )
+        res = np.array([s[slice(*arg)] for s, arg in zip(buf, zip(*bcast_args))], dtype=dt)
         assert_array_equal(act, res)
 
     def test_slice_unsupported(self, dt):
@@ -1140,9 +1130,7 @@ class TestMethods:
             TypeError,
             match=r"Cannot cast ufunc '_slice' input .* from .* to dtype\('int(64|32)'\)",
         ):
-            np.strings.slice(
-                np.array(["foo", "bar"], dtype=dt), np.array(["foo", "bar"], dtype=dt)
-            )
+            np.strings.slice(np.array(["foo", "bar"], dtype=dt), np.array(["foo", "bar"], dtype=dt))
 
     @pytest.mark.parametrize(
         "int_dt",
@@ -1160,9 +1148,7 @@ class TestMethods:
     def test_slice_int_type_promotion(self, int_dt, dt):
         buf = np.array(["hello", "world"], dtype=dt)
 
-        assert_array_equal(
-            np.strings.slice(buf, int_dt(4)), np.array(["hell", "worl"], dtype=dt)
-        )
+        assert_array_equal(np.strings.slice(buf, int_dt(4)), np.array(["hell", "worl"], dtype=dt))
         assert_array_equal(
             np.strings.slice(buf, np.array([4, 4], dtype=int_dt)),
             np.array(["hell", "worl"], dtype=dt),
@@ -1173,9 +1159,7 @@ class TestMethods:
             np.array(["ll", "rl"], dtype=dt),
         )
         assert_array_equal(
-            np.strings.slice(
-                buf, np.array([2, 2], dtype=int_dt), np.array([4, 4], dtype=int_dt)
-            ),
+            np.strings.slice(buf, np.array([2, 2], dtype=int_dt), np.array([4, 4], dtype=int_dt)),
             np.array(["ll", "rl"], dtype=dt),
         )
 
@@ -1525,9 +1509,7 @@ class TestMethodsWithUnicode:
         buf = np.array(["Приве́т नमस्ते שָׁלוֹם", "😀😃😄😁😆😅🤣😂🙂🙃"], dtype=dt)
         act = np.strings.slice(buf, *args)
         bcast_args = tuple(np.broadcast_to(arg, buf.shape) for arg in args)
-        res = np.array(
-            [s[slice(*arg)] for s, arg in zip(buf, zip(*bcast_args))], dtype=dt
-        )
+        res = np.array([s[slice(*arg)] for s, arg in zip(buf, zip(*bcast_args))], dtype=dt)
         assert_array_equal(act, res)
 
 
@@ -1626,8 +1608,7 @@ class TestReplaceOnArrays:
         assert_array_equal(
             r5,
             np.array(
-                ["01234ABCDE6789" * i for i in range(3)]
-                + ["01234ABCDE6789" + "0123456789" * 2],
+                ["01234ABCDE6789" * i for i in range(3)] + ["01234ABCDE6789" + "0123456789" * 2],
                 dtype=dt,
             ),
         )
@@ -1640,9 +1621,7 @@ class TestReplaceOnArrays:
         r2 = np.strings.replace(a, "0", [["1"], ["2"]], np.arange(1, 4))
         assert_array_equal(
             r2,
-            np.array(
-                [["1,0,0", "1,1,0", "1,1,1"], ["2,0,0", "2,2,0", "2,2,2"]], dtype=dt
-            ),
+            np.array([["1,0,0", "1,1,0", "1,1,1"], ["2,0,0", "2,2,0", "2,2,2"]], dtype=dt),
         )
         r3 = np.strings.replace(a, ["0", "0,0", "0,0,0"], "X")
         assert_array_equal(r3, np.array(["X,X,X", "X,0", "X"], dtype=dt))

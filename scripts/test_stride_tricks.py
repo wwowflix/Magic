@@ -469,17 +469,11 @@ class TestSlidingWindowView:
         arr = 10 * i + j
         with pytest.raises(ValueError, match="cannot contain negative values"):
             sliding_window_view(arr, (-1, 3))
-        with pytest.raises(
-            ValueError, match="must provide window_shape for all dimensions of `x`"
-        ):
+        with pytest.raises(ValueError, match="must provide window_shape for all dimensions of `x`"):
             sliding_window_view(arr, (1,))
-        with pytest.raises(
-            ValueError, match="Must provide matching length window_shape and axis"
-        ):
+        with pytest.raises(ValueError, match="Must provide matching length window_shape and axis"):
             sliding_window_view(arr, (1, 3, 4), axis=(0, 1))
-        with pytest.raises(
-            ValueError, match="window shape cannot be larger than input array"
-        ):
+        with pytest.raises(ValueError, match="window shape cannot be larger than input array"):
             sliding_window_view(arr, (5, 5))
 
     def test_writeable(self):

@@ -252,10 +252,7 @@ class Type:
 class Array:
 
     def __repr__(self):
-        return (
-            f"Array({self.type}, {self.dims}, {self.intent},"
-            f" {self.obj})|arr={self.arr}"
-        )
+        return f"Array({self.type}, {self.dims}, {self.intent}," f" {self.obj})|arr={self.arr}"
 
     def __init__(self, typ, dims, intent, obj):
         self.type = typ
@@ -432,9 +429,7 @@ class TestSharedMemory:
         try:
             a = self.array([2], intent.in_.inout, self.num2seq)
         except TypeError as msg:
-            if not str(msg).startswith(
-                "failed to initialize intent(inout|inplace|cache) array"
-            ):
+            if not str(msg).startswith("failed to initialize intent(inout|inplace|cache) array"):
                 raise
         else:
             raise SystemError("intent(inout) should have failed on sequence")
@@ -468,9 +463,7 @@ class TestSharedMemory:
             assert not a.has_shared_memory()
 
     def test_c_in_from_23seq(self):
-        a = self.array(
-            [len(self.num23seq), len(self.num23seq[0])], intent.in_, self.num23seq
-        )
+        a = self.array([len(self.num23seq), len(self.num23seq[0])], intent.in_, self.num23seq)
         assert not a.has_shared_memory()
 
     def test_in_from_23casttype(self):
@@ -491,9 +484,7 @@ class TestSharedMemory:
     def test_c_in_from_23casttype(self):
         for t in self.type.cast_types():
             obj = np.array(self.num23seq, dtype=t.dtype)
-            a = self.array(
-                [len(self.num23seq), len(self.num23seq[0])], intent.in_.c, obj
-            )
+            a = self.array([len(self.num23seq), len(self.num23seq[0])], intent.in_.c, obj)
             if t.elsize == self.type.elsize:
                 assert a.has_shared_memory()
             else:
@@ -502,17 +493,13 @@ class TestSharedMemory:
     def test_f_copy_in_from_23casttype(self):
         for t in self.type.cast_types():
             obj = np.array(self.num23seq, dtype=t.dtype, order="F")
-            a = self.array(
-                [len(self.num23seq), len(self.num23seq[0])], intent.in_.copy, obj
-            )
+            a = self.array([len(self.num23seq), len(self.num23seq[0])], intent.in_.copy, obj)
             assert not a.has_shared_memory()
 
     def test_c_copy_in_from_23casttype(self):
         for t in self.type.cast_types():
             obj = np.array(self.num23seq, dtype=t.dtype)
-            a = self.array(
-                [len(self.num23seq), len(self.num23seq[0])], intent.in_.c.copy, obj
-            )
+            a = self.array([len(self.num23seq), len(self.num23seq[0])], intent.in_.c.copy, obj)
             assert not a.has_shared_memory()
 
     def test_in_cache_from_2casttype(self):
@@ -540,9 +527,7 @@ class TestSharedMemory:
                 if not str(msg).startswith("failed to initialize intent(cache) array"):
                     raise
             else:
-                raise SystemError(
-                    "intent(cache) should have failed on multisegmented array"
-                )
+                raise SystemError("intent(cache) should have failed on multisegmented array")
 
     def test_in_cache_from_2casttype_failure(self):
         for t in self.type.all_types():
@@ -578,14 +563,10 @@ class TestSharedMemory:
         try:
             a = self.array(shape, intent.cache.hide, None)
         except ValueError as msg:
-            if not str(msg).startswith(
-                "failed to create intent(cache|hide)|optional array"
-            ):
+            if not str(msg).startswith("failed to create intent(cache|hide)|optional array"):
                 raise
         else:
-            raise SystemError(
-                "intent(cache) should have failed on undefined dimensions"
-            )
+            raise SystemError("intent(cache) should have failed on undefined dimensions")
 
     def test_hidden(self):
         shape = (2,)
@@ -609,9 +590,7 @@ class TestSharedMemory:
         try:
             a = self.array(shape, intent.hide, None)
         except ValueError as msg:
-            if not str(msg).startswith(
-                "failed to create intent(cache|hide)|optional array"
-            ):
+            if not str(msg).startswith("failed to create intent(cache|hide)|optional array"):
                 raise
         else:
             raise SystemError("intent(hide) should have failed on undefined dimensions")

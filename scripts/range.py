@@ -152,9 +152,7 @@ class RangeIndex(NumericIndex):
         return cls._simple_new(rng, name=name)
 
     @classmethod
-    def from_range(
-        cls, data: range, name=None, dtype: Dtype | None = None
-    ) -> RangeIndex:
+    def from_range(cls, data: range, name=None, dtype: Dtype | None = None) -> RangeIndex:
         """
         Create RangeIndex from a range object.
 
@@ -321,8 +319,7 @@ class RangeIndex(NumericIndex):
         """
         rng = self._range
         return getsizeof(rng) + sum(
-            getsizeof(getattr(rng, attr_name))
-            for attr_name in ["start", "stop", "step"]
+            getsizeof(getattr(rng, attr_name)) for attr_name in ["start", "stop", "step"]
         )
 
     def memory_usage(self, deep: bool = False) -> int:
@@ -403,9 +400,7 @@ class RangeIndex(NumericIndex):
         tolerance=None,
     ) -> npt.NDArray[np.intp]:
         if com.any_not_none(method, tolerance, limit):
-            return super()._get_indexer(
-                target, method=method, tolerance=tolerance, limit=limit
-            )
+            return super()._get_indexer(target, method=method, tolerance=tolerance, limit=limit)
 
         if self.step > 0:
             start, stop, step = self.start, self.stop, self.step

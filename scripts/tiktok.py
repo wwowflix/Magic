@@ -86,18 +86,14 @@ class TikTokApi:
         self.logger: logging.Logger = logging.getLogger(name)
         self.logger.setLevel(level)
         handler = logging.StreamHandler()
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
     async def __set_session_params(self, session: TikTokPlaywrightSession):
         """Set the session params for a TikTokPlaywrightSession"""
         user_agent = await session.page.evaluate("() => navigator.userAgent")
-        language = await session.page.evaluate(
-            "() => navigator.language || navigator.userLanguage"
-        )
+        language = await session.page.evaluate("() => navigator.language || navigator.userLanguage")
         platform = await session.page.evaluate("() => navigator.platform")
         device_id = str(random.randint(10**18, 10**19 - 1))  # Random device id
         history_len = str(random.randint(1, 10))  # Random history length
@@ -211,9 +207,7 @@ class TikTokApi:
             )
 
             if ms_token is None:
-                await asyncio.sleep(
-                    sleep_after
-                )  # TODO: Find a better way to wait for msToken
+                await asyncio.sleep(sleep_after)  # TODO: Find a better way to wait for msToken
                 cookies = await self.get_session_cookies(session)
                 ms_token = cookies.get("msToken")
                 session.ms_token = ms_token
@@ -516,9 +510,7 @@ class TikTokApi:
         retry_count = 0
         while retry_count < retries:
             retry_count += 1
-            result = await self.run_fetch_script(
-                signed_url, headers=headers, session_index=i
-            )
+            result = await self.run_fetch_script(signed_url, headers=headers, session_index=i)
 
             if result is None:
                 raise Exception("TikTokApi.run_fetch_script returned None")
@@ -539,9 +531,7 @@ class TikTokApi:
                     self.logger.error(f"Failed to decode json response: {result}")
                     raise InvalidJSONException()
 
-                self.logger.info(
-                    f"Failed a request, retrying ({retry_count}/{retries})"
-                )
+                self.logger.info(f"Failed a request, retrying ({retry_count}/{retries})")
                 if exponential_backoff:
                     await asyncio.sleep(2**retry_count)
                 else:

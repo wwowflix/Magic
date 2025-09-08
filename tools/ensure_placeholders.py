@@ -1,13 +1,9 @@
-import os
 import argparse
+import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--phases", required=True, help="Comma-separated phase numbers (e.g., 11)"
-)
-parser.add_argument(
-    "--modules", required=True, help="Comma-separated module letters (e.g., A,B,C)"
-)
+parser.add_argument("--phases", required=True, help="Comma-separated phase numbers (e.g., 11)")
+parser.add_argument("--modules", required=True, help="Comma-separated module letters (e.g., A,B,C)")
 args = parser.parse_args()
 
 base_path = "scripts"

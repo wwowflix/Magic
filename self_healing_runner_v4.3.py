@@ -21,7 +21,7 @@ results = []
 for script in scripts:
     script_path = Path(script)
     log_path = logs_dir / f"{script_path.stem}.log"
-    print(f"â–¶ Running {script}")
+    print(f"â�"¶ Running {script}")
 
     try:
         proc = subprocess.run(
@@ -57,4 +57,4 @@ with open(summary_file, "w", encoding="utf-8") as s:
     for script, status, error in results:
         s.write(f"{script}\t{status}\t{error}\n")
 
-print(f"âœ… Completed {len(results)} scripts. Summary saved to {summary_file}")
+print(f"â�"… Completed {len(results)} scripts. Summary saved to {summary_file}")

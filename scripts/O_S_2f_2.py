@@ -138,9 +138,7 @@ class table_O_S_2f_2(DefaultTable.DefaultTable):
         elif self.version != 0:
             from fontTools import ttLib
 
-            raise ttLib.TTLibError(
-                "unknown format for OS/2 table: version %s" % self.version
-            )
+            raise ttLib.TTLibError("unknown format for OS/2 table: version %s" % self.version)
         if len(data):
             log.warning("too much 'OS/2' table data")
 
@@ -152,18 +150,15 @@ class table_O_S_2f_2(DefaultTable.DefaultTable):
         head = ttFont["head"]
         if (self.fsSelection & 1) and not (head.macStyle & 1 << 1):
             log.warning(
-                "fsSelection bit 0 (italic) and "
-                "head table macStyle bit 1 (italic) should match"
+                "fsSelection bit 0 (italic) and " "head table macStyle bit 1 (italic) should match"
             )
         if (self.fsSelection & 1 << 5) and not (head.macStyle & 1):
             log.warning(
-                "fsSelection bit 5 (bold) and "
-                "head table macStyle bit 0 (bold) should match"
+                "fsSelection bit 5 (bold) and " "head table macStyle bit 0 (bold) should match"
             )
         if (self.fsSelection & 1 << 6) and (self.fsSelection & 1 + (1 << 5)):
             log.warning(
-                "fsSelection bit 6 (regular) is set, "
-                "bits 0 (italic) and 5 (bold) must be clear"
+                "fsSelection bit 6 (regular) is set, " "bits 0 (italic) and 5 (bold) must be clear"
             )
         if self.version < 4 and self.fsSelection & 0b1110000000:
             log.warning(
@@ -186,9 +181,7 @@ class table_O_S_2f_2(DefaultTable.DefaultTable):
         else:
             from fontTools import ttLib
 
-            raise ttLib.TTLibError(
-                "unknown format for OS/2 table: version %s" % self.version
-            )
+            raise ttLib.TTLibError("unknown format for OS/2 table: version %s" % self.version)
         self.panose = panose
         return data
 
@@ -668,7 +661,7 @@ def calcCodePageRanges(unicodes):
     """
     bits = set()
     hasAscii = set(range(0x20, 0x7E)).issubset(unicodes)
-    hasLineart = ord("┤") in unicodes
+    hasLineart = ord("�"�") in unicodes
 
     for uni in unicodes:
         if uni == ord("Þ") and hasAscii:
@@ -677,9 +670,9 @@ def calcCodePageRanges(unicodes):
             bits.add(1)  # Latin 2: Eastern Europe
             if hasLineart:
                 bits.add(58)  # Latin 2
-        elif uni == ord("Б"):
+        elif uni == ord("�'"):
             bits.add(2)  # Cyrillic
-            if ord("Ѕ") in unicodes and hasLineart:
+            if ord("�...") in unicodes and hasLineart:
                 bits.add(57)  # IBM Cyrillic
             if ord("╜") in unicodes and hasLineart:
                 bits.add(49)  # MS-DOS Russian
@@ -693,7 +686,7 @@ def calcCodePageRanges(unicodes):
             bits.add(4)  # Turkish
             if hasLineart:
                 bits.add(56)  # IBM turkish
-        elif uni == ord("א"):
+        elif uni == ord("�"):
             bits.add(5)  # Hebrew
             if hasLineart and ord("√") in unicodes:
                 bits.add(53)  # Hebrew
@@ -703,17 +696,17 @@ def calcCodePageRanges(unicodes):
                 bits.add(51)  # Arabic
             if hasLineart:
                 bits.add(61)  # Arabic; ASMO 708
-        elif uni == ord("ŗ") and hasAscii:
+        elif uni == ord("�-") and hasAscii:
             bits.add(7)  # Windows Baltic
             if hasLineart:
                 bits.add(59)  # MS-DOS Baltic
         elif uni == ord("₫") and hasAscii:
             bits.add(8)  # Vietnamese
-        elif uni == ord("ๅ"):
+        elif uni == ord("�..."):
             bits.add(16)  # Thai
         elif uni == ord("エ"):
             bits.add(17)  # JIS/Japan
-        elif uni == ord("ㄅ"):
+        elif uni == ord("�..."):
             bits.add(18)  # Chinese: Simplified
         elif uni == ord("ㄱ"):
             bits.add(19)  # Korean wansung
@@ -733,20 +726,21 @@ def calcCodePageRanges(unicodes):
             bits.add(62)  # WE/Latin 1
             bits.add(63)  # US
         elif hasAscii and hasLineart and ord("√") in unicodes:
-            if uni == ord("Å"):
+            if uni == ord("�..."):
                 bits.add(50)  # MS-DOS Nordic
             elif uni == ord("é"):
                 bits.add(52)  # MS-DOS Canadian French
             elif uni == ord("õ"):
                 bits.add(55)  # MS-DOS Portuguese
 
-    if hasAscii and ord("‰") in unicodes and ord("∑") in unicodes:
+    if hasAscii and ord("‰") in unicodes and ord("�'") in unicodes:
         bits.add(29)  # Macintosh Character Set (US Roman)
 
     return bits
 
 
 if __name__ == "__main__":
-    import doctest, sys
+    import doctest
+    import sys
 
     sys.exit(doctest.testmod().failed)

@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11I_fallback_agent_builder_READY.py
 Description: Auto-creates backup agents when main scripts fail
 Phase 11 - Module I (Legal Fortification)

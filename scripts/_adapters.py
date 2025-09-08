@@ -34,9 +34,7 @@ def _io_wrapper(file, mode="r", *args, **kwargs):
         return TextIOWrapper(file, *args, **kwargs)
     elif mode == "rb":
         return file
-    raise ValueError(
-        "Invalid mode value '{}', only 'r' and 'rb' are supported".format(mode)
-    )
+    raise ValueError("Invalid mode value '{}', only 'r' and 'rb' are supported".format(mode))
 
 
 class CompatibilityFiles:
@@ -59,8 +57,7 @@ class CompatibilityFiles:
             if not self._reader:
                 return iter(())
             return iter(
-                CompatibilityFiles.ChildPath(self._reader, path)
-                for path in self._reader.contents()
+                CompatibilityFiles.ChildPath(self._reader, path) for path in self._reader.contents()
             )
 
         def is_file(self):
@@ -107,9 +104,7 @@ class CompatibilityFiles:
             return self._name
 
         def open(self, mode="r", *args, **kwargs):
-            return _io_wrapper(
-                self._reader.open_resource(self.name), mode, *args, **kwargs
-            )
+            return _io_wrapper(self._reader.open_resource(self.name), mode, *args, **kwargs)
 
     class OrphanPath(abc.Traversable):
         """

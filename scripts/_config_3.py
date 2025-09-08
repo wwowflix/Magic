@@ -144,7 +144,7 @@ class AreaConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -196,7 +196,7 @@ class AreaConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -266,25 +266,25 @@ class AreaConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -437,12 +437,12 @@ class AreaConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -1129,7 +1129,7 @@ class BarConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -1192,7 +1192,7 @@ class BarConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -1262,25 +1262,25 @@ class BarConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -1411,12 +1411,12 @@ class BarConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -3461,7 +3461,7 @@ class LineConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -3513,7 +3513,7 @@ class LineConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -3583,25 +3583,25 @@ class LineConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -3744,12 +3744,12 @@ class LineConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -3999,7 +3999,7 @@ class MarkConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -4051,7 +4051,7 @@ class MarkConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -4121,25 +4121,25 @@ class MarkConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -4268,12 +4268,12 @@ class MarkConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -4577,7 +4577,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -4629,7 +4629,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -4699,25 +4699,25 @@ class OverlayMarkDefKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -4864,12 +4864,12 @@ class OverlayMarkDefKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     theta2Offset
         Offset for theta2.
@@ -5303,7 +5303,7 @@ class ProjectionKwds(TypedDict, total=False):
     fraction
         The fraction parameter for the ``bottomley`` projection.
 
-        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+        **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
     lobes
         The number of lobes in projections that support multi-lobe views: ``berghaus``,
         ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -5329,7 +5329,7 @@ class ProjectionKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710…``.
+        which defaults to ``âˆš0.5 â‰... 0.70710â€¦``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5384,11 +5384,7 @@ class ProjectionKwds(TypedDict, total=False):
         GeoJsonFeatureKwds
         | GeoJsonFeatureCollectionKwds
         | Sequence[GeoJsonFeatureKwds]
-        | Sequence[
-            GeoJsonFeatureKwds
-            | GeoJsonFeatureCollectionKwds
-            | Sequence[GeoJsonFeatureKwds]
-        ]
+        | Sequence[GeoJsonFeatureKwds | GeoJsonFeatureCollectionKwds | Sequence[GeoJsonFeatureKwds]]
     )
     fraction: float
     lobes: float
@@ -5446,7 +5442,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
     fraction
         The fraction parameter for the ``bottomley`` projection.
 
-        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+        **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
     lobes
         The number of lobes in projections that support multi-lobe views: ``berghaus``,
         ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -5472,7 +5468,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710…``.
+        which defaults to ``âˆš0.5 â‰... 0.70710â€¦``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5527,11 +5523,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
         GeoJsonFeatureKwds
         | GeoJsonFeatureCollectionKwds
         | Sequence[GeoJsonFeatureKwds]
-        | Sequence[
-            GeoJsonFeatureKwds
-            | GeoJsonFeatureCollectionKwds
-            | Sequence[GeoJsonFeatureKwds]
-        ]
+        | Sequence[GeoJsonFeatureKwds | GeoJsonFeatureCollectionKwds | Sequence[GeoJsonFeatureKwds]]
     )
     fraction: float
     lobes: float
@@ -5717,7 +5709,7 @@ class RectConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -5776,7 +5768,7 @@ class RectConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -5846,25 +5838,25 @@ class RectConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -5995,12 +5987,12 @@ class RectConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     timeUnitBandPosition
         Default relative band position for a time unit. If set to ``0``, the marks will be
@@ -6636,7 +6628,7 @@ class TickConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -6688,7 +6680,7 @@ class TickConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -6758,25 +6750,25 @@ class TickConfigKwds(TypedDict, total=False):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -6905,12 +6897,12 @@ class TickConfigKwds(TypedDict, total=False):
         Placeholder text if the ``text`` channel is not specified
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     thickness
         Thickness of the tick mark.
@@ -7436,13 +7428,7 @@ class VariableParameterKwds(TypedDict, total=False):
     """
 
     name: str
-    bind: (
-        BindInputKwds
-        | BindRangeKwds
-        | BindDirectKwds
-        | BindCheckboxKwds
-        | BindRadioSelectKwds
-    )
+    bind: BindInputKwds | BindRangeKwds | BindDirectKwds | BindCheckboxKwds | BindRadioSelectKwds
     expr: str
     react: bool
     value: Any

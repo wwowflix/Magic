@@ -160,9 +160,7 @@ class NoseTester:
 
     """
 
-    def __init__(
-        self, package=None, raise_warnings="release", depth=0, check_fpu_mode=False
-    ):
+    def __init__(self, package=None, raise_warnings="release", depth=0, check_fpu_mode=False):
         # Back-compat: 'None' used to mean either "release" or "develop"
         # depending on whether this was a release or develop version of
         # numpy. Those semantics were fine for testing numpy, but not so

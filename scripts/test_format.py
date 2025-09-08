@@ -491,10 +491,7 @@ def test_file_truncated(tmp_path):
                 with pytest.raises(
                     ValueError,
                     match=(
-                        (
-                            r"EOF: reading array header, "
-                            r"expected (\d+) bytes got (\d+)"
-                        )
+                        (r"EOF: reading array header, " r"expected (\d+) bytes got (\d+)")
                         if arr.size == 0
                         else (
                             r"Failed to read all data for array\. "
@@ -607,9 +604,7 @@ def test_pickle_python2_python3():
     # Python 2 and Python 3 and vice versa
     data_dir = os.path.join(os.path.dirname(__file__), "data")
 
-    expected = np.array(
-        [None, range, "\u512a\u826f", b"\xe4\xb8\x8d\xe8\x89\xaf"], dtype=object
-    )
+    expected = np.array([None, range, "\u512a\u826f", b"\xe4\xb8\x8d\xe8\x89\xaf"], dtype=object)
 
     for fname in [
         "py2-np0-objarr.npy",
@@ -642,9 +637,7 @@ def test_pickle_python2_python3():
                 data = np.load(path, allow_pickle=True)
                 assert_raises(UnicodeError, data.__getitem__, "x")
                 data.close()
-                data = np.load(
-                    path, allow_pickle=True, fix_imports=False, encoding="latin1"
-                )
+                data = np.load(path, allow_pickle=True, fix_imports=False, encoding="latin1")
                 assert_raises(ImportError, data.__getitem__, "x")
                 data.close()
             else:
@@ -670,9 +663,7 @@ def test_pickle_disallow(tmpdir):
         assert_raises(ValueError, f.__getitem__, "x")
 
     path = os.path.join(tmpdir, "pickle-disabled.npy")
-    assert_raises(
-        ValueError, np.save, path, np.array([None], dtype=object), allow_pickle=False
-    )
+    assert_raises(ValueError, np.save, path, np.array([None], dtype=object), allow_pickle=False)
 
 
 @pytest.mark.parametrize(
@@ -832,9 +823,7 @@ def test_version_2_0_memmap(tmpdir):
         version=(1, 0),
     )
 
-    ma = format.open_memmap(
-        tf1, mode="w+", dtype=d.dtype, shape=d.shape, version=(2, 0)
-    )
+    ma = format.open_memmap(tf1, mode="w+", dtype=d.dtype, shape=d.shape, version=(2, 0))
     ma[...] = d
     ma.flush()
     ma = format.open_memmap(tf1, mode="r", max_header_size=200000)
@@ -842,9 +831,7 @@ def test_version_2_0_memmap(tmpdir):
 
     with warnings.catch_warnings(record=True) as w:
         warnings.filterwarnings("always", "", UserWarning)
-        ma = format.open_memmap(
-            tf2, mode="w+", dtype=d.dtype, shape=d.shape, version=None
-        )
+        ma = format.open_memmap(tf2, mode="w+", dtype=d.dtype, shape=d.shape, version=None)
         assert_(w[0].category is UserWarning)
         ma[...] = d
         ma.flush()
@@ -1033,8 +1020,7 @@ def test_bad_header():
     # d = {"shape": (1, 2),
     #      "descr": "x"}
     s = BytesIO(
-        b"\x93NUMPY\x01\x006\x00{'descr': 'x', 'shape': (1, 2), }"
-        b"                    \n"
+        b"\x93NUMPY\x01\x006\x00{'descr': 'x', 'shape': (1, 2), }" b"                    \n"
     )
     assert_raises(ValueError, format.read_array_header_1_0, s)
 

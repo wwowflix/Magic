@@ -1,4 +1,4 @@
-ï¿"""Tracks previous failures to build institutional memory"""
+"""Tracks previous failures to build institutional memory"""
 
 
 def main():

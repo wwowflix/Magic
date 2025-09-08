@@ -1,4 +1,4 @@
-ï¿"""Identifies and suggests removal of duplicate agent functions"""
+"""Identifies and suggests removal of duplicate agent functions"""
 
 
 def main():

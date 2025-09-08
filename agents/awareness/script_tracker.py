@@ -55,17 +55,17 @@ def scan_files(state):
 
 
 def main():
-    print("â–¶ Starting Script Tracker. Ctrl+C to stop.")
+    print("â�"¶ Starting Script Tracker. Ctrl+C to stop.")
     state = load_state()
 
     while True:
         changed, current_state = scan_files(state)
         if changed:
-            print(f"ðŸ“ Detected {len(changed)} new/modified scripts:")
+            print(f"ðŸ“� Detected {len(changed)} new/modified scripts:")
             for script in changed:
                 print(f" - {script}")
         else:
-            print(f"âœ… No script changes detected at {datetime.now()}")
+            print(f"â�"… No script changes detected at {datetime.now()}")
         state = current_state
         save_state(state)
         time.sleep(CHECK_INTERVAL)

@@ -226,19 +226,19 @@ class Cluster:
             # Offset16	coverageOffset	Offset to Coverage table, from beginning of PairPos subtable.
             + 2
             + self.coverage_bytes
-            # uint16	valueFormat1	ValueRecord definition â€” for the first glyph of the pair (may be zero).
+            # uint16	valueFormat1	ValueRecord definition â€" for the first glyph of the pair (may be zero).
             + 2
-            # uint16	valueFormat2	ValueRecord definition â€” for the second glyph of the pair (may be zero).
+            # uint16	valueFormat2	ValueRecord definition â€" for the second glyph of the pair (may be zero).
             + 2
-            # Offset16	classDef1Offset	Offset to ClassDef table, from beginning of PairPos subtable â€” for the first glyph of the pair.
+            # Offset16	classDef1Offset	Offset to ClassDef table, from beginning of PairPos subtable â€" for the first glyph of the pair.
             + 2
             + self.classDef1_bytes
-            # Offset16	classDef2Offset	Offset to ClassDef table, from beginning of PairPos subtable â€” for the second glyph of the pair.
+            # Offset16	classDef2Offset	Offset to ClassDef table, from beginning of PairPos subtable â€" for the second glyph of the pair.
             + 2
             + self.classDef2_bytes
-            # uint16	class1Count	Number of classes in classDef1 table â€” includes Class 0.
+            # uint16	class1Count	Number of classes in classDef1 table â€" includes Class 0.
             + 2
-            # uint16	class2Count	Number of classes in classDef2 table â€” includes Class 0.
+            # uint16	class2Count	Number of classes in classDef2 table â€" includes Class 0.
             + 2
             # Class1Record	class1Records[class1Count]	Array of Class1 records, ordered by classes in classDef1.
             + (self.ctx.valueFormat1_bytes + self.ctx.valueFormat2_bytes)
@@ -250,10 +250,10 @@ class Cluster:
     def coverage_bytes(self):
         format1_bytes = (
             # From https://docs.microsoft.com/en-us/typography/opentype/spec/chapter2#coverage-format-1
-            # uint16	coverageFormat	Format identifier â€” format = 1
+            # uint16	coverageFormat	Format identifier â€" format = 1
             # uint16	glyphCount	Number of glyphs in the glyph array
             4
-            # uint16	glyphArray[glyphCount]	Array of glyph IDs â€” in numerical order
+            # uint16	glyphArray[glyphCount]	Array of glyph IDs â€" in numerical order
             + sum(len(self.ctx.all_class1[i]) for i in self.indices) * 2
         )
         ranges = sorted(chain.from_iterable(self.ctx.all_class1_data[i][0] for i in self.indices))
@@ -265,10 +265,10 @@ class Cluster:
             last = end
         format2_bytes = (
             # From https://docs.microsoft.com/en-us/typography/opentype/spec/chapter2#coverage-format-2
-            # uint16	coverageFormat	Format identifier â€” format = 2
+            # uint16	coverageFormat	Format identifier â€" format = 2
             # uint16	rangeCount	Number of RangeRecords
             4
-            # RangeRecord	rangeRecords[rangeCount]	Array of glyph ranges â€” ordered by startGlyphID.
+            # RangeRecord	rangeRecords[rangeCount]	Array of glyph ranges â€" ordered by startGlyphID.
             # uint16	startGlyphID	First glyph ID in the range
             # uint16	endGlyphID	Last glyph ID in the range
             # uint16	startCoverageIndex	Coverage Index of first glyph ID in range

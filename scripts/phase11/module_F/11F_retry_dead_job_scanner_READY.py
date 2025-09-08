@@ -3,7 +3,9 @@ Scans runner logs/manifest for jobs stuck in non-terminal states and schedules r
 Week 10 minimal stub: exits 0 if it can read the manifest; else 1.
 """
 
-import sys, json, pathlib
+import sys
+import json
+import pathlib
 
 MANIFEST = pathlib.Path("phase_manifest.json")
 

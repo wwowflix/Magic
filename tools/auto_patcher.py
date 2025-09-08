@@ -1,6 +1,6 @@
+import pathlib
 import re
 import sys
-import pathlib
 
 
 def fix_print_py2(code: str) -> str:

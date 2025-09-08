@@ -24,8 +24,8 @@ can be found on `CTAN <http://mirrors.ctan.org/info/knuth-pdf/texware/tftopl.pdf
         >>> tfm.fontdimens
         {'SLANT': 0.0, 'SPACE': 0.33333396911621094, 'STRETCH': 0.16666698455810547, 'SHRINK': 0.11111164093017578, 'XHEIGHT': 0.4305553436279297, 'QUAD': 1.0000028610229492, 'EXTRASPACE': 0.11111164093017578}
         >>> # Accessing a character gets you its metrics.
-        >>> # “width” is always available, other metrics are available only when
-        >>> # applicable. All values are relative to “designsize”.
+        >>> # "width" is always available, other metrics are available only when
+        >>> # applicable. All values are relative to "designsize".
         >>> tfm.chars[ord("g")]
         {'width': 0.5000019073486328, 'height': 0.4305553436279297, 'depth': 0.1944446563720703, 'italic': 0.013888359069824219}
         >>> # Kerning and ligature can be accessed as well.
@@ -161,10 +161,7 @@ class TFM:
 
     def __repr__(self):
         return (
-            f"<TFM"
-            f" for {self.family}"
-            f" in {self.codingscheme}"
-            f" at {self.designsize:g}pt>"
+            f"<TFM" f" for {self.family}" f" in {self.codingscheme}" f" at {self.designsize:g}pt>"
         )
 
     def _read(self, file):
@@ -184,7 +181,7 @@ class TFM:
 
         # Do some file structure sanity checks.
         # TeX and TFtoPL do additional functional checks and might even correct
-        # “errors” in the input file, but we instead try to output the file as
+        # "errors" in the input file, but we instead try to output the file as
         # it is as long as it is parsable, even if the data make no sense.
 
         if sizes.lf < 0:
@@ -201,9 +198,7 @@ class TFM:
             raise TFMException(f"The header length is only {sizes.lh}!")
 
         if sizes.bc > sizes.ec + 1 or sizes.ec > 255:
-            raise TFMException(
-                f"The character code range {sizes.bc}..{sizes.ec} is illegal!"
-            )
+            raise TFMException(f"The character code range {sizes.bc}..{sizes.ec} is illegal!")
 
         if sizes.nw == 0 or sizes.nh == 0 or sizes.nd == 0 or sizes.ni == 0:
             raise TFMException("Incomplete subfiles for character dimensions!")
@@ -224,7 +219,7 @@ class TFM:
             + sizes.ne
             + sizes.np
         ):
-            raise TFMException("Subfile sizes don’t add up to the stated total")
+            raise TFMException("Subfile sizes don't add up to the stated total")
 
         # Subfile offsets, used in the helper function below. These all are
         # 32-bit word offsets not 8-bit byte offsets.

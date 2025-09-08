@@ -1,6 +1,6 @@
-ï¿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # folder_audit.py
-# Phase 1 â€“ Folder Health Checker
+# Phase 1 â€" Folder Health Checker
 
 import os
 

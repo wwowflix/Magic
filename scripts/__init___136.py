@@ -159,9 +159,7 @@ class Cycler(Generic[K, V]):
         Do not use this directly, use `cycler` function instead.
         """
         if isinstance(left, Cycler):
-            self._left: Cycler[K, V] | list[dict[K, V]] = Cycler(
-                left._left, left._right, left._op
-            )
+            self._left: Cycler[K, V] | list[dict[K, V]] = Cycler(left._left, left._right, left._op)
         elif left is not None:
             # Need to copy the dictionary or else that will be a residual
             # mutable that could lead to strange errors
@@ -170,9 +168,7 @@ class Cycler(Generic[K, V]):
             self._left = []
 
         if isinstance(right, Cycler):
-            self._right: Cycler[K, V] | None = Cycler(
-                right._left, right._right, right._op
-            )
+            self._right: Cycler[K, V] | None = Cycler(right._left, right._right, right._op)
         else:
             self._right = None
 
@@ -258,9 +254,7 @@ class Cycler(Generic[K, V]):
                 yield dict(left)
         else:
             if self._op is None:
-                raise TypeError(
-                    "Operation cannot be None when both left and right are defined"
-                )
+                raise TypeError("Operation cannot be None when both left and right are defined")
             for a, b in self._op(self._left, self._right):
                 out = {}
                 out.update(a)
@@ -276,9 +270,7 @@ class Cycler(Generic[K, V]):
         other : Cycler
         """
         if len(self) != len(other):
-            raise ValueError(
-                f"Can only add equal length cycles, not {len(self)} and {len(other)}"
-            )
+            raise ValueError(f"Can only add equal length cycles, not {len(self)} and {len(other)}")
         return Cycler(
             cast(Cycler[Union[K, L], Union[V, U]], self),
             cast(Cycler[Union[K, L], Union[V, U]], other),
@@ -505,15 +497,12 @@ def cycler(*args, **kwargs):
 
     """
     if args and kwargs:
-        raise TypeError(
-            "cycler() can only accept positional OR keyword arguments -- not both."
-        )
+        raise TypeError("cycler() can only accept positional OR keyword arguments -- not both.")
 
     if len(args) == 1:
         if not isinstance(args[0], Cycler):
             raise TypeError(
-                "If only one positional argument given, it must "
-                "be a Cycler instance."
+                "If only one positional argument given, it must " "be a Cycler instance."
             )
         return Cycler(args[0])
     elif len(args) == 2:

@@ -38,8 +38,8 @@ Limitations
   is to modify the VOLT file or the generated feature file manually to use unique
   mark anchors for each lookup.
 * VOLT allows subtable breaks in any lookup type, but AFDKO feature file
-  implementations vary in their support; currently AFDKO’s makeOTF supports
-  subtable breaks in pair positioning lookups only, while FontTools’ feaLib
+  implementations vary in their support; currently AFDKO's makeOTF supports
+  subtable breaks in pair positioning lookups only, while FontTools' feaLib
   support it for most substitution lookups and only some positioning lookups.
 """
 
@@ -77,9 +77,7 @@ def sort_groups(groups):
     group_map = {group.name.lower(): group for group in groups}
     graph = {
         group.name.lower(): [
-            x.group.lower()
-            for x in _flatten_group(group)
-            if isinstance(x, VAst.GroupName)
+            x.group.lower() for x in _flatten_group(group) if isinstance(x, VAst.GroupName)
         ]
         for group in groups
     }
@@ -428,7 +426,7 @@ class VoltToFea:
                 coverage_1 = pos.coverages_1[idx1 - 1]
                 coverage_2 = pos.coverages_2[idx2 - 1]
 
-                # If not both are groups, use “enum pos” otherwise makeotf will
+                # If not both are groups, use "enum pos" otherwise makeotf will
                 # fail.
                 enumerated = False
                 for item in coverage_1 + coverage_2:
@@ -451,9 +449,7 @@ class VoltToFea:
                 glyphs = self._coverage(a)
                 record = self._adjustment(b)
                 assert len(glyphs) == 1
-                statements.append(
-                    ast.SinglePosStatement([(glyphs[0], record)], [], [], False)
-                )
+                statements.append(ast.SinglePosStatement([(glyphs[0], record)], [], [], False))
         elif isinstance(pos, VAst.PositionAttachDefinition):
             anchors = {}
             allmarks = set()
@@ -579,9 +575,7 @@ class VoltToFea:
             if ignore:
                 statement = ast.IgnorePosStatement([(prefix, glyphs, suffix)])
             else:
-                statement = ast.ChainContextPosStatement(
-                    prefix, glyphs, suffix, [chained]
-                )
+                statement = ast.ChainContextPosStatement(prefix, glyphs, suffix, [chained])
             statements.append(statement)
         elif isinstance(pos, VAst.PositionAttachDefinition):
             glyphs = [ast.GlyphClass()]
@@ -591,9 +585,7 @@ class VoltToFea:
             if ignore:
                 statement = ast.IgnorePosStatement([(prefix, glyphs, suffix)])
             else:
-                statement = ast.ChainContextPosStatement(
-                    prefix, glyphs, suffix, [chained]
-                )
+                statement = ast.ChainContextPosStatement(prefix, glyphs, suffix, [chained])
             statements.append(statement)
         else:
             raise NotImplementedError(pos)
@@ -616,17 +608,13 @@ class VoltToFea:
                 glyphs = self._coverage(key)
                 replacements = self._coverage(val)
                 assert len(glyphs) == 1
-                for src_glyph, repl_glyph in zip(
-                    glyphs[0].glyphSet(), replacements[0].glyphSet()
-                ):
+                for src_glyph, repl_glyph in zip(glyphs[0].glyphSet(), replacements[0].glyphSet()):
                     alternates.setdefault(str(self._glyphName(src_glyph)), []).append(
                         str(self._glyphName(repl_glyph))
                     )
 
             for glyph, replacements in alternates.items():
-                statement = ast.AlternateSubstStatement(
-                    [], glyph, [], ast.GlyphClass(replacements)
-                )
+                statement = ast.AlternateSubstStatement([], glyph, [], ast.GlyphClass(replacements))
                 statements.append(statement)
             return
 
@@ -640,22 +628,16 @@ class VoltToFea:
             if isinstance(sub, VAst.SubstitutionSingleDefinition):
                 assert len(glyphs) == 1
                 assert len(replacements) == 1
-                statements.append(
-                    ast.SingleSubstStatement(glyphs, replacements, [], [], False)
-                )
+                statements.append(ast.SingleSubstStatement(glyphs, replacements, [], [], False))
             elif isinstance(sub, VAst.SubstitutionReverseChainingSingleDefinition):
                 # This is handled in gsubContextLookup()
                 pass
             elif isinstance(sub, VAst.SubstitutionMultipleDefinition):
                 assert len(glyphs) == 1
-                statements.append(
-                    ast.MultipleSubstStatement([], glyphs[0], [], replacements)
-                )
+                statements.append(ast.MultipleSubstStatement([], glyphs[0], [], replacements))
             elif isinstance(sub, VAst.SubstitutionLigatureDefinition):
                 assert len(replacements) == 1
-                statement = ast.LigatureSubstStatement(
-                    [], glyphs, [], replacements[0], False
-                )
+                statement = ast.LigatureSubstStatement([], glyphs, [], replacements[0], False)
 
                 # If any of the input glyphs is a group, we need to
                 # explode the substitution into multiple ligature substitutions
@@ -684,9 +666,7 @@ class VoltToFea:
                     for zipped in zip(*glyphs, replacement):
                         zipped = [self._glyphName(x) for x in zipped]
                         statements.append(
-                            ast.LigatureSubstStatement(
-                                [], zipped[:-1], [], zipped[-1], False
-                            )
+                            ast.LigatureSubstStatement([], zipped[:-1], [], zipped[-1], False)
                         )
                 else:
                     statements.append(statement)
@@ -699,7 +679,7 @@ class VoltToFea:
         sub = lookup.sub
 
         if isinstance(sub, VAst.SubstitutionReverseChainingSingleDefinition):
-            # Reverse substitutions is a special case, it can’t use chained lookups.
+            # Reverse substitutions is a special case, it can't use chained lookups.
             for key, val in sub.mapping.items():
                 if not key or not val:
                     path, line, column = sub.location
@@ -708,9 +688,7 @@ class VoltToFea:
                 glyphs = self._coverage(key)
                 replacements = self._coverage(val)
                 statements.append(
-                    ast.ReverseChainSingleSubstStatement(
-                        prefix, suffix, glyphs, replacements
-                    )
+                    ast.ReverseChainSingleSubstStatement(prefix, suffix, glyphs, replacements)
                 )
             fealookup.chained = []
             return
@@ -739,9 +717,7 @@ class VoltToFea:
         if ignore:
             statements.append(ast.IgnoreSubstStatement([(prefix, glyphs, suffix)]))
         else:
-            statements.append(
-                ast.ChainContextSubstStatement(prefix, glyphs, suffix, [chained])
-            )
+            statements.append(ast.ChainContextSubstStatement(prefix, glyphs, suffix, [chained]))
 
     def _lookupDefinition(self, lookup):
         mark_attachement = None
@@ -764,16 +740,14 @@ class VoltToFea:
 
         lookupflags = None
         if flags or mark_attachement is not None or mark_filtering is not None:
-            lookupflags = ast.LookupFlagStatement(
-                flags, mark_attachement, mark_filtering
-            )
+            lookupflags = ast.LookupFlagStatement(flags, mark_attachement, mark_filtering)
 
         use_extension = False
         if self._settings.get("COMPILER_USEEXTENSIONLOOKUPS"):
             use_extension = True
 
         if "\\" in lookup.name:
-            # Merge sub lookups as subtables (lookups named “base\sub”),
+            # Merge sub lookups as subtables (lookups named "base\sub"),
             # makeotf/feaLib will issue a warning and ignore the subtable
             # statement if it is not a pairpos lookup, though.
             name = lookup.name.split("\\")[0]
@@ -825,13 +799,9 @@ class VoltToFea:
                 self._gposLookup(lookup, chained)
             for prefix, suffix, ignore in contexts:
                 if lookup.sub is not None:
-                    self._gsubContextLookup(
-                        lookup, prefix, suffix, ignore, fealookup, chained
-                    )
+                    self._gsubContextLookup(lookup, prefix, suffix, ignore, fealookup, chained)
                 elif lookup.pos is not None:
-                    self._gposContextLookup(
-                        lookup, prefix, suffix, ignore, fealookup, chained
-                    )
+                    self._gposContextLookup(lookup, prefix, suffix, ignore, fealookup, chained)
         else:
             if lookup.sub is not None:
                 self._gsubLookup(lookup, fealookup)
@@ -847,15 +817,9 @@ def main(args=None):
 
     from fontTools import configLogger
 
-    parser = argparse.ArgumentParser(
-        "fonttools voltLib.voltToFea", description=main.__doc__
-    )
-    parser.add_argument(
-        "input", metavar="INPUT", type=Path, help="input font/VTP file to process"
-    )
-    parser.add_argument(
-        "featurefile", metavar="OUTPUT", type=Path, help="output feature file"
-    )
+    parser = argparse.ArgumentParser("fonttools voltLib.voltToFea", description=main.__doc__)
+    parser.add_argument("input", metavar="INPUT", type=Path, help="input font/VTP file to process")
+    parser.add_argument("featurefile", metavar="OUTPUT", type=Path, help="output feature file")
     parser.add_argument(
         "-t",
         "--table",
@@ -864,12 +828,8 @@ def main(args=None):
         dest="tables",
         help="List of tables to write, by default all tables are written",
     )
-    parser.add_argument(
-        "-q", "--quiet", action="store_true", help="Suppress non-error messages"
-    )
-    parser.add_argument(
-        "--traceback", action="store_true", help="Don’t catch exceptions"
-    )
+    parser.add_argument("-q", "--quiet", action="store_true", help="Suppress non-error messages")
+    parser.add_argument("--traceback", action="store_true", help="Don't catch exceptions")
 
     options = parser.parse_args(args)
 

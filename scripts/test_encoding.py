@@ -31,10 +31,10 @@ def test_bytes_io_input(all_parsers):
     encoding = "cp1255"
     parser = all_parsers
 
-    data = BytesIO("שלום:1234\n562:123".encode(encoding))
+    data = BytesIO("שלו�:1234\n562:123".encode(encoding))
     result = parser.read_csv(data, sep=":", encoding=encoding)
 
-    expected = DataFrame([[562, 123]], columns=["שלום", "1234"])
+    expected = DataFrame([[562, 123]], columns=["שלו�", "1234"])
     tm.assert_frame_equal(result, expected)
 
 
@@ -118,18 +118,14 @@ def test_unicode_encoding(all_parsers, csv_dir_path):
 def test_utf8_bom(all_parsers, data, kwargs, expected, request):
     # see gh-4793
     parser = all_parsers
-    bom = "\ufeff"
+    bom = "\"
     utf8 = "utf-8"
 
     def _encode_data_with_bom(_data):
         bom_data = (bom + _data).encode(utf8)
         return BytesIO(bom_data)
 
-    if (
-        parser.engine == "pyarrow"
-        and data == "\n1"
-        and kwargs.get("skip_blank_lines", True)
-    ):
+    if parser.engine == "pyarrow" and data == "\n1" and kwargs.get("skip_blank_lines", True):
         # CSV parse error: Empty CSV file or block: cannot infer number of columns
         pytest.skip(reason="https://github.com/apache/arrow/issues/38676")
 
@@ -206,8 +202,8 @@ def test_encoding_named_temp_file(all_parsers):
     parser = all_parsers
     encoding = "shift-jis"
 
-    title = "てすと"
-    data = "こむ"
+    title = "���"
+    data = "�"む"
 
     expected = DataFrame({title: [data]})
 
@@ -221,9 +217,7 @@ def test_encoding_named_temp_file(all_parsers):
         assert not f.closed
 
 
-@pytest.mark.parametrize(
-    "encoding", ["utf-8", "utf-16", "utf-16-be", "utf-16-le", "utf-32"]
-)
+@pytest.mark.parametrize("encoding", ["utf-8", "utf-16", "utf-16-be", "utf-16-le", "utf-32"])
 def test_parse_encoded_special_characters(encoding):
     # GH16218 Verify parsing of data with encoded special characters
     # Data contains a Unicode 'FULLWIDTH COLON' (U+FF1A) at position (0,"a")
@@ -272,9 +266,9 @@ def test_chunk_splits_multibyte_char(all_parsers):
     # DEFAULT_CHUNKSIZE = 262144, defined in parsers.pyx
     df = DataFrame(data=["a" * 127] * 2048)
 
-    # Put two-bytes utf-8 encoded character "ą" at the end of chunk
-    # utf-8 encoding of "ą" is b'\xc4\x85'
-    df.iloc[2047] = "a" * 127 + "ą"
+    # Put two-bytes utf-8 encoded character "�..." at the end of chunk
+    # utf-8 encoding of "�..." is b'\xc4\x85'
+    df.iloc[2047] = "a" * 127 + "�..."
     with tm.ensure_clean("bug-gh43540.csv") as fname:
         df.to_csv(fname, index=False, header=False, encoding="utf-8")
 

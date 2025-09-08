@@ -80,7 +80,7 @@ class ProgressBar(JupyterMixin):
         Returns:
             List[Segment]: A list of segments, one segment per character.
         """
-        bar = "-" if ascii else "━"
+        bar = "-" if ascii else "�""
         segments: List[Segment] = []
         if color_system not in ("standard", "eight_bit", "truecolor") or no_color:
             segments += [Segment(bar, fore_style)] * (PULSE_SIZE // 2)
@@ -91,15 +91,9 @@ class ProgressBar(JupyterMixin):
 
         append = segments.append
         fore_color = (
-            fore_style.color.get_truecolor()
-            if fore_style.color
-            else ColorTriplet(255, 0, 255)
+            fore_style.color.get_truecolor() if fore_style.color else ColorTriplet(255, 0, 255)
         )
-        back_color = (
-            back_style.color.get_truecolor()
-            if back_style.color
-            else ColorTriplet(0, 0, 0)
-        )
+        back_color = back_style.color.get_truecolor() if back_style.color else ColorTriplet(0, 0, 0)
         cos = math.cos
         pi = math.pi
         _Segment = Segment
@@ -123,9 +117,7 @@ class ProgressBar(JupyterMixin):
         self.completed = completed
         self.total = total if total is not None else self.total
 
-    def _render_pulse(
-        self, console: Console, width: int, ascii: bool = False
-    ) -> Iterable[Segment]:
+    def _render_pulse(self, console: Console, width: int, ascii: bool = False) -> Iterable[Segment]:
         """Renders the pulse animation.
 
         Args:
@@ -145,17 +137,13 @@ class ProgressBar(JupyterMixin):
             fore_style, back_style, console.color_system, console.no_color, ascii=ascii
         )
         segment_count = len(pulse_segments)
-        current_time = (
-            monotonic() if self.animation_time is None else self.animation_time
-        )
+        current_time = monotonic() if self.animation_time is None else self.animation_time
         segments = pulse_segments * (int(width / segment_count) + 2)
         offset = int(-current_time * 15) % segment_count
         segments = segments[offset : offset + width]
         yield from segments
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
+    def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
 
         width = min(self.width or options.max_width, options.max_width)
         ascii = options.legacy_windows or options.ascii_only
@@ -168,7 +156,7 @@ class ProgressBar(JupyterMixin):
             min(self.total, max(0, self.completed)) if self.total is not None else None
         )
 
-        bar = "-" if ascii else "━"
+        bar = "-" if ascii else "�""
         half_bar_right = " " if ascii else "╸"
         half_bar_left = " " if ascii else "╺"
         complete_halves = (
@@ -198,9 +186,7 @@ class ProgressBar(JupyterMixin):
                 if remaining_bars:
                     yield _Segment(bar * remaining_bars, style)
 
-    def __rich_measure__(
-        self, console: Console, options: ConsoleOptions
-    ) -> Measurement:
+    def __rich_measure__(self, console: Console, options: ConsoleOptions) -> Measurement:
         return (
             Measurement(self.width, self.width)
             if self.width is not None

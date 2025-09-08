@@ -1,4 +1,4 @@
-ï¿\"\"\" Placeholder for 11W_hallucination_catcher_READY.py \"\"\"
+\"\"\" Placeholder for 11W_hallucination_catcher_READY.py \"\"\"
 
 def main():
     print("âœ… 11W_hallucination_catcher_READY.py placeholder executed successfully.")

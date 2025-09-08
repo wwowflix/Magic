@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11T_audit_trail_renderer_READY.py
 Description: Renders audit logs into clean readable formats for human review
 Phase 11 - Module T (Explainability & Traceability)

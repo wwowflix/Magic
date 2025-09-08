@@ -1,4 +1,4 @@
-ï¿\"\"\" Placeholder for 11X_agent_sabotage_replay_detector_READY.py \"\"\"
+\"\"\" Placeholder for 11X_agent_sabotage_replay_detector_READY.py \"\"\"
 
 def main():
     print("âœ… 11X_agent_sabotage_replay_detector_READY.py placeholder executed successfully.")

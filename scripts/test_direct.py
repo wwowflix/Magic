@@ -399,9 +399,7 @@ class TestPhilox(Base):
     def test_set_key(self):
         bit_generator = self.bit_generator(*self.data1["seed"])
         state = bit_generator.state
-        keyed = self.bit_generator(
-            counter=state["state"]["counter"], key=state["state"]["key"]
-        )
+        keyed = self.bit_generator(counter=state["state"]["counter"], key=state["state"]["key"])
         assert_state_equal(bit_generator.state, keyed.state)
 
 

@@ -95,10 +95,7 @@ def pprint(walker):
         type = token["type"]
         if type in ("StartTag", "EmptyTag"):
             # tag name
-            if (
-                token["namespace"]
-                and token["namespace"] != constants.namespaces["html"]
-            ):
+            if token["namespace"] and token["namespace"] != constants.namespaces["html"]:
                 if token["namespace"] in constants.prefixes:
                     ns = constants.prefixes[token["namespace"]]
                 else:
@@ -156,9 +153,7 @@ def pprint(walker):
             output.append('%s"%s"' % (" " * indent, token["data"]))
 
         elif type == "SpaceCharacters":
-            assert (
-                False
-            ), "concatenateCharacterTokens should have got rid of all Space tokens"
+            assert False, "concatenateCharacterTokens should have got rid of all Space tokens"
 
         else:
             raise ValueError("Unknown token type, %s" % type)

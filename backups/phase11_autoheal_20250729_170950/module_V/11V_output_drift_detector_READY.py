@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11V_output_drift_detector_READY.py] executed successfully (stub mode).")
 
 

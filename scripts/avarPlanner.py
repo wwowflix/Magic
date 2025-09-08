@@ -882,7 +882,7 @@ def main(args=None):
     configLogger(level=("DEBUG" if options.verbose else "WARNING" if options.quiet else "INFO"))
 
     font = TTFont(options.font)
-    if not "fvar" in font:
+    if "fvar" not in font:
         log.error("Not a variable font.")
         return 1
 

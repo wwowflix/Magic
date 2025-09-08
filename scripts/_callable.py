@@ -131,9 +131,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload  # platform dependent
         def __call__(self, __other: int) -> _2Tuple[int_]: ...
         @overload
-        def __call__(
-            self, __other: float
-        ) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
+        def __call__(self, __other: float) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
         @overload
         def __call__(self, __other: _IntType) -> _2Tuple[_IntType]: ...
         @overload
@@ -157,13 +155,9 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(
             self, __other: complex
-        ) -> complexfloating[
-            Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]
-        ]: ...
+        ) -> complexfloating[Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]]: ...
         @overload
-        def __call__(
-            self, __other: integer[_NBit2]
-        ) -> floating[Union[_NBit1, _NBit2]]: ...
+        def __call__(self, __other: integer[_NBit2]) -> floating[Union[_NBit1, _NBit2]]: ...
 
     class _UnsignedIntOp(Protocol[_NBit1]):
         # NOTE: `uint64 + signedinteger -> float64`
@@ -176,9 +170,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(
             self, __other: complex
-        ) -> complexfloating[
-            Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]
-        ]: ...
+        ) -> complexfloating[Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]]: ...
         @overload
         def __call__(
             self, __other: unsignedinteger[_NBit2]
@@ -214,9 +206,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: Union[int, signedinteger[Any]]) -> _2Tuple[Any]: ...
         @overload
-        def __call__(
-            self, __other: float
-        ) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
+        def __call__(self, __other: float) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
         @overload
         def __call__(
             self, __other: unsignedinteger[_NBit2]
@@ -232,9 +222,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(
             self, __other: complex
-        ) -> complexfloating[
-            Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]
-        ]: ...
+        ) -> complexfloating[Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]]: ...
         @overload
         def __call__(
             self, __other: signedinteger[_NBit2]
@@ -266,13 +254,9 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> _2Tuple[signedinteger[_NBit1]]: ...
         @overload
-        def __call__(
-            self, __other: int
-        ) -> _2Tuple[signedinteger[Union[_NBit1, _NBitInt]]]: ...
+        def __call__(self, __other: int) -> _2Tuple[signedinteger[Union[_NBit1, _NBitInt]]]: ...
         @overload
-        def __call__(
-            self, __other: float
-        ) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
+        def __call__(self, __other: float) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
         @overload
         def __call__(
             self, __other: signedinteger[_NBit2]
@@ -288,9 +272,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(
             self, __other: complex
-        ) -> complexfloating[
-            Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]
-        ]: ...
+        ) -> complexfloating[Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]]: ...
         @overload
         def __call__(
             self, __other: Union[integer[_NBit2], floating[_NBit2]]
@@ -312,13 +294,9 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(self, __other: bool) -> _2Tuple[floating[_NBit1]]: ...
         @overload
-        def __call__(
-            self, __other: int
-        ) -> _2Tuple[floating[Union[_NBit1, _NBitInt]]]: ...
+        def __call__(self, __other: int) -> _2Tuple[floating[Union[_NBit1, _NBitInt]]]: ...
         @overload
-        def __call__(
-            self, __other: float
-        ) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
+        def __call__(self, __other: float) -> _2Tuple[floating[Union[_NBit1, _NBitDouble]]]: ...
         @overload
         def __call__(
             self, __other: Union[integer[_NBit2], floating[_NBit2]]
@@ -334,9 +312,7 @@ if TYPE_CHECKING or HAVE_PROTOCOL:
         @overload
         def __call__(
             self, __other: Union[float, complex]
-        ) -> complexfloating[
-            Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]
-        ]: ...
+        ) -> complexfloating[Union[_NBit1, _NBitDouble], Union[_NBit1, _NBitDouble]]: ...
         @overload
         def __call__(
             self,

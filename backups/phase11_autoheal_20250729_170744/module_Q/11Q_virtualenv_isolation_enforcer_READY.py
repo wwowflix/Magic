@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print(
         "âœ… [11Q_virtualenv_isolation_enforcer_READY.py] executed successfully (stub mode)."
     )

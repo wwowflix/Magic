@@ -96,9 +96,7 @@ def from_csv(
         raise ValueError("No CSV files found in directory {}".format(path))
     for file in csvfiles:
         if not (os.path.exists(file) and os.path.splitext(file)[1] == ".csv"):
-            raise ValueError(
-                "Bad CSV file path spec," " includes non-csv file: {}".format(file)
-            )
+            raise ValueError("Bad CSV file path spec," " includes non-csv file: {}".format(file))
 
     config_dict: Dict[str, Any] = {}
     try:
@@ -167,8 +165,7 @@ def from_csv(
         elif config_dict["method"] == "optimize":
             if "algorithm" not in config_dict:
                 raise ValueError(
-                    "Cannot find optimization algorithm"
-                    " in file {}.".format(csvfiles[0])
+                    "Cannot find optimization algorithm" " in file {}.".format(csvfiles[0])
                 )
             optimize_args = OptimizeArgs(
                 algorithm=config_dict["algorithm"],
@@ -189,8 +186,7 @@ def from_csv(
         elif config_dict["method"] == "variational":
             if "algorithm" not in config_dict:
                 raise ValueError(
-                    "Cannot find variational algorithm"
-                    " in file {}.".format(csvfiles[0])
+                    "Cannot find variational algorithm" " in file {}.".format(csvfiles[0])
                 )
             variational_args = VariationalArgs(
                 algorithm=config_dict["algorithm"],
@@ -257,6 +253,4 @@ def from_csv(
             )
             return None
     except (IOError, OSError, PermissionError) as e:
-        raise ValueError(
-            "An error occurred processing the CSV files:\n\t{}".format(str(e))
-        ) from e
+        raise ValueError("An error occurred processing the CSV files:\n\t{}".format(str(e))) from e

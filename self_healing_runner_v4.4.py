@@ -2,14 +2,14 @@ import subprocess
 
 
 def run_notion_sync():
-    print("\nðŸ”„ Triggering Notion Sync via PowerShell...")
+    print("\nÃ°Å¸â€â€ž Triggering Notion Sync via PowerShell...")
     try:
         subprocess.run(
             ["powershell", "-ExecutionPolicy", "Bypass", "-File", "run_magic_sync.ps1"],
             check=True,
         )
     except subprocess.CalledProcessError as e:
-        print(f"âŒ Notion Sync Failed: {e}")
+        print(f"Ã¢ÂÅ' Notion Sync Failed: {e}")
 
 
 # After script runs and summaries are written:

@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11I_rate_limit_guard_READY.py] executed successfully (stub mode).")
 
 

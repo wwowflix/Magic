@@ -29,7 +29,7 @@ class PDFLinearization(PDFObject):
         self.n = pages_count
         # Primary hint stream offset and length (part 5):
         self.h = HINT_STREAM_OFFSET_LENGTH_PLACEHOLDER
-        self.o = None  # Object number of first page’s page object (part 6)
+        self.o = None  # Object number of first page's page object (part 6)
         self.e = FIRST_PAGE_END_OFFSET_PLACEHOLDER  # Offset of end of first page
         # Offset of first entry in main cross-reference table (part 11):
         self.t = MAIN_XREF_1ST_ENTRY_OFFSET_PLACEHOLDER

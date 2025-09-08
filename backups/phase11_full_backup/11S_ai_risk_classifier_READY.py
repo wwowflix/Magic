@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11S_ai_risk_classifier_READY.py
 Description: Classifies scripts/actions by risk level using heuristics or ML
 Phase 11 - Module S (Risk Scoring & Decision Logic)

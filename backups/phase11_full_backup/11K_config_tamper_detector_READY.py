@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11K_config_tamper_detector_READY.py
 Description: Detects unauthorized modifications to config files
 Phase 11 - Module K (Permissions & Access Security)

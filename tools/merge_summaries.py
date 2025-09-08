@@ -1,7 +1,8 @@
 from __future__ import annotations
-from pathlib import Path
-import csv
+
 import argparse
+import csv
+from pathlib import Path
 
 
 def merge_summaries(input_dir: str, out_file: str) -> int:
@@ -22,9 +23,7 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
             with p.open("r", encoding="utf-8-sig", errors="replace", newline="") as f:
                 reader = csv.reader(f, delimiter="\t")
                 local_header = next(reader, None)
-                if not local_header or all(
-                    (c or "").strip() == "" for c in local_header
-                ):
+                if not local_header or all((c or "").strip() == "" for c in local_header):
                     continue
                 if header is None:
                     header = local_header
@@ -34,7 +33,7 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
                         continue
                     rows.append(row)
         except Exception:
-            # Never explode on import/tests—just skip bad files.
+            # Never explode on import/testsâ€"just skip bad files.
             continue
 
     if header is None:

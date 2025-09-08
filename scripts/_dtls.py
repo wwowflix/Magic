@@ -132,10 +132,7 @@ def part_of_handshake_untrusted(packet: bytes) -> bool:
 # Cannot fail
 def is_client_hello_untrusted(packet: bytes) -> bool:
     try:
-        return (
-            packet[0] == ContentType.handshake
-            and packet[13] == HandshakeType.client_hello
-        )
+        return packet[0] == ContentType.handshake and packet[13] == HandshakeType.client_hello
     except IndexError:
         # Invalid DTLS record
         return False
@@ -401,9 +398,9 @@ def decode_volley_trusted(
             assert msg.msg_seq == fragment.msg_seq
             assert len(msg.body) == fragment.msg_len
 
-            msg.body[
-                fragment.frag_offset : fragment.frag_offset + fragment.frag_len
-            ] = fragment.frag
+            msg.body[fragment.frag_offset : fragment.frag_offset + fragment.frag_len] = (
+                fragment.frag
+            )
 
     return messages
 
@@ -450,12 +447,7 @@ class RecordEncoder:
                 # If message.body is empty, then we still want to encode it in one
                 # fragment, not zero.
                 while frag_offset < len(message.body) or not frags_encoded:
-                    space = (
-                        mtu
-                        - len(packet)
-                        - RECORD_HEADER.size
-                        - HANDSHAKE_MESSAGE_HEADER.size
-                    )
+                    space = mtu - len(packet) - RECORD_HEADER.size - HANDSHAKE_MESSAGE_HEADER.size
                     if space <= 0:
                         packets.append(packet)
                         packet = bytearray()
@@ -827,7 +819,7 @@ class DTLSChannelStatistics:
 class DTLSChannel(trio.abc.Channel[bytes], metaclass=NoPublicConstructor):
     """A DTLS connection.
 
-    This class has no public constructor – you get instances by calling
+    This class has no public constructor â€" you get instances by calling
     `DTLSEndpoint.serve` or `~DTLSEndpoint.connect`.
 
     .. attribute:: endpoint
@@ -894,7 +886,7 @@ class DTLSChannel(trio.abc.Channel[bytes], metaclass=NoPublicConstructor):
     def close(self) -> None:
         """Close this connection.
 
-        `DTLSChannel`\\s don't actually own any OS-level resources – the
+        `DTLSChannel`\\s don't actually own any OS-level resources â€" the
         socket is owned by the `DTLSEndpoint`, not the individual connections. So
         you don't really *have* to call this. But it will interrupt any other tasks
         calling `receive` with a `ClosedResourceError`, and cause future attempts to use
@@ -948,14 +940,14 @@ class DTLSChannel(trio.abc.Channel[bytes], metaclass=NoPublicConstructor):
     async def do_handshake(self, *, initial_retransmit_timeout: float = 1.0) -> None:
         """Perform the handshake.
 
-        Calling this is optional – if you don't, then it will be automatically called
+        Calling this is optional â€" if you don't, then it will be automatically called
         the first time you call `send` or `receive`. But calling it explicitly can be
         useful in case you want to control the retransmit timeout, use a cancel scope to
         place an overall timeout on the handshake, or catch errors from the handshake
         specifically.
 
         It's safe to call this multiple times, or call it simultaneously from multiple
-        tasks – the first call will perform the handshake, and the rest will be no-ops.
+        tasks â€" the first call will perform the handshake, and the rest will be no-ops.
 
         Args:
 
@@ -1122,7 +1114,7 @@ class DTLSChannel(trio.abc.Channel[bytes], metaclass=NoPublicConstructor):
         """Tells Trio the `largest amount of data that can be sent in a single packet to
         this peer <https://en.wikipedia.org/wiki/Maximum_transmission_unit>`__.
 
-        Trio doesn't actually enforce this limit – if you pass a huge packet to `send`,
+        Trio doesn't actually enforce this limit â€" if you pass a huge packet to `send`,
         then we'll dutifully encrypt it and attempt to send it. But calling this method
         does have two useful effects:
 
@@ -1219,9 +1211,7 @@ class DTLSEndpoint:
         # as a peer provides a valid cookie, we can immediately tear down the
         # old connection.
         # {remote address: DTLSChannel}
-        self._streams: WeakValueDictionary[AddressFormat, DTLSChannel] = (
-            WeakValueDictionary()
-        )
+        self._streams: WeakValueDictionary[AddressFormat, DTLSChannel] = WeakValueDictionary()
         self._listening_context: SSL.Context | None = None
         self._listening_key: bytes | None = None
         self._incoming_connections_q = _Queue[DTLSChannel](float("inf"))
@@ -1356,7 +1346,7 @@ class DTLSEndpoint:
         """Initiate an outgoing DTLS connection.
 
         Notice that this is a synchronous method. That's because it doesn't actually
-        initiate any I/O – it just sets up a `DTLSChannel` object. The actual handshake
+        initiate any I/O â€" it just sets up a `DTLSChannel` object. The actual handshake
         doesn't occur until you start using the `DTLSChannel`. This gives you a chance
         to do further configuration first, like setting MTU etc.
 

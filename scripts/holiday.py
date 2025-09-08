@@ -522,7 +522,7 @@ USMartinLutherKingJr = Holiday(
     day=1,
     offset=DateOffset(weekday=MO(3)),
 )
-USPresidentsDay = Holiday("Washington’s Birthday", month=2, day=1, offset=DateOffset(weekday=MO(3)))
+USPresidentsDay = Holiday("Washington's Birthday", month=2, day=1, offset=DateOffset(weekday=MO(3)))
 GoodFriday = Holiday("Good Friday", month=1, day=1, offset=[Easter(), Day(-2)])
 
 EasterMonday = Holiday("Easter Monday", month=1, day=1, offset=[Easter(), Day(1)])

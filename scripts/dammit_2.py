@@ -130,13 +130,13 @@ class EntitySubstitution(object):
 
         This function sets the following class variables:
 
-        CHARACTER_TO_HTML_ENTITY - A mapping of Unicode strings like "â¦¨" to
+        CHARACTER_TO_HTML_ENTITY - A mapping of Unicode strings like "Ã¢Â¦Â¨" to
         entity names like "angmsdaa". When a single Unicode string has
         multiple entity names, we try to choose the most commonly-used
         name.
 
         HTML_ENTITY_TO_CHARACTER: A mapping of entity names like "angmsdaa" to
-        Unicode strings like "â¦¨".
+        Unicode strings like "Ã¢Â¦Â¨".
 
         CHARACTER_TO_HTML_ENTITY_RE: A regular expression matching (almost) any
         Unicode string that corresponds to an HTML5 named entity.
@@ -1023,8 +1023,8 @@ class UnicodeDammit:
     }
 
     #: A parochial partial mapping of ISO-Latin-1 to ASCII. Contains
-    #: horrors like stripping diacritical marks to turn Ã¡ into a, but also
-    #: contains non-horrors like turning â€œ into ".
+    #: horrors like stripping diacritical marks to turn ÃƒÂ¡ into a, but also
+    #: contains non-horrors like turning Ã¢â‚¬Å" into ".
     #:
     #: Seriously, don't use this for anything other than removing smart
     #: quotes.
@@ -1170,128 +1170,128 @@ class UnicodeDammit:
     #:
     #: :meta hide-value:
     WINDOWS_1252_TO_UTF8: Dict[int, bytes] = {
-        0x80: b"\xe2\x82\xac",  # â‚¬
-        0x82: b"\xe2\x80\x9a",  # â€š
-        0x83: b"\xc6\x92",  # Æ’
-        0x84: b"\xe2\x80\x9e",  # â€ž
-        0x85: b"\xe2\x80\xa6",  # â€¦
-        0x86: b"\xe2\x80\xa0",  # â€
-        0x87: b"\xe2\x80\xa1",  # â€¡
-        0x88: b"\xcb\x86",  # Ë†
-        0x89: b"\xe2\x80\xb0",  # â€°
-        0x8A: b"\xc5\xa0",  # Å
-        0x8B: b"\xe2\x80\xb9",  # â€¹
-        0x8C: b"\xc5\x92",  # Å’
-        0x8E: b"\xc5\xbd",  # Å½
-        0x91: b"\xe2\x80\x98",  # â€˜
-        0x92: b"\xe2\x80\x99",  # â€™
-        0x93: b"\xe2\x80\x9c",  # â€œ
-        0x94: b"\xe2\x80\x9d",  # â€
-        0x95: b"\xe2\x80\xa2",  # â€¢
-        0x96: b"\xe2\x80\x93",  # â€“
-        0x97: b"\xe2\x80\x94",  # â€”
-        0x98: b"\xcb\x9c",  # Ëœ
-        0x99: b"\xe2\x84\xa2",  # â„¢
-        0x9A: b"\xc5\xa1",  # Å¡
-        0x9B: b"\xe2\x80\xba",  # â€º
-        0x9C: b"\xc5\x93",  # Å“
-        0x9E: b"\xc5\xbe",  # Å¾
-        0x9F: b"\xc5\xb8",  # Å¸
+        0x80: b"\xe2\x82\xac",  # Ã¢â€šÂ¬
+        0x82: b"\xe2\x80\x9a",  # Ã¢â‚¬Å¡
+        0x83: b"\xc6\x92",  # Ã†â€™
+        0x84: b"\xe2\x80\x9e",  # Ã¢â‚¬Å¾
+        0x85: b"\xe2\x80\xa6",  # Ã¢â‚¬Â¦
+        0x86: b"\xe2\x80\xa0",  # Ã¢â‚¬
+        0x87: b"\xe2\x80\xa1",  # Ã¢â‚¬Â¡
+        0x88: b"\xcb\x86",  # Ã‹â€
+        0x89: b"\xe2\x80\xb0",  # Ã¢â‚¬Â°
+        0x8A: b"\xc5\xa0",  # Ã...
+        0x8B: b"\xe2\x80\xb9",  # Ã¢â‚¬Â¹
+        0x8C: b"\xc5\x92",  # Ã...â€™
+        0x8E: b"\xc5\xbd",  # Ã...Â½
+        0x91: b"\xe2\x80\x98",  # Ã¢â‚¬Ëœ
+        0x92: b"\xe2\x80\x99",  # Ã¢â‚¬â„¢
+        0x93: b"\xe2\x80\x9c",  # Ã¢â‚¬Å"
+        0x94: b"\xe2\x80\x9d",  # Ã¢â‚¬Â
+        0x95: b"\xe2\x80\xa2",  # Ã¢â‚¬Â¢
+        0x96: b"\xe2\x80\x93",  # Ã¢â‚¬â€œ
+        0x97: b"\xe2\x80\x94",  # Ã¢â‚¬â€
+        0x98: b"\xcb\x9c",  # Ã‹Å"
+        0x99: b"\xe2\x84\xa2",  # Ã¢â€žÂ¢
+        0x9A: b"\xc5\xa1",  # Ã...Â¡
+        0x9B: b"\xe2\x80\xba",  # Ã¢â‚¬Âº
+        0x9C: b"\xc5\x93",  # Ã...â€œ
+        0x9E: b"\xc5\xbe",  # Ã...Â¾
+        0x9F: b"\xc5\xb8",  # Ã...Â¸
         0xA0: b"\xc2\xa0",  #
-        0xA1: b"\xc2\xa1",  # Â¡
-        0xA2: b"\xc2\xa2",  # Â¢
-        0xA3: b"\xc2\xa3",  # Â£
-        0xA4: b"\xc2\xa4",  # Â¤
-        0xA5: b"\xc2\xa5",  # Â¥
-        0xA6: b"\xc2\xa6",  # Â¦
-        0xA7: b"\xc2\xa7",  # Â§
-        0xA8: b"\xc2\xa8",  # Â¨
-        0xA9: b"\xc2\xa9",  # Â©
-        0xAA: b"\xc2\xaa",  # Âª
-        0xAB: b"\xc2\xab",  # Â
-        0xAC: b"\xc2\xac",  # Â¬
-        0xAD: b"\xc2\xad",  # Â­
-        0xAE: b"\xc2\xae",  # Â®
-        0xAF: b"\xc2\xaf",  # Â¯
-        0xB0: b"\xc2\xb0",  # Â°
-        0xB1: b"\xc2\xb1",  # Â±
-        0xB2: b"\xc2\xb2",  # Â²
-        0xB3: b"\xc2\xb3",  # Â³
-        0xB4: b"\xc2\xb4",  # Â´
-        0xB5: b"\xc2\xb5",  # Âµ
-        0xB6: b"\xc2\xb6",  # Â¶
-        0xB7: b"\xc2\xb7",  # Â·
-        0xB8: b"\xc2\xb8",  # Â¸
-        0xB9: b"\xc2\xb9",  # Â¹
-        0xBA: b"\xc2\xba",  # Âº
-        0xBB: b"\xc2\xbb",  # Â
-        0xBC: b"\xc2\xbc",  # Â¼
-        0xBD: b"\xc2\xbd",  # Â½
-        0xBE: b"\xc2\xbe",  # Â¾
-        0xBF: b"\xc2\xbf",  # Â¿
-        0xC0: b"\xc3\x80",  # Ã€
-        0xC1: b"\xc3\x81",  # Ã
-        0xC2: b"\xc3\x82",  # Ã‚
-        0xC3: b"\xc3\x83",  # Ãƒ
-        0xC4: b"\xc3\x84",  # Ã„
-        0xC5: b"\xc3\x85",  # Ã…
-        0xC6: b"\xc3\x86",  # Ã†
-        0xC7: b"\xc3\x87",  # Ã‡
-        0xC8: b"\xc3\x88",  # Ãˆ
-        0xC9: b"\xc3\x89",  # Ã‰
-        0xCA: b"\xc3\x8a",  # ÃŠ
-        0xCB: b"\xc3\x8b",  # Ã‹
-        0xCC: b"\xc3\x8c",  # ÃŒ
-        0xCD: b"\xc3\x8d",  # Ã
-        0xCE: b"\xc3\x8e",  # ÃŽ
-        0xCF: b"\xc3\x8f",  # Ã
-        0xD0: b"\xc3\x90",  # Ã
-        0xD1: b"\xc3\x91",  # Ã‘
-        0xD2: b"\xc3\x92",  # Ã’
-        0xD3: b"\xc3\x93",  # Ã“
-        0xD4: b"\xc3\x94",  # Ã”
-        0xD5: b"\xc3\x95",  # Ã•
-        0xD6: b"\xc3\x96",  # Ã–
-        0xD7: b"\xc3\x97",  # Ã—
-        0xD8: b"\xc3\x98",  # Ã˜
-        0xD9: b"\xc3\x99",  # Ã™
-        0xDA: b"\xc3\x9a",  # Ãš
-        0xDB: b"\xc3\x9b",  # Ã›
-        0xDC: b"\xc3\x9c",  # Ãœ
-        0xDD: b"\xc3\x9d",  # Ã
-        0xDE: b"\xc3\x9e",  # Ãž
-        0xDF: b"\xc3\x9f",  # ÃŸ
-        0xE0: b"\xc3\xa0",  # Ã
-        0xE1: b"\xa1",  # Ã¡
-        0xE2: b"\xc3\xa2",  # Ã¢
-        0xE3: b"\xc3\xa3",  # Ã£
-        0xE4: b"\xc3\xa4",  # Ã¤
-        0xE5: b"\xc3\xa5",  # Ã¥
-        0xE6: b"\xc3\xa6",  # Ã¦
-        0xE7: b"\xc3\xa7",  # Ã§
-        0xE8: b"\xc3\xa8",  # Ã¨
-        0xE9: b"\xc3\xa9",  # Ã©
-        0xEA: b"\xc3\xaa",  # Ãª
-        0xEB: b"\xc3\xab",  # Ã
-        0xEC: b"\xc3\xac",  # Ã¬
-        0xED: b"\xc3\xad",  # Ã­
-        0xEE: b"\xc3\xae",  # Ã®
-        0xEF: b"\xc3\xaf",  # Ã¯
-        0xF0: b"\xc3\xb0",  # Ã°
-        0xF1: b"\xc3\xb1",  # Ã±
-        0xF2: b"\xc3\xb2",  # Ã²
-        0xF3: b"\xc3\xb3",  # Ã³
-        0xF4: b"\xc3\xb4",  # Ã´
-        0xF5: b"\xc3\xb5",  # Ãµ
-        0xF6: b"\xc3\xb6",  # Ã¶
-        0xF7: b"\xc3\xb7",  # Ã·
-        0xF8: b"\xc3\xb8",  # Ã¸
-        0xF9: b"\xc3\xb9",  # Ã¹
-        0xFA: b"\xc3\xba",  # Ãº
-        0xFB: b"\xc3\xbb",  # Ã
-        0xFC: b"\xc3\xbc",  # Ã¼
-        0xFD: b"\xc3\xbd",  # Ã½
-        0xFE: b"\xc3\xbe",  # Ã¾
+        0xA1: b"\xc2\xa1",  # Ã‚Â¡
+        0xA2: b"\xc2\xa2",  # Ã‚Â¢
+        0xA3: b"\xc2\xa3",  # Ã‚Â£
+        0xA4: b"\xc2\xa4",  # Ã‚Â¤
+        0xA5: b"\xc2\xa5",  # Ã‚Â¥
+        0xA6: b"\xc2\xa6",  # Ã‚Â¦
+        0xA7: b"\xc2\xa7",  # Ã‚Â§
+        0xA8: b"\xc2\xa8",  # Ã‚Â¨
+        0xA9: b"\xc2\xa9",  # Ã‚Â©
+        0xAA: b"\xc2\xaa",  # Ã‚Âª
+        0xAB: b"\xc2\xab",  # Ã‚
+        0xAC: b"\xc2\xac",  # Ã‚Â¬
+        0xAD: b"\xc2\xad",  # Ã‚Â­
+        0xAE: b"\xc2\xae",  # Ã‚Â®
+        0xAF: b"\xc2\xaf",  # Ã‚Â¯
+        0xB0: b"\xc2\xb0",  # Ã‚Â°
+        0xB1: b"\xc2\xb1",  # Ã‚Â±
+        0xB2: b"\xc2\xb2",  # Ã‚Â²
+        0xB3: b"\xc2\xb3",  # Ã‚Â³
+        0xB4: b"\xc2\xb4",  # Ã‚Â´
+        0xB5: b"\xc2\xb5",  # Ã‚Âµ
+        0xB6: b"\xc2\xb6",  # Ã‚Â¶
+        0xB7: b"\xc2\xb7",  # Ã‚Â·
+        0xB8: b"\xc2\xb8",  # Ã‚Â¸
+        0xB9: b"\xc2\xb9",  # Ã‚Â¹
+        0xBA: b"\xc2\xba",  # Ã‚Âº
+        0xBB: b"\xc2\xbb",  # Ã‚
+        0xBC: b"\xc2\xbc",  # Ã‚Â¼
+        0xBD: b"\xc2\xbd",  # Ã‚Â½
+        0xBE: b"\xc2\xbe",  # Ã‚Â¾
+        0xBF: b"\xc2\xbf",  # Ã‚Â¿
+        0xC0: b"\xc3\x80",  # Ãƒâ‚¬
+        0xC1: b"\xc3\x81",  # ÃƒÂ
+        0xC2: b"\xc3\x82",  # Ãƒâ€š
+        0xC3: b"\xc3\x83",  # ÃƒÆ'
+        0xC4: b"\xc3\x84",  # Ãƒâ€ž
+        0xC5: b"\xc3\x85",  # Ãƒâ€¦
+        0xC6: b"\xc3\x86",  # Ãƒâ€
+        0xC7: b"\xc3\x87",  # Ãƒâ€¡
+        0xC8: b"\xc3\x88",  # ÃƒË†
+        0xC9: b"\xc3\x89",  # Ãƒâ€°
+        0xCA: b"\xc3\x8a",  # ÃƒÅ
+        0xCB: b"\xc3\x8b",  # Ãƒâ€¹
+        0xCC: b"\xc3\x8c",  # ÃƒÅ'
+        0xCD: b"\xc3\x8d",  # ÃƒÂ
+        0xCE: b"\xc3\x8e",  # ÃƒÅ½
+        0xCF: b"\xc3\x8f",  # ÃƒÂ
+        0xD0: b"\xc3\x90",  # ÃƒÂ
+        0xD1: b"\xc3\x91",  # Ãƒâ€˜
+        0xD2: b"\xc3\x92",  # Ãƒâ€™
+        0xD3: b"\xc3\x93",  # Ãƒâ€œ
+        0xD4: b"\xc3\x94",  # Ãƒâ€
+        0xD5: b"\xc3\x95",  # Ãƒâ€¢
+        0xD6: b"\xc3\x96",  # Ãƒâ€"
+        0xD7: b"\xc3\x97",  # Ãƒâ€"
+        0xD8: b"\xc3\x98",  # ÃƒËœ
+        0xD9: b"\xc3\x99",  # Ãƒâ„¢
+        0xDA: b"\xc3\x9a",  # ÃƒÅ¡
+        0xDB: b"\xc3\x9b",  # Ãƒâ€º
+        0xDC: b"\xc3\x9c",  # ÃƒÅ"
+        0xDD: b"\xc3\x9d",  # ÃƒÂ
+        0xDE: b"\xc3\x9e",  # ÃƒÅ¾
+        0xDF: b"\xc3\x9f",  # ÃƒÅ¸
+        0xE0: b"\xc3\xa0",  # Ãƒ
+        0xE1: b"\xa1",  # ÃƒÂ¡
+        0xE2: b"\xc3\xa2",  # ÃƒÂ¢
+        0xE3: b"\xc3\xa3",  # ÃƒÂ£
+        0xE4: b"\xc3\xa4",  # ÃƒÂ¤
+        0xE5: b"\xc3\xa5",  # ÃƒÂ¥
+        0xE6: b"\xc3\xa6",  # ÃƒÂ¦
+        0xE7: b"\xc3\xa7",  # ÃƒÂ§
+        0xE8: b"\xc3\xa8",  # ÃƒÂ¨
+        0xE9: b"\xc3\xa9",  # ÃƒÂ©
+        0xEA: b"\xc3\xaa",  # ÃƒÂª
+        0xEB: b"\xc3\xab",  # Ãƒ
+        0xEC: b"\xc3\xac",  # ÃƒÂ¬
+        0xED: b"\xc3\xad",  # ÃƒÂ­
+        0xEE: b"\xc3\xae",  # ÃƒÂ®
+        0xEF: b"\xc3\xaf",  # ÃƒÂ¯
+        0xF0: b"\xc3\xb0",  # ÃƒÂ°
+        0xF1: b"\xc3\xb1",  # ÃƒÂ±
+        0xF2: b"\xc3\xb2",  # ÃƒÂ²
+        0xF3: b"\xc3\xb3",  # ÃƒÂ³
+        0xF4: b"\xc3\xb4",  # ÃƒÂ´
+        0xF5: b"\xc3\xb5",  # ÃƒÂµ
+        0xF6: b"\xc3\xb6",  # ÃƒÂ¶
+        0xF7: b"\xc3\xb7",  # ÃƒÂ·
+        0xF8: b"\xc3\xb8",  # ÃƒÂ¸
+        0xF9: b"\xc3\xb9",  # ÃƒÂ¹
+        0xFA: b"\xc3\xba",  # ÃƒÂº
+        0xFB: b"\xc3\xbb",  # Ãƒ
+        0xFC: b"\xc3\xbc",  # ÃƒÂ¼
+        0xFD: b"\xc3\xbd",  # ÃƒÂ½
+        0xFE: b"\xc3\xbe",  # ÃƒÂ¾
     }
 
     #: :meta private:

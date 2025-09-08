@@ -2436,9 +2436,7 @@ add_newdoc(
 add_newdoc("numpy.core.multiarray", "ndarray", ("__array_finalize__", """None."""))
 
 
-add_newdoc(
-    "numpy.core.multiarray", "ndarray", ("__array_priority__", """Array priority.""")
-)
+add_newdoc("numpy.core.multiarray", "ndarray", ("__array_priority__", """Array priority."""))
 
 
 add_newdoc(
@@ -7166,29 +7164,17 @@ def refer_to_array_attribute(attr, method=True):
     return attr, docstring.format("method" if method else "attribute", attr)
 
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", refer_to_array_attribute("T", method=False)
-)
+add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("T", method=False))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", refer_to_array_attribute("base", method=False)
-)
+add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("base", method=False))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("data", """Pointer to start of data.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("data", """Pointer to start of data."""))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("dtype", """Get array data-descriptor.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("dtype", """Get array data-descriptor."""))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("flags", """The integer value of flags.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("flags", """The integer value of flags."""))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("flat", """A 1-D view of the scalar.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("flat", """A 1-D view of the scalar."""))
 
 add_newdoc(
     "numpy.core.numerictypes",
@@ -7214,13 +7200,9 @@ add_newdoc(
     ("ndim", """The number of array dimensions."""),
 )
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("real", """The real part of the scalar.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("real", """The real part of the scalar."""))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", ("shape", """Tuple of array dimensions.""")
-)
+add_newdoc("numpy.core.numerictypes", "generic", ("shape", """Tuple of array dimensions."""))
 
 add_newdoc(
     "numpy.core.numerictypes",
@@ -7341,9 +7323,7 @@ add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("resiz
 
 add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("round"))
 
-add_newdoc(
-    "numpy.core.numerictypes", "generic", refer_to_array_attribute("searchsorted")
-)
+add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("searchsorted"))
 
 add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("setfield"))
 

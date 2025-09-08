@@ -30,13 +30,9 @@ class TestFFTShift:
         freqs = [[0, 1, 2], [3, 4, -4], [-3, -2, -1]]
         shifted = [[-1, -3, -2], [2, 0, 1], [-4, 3, 4]]
         assert_array_almost_equal(fft.fftshift(freqs, axes=(0, 1)), shifted)
-        assert_array_almost_equal(
-            fft.fftshift(freqs, axes=0), fft.fftshift(freqs, axes=(0,))
-        )
+        assert_array_almost_equal(fft.fftshift(freqs, axes=0), fft.fftshift(freqs, axes=(0,)))
         assert_array_almost_equal(fft.ifftshift(shifted, axes=(0, 1)), freqs)
-        assert_array_almost_equal(
-            fft.ifftshift(shifted, axes=0), fft.ifftshift(shifted, axes=(0,))
-        )
+        assert_array_almost_equal(fft.ifftshift(shifted, axes=0), fft.ifftshift(shifted, axes=(0,)))
 
         assert_array_almost_equal(fft.fftshift(freqs), shifted)
         assert_array_almost_equal(fft.ifftshift(shifted), freqs)

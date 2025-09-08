@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import argparse
 import json
 import sys
@@ -94,9 +95,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="create_manifest")
     parser.add_argument("--scripts-root", default=str(Path.cwd() / "scripts"))
     parser.add_argument("--out", default=str(Path.cwd() / "phase_manifest.json"))
-    parser.add_argument(
-        "scripts_root_pos", nargs="?", help="Optional positional scripts_root"
-    )
+    parser.add_argument("scripts_root_pos", nargs="?", help="Optional positional scripts_root")
     parser.add_argument("out_pos", nargs="?", help="Optional positional output path")
     parser.add_argument(
         "--compact", action="store_true", help="Write compact JSON (no pretty indent)"
@@ -108,16 +107,12 @@ def main(argv: list[str] | None = None) -> int:
     # Only honor positionals if BOTH are provided (avoids pytest sys.argv pollution)
     use_positional = bool(args.scripts_root_pos and args.out_pos)
 
-    scripts_root = Path(
-        args.scripts_root_pos if use_positional else args.scripts_root
-    ).resolve()
+    scripts_root = Path(args.scripts_root_pos if use_positional else args.scripts_root).resolve()
     out_path = Path(args.out_pos if use_positional else args.out).resolve()
 
     manifest = generate_manifest(scripts_root)
 
-    payload = (
-        {"count": len(manifest), "entries": manifest} if use_positional else manifest
-    )
+    payload = {"count": len(manifest), "entries": manifest} if use_positional else manifest
     indent = None if args.compact else 2
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

@@ -5,9 +5,7 @@ import time
 TOKEN = os.getenv("NOTION_TOKEN")
 DB_ID = os.getenv("NOTION_DATABASE_ID")
 if not TOKEN or not DB_ID:
-    raise RuntimeError(
-        "Make sure NOTION_TOKEN and NOTION_DATABASE_ID are set in your env"
-    )
+    raise RuntimeError("Make sure NOTION_TOKEN and NOTION_DATABASE_ID are set in your env")
 
 headers = {
     "Authorization": f"Bearer {TOKEN}",
@@ -41,9 +39,7 @@ print(f"Found {len(all_pages)} pages to archiveâ€¦")
 for page in all_pages:
     page_id = page["id"]
     patch = {"archived": True}
-    r = requests.patch(
-        f"https://api.notion.com/v1/pages/{page_id}", headers=headers, json=patch
-    )
+    r = requests.patch(f"https://api.notion.com/v1/pages/{page_id}", headers=headers, json=patch)
     if r.status_code == 200:
         print("âœ… Archived", page_id)
     else:

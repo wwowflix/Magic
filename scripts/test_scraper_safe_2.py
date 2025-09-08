@@ -1,4 +1,4 @@
-# ✅ test_scraper_safe.py — Pure snscrape + pandas, NO numpy
+# âœ... test_scraper_safe.py â€" Pure snscrape + pandas, NO numpy
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 
@@ -19,4 +19,4 @@ for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
 
 df = pd.DataFrame(tweets)
 df.to_csv("outputs/twitter_trends.csv", index=False)
-print("✅ Twitter trends saved to outputs/twitter_trends.csv")
+print("âœ... Twitter trends saved to outputs/twitter_trends.csv")

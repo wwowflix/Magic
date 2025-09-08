@@ -10,17 +10,17 @@ def main():
     database_id = os.getenv("NOTION_DATABASE_ID")
 
     if not notion_token or not database_id:
-        print("âŒ Missing NOTION_TOKEN or NOTION_DATABASE_ID in .env")
+        print("â��' Missing NOTION_TOKEN or NOTION_DATABASE_ID in .env")
         return
 
     notion = Client(auth=notion_token)
 
     try:
         response = notion.databases.retrieve(database_id=database_id)
-        print("âœ… Connection successful!")
+        print("â�"… Connection successful!")
         print(f"Database title: {response['title'][0]['plain_text']}")
     except Exception as e:
-        print(f"âŒ Connection failed: {e}")
+        print(f"â��' Connection failed: {e}")
 
 
 if __name__ == "__main__":

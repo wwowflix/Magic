@@ -162,9 +162,7 @@ def deprecate_kwarg(
     should raise warning
     """
     if mapping is not None and not hasattr(mapping, "get") and not callable(mapping):
-        raise TypeError(
-            "mapping from old to new argument values must be dict or callable!"
-        )
+        raise TypeError("mapping from old to new argument values must be dict or callable!")
 
     def _deprecate_kwarg(func: F) -> F:
         @wraps(func)
@@ -298,8 +296,7 @@ def deprecate_nonkeyword_arguments(
             allow_args = [
                 p.name
                 for p in old_sig.parameters.values()
-                if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
-                and p.default is p.empty
+                if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD) and p.default is p.empty
             ]
 
         new_params = [

@@ -64,15 +64,11 @@ class TestRecFunctions:
 
         # Standard & nested dtype
         test = zip_descr((x, w), flatten=True)
-        assert_equal(
-            test, np.dtype([("", int), ("a", int), ("ba", float), ("bb", int)])
-        )
+        assert_equal(test, np.dtype([("", int), ("a", int), ("ba", float), ("bb", int)]))
         test = zip_descr((x, w), flatten=False)
         assert_equal(
             test,
-            np.dtype(
-                [("", int), ("", [("a", int), ("b", [("ba", float), ("bb", int)])])]
-            ),
+            np.dtype([("", int), ("", [("a", int), ("b", [("ba", float), ("bb", int)])])]),
         )
 
     def test_drop_fields(self):
@@ -84,9 +80,7 @@ class TestRecFunctions:
 
         # A basic field
         test = drop_fields(a, "a")
-        control = np.array(
-            [((2, 3.0),), ((5, 6.0),)], dtype=[("b", [("ba", float), ("bb", int)])]
-        )
+        control = np.array([((2, 3.0),), ((5, 6.0),)], dtype=[("b", [("ba", float), ("bb", int)])])
         assert_equal(test, control)
 
         # Another basic field (but nesting two fields)
@@ -101,9 +95,7 @@ class TestRecFunctions:
                 "ba",
             ],
         )
-        control = np.array(
-            [(1, (3.0,)), (4, (6.0,))], dtype=[("a", int), ("b", [("bb", int)])]
-        )
+        control = np.array([(1, (3.0,)), (4, (6.0,))], dtype=[("a", int), ("b", [("bb", int)])])
         assert_equal(test, control)
 
         # All the nested sub-field from a field: zap that field
@@ -188,9 +180,7 @@ class TestRecFunctions:
         )
 
         # One 2-nested fields
-        ndtype = np.dtype(
-            [("A", int), ("B", [("BA", int), ("BB", [("BBA", int), ("BBB", int)])])]
-        )
+        ndtype = np.dtype([("A", int), ("B", [("BA", int), ("BB", [("BBA", int), ("BBB", int)])])])
         test = get_fieldstructure(ndtype)
         control = {
             "A": [],
@@ -315,9 +305,7 @@ class TestRecFunctions:
             apply_along_fields(np.mean, d),
             np.array([8.0 / 3, 16.0 / 3, 26.0 / 3, 11.0]),
         )
-        assert_equal(
-            apply_along_fields(np.mean, d[["x", "z"]]), np.array([3.0, 5.5, 9.0, 11.0])
-        )
+        assert_equal(apply_along_fields(np.mean, d[["x", "z"]]), np.array([3.0, 5.5, 9.0, 11.0]))
 
         # check that for uniform field dtypes we get a view, not a copy:
         d = np.array(
@@ -432,9 +420,7 @@ class TestRecFunctions:
         assert_equal(ddd, dd_expected)
 
         # memmap
-        d = np.memmap(
-            tmp_path / "memmap", mode="w+", dtype=d_plain.dtype, shape=d_plain.shape
-        )
+        d = np.memmap(tmp_path / "memmap", mode="w+", dtype=d_plain.dtype, shape=d_plain.shape)
         d[:] = d_plain
         dd = structured_to_unstructured(d, copy=False)
         ddd = structured_to_unstructured(d, copy=True)
@@ -488,9 +474,7 @@ class TestRecursiveFillFields:
         a = np.array([(1, 10.0), (2, 20.0)], dtype=[("A", int), ("B", float)])
         b = np.zeros((3,), dtype=a.dtype)
         test = recursive_fill_fields(a, b)
-        control = np.array(
-            [(1, 10.0), (2, 20.0), (0, 0.0)], dtype=[("A", int), ("B", float)]
-        )
+        control = np.array([(1, 10.0), (2, 20.0), (0, 0.0)], dtype=[("A", int), ("B", float)])
         assert_equal(test, control)
 
     def test_masked_flexible(self):
@@ -560,9 +544,7 @@ class TestMergeArrays:
         # Test merge arrays
         (_, x, y, _) = self.data
         test = merge_arrays((x, y), usemask=False)
-        control = np.array(
-            [(1, 10), (2, 20), (-1, 30)], dtype=[("f0", int), ("f1", int)]
-        )
+        control = np.array([(1, 10), (2, 20), (-1, 30)], dtype=[("f0", int), ("f1", int)])
         assert_equal(test, control)
 
         test = merge_arrays((x, y), usemask=True)
@@ -606,9 +588,7 @@ class TestMergeArrays:
             ("f0", int),
             ("f1", [("a", int), ("b", [("ba", float), ("bb", int), ("bc", [])])]),
         ]
-        control = np.array(
-            [(1.0, (1, (2, 3.0, ()))), (2, (4, (5, 6.0, ())))], dtype=controldtype
-        )
+        control = np.array([(1.0, (1, (2, 3.0, ()))), (2, (4, (5, 6.0, ())))], dtype=controldtype)
         assert_equal(test, control)
 
     def test_wmasked_arrays(self):
@@ -891,9 +871,7 @@ class TestStackArrays:
         a = ma.array([(1, 2, 3)], mask=[(0, 1, 0)], dtype=adtype)
         bdtype = [("A", int), ("B", float), ("C", float)]
         b = ma.array([(4, 5, 6)], dtype=bdtype)
-        control = ma.array(
-            [(1, 2, 3), (4, 5, 6)], mask=[(0, 1, 0), (0, 0, 0)], dtype=bdtype
-        )
+        control = ma.array([(1, 2, 3), (4, 5, 6)], mask=[(0, 1, 0), (0, 0, 0)], dtype=bdtype)
         test = stack_arrays((a, b), autoconvert=True)
         assert_equal(test, control)
         assert_equal(test.mask, control.mask)
@@ -907,9 +885,7 @@ class TestStackArrays:
         bdtype = [(("a", "A"), int), (("b", "B"), bool), (("c", "C"), float)]
         b = ma.array([(4, 5, 6)], dtype=bdtype)
         test = stack_arrays((a, b))
-        control = ma.array(
-            [(1, 2, 3), (4, 5, 6)], mask=[(0, 1, 0), (0, 0, 0)], dtype=bdtype
-        )
+        control = ma.array([(1, 2, 3), (4, 5, 6)], mask=[(0, 1, 0), (0, 0, 0)], dtype=bdtype)
         assert_equal(test, control)
         assert_equal(test.mask, control.mask)
 
@@ -998,9 +974,7 @@ class TestJoinBy:
     def test_join_subdtype(self):
         # tests the bug in https://stackoverflow.com/q/44769632/102441
         foo = np.array([(1,)], dtype=[("key", int)])
-        bar = np.array(
-            [(1, np.array([1, 2, 3]))], dtype=[("key", int), ("value", "uint16", 3)]
-        )
+        bar = np.array([(1, np.array([1, 2, 3]))], dtype=[("key", int), ("value", "uint16", 3)])
         res = join_by("key", foo, bar)
         assert_equal(res, bar.view(ma.MaskedArray))
 
@@ -1106,9 +1080,7 @@ class TestJoinBy:
     def test_same_name_different_dtypes_key(self):
         a_dtype = np.dtype([("key", "S5"), ("value", "<f4")])
         b_dtype = np.dtype([("key", "S10"), ("value", "<f4")])
-        expected_dtype = np.dtype(
-            [("key", "S10"), ("value1", "<f4"), ("value2", "<f4")]
-        )
+        expected_dtype = np.dtype([("key", "S10"), ("value1", "<f4"), ("value2", "<f4")])
 
         a = np.array([("Sarah", 8.0), ("John", 6.0)], dtype=a_dtype)
         b = np.array([("Sarah", 10.0), ("John", 7.0)], dtype=b_dtype)
@@ -1120,9 +1092,7 @@ class TestJoinBy:
         # gh-9338
         a_dtype = np.dtype([("key", "S10"), ("value", "<f4")])
         b_dtype = np.dtype([("key", "S10"), ("value", "<f8")])
-        expected_dtype = np.dtype(
-            [("key", "|S10"), ("value1", "<f4"), ("value2", "<f8")]
-        )
+        expected_dtype = np.dtype([("key", "|S10"), ("value1", "<f4"), ("value2", "<f8")])
 
         a = np.array([("Sarah", 8.0), ("John", 6.0)], dtype=a_dtype)
         b = np.array([("Sarah", 10.0), ("John", 7.0)], dtype=b_dtype)
@@ -1194,9 +1164,7 @@ class TestJoinBy2:
         assert_equal(test, control)
 
     def test_no_postfix(self):
-        assert_raises(
-            ValueError, join_by, "a", self.a, self.b, r1postfix="", r2postfix=""
-        )
+        assert_raises(ValueError, join_by, "a", self.a, self.b, r1postfix="", r2postfix="")
 
     def test_no_r2postfix(self):
         # Basic test of join_by no_r2postfix

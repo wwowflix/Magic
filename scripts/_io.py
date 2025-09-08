@@ -214,14 +214,8 @@ def network(
 
     @wraps(t)
     def wrapper(*args, **kwargs):
-        if (
-            check_before_test
-            and not raise_on_error
-            and not can_connect(url, error_classes)
-        ):
-            pytest.skip(
-                f"May not have network connectivity because cannot connect to {url}"
-            )
+        if check_before_test and not raise_on_error and not can_connect(url, error_classes):
+            pytest.skip(f"May not have network connectivity because cannot connect to {url}")
         try:
             return t(*args, **kwargs)
         except Exception as err:
@@ -236,16 +230,12 @@ def network(
             e_str = str(err)
 
             if any(m.lower() in e_str.lower() for m in _skip_on_messages):
-                pytest.skip(
-                    f"Skipping test because exception message is known and error {err}"
-                )
+                pytest.skip(f"Skipping test because exception message is known and error {err}")
 
             if not isinstance(err, error_classes) or raise_on_error:
                 raise
             else:
-                pytest.skip(
-                    f"Skipping test due to lack of connectivity and error {err}"
-                )
+                pytest.skip(f"Skipping test due to lack of connectivity and error {err}")
 
     return wrapper
 

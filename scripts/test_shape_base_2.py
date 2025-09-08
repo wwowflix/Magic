@@ -164,9 +164,7 @@ class TestApplyAlongAxis:
 
         a = np.zeros((6, 3)).view(MinimalSubclass)
 
-        assert_array_equal(
-            apply_along_axis(minimal_function, 0, a), np.array([1, 1, 1])
-        )
+        assert_array_equal(apply_along_axis(minimal_function, 0, a), np.array([1, 1, 1]))
 
     def test_scalar_array(self, cls=np.ndarray):
         a = np.ones((6, 3)).view(cls)
@@ -199,17 +197,13 @@ class TestApplyAlongAxis:
 
         # 2d insertion along first axis
         actual = apply_along_axis(f1to2, 0, a2d)
-        expected = np.stack(
-            [f1to2(a2d[:, i]) for i in range(a2d.shape[1])], axis=-1
-        ).view(cls)
+        expected = np.stack([f1to2(a2d[:, i]) for i in range(a2d.shape[1])], axis=-1).view(cls)
         assert_equal(type(actual), type(expected))
         assert_equal(actual, expected)
 
         # 2d insertion along last axis
         actual = apply_along_axis(f1to2, 1, a2d)
-        expected = np.stack(
-            [f1to2(a2d[i, :]) for i in range(a2d.shape[0])], axis=0
-        ).view(cls)
+        expected = np.stack([f1to2(a2d[i, :]) for i in range(a2d.shape[0])], axis=0).view(cls)
         assert_equal(type(actual), type(expected))
         assert_equal(actual, expected)
 
@@ -734,9 +728,7 @@ class TestTile:
         assert_equal(tile(a, (1, 2)), [[0, 1, 2, 0, 1, 2]])
         assert_equal(tile(b, 2), [[1, 2, 1, 2], [3, 4, 3, 4]])
         assert_equal(tile(b, (2, 1)), [[1, 2], [3, 4], [1, 2], [3, 4]])
-        assert_equal(
-            tile(b, (2, 2)), [[1, 2, 1, 2], [3, 4, 3, 4], [1, 2, 1, 2], [3, 4, 3, 4]]
-        )
+        assert_equal(tile(b, (2, 2)), [[1, 2, 1, 2], [3, 4, 3, 4], [1, 2, 1, 2], [3, 4, 3, 4]])
 
     def test_tile_one_repetition_on_array_gh4679(self):
         a = np.arange(5)

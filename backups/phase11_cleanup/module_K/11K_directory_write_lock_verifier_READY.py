@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11K_directory_write_lock_verifier_READY.py
 Description: Checks critical directories for enforced write protection
 Phase 11 - Module K (Permissions & Access Security)

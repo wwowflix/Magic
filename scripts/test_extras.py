@@ -95,14 +95,10 @@ class TestGeneric:
         # Nested dtype
         dt = np.dtype([("a", "f"), ("b", [("ba", "f"), ("bb", "f")])])
         test = masked_all((2,), dtype=dt)
-        control = array(
-            [(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt
-        )
+        control = array([(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt)
         assert_equal(test, control)
         test = masked_all((2,), dtype=dt)
-        control = array(
-            [(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt
-        )
+        control = array([(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt)
         assert_equal(test, control)
         test = masked_all((1, 1), dtype=dt)
         control = array([[(1, (1, 1))]], mask=[[(1, (1, 1))]], dtype=dt)
@@ -145,9 +141,7 @@ class TestGeneric:
         assert_equal(test, control)
         # Nested dtype
         dt = np.dtype([("a", "f"), ("b", [("ba", "f"), ("bb", "f")])])
-        control = array(
-            [(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt
-        )
+        control = array([(1, (1, 1)), (1, (1, 1))], mask=[(1, (1, 1)), (1, (1, 1))], dtype=dt)
         test = masked_all_like(control)
         assert_equal(test, control)
 
@@ -298,9 +292,7 @@ class TestAverage:
         # this test mirrors a test for np.average()
         # in lib/test/test_function_base.py
         y = np.arange(12).reshape(2, 2, 3)
-        w = np.array(
-            [0.0, 0.0, 1.0, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 1.0, 0.0, 0.0]
-        ).reshape(2, 2, 3)
+        w = np.array([0.0, 0.0, 1.0, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 1.0, 0.0, 0.0]).reshape(2, 2, 3)
 
         m = np.full((2, 2, 3), False)
         yma = np.ma.array(y, mask=m)
@@ -329,15 +321,13 @@ class TestAverage:
         # here the weights have the wrong shape for the specified axes
         with pytest.raises(
             ValueError,
-            match="Shape of weights must be consistent with "
-            "shape of a along specified axis",
+            match="Shape of weights must be consistent with " "shape of a along specified axis",
         ):
             average(yma, axis=(0, 1, 2), weights=subw0)
 
         with pytest.raises(
             ValueError,
-            match="Shape of weights must be consistent with "
-            "shape of a along specified axis",
+            match="Shape of weights must be consistent with " "shape of a along specified axis",
         ):
             average(yma, axis=(0, 1), weights=subw1)
 
@@ -385,18 +375,12 @@ class TestAverage:
         assert_almost_equal(wav.imag, expected.imag)
 
         wav0 = average(a, weights=wts, axis=0)
-        expected0 = (
-            average(a.real, weights=wts, axis=0)
-            + average(a.imag, weights=wts, axis=0) * 1j
-        )
+        expected0 = average(a.real, weights=wts, axis=0) + average(a.imag, weights=wts, axis=0) * 1j
         assert_almost_equal(wav0.real, expected0.real)
         assert_almost_equal(wav0.imag, expected0.imag)
 
         wav1 = average(a, weights=wts, axis=1)
-        expected1 = (
-            average(a.real, weights=wts, axis=1)
-            + average(a.imag, weights=wts, axis=1) * 1j
-        )
+        expected1 = average(a.real, weights=wts, axis=1) + average(a.imag, weights=wts, axis=1) * 1j
         assert_almost_equal(wav1.real, expected1.real)
         assert_almost_equal(wav1.imag, expected1.imag)
 
@@ -414,9 +398,7 @@ class TestAverage:
             ),
         ],
     )
-    def test_basic_keepdims(
-        self, x, axis, expected_avg, weights, expected_wavg, expected_wsum
-    ):
+    def test_basic_keepdims(self, x, axis, expected_avg, weights, expected_wavg, expected_wsum):
         avg = np.ma.average(x, axis=axis, keepdims=True)
         assert avg.shape == np.shape(expected_avg)
         assert_array_equal(avg, expected_avg)
@@ -425,9 +407,7 @@ class TestAverage:
         assert wavg.shape == np.shape(expected_wavg)
         assert_array_equal(wavg, expected_wavg)
 
-        wavg, wsum = np.ma.average(
-            x, axis=axis, weights=weights, returned=True, keepdims=True
-        )
+        wavg, wsum = np.ma.average(x, axis=axis, weights=weights, returned=True, keepdims=True)
         assert wavg.shape == np.shape(expected_wavg)
         assert_array_equal(wavg, expected_wavg)
         assert wsum.shape == np.shape(expected_wsum)
@@ -436,9 +416,7 @@ class TestAverage:
     def test_masked_weights(self):
         # Test with masked weights.
         # (Regression test for https://github.com/numpy/numpy/issues/10438)
-        a = np.ma.array(
-            np.arange(9).reshape(3, 3), mask=[[1, 0, 0], [1, 0, 0], [0, 0, 0]]
-        )
+        a = np.ma.array(np.arange(9).reshape(3, 3), mask=[[1, 0, 0], [1, 0, 0], [0, 0, 0]])
         weights_unmasked = masked_array([5, 28, 31], mask=False)
         weights_masked = masked_array([5, 28, 31], mask=[1, 0, 0])
 
@@ -472,9 +450,7 @@ class TestAverage:
         )
 
         avg_masked = np.ma.average(a, weights=[1, np.nan, 1], axis=0)
-        avg_expected = np.ma.array(
-            [1.0, np.nan, np.nan, 3.5], mask=[False, True, True, False]
-        )
+        avg_expected = np.ma.array([1.0, np.nan, np.nan, 3.5], mask=[False, True, True, False])
 
         assert_almost_equal(avg_masked, avg_expected)
         assert_equal(avg_masked.mask, avg_expected.mask)
@@ -594,9 +570,7 @@ class TestNotMasked:
         )
         #
         tmp = notmasked_contiguous(a, 1)
-        assert_equal(
-            tmp, [[slice(0, 4, None)], [], [slice(0, 6, None), slice(7, 8, None)]]
-        )
+        assert_equal(tmp, [[slice(0, 4, None)], [], [slice(0, 6, None), slice(7, 8, None)]])
 
 
 class TestCompressFunctions:
@@ -786,9 +760,7 @@ class TestCompressFunctions:
         assert_(mask_rowcols(x, 1).mask.all())
 
     @pytest.mark.parametrize("axis", [None, 0, 1])
-    @pytest.mark.parametrize(
-        ["func", "rowcols_axis"], [(np.ma.mask_rows, 0), (np.ma.mask_cols, 1)]
-    )
+    @pytest.mark.parametrize(["func", "rowcols_axis"], [(np.ma.mask_rows, 0), (np.ma.mask_cols, 1)])
     def test_mask_row_cols_axis_deprecation(self, axis, func, rowcols_axis):
         # Test deprecation of the axis argument to `mask_rows` and `mask_cols`
         x = array(np.arange(9).reshape(3, 3), mask=[[1, 0, 0], [0, 0, 0], [0, 0, 0]])
@@ -867,12 +839,8 @@ class TestCompressFunctions:
         c = dot(b, a, strict=False)
         assert_equal(c, np.dot(b.filled(0), a.filled(0)))
         #
-        a = masked_array(
-            np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]]
-        )
-        b = masked_array(
-            np.arange(8).reshape(2, 2, 2), mask=[[[0, 0], [0, 0]], [[0, 0], [0, 1]]]
-        )
+        a = masked_array(np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]])
+        b = masked_array(np.arange(8).reshape(2, 2, 2), mask=[[[0, 0], [0, 0]], [[0, 0], [0, 1]]])
         c = dot(a, b, strict=True)
         assert_equal(
             c.mask,
@@ -906,9 +874,7 @@ class TestCompressFunctions:
             ],
         )
         #
-        a = masked_array(
-            np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]]
-        )
+        a = masked_array(np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]])
         b = 5.0
         c = dot(a, b, strict=True)
         assert_equal(c.mask, [[[1, 0], [0, 0]], [[0, 0], [0, 0]]])
@@ -919,9 +885,7 @@ class TestCompressFunctions:
         c = dot(b, a, strict=False)
         assert_equal(c.mask, [[[1, 0], [0, 0]], [[0, 0], [0, 0]]])
         #
-        a = masked_array(
-            np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]]
-        )
+        a = masked_array(np.arange(8).reshape(2, 2, 2), mask=[[[1, 0], [0, 0]], [[0, 0], [0, 0]]])
         b = masked_array(np.arange(2), mask=[0, 1])
         c = dot(a, b, strict=True)
         assert_equal(c.mask, [[1, 1], [1, 1]])
@@ -987,13 +951,9 @@ class TestMedian:
 
     def test_inf(self):
         # test that even which computes handles inf / x = masked
-        r = np.ma.median(
-            np.ma.masked_array([[np.inf, np.inf], [np.inf, np.inf]]), axis=-1
-        )
+        r = np.ma.median(np.ma.masked_array([[np.inf, np.inf], [np.inf, np.inf]]), axis=-1)
         assert_equal(r, np.inf)
-        r = np.ma.median(
-            np.ma.masked_array([[np.inf, np.inf], [np.inf, np.inf]]), axis=None
-        )
+        r = np.ma.median(np.ma.masked_array([[np.inf, np.inf], [np.inf, np.inf]]), axis=None)
         assert_equal(r, np.inf)
         # all masked
         r = np.ma.median(
@@ -1219,9 +1179,7 @@ class TestMedian:
             shape_out = (1,) * d.ndim
         else:
             axis_norm = normalize_axis_tuple(axis, d.ndim)
-            shape_out = tuple(
-                1 if i in axis_norm else d.shape[i] for i in range(d.ndim)
-            )
+            shape_out = tuple(1 if i in axis_norm else d.shape[i] for i in range(d.ndim))
         out = masked_array(np.empty(shape_out))
         result = median(d, axis=axis, keepdims=True, out=out)
         assert result is out
@@ -1425,18 +1383,14 @@ class TestCov:
         x = self.data
         assert_almost_equal(np.cov(x), cov(x))
         assert_almost_equal(np.cov(x, rowvar=False), cov(x, rowvar=False))
-        assert_almost_equal(
-            np.cov(x, rowvar=False, bias=True), cov(x, rowvar=False, bias=True)
-        )
+        assert_almost_equal(np.cov(x, rowvar=False, bias=True), cov(x, rowvar=False, bias=True))
 
     def test_2d_without_missing(self):
         # Test cov on 1 2D variable w/o missing values
         x = self.data.reshape(3, 4)
         assert_almost_equal(np.cov(x), cov(x))
         assert_almost_equal(np.cov(x, rowvar=False), cov(x, rowvar=False))
-        assert_almost_equal(
-            np.cov(x, rowvar=False, bias=True), cov(x, rowvar=False, bias=True)
-        )
+        assert_almost_equal(np.cov(x, rowvar=False, bias=True), cov(x, rowvar=False, bias=True))
 
     def test_1d_with_missing(self):
         # Test cov 1 1D variable w/missing values
@@ -1446,9 +1400,7 @@ class TestCov:
         nx = x.compressed()
         assert_almost_equal(np.cov(nx), cov(x))
         assert_almost_equal(np.cov(nx, rowvar=False), cov(x, rowvar=False))
-        assert_almost_equal(
-            np.cov(nx, rowvar=False, bias=True), cov(x, rowvar=False, bias=True)
-        )
+        assert_almost_equal(np.cov(nx, rowvar=False, bias=True), cov(x, rowvar=False, bias=True))
         #
         try:
             cov(x, allow_masked=False)
@@ -1458,9 +1410,7 @@ class TestCov:
         # 2 1D variables w/ missing values
         nx = x[1:-1]
         assert_almost_equal(np.cov(nx, nx[::-1]), cov(x, x[::-1]))
-        assert_almost_equal(
-            np.cov(nx, nx[::-1], rowvar=False), cov(x, x[::-1], rowvar=False)
-        )
+        assert_almost_equal(np.cov(nx, nx[::-1], rowvar=False), cov(x, x[::-1], rowvar=False))
         assert_almost_equal(
             np.cov(nx, nx[::-1], rowvar=False, bias=True),
             cov(x, x[::-1], rowvar=False, bias=True),
@@ -1475,9 +1425,7 @@ class TestCov:
         frac = np.dot(valid, valid.T)
         xf = (x - x.mean(1)[:, None]).filled(0)
         assert_almost_equal(cov(x), np.cov(xf) * (x.shape[1] - 1) / (frac - 1.0))
-        assert_almost_equal(
-            cov(x, bias=True), np.cov(xf, bias=True) * x.shape[1] / frac
-        )
+        assert_almost_equal(cov(x, bias=True), np.cov(xf, bias=True) * x.shape[1] / frac)
         frac = np.dot(valid.T, valid)
         xf = (x - x.mean(0)).filled(0)
         assert_almost_equal(
@@ -1673,9 +1621,7 @@ class TestArraySetOps:
         assert_equal(test[2], [0, 0, 3, 1, 3, 2])
         #
         data.fill_value = 3
-        data = masked_array(
-            data=[1, 1, 1, 2, 2, 3], mask=[0, 0, 1, 0, 1, 0], fill_value=3
-        )
+        data = masked_array(data=[1, 1, 1, 2, 2, 3], mask=[0, 0, 1, 0, 1, 0], fill_value=3)
         test = unique(data, return_index=True, return_inverse=True)
         assert_equal(test[0], masked_array([1, 2, 3, -1], mask=[0, 0, 0, 1]))
         assert_equal(test[1], [0, 3, 5, 2])
@@ -1835,9 +1781,7 @@ class TestArraySetOps:
         mask = np.zeros([2, 3, 4])
         mask[1, 2, 0] = 1
         a = array(a, mask=mask)
-        b = array(
-            data=[0, 10, 20, 30, 1, 3, 11, 22, 33], mask=[0, 1, 0, 1, 0, 1, 0, 1, 0]
-        )
+        b = array(data=[0, 10, 20, 30, 1, 3, 11, 22, 33], mask=[0, 1, 0, 1, 0, 1, 0, 1, 0])
         ec = zeros((2, 3, 4), dtype=bool)
         ec[0, 0, 0] = True
         ec[0, 0, 1] = True
@@ -1976,9 +1920,7 @@ class TestNDEnumerate:
         with_mask = masked_array(ordinary, mask=empty_mask)
         assert_equal(list(np.ndenumerate(ordinary)), list(ndenumerate(ordinary)))
         assert_equal(list(ndenumerate(ordinary)), list(ndenumerate(with_mask)))
-        assert_equal(
-            list(ndenumerate(with_mask)), list(ndenumerate(with_mask, compressed=False))
-        )
+        assert_equal(list(ndenumerate(with_mask)), list(ndenumerate(with_mask, compressed=False)))
 
     def test_ndenumerate_allmasked(self):
         a = masked_all(())

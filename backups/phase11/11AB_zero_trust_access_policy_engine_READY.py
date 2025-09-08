@@ -1,4 +1,4 @@
-ï¿"""Enforces zero-trust rules for agent resource access"""
+"""Enforces zero-trust rules for agent resource access"""
 
 
 def main():

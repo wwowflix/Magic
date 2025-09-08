@@ -23,9 +23,7 @@ from .input_device import InputDevice
 
 
 class ScrollOrigin:
-    def __init__(
-        self, origin: Union[str, WebElement], x_offset: int, y_offset: int
-    ) -> None:
+    def __init__(self, origin: Union[str, WebElement], x_offset: int, y_offset: int) -> None:
         self._origin = origin
         self._x_offset = x_offset
         self._y_offset = y_offset

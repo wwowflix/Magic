@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11U_agent_voting_system_READY.py] executed successfully (stub mode).")
 
 

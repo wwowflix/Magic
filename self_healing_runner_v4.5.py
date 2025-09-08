@@ -42,25 +42,21 @@ def run_script(phase, module, script_path):
                 if result.returncode == 0:
                     return 0
                 else:
-                    log.write(f"âš ï¸ Script failed on attempt {attempt}.\n\n")
+                    log.write(f"âš ï¸� Script failed on attempt {attempt}.\n\n")
             except Exception as e:
                 log.write(f"[ERROR] Exception while running script: {e}\n\n")
 
         if attempt < MAX_RETRIES:
-            print(
-                f"âš ï¸ {os.path.basename(script_path)} failed on attempt {attempt}. Retrying..."
-            )
+            print(f"âš ï¸� {os.path.basename(script_path)} failed on attempt {attempt}. Retrying...")
         else:
-            print(
-                f"âŒ {os.path.basename(script_path)} failed after {MAX_RETRIES} attempts."
-            )
+            print(f"â��' {os.path.basename(script_path)} failed after {MAX_RETRIES} attempts.")
 
     return 1  # Failure after max retries
 
 
 def main():
     print(
-        f"\nâ–¶ Starting Self-Healing Runner v4.5 with retry logic on {len(manifest)} scripts...\n"
+        f"\nâ�"¶ Starting Self-Healing Runner v4.5 with retry logic on {len(manifest)} scripts...\n"
     )
 
     total = 0
@@ -70,7 +66,7 @@ def main():
     for script_path in manifest:
         parts = os.path.normpath(script_path).split(os.sep)
         if len(parts) < 3:
-            print(f"âš ï¸ Unexpected script path format: {script_path}")
+            print(f"âš ï¸� Unexpected script path format: {script_path}")
             failed += 1
             continue
 
@@ -78,16 +74,16 @@ def main():
         module = parts[-2].replace("module_", "")
 
         if not os.path.exists(script_path):
-            print(f"âš ï¸ Missing script: {script_path}")
+            print(f"âš ï¸� Missing script: {script_path}")
             failed += 1
             continue
 
-        print(f"â–¶ Running: {os.path.basename(script_path)}")
+        print(f"â�"¶ Running: {os.path.basename(script_path)}")
         code = run_script(phase, module, script_path)
 
         total += 1
         if code == 0:
-            print(f"âœ… PASS: {os.path.basename(script_path)}")
+            print(f"â�"… PASS: {os.path.basename(script_path)}")
             passed += 1
         else:
             failed += 1

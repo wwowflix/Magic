@@ -98,9 +98,7 @@ class TestDataFrameInsert:
     def test_insert_EA_no_warning(self):
         # PerformanceWarning about fragmented frame should not be raised when
         # using EAs (https://github.com/pandas-dev/pandas/issues/44098)
-        df = DataFrame(
-            np.random.default_rng(2).integers(0, 100, size=(3, 100)), dtype="Int64"
-        )
+        df = DataFrame(np.random.default_rng(2).integers(0, 100, size=(3, 100)), dtype="Int64")
         with tm.assert_produces_warning(None):
             df["a"] = np.array([1, 2, 3])
 
@@ -108,9 +106,7 @@ class TestDataFrameInsert:
         # GH#42403
         df = DataFrame({"col1": [1, 2], "col2": [3, 4]})
 
-        msg = (
-            "Expected a one-dimensional object, got a DataFrame with 2 columns instead."
-        )
+        msg = "Expected a one-dimensional object, got a DataFrame with 2 columns instead."
         with pytest.raises(ValueError, match=msg):
             df.insert(1, "newcol", df)
 

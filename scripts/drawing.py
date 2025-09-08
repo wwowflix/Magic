@@ -6,7 +6,10 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import copy, decimal, math, re
+import copy
+import decimal
+import math
+import re
 from collections import OrderedDict
 
 from collections.abc import Sequence
@@ -2512,14 +2515,14 @@ class Arc(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not curves:
-            debug_stream.write(pfx + " â””â”€ nothing\n")
+            debug_stream.write(pfx + " â��â�€ nothing\n")
             return "", last_item
 
         previous = [last_item]
         for curve in curves[:-1]:
             previous.append(curve)
-            debug_stream.write(pfx + f" â”œâ”€ {curve}\n")
-        debug_stream.write(pfx + f" â””â”€ {curves[-1]}\n")
+            debug_stream.write(pfx + f" â��"â�€ {curve}\n")
+        debug_stream.write(pfx + f" â��â�€ {curves[-1]}\n")
 
         return (
             " ".join(
@@ -2783,7 +2786,7 @@ class RoundedRectangle(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not components:
-            debug_stream.write(pfx + " â””â”€ nothing\n")
+            debug_stream.write(pfx + " â��â�€ nothing\n")
             return "", last_item
 
         render_list = []
@@ -2791,13 +2794,13 @@ class RoundedRectangle(NamedTuple):
             rendered, last_item, initial_point = item.render(
                 gsd_registry, style, last_item, initial_point
             )
-            debug_stream.write(pfx + f" â”œâ”€ {item}\n")
+            debug_stream.write(pfx + f" â��"â�€ {item}\n")
             render_list.append(rendered)
 
         rendered, last_item, initial_point = components[-1].render(
             gsd_registry, style, last_item, initial_point
         )
-        debug_stream.write(pfx + f" â””â”€ {components[-1]}\n")
+        debug_stream.write(pfx + f" â��â�€ {components[-1]}\n")
         render_list.append(rendered)
 
         return " ".join(render_list), Line(self.org), initial_point
@@ -2891,7 +2894,7 @@ class Ellipse(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not components:
-            debug_stream.write(pfx + " â””â”€ nothing\n")
+            debug_stream.write(pfx + " â��â�€ nothing\n")
             return "", last_item
 
         render_list = []
@@ -2899,13 +2902,13 @@ class Ellipse(NamedTuple):
             rendered, last_item, initial_point = item.render(
                 gsd_registry, style, last_item, initial_point
             )
-            debug_stream.write(pfx + f" â”œâ”€ {item}\n")
+            debug_stream.write(pfx + f" â��"â�€ {item}\n")
             render_list.append(rendered)
 
         rendered, last_item, initial_point = components[-1].render(
             gsd_registry, style, last_item, initial_point
         )
-        debug_stream.write(pfx + f" â””â”€ {components[-1]}\n")
+        debug_stream.write(pfx + f" â��â�€ {components[-1]}\n")
         render_list.append(rendered)
 
         return " ".join(render_list), Move(self.center), initial_point
@@ -3159,15 +3162,15 @@ class DrawingContext:
 
         debug_stream.write("ROOT\n")
         for child in self._subitems[:-1]:
-            debug_stream.write(" â”œâ”€ ")
+            debug_stream.write(" â��"â�€ ")
             rendered, last_item = child.render_debug(
-                gsd_registry, style, last_item, debug_stream, " â”‚  "
+                gsd_registry, style, last_item, debug_stream, " â�‚  "
             )
             if rendered:
                 render_list.append(rendered)
 
         if self._subitems:
-            debug_stream.write(" â””â”€ ")
+            debug_stream.write(" â��â�€ ")
             rendered, last_item, first_point = self._subitems[-1].render_debug(
                 gsd_registry, style, last_item, first_point, debug_stream, "    "
             )
@@ -3979,7 +3982,7 @@ class GraphicsContext:
                         debug_stream.write(style_dbg_line)
                         debug_stream.write("\n")
 
-                    debug_stream.write(pfx + "}â”\n")
+                    debug_stream.write(pfx + "}â��\n")
                 else:
                     debug_stream.write("\n")
 
@@ -4031,33 +4034,33 @@ class GraphicsContext:
 
             if debug_stream:
                 if self.clipping_path is not None:
-                    debug_stream.write(pfx + " â”œâ”€ ")
+                    debug_stream.write(pfx + " â��"â�€ ")
                     rendered_cpath, _, __ = self.clipping_path.render_debug(
                         gsd_registry,
                         merged_style,
                         last_item,
                         initial_point,
                         debug_stream,
-                        pfx + " â”‚  ",
+                        pfx + " â�‚  ",
                     )
                     if rendered_cpath:
                         render_list.append(rendered_cpath)
 
                 for item in self.path_items[:-1]:
-                    debug_stream.write(pfx + " â”œâ”€ ")
+                    debug_stream.write(pfx + " â��"â�€ ")
                     rendered, last_item, initial_point = item.render_debug(
                         gsd_registry,
                         merged_style,
                         last_item,
                         initial_point,
                         debug_stream,
-                        pfx + " â”‚  ",
+                        pfx + " â�‚  ",
                     )
 
                     if rendered:
                         render_list.append(rendered)
 
-                debug_stream.write(pfx + " â””â”€ ")
+                debug_stream.write(pfx + " â��â�€ ")
                 rendered, last_item, initial_point = self.path_items[-1].render_debug(
                     gsd_registry,
                     merged_style,

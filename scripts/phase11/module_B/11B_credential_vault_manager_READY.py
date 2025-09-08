@@ -35,14 +35,14 @@ for key in env_data.keys():
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if not missing and not empty:
-        f.write("✅ All required keys are present and non-empty.\n")
+        f.write("�... All required keys are present and non-empty.\n")
     else:
         if missing:
-            f.write("❌ Missing keys:\n")
+            f.write("� Missing keys:\n")
             for key in missing:
                 f.write(f" - {key}\n")
         if empty:
-            f.write("⚠️ Empty keys:\n")
+            f.write("� � Empty keys:\n")
             for key in empty:
                 f.write(f" - {key}\n")
     if unknown:
@@ -50,4 +50,4 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
         for key in unknown:
             f.write(f" - {key}\n")
 
-print(f"🔐 Vault check complete. See: {LOG_FILE}")
+print(f"�" Vault check complete. See: {LOG_FILE}")

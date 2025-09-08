@@ -135,9 +135,7 @@ class UpdateChecker:
     def check(self, package_name, package_version):
         """Return a UpdateResult object if there is a newer version."""
 
-        data = query_pypi(
-            package_name, include_prereleases=not standard_release(package_version)
-        )
+        data = query_pypi(package_name, include_prereleases=not standard_release(package_version))
 
         if not data.get("success") or (
             parse_version(package_version) >= parse_version(data["data"]["version"])

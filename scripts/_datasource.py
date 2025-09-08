@@ -532,9 +532,7 @@ class DataSource:
             _fname, ext = self._splitzipext(found)
             if ext == "bz2":
                 mode.replace("+", "")
-            return _file_openers[ext](
-                found, mode=mode, encoding=encoding, newline=newline
-            )
+            return _file_openers[ext](found, mode=mode, encoding=encoding, newline=newline)
         else:
             raise IOError("%s not found." % path)
 
@@ -686,9 +684,7 @@ class Repository(DataSource):
             File object.
 
         """
-        return DataSource.open(
-            self, self._fullpath(path), mode, encoding=encoding, newline=newline
-        )
+        return DataSource.open(self, self._fullpath(path), mode, encoding=encoding, newline=newline)
 
     def listdir(self):
         """

@@ -1,4 +1,4 @@
-ï¿\"\"\" Placeholder for 11W_ethical_decision_flagger_READY.py \"\"\"
+\"\"\" Placeholder for 11W_ethical_decision_flagger_READY.py \"\"\"
 
 def main():
     print("âœ… 11W_ethical_decision_flagger_READY.py placeholder executed successfully.")

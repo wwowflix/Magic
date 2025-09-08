@@ -93,9 +93,7 @@ def add_newdoc_for_scalar_type(obj, fixed_aliases, doc):
     canonical_name_doc = (
         "" if obj == o.__name__ else ":Canonical name: `numpy.{}`\n    ".format(obj)
     )
-    alias_doc = "".join(
-        ":Alias: `numpy.{}`\n    ".format(alias) for alias in fixed_aliases
-    )
+    alias_doc = "".join(":Alias: `numpy.{}`\n    ".format(alias) for alias in fixed_aliases)
     alias_doc += "".join(
         ":Alias on this platform ({} {}): `numpy.{}`: {}.\n    ".format(
             platform.system(), platform.machine(), alias, doc

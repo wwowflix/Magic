@@ -1,8 +1,9 @@
 from __future__ import annotations
-from pathlib import Path
-import re
-import csv
+
 import argparse
+import csv
+import re
+from pathlib import Path
 
 NAME_RE = re.compile(r"^(?P<phase>\d{1,2})(?P<module>[A-Z])_")
 
@@ -55,9 +56,7 @@ def write_csv(rows: list[dict], out_path: Path) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Generate patch CSV from scripts.")
     parser.add_argument("--root", default="scripts")
-    parser.add_argument(
-        "--out", default=str(Path("outputs") / "patches" / "patch_manifest.csv")
-    )
+    parser.add_argument("--out", default=str(Path("outputs") / "patches" / "patch_manifest.csv"))
     args = parser.parse_args(argv)
 
     try:

@@ -512,9 +512,7 @@ class MplDebugRenderer(MplRenderer):
                 start_index = 0
                 end_index = len(line)
                 if start_point_color is not None:
-                    ax.plot(
-                        line[0, 0], line[0, 1], "o", c=start_point_color, alpha=alpha
-                    )
+                    ax.plot(line[0, 0], line[0, 1], "o", c=start_point_color, alpha=alpha)
                     start_index = 1
                     if line[0][0] == line[-1][0] and line[0][1] == line[-1][1]:
                         end_index -= 1

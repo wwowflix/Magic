@@ -328,9 +328,7 @@ class AsyncBackend(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
-    async def getnameinfo(
-        cls, sockaddr: IPSockAddrType, flags: int = 0
-    ) -> tuple[str, str]:
+    async def getnameinfo(cls, sockaddr: IPSockAddrType, flags: int = 0) -> tuple[str, str]:
         pass
 
     @classmethod

@@ -210,9 +210,7 @@ def assert_almost_equal(actual, desired, decimal=7, err_msg="", verbose=True):
 assert_close = assert_almost_equal
 
 
-def assert_array_compare(
-    comparison, x, y, err_msg="", verbose=True, header="", fill_value=True
-):
+def assert_array_compare(comparison, x, y, err_msg="", verbose=True, header="", fill_value=True):
     """
     Asserts that comparison between two masked arrays is satisfied.
 

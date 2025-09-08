@@ -1,4 +1,4 @@
-ï¿"""
+"""
 11T_decision_chain_visualizer_READY.py
 Description: Maps and displays AI decision steps and source reasoning
 Phase 11 - Module T (Explainability & Traceability)

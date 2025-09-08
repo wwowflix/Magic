@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print(
         "âœ… [11W_ethical_decision_flagger_READY.py] executed successfully (stub mode)."
     )

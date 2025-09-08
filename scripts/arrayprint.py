@@ -142,7 +142,7 @@ def set_printoptions(
     sign=None,
     floatmode=None,
     *,
-    legacy=None
+    legacy=None,
 ):
     """
     Set printing options.
@@ -594,7 +594,7 @@ def _array2string_dispatcher(
     floatmode=None,
     suffix=None,
     *,
-    legacy=None
+    legacy=None,
 ):
     return (a,)
 
@@ -615,7 +615,7 @@ def array2string(
     floatmode=None,
     suffix="",
     *,
-    legacy=None
+    legacy=None,
 ):
     """
     Return a string representation of an array.

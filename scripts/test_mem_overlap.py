@@ -96,12 +96,8 @@ def test_diophantine_fuzz():
             A_max = min(max_int, A_max)
             U_max = min(max_int - 1, U_max)
 
-            A = tuple(
-                int(rng.randint(1, A_max + 1, dtype=np.intp)) for j in range(ndim)
-            )
-            U = tuple(
-                int(rng.randint(0, U_max + 2, dtype=np.intp)) for j in range(ndim)
-            )
+            A = tuple(int(rng.randint(1, A_max + 1, dtype=np.intp)) for j in range(ndim))
+            U = tuple(int(rng.randint(0, U_max + 2, dtype=np.intp)) for j in range(ndim))
 
             b_ub = min(max_int - 2, sum(a * ub for a, ub in zip(A, U)))
             b = int(rng.randint(-1, b_ub + 2, dtype=np.intp))
@@ -156,9 +152,7 @@ def test_diophantine_overflow():
 def check_may_share_memory_exact(a, b):
     got = np.may_share_memory(a, b, max_work=MAY_SHARE_EXACT)
 
-    assert_equal(
-        np.may_share_memory(a, b), np.may_share_memory(a, b, max_work=MAY_SHARE_BOUNDS)
-    )
+    assert_equal(np.may_share_memory(a, b), np.may_share_memory(a, b, max_work=MAY_SHARE_BOUNDS))
 
     a.fill(0)
     b.fill(0)
@@ -277,11 +271,7 @@ def iter_random_view_pairs(x, same_steps=True, equal_size=False):
     # Then discontiguous views
     while True:
         steps = tuple(
-            (
-                rng.randint(1, 11, dtype=np.intp)
-                if rng.randint(0, 5, dtype=np.intp) == 0
-                else 1
-            )
+            (rng.randint(1, 11, dtype=np.intp) if rng.randint(0, 5, dtype=np.intp) == 0 else 1)
             for j in range(x.ndim)
         )
         s1 = tuple(random_slice(p, s) for p, s in zip(x.shape, steps))
@@ -306,18 +296,13 @@ def iter_random_view_pairs(x, same_steps=True, equal_size=False):
                 for p, s, pa in zip(x.shape, s1, a.shape)
             )
             s2 = tuple(
-                random_slice_fixed_size(p, s, pa)
-                for p, s, pa in zip(x.shape, steps2, a.shape)
+                random_slice_fixed_size(p, s, pa) for p, s, pa in zip(x.shape, steps2, a.shape)
             )
         elif same_steps:
             steps2 = steps
         else:
             steps2 = tuple(
-                (
-                    rng.randint(1, 11, dtype=np.intp)
-                    if rng.randint(0, 5, dtype=np.intp) == 0
-                    else 1
-                )
+                (rng.randint(1, 11, dtype=np.intp) if rng.randint(0, 5, dtype=np.intp) == 0 else 1)
                 for j in range(x.ndim)
             )
 
@@ -367,9 +352,7 @@ def test_may_share_memory_easy_fuzz():
     # Check that overlap problems with common strides are always
     # solved with little work.
 
-    check_may_share_memory_easy_fuzz(
-        get_max_work=lambda a, b: 1, same_steps=True, min_count=2000
-    )
+    check_may_share_memory_easy_fuzz(get_max_work=lambda a, b: 1, same_steps=True, min_count=2000)
 
 
 @pytest.mark.slow
@@ -415,10 +398,7 @@ def test_internal_overlap_diophantine():
             exists = X is not None
 
         if X is not None:
-            assert_(
-                sum(a * x for a, x in zip(A, X))
-                == sum(a * u // 2 for a, u in zip(A, U))
-            )
+            assert_(sum(a * x for a, x in zip(A, X)) == sum(a * u // 2 for a, u in zip(A, U)))
             assert_(all(0 <= x <= u for x, u in zip(X, U)))
             assert_(any(x != u // 2 for x, u in zip(X, U)))
 
@@ -452,11 +432,7 @@ def test_internal_overlap_slices():
 
     while cases < min_count:
         steps = tuple(
-            (
-                rng.randint(1, 11, dtype=np.intp)
-                if rng.randint(0, 5, dtype=np.intp) == 0
-                else 1
-            )
+            (rng.randint(1, 11, dtype=np.intp) if rng.randint(0, 5, dtype=np.intp) == 0 else 1)
             for j in range(x.ndim)
         )
         t1 = np.arange(x.ndim)
@@ -619,9 +595,7 @@ class TestUFunc:
     Test ufunc call memory overlap handling
     """
 
-    def check_unary_fuzz(
-        self, operation, get_out_axis_size, dtype=np.int16, count=5000
-    ):
+    def check_unary_fuzz(self, operation, get_out_axis_size, dtype=np.int16, count=5000):
         shapes = [7, 13, 8, 21, 29, 32]
 
         rng = np.random.RandomState(1234)
@@ -701,17 +675,13 @@ class TestUFunc:
             else:
                 return a.shape[axis], False
 
-        self.check_unary_fuzz(
-            np.add.accumulate, get_out_axis_size, dtype=np.int16, count=500
-        )
+        self.check_unary_fuzz(np.add.accumulate, get_out_axis_size, dtype=np.int16, count=500)
 
     def test_binary_ufunc_reduce_fuzz(self):
         def get_out_axis_size(a, b, axis):
             return None, (axis is None or a.ndim == 1)
 
-        self.check_unary_fuzz(
-            np.add.reduce, get_out_axis_size, dtype=np.int16, count=500
-        )
+        self.check_unary_fuzz(np.add.reduce, get_out_axis_size, dtype=np.int16, count=500)
 
     def test_binary_ufunc_reduceat_fuzz(self):
         def get_out_axis_size(a, b, axis):

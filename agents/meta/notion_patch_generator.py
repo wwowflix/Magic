@@ -10,7 +10,7 @@ NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 # Check for valid token and DB
 if not NOTION_TOKEN or not NOTION_DATABASE_ID:
-    print("âŒ NOTION_TOKEN or NOTION_DATABASE_ID missing from .env")
+    print("â��' NOTION_TOKEN or NOTION_DATABASE_ID missing from .env")
     exit(1)
 
 notion = Client(auth=NOTION_TOKEN)
@@ -43,27 +43,23 @@ def create_notion_entry(row):
                 "Status": {"select": {"name": status}},
                 "Is Placeholder": {"checkbox": is_placeholder},
                 "Is Implemented": {"checkbox": is_implemented},
-                "Folder Location": {
-                    "rich_text": [{"text": {"content": folder_location}}]
-                },
+                "Folder Location": {"rich_text": [{"text": {"content": folder_location}}]},
                 "Notes": {"rich_text": [{"text": {"content": notes}}]} if notes else {},
                 "Last Synced": (
-                    {"rich_text": [{"text": {"content": last_synced}}]}
-                    if last_synced
-                    else {}
+                    {"rich_text": [{"text": {"content": last_synced}}]} if last_synced else {}
                 ),
             },
         )
-        print(f"âœ… Added: {filename}")
+        print(f"â�"… Added: {filename}")
 
     except Exception as e:
-        print(f"âŒ Failed to add: {filename} â†’ {e}")
+        print(f"â��' Failed to add: {filename} â� ’ {e}")
 
 
 # Main Execution
 if __name__ == "__main__":
     if not os.path.exists(patch_file_path):
-        print(f"âŒ File not found: {patch_file_path}")
+        print(f"â��' File not found: {patch_file_path}")
         exit(1)
 
     with open(patch_file_path, newline="", encoding="utf-8") as csvfile:
@@ -72,4 +68,4 @@ if __name__ == "__main__":
             if row.get("Filename") and row.get("Prefix"):
                 create_notion_entry(row)
             else:
-                print(f"âš ï¸ Skipped row (missing Filename or Prefix): {row}")
+                print(f"âš ï¸� Skipped row (missing Filename or Prefix): {row}")

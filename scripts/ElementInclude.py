@@ -164,9 +164,7 @@ def include(elem, loader=None, base_url=None, max_depth=DEFAULT_MAX_INCLUSION_DE
     if max_depth is None:
         max_depth = -1
     elif max_depth < 0:
-        raise ValueError(
-            "expected non-negative depth or None for 'max_depth', got %r" % max_depth
-        )
+        raise ValueError("expected non-negative depth or None for 'max_depth', got %r" % max_depth)
 
     if base_url is None:
         if hasattr(elem, "getroot"):
@@ -216,9 +214,7 @@ def _include(
                 node = load_include(href, parse, parser=parser)
                 if node is None:
                     raise FatalIncludeError("cannot load %r as %r" % (href, parse))
-                node = _include(
-                    node, loader, href, max_depth - 1, {href} | _parent_hrefs
-                )
+                node = _include(node, loader, href, max_depth - 1, {href} | _parent_hrefs)
                 if e.tail:
                     node.tail = (node.tail or "") + e.tail
                 if parent is None:
@@ -237,17 +233,11 @@ def _include(
                     parent.text = (parent.text or "") + text + (e.tail or "")
                 parent.remove(e)
             else:
-                raise FatalIncludeError(
-                    "unknown parse type in xi:include tag (%r)" % parse
-                )
+                raise FatalIncludeError("unknown parse type in xi:include tag (%r)" % parse)
         elif e.tag == XINCLUDE_FALLBACK:
             parent = e.getparent()
             if parent is not None and parent.tag != XINCLUDE_INCLUDE:
-                raise FatalIncludeError(
-                    "xi:fallback tag must be child of xi:include (%r)" % e.tag
-                )
+                raise FatalIncludeError("xi:fallback tag must be child of xi:include (%r)" % e.tag)
         else:
-            raise FatalIncludeError(
-                "Invalid element found in XInclude namespace (%r)" % e.tag
-            )
+            raise FatalIncludeError("Invalid element found in XInclude namespace (%r)" % e.tag)
     return elem

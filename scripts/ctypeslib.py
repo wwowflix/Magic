@@ -403,9 +403,7 @@ if ctypes is not None:
         try:
             ctype = _scalar_type_map[dtype_native]
         except KeyError:
-            raise NotImplementedError(
-                "Converting {!r} to a ctypes type".format(dtype)
-            ) from None
+            raise NotImplementedError("Converting {!r} to a ctypes type".format(dtype)) from None
 
         if dtype_with_endian.byteorder == ">":
             ctype = ctype.__ctype_be__
@@ -429,9 +427,7 @@ if ctypes is not None:
         # ctypes doesn't care about field order
         field_data = sorted(field_data, key=lambda f: f[0])
 
-        if len(field_data) > 1 and all(
-            offset == 0 for offset, name, ctype in field_data
-        ):
+        if len(field_data) > 1 and all(offset == 0 for offset, name, ctype in field_data):
             # union, if multiple fields all at address 0
             size = 0
             _fields_ = []
@@ -541,9 +537,7 @@ if ctypes is not None:
         if isinstance(obj, ctypes._Pointer):
             # convert pointers to an array of the desired shape
             if shape is None:
-                raise TypeError(
-                    "as_array() requires a shape argument when called on a " "pointer"
-                )
+                raise TypeError("as_array() requires a shape argument when called on a " "pointer")
             p_arr_type = ctypes.POINTER(_ctype_ndarray(obj._type_, shape))
             obj = ctypes.cast(obj, p_arr_type).contents
 

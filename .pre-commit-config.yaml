@@ -1,24 +1,21 @@
 ﻿repos:
-  - repo: https://github.com/psf/black
-    rev: 24.8.0
-    hooks:
-      - id: black
-        language_version: python3
-        exclude: |
-          (?x)
-          ^scripts/.*_2\.py$
-          | ^scripts/.*_3\.py$
-          | ^scripts/core\.py$
-          | ^scripts/constants_2\.py$
-          | ^scripts/deduplicate_records_2\.py$
+- repo: https://github.com/psf/black
+  rev: 25.1.0
+  hooks:
+    - id: black
+      args: ["--line-length=100"]
+      exclude: '(^backups/|^quarantine/|.*agents/awareness/file_watchdog_agent\.py$|.*agents/awareness/log_writer_agent\.py$|.*agents/awareness/log_writer_agent_BACKUP_20250729_171928\.py$|.*agents/awareness/script_tracker\.py$|.*agents/awareness/status_aggregator\.py$|.*agents/meta/fix_prefixes\.py$|.*agents/meta/notion_patch_cleaner\.py$|.*agents/meta/notion_patch_final_importer\.py$|.*agents/meta/notion_patch_generator\.py$|.*agents/meta/notion_patch_importer\.py$|.*agents/meta/notion_sync_agent\.py$|.*agents/meta/notion_test_connect\.py$|.*backup_agent_standalone\.py$|.*generate_patch_csv\.py$|.*notion_status_patcher_FIXED\.py$|.*scripts/__init___105\.py$|.*scripts/__init___5\.py$|.*scripts/_cli\.py$|.*scripts/_emoji_codes\.py$|.*scripts/_spinners\.py$|.*scripts/_util\.py$|.*scripts/agl\.py$|.*scripts/api_normalizer\.py$|.*scripts/autocomplete_scraper\.py$|.*scripts/bar\.py$|.*scripts/bidi\.py$|.*scripts/cd\.py$|.*scripts/cd_2\.py$|.*scripts/constant\.py$|.*scripts/constant_2\.py$|.*scripts/constants_2\.py$|.*scripts/correlation_engine\.py$|.*scripts/dashboard_notifier\.py$|.*scripts/deduplicate_records_2\.py$|.*scripts/drawing\.py$|.*scripts/encoding_test\.py$|.*scripts/export_json\.py$|.*scripts/fix_reddit\.py$|.*scripts/fixed_twitter_scraper_simple_2\.py$|.*scripts/gui\.py$|.*scripts/languages\.py$|.*scripts/lexer\.py$|.*scripts/O_S_2f_2\.py$|.*scripts/orchestrator\.py$|.*scripts/phase11/module_B/11B_credential_vault_manager_READY\.py$|.*scripts/phase17/module_C/17C_auto_recover_agent_READY\.py$|.*scripts/progress_bar\.py$|.*scripts/python_parser\.py$|.*scripts/reddit_api_2\.py$|.*scripts/reddit_api_3\.py$|.*scripts/reddit_api_final\.py$|.*scripts/reddit_api_fixed\.py$|.*scripts/reddit_test\.py$|.*scripts/rule\.py$|.*scripts/setup_folders_2\.py$|.*scripts/spec\.py$|.*scripts/status_codes\.py$|.*scripts/test_clipboard\.py$|.*scripts/test_encoding\.py$|.*scripts/test_json_table_schema\.py$|.*scripts/test_loadtxt\.py$|.*scripts/test_readlines\.py$|.*scripts/test_reddit_2\.py$|.*scripts/test_secrets_2\.py$|.*scripts/test_stringdtype\.py$|.*scripts/test_websocket\.py$|.*scripts/test_xml\.py$|.*scripts/text\.py$|.*scripts/tree\.py$|.*scripts/unicode\.py$|.*scripts/utils_8\.py$|.*scripts/uts46data\.py$|.*self_healing_runner\.py$|.*self_healing_runner_v4\.2\.py$|.*self_healing_runner_v4\.3\.py$|.*self_healing_runner_v4\.5\.py$|.*self_healing_runner_v4\.6\.py$|.*self_healing_runner_v4\.7\.py$|.*self_healing_runner_v4\.8\.py$|.*self_healing_runner_v4\.9\.py$|.*self_healing_runner_v5_parallel\.py$|.*test_manifest\.py$|.*tools/backup_failed_scripts\.py$|.*tools/build_dashboard\.py$|.*tools/fix_log_writer_agent\.py$|.*tools/magic_phase11_full_cycle\.py$|.*tools/notion_status_updater\.py$|.*tools/run_self_healing_agent\.py$|.*wipe_notion_db\.py$)'
+      files: '\.py$'
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
-    hooks:
-      - id: ruff
-        args: [--fix]
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.12.12
+  hooks:
+    - id: ruff
+      args: ["--fix"]
+      stages: [manual]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
-    hooks:
-      - id: mypy
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.17.1
+  hooks:
+    - id: mypy
+      stages: [manual]

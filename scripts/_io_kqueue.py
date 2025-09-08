@@ -37,9 +37,7 @@ class _KqueueStatistics:
 class KqueueIOManager:
     _kqueue: select.kqueue = attrs.Factory(select.kqueue)
     # {(ident, filter): Task or UnboundedQueue}
-    _registered: dict[tuple[int, int], Task | UnboundedQueue[select.kevent]] = (
-        attrs.Factory(dict)
-    )
+    _registered: dict[tuple[int, int], Task | UnboundedQueue[select.kevent]] = attrs.Factory(dict)
     _force_wakeup: WakeupSocketpair = attrs.Factory(WakeupSocketpair)
     _force_wakeup_fd: int | None = None
 
@@ -253,7 +251,7 @@ class KqueueIOManager:
         calls on the given object to immediately wake up and raise
         `~trio.ClosedResourceError`.
 
-        This doesn't actually close the object – you still have to do that
+        This doesn't actually close the object â€" you still have to do that
         yourself afterwards. Also, you want to be careful to make sure no
         new tasks start waiting on the object in between when you call this
         and when it's actually closed. So to close something properly, you

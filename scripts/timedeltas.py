@@ -69,18 +69,7 @@ def to_timedelta(
 
 
 def to_timedelta(
-    arg: (
-        str
-        | int
-        | float
-        | timedelta
-        | list
-        | tuple
-        | range
-        | ArrayLike
-        | Index
-        | Series
-    ),
+    arg: str | int | float | timedelta | list | tuple | range | ArrayLike | Index | Series,
     unit: UnitChoices | None = None,
     errors: DateTimeErrorChoices = "raise",
 ) -> Timedelta | TimedeltaIndex | Series:
@@ -200,9 +189,7 @@ def to_timedelta(
     elif is_list_like(arg) and getattr(arg, "ndim", 1) == 1:
         return _convert_listlike(arg, unit=unit, errors=errors)
     elif getattr(arg, "ndim", 1) > 1:
-        raise TypeError(
-            "arg must be a string, timedelta, list, tuple, 1-d array, or Series"
-        )
+        raise TypeError("arg must be a string, timedelta, list, tuple, 1-d array, or Series")
 
     if isinstance(arg, str) and unit is not None:
         raise ValueError("unit must not be specified if the input is/contains a str")

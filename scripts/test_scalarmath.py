@@ -199,9 +199,7 @@ class TestBaseMath:
         # test alignments offsets for simd instructions
         # alignments for vz + 2 * (vs - 1) + 1
         for dt, sz in [(np.float32, 11), (np.float64, 7), (np.int32, 11)]:
-            for out, inp1, inp2, msg in _gen_alignment_data(
-                dtype=dt, type="binary", max_size=sz
-            ):
+            for out, inp1, inp2, msg in _gen_alignment_data(dtype=dt, type="binary", max_size=sz):
                 exp1 = np.ones_like(inp1)
                 inp1[...] = np.ones_like(inp1)
                 inp2[...] = np.zeros_like(inp2)
@@ -213,14 +211,10 @@ class TestBaseMath:
                 assert_almost_equal(out, exp1, err_msg=msg)
 
                 inp2[...] += np.arange(inp2.size, dtype=dt) + 1
-                assert_almost_equal(
-                    np.square(inp2), np.multiply(inp2, inp2), err_msg=msg
-                )
+                assert_almost_equal(np.square(inp2), np.multiply(inp2, inp2), err_msg=msg)
                 # skip true divide for ints
                 if dt != np.int32:
-                    assert_almost_equal(
-                        np.reciprocal(inp2), np.divide(1, inp2), err_msg=msg
-                    )
+                    assert_almost_equal(np.reciprocal(inp2), np.divide(1, inp2), err_msg=msg)
 
                 inp1[...] = np.ones_like(inp1)
                 np.add(inp1, 2, out=out)
@@ -445,9 +439,7 @@ class TestModulus:
         # promotes to float which does not fit
         a = np.array([1, 2], np.int64)
         b = np.array([1, 2], np.uint64)
-        with pytest.raises(
-            TypeError, match=r"Cannot cast ufunc 'floor_divide' output from"
-        ):
+        with pytest.raises(TypeError, match=r"Cannot cast ufunc 'floor_divide' output from"):
             a //= b
 
 
@@ -590,9 +582,7 @@ class TestConversion:
         np.finfo(np.double) == np.finfo(np.longdouble),
         reason="long double is same as double",
     )
-    @pytest.mark.skipif(
-        platform.machine().startswith("ppc"), reason="IBM double double"
-    )
+    @pytest.mark.skipif(platform.machine().startswith("ppc"), reason="IBM double double")
     def test_int_from_huge_longdouble(self):
         # Produce a longdouble that would overflow a double,
         # use exponent that avoids bug in Darwin pow function.
@@ -851,10 +841,7 @@ class TestAbs:
         if (
             sys.platform == "cygwin"
             and dtype == np.clongdouble
-            and (
-                _pep440.parse(platform.release().split("-")[0])
-                < _pep440.Version("3.3.0")
-            )
+            and (_pep440.parse(platform.release().split("-")[0]) < _pep440.Version("3.3.0"))
         ):
             pytest.xfail(reason="absl is computed in double precision on cygwin < 3.3")
         self._test_abs_func(abs, dtype)
@@ -864,10 +851,7 @@ class TestAbs:
         if (
             sys.platform == "cygwin"
             and dtype == np.clongdouble
-            and (
-                _pep440.parse(platform.release().split("-")[0])
-                < _pep440.Version("3.3.0")
-            )
+            and (_pep440.parse(platform.release().split("-")[0]) < _pep440.Version("3.3.0"))
         ):
             pytest.xfail(reason="absl is computed in double precision on cygwin < 3.3")
         self._test_abs_func(np.abs, dtype)
@@ -969,9 +953,7 @@ def test_operator_object_right(o, op, type_):
         pass
 
 
-@given(
-    sampled_from(binary_operators_for_scalars), sampled_from(types), sampled_from(types)
-)
+@given(sampled_from(binary_operators_for_scalars), sampled_from(types), sampled_from(types))
 def test_operator_scalars(op, type1, type2):
     try:
         op(type1(1), type2(1))
@@ -1180,9 +1162,7 @@ def test_pyscalar_subclasses(subtype, __op__, __rop__, op, cmp):
         return __rop__
 
     # Check that deferring is indicated using `__array_ufunc__`:
-    myt = type(
-        "myt", (subtype,), {__op__: op_func, __rop__: rop_func, "__array_ufunc__": None}
-    )
+    myt = type("myt", (subtype,), {__op__: op_func, __rop__: rop_func, "__array_ufunc__": None})
 
     # Just like normally, we should never presume we can modify the float.
     assert op(myt(1), np.float64(2)) == __op__

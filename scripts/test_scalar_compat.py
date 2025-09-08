@@ -125,9 +125,7 @@ class TestDatetimeIndexOps:
         assert (rng.hour == 0).all()
 
         # a more unusual time zone, GH#1946
-        dr = date_range(
-            "2011-10-02 00:00", freq="h", periods=10, tz=prefix + "America/Atikokan"
-        )
+        dr = date_range("2011-10-02 00:00", freq="h", periods=10, tz=prefix + "America/Atikokan")
 
         expected = Index(np.arange(10, dtype=np.int32))
         tm.assert_index_equal(dr.hour, expected)

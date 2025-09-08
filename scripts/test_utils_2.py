@@ -210,9 +210,7 @@ class TestArrayEqual(_GenericTest):
         self._test_not_equal(a, b)
         self._test_not_equal(b, a)
 
-    @pytest.mark.skipif(
-        not ARRAY_FUNCTION_ENABLED, reason="requires __array_function__"
-    )
+    @pytest.mark.skipif(not ARRAY_FUNCTION_ENABLED, reason="requires __array_function__")
     def test_subclass_that_does_not_implement_npall(self):
         class MyArray(np.ndarray):
             def __array_function__(self, *args, **kwargs):
@@ -295,20 +293,12 @@ class TestEqual(TestArrayEqual):
         self._test_not_equal(np.inf, [np.inf])
 
     def test_datetime(self):
-        self._test_equal(
-            np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-01", "s")
-        )
-        self._test_equal(
-            np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-01", "m")
-        )
+        self._test_equal(np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-01", "s"))
+        self._test_equal(np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-01", "m"))
 
         # gh-10081
-        self._test_not_equal(
-            np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-02", "s")
-        )
-        self._test_not_equal(
-            np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-02", "m")
-        )
+        self._test_not_equal(np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-02", "s"))
+        self._test_not_equal(np.datetime64("2017-01-01", "s"), np.datetime64("2017-01-02", "m"))
 
     def test_nat_items(self):
         # not a datetime
@@ -387,9 +377,7 @@ class TestArrayAlmostEqual(_GenericTest):
 
         # test arrays
         self._assert_func([1.499999], [0.0], decimal=0)
-        assert_raises(
-            AssertionError, lambda: self._assert_func([1.5], [0.0], decimal=0)
-        )
+        assert_raises(AssertionError, lambda: self._assert_func([1.5], [0.0], decimal=0))
 
     def test_simple(self):
         x = np.array([1234.2222])
@@ -418,9 +406,7 @@ class TestArrayAlmostEqual(_GenericTest):
 
     def test_subclass(self):
         a = np.array([[1.0, 2.0], [3.0, 4.0]])
-        b = np.ma.masked_array(
-            [[1.0, 2.0], [0.0, 4.0]], [[False, False], [True, False]]
-        )
+        b = np.ma.masked_array([[1.0, 2.0], [0.0, 4.0]], [[False, False], [True, False]])
         self._assert_func(a, b)
         self._assert_func(b, a)
         self._assert_func(b, b)
@@ -480,9 +466,7 @@ class TestAlmostEqual(_GenericTest):
 
         # test arrays
         self._assert_func([1.499999], [0.0], decimal=0)
-        assert_raises(
-            AssertionError, lambda: self._assert_func([1.5], [0.0], decimal=0)
-        )
+        assert_raises(AssertionError, lambda: self._assert_func([1.5], [0.0], decimal=0))
 
     def test_nan_item(self):
         self._assert_func(np.nan, np.nan)
@@ -528,12 +512,8 @@ class TestAlmostEqual(_GenericTest):
         assert_equal(msgs[3], "Mismatched elements: 3 / 3 (100%)")
         assert_equal(msgs[4], "Max absolute difference: 1.e-05")
         assert_equal(msgs[5], "Max relative difference: 3.33328889e-06")
-        assert_equal(
-            msgs[6], " x: array([1.00000000001, 2.00000000002, 3.00003      ])"
-        )
-        assert_equal(
-            msgs[7], " y: array([1.00000000002, 2.00000000003, 3.00004      ])"
-        )
+        assert_equal(msgs[6], " x: array([1.00000000001, 2.00000000002, 3.00003      ])")
+        assert_equal(msgs[7], " y: array([1.00000000002, 2.00000000003, 3.00004      ])")
 
         # With the default value of decimal digits, only the 3rd element
         # differs. Note that we only check for the formatting of the arrays
@@ -1082,31 +1062,19 @@ class TestArrayAlmostEqualNulp:
 
         eps = np.finfo(x.dtype).eps
         y = x + x * eps * nulp * 2.0
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp
-        )
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp)
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp)
         # The test condition needs to be at least a factor of sqrt(2) smaller
         # because the real and imaginary parts both change
         y = x + x * eps * nulp
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp)
 
         epsneg = np.finfo(x.dtype).epsneg
         y = x - x * epsneg * nulp * 2.0
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp
-        )
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp)
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp)
         y = x - x * epsneg * nulp
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp)
 
     def test_complex64_pass(self):
         nulp = 5
@@ -1138,29 +1106,17 @@ class TestArrayAlmostEqualNulp:
 
         eps = np.finfo(x.dtype).eps
         y = x + x * eps * nulp * 2.0
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp
-        )
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp)
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp)
         y = x + x * eps * nulp
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp)
 
         epsneg = np.finfo(x.dtype).epsneg
         y = x - x * epsneg * nulp * 2.0
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp
-        )
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, x + y * 1j, nulp)
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + x * 1j, nulp)
         y = x - x * epsneg * nulp
-        assert_raises(
-            AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp
-        )
+        assert_raises(AssertionError, assert_array_almost_equal_nulp, xi, y + y * 1j, nulp)
 
 
 class TestULP:
@@ -1202,21 +1158,11 @@ class TestULP:
             tiny = np.array([np.finfo(dt).tiny])
             zero = np.array([np.PZERO]).astype(dt)
             nzero = np.array([np.NZERO]).astype(dt)
-            assert_raises(
-                AssertionError, lambda: assert_array_max_ulp(nan, inf, maxulp=maxulp)
-            )
-            assert_raises(
-                AssertionError, lambda: assert_array_max_ulp(nan, big, maxulp=maxulp)
-            )
-            assert_raises(
-                AssertionError, lambda: assert_array_max_ulp(nan, tiny, maxulp=maxulp)
-            )
-            assert_raises(
-                AssertionError, lambda: assert_array_max_ulp(nan, zero, maxulp=maxulp)
-            )
-            assert_raises(
-                AssertionError, lambda: assert_array_max_ulp(nan, nzero, maxulp=maxulp)
-            )
+            assert_raises(AssertionError, lambda: assert_array_max_ulp(nan, inf, maxulp=maxulp))
+            assert_raises(AssertionError, lambda: assert_array_max_ulp(nan, big, maxulp=maxulp))
+            assert_raises(AssertionError, lambda: assert_array_max_ulp(nan, tiny, maxulp=maxulp))
+            assert_raises(AssertionError, lambda: assert_array_max_ulp(nan, zero, maxulp=maxulp))
+            assert_raises(AssertionError, lambda: assert_array_max_ulp(nan, nzero, maxulp=maxulp))
 
 
 class TestStringEqual:

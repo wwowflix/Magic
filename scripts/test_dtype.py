@@ -29,9 +29,7 @@ from numpy.testing import (
 
 def assert_dtype_equal(a, b):
     assert_equal(a, b)
-    assert_equal(
-        hash(a), hash(b), "two equivalent types do not hash to the same value !"
-    )
+    assert_equal(hash(a), hash(b), "two equivalent types do not hash to the same value !")
 
 
 def assert_dtype_not_equal(a, b):
@@ -116,9 +114,7 @@ class TestBuiltin:
         assert not np.dtype(np.int32) == 7, "dtype richcompare failed for =="
         assert np.dtype(np.int32) != 7, "dtype richcompare failed for !="
 
-    @pytest.mark.parametrize(
-        "operation", [operator.le, operator.lt, operator.ge, operator.gt]
-    )
+    @pytest.mark.parametrize("operation", [operator.le, operator.lt, operator.ge, operator.gt])
     def test_richcompare_invalid_dtype_comparison(self, operation):
         # Make sure TypeError is raised for comparison operators
         # for invalid dtypes. Here 7 is an invalid dtype.
@@ -378,12 +374,8 @@ class TestRecord:
         """Test if an appropriate exception is raised when passing bad values to
         the dtype constructor.
         """
-        assert_raises(
-            TypeError, np.dtype, {"names": {"A", "B"}, "formats": ["f8", "i4"]}
-        )
-        assert_raises(
-            TypeError, np.dtype, {"names": ["A", "B"], "formats": {"f8", "i4"}}
-        )
+        assert_raises(TypeError, np.dtype, {"names": {"A", "B"}, "formats": ["f8", "i4"]})
+        assert_raises(TypeError, np.dtype, {"names": ["A", "B"], "formats": {"f8", "i4"}})
 
     def test_aligned_size(self):
         # Check that structured dtypes get padded to an aligned size
@@ -459,9 +451,7 @@ class TestRecord:
         assert_equal(dt1, dt2)
         assert_equal(dt2, dt3)
         # Array of subtype should preserve alignment
-        dt1 = np.dtype(
-            [("a", "|i1"), ("b", [("f0", "<i2"), ("f1", "<f4")], 2)], align=True
-        )
+        dt1 = np.dtype([("a", "|i1"), ("b", [("f0", "<i2"), ("f1", "<f4")], 2)], align=True)
         assert_equal(
             dt1.descr,
             [
@@ -588,9 +578,7 @@ class TestRecord:
 
     def test_comma_datetime(self):
         dt = np.dtype("M8[D],datetime64[Y],i8")
-        assert_equal(
-            dt, np.dtype([("f0", "M8[D]"), ("f1", "datetime64[Y]"), ("f2", "i8")])
-        )
+        assert_equal(dt, np.dtype([("f0", "M8[D]"), ("f1", "datetime64[Y]"), ("f2", "i8")]))
 
     def test_from_dictproxy(self):
         # Tests for PR #5920
@@ -602,9 +590,7 @@ class TestRecord:
     def test_from_dict_with_zero_width_field(self):
         # Regression test for #6430 / #2196
         dt = np.dtype([("val1", np.float32, (0,)), ("val2", int)])
-        dt2 = np.dtype(
-            {"names": ["val1", "val2"], "formats": [(np.float32, (0,)), int]}
-        )
+        dt2 = np.dtype({"names": ["val1", "val2"], "formats": [(np.float32, (0,)), int]})
 
         assert_dtype_equal(dt, dt2)
         assert_equal(dt.fields["val1"][0].itemsize, 0)
@@ -646,9 +632,7 @@ class TestRecord:
     def test_multifield_index(self, align_flag):
         # indexing with a list produces subfields
         # the align flag should be preserved
-        dt = np.dtype(
-            [(("title", "col1"), "<U20"), ("A", "<f8"), ("B", "<f8")], align=align_flag
-        )
+        dt = np.dtype([(("title", "col1"), "<U20"), ("A", "<f8"), ("B", "<f8")], align=align_flag)
 
         dt_sub = dt[["B", "col1"]]
         assert_equal(
@@ -668,9 +652,7 @@ class TestRecord:
         dt_sub = dt[["B"]]
         assert_equal(
             dt_sub,
-            np.dtype(
-                {"names": ["B"], "formats": ["<f8"], "offsets": [88], "itemsize": 96}
-            ),
+            np.dtype({"names": ["B"], "formats": ["<f8"], "offsets": [88], "itemsize": 96}),
         )
         assert_equal(dt_sub.isalignedstruct, align_flag)
 
@@ -697,9 +679,7 @@ class TestRecord:
         )
 
     def test_fieldless_views(self):
-        a = np.zeros(
-            2, dtype={"names": [], "formats": [], "offsets": [], "itemsize": 8}
-        )
+        a = np.zeros(2, dtype={"names": [], "formats": [], "offsets": [], "itemsize": 8})
         assert_raises(ValueError, a.view, np.dtype([]))
 
         d = np.dtype((np.dtype([]), 10))
@@ -715,9 +695,7 @@ class TestRecord:
         assert_raises(ValueError, np.dtype, ([], "f8"))
         assert_raises(ValueError, np.zeros(1, dtype="i4").view, [])
 
-        assert_equal(
-            np.zeros(2, dtype=[]) == np.zeros(2, dtype=[]), np.ones(2, dtype=bool)
-        )
+        assert_equal(np.zeros(2, dtype=[]) == np.zeros(2, dtype=[]), np.ones(2, dtype=bool))
 
         assert_equal(np.zeros((1, 2), dtype=[]) == a, np.ones((1, 2), dtype=bool))
 
@@ -927,8 +905,7 @@ def iter_struct_object_dtypes():
 
 @pytest.mark.skipif(
     sys.version_info >= (3, 12),
-    reason="Python 3.12 has immortal refcounts, this test will no longer "
-    "work. See gh-23986",
+    reason="Python 3.12 has immortal refcounts, this test will no longer " "work. See gh-23986",
 )
 @pytest.mark.skipif(not HAS_REFCOUNT, reason="Python lacks refcounts")
 class TestStructuredObjectRefcounting:
@@ -936,9 +913,7 @@ class TestStructuredObjectRefcounting:
     include objects and thus require reference counting.
     """
 
-    @pytest.mark.parametrize(
-        ["dt", "pat", "count", "singleton"], iter_struct_object_dtypes()
-    )
+    @pytest.mark.parametrize(["dt", "pat", "count", "singleton"], iter_struct_object_dtypes())
     @pytest.mark.parametrize(
         ["creation_func", "creation_obj"],
         [
@@ -967,9 +942,7 @@ class TestStructuredObjectRefcounting:
         now = sys.getrefcount(creation_obj)
         assert now == before
 
-    @pytest.mark.parametrize(
-        ["dt", "pat", "count", "singleton"], iter_struct_object_dtypes()
-    )
+    @pytest.mark.parametrize(["dt", "pat", "count", "singleton"], iter_struct_object_dtypes())
     def test_structured_object_item_setting(self, dt, pat, count, singleton):
         """Structured object reference counting for simple item setting"""
         one = 1
@@ -988,9 +961,7 @@ class TestStructuredObjectRefcounting:
         assert sys.getrefcount(one) == before2
         assert sys.getrefcount(singleton) == before
 
-    @pytest.mark.parametrize(
-        ["dt", "pat", "count", "singleton"], iter_struct_object_dtypes()
-    )
+    @pytest.mark.parametrize(["dt", "pat", "count", "singleton"], iter_struct_object_dtypes())
     @pytest.mark.parametrize(
         ["shape", "index", "items_changed"],
         [
@@ -1029,9 +1000,7 @@ class TestStructuredObjectRefcounting:
         assert before_val0 - after_val0 == count * items_changed
         assert after_val1 - before_val1 == count * items_changed
 
-    @pytest.mark.parametrize(
-        ["dt", "pat", "count", "singleton"], iter_struct_object_dtypes()
-    )
+    @pytest.mark.parametrize(["dt", "pat", "count", "singleton"], iter_struct_object_dtypes())
     def test_structured_object_take_and_repeat(self, dt, pat, count, singleton):
         """Structured object reference counting for specialized functions.
         The older functions such as take and repeat use different code paths
@@ -1066,9 +1035,7 @@ class TestStructuredDtypeSparseFields:
             )
         ]
     )
-    sparse_dtype = np.dtype(
-        [("a", {"names": ["ab"], "formats": ["f"], "offsets": [4]}, (2, 3))]
-    )
+    sparse_dtype = np.dtype([("a", {"names": ["ab"], "formats": ["f"], "offsets": [4]}, (2, 3))])
 
     def test_sparse_field_assignment(self):
         arr = np.zeros(3, self.dtype)
@@ -1561,9 +1528,7 @@ class TestDTypeMakeCanonical:
         canonicalized = np.result_type(dtype_with_empty_space)
         self.check_canonical(dtype_with_empty_space, canonicalized)
         # promotion with two arguments should always give identical results:
-        two_arg_result = np.promote_types(
-            dtype_with_empty_space, dtype_with_empty_space
-        )
+        two_arg_result = np.promote_types(dtype_with_empty_space, dtype_with_empty_space)
         assert np.can_cast(two_arg_result, canonicalized, casting="no")
 
         # Ensure that we also check aligned struct (check the opposite, in
@@ -1574,9 +1539,7 @@ class TestDTypeMakeCanonical:
         canonicalized = np.result_type(dtype_with_empty_space)
         self.check_canonical(dtype_with_empty_space, canonicalized)
         # promotion with two arguments should always give identical results:
-        two_arg_result = np.promote_types(
-            dtype_with_empty_space, dtype_with_empty_space
-        )
+        two_arg_result = np.promote_types(dtype_with_empty_space, dtype_with_empty_space)
         assert np.can_cast(two_arg_result, canonicalized, casting="no")
 
 
@@ -1655,8 +1618,7 @@ class TestPickling:
 
     @pytest.mark.parametrize(
         "DType",
-        [type(np.dtype(t)) for t in np.typecodes["All"]]
-        + [type(np.dtype(rational)), np.dtype],
+        [type(np.dtype(t)) for t in np.typecodes["All"]] + [type(np.dtype(rational)), np.dtype],
     )
     def test_pickle_dtype_class(self, DType):
         # Check that DTypes (the classes/types) roundtrip when pickling
@@ -1738,14 +1700,10 @@ class TestPromotion:
         assert res == expected
 
     def test_complex_pyscalar_promote_rational(self):
-        with pytest.raises(
-            TypeError, match=r".* no common DType exists for the given inputs"
-        ):
+        with pytest.raises(TypeError, match=r".* no common DType exists for the given inputs"):
             np.result_type(1j, rational)
 
-        with pytest.raises(
-            TypeError, match=r".* no common DType exists for the given inputs"
-        ):
+        with pytest.raises(TypeError, match=r".* no common DType exists for the given inputs"):
             np.result_type(1j, rational(1, 2))
 
     @pytest.mark.parametrize("val", [2, 2**32, 2**63, 2**64, 2 * 100])

@@ -3,7 +3,8 @@ Detects duplicate/overlapping runs and suppresses redundant work.
 Week 10 minimal stub: checks for a lockfile pattern and exits 0.
 """
 
-import sys, pathlib
+import sys
+import pathlib
 
 LOCK = pathlib.Path("outputs/.runner_lock")
 

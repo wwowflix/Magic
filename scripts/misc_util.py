@@ -253,9 +253,7 @@ def get_mathlibs(path=None):
                 config_file = fn
                 break
         else:
-            raise DistutilsError(
-                "_numpyconfig.h not found in numpy include " "dirs %r" % (dirs,)
-            )
+            raise DistutilsError("_numpyconfig.h not found in numpy include " "dirs %r" % (dirs,))
 
     with open(config_file) as fid:
         mathlibs = []
@@ -350,9 +348,7 @@ def make_temp_file(suffix="", prefix="", text=True):
     if not hasattr(_tdata, "tempdir"):
         _tdata.tempdir = tempfile.mkdtemp()
         _tmpdirs.append(_tdata.tempdir)
-    fid, name = tempfile.mkstemp(
-        suffix=suffix, prefix=prefix, dir=_tdata.tempdir, text=text
-    )
+    fid, name = tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=_tdata.tempdir, text=text)
     fo = os.fdopen(fid, "w")
     return fo, name
 
@@ -379,10 +375,7 @@ def terminal_has_colors():
                 curses.tigetnum("colors") >= 0
                 and curses.tigetnum("pairs") >= 0
                 and (
-                    (
-                        curses.tigetstr("setf") is not None
-                        and curses.tigetstr("setb") is not None
-                    )
+                    (curses.tigetstr("setf") is not None and curses.tigetstr("setb") is not None)
                     or (
                         curses.tigetstr("setaf") is not None
                         and curses.tigetstr("setab") is not None
@@ -694,11 +687,7 @@ def general_source_directories_files(top_path):
             yield rpath, files
     dpath = top_path
     rpath = rel_path(dpath, top_path)
-    filenames = [
-        os.path.join(dpath, f)
-        for f in os.listdir(dpath)
-        if not prune_file_pat.search(f)
-    ]
+    filenames = [os.path.join(dpath, f) for f in os.listdir(dpath) if not prune_file_pat.search(f)]
     files = [f for f in filenames if os.path.isfile(f)]
     yield rpath, files
 
@@ -849,7 +838,7 @@ class Configuration:
         package_path=None,
         caller_level=1,
         setup_name="setup.py",
-        **attrs
+        **attrs,
     ):
         """Construct configuration instance of a package.
 
@@ -1000,9 +989,7 @@ class Configuration:
             if "build" in d.split(os.sep):
                 continue
             n = ".".join(d.split(os.sep)[-len(l) :])
-            c = self.get_subpackage(
-                n, parent_name=parent_name, caller_level=caller_level + 1
-            )
+            c = self.get_subpackage(n, parent_name=parent_name, caller_level=caller_level + 1)
             config_list.extend(c)
         return config_list
 
@@ -1062,9 +1049,7 @@ class Configuration:
         """
         if subpackage_name is None:
             if subpackage_path is None:
-                raise ValueError(
-                    "either subpackage_name or subpackage_path must be specified"
-                )
+                raise ValueError("either subpackage_name or subpackage_path must be specified")
             subpackage_name = os.path.basename(subpackage_path)
 
         # handle wildcards
@@ -1073,9 +1058,7 @@ class Configuration:
             return self._wildcard_get_subpackage(
                 subpackage_name, parent_name, caller_level=caller_level + 1
             )
-        assert "*" not in subpackage_name, repr(
-            (subpackage_name, subpackage_path, parent_name)
-        )
+        assert "*" not in subpackage_name, repr((subpackage_name, subpackage_path, parent_name))
         if subpackage_path is None:
             subpackage_path = njoin([self.local_path] + l)
         else:
@@ -1247,9 +1230,7 @@ class Configuration:
                     for s in pattern_list:
                         if is_glob_pattern(s):
                             if i >= len(path_list):
-                                raise ValueError(
-                                    "cannot fill pattern %r with %r" % (d, path)
-                                )
+                                raise ValueError("cannot fill pattern %r with %r" % (d, path))
                             target_list.append(path_list[i])
                         else:
                             assert s == path_list[i], repr(
@@ -1519,9 +1500,7 @@ class Configuration:
 
         """
         include_non_existing = kws.get("include_non_existing", True)
-        return gpaths(
-            paths, local_path=self.local_path, include_non_existing=include_non_existing
-        )
+        return gpaths(paths, local_path=self.local_path, include_non_existing=include_non_existing)
 
     def _fix_paths_dict(self, kw):
         for k in kw.keys():
@@ -1626,9 +1605,7 @@ class Configuration:
             libnames.append(libname)
 
         ext_args["libraries"] = libnames + ext_args["libraries"]
-        ext_args["define_macros"] = self.define_macros + ext_args.get(
-            "define_macros", []
-        )
+        ext_args["define_macros"] = self.define_macros + ext_args.get("define_macros", [])
 
         from numpy.distutils.core import Extension
 
@@ -1848,9 +1825,7 @@ class Configuration:
         template = os.path.join(self.package_path, template)
 
         if self.name in self.installed_pkg_config:
-            self.installed_pkg_config[self.name].append(
-                (template, install_dir, subst_dict)
-            )
+            self.installed_pkg_config[self.name].append((template, install_dir, subst_dict))
         else:
             self.installed_pkg_config[self.name] = [(template, install_dir, subst_dict)]
 
@@ -1884,8 +1859,7 @@ class Configuration:
                 if a and a == dict[key]:
                     continue
                 self.warn(
-                    "Inheriting attribute %r=%r from %r"
-                    % (key, dict[key], dict.get("name", "?"))
+                    "Inheriting attribute %r=%r from %r" % (key, dict[key], dict.get("name", "?"))
                 )
                 setattr(self, key, dict[key])
                 self.extra_keys.append(key)
@@ -1979,9 +1953,7 @@ class Configuration:
         """Append libraries, include_dirs to extension or library item."""
         if is_sequence(extlib):
             lib_name, build_info = extlib
-            dict_append(
-                build_info, libraries=self.libraries, include_dirs=self.include_dirs
-            )
+            dict_append(build_info, libraries=self.libraries, include_dirs=self.include_dirs)
         else:
             from numpy.distutils.core import Extension
 
@@ -2480,12 +2452,8 @@ def generate_config_py(target):
 
     mkpath(os.path.dirname(target))
     with open(target, "w") as f:
-        f.write(
-            "# This file is generated by numpy's %s\n" % (os.path.basename(sys.argv[0]))
-        )
-        f.write(
-            "# It contains system_info results at the time of building this package.\n"
-        )
+        f.write("# This file is generated by numpy's %s\n" % (os.path.basename(sys.argv[0])))
+        f.write("# It contains system_info results at the time of building this package.\n")
         f.write('__all__ = ["get_info","show"]\n\n')
 
         # For gfortran+msvc combination, extra shared libraries may exist

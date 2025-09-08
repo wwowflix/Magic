@@ -99,9 +99,7 @@ class ResourceContainer(Traversable):
         raise IsADirectoryError()
 
     def joinpath(self, name):
-        return next(
-            traversable for traversable in self.iterdir() if traversable.name == name
-        )
+        return next(traversable for traversable in self.iterdir() if traversable.name == name)
 
 
 class TraversableReader(TraversableResources, SimpleReader):

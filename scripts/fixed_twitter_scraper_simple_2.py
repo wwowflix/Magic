@@ -1,4 +1,4 @@
-ï¿import time
+import time
 from fake_useragent import UserAgent
 import requests
 
@@ -40,4 +40,4 @@ with open("outputs/twitter_trends.csv", mode="w", newline="", encoding="utf-8") 
             break
         writer.writerow([tweet.date, tweet.user.username, tweet.content, tweet.url])
 
-print("Ã¢Å“â€¦ Scraped", limit, "tweets to outputs/twitter_trends.csv")
+print("â�"… Scraped", limit, "tweets to outputs/twitter_trends.csv")

@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11E_bottleneck_profiler_READY.py] executed successfully (stub mode).")
 
 

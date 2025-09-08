@@ -136,30 +136,20 @@ class ServiceWorkerVersion:
             version_id=str(json["versionId"]),
             registration_id=RegistrationID.from_json(json["registrationId"]),
             script_url=str(json["scriptURL"]),
-            running_status=ServiceWorkerVersionRunningStatus.from_json(
-                json["runningStatus"]
-            ),
+            running_status=ServiceWorkerVersionRunningStatus.from_json(json["runningStatus"]),
             status=ServiceWorkerVersionStatus.from_json(json["status"]),
             script_last_modified=(
-                float(json["scriptLastModified"])
-                if "scriptLastModified" in json
-                else None
+                float(json["scriptLastModified"]) if "scriptLastModified" in json else None
             ),
             script_response_time=(
-                float(json["scriptResponseTime"])
-                if "scriptResponseTime" in json
-                else None
+                float(json["scriptResponseTime"]) if "scriptResponseTime" in json else None
             ),
             controlled_clients=(
                 [target.TargetID.from_json(i) for i in json["controlledClients"]]
                 if "controlledClients" in json
                 else None
             ),
-            target_id=(
-                target.TargetID.from_json(json["targetId"])
-                if "targetId" in json
-                else None
-            ),
+            target_id=(target.TargetID.from_json(json["targetId"]) if "targetId" in json else None),
             router_rules=str(json["routerRules"]) if "routerRules" in json else None,
         )
 
@@ -389,9 +379,7 @@ class WorkerErrorReported:
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> WorkerErrorReported:
-        return cls(
-            error_message=ServiceWorkerErrorMessage.from_json(json["errorMessage"])
-        )
+        return cls(error_message=ServiceWorkerErrorMessage.from_json(json["errorMessage"]))
 
 
 @event_class("ServiceWorker.workerRegistrationUpdated")
@@ -402,9 +390,7 @@ class WorkerRegistrationUpdated:
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> WorkerRegistrationUpdated:
         return cls(
-            registrations=[
-                ServiceWorkerRegistration.from_json(i) for i in json["registrations"]
-            ]
+            registrations=[ServiceWorkerRegistration.from_json(i) for i in json["registrations"]]
         )
 
 
@@ -415,6 +401,4 @@ class WorkerVersionUpdated:
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> WorkerVersionUpdated:
-        return cls(
-            versions=[ServiceWorkerVersion.from_json(i) for i in json["versions"]]
-        )
+        return cls(versions=[ServiceWorkerVersion.from_json(i) for i in json["versions"]])

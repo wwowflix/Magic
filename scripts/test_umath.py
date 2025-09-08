@@ -41,9 +41,7 @@ UFUNCS_UNARY = [uf for uf in UFUNCS if uf.nin == 1]
 UFUNCS_UNARY_FP = [uf for uf in UFUNCS_UNARY if "f->f" in uf.types]
 
 UFUNCS_BINARY = [uf for uf in UFUNCS if uf.nin == 2]
-UFUNCS_BINARY_ACC = [
-    uf for uf in UFUNCS_BINARY if hasattr(uf, "accumulate") and uf.nout == 1
-]
+UFUNCS_BINARY_ACC = [uf for uf in UFUNCS_BINARY if hasattr(uf, "accumulate") and uf.nout == 1]
 
 
 def interesting_binop_operands(val1, val2, dtype):
@@ -325,15 +323,9 @@ class TestComparisons:
         comp_s2_list = [int(py_comp(x, scalar)) for x in a_lst]
 
         # Sequence: Binary, Scalar1 and Scalar2
-        assert_(
-            comp_b.tolist() == comp_b_list, f"Failed comparison ({py_comp.__name__})"
-        )
-        assert_(
-            comp_s1.tolist() == comp_s1_list, f"Failed comparison ({py_comp.__name__})"
-        )
-        assert_(
-            comp_s2.tolist() == comp_s2_list, f"Failed comparison ({py_comp.__name__})"
-        )
+        assert_(comp_b.tolist() == comp_b_list, f"Failed comparison ({py_comp.__name__})")
+        assert_(comp_s1.tolist() == comp_s1_list, f"Failed comparison ({py_comp.__name__})")
+        assert_(comp_s2.tolist() == comp_s2_list, f"Failed comparison ({py_comp.__name__})")
 
     def test_ignore_object_identity_in_equal(self):
         # Check comparing identical objects whose comparison
@@ -437,9 +429,7 @@ class TestComparisons:
         ],
     )
     @pytest.mark.parametrize("flip", [True, False])
-    def test_unsigned_signed_direct_comparison(
-        self, dtype, py_comp_func, np_comp_func, flip
-    ):
+    def test_unsigned_signed_direct_comparison(self, dtype, py_comp_func, np_comp_func, flip):
         if flip:
             py_comp = lambda x, y: py_comp_func(y, x)
             np_comp = lambda x, y: np_comp_func(y, x)
@@ -593,9 +583,7 @@ class TestDivision:
         fo = np.iinfo(dtype)
         a = eval(ex_val)
         lst = a.tolist()
-        c_div = lambda n, d: (
-            0 if d == 0 or (n and n == fo.min and d == -1) else n // d
-        )
+        c_div = lambda n, d: (0 if d == 0 or (n and n == fo.min and d == -1) else n // d)
 
         with np.errstate(divide="ignore"):
             div_a = np.floor_divide.reduce(a)
@@ -604,14 +592,10 @@ class TestDivision:
         assert div_a == div_lst, msg
 
         with np.errstate(divide="raise", over="raise"):
-            with pytest.raises(
-                FloatingPointError, match="divide by zero encountered in reduce"
-            ):
+            with pytest.raises(FloatingPointError, match="divide by zero encountered in reduce"):
                 np.floor_divide.reduce(np.arange(-100, 100).astype(dtype))
             if fo.min:
-                with pytest.raises(
-                    FloatingPointError, match="overflow encountered in reduce"
-                ):
+                with pytest.raises(FloatingPointError, match="overflow encountered in reduce"):
                     np.floor_divide.reduce(np.array([fo.min, 1, -1], dtype=dtype))
 
     @pytest.mark.parametrize(
@@ -653,9 +637,7 @@ class TestDivision:
     def test_division_complex(self):
         # check that implementation is correct
         msg = "Complex division implementation check"
-        x = np.array(
-            [1.0 + 1.0 * 1j, 1.0 + 0.5 * 1j, 1.0 + 2.0 * 1j], dtype=np.complex128
-        )
+        x = np.array([1.0 + 1.0 * 1j, 1.0 + 0.5 * 1j, 1.0 + 2.0 * 1j], dtype=np.complex128)
         assert_almost_equal(x**2 / x, x, err_msg=msg)
         # check overflow, underflow
         msg = "Complex division overflow/underflow check"
@@ -679,9 +661,7 @@ class TestDivision:
 
     def test_floor_division_complex(self):
         # check that floor division, divmod and remainder raises type errors
-        x = np.array(
-            [0.9 + 1j, -0.1 + 1j, 0.9 + 0.5 * 1j, 0.9 + 2.0 * 1j], dtype=np.complex128
-        )
+        x = np.array([0.9 + 1j, -0.1 + 1j, 0.9 + 0.5 * 1j, 0.9 + 2.0 * 1j], dtype=np.complex128)
         with pytest.raises(TypeError):
             x // 7
         with pytest.raises(TypeError):
@@ -976,13 +956,9 @@ class TestDivisionIntegerOverflowsAndDivideByZero:
         np.remainder: result_type(helper_lambdas["zero"], helper_lambdas["zero"]),
         np.fmod: result_type(helper_lambdas["zero"], helper_lambdas["zero"]),
         operator.mod: result_type(helper_lambdas["zero"], helper_lambdas["zero"]),
-        operator.floordiv: result_type(
-            helper_lambdas["min"], helper_lambdas["neg_min"]
-        ),
+        operator.floordiv: result_type(helper_lambdas["min"], helper_lambdas["neg_min"]),
         np.floor_divide: result_type(helper_lambdas["min"], helper_lambdas["neg_min"]),
-        np.divmod: result_type(
-            helper_lambdas["min-zero"], helper_lambdas["neg_min-zero"]
-        ),
+        np.divmod: result_type(helper_lambdas["min-zero"], helper_lambdas["neg_min-zero"]),
     }
 
     @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
@@ -1060,17 +1036,13 @@ class TestDivisionIntegerOverflowsAndDivideByZero:
         # If dividend is a larger type than the divisor (`else` case),
         # then, result will be a larger type than dividend and will not
         # result in an overflow for `divmod` and `floor_divide`.
-        if np.dtype(dividend_dtype).itemsize >= np.dtype(
-            divisor_dtype
-        ).itemsize and operation in (
+        if np.dtype(dividend_dtype).itemsize >= np.dtype(divisor_dtype).itemsize and operation in (
             np.divmod,
             np.floor_divide,
             operator.floordiv,
         ):
             with pytest.warns(RuntimeWarning, match="overflow encountered in"):
-                result = operation(
-                    dividend_dtype(np.iinfo(dividend_dtype).min), divisor_dtype(-1)
-                )
+                result = operation(dividend_dtype(np.iinfo(dividend_dtype).min), divisor_dtype(-1))
                 assert result == self.overflow_results[operation].nocast(dividend_dtype)
 
             # Arrays
@@ -1081,15 +1053,12 @@ class TestDivisionIntegerOverflowsAndDivideByZero:
                 with pytest.warns(RuntimeWarning, match="overflow encountered in"):
                     result = np.array(operation(a, divisor)).flatten("f")
                     expected_array = np.array(
-                        [self.overflow_results[operation].nocast(dividend_dtype)]
-                        * len(a)
+                        [self.overflow_results[operation].nocast(dividend_dtype)] * len(a)
                     ).flatten()
                     assert_array_equal(result, expected_array)
         else:
             # Scalars
-            result = operation(
-                dividend_dtype(np.iinfo(dividend_dtype).min), divisor_dtype(-1)
-            )
+            result = operation(dividend_dtype(np.iinfo(dividend_dtype).min), divisor_dtype(-1))
             assert result == self.overflow_results[operation].casted(dividend_dtype)
 
             # Arrays
@@ -1127,17 +1096,13 @@ class TestPower:
         assert_almost_equal(x ** (-1), [1.0, 0.5, 1.0 / 3])
         assert_almost_equal(x ** (0.5), [1.0, ncu.sqrt(2), ncu.sqrt(3)])
 
-        for out, inp, msg in _gen_alignment_data(
-            dtype=np.float32, type="unary", max_size=11
-        ):
+        for out, inp, msg in _gen_alignment_data(dtype=np.float32, type="unary", max_size=11):
             exp = [ncu.sqrt(i) for i in inp]
             assert_almost_equal(inp ** (0.5), exp, err_msg=msg)
             np.sqrt(inp, out=out)
             assert_equal(out, exp, err_msg=msg)
 
-        for out, inp, msg in _gen_alignment_data(
-            dtype=np.float64, type="unary", max_size=7
-        ):
+        for out, inp, msg in _gen_alignment_data(dtype=np.float64, type="unary", max_size=7):
             exp = [ncu.sqrt(i) for i in inp]
             assert_almost_equal(inp ** (0.5), exp, err_msg=msg)
             np.sqrt(inp, out=out)
@@ -1151,15 +1116,9 @@ class TestPower:
         assert_almost_equal(x**3, [(1 + 2j) ** 3, (2 + 3j) ** 3, (3 + 4j) ** 3])
         assert_almost_equal(x**4, [(1 + 2j) ** 4, (2 + 3j) ** 4, (3 + 4j) ** 4])
         assert_almost_equal(x ** (-1), [1 / (1 + 2j), 1 / (2 + 3j), 1 / (3 + 4j)])
-        assert_almost_equal(
-            x ** (-2), [1 / (1 + 2j) ** 2, 1 / (2 + 3j) ** 2, 1 / (3 + 4j) ** 2]
-        )
-        assert_almost_equal(
-            x ** (-3), [(-11 + 2j) / 125, (-46 - 9j) / 2197, (-117 - 44j) / 15625]
-        )
-        assert_almost_equal(
-            x ** (0.5), [ncu.sqrt(1 + 2j), ncu.sqrt(2 + 3j), ncu.sqrt(3 + 4j)]
-        )
+        assert_almost_equal(x ** (-2), [1 / (1 + 2j) ** 2, 1 / (2 + 3j) ** 2, 1 / (3 + 4j) ** 2])
+        assert_almost_equal(x ** (-3), [(-11 + 2j) / 125, (-46 - 9j) / 2197, (-117 - 44j) / 15625])
+        assert_almost_equal(x ** (0.5), [ncu.sqrt(1 + 2j), ncu.sqrt(2 + 3j), ncu.sqrt(3 + 4j)])
         norm = 1.0 / ((x**14)[0])
         assert_almost_equal(
             x**14 * norm,
@@ -1295,9 +1254,7 @@ class TestPower:
     def test_float_to_inf_power(self):
         for dt in [np.float32, np.float64]:
             a = np.array([1, 1, 2, 2, -2, -2, np.inf, -np.inf], dt)
-            b = np.array(
-                [np.inf, -np.inf, np.inf, -np.inf, np.inf, -np.inf, np.inf, -np.inf], dt
-            )
+            b = np.array([np.inf, -np.inf, np.inf, -np.inf, np.inf, -np.inf, np.inf, -np.inf], dt)
             r = np.array([1, 1, np.inf, 0, np.inf, 0, np.inf, 0], dt)
             assert_equal(np.power(a, b), r)
 
@@ -1456,12 +1413,8 @@ class TestLog:
             y_true = np.log(x_f64)
             y_special = np.log(x_special)
             for jj in strides:
-                assert_array_almost_equal_nulp(
-                    np.log(x_f64[::jj]), y_true[::jj], nulp=2
-                )
-                assert_array_almost_equal_nulp(
-                    np.log(x_special[::jj]), y_special[::jj], nulp=2
-                )
+                assert_array_almost_equal_nulp(np.log(x_f64[::jj]), y_true[::jj], nulp=2)
+                assert_array_almost_equal_nulp(np.log(x_special[::jj]), y_special[::jj], nulp=2)
 
     # Reference values were computed with mpmath, with mp.dps = 200.
     @pytest.mark.parametrize(
@@ -1525,9 +1478,7 @@ class TestExp:
             x_f64 = np.float64(np.random.uniform(low=0.01, high=709.1, size=ii))
             y_true = np.exp(x_f64)
             for jj in strides:
-                assert_array_almost_equal_nulp(
-                    np.exp(x_f64[::jj]), y_true[::jj], nulp=2
-                )
+                assert_array_almost_equal_nulp(np.exp(x_f64[::jj]), y_true[::jj], nulp=2)
 
 
 class TestSpecialFloats:
@@ -1616,9 +1567,7 @@ class TestSpecialFloats:
     )
     def test_sincos_underflow(self):
         with np.errstate(under="raise"):
-            underflow_trigger = np.array(
-                float.fromhex("0x1.f37f47a03f82ap-511"), dtype=np.float64
-            )
+            underflow_trigger = np.array(float.fromhex("0x1.f37f47a03f82ap-511"), dtype=np.float64)
             np.sin(underflow_trigger)
             np.cos(underflow_trigger)
 
@@ -1691,9 +1640,7 @@ class TestSpecialFloats:
 
         with np.errstate(divide="raise"):
             for dt in ["e", "f", "d", "g"]:
-                assert_raises(
-                    FloatingPointError, np.reciprocal, np.array(-0.0, dtype=dt)
-                )
+                assert_raises(FloatingPointError, np.reciprocal, np.array(-0.0, dtype=dt))
 
     @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
     def test_tan(self):
@@ -1725,9 +1672,7 @@ class TestSpecialFloats:
             for value in [np.inf, -np.inf, 2.0, -2.0]:
                 for dt in ["e", "f", "d"]:
                     with np.errstate(invalid="raise"):
-                        assert_raises(
-                            FloatingPointError, callable, np.array(value, dtype=dt)
-                        )
+                        assert_raises(FloatingPointError, callable, np.array(value, dtype=dt))
 
     def test_arctan(self):
         with np.errstate(all="ignore"):
@@ -1799,9 +1744,7 @@ class TestSpecialFloats:
         for value in [0.0, -np.inf]:
             with np.errstate(invalid="raise"):
                 for dt in ["e", "f", "d"]:
-                    assert_raises(
-                        FloatingPointError, np.arccosh, np.array(value, dtype=dt)
-                    )
+                    assert_raises(FloatingPointError, np.arccosh, np.array(value, dtype=dt))
 
     @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
     def test_arctanh(self):
@@ -1816,9 +1759,7 @@ class TestSpecialFloats:
         for value in [1.01, np.inf, -np.inf, 1.0, -1.0]:
             with np.errstate(invalid="raise", divide="raise"):
                 for dt in ["e", "f", "d"]:
-                    assert_raises(
-                        FloatingPointError, np.arctanh, np.array(value, dtype=dt)
-                    )
+                    assert_raises(FloatingPointError, np.arctanh, np.array(value, dtype=dt))
 
         # Make sure glibc < 2.18 atanh is not used, issue 25087
         assert np.signbit(np.arctanh(-1j).real)
@@ -1840,9 +1781,7 @@ class TestSpecialFloats:
         for value in [2000.0, -2000.0]:
             with np.errstate(over="raise", under="raise"):
                 for dt in ["e", "f", "d"]:
-                    assert_raises(
-                        FloatingPointError, np.exp2, np.array(value, dtype=dt)
-                    )
+                    assert_raises(FloatingPointError, np.exp2, np.array(value, dtype=dt))
 
     @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
     def test_expm1(self):
@@ -1857,9 +1796,7 @@ class TestSpecialFloats:
         for value in [200.0, 2000.0]:
             with np.errstate(over="raise"):
                 for dt in ["e", "f"]:
-                    assert_raises(
-                        FloatingPointError, np.expm1, np.array(value, dtype=dt)
-                    )
+                    assert_raises(FloatingPointError, np.expm1, np.array(value, dtype=dt))
 
     # test to ensure no spurious FP exceptions are raised due to SIMD
     INF_INVALID_ERR = [
@@ -2048,18 +1985,10 @@ class TestFPClass:
             ],
             dtype=dtype,
         )
-        nan = np.array(
-            [True, True, False, False, False, False, False, False, False, False]
-        )
-        inf = np.array(
-            [False, False, True, True, False, False, False, False, False, False]
-        )
-        sign = np.array(
-            [False, True, False, True, True, False, True, False, False, True]
-        )
-        finite = np.array(
-            [False, False, False, False, True, True, True, True, True, True]
-        )
+        nan = np.array([True, True, False, False, False, False, False, False, False, False])
+        inf = np.array([False, False, True, True, False, False, False, False, False, False])
+        sign = np.array([False, True, False, True, True, False, True, False, False, True])
+        finite = np.array([False, False, False, False, True, True, True, True, True, True])
         out = np.ndarray(data.shape, dtype="bool")
         ncontig_in = data[1::3]
         ncontig_out = out[1::3]
@@ -2135,12 +2064,8 @@ class TestFRExp:
     )
     @pytest.mark.xfail(IS_MUSL, reason="gh23049")
     def test_frexp(self, dtype, stride):
-        arr = np.array(
-            [np.nan, np.nan, np.inf, -np.inf, 0.0, -0.0, 1.0, -1.0], dtype=dtype
-        )
-        mant_true = np.array(
-            [np.nan, np.nan, np.inf, -np.inf, 0.0, -0.0, 0.5, -0.5], dtype=dtype
-        )
+        arr = np.array([np.nan, np.nan, np.inf, -np.inf, 0.0, -0.0, 1.0, -1.0], dtype=dtype)
+        mant_true = np.array([np.nan, np.nan, np.inf, -np.inf, 0.0, -0.0, 0.5, -0.5], dtype=dtype)
         exp_true = np.array([0, 0, 0, 0, 0, 0, 1, 1], dtype="i")
         out_mant = np.ones(8, dtype=dtype)
         out_exp = 2 * np.ones(8, dtype="i")
@@ -2175,9 +2100,7 @@ class TestAVXUfuncs:
             # various array sizes to ensure masking in AVX is tested
             for size in range(1, 32):
                 myfunc = getattr(np, func)
-                x_f32 = np.random.uniform(low=minval, high=maxval, size=size).astype(
-                    np.float32
-                )
+                x_f32 = np.random.uniform(low=minval, high=maxval, size=size).astype(np.float32)
                 x_f64 = x_f32.astype(np.float64)
                 x_f128 = x_f32.astype(np.longdouble)
                 y_true128 = myfunc(x_f128)
@@ -2228,12 +2151,8 @@ class TestAVXFloat32Transcendental:
         assert_array_max_ulp(np.cos(x_f32), np.float32(np.cos(x_f64)), maxulp=2)
         # test aliasing(issue #17761)
         tx_f32 = x_f32.copy()
-        assert_array_max_ulp(
-            np.sin(x_f32, out=x_f32), np.float32(np.sin(x_f64)), maxulp=2
-        )
-        assert_array_max_ulp(
-            np.cos(tx_f32, out=tx_f32), np.float32(np.cos(x_f64)), maxulp=2
-        )
+        assert_array_max_ulp(np.sin(x_f32, out=x_f32), np.float32(np.sin(x_f64)), maxulp=2)
+        assert_array_max_ulp(np.cos(tx_f32, out=tx_f32), np.float32(np.cos(x_f64)), maxulp=2)
 
     def test_strided_float32(self):
         np.random.seed(42)
@@ -2248,18 +2167,10 @@ class TestAVXFloat32Transcendental:
             sin_true = np.sin(x_f32_large)
             cos_true = np.cos(x_f32_large)
             for jj in strides:
-                assert_array_almost_equal_nulp(
-                    np.exp(x_f32[::jj]), exp_true[::jj], nulp=2
-                )
-                assert_array_almost_equal_nulp(
-                    np.log(x_f32[::jj]), log_true[::jj], nulp=2
-                )
-                assert_array_almost_equal_nulp(
-                    np.sin(x_f32_large[::jj]), sin_true[::jj], nulp=2
-                )
-                assert_array_almost_equal_nulp(
-                    np.cos(x_f32_large[::jj]), cos_true[::jj], nulp=2
-                )
+                assert_array_almost_equal_nulp(np.exp(x_f32[::jj]), exp_true[::jj], nulp=2)
+                assert_array_almost_equal_nulp(np.log(x_f32[::jj]), log_true[::jj], nulp=2)
+                assert_array_almost_equal_nulp(np.sin(x_f32_large[::jj]), sin_true[::jj], nulp=2)
+                assert_array_almost_equal_nulp(np.cos(x_f32_large[::jj]), cos_true[::jj], nulp=2)
 
 
 class TestLogAddExp(_FilterInvalids):
@@ -2354,16 +2265,12 @@ class TestHypot:
 
 def assert_hypot_isnan(x, y):
     with np.errstate(invalid="ignore"):
-        assert_(
-            np.isnan(ncu.hypot(x, y)), f"hypot({x}, {y}) is {ncu.hypot(x, y)}, not nan"
-        )
+        assert_(np.isnan(ncu.hypot(x, y)), f"hypot({x}, {y}) is {ncu.hypot(x, y)}, not nan")
 
 
 def assert_hypot_isinf(x, y):
     with np.errstate(invalid="ignore"):
-        assert_(
-            np.isinf(ncu.hypot(x, y)), f"hypot({x}, {y}) is {ncu.hypot(x, y)}, not inf"
-        )
+        assert_(np.isinf(ncu.hypot(x, y)), f"hypot({x}, {y}) is {ncu.hypot(x, y)}, not inf")
 
 
 class TestHypotSpecialValues:
@@ -2384,9 +2291,7 @@ class TestHypotSpecialValues:
 
 
 def assert_arctan2_isnan(x, y):
-    assert_(
-        np.isnan(ncu.arctan2(x, y)), f"arctan({x}, {y}) is {ncu.arctan2(x, y)}, not nan"
-    )
+    assert_(np.isnan(ncu.arctan2(x, y)), f"arctan({x}, {y}) is {ncu.arctan2(x, y)}, not nan")
 
 
 def assert_arctan2_ispinf(x, y):
@@ -2490,9 +2395,7 @@ class TestLdexp:
     def _check_ldexp(self, tp):
         assert_almost_equal(ncu.ldexp(np.array(2.0, np.float32), np.array(3, tp)), 16.0)
         assert_almost_equal(ncu.ldexp(np.array(2.0, np.float64), np.array(3, tp)), 16.0)
-        assert_almost_equal(
-            ncu.ldexp(np.array(2.0, np.longdouble), np.array(3, tp)), 16.0
-        )
+        assert_almost_equal(ncu.ldexp(np.array(2.0, np.longdouble), np.array(3, tp)), 16.0)
 
     def test_ldexp(self):
         # The default Python int type should work
@@ -2578,9 +2481,7 @@ class TestMaximum(_FilterInvalids):
         out_maxtrue = np.array([-2.0, 1.0, 1.0, 10.0, 1.0, 1.0, np.nan, 1.0])
         assert_equal(np.maximum(arr1, arr2), maxtrue)
         assert_equal(np.maximum(arr1[::2], arr2[::2]), maxtrue[::2])
-        assert_equal(
-            np.maximum(arr1[:4:], arr2[::2]), np.array([-2.0, np.nan, 10.0, 1.0])
-        )
+        assert_equal(np.maximum(arr1[:4:], arr2[::2]), np.array([-2.0, np.nan, 10.0, 1.0]))
         assert_equal(np.maximum(arr1[::3], arr2[:3:]), np.array([-2.0, 0.0, np.nan]))
         assert_equal(
             np.maximum(arr1[:6:2], arr2[::3], out=out[::3]),
@@ -2675,9 +2576,7 @@ class TestMinimum(_FilterInvalids):
         out_mintrue = np.array([-4.0, 1.0, 1.0, 1.0, 1.0, 1.0, np.nan, 1.0])
         assert_equal(np.minimum(arr1, arr2), mintrue)
         assert_equal(np.minimum(arr1[::2], arr2[::2]), mintrue[::2])
-        assert_equal(
-            np.minimum(arr1[:4:], arr2[::2]), np.array([-4.0, np.nan, 0.0, 0.0])
-        )
+        assert_equal(np.minimum(arr1[:4:], arr2[::2]), np.array([-4.0, np.nan, 0.0, 0.0]))
         assert_equal(np.minimum(arr1[::3], arr2[:3:]), np.array([-4.0, -1.0, np.nan]))
         assert_equal(
             np.minimum(arr1[:6:2], arr2[::3], out=out[::3]),
@@ -2845,9 +2744,7 @@ class TestBool:
         input1 = [0, 0, 3, 2]
         input2 = [0, 4, 0, 2]
 
-        typecodes = (
-            np.typecodes["AllFloat"] + np.typecodes["AllInteger"] + "?"
-        )  # boolean
+        typecodes = np.typecodes["AllFloat"] + np.typecodes["AllInteger"] + "?"  # boolean
         for dtype in map(np.dtype, typecodes):
             arg1 = np.asarray(input1, dtype=dtype)
             arg2 = np.asarray(input2, dtype=dtype)
@@ -2985,9 +2882,7 @@ class TestBitwiseUFuncs:
             btype = np.array([True], dtype=object)
             assert_(type(f.reduce(btype)) is bool, msg)
 
-    @pytest.mark.parametrize(
-        "input_dtype_obj, bitsize", zip(bitwise_types, bitwise_bits)
-    )
+    @pytest.mark.parametrize("input_dtype_obj, bitsize", zip(bitwise_types, bitwise_bits))
     def test_bitwise_count(self, input_dtype_obj, bitsize):
         input_dtype = input_dtype_obj.type
 
@@ -2995,10 +2890,7 @@ class TestBitwiseUFuncs:
             num = 2**i - 1
             msg = f"bitwise_count for {num}"
             assert i == np.bitwise_count(input_dtype(num)), msg
-            if (
-                np.issubdtype(input_dtype, np.signedinteger)
-                or input_dtype == np.object_
-            ):
+            if np.issubdtype(input_dtype, np.signedinteger) or input_dtype == np.object_:
                 assert i == np.bitwise_count(input_dtype(-num)), msg
 
         a = np.array([2**i - 1 for i in range(1, bitsize)], dtype=input_dtype)
@@ -3135,17 +3027,13 @@ class TestMinMax:
         # simd tests on max/min, test all alignments, slow but important
         # for 2 * vz + 2 * (vs - 1) + 1 (unrolled once)
         for dt, sz in [(np.float32, 15), (np.float64, 7)]:
-            for out, inp, msg in _gen_alignment_data(
-                dtype=dt, type="unary", max_size=sz
-            ):
+            for out, inp, msg in _gen_alignment_data(dtype=dt, type="unary", max_size=sz):
                 for i in range(inp.size):
                     inp[:] = np.arange(inp.size, dtype=dt)
                     inp[i] = np.nan
                     emsg = lambda: f"{inp!r}\n{msg}"
                     with suppress_warnings() as sup:
-                        sup.filter(
-                            RuntimeWarning, "invalid value encountered in reduce"
-                        )
+                        sup.filter(RuntimeWarning, "invalid value encountered in reduce")
                         assert_(np.isnan(inp.max()), msg=emsg)
                         assert_(np.isnan(inp.min()), msg=emsg)
 
@@ -3179,9 +3067,7 @@ class TestAbsoluteNegative:
     def test_abs_neg_blocked(self):
         # simd tests on abs, test all alignments for vz + 2 * (vs - 1) + 1
         for dt, sz in [(np.float32, 11), (np.float64, 5)]:
-            for out, inp, msg in _gen_alignment_data(
-                dtype=dt, type="unary", max_size=sz
-            ):
+            for out, inp, msg in _gen_alignment_data(dtype=dt, type="unary", max_size=sz):
                 tgt = [ncu.absolute(i) for i in inp]
                 np.absolute(inp, out=out)
                 assert_equal(out, tgt, err_msg=msg)
@@ -3730,9 +3616,7 @@ class TestSpecialMethods:
         )
         # np._NoValue ignored for initial
         res = np.multiply.reduce(a, 0, None, None, False, np._NoValue, True)
-        assert_equal(
-            res[4], {"axis": 0, "dtype": None, "keepdims": False, "where": True}
-        )
+        assert_equal(res[4], {"axis": 0, "dtype": None, "keepdims": False, "where": True})
         # None kept for initial, True for where.
         res = np.multiply.reduce(a, 0, None, None, False, None, True)
         assert_equal(
@@ -3952,9 +3836,7 @@ class TestSpecialMethods:
         assert isinstance(result_1, OverriddenArrayNew)
         assert np.all(np.array(result_1) == expected, where=where)
 
-        result_2 = ufunc(
-            array.view(OverriddenArrayNew), where=where.view(OverriddenArrayNew)
-        )
+        result_2 = ufunc(array.view(OverriddenArrayNew), where=where.view(OverriddenArrayNew))
         assert isinstance(result_2, OverriddenArrayNew)
         assert np.all(np.array(result_2) == expected, where=where)
 
@@ -4240,9 +4122,7 @@ class TestSpecialMethods:
     def test_ufunc_docstring(self):
         original_doc = np.add.__doc__
         new_doc = "new docs"
-        expected_dict = (
-            {} if IS_PYPY else {"__module__": "numpy", "__qualname__": "add"}
-        )
+        expected_dict = {} if IS_PYPY else {"__module__": "numpy", "__qualname__": "add"}
 
         np.add.__doc__ = new_doc
         assert np.add.__doc__ == new_doc
@@ -4428,9 +4308,7 @@ class TestRoundingFunctions:
         assert_equal(np.trunc(f), -1)
 
     @pytest.mark.parametrize("func", [np.floor, np.ceil, np.trunc])
-    @pytest.mark.parametrize(
-        "dtype", [np.bool, np.float64, np.float32, np.int64, np.uint32]
-    )
+    @pytest.mark.parametrize("dtype", [np.bool, np.float64, np.float32, np.int64, np.uint32])
     def test_output_dtype(self, func, dtype):
         arr = np.array([-2, 0, 4, 8]).astype(dtype)
         result = func(arr)
@@ -4527,15 +4405,9 @@ class TestComplexFunctions:
         _check_branch_cut(np.arccos, [0 - 2j, 2j], [1, 1], 1, 1, False, np.complex64)
         _check_branch_cut(np.arctan, [-2, 2], [1j, 1j], 1, 1, False, np.complex64)
 
-        _check_branch_cut(
-            np.arcsinh, [-2, 2, 0], [1j, 1j, 1], 1, 1, False, np.complex64
-        )
-        _check_branch_cut(
-            np.arccosh, [0 - 2j, 2j, 2], [1, 1, 1j], 1, 1, False, np.complex64
-        )
-        _check_branch_cut(
-            np.arctanh, [0 - 2j, 2j, 0], [1, 1, 1j], 1, 1, False, np.complex64
-        )
+        _check_branch_cut(np.arcsinh, [-2, 2, 0], [1j, 1j, 1], 1, 1, False, np.complex64)
+        _check_branch_cut(np.arccosh, [0 - 2j, 2j, 2], [1, 1, 1j], 1, 1, False, np.complex64)
+        _check_branch_cut(np.arctanh, [0 - 2j, 2j, 0], [1, 1, 1j], 1, 1, False, np.complex64)
 
     def test_against_cmath(self):
         import cmath
@@ -4586,27 +4458,19 @@ class TestComplexFunctions:
 
             z = x.astype(dtype)
             d = np.absolute(np.arcsinh(x) / np.arcsinh(z).real - 1)
-            assert_(
-                np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arcsinh")
-            )
+            assert_(np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arcsinh"))
 
             z = (1j * x).astype(dtype)
             d = np.absolute(np.arcsinh(x) / np.arcsin(z).imag - 1)
-            assert_(
-                np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arcsin")
-            )
+            assert_(np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arcsin"))
 
             z = x.astype(dtype)
             d = np.absolute(np.arctanh(x) / np.arctanh(z).real - 1)
-            assert_(
-                np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arctanh")
-            )
+            assert_(np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arctanh"))
 
             z = (1j * x).astype(dtype)
             d = np.absolute(np.arctanh(x) / np.arctan(z).imag - 1)
-            assert_(
-                np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arctan")
-            )
+            assert_(np.all(d < rtol), (np.argmax(d), x[np.argmax(d)], d.max(), "arctan"))
 
         # The switchover was chosen as 1e-3; hence there can be up to
         # ~eps/1e-3 of relative cancellation error before it
@@ -4736,15 +4600,11 @@ class TestFrompyfunc:
         # with no identity (not reorderable)
         mul_ufunc = np.frompyfunc(mul, nin=2, nout=1)
         assert_equal(mul_ufunc.reduce([2, 3, 4]), 24)
-        assert_raises(
-            ValueError, lambda: mul_ufunc.reduce(np.ones((2, 2)), axis=(0, 1))
-        )
+        assert_raises(ValueError, lambda: mul_ufunc.reduce(np.ones((2, 2)), axis=(0, 1)))
         assert_raises(ValueError, lambda: mul_ufunc.reduce([]))
 
 
-def _check_branch_cut(
-    f, x0, dx, re_sign=1, im_sign=-1, sig_zero_ok=False, dtype=complex
-):
+def _check_branch_cut(f, x0, dx, re_sign=1, im_sign=-1, sig_zero_ok=False, dtype=complex):
     """
     Check for a branch cut in a function.
 
@@ -4850,9 +4710,7 @@ def test_nextafterf():
     np.finfo(np.double) == np.finfo(np.longdouble),
     reason="long double is same as double",
 )
-@pytest.mark.xfail(
-    condition=platform.machine().startswith("ppc64"), reason="IBM double double"
-)
+@pytest.mark.xfail(condition=platform.machine().startswith("ppc64"), reason="IBM double double")
 def test_nextafterl():
     return _test_nextafter(np.longdouble)
 
@@ -4894,9 +4752,7 @@ def test_spacingf():
     np.finfo(np.double) == np.finfo(np.longdouble),
     reason="long double is same as double",
 )
-@pytest.mark.xfail(
-    condition=platform.machine().startswith("ppc64"), reason="IBM double double"
-)
+@pytest.mark.xfail(condition=platform.machine().startswith("ppc64"), reason="IBM double double")
 def test_spacingl():
     return _test_spacing(np.longdouble)
 

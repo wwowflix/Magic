@@ -318,9 +318,7 @@ class ActionChains:
 
         return self
 
-    def send_keys_to_element(
-        self, element: WebElement, *keys_to_send: str
-    ) -> ActionChains:
+    def send_keys_to_element(self, element: WebElement, *keys_to_send: str) -> ActionChains:
         """Sends keys to an element.
 
         :Args:
@@ -374,9 +372,7 @@ class ActionChains:
         """
 
         if not isinstance(scroll_origin, ScrollOrigin):
-            raise TypeError(
-                f"Expected object of type ScrollOrigin, got: {type(scroll_origin)}"
-            )
+            raise TypeError(f"Expected object of type ScrollOrigin, got: {type(scroll_origin)}")
 
         self.w3c_actions.wheel_action.scroll(
             origin=scroll_origin.origin,

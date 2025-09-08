@@ -81,9 +81,7 @@ class DisplayMode(enum.Enum):
 
 def get_os_app_state(
     manifest_id: str,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[FileHandler]]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[int, typing.List[FileHandler]]]:
     """
     Returns the following OS state for the given manifest id.
 

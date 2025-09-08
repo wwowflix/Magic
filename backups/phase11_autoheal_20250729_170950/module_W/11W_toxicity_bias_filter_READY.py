@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11W_toxicity_bias_filter_READY.py] executed successfully (stub mode).")
 
 

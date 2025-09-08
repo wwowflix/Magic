@@ -22,7 +22,7 @@ NOTION_PATCHER = os.path.join(PROJECT_ROOT, "notion_status_patcher_FIXED.py")
 # ----------------------------
 def run_command(command, step_name):
     """Runs a shell command and logs its output."""
-    print(f"\n▶ {step_name}...")
+    print(f"\n�-� {step_name}...")
     with open(CYCLE_LOG, "a", encoding="utf-8") as log:
         log.write(f"\n=== {step_name} ===\n")
         try:
@@ -34,10 +34,10 @@ def run_command(command, step_name):
                 stderr=subprocess.STDOUT,
             )
             log.write(result.stdout.decode("utf-8", errors="ignore"))
-            print(f"✅ {step_name} completed.")
+            print(f"�... {step_name} completed.")
         except subprocess.CalledProcessError as e:
             log.write(e.stdout.decode("utf-8", errors="ignore"))
-            print(f"❌ {step_name} failed. Check log for details.")
+            print(f"� {step_name} failed. Check log for details.")
 
 
 # ----------------------------
@@ -45,32 +45,30 @@ def run_command(command, step_name):
 # ----------------------------
 def main():
     print("=" * 40)
-    print("MAGIC PROJECT – PHASE 11 FULL CYCLE")
+    print("MAGIC PROJECT �" PHASE 11 FULL CYCLE")
     print("=" * 40)
     print(f"Log File: {CYCLE_LOG}")
 
     os.makedirs(LOG_DIR, exist_ok=True)
 
-    # 1️⃣ Auto-Heal
+    # 1�⃣ Auto-Heal
     run_command(
         f'powershell -ExecutionPolicy Bypass -File "{AUTOHEAL_SCRIPT}"',
         "STEP 1: Auto-Heal Placeholders",
     )
 
-    # 2️⃣ Master Orchestrator
+    # 2�⃣ Master Orchestrator
     run_command(
         f'powershell -ExecutionPolicy Bypass -File "{ORCHESTRATOR_SCRIPT}"',
         "STEP 2: Run Master Orchestrator",
     )
 
-    # 3️⃣ Notion Sync
-    run_command(
-        f'"{sys.executable}" "{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker"
-    )
+    # 3�⃣ Notion Sync
+    run_command(f'"{sys.executable}" "{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker")
 
     print("\n=============================")
-    print(" ✅ PHASE 11 FULL CYCLE COMPLETED")
-    print(f" 📜 Log saved to: {CYCLE_LOG}")
+    print(" �... PHASE 11 FULL CYCLE COMPLETED")
+    print(f" �"� Log saved to: {CYCLE_LOG}")
     print("=============================\n")
 
 

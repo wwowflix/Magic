@@ -128,8 +128,7 @@ class StringFormatter:
             lwidth -= np.array([self.adj.len(x) for x in idx]).max() + adjoin_width
 
         col_widths = [
-            np.array([self.adj.len(x) for x in col]).max() if len(col) > 0 else 0
-            for col in strcols
+            np.array([self.adj.len(x) for x in col]).max() if len(col) > 0 else 0 for col in strcols
         ]
 
         assert lwidth is not None

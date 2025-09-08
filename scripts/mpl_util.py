@@ -15,11 +15,7 @@ if TYPE_CHECKING:
 
 def filled_to_mpl_paths(filled: FillReturn, fill_type: FillType) -> list[mpath.Path]:
     if fill_type in (FillType.OuterCode, FillType.ChunkCombinedCode):
-        paths = [
-            mpath.Path(points, codes)
-            for points, codes in zip(*filled)
-            if points is not None
-        ]
+        paths = [mpath.Path(points, codes) for points, codes in zip(*filled) if points is not None]
     elif fill_type in (FillType.OuterOffset, FillType.ChunkCombinedOffset):
         paths = [
             mpath.Path(points, codes_from_offsets(offsets))
@@ -44,9 +40,7 @@ def filled_to_mpl_paths(filled: FillReturn, fill_type: FillType) -> list[mpath.P
                 pts = points[offs[0] : offs[-1]]
                 paths += [mpath.Path(pts, codes_from_offsets(offs - offs[0]))]
     else:
-        raise RuntimeError(
-            f"Conversion of FillType {fill_type} to MPL Paths is not implemented"
-        )
+        raise RuntimeError(f"Conversion of FillType {fill_type} to MPL Paths is not implemented")
     return paths
 
 
@@ -60,11 +54,7 @@ def lines_to_mpl_paths(lines: LineReturn, line_type: LineType) -> list[mpath.Pat
             closed = line[0, 0] == line[-1, 0] and line[0, 1] == line[-1, 1]
             paths.append(mpath.Path(line, closed=closed))
     elif line_type in (LineType.SeparateCode, LineType.ChunkCombinedCode):
-        paths = [
-            mpath.Path(points, codes)
-            for points, codes in zip(*lines)
-            if points is not None
-        ]
+        paths = [mpath.Path(points, codes) for points, codes in zip(*lines) if points is not None]
     elif line_type == LineType.ChunkCombinedOffset:
         paths = []
         for points, offsets in zip(*lines):
@@ -86,7 +76,5 @@ def lines_to_mpl_paths(lines: LineReturn, line_type: LineType) -> list[mpath.Pat
                 closed = line[0, 0] == line[-1, 0] and line[0, 1] == line[-1, 1]
                 paths.append(mpath.Path(line, closed=closed))
     else:
-        raise RuntimeError(
-            f"Conversion of LineType {line_type} to MPL Paths is not implemented"
-        )
+        raise RuntimeError(f"Conversion of LineType {line_type} to MPL Paths is not implemented")
     return paths

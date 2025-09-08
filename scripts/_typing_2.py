@@ -100,12 +100,8 @@ IntStrT = TypeVar("IntStrT", int, str)
 
 # timestamp and timedelta convertible types
 
-TimestampConvertibleTypes = Union[
-    "Timestamp", datetime, np.datetime64, np.int64, float, str
-]
-TimedeltaConvertibleTypes = Union[
-    "Timedelta", timedelta, np.timedelta64, np.int64, float, str
-]
+TimestampConvertibleTypes = Union["Timestamp", datetime, np.datetime64, np.int64, float, str]
+TimedeltaConvertibleTypes = Union["Timedelta", timedelta, np.timedelta64, np.int64, float, str]
 Timezone = Union[str, tzinfo]
 
 # NDFrameT is stricter and ensures that the same subclass of NDFrame always is
@@ -146,9 +142,7 @@ DtypeObj = Union[np.dtype, "ExtensionDtype"]
 ConvertersArg = Dict[Hashable, Callable[[Dtype], Dtype]]
 
 # parse_dates
-ParseDatesArg = Union[
-    bool, List[Hashable], List[List[Hashable]], Dict[Hashable, List[Hashable]]
-]
+ParseDatesArg = Union[bool, List[Hashable], List[List[Hashable]], Dict[Hashable, List[Hashable]]]
 
 # For functions like rename that convert one label to another
 Renamer = Union[Mapping[Any, Hashable], Callable[[Any], Hashable]]
@@ -267,22 +261,16 @@ CompressionOptions = Optional[
 ]
 
 # types in DataFrameFormatter
-FormattersType = Union[
-    List[Callable], Tuple[Callable, ...], Mapping[Union[str, int], Callable]
-]
+FormattersType = Union[List[Callable], Tuple[Callable, ...], Mapping[Union[str, int], Callable]]
 ColspaceType = Mapping[Hashable, Union[str, int]]
 FloatFormatType = Union[str, Callable, "EngFormatter"]
-ColspaceArgType = Union[
-    str, int, Sequence[Union[str, int]], Mapping[Hashable, Union[str, int]]
-]
+ColspaceArgType = Union[str, int, Sequence[Union[str, int]], Mapping[Hashable, Union[str, int]]]
 
 # Arguments for fillna()
 FillnaOptions = Literal["backfill", "bfill", "ffill", "pad"]
 
 # internals
-Manager = Union[
-    "ArrayManager", "SingleArrayManager", "BlockManager", "SingleBlockManager"
-]
+Manager = Union["ArrayManager", "SingleArrayManager", "BlockManager", "SingleBlockManager"]
 SingleManager = Union["SingleArrayManager", "SingleBlockManager"]
 Manager2D = Union["ArrayManager", "BlockManager"]
 

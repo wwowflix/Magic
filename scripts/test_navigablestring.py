@@ -125,13 +125,8 @@ class TestNavigableStringSubclasses(SoupTest):
         # The TemplateString is a little unusual because it's generally found
         # _inside_ children of a <template> element, not a direct child of the
         # <template> element.
-        soup = self.soup(
-            "<template>Some text<p>In a tag</p></template>Some text outside"
-        )
-        assert all(
-            isinstance(x, TemplateString)
-            for x in soup.template._all_strings(types=None)
-        )
+        soup = self.soup("<template>Some text<p>In a tag</p></template>Some text outside")
+        assert all(isinstance(x, TemplateString) for x in soup.template._all_strings(types=None))
 
         # Once the <template> tag closed, we went back to using
         # NavigableString.
@@ -147,13 +142,15 @@ class TestNavigableStringSubclasses(SoupTest):
         assert markup == soup.template.encode("utf8")
 
     def test_ruby_strings(self):
-        markup = "<ruby>漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字 <rp>(</rp><rt>ji</rt><rp>)</rp></ruby>"
+        markup = (
+            "<ruby>æ¼¢ <rp>(</rp><rt>kan</rt><rp>)</rp> å­- <rp>(</rp><rt>ji</rt><rp>)</rp></ruby>"
+        )
         soup = self.soup(markup)
         assert isinstance(soup.rp.string, RubyParenthesisString)
         assert isinstance(soup.rt.string, RubyTextString)
 
         # Just as a demo, here's what this means for get_text usage.
-        assert "漢字" == soup.get_text(strip=True)
-        assert "漢(kan)字(ji)" == soup.get_text(
+        assert "æ¼¢å­-" == soup.get_text(strip=True)
+        assert "æ¼¢(kan)å­-(ji)" == soup.get_text(
             strip=True, types=(NavigableString, RubyTextString, RubyParenthesisString)
         )

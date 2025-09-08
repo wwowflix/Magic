@@ -20,9 +20,7 @@ PLACEHOLDER_TEMPLATE = (
 RETRY_LIMIT = 2
 RETRY_DELAY = 1  # seconds
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 
 def load_manifest(path):

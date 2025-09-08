@@ -61,9 +61,7 @@ class Mingw32CCompiler(distutils.cygwinccompiler.CygwinCCompiler):
 
     def __init__(self, verbose=0, dry_run=0, force=0):
 
-        distutils.cygwinccompiler.CygwinCCompiler.__init__(
-            self, verbose, dry_run, force
-        )
+        distutils.cygwinccompiler.CygwinCCompiler.__init__(self, verbose, dry_run, force)
 
         # we need to support 3.2 which doesn't match the standard
         # get_versions methods regex
@@ -138,8 +136,7 @@ class Mingw32CCompiler(distutils.cygwinccompiler.CygwinCCompiler):
                     compiler="gcc -mno-cygwin -O2 -w",
                     compiler_so="gcc -mno-cygwin -mdll -O2 -w" " -Wstrict-prototypes",
                     linker_exe="g++ -mno-cygwin",
-                    linker_so="%s -mno-cygwin -mdll -static %s"
-                    % (self.linker, entry_point),
+                    linker_so="%s -mno-cygwin -mdll -static %s" % (self.linker, entry_point),
                 )
             elif self.gcc_version < "4.0":
                 self.set_executables(
@@ -232,16 +229,12 @@ class Mingw32CCompiler(distutils.cygwinccompiler.CygwinCCompiler):
                 base = base[1:]
 
             if ext not in (self.src_extensions + [".rc", ".res"]):
-                raise UnknownFileError(
-                    "unknown file type '%s' (from '%s')" % (ext, src_name)
-                )
+                raise UnknownFileError("unknown file type '%s' (from '%s')" % (ext, src_name))
             if strip_dir:
                 base = os.path.basename(base)
             if ext == ".res" or ext == ".rc":
                 # these need to be compiled to object files
-                obj_names.append(
-                    os.path.join(output_dir, base + ext + self.obj_extension)
-                )
+                obj_names.append(os.path.join(output_dir, base + ext + self.obj_extension))
             else:
                 obj_names.append(os.path.join(output_dir, base + self.obj_extension))
         return obj_names
@@ -465,9 +458,7 @@ def _build_import_library_amd64():
 
     # get the runtime dll for which we are building import library
     dll_file = find_python_dll()
-    log.info(
-        'Building import library (arch=AMD64): "%s" (from %s)' % (out_file, dll_file)
-    )
+    log.info('Building import library (arch=AMD64): "%s" (from %s)' % (out_file, dll_file))
 
     # generate symbol list from this library
     def_name = "python%d%d.def" % tuple(sys.version_info[:2])
@@ -580,9 +571,7 @@ def msvc_manifest_xml(maj, min):
     try:
         fullver = _MSVCRVER_TO_FULLVER[str(maj * 10 + min)]
     except KeyError:
-        raise ValueError(
-            "Version %d,%d of MSVCRT not supported yet" % (maj, min)
-        ) from None
+        raise ValueError("Version %d,%d of MSVCRT not supported yet" % (maj, min)) from None
     # Don't be fooled, it looks like an XML, but it is not. In particular, it
     # should not have any space before starting, and its size should be
     # divisible by 4, most likely for alignment constraints when the xml is

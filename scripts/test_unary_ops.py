@@ -179,9 +179,7 @@ class TestTimestampUnaryOps:
         assert result._reso == getattr(NpyDatetimeUnit, f"NPY_FR_{unit}").value
 
         result = getattr(ts, method)("H", ambiguous=False)
-        expected = Timestamp("2017-10-29 01:00:00", tz="UTC").tz_convert(
-            "Europe/Madrid"
-        )
+        expected = Timestamp("2017-10-29 01:00:00", tz="UTC").tz_convert("Europe/Madrid")
         assert result == expected
         assert result._reso == getattr(NpyDatetimeUnit, f"NPY_FR_{unit}").value
 
@@ -291,17 +289,13 @@ class TestTimestampUnaryOps:
             Timestamp.min.floor("s")
 
         # the second message here shows up in windows builds
-        msg = "|".join(
-            ["Python int too large to convert to C long", "int too big to convert"]
-        )
+        msg = "|".join(["Python int too large to convert to C long", "int too big to convert"])
         with pytest.raises(OverflowError, match=msg):
             Timestamp.max.ceil("s")
 
     @pytest.mark.xfail(reason="Failing on builds", strict=False)
     @given(val=st.integers(iNaT + 1, lib.i8max))
-    @pytest.mark.parametrize(
-        "method", [Timestamp.round, Timestamp.floor, Timestamp.ceil]
-    )
+    @pytest.mark.parametrize("method", [Timestamp.round, Timestamp.floor, Timestamp.ceil])
     def test_round_sanity(self, val, method):
         val = np.int64(val)
         ts = Timestamp(val)
@@ -500,9 +494,7 @@ class TestTimestampUnaryOps:
         d = datetime(2019, 10, 27, 2, 30)
         ts = Timestamp(d, tz=tz)._as_unit(unit)
         result = ts.replace(hour=1, fold=fold)
-        expected = Timestamp(datetime(2019, 10, 27, 1, 30)).tz_localize(
-            tz, ambiguous=not fold
-        )
+        expected = Timestamp(datetime(2019, 10, 27, 1, 30)).tz_localize(tz, ambiguous=not fold)
         assert result == expected
         assert result._reso == getattr(NpyDatetimeUnit, f"NPY_FR_{unit}").value
 

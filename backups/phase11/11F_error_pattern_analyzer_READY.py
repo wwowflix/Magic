@@ -1,4 +1,4 @@
-ï¿"""Detects recurring failure types across agents"""
+"""Detects recurring failure types across agents"""
 
 
 def main():

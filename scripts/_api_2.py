@@ -134,9 +134,7 @@ class FileLockMeta(ABCMeta):
         }
 
         present_params = inspect.signature(cls.__init__).parameters  # type: ignore[misc]
-        init_params = {
-            key: value for key, value in all_params.items() if key in present_params
-        }
+        init_params = {key: value for key, value in all_params.items() if key in present_params}
 
         instance = super().__call__(lock_file, **init_params)
 
@@ -337,9 +335,7 @@ class BaseFileLock(contextlib.ContextDecorator, metaclass=FileLockMeta):
         try:
             while True:
                 if not self.is_locked:
-                    _LOGGER.debug(
-                        "Attempting to acquire lock %s on %s", lock_id, lock_filename
-                    )
+                    _LOGGER.debug("Attempting to acquire lock %s on %s", lock_id, lock_filename)
                     self._acquire()
                 if self.is_locked:
                     _LOGGER.debug("Lock %s acquired on %s", lock_id, lock_filename)
@@ -352,9 +348,7 @@ class BaseFileLock(contextlib.ContextDecorator, metaclass=FileLockMeta):
                     )
                     raise Timeout(lock_filename)  # noqa: TRY301
                 if 0 <= timeout < time.perf_counter() - start_time:
-                    _LOGGER.debug(
-                        "Timeout on acquiring lock %s on %s", lock_id, lock_filename
-                    )
+                    _LOGGER.debug("Timeout on acquiring lock %s on %s", lock_id, lock_filename)
                     raise Timeout(lock_filename)  # noqa: TRY301
                 msg = "Lock %s not acquired on %s, waiting %s seconds ..."
                 _LOGGER.debug(msg, lock_id, lock_filename, poll_interval)
@@ -378,9 +372,7 @@ class BaseFileLock(contextlib.ContextDecorator, metaclass=FileLockMeta):
             if self._context.lock_counter == 0 or force:
                 lock_id, lock_filename = id(self), self.lock_file
 
-                _LOGGER.debug(
-                    "Attempting to release lock %s on %s", lock_id, lock_filename
-                )
+                _LOGGER.debug("Attempting to release lock %s on %s", lock_id, lock_filename)
                 self._release()
                 self._context.lock_counter = 0
                 _LOGGER.debug("Lock %s released on %s", lock_id, lock_filename)

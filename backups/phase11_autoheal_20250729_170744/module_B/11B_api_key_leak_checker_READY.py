@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print("âœ… [11B_api_key_leak_checker_READY.py] executed successfully (stub mode).")
 
 

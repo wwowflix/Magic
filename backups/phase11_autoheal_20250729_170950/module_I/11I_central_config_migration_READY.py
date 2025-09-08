@@ -1,4 +1,4 @@
-ï¿def main():
+def main():
     print(
         "âœ… [11I_central_config_migration_READY.py] executed successfully (stub mode)."
     )

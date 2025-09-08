@@ -667,6 +667,7 @@ def _remapLangSys(langSys, featureRemap):
 
 
 if __name__ == "__main__":
-    import doctest, sys
+    import doctest
+    import sys
 
     sys.exit(doctest.testmod().failed)

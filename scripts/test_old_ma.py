@@ -102,9 +102,7 @@ def eq(v, w, msg=""):
 class TestMa:
 
     def setup_method(self):
-        x = np.array(
-            [1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0]
-        )
+        x = np.array([1.0, 1.0, 1.0, -2.0, pi / 2.0, 4.0, 5.0, -10.0, 10.0, 1.0, 2.0, 3.0])
         y = np.array([5.0, 0.0, 3.0, 2.0, -1.0, -4.0, 0.0, -10.0, 10.0, 1.0, 0.0, 3.0])
         a10 = 10.0
         m1 = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
@@ -665,16 +663,10 @@ class TestMa:
         y = array([arange(6), 2.0 * arange(6)])
         assert_(allclose(average(y, None), np.add.reduce(np.arange(6)) * 3.0 / 12.0))
         assert_(allclose(average(y, axis=0), np.arange(6) * 3.0 / 2.0))
-        assert_(
-            allclose(average(y, axis=1), [average(x, axis=0), average(x, axis=0) * 2.0])
-        )
+        assert_(allclose(average(y, axis=1), [average(x, axis=0), average(x, axis=0) * 2.0]))
         assert_(allclose(average(y, None, weights=w2), 20.0 / 6.0))
-        assert_(
-            allclose(average(y, axis=0, weights=w2), [0.0, 1.0, 2.0, 3.0, 4.0, 10.0])
-        )
-        assert_(
-            allclose(average(y, axis=1), [average(x, axis=0), average(x, axis=0) * 2.0])
-        )
+        assert_(allclose(average(y, axis=0, weights=w2), [0.0, 1.0, 2.0, 3.0, 4.0, 10.0]))
+        assert_(allclose(average(y, axis=1), [average(x, axis=0), average(x, axis=0) * 2.0]))
         m1 = zeros(6)
         m2 = [0, 0, 1, 1, 0, 0]
         m3 = [[0, 0, 1, 1, 0, 0], [0, 1, 1, 1, 1, 0]]
@@ -689,9 +681,7 @@ class TestMa:
         assert_(allclose(average(z, None), 20.0 / 6.0))
         assert_(allclose(average(z, axis=0), [0.0, 1.0, 99.0, 99.0, 4.0, 7.5]))
         assert_(allclose(average(z, axis=1), [2.5, 5.0]))
-        assert_(
-            allclose(average(z, axis=0, weights=w2), [0.0, 1.0, 99.0, 99.0, 4.0, 10.0])
-        )
+        assert_(allclose(average(z, axis=0, weights=w2), [0.0, 1.0, 99.0, 99.0, 4.0, 10.0]))
 
         a = arange(6)
         b = arange(6) * 3
@@ -761,11 +751,7 @@ class TestMa:
 
     def test_testAPI(self):
         assert_(
-            not [
-                m
-                for m in dir(np.ndarray)
-                if m not in dir(MaskedArray) and not m.startswith("_")
-            ]
+            not [m for m in dir(np.ndarray) if m not in dir(MaskedArray) and not m.startswith("_")]
         )
 
     def test_testSingleElementSubscript(self):

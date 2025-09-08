@@ -8,7 +8,9 @@ in non-backward-compatible ways.
 
 from html.parser import HTMLParser
 from string import ascii_lowercase, ascii_uppercase
-import logging, re, warnings
+import logging
+import re
+import warnings
 
 from .deprecation import get_stack_level
 from .drawing import color_from_hex_string, convert_to_device_color
@@ -91,7 +93,7 @@ _WS_CHARS = "".join(
         "\u0009-\u000d",  # combine the above
         "\u0020",  # SPACE
         "\u0085",  # NEXT LINE
-        # "\u00a0",  # NO-BREAK SPACE   (keep)
+        # "\ ",  # NO-BREAK SPACE   (keep)
         # "\u1680",  # OGHAM SPACE MARK (not actually white)
         # "\u2000",  # EN QUAD
         # "\u2001",  # EM QUAD
@@ -694,7 +696,7 @@ class HTML2FPDF(HTMLParser):
             align = None
             if "align" in attrs:
                 align = attrs.get("align")[0].upper()
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             line_height = css_style.get("line-height", attrs.get("line-height"))
             # "line-height" attributes are not valid in HTML,
@@ -728,7 +730,7 @@ class HTML2FPDF(HTMLParser):
             hsize = (tag_style.size_pt or self.font_size_pt) / self.pdf.k
             if attrs:
                 align = attrs.get("align")
-                if not align in ["L", "R", "J", "C"]:
+                if align not in ["L", "R", "J", "C"]:
                     align = None
             else:
                 align = None
@@ -821,7 +823,7 @@ class HTML2FPDF(HTMLParser):
                     bottom_margin=tag_style.b_margin,
                     indent=tag_style.l_margin,
                 )
-                self._write_paragraph("\u00a0")
+                self._write_paragraph("\ ")
             self._end_paragraph()
         if tag == "ol":
             self.indent += 1
@@ -848,7 +850,7 @@ class HTML2FPDF(HTMLParser):
                     bottom_margin=tag_style.b_margin,
                     indent=tag_style.l_margin,
                 )
-                self._write_paragraph("\u00a0")
+                self._write_paragraph("\ ")
             self._end_paragraph()
         if tag == "li":
             prev_text_color = self.pdf.text_color

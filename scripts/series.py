@@ -320,9 +320,7 @@ class Series(base.IndexOpsMixin, NDFrame):
     _internal_names_set = {"index"} | NDFrame._internal_names_set
     _accessors = {"dt", "cat", "str", "sparse"}
     _hidden_attrs = (
-        base.IndexOpsMixin._hidden_attrs
-        | NDFrame._hidden_attrs
-        | frozenset(["compress", "ptp"])
+        base.IndexOpsMixin._hidden_attrs | NDFrame._hidden_attrs | frozenset(["compress", "ptp"])
     )
 
     # Override cache_readonly bc Series is mutable
@@ -484,9 +482,7 @@ class Series(base.IndexOpsMixin, NDFrame):
             self.name = name
             self._set_axis(0, index)
 
-    def _init_dict(
-        self, data, index: Index | None = None, dtype: DtypeObj | None = None
-    ):
+    def _init_dict(self, data, index: Index | None = None, dtype: DtypeObj | None = None):
         """
         Derive the "_mgr" and "index" attributes of a new Series from a
         dictionary input.
@@ -580,9 +576,7 @@ class Series(base.IndexOpsMixin, NDFrame):
             if isinstance(labels, CategoricalIndex):
                 deep_labels = labels.categories
 
-            if not isinstance(
-                deep_labels, (DatetimeIndex, PeriodIndex, TimedeltaIndex)
-            ):
+            if not isinstance(deep_labels, (DatetimeIndex, PeriodIndex, TimedeltaIndex)):
                 try:
                     labels = DatetimeIndex(labels)
                 except (tslibs.OutOfBoundsDatetime, ValueError):
@@ -915,9 +909,7 @@ class Series(base.IndexOpsMixin, NDFrame):
     # Indexing Methods
 
     @Appender(NDFrame.take.__doc__)
-    def take(
-        self, indices, axis: Axis = 0, is_copy: bool | None = None, **kwargs
-    ) -> Series:
+    def take(self, indices, axis: Axis = 0, is_copy: bool | None = None, **kwargs) -> Series:
         if is_copy is not None:
             warnings.warn(
                 "is_copy is deprecated and will be removed in a future version. "
@@ -1062,9 +1054,7 @@ class Series(base.IndexOpsMixin, NDFrame):
 
         # If key is contained, would have returned by now
         indexer, new_index = self.index.get_loc_level(key)
-        return self._constructor(self._values[indexer], index=new_index).__finalize__(
-            self
-        )
+        return self._constructor(self._values[indexer], index=new_index).__finalize__(self)
 
     def _get_values(self, indexer: slice | npt.NDArray[np.bool_]) -> Series:
         new_mgr = self._mgr.getitem_mgr(indexer)
@@ -1136,9 +1126,7 @@ class Series(base.IndexOpsMixin, NDFrame):
             if isinstance(key, tuple) and not isinstance(self.index, MultiIndex):
                 # cases with MultiIndex don't get here bc they raise KeyError
                 # e.g. test_basic_getitem_setitem_corner
-                raise KeyError(
-                    "key of type tuple not found and not a MultiIndex"
-                ) from err
+                raise KeyError("key of type tuple not found and not a MultiIndex") from err
 
             if com.is_bool_indexer(key):
                 key = check_bool_indexer(self.index, key)
@@ -1306,8 +1294,7 @@ class Series(base.IndexOpsMixin, NDFrame):
             # if the Series changed, and always pop the cached item
             elif (
                 not (
-                    get_option("mode.copy_on_write")
-                    and get_option("mode.data_manager") == "block"
+                    get_option("mode.copy_on_write") and get_option("mode.data_manager") == "block"
                 )
                 and len(self) == len(ref)
                 and self.name in ref.columns
@@ -1321,9 +1308,7 @@ class Series(base.IndexOpsMixin, NDFrame):
                 #  reference to self is now invalid
                 ref._item_cache.pop(cacher[0], None)
 
-        super()._maybe_update_cacher(
-            clear=clear, verify_is_copy=verify_is_copy, inplace=inplace
-        )
+        super()._maybe_update_cacher(clear=clear, verify_is_copy=verify_is_copy, inplace=inplace)
 
     # ----------------------------------------------------------------------
     # Unsorted
@@ -1386,9 +1371,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         nv.validate_repeat((), {"axis": axis})
         new_index = self.index.repeat(repeats)
         new_values = self._values.repeat(repeats)
-        return self._constructor(new_values, index=new_index).__finalize__(
-            self, method="repeat"
-        )
+        return self._constructor(new_values, index=new_index).__finalize__(self, method="repeat")
 
     @overload
     def reset_index(
@@ -1559,13 +1542,11 @@ class Series(base.IndexOpsMixin, NDFrame):
             if inplace:
                 self.index = new_index
             else:
-                return self._constructor(
-                    self._values.copy(), index=new_index
-                ).__finalize__(self, method="reset_index")
+                return self._constructor(self._values.copy(), index=new_index).__finalize__(
+                    self, method="reset_index"
+                )
         elif inplace:
-            raise TypeError(
-                "Cannot reset_index inplace on a Series to create a DataFrame"
-            )
+            raise TypeError("Cannot reset_index inplace on a Series to create a DataFrame")
         else:
             if name is lib.no_default:
                 # For backwards compatibility, keep columns as [0] instead of
@@ -1576,9 +1557,7 @@ class Series(base.IndexOpsMixin, NDFrame):
                     name = self.name
 
             df = self.to_frame(name)
-            return df.reset_index(
-                level=level, drop=drop, allow_duplicates=allow_duplicates
-            )
+            return df.reset_index(level=level, drop=drop, allow_duplicates=allow_duplicates)
         return None
 
     # ----------------------------------------------------------------------
@@ -1685,8 +1664,7 @@ class Series(base.IndexOpsMixin, NDFrame):
         # catch contract violations
         if not isinstance(result, str):
             raise AssertionError(
-                "result must be of type str, type "
-                f"of result is {repr(type(result).__name__)}"
+                "result must be of type str, type " f"of result is {repr(type(result).__name__)}"
             )
 
         if buf is None:
@@ -2142,9 +2120,7 @@ Name: Max Speed, dtype: float64
         # error: Argument "minlength" to "bincount" has incompatible type
         # "Optional[int]"; expected "SupportsIndex"
         out = np.bincount(obs, minlength=len(lev) or None)  # type: ignore[arg-type]
-        return self._constructor(out, index=lev, dtype="int64").__finalize__(
-            self, method="count"
-        )
+        return self._constructor(out, index=lev, dtype="int64").__finalize__(self, method="count")
 
     def mode(self, dropna: bool = True) -> Series:
         """
@@ -2172,9 +2148,7 @@ Name: Max Speed, dtype: float64
             res_values = values._mode(dropna=dropna)
 
         # Ensure index is type stable (should always use int index)
-        return self._constructor(
-            res_values, index=range(len(res_values)), name=self.name
-        )
+        return self._constructor(res_values, index=range(len(res_values)), name=self.name)
 
     def unique(self) -> ArrayLike:
         """
@@ -2593,16 +2567,12 @@ Name: Max Speed, dtype: float64
         """
         nv.validate_round(args, kwargs)
         result = self._values.round(decimals)
-        result = self._constructor(result, index=self.index).__finalize__(
-            self, method="round"
-        )
+        result = self._constructor(result, index=self.index).__finalize__(self, method="round")
 
         return result
 
     @overload
-    def quantile(
-        self, q: float = ..., interpolation: QuantileInterpolation = ...
-    ) -> float: ...
+    def quantile(self, q: float = ..., interpolation: QuantileInterpolation = ...) -> float: ...
 
     @overload
     def quantile(
@@ -2685,8 +2655,7 @@ Name: Max Speed, dtype: float64
         self,
         other: Series,
         method: (
-            Literal["pearson", "kendall", "spearman"]
-            | Callable[[np.ndarray, np.ndarray], float]
+            Literal["pearson", "kendall", "spearman"] | Callable[[np.ndarray, np.ndarray], float]
         ) = "pearson",
         min_periods: int | None = None,
     ) -> float:
@@ -2749,9 +2718,7 @@ Name: Max Speed, dtype: float64
             return np.nan
 
         if method in ["pearson", "spearman", "kendall"] or callable(method):
-            return nanops.nancorr(
-                this.values, other.values, method=method, min_periods=min_periods
-            )
+            return nanops.nancorr(this.values, other.values, method=method, min_periods=min_periods)
 
         raise ValueError(
             "method must be either 'pearson', "
@@ -2803,9 +2770,7 @@ Name: Max Speed, dtype: float64
         this, other = self.align(other, join="inner", copy=False)
         if len(this) == 0:
             return np.nan
-        return nanops.nancov(
-            this.values, other.values, min_periods=min_periods, ddof=ddof
-        )
+        return nanops.nancov(this.values, other.values, min_periods=min_periods, ddof=ddof)
 
     @doc(
         klass="Series",
@@ -2893,9 +2858,7 @@ Name: Max Speed, dtype: float64
         {examples}
         """
         result = algorithms.diff(self._values, periods)
-        return self._constructor(result, index=self.index).__finalize__(
-            self, method="diff"
-        )
+        return self._constructor(result, index=self.index).__finalize__(self, method="diff")
 
     def autocorr(self, lag: int = 1) -> float:
         """
@@ -3005,14 +2968,12 @@ Name: Max Speed, dtype: float64
             lvals = self.values
             rvals = np.asarray(other)
             if lvals.shape[0] != rvals.shape[0]:
-                raise Exception(
-                    f"Dot product shape mismatch, {lvals.shape} vs {rvals.shape}"
-                )
+                raise Exception(f"Dot product shape mismatch, {lvals.shape} vs {rvals.shape}")
 
         if isinstance(other, ABCDataFrame):
-            return self._constructor(
-                np.dot(lvals, rvals), index=other.columns
-            ).__finalize__(self, method="dot")
+            return self._constructor(np.dot(lvals, rvals), index=other.columns).__finalize__(
+                self, method="dot"
+            )
         elif isinstance(other, Series):
             return np.dot(lvals, rvals)
         elif isinstance(rvals, np.ndarray):
@@ -3060,7 +3021,7 @@ Name: Max Speed, dtype: float64
         to_append : Series or list/tuple of Series
             Series to append with self.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, ..., n - 1.
         verify_integrity : bool, default False
             If True, raise Exception on creating index with duplicates.
 
@@ -3131,9 +3092,7 @@ Name: Max Speed, dtype: float64
 
         return self._append(to_append, ignore_index, verify_integrity)
 
-    def _append(
-        self, to_append, ignore_index: bool = False, verify_integrity: bool = False
-    ):
+    def _append(self, to_append, ignore_index: bool = False, verify_integrity: bool = False):
         from pandas.core.reshape.concat import concat
 
         if isinstance(to_append, (list, tuple)):
@@ -3144,9 +3103,7 @@ Name: Max Speed, dtype: float64
         if any(isinstance(x, (ABCDataFrame,)) for x in to_concat[1:]):
             msg = "to_append should be a Series or list/tuple of Series, got DataFrame"
             raise TypeError(msg)
-        return concat(
-            to_concat, ignore_index=ignore_index, verify_integrity=verify_integrity
-        )
+        return concat(to_concat, ignore_index=ignore_index, verify_integrity=verify_integrity)
 
     def _binop(self, other: Series, func, level=None, fill_value=None):
         """
@@ -3592,7 +3549,7 @@ Keep all original rows and also all original values
             Argument 'first' puts NaNs at the beginning, 'last' puts NaNs at
             the end.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, ..., n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -3743,9 +3700,7 @@ Keep all original rows and also all original values
         if is_list_like(ascending):
             ascending = cast(Sequence[Union[bool, int]], ascending)
             if len(ascending) != 1:
-                raise ValueError(
-                    f"Length of ascending ({len(ascending)}) must be 1 for Series"
-                )
+                raise ValueError(f"Length of ascending ({len(ascending)}) must be 1 for Series")
             ascending = ascending[0]
 
         ascending = validate_ascending(ascending)
@@ -3757,9 +3712,7 @@ Keep all original rows and also all original values
         values_to_sort = ensure_key_mapped(self, key)._values if key else self._values
         sorted_index = nargsort(values_to_sort, kind, bool(ascending), na_position)
 
-        result = self._constructor(
-            self._values[sorted_index], index=self.index[sorted_index]
-        )
+        result = self._constructor(self._values[sorted_index], index=self.index[sorted_index])
 
         if ignore_index:
             result.index = default_index(len(sorted_index))
@@ -3857,7 +3810,7 @@ Keep all original rows and also all original values
             If True and sorting by level and index is multilevel, sort by other
             levels too (in order) after sorting by specified level.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, ..., n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -4020,9 +3973,7 @@ Keep all original rows and also all original values
         res = self._constructor(result, index=self.index, name=self.name, dtype=np.intp)
         return res.__finalize__(self, method="argsort")
 
-    def nlargest(
-        self, n: int = 5, keep: Literal["first", "last", "all"] = "first"
-    ) -> Series:
+    def nlargest(self, n: int = 5, keep: Literal["first", "last", "all"] = "first") -> Series:
         """
         Return the largest `n` elements.
 
@@ -4334,7 +4285,7 @@ Keep all original rows and also all original values
         Parameters
         ----------
         ignore_index : bool, default False
-            If True, the resulting index will be labeled 0, 1, …, n - 1.
+            If True, the resulting index will be labeled 0, 1, ..., n - 1.
 
             .. versionadded:: 1.1.0
 
@@ -4524,9 +4475,7 @@ Keep all original rows and also all original values
         dtype: object
         """
         new_values = self._map_values(arg, na_action=na_action)
-        return self._constructor(new_values, index=self.index).__finalize__(
-            self, method="map"
-        )
+        return self._constructor(new_values, index=self.index).__finalize__(self, method="map")
 
     def _gotitem(self, key, ndim, subset=None) -> Series:
         """
@@ -4632,9 +4581,7 @@ Keep all original rows and also all original values
         klass=_shared_doc_kwargs["klass"],
         axis=_shared_doc_kwargs["axis"],
     )
-    def transform(
-        self, func: AggFuncType, axis: Axis = 0, *args, **kwargs
-    ) -> DataFrame | Series:
+    def transform(self, func: AggFuncType, axis: Axis = 0, *args, **kwargs) -> DataFrame | Series:
         # Validate axis argument
         self._get_axis_number(axis)
         result = SeriesApply(
@@ -4793,9 +4740,7 @@ Keep all original rows and also all original values
                     FutureWarning,
                     stacklevel=find_stack_level(),
                 )
-                raise NotImplementedError(
-                    f"Series.{name} does not implement {kwd_name}."
-                )
+                raise NotImplementedError(f"Series.{name} does not implement {kwd_name}.")
             with np.errstate(all="ignore"):
                 return op(delegate, skipna=skipna, **kwds)
 
@@ -4804,16 +4749,12 @@ Keep all original rows and also all original values
     ) -> Series:
         # Note: new_index is None iff indexer is None
         # if not None, indexer is np.intp
-        if indexer is None and (
-            new_index is None or new_index.names == self.index.names
-        ):
+        if indexer is None and (new_index is None or new_index.names == self.index.names):
             if copy:
                 return self.copy()
             return self
 
-        new_values = algorithms.take_nd(
-            self._values, indexer, allow_fill=True, fill_value=None
-        )
+        new_values = algorithms.take_nd(self._values, indexer, allow_fill=True, fill_value=None)
         return self._constructor(new_values, index=new_index)
 
     def _needs_reindex_multi(self, axes, method, level) -> bool:
@@ -5065,9 +5006,7 @@ Keep all original rows and also all original values
         if args:
             (index,) = args
             if "index" in kwargs:
-                raise TypeError(
-                    "'index' passed as both positional and keyword argument"
-                )
+                raise TypeError("'index' passed as both positional and keyword argument")
             kwargs.update({"index": index})
         return super().reindex(**kwargs)
 
@@ -5329,9 +5268,7 @@ Keep all original rows and also all original values
     ) -> None: ...
 
     # error: Signature of "replace" incompatible with supertype "NDFrame"
-    @deprecate_nonkeyword_arguments(
-        version=None, allowed_args=["self", "to_replace", "value"]
-    )
+    @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "to_replace", "value"])
     @doc(
         NDFrame.replace,
         klass=_shared_doc_kwargs["klass"],
@@ -5399,9 +5336,7 @@ Keep all original rows and also all original values
     def shift(
         self, periods: int = 1, freq=None, axis: Axis = 0, fill_value: Hashable = None
     ) -> Series:
-        return super().shift(
-            periods=periods, freq=freq, axis=axis, fill_value=fill_value
-        )
+        return super().shift(periods=periods, freq=freq, axis=axis, fill_value=fill_value)
 
     def memory_usage(self, index: bool = True, deep: bool = False) -> int:
         """
@@ -5531,9 +5466,7 @@ Keep all original rows and also all original values
         dtype: bool
         """
         result = algorithms.isin(self._values, values)
-        return self._constructor(result, index=self.index).__finalize__(
-            self, method="isin"
-        )
+        return self._constructor(result, index=self.index).__finalize__(self, method="isin")
 
     def between(
         self,
@@ -5635,8 +5568,7 @@ Keep all original rows and also all original values
             rmask = self < right
         else:
             raise ValueError(
-                "Inclusive has to be either string of 'both',"
-                "'left', 'right', or 'neither'."
+                "Inclusive has to be either string of 'both'," "'left', 'right', or 'neither'."
             )
 
         return lmask & rmask
@@ -5910,9 +5842,7 @@ Keep all original rows and also all original values
         if not isinstance(self.index, DatetimeIndex):
             raise TypeError(f"unsupported Type {type(self.index).__name__}")
         new_index = self.index.to_period(freq=freq)
-        return self._constructor(new_values, index=new_index).__finalize__(
-            self, method="to_period"
-        )
+        return self._constructor(new_values, index=new_index).__finalize__(self, method="to_period")
 
     @overload
     def ffill(
@@ -5996,9 +5926,7 @@ Keep all original rows and also all original values
     ) -> Series | None:
         return super().bfill(axis=axis, inplace=inplace, limit=limit, downcast=downcast)
 
-    @deprecate_nonkeyword_arguments(
-        version=None, allowed_args=["self", "lower", "upper"]
-    )
+    @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "lower", "upper"])
     def clip(
         self: Series,
         lower=None,
@@ -6074,9 +6002,7 @@ Keep all original rows and also all original values
 
     # error: Signature of "where" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
-    @deprecate_nonkeyword_arguments(
-        version=None, allowed_args=["self", "cond", "other"]
-    )
+    @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "cond", "other"])
     def where(  # type: ignore[override]
         self,
         cond,
@@ -6137,9 +6063,7 @@ Keep all original rows and also all original values
 
     # error: Signature of "mask" incompatible with supertype "NDFrame"
     @deprecate_kwarg(old_arg_name="errors", new_arg_name=None)
-    @deprecate_nonkeyword_arguments(
-        version=None, allowed_args=["self", "cond", "other"]
-    )
+    @deprecate_nonkeyword_arguments(version=None, allowed_args=["self", "cond", "other"])
     def mask(  # type: ignore[override]
         self,
         cond,
@@ -6166,9 +6090,7 @@ Keep all original rows and also all original values
     _info_axis_number = 0
     _info_axis_name = "index"
 
-    index = properties.AxisProperty(
-        axis=0, doc="The index (axis labels) of the Series."
-    )
+    index = properties.AxisProperty(axis=0, doc="The index (axis labels) of the Series.")
 
     # ----------------------------------------------------------------------
     # Accessor Methods

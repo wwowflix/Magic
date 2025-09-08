@@ -25,9 +25,7 @@ logger = logging  # Replaced below after setting the logger class
 class Logger(logging.Logger):
     def _log_with_stack(self, level, *args, **kwargs):
         super().log(level, *args, **kwargs)
-        if dumpLocals and not kwargs.get("extra", {}).get(
-            "_snscrapeSuppressDumpLocals", False
-        ):
+        if dumpLocals and not kwargs.get("extra", {}).get("_snscrapeSuppressDumpLocals", False):
             stack = inspect.stack()
             if len(stack) >= 3:
                 name = _dump_stack_and_locals(stack[2:][::-1])
@@ -75,9 +73,9 @@ def _requests_response_repr(name, response, withHistory=True):
         for previousResponse in response.history:
             ret.append("\n    ")
             ret.append(
-                _requests_response_repr(
-                    "_", previousResponse, withHistory=False
-                ).replace("\n", "\n    ")
+                _requests_response_repr("_", previousResponse, withHistory=False).replace(
+                    "\n", "\n    "
+                )
             )
         ret.append("\n  ]")
     ret.append(f"\n  {name}.status_code = {response.status_code}")
@@ -104,34 +102,21 @@ def _repr(name, value):
     if isinstance(value, requests.exceptions.RequestException):
         return _requests_exception_repr(name, value)
     if isinstance(value, dict):
-        return (
-            f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  "
-            + "\n  ".join(
-                _repr(f"{name}[{k!r}]", v).replace("\n", "\n  ")
-                for k, v in value.items()
-            )
+        return f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  " + "\n  ".join(
+            _repr(f"{name}[{k!r}]", v).replace("\n", "\n  ") for k, v in value.items()
         )
     if isinstance(value, (list, tuple, collections.deque)) and not all(
         isinstance(v, (int, str)) for v in value
     ):
-        return (
-            f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  "
-            + "\n  ".join(
-                _repr(f"{name}[{i}]", v).replace("\n", "\n  ")
-                for i, v in enumerate(value)
-            )
+        return f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  " + "\n  ".join(
+            _repr(f"{name}[{i}]", v).replace("\n", "\n  ") for i, v in enumerate(value)
         )
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
-        return (
-            f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  "
-            + "\n  ".join(
-                _repr(f"{name}.{f.name}", f.name)
-                + " = "
-                + _repr(f"{name}.{f.name}", getattr(value, f.name)).replace(
-                    "\n", "\n  "
-                )
-                for f in dataclasses.fields(value)
-            )
+        return f"{name} = <{type(value).__module__}.{type(value).__name__}>\n  " + "\n  ".join(
+            _repr(f"{name}.{f.name}", f.name)
+            + " = "
+            + _repr(f"{name}.{f.name}", getattr(value, f.name)).replace("\n", "\n  ")
+            for f in dataclasses.fields(value)
         )
     valueRepr = f"{name} = {value!r}"
     if "\n" in valueRepr:
@@ -155,9 +140,7 @@ def _dump_locals_on_exception():
 
 
 def _dump_stack_and_locals(trace, exc=None):
-    with tempfile.NamedTemporaryFile(
-        "w", prefix="snscrape_locals_", delete=False
-    ) as fp:
+    with tempfile.NamedTemporaryFile("w", prefix="snscrape_locals_", delete=False) as fp:
         if exc is not None:
             fp.write("Exception:\n")
             fp.write(f"  {type(exc).__module__}.{type(exc).__name__}: {exc!s}\n")
@@ -185,10 +168,7 @@ def _dump_stack_and_locals(trace, exc=None):
                     # No previous module scope
                     continue
                 module = modules[j]
-            if (
-                not module.__name__.startswith("snscrape.")
-                and module.__name__ != "snscrape"
-            ):
+            if not module.__name__.startswith("snscrape.") and module.__name__ != "snscrape":
                 continue
             locals_ = frameRecord[0].f_locals
             fp.write(
@@ -274,7 +254,7 @@ class CitationAction(argparse.Action):
         print(f'Title: {m["name"]}: {m["summary"]}')
         print(f'URL: {m["home-page"]}')
         print(f'Version: {m["version"]}')
-        print(f'Date: 2018‒{m["version"].split(".", 3)[3][:4]}')
+        print(f'Date: 2018�'{m["version"].split(".", 3)[3][:4]}')
 
         if ".dev" in m["version"]:
             print()
@@ -290,9 +270,7 @@ def parse_args():
     import snscrape.modules
     import snscrape.version
 
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "--version",
         action="version",
@@ -334,9 +312,7 @@ def parse_args():
         "--max-results",
         dest="maxResults",
         type=lambda x: (
-            int(x)
-            if int(x) >= 0
-            else parser.error("--max-results N must be zero or positive")
+            int(x) if int(x) >= 0 else parser.error("--max-results N must be zero or positive")
         ),
         metavar="N",
         help="Only return the first N results",
@@ -461,9 +437,7 @@ def main():
                 return
             for i, item in enumerate(scraper.get_items(), start=1):
                 if args.since is not None and item.date < args.since:
-                    logger.info(
-                        f"Exiting due to reaching older results than {args.since}"
-                    )
+                    logger.info(f"Exiting due to reaching older results than {args.since}")
                     break
                 if args.jsonl:
                     print(item.json(forBuggyIntParser=args.jsonlForBuggyIntParser))
