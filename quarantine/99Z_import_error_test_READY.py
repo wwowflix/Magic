@@ -1,1 +1,1 @@
-﻿print("This should fail because module does not exist.")
+print("This should fail because module does not exist.")

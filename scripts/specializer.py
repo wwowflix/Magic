@@ -41,7 +41,7 @@ def programToCommands(program, getNumRegions=None):
     Each command is a two-tuple of commandname,arg-list.  The commandname might
     be empty string if no commandname shall be emitted (used for glyph width,
     hintmask/cntrmask argument, as well as stray arguments at the end of the
-    program (🤷).
+    program (ðŸ¤·).
     'getNumRegions' may be None, or a callable object. It must return the
     number of regions. 'getNumRegions' takes a single argument, vsindex. It
     returns the numRegions for the vsindex.
@@ -327,10 +327,10 @@ def _convertBlendOpToArgs(blendList):
 
     # We now know that blendList contains a blend op argument list, even if
     # some of the args are lists that each contain a blend op argument list.
-    # 	Convert from:
-    # 		[default font arg sequence x0,...,xn] + [delta tuple for x0] + ... + [delta tuple for xn]
-    # 	to:
-    # 		[ [x0] + [delta tuple for x0],
+    #     Convert from:
+    #         [default font arg sequence x0,...,xn] + [delta tuple for x0] + ... + [delta tuple for xn]
+    #     to:
+    #         [ [x0] + [delta tuple for x0],
     #                 ...,
     #          [xn] + [delta tuple for xn] ]
     numBlends = args[-1]

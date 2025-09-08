@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 # CONFIG
 DECISION_LOGS_FOLDER = "outputs/logs/decisions/"  # where AI decisions would be logged

@@ -23,8 +23,8 @@ _CIRCLE_INSIDE_TOLERANCE = 1e-4
 
 
 # The unit vector's X and Y components are respectively
-#   U = (cos(α), sin(α))
-# where α is the angle between the unit vector and the positive x axis.
+#   U = (cos(Î±), sin(Î±))
+# where Î± is the angle between the unit vector and the positive x axis.
 _UNIT_VECTOR_THRESHOLD = cos(3 / 8 * pi)  # == sin(1/8 * pi) == 0.38268343236508984
 
 

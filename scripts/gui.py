@@ -268,10 +268,10 @@ class FileSelector(SigSlot):
         self.kwargs = pn.widgets.TextInput(
             name="kwargs", value=self.init_kwargs, align="center"
         )
-        self.go = pn.widgets.Button(name="⇨", align="end", width=45)
+        self.go = pn.widgets.Button(name="â‡¨", align="end", width=45)
         self.main = SingleSelect(size=10)
-        self.home = pn.widgets.Button(name="🏠", width=40, height=30, align="end")
-        self.up = pn.widgets.Button(name="‹", width=30, height=30, align="end")
+        self.home = pn.widgets.Button(name="ðŸ ", width=40, height=30, align="end")
+        self.up = pn.widgets.Button(name="â€¹", width=30, height=30, align="end")
 
         self._register(self.protocol, "protocol_changed", auto=True)
         self._register(self.go, "go_clicked", "clicks", auto=True)
@@ -383,12 +383,12 @@ class FileSelector(SigSlot):
             if not any(i.match(l["name"].rsplit("/", 1)[-1]) for i in self.ignore)
         ]
         folders = {
-            "📁 " + o["name"].rsplit("/", 1)[-1]: o["name"]
+            "ðŸ“ " + o["name"].rsplit("/", 1)[-1]: o["name"]
             for o in listing
             if o["type"] == "directory"
         }
         files = {
-            "📄 " + o["name"].rsplit("/", 1)[-1]: o["name"]
+            "ðŸ“„ " + o["name"].rsplit("/", 1)[-1]: o["name"]
             for o in listing
             if o["type"] == "file"
         }

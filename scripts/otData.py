@@ -1376,16 +1376,16 @@ otData = [
             ("LOffset", "ExtSubTable", None, None, "Offset to SubTable"),
         ],
     ),
-    # 	('ValueRecord', [
-    # 		('int16', 'XPlacement', None, None, 'Horizontal adjustment for placement-in design units'),
-    # 		('int16', 'YPlacement', None, None, 'Vertical adjustment for placement-in design units'),
-    # 		('int16', 'XAdvance', None, None, 'Horizontal adjustment for advance-in design units (only used for horizontal writing)'),
-    # 		('int16', 'YAdvance', None, None, 'Vertical adjustment for advance-in design units (only used for vertical writing)'),
-    # 		('Offset', 'XPlaDevice', None, None, 'Offset to Device table for horizontal placement-measured from beginning of PosTable (may be NULL)'),
-    # 		('Offset', 'YPlaDevice', None, None, 'Offset to Device table for vertical placement-measured from beginning of PosTable (may be NULL)'),
-    # 		('Offset', 'XAdvDevice', None, None, 'Offset to Device table for horizontal advance-measured from beginning of PosTable (may be NULL)'),
-    # 		('Offset', 'YAdvDevice', None, None, 'Offset to Device table for vertical advance-measured from beginning of PosTable (may be NULL)'),
-    # 	]),
+    #     ('ValueRecord', [
+    #         ('int16', 'XPlacement', None, None, 'Horizontal adjustment for placement-in design units'),
+    #         ('int16', 'YPlacement', None, None, 'Vertical adjustment for placement-in design units'),
+    #         ('int16', 'XAdvance', None, None, 'Horizontal adjustment for advance-in design units (only used for horizontal writing)'),
+    #         ('int16', 'YAdvance', None, None, 'Vertical adjustment for advance-in design units (only used for vertical writing)'),
+    #         ('Offset', 'XPlaDevice', None, None, 'Offset to Device table for horizontal placement-measured from beginning of PosTable (may be NULL)'),
+    #         ('Offset', 'YPlaDevice', None, None, 'Offset to Device table for vertical placement-measured from beginning of PosTable (may be NULL)'),
+    #         ('Offset', 'XAdvDevice', None, None, 'Offset to Device table for horizontal advance-measured from beginning of PosTable (may be NULL)'),
+    #         ('Offset', 'YAdvDevice', None, None, 'Offset to Device table for vertical advance-measured from beginning of PosTable (may be NULL)'),
+    #     ]),
     (
         "AnchorFormat1",
         [
@@ -4401,7 +4401,7 @@ otData = [
                 "Delta",
                 32,
                 0,
-                "These are the FUnit distance deltas from the font’s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
+                "These are the FUnit distance deltas from the fontâ€™s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
             ),
         ],
     ),
@@ -4421,7 +4421,7 @@ otData = [
                 "Delta",
                 32,
                 0,
-                "These are the FUnit distance deltas from the font’s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
+                "These are the FUnit distance deltas from the fontâ€™s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
             ),
             (
                 "AATLookup(uint16)",
@@ -4953,8 +4953,8 @@ otData = [
             ),
         ],
     ),
-    # Apple TrueType Reference Manual, chapter “The ‘morx’ table”,
-    # section “Metamorphosis Subtables”.
+    # Apple TrueType Reference Manual, chapter â€œThe â€˜morxâ€™ tableâ€,
+    # section â€œMetamorphosis Subtablesâ€.
     # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6morx.html
     (
         "MorxSubtable",
@@ -5093,7 +5093,7 @@ otData = [
         ],
     ),
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
-    # 		('Offset', 'MarkGlyphSetsDef', None, 'round(Version*0x10000) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
+    #         ('Offset', 'MarkGlyphSetsDef', None, 'round(Version*0x10000) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
     #
     # prop
     #
@@ -5105,7 +5105,7 @@ otData = [
                 "Version",
                 None,
                 None,
-                "Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the “attaches on right” bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.",
+                "Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the â€œattaches on rightâ€ bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.",
             ),
             ("struct", "GlyphProperties", None, None, "Glyph properties."),
         ],
@@ -6385,7 +6385,7 @@ otData = [
                 "AxisSegmentMap",
                 "AxisCount",
                 0,
-                'The segment maps array — one segment map for each axis, in the order of axes specified in the "fvar" table',
+                'The segment maps array â€” one segment map for each axis, in the order of axes specified in the "fvar" table',
             ),
             (
                 "LOffsetTo(DeltaSetIndexMap)",

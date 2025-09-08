@@ -102,12 +102,12 @@ class TestDataFrameFilter:
         [
             ("a", DataFrame({"a": [1, 2]})),
             ("a", DataFrame({"a": [1, 2]})),
-            ("あ", DataFrame({"あ": [3, 4]})),
+            ("ã‚", DataFrame({"ã‚": [3, 4]})),
         ],
     )
     def test_filter_unicode(self, name, expected):
         # GH13101
-        df = DataFrame({"a": [1, 2], "あ": [3, 4]})
+        df = DataFrame({"a": [1, 2], "ã‚": [3, 4]})
 
         tm.assert_frame_equal(df.filter(like=name), expected)
         tm.assert_frame_equal(df.filter(regex=name), expected)

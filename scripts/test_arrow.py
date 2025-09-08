@@ -2042,7 +2042,7 @@ def test_str_slice_replace(start, stop, repl, exp):
         ["!|,", "isalnum", False],
         ["aaa", "isalpha", True],
         ["!!!", "isalpha", False],
-        ["٠", "isdecimal", True],  # noqa: RUF001
+        ["Ù ", "isdecimal", True],  # noqa: RUF001
         ["~!", "isdecimal", False],
         ["2", "isdigit", True],
         ["~", "isdigit", False],

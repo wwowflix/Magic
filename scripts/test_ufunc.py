@@ -875,10 +875,10 @@ class TestUfunc:
         [None, np.array([[1.0 + 1j, 0.5, -0.5j], [0.25, 2j, 0.0], [4.0, 0.0, -1j]])],
     )
     def test_vecmatvec_identity(self, matrix, vec):
-        """Check that (x†A)x equals x†(Ax)."""
+        """Check that (xâ€ A)x equals xâ€ (Ax)."""
         mat = matrix if matrix is not None else np.eye(3)
         matvec = np.matvec(mat, vec)  # Ax
-        vecmat = np.vecmat(vec, mat)  # x†A
+        vecmat = np.vecmat(vec, mat)  # xâ€ A
         if matrix is None:
             assert_array_equal(matvec, vec)
             assert_array_equal(vecmat.conj(), vec)

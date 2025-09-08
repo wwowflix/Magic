@@ -42,9 +42,9 @@ from typing import Type
 
 class TestConstructor(SoupTest):
     def test_short_unicode_input(self):
-        data = "<h1>éé</h1>"
+        data = "<h1>Ã©Ã©</h1>"
         soup = self.soup(data)
-        assert "éé" == soup.h1.string
+        assert "Ã©Ã©" == soup.h1.string
 
     def test_embedded_null(self):
         data = "<h1>foo\0bar</h1>"
@@ -52,7 +52,7 @@ class TestConstructor(SoupTest):
         assert "foo\0bar" == soup.h1.string
 
     def test_exclude_encodings(self):
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃ¤ksmÃ¶rgÃ¥s".encode("utf-8")
         soup = self.soup(utf8_data, exclude_encodings=["utf-8"])
         assert "windows-1252" == soup.original_encoding
 

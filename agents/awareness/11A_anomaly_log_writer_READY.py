@@ -33,7 +33,7 @@ def detect_anomalies(lines):
 
     # Detect error/warning patterns
     for line in lines:
-        if "error" in line.lower() or "❌" in line or "failed" in line.lower():
+        if "error" in line.lower() or "âŒ" in line or "failed" in line.lower():
             anomalies.append(f"[ERROR-DETECTED] {line.strip()}")
 
     return anomalies
@@ -47,7 +47,7 @@ def write_anomalies(anomalies):
 
 
 def main():
-    print("🔍 Anomaly Log Writer Agent started...")
+    print("ðŸ” Anomaly Log Writer Agent started...")
 
     last_size = 0
     while True:

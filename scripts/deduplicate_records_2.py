@@ -22,9 +22,9 @@ for table, columns in tables_columns.items():
         )
         """
         )
-        print(f"✅ Deduplicated: {table}")
+        print(f"âœ… Deduplicated: {table}")
     except Exception as e:
-        print(f"⚠️ Error deduplicating {table}: {e}")
+        print(f"âš ï¸ Error deduplicating {table}: {e}")
 
 conn.commit()
 conn.close()

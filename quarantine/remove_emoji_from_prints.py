@@ -1,16 +1,16 @@
 @"
 <#
 .SYNOPSIS
-    Executes all *_READY.py scripts in a given Phase 11 module and logs output.
+    Executes all *_READY.py scripts in a given PhaseÂ 11 module and logs output.
 .DESCRIPTION
-    - Takes a module letter (e.g. B, C, D…) as a parameter.
+    - Takes a module letter (e.g. B, C, Dâ€¦) as a parameter.
     - Discovers each READY script under scripts/phase11/module_<Module>.
     - Ensures a log directory exists.
     - Runs them one by one, capturing stdout/stderr into individual log files.
     - Writes a summary.tsv with Script and Status columns.
     - Prints colored status to the console.
 .PARAMETER Module
-    The Phase 11 module letter to run (e.g. "B").
+    The PhaseÂ 11 module letter to run (e.g. "B").
 .EXAMPLE
     .\run_phase11_module.ps1 -Module B
 #>
@@ -43,7 +43,7 @@ Get-ChildItem -Path $moduleDir -Filter '*_READY.py' -File | Sort-Object Name | F
     $logPath    = Join-Path $logDir ($scriptName + '.log')
     $timestamp  = (Get-Date).ToString('s')
 
-    Write-Host "[$timestamp] → Running $scriptName" -NoNewline
+    Write-Host "[$timestamp] â†’ Running $scriptName" -NoNewline
 
     # Execute and capture
     $proc = Start-Process python -ArgumentList "`"$scriptPath`"" `
@@ -52,10 +52,10 @@ Get-ChildItem -Path $moduleDir -Filter '*_READY.py' -File | Sort-Object Name | F
                   -NoNewWindow -Wait -PassThru
 
     if ($proc.ExitCode -eq 0) {
-        Write-Host "  ✓ $scriptName executed successfully."
+        Write-Host "  âœ“ $scriptName executed successfully."
         $status = "OK"
     } else {
-        Write-Host "  ✗ $scriptName FAILED (exit $($proc.ExitCode)). See log: $logPath"
+        Write-Host "  âœ— $scriptName FAILED (exit $($proc.ExitCode)). See log: $logPath"
         $status = "ERROR"
     }
 

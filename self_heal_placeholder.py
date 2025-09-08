@@ -8,15 +8,15 @@ with open("phase_manifest.json", "r", encoding="utf-8-sig") as f:
 
 def ensure_placeholder(script_path):
     if not os.path.exists(script_path):
-        print(f"⚠️ Missing script detected: {script_path}")
+        print(f"âš ï¸ Missing script detected: {script_path}")
         os.makedirs(os.path.dirname(script_path), exist_ok=True)
         with open(script_path, "w", encoding="utf-8") as f:
             f.write("# Placeholder script - auto-generated\npass\n")
-        print(f"✅ Placeholder created: {script_path}")
+        print(f"âœ… Placeholder created: {script_path}")
 
 
 def main():
-    print(f"▶ Running Placeholder Recovery on {len(manifest)} scripts...\n")
+    print(f"â–¶ Running Placeholder Recovery on {len(manifest)} scripts...\n")
     for script_path in manifest:
         # Normalize path for OS compatibility
         normalized_path = os.path.normpath(script_path)
@@ -33,7 +33,7 @@ def main():
 
         ensure_placeholder(normalized_path)
 
-    print("\n✅ Placeholder recovery complete.")
+    print("\nâœ… Placeholder recovery complete.")
 
 
 if __name__ == "__main__":

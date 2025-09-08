@@ -30,13 +30,13 @@ def check_logs():
 
 
 def main():
-    print("🛡️  Starting Log Watchdog. Press Ctrl+C to stop.")
+    print("ðŸ›¡ï¸  Starting Log Watchdog. Press Ctrl+C to stop.")
     try:
         while True:
             check_logs()
             time.sleep(CHECK_INTERVAL)
     except KeyboardInterrupt:
-        print("\n🛑 Log Watchdog stopped by user gracefully.")
+        print("\nðŸ›‘ Log Watchdog stopped by user gracefully.")
 
 
 if __name__ == "__main__":

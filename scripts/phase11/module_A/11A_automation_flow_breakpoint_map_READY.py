@@ -31,20 +31,20 @@ def main():
                     if f.endswith("_READY.py")
                 ]
                 if len(files) == 0:
-                    log.write(f"❌ Breakpoint: {module} has NO scripts.\n")
+                    log.write(f"âŒ Breakpoint: {module} has NO scripts.\n")
                 elif len(files) < 3:
                     log.write(
-                        f"⚠️ Potential issue: {module} has only {len(files)} scripts.\n"
+                        f"âš ï¸ Potential issue: {module} has only {len(files)} scripts.\n"
                     )
                 else:
                     log.write(
-                        f"✅ Module {module} looks okay ({len(files)} scripts).\n"
+                        f"âœ… Module {module} looks okay ({len(files)} scripts).\n"
                     )
 
         print("PASS")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"❌ Error occurred: {str(e)}\n")
+            log.write(f"âŒ Error occurred: {str(e)}\n")
         print("FAIL")
 
 

@@ -191,7 +191,7 @@ class HostnameResolver(ABC):
 
         Any required IDNA encoding is handled before calling this function;
         your implementation can assume that it will never see U-labels like
-        ``"café.com"``, and only needs to handle A-labels like
+        ``"cafÃ©.com"``, and only needs to handle A-labels like
         ``b"xn--caf-dma.com"``."""  # spellchecker:disable-line
 
     @abstractmethod
@@ -519,7 +519,7 @@ class HalfCloseableStream(Stream):
           "channels" on top of a single encrypted connection. A Trio
           implementation of SSH could expose these channels as
           :class:`HalfCloseableStream` objects, and calling :meth:`send_eof`
-          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 §5.3
+          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 Â§5.3
           <https://tools.ietf.org/html/rfc4254#section-5.3>`__).
 
         * On an SSL/TLS-encrypted connection, the protocol doesn't provide any

@@ -27,9 +27,9 @@ for root, _, files in os.walk(SCRIPTS_ROOT):
                 issues.append(f"Read Error: {e}")
 
             if issues:
-                results.append(f"{full_path} ❌ {' | '.join(issues)}")
+                results.append(f"{full_path} âŒ {' | '.join(issues)}")
             else:
-                results.append(f"{full_path} ✅ Healthy")
+                results.append(f"{full_path} âœ… Healthy")
 
 # Write log
 os.makedirs(os.path.dirname(LOG_OUTPUT), exist_ok=True)
@@ -38,6 +38,6 @@ with open(LOG_OUTPUT, "w", encoding="utf-8") as f:
         f.write(line + "\n")
 
 print(
-    f"🔍 Health scan complete. ✅={sum('✅' in l for l in results)}, ❌={sum('❌' in l for l in results)}"
+    f"ðŸ” Health scan complete. âœ…={sum('âœ…' in l for l in results)}, âŒ={sum('âŒ' in l for l in results)}"
 )
-print(f"📄 See report: {LOG_OUTPUT}")
+print(f"ðŸ“„ See report: {LOG_OUTPUT}")

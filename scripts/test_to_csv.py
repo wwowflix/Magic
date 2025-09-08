@@ -1042,10 +1042,10 @@ class TestDataFrameToCSV:
             ),
             # GH 21241, 21118
             (DataFrame([["abc", "def", "ghi"]], columns=["X", "Y", "Z"]), "ascii"),
-            (DataFrame(5 * [[123, "你好", "世界"]], columns=["X", "Y", "Z"]), "gb2312"),
+            (DataFrame(5 * [[123, "ä½ å¥½", "ä¸–ç•Œ"]], columns=["X", "Y", "Z"]), "gb2312"),
             (
                 DataFrame(
-                    5 * [[123, "Γειά σου", "Κόσμε"]],  # noqa: RUF001
+                    5 * [[123, "Î“ÎµÎ¹Î¬ ÏƒÎ¿Ï…", "ÎšÏŒÏƒÎ¼Îµ"]],  # noqa: RUF001
                     columns=["X", "Y", "Z"],
                 ),
                 "cp737",

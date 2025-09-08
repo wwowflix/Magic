@@ -26,10 +26,10 @@ for folder in TARGET_DIRS:
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if cleaned_files:
-        f.write("🧹 Cleanup Report:\n")
+        f.write("ðŸ§¹ Cleanup Report:\n")
         for file in cleaned_files:
             f.write(f"Deleted: {file}\n")
     else:
-        f.write("✅ No outdated files found.\n")
+        f.write("âœ… No outdated files found.\n")
 
-print(f"📄 Cleanup log saved to: {LOG_FILE}")
+print(f"ðŸ“„ Cleanup log saved to: {LOG_FILE}")

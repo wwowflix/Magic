@@ -20,7 +20,7 @@ def cleanup(path="outputs", retention_days=7, max_mb=2048):
                     print("  Error:", e)
     mb = total_size / (1024 * 1024)
     if mb > max_mb:
-        print(f"⚠ Folder {path} is {mb:.1f} MB (limit {max_mb} MB)")
+        print(f"âš  Folder {path} is {mb:.1f} MB (limit {max_mb} MB)")
 
 
 if __name__ == "__main__":

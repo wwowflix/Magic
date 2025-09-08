@@ -28,7 +28,7 @@ for root, dirs, files in os.walk(TARGET_DIR):
                     for pattern in key_patterns:
                         if re.search(pattern, content):
                             leaks.append(
-                                f"❗ Potential leak in {path} (pattern: {pattern})"
+                                f"â— Potential leak in {path} (pattern: {pattern})"
                             )
             except:
                 continue
@@ -37,10 +37,10 @@ for root, dirs, files in os.walk(TARGET_DIR):
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if not leaks:
-        f.write("✅ No API key leaks detected.\n")
+        f.write("âœ… No API key leaks detected.\n")
     else:
-        f.write("❌ Potential API key leaks found:\n")
+        f.write("âŒ Potential API key leaks found:\n")
         for line in leaks:
             f.write(f"{line}\n")
 
-print(f"🔐 Leak scan complete. Results saved to {LOG_FILE}")
+print(f"ðŸ” Leak scan complete. Results saved to {LOG_FILE}")

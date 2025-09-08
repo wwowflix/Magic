@@ -281,7 +281,7 @@ def approximateQuadraticArcLengthC(pt1, pt2, pt3):
     #
     # https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss.E2.80.93Legendre_quadrature
 
-    # abs(BezierCurveC[2].diff(t).subs({t:T})) for T in sorted(.5, .5±sqrt(3/5)/2),
+    # abs(BezierCurveC[2].diff(t).subs({t:T})) for T in sorted(.5, .5Â±sqrt(3/5)/2),
     # weighted 5/18, 8/18, 5/18 respectively.
     v0 = abs(
         -0.492943519233745 * pt1 + 0.430331482911935 * pt2 + 0.0626120363218102 * pt3
@@ -387,7 +387,7 @@ def approximateCubicArcLengthC(pt1, pt2, pt3, pt4):
     #
     # https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss.E2.80.93Lobatto_rules
 
-    # abs(BezierCurveC[3].diff(t).subs({t:T})) for T in sorted(0, .5±(3/7)**.5/2, .5, 1),
+    # abs(BezierCurveC[3].diff(t).subs({t:T})) for T in sorted(0, .5Â±(3/7)**.5/2, .5, 1),
     # weighted 1/20, 49/180, 32/90, 49/180, 1/20 respectively.
     v0 = abs(pt2 - pt1) * 0.15
     v1 = abs(
@@ -817,7 +817,7 @@ def solveQuadratic(a, b, c, sqrt=sqrt):
     Solves *a*x*x + b*x + c = 0* where a, b and c are real.
 
     Args:
-        a: coefficient of *x²*
+        a: coefficient of *xÂ²*
         b: coefficient of *x*
         c: constant term
 
@@ -850,8 +850,8 @@ def solveCubic(a, b, c, d):
     Solves *a*x*x*x + b*x*x + c*x + d = 0* where a, b, c and d are real.
 
     Args:
-        a: coefficient of *x³*
-        b: coefficient of *x²*
+        a: coefficient of *xÂ³*
+        b: coefficient of *xÂ²*
         c: coefficient of *x*
         d: constant term
 

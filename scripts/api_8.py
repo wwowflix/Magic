@@ -2484,7 +2484,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fraction : float
             The fraction parameter for the ``bottomley`` projection.
 
-            **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+            **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
         lobes : float
             The number of lobes in projections that support multi-lobe views: ``berghaus``,
             ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -2498,7 +2498,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
              If precision is not specified, returns the projection's current resampling
-            precision which defaults to `√0.5 ≅ 0.70710...`.
+            precision which defaults to `âˆš0.5 â‰… 0.70710...`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
             varies based on the projection type.

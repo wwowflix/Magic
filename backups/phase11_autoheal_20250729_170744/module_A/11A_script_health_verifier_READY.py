@@ -32,22 +32,22 @@ def main():
                         )
                         if result.returncode != 0:
                             bad_scripts.append(file)
-                            log.write(f"❌ Syntax error: {file}\n")
+                            log.write(f"âŒ Syntax error: {file}\n")
                         else:
                             # Check for main()
                             with open(filepath, encoding="utf-8") as f:
                                 content = f.read()
                                 if "def main" not in content:
                                     bad_scripts.append(file)
-                                    log.write(f"⚠️ Missing main(): {file}\n")
+                                    log.write(f"âš ï¸ Missing main(): {file}\n")
 
             if not bad_scripts:
-                log.write("✅ All scripts passed health check.\n")
+                log.write("âœ… All scripts passed health check.\n")
 
         print("PASS")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"❌ Error occurred: {str(e)}\n")
+            log.write(f"âŒ Error occurred: {str(e)}\n")
         print("FAIL")
 
 

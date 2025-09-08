@@ -9,7 +9,7 @@ LOG_OUTPUT = "outputs/logs/flow_breakpoint_report.txt"
 df = pd.read_csv(PATCH_CSV_PATH)
 df = df[df["Filename"].str.endswith("_READY.py")]
 
-# Group by Phase → List of Modules
+# Group by Phase â†’ List of Modules
 flow_map = defaultdict(set)
 for _, row in df.iterrows():
     try:
@@ -31,17 +31,17 @@ for phase in sorted(flow_map):
                 missing.append(mod)
     if missing:
         log_lines.append(
-            f"Phase {phase}: ❗ Missing modules near continuity: {', '.join(missing)}"
+            f"Phase {phase}: â— Missing modules near continuity: {', '.join(missing)}"
         )
 
 # Write report
 os.makedirs(os.path.dirname(LOG_OUTPUT), exist_ok=True)
 with open(LOG_OUTPUT, "w", encoding="utf-8") as f:
     if not log_lines:
-        f.write("✅ All phase/module chains appear continuous.\n")
+        f.write("âœ… All phase/module chains appear continuous.\n")
     else:
-        f.write("❌ Flow Breakpoints Detected:\n")
+        f.write("âŒ Flow Breakpoints Detected:\n")
         for line in log_lines:
             f.write(f"{line}\n")
 
-print(f"📊 Continuity scan complete. Report saved to {LOG_OUTPUT}")
+print(f"ðŸ“Š Continuity scan complete. Report saved to {LOG_OUTPUT}")

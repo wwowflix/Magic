@@ -45,9 +45,9 @@ for page in all_pages:
         f"https://api.notion.com/v1/pages/{page_id}", headers=headers, json=patch
     )
     if r.status_code == 200:
-        print("✅ Archived", page_id)
+        print("âœ… Archived", page_id)
     else:
-        print("⚠️ Skipped", page_id, r.status_code, r.text)
+        print("âš ï¸ Skipped", page_id, r.status_code, r.text)
     time.sleep(0.2)
 
-print("🎉 Done. Database should now be empty!")
+print("ðŸŽ‰ Done. Database should now be empty!")

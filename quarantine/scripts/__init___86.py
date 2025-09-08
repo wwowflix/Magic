@@ -1901,9 +1901,9 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         """
         Returns the projected planar bounding box (typically in pixels) for the specified GeoJSON ``feature``, according to the named ``projection``.
 
-        The bounding box is represented by a two-dimensional array: [[*x₀*, *y₀*], [*x₁*, *y₁*]],
-        where *x₀* is the minimum x-coordinate, *y₀* is the minimum y-coordinate, *x₁* is the
-        maximum x-coordinate, and *y₁* is the maximum y-coordinate. If the ``projection`` argument
+        The bounding box is represented by a two-dimensional array: [[*xâ‚€*, *yâ‚€*], [*xâ‚*, *yâ‚*]],
+        where *xâ‚€* is the minimum x-coordinate, *yâ‚€* is the minimum y-coordinate, *xâ‚* is the
+        maximum x-coordinate, and *yâ‚* is the maximum y-coordinate. If the ``projection`` argument
         is ``null``, computes the spherical bounding box using unprojected longitude, latitude
         coordinates. The optional ``group`` argument takes a scenegraph group mark item to indicate
         the specific scope in which to look up the projection. Uses d3-geo's `geoBounds`_ and

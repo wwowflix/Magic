@@ -10,7 +10,7 @@ NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 # Check for valid token and DB
 if not NOTION_TOKEN or not NOTION_DATABASE_ID:
-    print("❌ NOTION_TOKEN or NOTION_DATABASE_ID missing from .env")
+    print("âŒ NOTION_TOKEN or NOTION_DATABASE_ID missing from .env")
     exit(1)
 
 notion = Client(auth=NOTION_TOKEN)
@@ -54,16 +54,16 @@ def create_notion_entry(row):
                 ),
             },
         )
-        print(f"✅ Added: {filename}")
+        print(f"âœ… Added: {filename}")
 
     except Exception as e:
-        print(f"❌ Failed to add: {filename} → {e}")
+        print(f"âŒ Failed to add: {filename} â†’ {e}")
 
 
 # Main Execution
 if __name__ == "__main__":
     if not os.path.exists(patch_file_path):
-        print(f"❌ File not found: {patch_file_path}")
+        print(f"âŒ File not found: {patch_file_path}")
         exit(1)
 
     with open(patch_file_path, newline="", encoding="utf-8") as csvfile:
@@ -72,4 +72,4 @@ if __name__ == "__main__":
             if row.get("Filename") and row.get("Prefix"):
                 create_notion_entry(row)
             else:
-                print(f"⚠️ Skipped row (missing Filename or Prefix): {row}")
+                print(f"âš ï¸ Skipped row (missing Filename or Prefix): {row}")

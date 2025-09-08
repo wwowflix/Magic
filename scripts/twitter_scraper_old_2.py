@@ -20,4 +20,4 @@ for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
 
 df = pd.DataFrame(tweets)
 df.to_csv("outputs/twitter_scrape.csv", index=False)
-print("✅ Saved Twitter trend data to outputs/twitter_scrape.csv")
+print("âœ… Saved Twitter trend data to outputs/twitter_scrape.csv")
