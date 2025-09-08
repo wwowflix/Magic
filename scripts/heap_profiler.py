@@ -8,7 +8,7 @@ from __future__ import annotations
 from .util import event_class, T_JSON_DICT
 from dataclasses import dataclass
 import typing
-from . import runtime
+from scripts import runtime
 
 
 class HeapSnapshotObjectId(str):

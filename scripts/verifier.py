@@ -6,8 +6,8 @@ import os
 import binascii
 import shutil
 import io
-from . import __version_verifier_modules__
-from . import ffiplatform
+from scripts import __version_verifier_modules__
+from scripts import ffiplatform
 from .error import VerificationError
 
 if sys.version_info >= (3, 3):
@@ -261,11 +261,11 @@ def _locate_engine_class(ffi, force_generic_engine):
             if ffi._backend is not _cffi_backend:
                 force_generic_engine = True
     if force_generic_engine:
-        from . import vengine_gen
+from scripts import vengine_gen
 
         return vengine_gen.VGenericEngine
     else:
-        from . import vengine_cpy
+from scripts import vengine_cpy
 
         return vengine_cpy.VCPythonEngine
 

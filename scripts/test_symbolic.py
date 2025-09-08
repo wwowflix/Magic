@@ -29,8 +29,7 @@ from numpy.f2py.symbolic import (
     insert_quotes,
     normalize,
 )
-
-from . import util
+from scripts import util
 
 
 class TestSymbolic(util.F2PyTest):

@@ -45,9 +45,8 @@ from six import integer_types, text_type
 from decimal import Decimal
 
 from warnings import warn
-
-from .. import relativedelta
-from .. import tz
+from scripts import relativedelta
+from scripts import tz
 
 __all__ = ["parse", "parserinfo", "ParserError"]
 

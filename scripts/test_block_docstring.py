@@ -3,8 +3,7 @@ import sys
 import pytest
 
 from numpy.testing import IS_PYPY
-
-from . import util
+from scripts import util
 
 
 @pytest.mark.slow

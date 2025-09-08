@@ -22,7 +22,7 @@ from .umath import (
     SHIFT_UNDERFLOW,
     SHIFT_INVALID,
 )
-from . import umath
+from scripts import umath
 
 __all__ = [
     "seterr",

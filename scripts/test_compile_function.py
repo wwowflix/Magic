@@ -9,7 +9,7 @@ import pytest
 import numpy.f2py
 
 from numpy.testing import assert_equal
-from . import util
+from scripts import util
 
 
 def setup_module():

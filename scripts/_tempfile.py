@@ -13,8 +13,7 @@ from typing import (
     Generic,
     overload,
 )
-
-from .. import to_thread
+from scripts import to_thread
 from .._core._fileio import AsyncFile
 from ..lowlevel import checkpoint_if_cancelled
 

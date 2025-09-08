@@ -42,7 +42,7 @@ class TraversableResourcesLoader:
         return self.spec.origin
 
     def get_resource_reader(self, name):
-        from . import readers, _adapters
+from scripts import readers, _adapters
 
         def _zip_reader(spec):
             with suppress(AttributeError):
@@ -93,6 +93,6 @@ def wrap_spec(package):
     Supersedes _adapters.wrap_spec to use TraversableResourcesLoader
     from above for older Python compatibility (<3.10).
     """
-    from . import _adapters
+from scripts import _adapters
 
     return _adapters.SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)

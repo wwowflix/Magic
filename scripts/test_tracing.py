@@ -2,9 +2,8 @@ from __future__ import print_function
 import sys
 import greenlet
 import unittest
-
-from . import TestCase
-from . import PY312
+from scripts import TestCase
+from scripts import PY312
 
 # https://discuss.python.org/t/cpython-3-12-greenlet-and-tracing-profiling-how-to-not-crash-and-get-correct-results/33144/2
 DEBUG_BUILD_PY312 = (

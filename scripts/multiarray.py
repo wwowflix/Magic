@@ -7,9 +7,8 @@ by importing from the extension module.
 """
 
 import functools
-
-from . import overrides
-from . import _multiarray_umath
+from scripts import overrides
+from scripts import _multiarray_umath
 from ._multiarray_umath import *  # noqa: F403
 
 # These imports are needed for backward compatibility,

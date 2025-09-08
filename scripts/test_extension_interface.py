@@ -4,8 +4,8 @@ from __future__ import absolute_import
 import sys
 
 import greenlet
-from . import _test_extension
-from . import TestCase
+from scripts import _test_extension
+from scripts import TestCase
 
 # pylint:disable=c-extension-no-member
 

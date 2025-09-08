@@ -16,7 +16,7 @@ import sysconfig
 import pathlib
 
 from .errors import DistutilsPlatformError
-from . import py39compat
+from scripts import py39compat
 from ._functools import pass_none
 
 IS_PYPY = "__pypy__" in sys.builtin_module_names

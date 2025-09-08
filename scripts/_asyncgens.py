@@ -7,10 +7,9 @@ import weakref
 from typing import TYPE_CHECKING, NoReturn, TypeVar
 
 import attrs
-
-from .. import _core
+from scripts import _core
 from .._util import name_asyncgen
-from . import _run
+from scripts import _run
 
 # Used to log exceptions in async generator finalizers
 ASYNCGEN_LOGGER = logging.getLogger("trio.async_generator_errors")

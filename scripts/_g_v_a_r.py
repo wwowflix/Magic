@@ -4,7 +4,7 @@ from fontTools.misc.textTools import safeEval
 from fontTools.misc.lazyTools import LazyDict
 from fontTools.ttLib import OPTIMIZE_FONT_SPEED
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
-from . import DefaultTable
+from scripts import DefaultTable
 import array
 import itertools
 import logging

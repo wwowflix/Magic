@@ -84,7 +84,7 @@ def test_winerror(monkeypatch: pytest.MonkeyPatch) -> None:
 # then we filter out the warning.
 @pytest.mark.filterwarnings("ignore:.*UnboundedQueue:trio.TrioDeprecationWarning")
 async def test_completion_key_listen() -> None:
-    from .. import _io_windows
+from scripts import _io_windows
 
     async def post(key: int) -> None:
         iocp = Handle(ffi.cast("HANDLE", _core.current_iocp()))
@@ -245,7 +245,7 @@ async def test_too_late_to_cancel() -> None:
 def test_lsp_that_hooks_select_gives_good_error(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    from .. import _io_windows
+from scripts import _io_windows
     from .._windows_cffi import CData, WSAIoctls, _handle
 
     def patched_get_underlying(
@@ -275,8 +275,7 @@ def test_lsp_that_completely_hides_base_socket_gives_good_error(
     # self for SIO_BSP_HANDLE_SELECT (like Komodia), but also returns
     # self for SIO_BSP_HANDLE_POLL. No known LSP does this, but we want to
     # make sure we get an error rather than an infinite loop.
-
-    from .. import _io_windows
+from scripts import _io_windows
     from .._windows_cffi import CData, WSAIoctls, _handle
 
     def patched_get_underlying(

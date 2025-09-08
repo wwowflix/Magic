@@ -8,8 +8,7 @@ from collections import deque
 from collections.abc import Callable
 from textwrap import dedent
 from typing import Any, Final, TypeVar
-
-from . import current_time, to_thread
+from scripts import current_time, to_thread
 from ._core._exceptions import BrokenWorkerIntepreter
 from ._core._synchronization import CapacityLimiter
 from .lowlevel import RunVar

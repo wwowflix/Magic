@@ -1,7 +1,7 @@
 from fontTools.misc.roundTools import otRound
 from fontTools import ttLib
 from fontTools.misc.textTools import safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 import sys
 import struct
 import array

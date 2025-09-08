@@ -22,7 +22,7 @@ except ImportError:
     cython = fake_cython()
 
 try:
-    from . import _difflib as difflib
+from scripts import _difflib as difflib
     import inspect
 
     if inspect.isfunction(difflib.get_close_matches):
@@ -43,7 +43,7 @@ import re
 
 from lxml import etree
 from lxml.html import fragment_fromstring
-from . import defs
+from scripts import defs
 
 __all__ = ["html_annotate", "htmldiff"]
 

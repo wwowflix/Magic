@@ -9,8 +9,8 @@ from .util import T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import dom
-from . import runtime
+from scripts import dom
+from scripts import runtime
 
 
 class DOMBreakpointType(enum.Enum):

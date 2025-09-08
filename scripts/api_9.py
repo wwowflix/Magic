@@ -2,7 +2,7 @@ import sys
 import types
 from .lock import allocate_lock
 from .error import CDefError
-from . import model
+from scripts import model
 
 try:
     callable
@@ -47,7 +47,7 @@ class FFI(object):
             # You need PyPy (>= 2.0 beta), or a CPython (>= 2.6) with
             # _cffi_backend.so compiled.
             import _cffi_backend as backend
-            from . import __version__
+from scripts import __version__
 
             if backend.__version__ != __version__:
                 # bad version!  Try to be as explicit as possible.
@@ -66,8 +66,7 @@ class FFI(object):
             # (If you insist you can also try to pass the option
             # 'backend=backend_ctypes.CTypesBackend()', but don't
             # rely on it!  It's probably not going to work well.)
-
-        from . import cparser
+from scripts import cparser
 
         self._backend = backend
         self._lock = allocate_lock()
@@ -668,7 +667,7 @@ class FFI(object):
     def set_source_pkgconfig(
         self, module_name, pkgconfig_libs, source, source_extension=".c", **kwds
     ):
-        from . import pkgconfig
+from scripts import pkgconfig
 
         if not isinstance(pkgconfig_libs, list):
             raise TypeError(

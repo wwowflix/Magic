@@ -7,7 +7,7 @@ from fontTools.misc.timeTools import (
     timestampNow,
 )
 from fontTools.misc.arrayTools import intRect, unionRect
-from . import DefaultTable
+from scripts import DefaultTable
 import logging
 
 

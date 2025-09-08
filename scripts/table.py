@@ -10,8 +10,7 @@ from typing import (
     Tuple,
     Union,
 )
-
-from . import box, errors
+from scripts import box, errors
 from ._loop import loop_first_last, loop_last
 from ._pick import pick_bool
 from ._ratio import ratio_distribute, ratio_reduce

@@ -13,8 +13,7 @@ from pip._vendor.pygments.token import Comment, Keyword, Name, Number, Operator,
 from pip._vendor.pygments.token import Text as TextToken
 from pip._vendor.pygments.token import Token
 from pip._vendor.pygments.util import ClassNotFound
-
-from . import pretty
+from scripts import pretty
 from ._loop import loop_last
 from .columns import Columns
 from .console import Console, ConsoleOptions, ConsoleRenderable, RenderResult, group

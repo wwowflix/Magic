@@ -5,7 +5,7 @@ See also https://learn.microsoft.com/en-us/typography/tools/vtt/tsi-tables
 """
 
 from fontTools.misc.textTools import strjoin, tobytes, tostr
-from . import asciiTable
+from scripts import asciiTable
 
 
 class table_T_S_I_V_(asciiTable.asciiTable):

@@ -1,4 +1,4 @@
-from . import DefaultTable
+from scripts import DefaultTable
 import sys
 import array
 import logging

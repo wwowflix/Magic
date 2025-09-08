@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("✅ [11J_random_failure_injector_READY.py] executed successfully (stub mode).")
 
 

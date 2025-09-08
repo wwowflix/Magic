@@ -1,7 +1,6 @@
 from contextlib import suppress
 from io import TextIOWrapper
-
-from . import abc
+from scripts import abc
 
 
 class SpecLoaderAdapter:

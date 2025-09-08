@@ -10,8 +10,7 @@ from stat import S_ISDIR, S_ISLNK
 
 import smbclient
 import smbprotocol.exceptions
-
-from .. import AbstractFileSystem
+from scripts import AbstractFileSystem
 from ..utils import infer_storage_options
 
 # ! pylint: disable=bad-continuation

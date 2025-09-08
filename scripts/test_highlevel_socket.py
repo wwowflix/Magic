@@ -6,8 +6,7 @@ import sys
 from typing import TYPE_CHECKING
 
 import pytest
-
-from .. import _core, socket as tsocket
+from scripts import _core, socket as tsocket
 from .._highlevel_socket import *
 from ..testing import (
     assert_checkpoints,

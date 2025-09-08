@@ -18,8 +18,7 @@
 from typing import Optional, Union
 
 from selenium.webdriver.remote.command import Command
-
-from . import interaction
+from scripts import interaction
 from .key_actions import KeyActions
 from .key_input import KeyInput
 from .pointer_actions import PointerActions

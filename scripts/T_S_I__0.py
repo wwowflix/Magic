@@ -10,8 +10,7 @@ See also https://learn.microsoft.com/en-us/typography/tools/vtt/tsi-tables
 
 import logging
 import struct
-
-from . import DefaultTable
+from scripts import DefaultTable
 
 log = logging.getLogger(__name__)
 

@@ -8,9 +8,9 @@ from __future__ import annotations
 from .util import T_JSON_DICT
 from dataclasses import dataclass
 import typing
-from . import dom
-from . import dom_debugger
-from . import page
+from scripts import dom
+from scripts import dom_debugger
+from scripts import page
 
 
 @dataclass

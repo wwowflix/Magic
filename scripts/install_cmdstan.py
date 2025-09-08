@@ -43,8 +43,7 @@ from cmdstanpy.utils import (
     wrap_url_progress_hook,
 )
 from cmdstanpy.utils.cmdstan import get_download_url
-
-from . import progress as progbar
+from scripts import progress as progbar
 
 if sys.version_info >= (3, 8) or TYPE_CHECKING:
     # mypy only knows about the new built-in cached_property

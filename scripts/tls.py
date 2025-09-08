@@ -328,7 +328,7 @@ class TLSListener(Listener[TLSStream]):
     ) -> None:
         @wraps(handler)
         async def handler_wrapper(stream: AnyByteStream) -> None:
-            from .. import fail_after
+from scripts import fail_after
 
             try:
                 with fail_after(self.handshake_timeout):

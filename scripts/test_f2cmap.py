@@ -1,6 +1,5 @@
 import numpy as np
-
-from . import util
+from scripts import util
 
 
 class TestF2Cmap(util.F2PyTest):

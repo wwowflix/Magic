@@ -6,7 +6,7 @@ from typing import Generic, TypeVar, cast
 import attrs
 
 from .._util import NoPublicConstructor, final
-from . import _run
+from scripts import _run
 
 T = TypeVar("T")
 

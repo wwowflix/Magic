@@ -111,8 +111,7 @@ References
 import numpy as np
 import numpy.linalg as la
 from numpy.core.multiarray import normalize_axis_index
-
-from . import polyutils as pu
+from scripts import polyutils as pu
 from ._polybase import ABCPolyBase
 
 __all__ = [

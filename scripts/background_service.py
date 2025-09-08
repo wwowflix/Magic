@@ -9,8 +9,8 @@ from .util import event_class, T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import network
-from . import service_worker
+from scripts import network
+from scripts import service_worker
 
 
 class ServiceName(enum.Enum):

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 r"""
 MAGIC Project â€“ Log Writer Auto-Fix Script
 Author: ChatGPT Assistant

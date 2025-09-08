@@ -13,8 +13,7 @@ if TYPE_CHECKING:
     import select
     from collections.abc import Callable
     from contextlib import AbstractContextManager
-
-    from .. import _core
+from scripts import _core
     from .._file_io import _HasFileNo
     from ._traps import Abort, RaiseCancelT
 

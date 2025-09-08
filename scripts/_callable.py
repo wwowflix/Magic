@@ -43,7 +43,7 @@ from ._scalars import (
     _FloatLike_co,
     _NumberLike_co,
 )
-from . import NBitBase
+from scripts import NBitBase
 from ._generic_alias import NDArray
 
 if sys.version_info >= (3, 8):

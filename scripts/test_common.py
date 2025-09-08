@@ -1,8 +1,7 @@
 import pytest
 
 import numpy as np
-
-from . import util
+from scripts import util
 
 
 @pytest.mark.slow

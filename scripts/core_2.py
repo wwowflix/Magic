@@ -2,8 +2,7 @@ import bisect
 import re
 import unicodedata
 from typing import Optional, Union
-
-from . import idnadata
+from scripts import idnadata
 from .intranges import intranges_contain
 
 _virama_combining_class = 9

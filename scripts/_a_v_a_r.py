@@ -8,7 +8,7 @@ from fontTools.misc.textTools import safeEval
 from fontTools.misc.roundTools import otRound
 from fontTools.varLib.models import piecewiseLinearMap
 from fontTools.varLib.varStore import VarStoreInstancer
-from . import otTables
+from scripts import otTables
 import logging
 
 

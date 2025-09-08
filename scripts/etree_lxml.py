@@ -21,12 +21,11 @@ try:
     from collections.abc import MutableMapping
 except ImportError:
     from collections import MutableMapping
-
-from . import base
+from scripts import base
 from ..constants import DataLossWarning
-from .. import constants
-from . import etree as etree_builders
-from .. import _ihatexml
+from scripts import constants
+from scripts import etree as etree_builders
+from scripts import _ihatexml
 
 import lxml.etree as etree
 from six import PY3, binary_type

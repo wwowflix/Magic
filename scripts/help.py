@@ -7,8 +7,7 @@ import sys
 
 import idna
 import urllib3
-
-from . import __version__ as requests_version
+from scripts import __version__ as requests_version
 
 try:
     import charset_normalizer

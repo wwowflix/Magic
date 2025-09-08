@@ -12,11 +12,10 @@ import functools
 import itertools
 import operator
 import warnings
-
-from . import numeric as _nx
-from . import overrides
+from scripts import numeric as _nx
+from scripts import overrides
 from .multiarray import array, asanyarray, normalize_axis_index
-from . import fromnumeric as _from_nx
+from scripts import fromnumeric as _from_nx
 
 
 array_function_dispatch = functools.partial(

@@ -12,7 +12,7 @@ import abc
 import numbers
 
 import numpy as np
-from . import polyutils as pu
+from scripts import polyutils as pu
 
 __all__ = ["ABCPolyBase"]
 

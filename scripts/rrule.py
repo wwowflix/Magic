@@ -1674,7 +1674,7 @@ class _rrulestr(object):
                 except KeyError:
                     continue
                 if tzids is None:
-                    from . import tz
+from scripts import tz
 
                     tzlookup = tz.gettz
                 elif callable(tzids):

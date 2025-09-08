@@ -63,8 +63,7 @@ from cmdstanpy.utils import (
     returncode_msg,
 )
 from cmdstanpy.utils.filesystem import temp_inits, temp_single_json
-
-from . import progress as progbar
+from scripts import progress as progbar
 
 OptionalPath = Union[str, os.PathLike, None]
 Fit = TypeVar("Fit", CmdStanMCMC, CmdStanMLE, CmdStanVB)

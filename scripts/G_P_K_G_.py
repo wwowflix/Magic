@@ -1,6 +1,6 @@
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import bytesjoin, safeEval, readHex
-from . import DefaultTable
+from scripts import DefaultTable
 import sys
 import array
 

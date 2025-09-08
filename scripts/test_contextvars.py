@@ -10,8 +10,8 @@ from unittest import skipIf
 
 from greenlet import greenlet
 from greenlet import getcurrent
-from . import TestCase
-from . import PY314
+from scripts import TestCase
+from scripts import PY314
 
 try:
     from contextvars import Context

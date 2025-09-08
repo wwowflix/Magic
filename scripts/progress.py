@@ -38,8 +38,7 @@ if sys.version_info >= (3, 8):
     from typing import Literal
 else:
     from pip._vendor.typing_extensions import Literal  # pragma: no cover
-
-from . import filesize, get_console
+from scripts import filesize, get_console
 from .console import Console, Group, JustifyMethod, RenderableType
 from .highlighter import Highlighter
 from .jupyter import JupyterMixin

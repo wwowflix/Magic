@@ -13,7 +13,7 @@ $Date: 2005/07/20 11:27:58 $
 Pearu Peterson
 
 """
-from . import __version__
+from scripts import __version__
 from .auxfuncs import (
     applyrules,
     debugcapi,
@@ -46,7 +46,7 @@ from .auxfuncs import (
     stripcomma,
     throw_error,
 )
-from . import cfuncs
+from scripts import cfuncs
 
 f2py_version = __version__.version
 
@@ -619,7 +619,7 @@ def buildcallbacks(m):
 
 
 def buildcallback(rout, um):
-    from . import capi_maps
+from scripts import capi_maps
 
     outmess('\tConstructing call-back function "cb_%s_in_%s"\n' % (rout["name"], um))
     args, depargs = getargs(rout)

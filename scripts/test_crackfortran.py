@@ -9,8 +9,7 @@ import pytest
 import numpy as np
 from numpy.f2py import crackfortran
 from numpy.f2py.crackfortran import markinnerspaces, nameargspattern
-
-from . import util
+from scripts import util
 
 
 class TestNoSpace(util.F2PyTest):

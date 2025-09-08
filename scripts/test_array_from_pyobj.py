@@ -7,8 +7,7 @@ import pytest
 
 import numpy as np
 from numpy._core._type_aliases import c_names_dict as _c_names_dict
-
-from . import util
+from scripts import util
 
 wrap = None
 

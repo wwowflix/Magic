@@ -122,7 +122,7 @@ class MultiListener(Generic[T_Stream], Listener[T_Stream]):
     async def serve(
         self, handler: Callable[[T_Stream], Any], task_group: TaskGroup | None = None
     ) -> None:
-        from .. import create_task_group
+from scripts import create_task_group
 
         async with create_task_group() as tg:
             for listener in self.listeners:

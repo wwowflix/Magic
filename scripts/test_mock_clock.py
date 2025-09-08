@@ -6,7 +6,7 @@ import pytest
 from trio import sleep
 
 from ... import _core
-from .. import wait_all_tasks_blocked
+from scripts import wait_all_tasks_blocked
 from .._mock_clock import MockClock
 from .._run import GLOBAL_RUN_CONTEXT
 from .tutil import slow

@@ -16,8 +16,7 @@ import os
 import posixpath
 import sys
 import zipimport
-
-from . import DistlibException, resources
+from scripts import DistlibException, resources
 from .compat import StringIO
 from .version import get_scheme, UnsupportedVersionError
 from .metadata import (

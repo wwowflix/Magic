@@ -1,5 +1,5 @@
 from fontTools.misc.textTools import bytesjoin, tobytes, safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 import struct
 
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6ltag.html

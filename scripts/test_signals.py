@@ -7,8 +7,7 @@ import pytest
 
 import trio
 from trio.testing import RaisesGroup
-
-from .. import _core
+from scripts import _core
 from .._signals import _signal_handler, get_pending_signal_count, open_signal_receiver
 
 if TYPE_CHECKING:

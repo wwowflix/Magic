@@ -6,7 +6,7 @@ from bs4.formatter import (
     HTMLFormatter,
     XMLFormatter,
 )
-from . import SoupTest
+from scripts import SoupTest
 
 
 class TestFormatter(SoupTest):

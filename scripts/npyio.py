@@ -8,7 +8,7 @@ from operator import itemgetter, index as opindex
 from collections.abc import Mapping
 
 import numpy as np
-from . import format
+from scripts import format
 from ._datasource import DataSource
 from numpy.core import overrides
 from numpy.core.multiarray import packbits, unpackbits

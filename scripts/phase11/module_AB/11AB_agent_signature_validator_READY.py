@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("✅ [11AB_agent_signature_validator_READY.py] executed successfully (stub mode).")
 
 

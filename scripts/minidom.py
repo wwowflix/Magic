@@ -7,8 +7,8 @@
 from __future__ import print_function, absolute_import
 
 from xml.dom.minidom import _do_pulldom_parse
-from . import expatbuilder as _expatbuilder
-from . import pulldom as _pulldom
+from scripts import expatbuilder as _expatbuilder
+from scripts import pulldom as _pulldom
 
 __origin__ = "xml.dom.minidom"
 

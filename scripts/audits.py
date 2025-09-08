@@ -9,10 +9,10 @@ from .util import event_class, T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import dom
-from . import network
-from . import page
-from . import runtime
+from scripts import dom
+from scripts import network
+from scripts import page
+from scripts import runtime
 
 
 @dataclass

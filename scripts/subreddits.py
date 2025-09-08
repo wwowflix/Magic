@@ -8,7 +8,7 @@ from warnings import warn
 
 from ..const import API_PATH
 from ..util import _deprecate_args
-from . import Subreddit
+from scripts import Subreddit
 from .base import PRAWBase
 from .listing.generator import ListingGenerator
 from .util import stream_generator

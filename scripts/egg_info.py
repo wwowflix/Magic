@@ -18,7 +18,7 @@ import time
 import collections
 
 from .._importlib import metadata
-from .. import _entry_points
+from scripts import _entry_points
 
 from setuptools import Command
 from setuptools.command.sdist import sdist

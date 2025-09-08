@@ -1,5 +1,5 @@
 from fontTools.misc.textTools import bytesjoin, safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 import struct
 
 

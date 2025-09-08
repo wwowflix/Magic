@@ -1,4 +1,4 @@
-﻿import argparse, os, time
+import argparse, os, time
 
 
 def cleanup(path="outputs", retention_days=7, max_mb=2048):

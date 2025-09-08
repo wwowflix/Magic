@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING
 
 import trio
 from trio import TaskStatus
-
-from . import socket as tsocket
+from scripts import socket as tsocket
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable

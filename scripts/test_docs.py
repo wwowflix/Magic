@@ -4,8 +4,7 @@ import pytest
 
 import numpy as np
 from numpy.testing import assert_array_equal, assert_equal
-
-from . import util
+from scripts import util
 
 
 def get_docdir():

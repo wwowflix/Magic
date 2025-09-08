@@ -12,8 +12,7 @@ from bs4.element import (
     Stylesheet,
     TemplateString,
 )
-
-from . import SoupTest
+from scripts import SoupTest
 
 
 class TestNavigableString(SoupTest):

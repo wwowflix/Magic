@@ -7,7 +7,7 @@ from fontTools.misc.fixedTools import (
 )
 from fontTools.misc.textTools import bytesjoin, safeEval
 from fontTools.ttLib import TTLibError
-from . import DefaultTable
+from scripts import DefaultTable
 import struct
 from collections.abc import MutableMapping
 

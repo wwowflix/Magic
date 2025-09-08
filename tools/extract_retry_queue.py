@@ -1,4 +1,4 @@
-﻿import csv, json
+import csv, json
 from pathlib import Path
 
 SRC = Path("phase_master_summary.tsv")

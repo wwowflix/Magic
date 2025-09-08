@@ -1,6 +1,6 @@
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import byteord, safeEval
-from . import DefaultTable
+from scripts import DefaultTable
 import pdb
 import struct
 

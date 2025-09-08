@@ -13,8 +13,8 @@ import threading
 
 
 import greenlet
-from . import TestCase
-from . import PY314
+from scripts import TestCase
+from scripts import PY314
 from .leakcheck import fails_leakcheck
 from .leakcheck import ignores_leakcheck
 from .leakcheck import RUNNING_ON_MANYLINUX

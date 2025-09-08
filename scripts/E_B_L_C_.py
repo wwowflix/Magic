@@ -1,5 +1,5 @@
 from fontTools.misc import sstruct
-from . import DefaultTable
+from scripts import DefaultTable
 from fontTools.misc.textTools import bytesjoin, safeEval
 from .BitmapGlyphMetrics import (
     BigGlyphMetrics,

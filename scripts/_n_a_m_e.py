@@ -14,7 +14,7 @@ from fontTools.ttLib import newTable
 from fontTools.ttLib.ttVisitor import TTVisitor
 from fontTools import ttLib
 import fontTools.ttLib.tables.otTables as otTables
-from . import DefaultTable
+from scripts import DefaultTable
 import struct
 import logging
 

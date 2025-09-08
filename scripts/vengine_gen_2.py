@@ -4,8 +4,7 @@
 import sys
 import os
 import types
-
-from . import model
+from scripts import model
 from .error import VerificationError
 
 

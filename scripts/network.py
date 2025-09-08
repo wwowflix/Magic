@@ -9,12 +9,12 @@ from .util import event_class, T_JSON_DICT
 from dataclasses import dataclass
 import enum
 import typing
-from . import debugger
-from . import emulation
-from . import io
-from . import page
-from . import runtime
-from . import security
+from scripts import debugger
+from scripts import emulation
+from scripts import io
+from scripts import page
+from scripts import runtime
+from scripts import security
 
 
 class ResourceType(enum.Enum):

@@ -1,7 +1,7 @@
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import safeEval
 from fontTools.misc.timeTools import timestampFromString, timestampToString
-from . import DefaultTable
+from scripts import DefaultTable
 
 FFTMFormat = """
 		>	# big endian

@@ -2,7 +2,7 @@ import sys
 
 
 from greenlet import greenlet
-from . import TestCase
+from scripts import TestCase
 
 
 def switch(*args):

@@ -1,7 +1,7 @@
 import os
 import sys
 import io
-from . import ffiplatform, model
+from scripts import ffiplatform, model
 from .error import VerificationError
 from .cffi_opcode import *
 

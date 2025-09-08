@@ -22,8 +22,7 @@ import narwhals.stable.v1 as nw
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
 from altair.utils.schemapi import Undefined, with_property_setters
-
-from . import core
+from scripts import core
 from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:

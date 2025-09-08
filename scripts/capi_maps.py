@@ -11,7 +11,7 @@ $Date: 2005/05/06 10:57:33 $
 Pearu Peterson
 
 """
-from . import __version__
+from scripts import __version__
 
 f2py_version = __version__.version
 
@@ -19,7 +19,7 @@ import copy
 import re
 import os
 from .crackfortran import markoutercomma
-from . import cb_rules
+from scripts import cb_rules
 
 # The environment provided by auxfuncs.py is needed for some calls to eval.
 # As the needed functions cannot be determined by static inspection of the

@@ -14,8 +14,7 @@ import warnings
 from xml.sax.saxutils import escape, unescape
 
 from six.moves import urllib_parse as urlparse
-
-from . import base
+from scripts import base
 from ..constants import namespaces, prefixes
 
 __all__ = ["Filter"]

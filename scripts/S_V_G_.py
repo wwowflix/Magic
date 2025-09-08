@@ -19,7 +19,7 @@ The XML format is:
 
 from fontTools.misc.textTools import bytesjoin, safeEval, strjoin, tobytes, tostr
 from fontTools.misc import sstruct
-from . import DefaultTable
+from scripts import DefaultTable
 from collections.abc import Sequence
 from dataclasses import dataclass, astuple
 from io import BytesIO

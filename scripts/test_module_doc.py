@@ -2,8 +2,7 @@ import os
 import sys
 import pytest
 import textwrap
-
-from . import util
+from scripts import util
 from numpy.testing import assert_equal, IS_PYPY
 
 

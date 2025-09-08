@@ -5,10 +5,8 @@ from collections import OrderedDict
 
 from lxml import etree
 from ..treebuilders.etree import tag_regexp
-
-from . import base
-
-from .. import _ihatexml
+from scripts import base
+from scripts import _ihatexml
 
 
 def ensure_str(s):

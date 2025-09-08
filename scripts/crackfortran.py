@@ -146,8 +146,7 @@ import re
 import os
 import copy
 import platform
-
-from . import __version__
+from scripts import __version__
 
 # The environment provided by auxfuncs.py is needed for some calls to eval.
 # As the needed functions cannot be determined by static inspection of the

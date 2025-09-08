@@ -20,7 +20,7 @@ import urllib.parse
 import warnings
 
 from .._importlib import metadata
-from .. import SetuptoolsDeprecationWarning
+from scripts import SetuptoolsDeprecationWarning
 
 from .upload import upload
 

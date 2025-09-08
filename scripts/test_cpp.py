@@ -5,9 +5,9 @@ import subprocess
 import unittest
 
 import greenlet
-from . import _test_extension_cpp
-from . import TestCase
-from . import WIN
+from scripts import _test_extension_cpp
+from scripts import TestCase
+from scripts import WIN
 
 
 class CPPTests(TestCase):
