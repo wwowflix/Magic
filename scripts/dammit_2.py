@@ -1053,7 +1053,7 @@ class UnicodeDammit:
 
     #: A parochial partial mapping of ISO-Latin-1 to ASCII. Contains
     #: horrors like stripping diacritical marks to turn á into a, but also
-    #: contains non-horrors like turning “ into ".
+    #: contains non-horrors like turning " into ".
     #:
     #: Seriously, don't use this for anything other than removing smart
     #: quotes.
@@ -1203,7 +1203,7 @@ class UnicodeDammit:
         0x82: b"\xe2\x80\x9a",  # ‚
         0x83: b"\xc6\x92",  # ƒ
         0x84: b"\xe2\x80\x9e",  # „
-        0x85: b"\xe2\x80\xa6",  # …
+        0x85: b"\xe2\x80\xa6",  # ...
         0x86: b"\xe2\x80\xa0",  # †
         0x87: b"\xe2\x80\xa1",  # ‡
         0x88: b"\xcb\x86",  # ˆ
@@ -1212,13 +1212,13 @@ class UnicodeDammit:
         0x8B: b"\xe2\x80\xb9",  # ‹
         0x8C: b"\xc5\x92",  # Œ
         0x8E: b"\xc5\xbd",  # Ž
-        0x91: b"\xe2\x80\x98",  # ‘
-        0x92: b"\xe2\x80\x99",  # ’
-        0x93: b"\xe2\x80\x9c",  # “
-        0x94: b"\xe2\x80\x9d",  # ”
+        0x91: b"\xe2\x80\x98",  # '
+        0x92: b"\xe2\x80\x99",  # '
+        0x93: b"\xe2\x80\x9c",  # "
+        0x94: b"\xe2\x80\x9d",  # "
         0x95: b"\xe2\x80\xa2",  # •
-        0x96: b"\xe2\x80\x93",  # –
-        0x97: b"\xe2\x80\x94",  # —
+        0x96: b"\xe2\x80\x93",  # -
+        0x97: b"\xe2\x80\x94",  # -
         0x98: b"\xcb\x9c",  # ˜
         0x99: b"\xe2\x84\xa2",  # ™
         0x9A: b"\xc5\xa1",  # š

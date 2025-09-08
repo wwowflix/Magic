@@ -1271,7 +1271,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         The optional ``align`` argument indicates what part of the string should be truncated:
         ``'left'`` (the beginning), ``'center'``, or ``'right'`` (the end). By default, the
         ``'right'`` end of the string is truncated. The optional ``ellipsis`` argument indicates the
-        string to use to indicate truncated content; by default the ellipsis character ``…``
+        string to use to indicate truncated content; by default the ellipsis character ``...``
         (``\u2026``) is used.
         """
         return FunctionExpression("truncate", (string, length, align, ellipsis))

@@ -2498,7 +2498,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
              If precision is not specified, returns the projection's current resampling
-            precision which defaults to `√0.5 ≅ 0.70710…`.
+            precision which defaults to `√0.5 ≅ 0.70710...`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
             varies based on the projection type.
@@ -3616,7 +3616,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``false``
         sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
-            objects are considered equal by the comparator, they are considered “peer” values of
+            objects are considered equal by the comparator, they are considered "peer" values of
             equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).

@@ -45,7 +45,7 @@ def run_command(command, step_name):
 # ----------------------------
 def main():
     print("=" * 40)
-    print("MAGIC PROJECT – PHASE 11 FULL CYCLE")
+    print("MAGIC PROJECT - PHASE 11 FULL CYCLE")
     print("=" * 40)
     print(f"Log File: {CYCLE_LOG}")
 

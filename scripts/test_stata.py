@@ -1815,7 +1815,7 @@ The repeated labels are:\n-+\nwolof
 
     @pytest.mark.parametrize("version", [114, 117, 118, 119, None])
     def test_invalid_file_not_written(self, version):
-        content = "Here is one __�__ Another one __·__ Another one __½__"
+        content = "Here is one ____ Another one __·__ Another one __½__"
         df = DataFrame([content], columns=["invalid"])
         with tm.ensure_clean() as path:
             msg1 = (

@@ -979,7 +979,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 (width, height). Default to "a4".
             same (bool): indicates to use the same page format as the previous page.
                 Default to False.
-            duration (float): optional page’s display duration, i.e. the maximum length of time,
+            duration (float): optional page's display duration, i.e. the maximum length of time,
                 in seconds, that the page is displayed in presentation mode,
                 before the viewer application automatically advances to the next page.
                 Can be configured globally through the `.page_duration` FPDF property.
@@ -2531,7 +2531,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
             h (float): optional height of the link rectangle
             name (fpdf.enums.AnnotationName, str): optional icon that shall be used in displaying the annotation
             flags (Tuple[fpdf.enums.AnnotationFlag], Tuple[str]): optional list of flags defining annotation properties
-            title (str): the text label that shall be displayed in the title bar of the annotation’s
+            title (str): the text label that shall be displayed in the title bar of the annotation's
                 pop-up window when open and active. This entry shall identify the user who added the annotation.
         """
         annotation = AnnotationDict(
@@ -2633,11 +2633,11 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 
         Args:
             text (str): text of the annotation
-            title (str): the text label that shall be displayed in the title bar of the annotation’s
+            title (str): the text label that shall be displayed in the title bar of the annotation's
                 pop-up window when open and active. This entry shall identify the user who added the annotation.
             type (fpdf.enums.TextMarkupType, str): "Highlight", "Underline", "Squiggly" or "StrikeOut".
             color (tuple): a tuple of numbers in the range 0.0 to 1.0, representing a colour used for
-                the title bar of the annotation’s pop-up window. Defaults to yellow.
+                the title bar of the annotation's pop-up window. Defaults to yellow.
             modification_time (datetime): date and time when the annotation was most recently modified
         """
         if self._record_text_quad_points:
@@ -2688,10 +2688,10 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
                 in default user space that comprise the region in which the link should be activated.
                 The coordinates for each quadrilateral are given in the order: x1 y1 x2 y2 x3 y3 x4 y4
                 specifying the four vertices of the quadrilateral in counterclockwise order
-            title (str): the text label that shall be displayed in the title bar of the annotation’s
+            title (str): the text label that shall be displayed in the title bar of the annotation's
                 pop-up window when open and active. This entry shall identify the user who added the annotation.
             color (tuple): a tuple of numbers in the range 0.0 to 1.0, representing a colour used for
-                the title bar of the annotation’s pop-up window. Defaults to yellow.
+                the title bar of the annotation's pop-up window. Defaults to yellow.
             modification_time (datetime): date and time when the annotation was most recently modified
             page (int): index of the page where this annotation is added
         """
@@ -2730,10 +2730,10 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         Args:
             coords (tuple): an iterable of coordinates (pairs of numbers) defining a path
             text (str): textual description
-            title (str): the text label that shall be displayed in the title bar of the annotation’s
+            title (str): the text label that shall be displayed in the title bar of the annotation's
                 pop-up window when open and active. This entry shall identify the user who added the annotation.
             color (tuple): a tuple of numbers in the range 0.0 to 1.0, representing a colour used for
-                the title bar of the annotation’s pop-up window. Defaults to yellow.
+                the title bar of the annotation's pop-up window. Defaults to yellow.
             border_width (float): thickness of the path stroke.
         """
         ink_list = sum(((x * self.k, (self.h - y) * self.k) for (x, y) in coords), ())
@@ -5055,7 +5055,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         # > based on the contents of the file at the time it was originally created
         # > and shall not change when the file is incrementally updated.
         # > The second byte string shall be a changing identifier
-        # > based on the file’s contents at the time it was last updated.
+        # > based on the file's contents at the time it was last updated.
         # > When a file is first written, both identifiers shall be set to the same value.
         id_hash = hashlib.new("md5", usedforsecurity=False)  # nosec B324
         id_hash.update(buffer)

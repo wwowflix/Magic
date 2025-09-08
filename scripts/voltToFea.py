@@ -38,8 +38,8 @@ Limitations
   is to modify the VOLT file or the generated feature file manually to use unique
   mark anchors for each lookup.
 * VOLT allows subtable breaks in any lookup type, but AFDKO feature file
-  implementations vary in their support; currently AFDKO’s makeOTF supports
-  subtable breaks in pair positioning lookups only, while FontTools’ feaLib
+  implementations vary in their support; currently AFDKO's makeOTF supports
+  subtable breaks in pair positioning lookups only, while FontTools' feaLib
   support it for most substitution lookups and only some positioning lookups.
 """
 
@@ -428,7 +428,7 @@ class VoltToFea:
                 coverage_1 = pos.coverages_1[idx1 - 1]
                 coverage_2 = pos.coverages_2[idx2 - 1]
 
-                # If not both are groups, use “enum pos” otherwise makeotf will
+                # If not both are groups, use "enum pos" otherwise makeotf will
                 # fail.
                 enumerated = False
                 for item in coverage_1 + coverage_2:
@@ -699,7 +699,7 @@ class VoltToFea:
         sub = lookup.sub
 
         if isinstance(sub, VAst.SubstitutionReverseChainingSingleDefinition):
-            # Reverse substitutions is a special case, it can’t use chained lookups.
+            # Reverse substitutions is a special case, it can't use chained lookups.
             for key, val in sub.mapping.items():
                 if not key or not val:
                     path, line, column = sub.location
@@ -773,7 +773,7 @@ class VoltToFea:
             use_extension = True
 
         if "\\" in lookup.name:
-            # Merge sub lookups as subtables (lookups named “base\sub”),
+            # Merge sub lookups as subtables (lookups named "base\sub"),
             # makeotf/feaLib will issue a warning and ignore the subtable
             # statement if it is not a pairpos lookup, though.
             name = lookup.name.split("\\")[0]
@@ -868,7 +868,7 @@ def main(args=None):
         "-q", "--quiet", action="store_true", help="Suppress non-error messages"
     )
     parser.add_argument(
-        "--traceback", action="store_true", help="Don’t catch exceptions"
+        "--traceback", action="store_true", help="Don't catch exceptions"
     )
 
     options = parser.parse_args(args)

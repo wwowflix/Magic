@@ -182,7 +182,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -273,7 +273,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -324,7 +324,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -377,7 +377,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -417,7 +417,7 @@ class FreeTypePen(BasePen):
 
     @property
     def cbox(self):
-        """Returns an outline's ‘control box’.
+        """Returns an outline's 'control box'.
 
         Returns:
             A tuple of ``(xMin, yMin, xMax, yMax)``.

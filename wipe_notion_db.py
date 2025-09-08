@@ -35,7 +35,7 @@ while True:
     cursor = data["next_cursor"]
     time.sleep(0.3)  # gentle rate-limit
 
-print(f"Found {len(all_pages)} pages to archive…")
+print(f"Found {len(all_pages)} pages to archive...")
 
 # 2) Archive each one
 for page in all_pages:
