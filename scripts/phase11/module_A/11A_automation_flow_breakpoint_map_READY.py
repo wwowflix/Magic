@@ -18,7 +18,11 @@ def main():
     try:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
             modules = sorted(
-                [d for d in os.listdir(PHASE_PATH) if os.path.isdir(os.path.join(PHASE_PATH, d))]
+                [
+                    d
+                    for d in os.listdir(PHASE_PATH)
+                    if os.path.isdir(os.path.join(PHASE_PATH, d))
+                ]
             )
             for module in modules:
                 files = [
@@ -29,9 +33,13 @@ def main():
                 if len(files) == 0:
                     log.write(f"❌ Breakpoint: {module} has NO scripts.\n")
                 elif len(files) < 3:
-                    log.write(f"⚠️ Potential issue: {module} has only {len(files)} scripts.\n")
+                    log.write(
+                        f"⚠️ Potential issue: {module} has only {len(files)} scripts.\n"
+                    )
                 else:
-                    log.write(f"✅ Module {module} looks okay ({len(files)} scripts).\n")
+                    log.write(
+                        f"✅ Module {module} looks okay ({len(files)} scripts).\n"
+                    )
 
         print("PASS")
     except Exception as e:

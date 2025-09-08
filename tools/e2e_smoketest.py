@@ -19,14 +19,20 @@ def _expected_log_path(row: dict[str, str], logs_root: Path) -> Path:
     module_letter = ""
     if len(fname) >= 3 and fname[:2].isdigit():
         module_letter = fname[2]
-    subdir = f"phase{phase}_module_{module_letter}" if phase and module_letter else f"phase{phase}"
+    subdir = (
+        f"phase{phase}_module_{module_letter}"
+        if phase and module_letter
+        else f"phase{phase}"
+    )
     logname = fname.replace(".py", ".log") if fname else "unknown.log"
     return logs_root / subdir / logname
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--summary", type=Path, required=True, help="Path to phase_master_summary.tsv")
+    p.add_argument(
+        "--summary", type=Path, required=True, help="Path to phase_master_summary.tsv"
+    )
     # accept both styles
     p.add_argument(
         "--logs-root",
@@ -56,10 +62,14 @@ def main(argv: list[str] | None = None) -> int:
             fail_count += 1
             exp = _expected_log_path(r, args.logs_root)
             if not exp.exists():
-                missing_logs.append({"Filename": r.get("Filename", ""), "expected_log": str(exp)})
+                missing_logs.append(
+                    {"Filename": r.get("Filename", ""), "expected_log": str(exp)}
+                )
 
     overall_ok = len(missing_logs) == 0
-    phase_field = int(args.phase) if (args.phase and args.phase.isdigit()) else args.phase
+    phase_field = (
+        int(args.phase) if (args.phase and args.phase.isdigit()) else args.phase
+    )
     totals = {"PASS": pass_count, "FAIL": fail_count, "TOTAL": pass_count + fail_count}
 
     args.report.parent.mkdir(parents=True, exist_ok=True)

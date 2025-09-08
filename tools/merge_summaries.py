@@ -22,7 +22,9 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
             with p.open("r", encoding="utf-8-sig", errors="replace", newline="") as f:
                 reader = csv.reader(f, delimiter="\t")
                 local_header = next(reader, None)
-                if not local_header or all((c or "").strip() == "" for c in local_header):
+                if not local_header or all(
+                    (c or "").strip() == "" for c in local_header
+                ):
                     continue
                 if header is None:
                     header = local_header
