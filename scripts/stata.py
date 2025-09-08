@@ -3577,7 +3577,7 @@ class StataWriterUTF8(StataWriter117):
     Using Unicode data and column names
 
     >>> from pandas.io.stata import StataWriterUTF8
-    >>> data = pd.DataFrame([[1.0, 1, 'ᴬ']], columns=['a', 'β', 'ĉ'])
+    >>> data = pd.DataFrame([[1.0, 1, 'á´¬']], columns=['a', 'Î²', 'Ä‰'])
     >>> writer = StataWriterUTF8('./data_file.dta', data)
     >>> writer.write_file()
 
@@ -3588,7 +3588,7 @@ class StataWriterUTF8(StataWriter117):
 
     Or with long strings stored in strl format
 
-    >>> data = pd.DataFrame([['ᴀ relatively long ŝtring'], [''], ['']],
+    >>> data = pd.DataFrame([['á´€ relatively long Åtring'], [''], ['']],
     ...                     columns=['strls'])
     >>> writer = StataWriterUTF8('./data_file_with_long_strings.dta', data,
     ...                          convert_strl=['strls'])
@@ -3672,7 +3672,7 @@ class StataWriterUTF8(StataWriter117):
                     and c != "_"
                 )
                 or 128 <= ord(c) < 192
-                or c in {"×", "÷"}
+                or c in {"Ã—", "Ã·"}
             ):
                 name = name.replace(c, "_")
 

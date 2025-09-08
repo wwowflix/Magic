@@ -6,7 +6,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 # ================================
-# 1️⃣ Load Environment Variables
+# 1ï¸âƒ£ Load Environment Variables
 # ================================
 load_dotenv()
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
@@ -21,7 +21,7 @@ SUMMARY_DIR = os.path.join("outputs", "summaries")
 NOTION_PAGE_SIZE = 100
 
 # ================================
-# 2️⃣ Session with Retry Logic
+# 2ï¸âƒ£ Session with Retry Logic
 # ================================
 session = requests.Session()
 retries = Retry(
@@ -34,7 +34,7 @@ session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 # ================================
-# 3️⃣ Helpers
+# 3ï¸âƒ£ Helpers
 # ================================
 def fetch_database_schema():
     """Fetch database schema to validate select options."""
@@ -44,7 +44,7 @@ def fetch_database_schema():
         resp.raise_for_status()
         return resp.json().get("properties", {})
     except Exception as e:
-        print(f"⚠️ Failed to fetch schema: {e}")
+        print(f"âš ï¸ Failed to fetch schema: {e}")
         return {}
 
 
@@ -76,7 +76,7 @@ def normalize_status(status, valid_statuses):
     if status in valid_statuses:
         return status
     fallback = valid_statuses[0] if valid_statuses else "Unknown"
-    print(f"⚠️ Status '{status}' not valid, using '{fallback}'")
+    print(f"âš ï¸ Status '{status}' not valid, using '{fallback}'")
     return fallback
 
 
@@ -96,12 +96,12 @@ def create_page(script_name, phase, module, status, valid_statuses):
         },
     }
     try:
-        print(f"➕ Creating: {script_name}")
+        print(f"âž• Creating: {script_name}")
         resp = session.post(url, headers=HEADERS, json=data)
         resp.raise_for_status()
     except requests.HTTPError as e:
         err = e.response.text if e.response is not None else str(e)
-        print(f"⚠️ Error creating page for {script_name}: {err}")
+        print(f"âš ï¸ Error creating page for {script_name}: {err}")
 
 
 def update_page(page_id, phase, module, status, valid_statuses):
@@ -118,18 +118,18 @@ def update_page(page_id, phase, module, status, valid_statuses):
         }
     }
     try:
-        print(f"✏️ Updating: {page_id}")
+        print(f"âœï¸ Updating: {page_id}")
         resp = session.patch(url, headers=HEADERS, json=data)
         resp.raise_for_status()
     except requests.HTTPError as e:
         err = e.response.text if e.response is not None else str(e)
-        print(f"⚠️ Error updating page {page_id}: {err}")
+        print(f"âš ï¸ Error updating page {page_id}: {err}")
 
 
 def read_latest_summary_files():
     """Return latest version of each summary file based on timestamp."""
     if not os.path.isdir(SUMMARY_DIR):
-        print(f"⚠️ Summary directory not found: {SUMMARY_DIR}, skipping sync.")
+        print(f"âš ï¸ Summary directory not found: {SUMMARY_DIR}, skipping sync.")
         return []
     files = [f for f in os.listdir(SUMMARY_DIR) if f.endswith("_summary.tsv")]
     latest = {}
@@ -143,7 +143,7 @@ def read_latest_summary_files():
 
 
 # ================================
-# 4️⃣ Main Sync Function
+# 4ï¸âƒ£ Main Sync Function
 # ================================
 def sync_to_notion():
     schema = fetch_database_schema()
@@ -164,18 +164,18 @@ def sync_to_notion():
 
     summary_files = read_latest_summary_files()
     if not summary_files:
-        print("⚠️ No summary files to process.")
+        print("âš ï¸ No summary files to process.")
         return
 
     for summary in summary_files:
         name = os.path.basename(summary)
         if not name.startswith("phase") or "_module_" not in name:
-            print(f"⚠️ Skipping invalid file: {name}")
+            print(f"âš ï¸ Skipping invalid file: {name}")
             continue
         phase_part, module_part = name.split("_module_")
         phase_num = phase_part.replace("phase", "")
         if not phase_num.isdigit():
-            print(f"⚠️ Skipping non-numeric phase file: {name}")
+            print(f"âš ï¸ Skipping non-numeric phase file: {name}")
             continue
         module = module_part.replace("_summary.tsv", "")
 
@@ -184,7 +184,7 @@ def sync_to_notion():
             for line in f:
                 parts = line.strip().split("\t")
                 if len(parts) != 2:
-                    print(f"⚠️ Skipping invalid line in {name}: {line.strip()}")
+                    print(f"âš ï¸ Skipping invalid line in {name}: {line.strip()}")
                     continue
                 script_name, status = parts
                 try:
@@ -201,13 +201,13 @@ def sync_to_notion():
                             script_name, phase_num, module, status, valid_statuses
                         )
                 except Exception as e:
-                    print(f"⚠️ Error syncing {script_name}: {e}")
+                    print(f"âš ï¸ Error syncing {script_name}: {e}")
 
-    print("✅ Notion sync complete.")
+    print("âœ… Notion sync complete.")
 
 
 # ================================
-# 5️⃣ Entry Point
+# 5ï¸âƒ£ Entry Point
 # ================================
 if __name__ == "__main__":
     sync_to_notion()

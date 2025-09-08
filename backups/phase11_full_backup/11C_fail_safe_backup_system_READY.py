@@ -27,4 +27,4 @@ with zipfile.ZipFile(backup_path, "w", zipfile.ZIP_DEFLATED) as backup_zip:
                 arcname = os.path.relpath(full_path, start=os.path.dirname(folder))
                 backup_zip.write(full_path, arcname)
 
-print(f"✅ Backup created: {backup_path}")
+print(f"âœ… Backup created: {backup_path}")

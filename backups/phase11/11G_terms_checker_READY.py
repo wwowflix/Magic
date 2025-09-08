@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 # CONFIG
 SCRIPTS_ROOT = "scripts/"

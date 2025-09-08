@@ -1,4 +1,4 @@
-import sys, os
+﻿import sys, os
 
 
 def has_bom(path: str) -> bool:

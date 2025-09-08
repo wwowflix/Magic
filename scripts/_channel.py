@@ -77,7 +77,7 @@ def _open_memory_channel(
     Returns:
       A pair ``(send_channel, receive_channel)``. If you have
       trouble remembering which order these go in, remember: data
-      flows from left → right.
+      flows from left â†’ right.
 
     In addition to the standard channel methods, all memory channel objects
     provide a ``statistics()`` method, which returns an object with the

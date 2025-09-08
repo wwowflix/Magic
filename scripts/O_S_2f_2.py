@@ -11,16 +11,16 @@ log = logging.getLogger(__name__)
 # panose classification
 
 panoseFormat = """
-	bFamilyType:        B
-	bSerifStyle:        B
-	bWeight:            B
-	bProportion:        B
-	bContrast:          B
-	bStrokeVariation:   B
-	bArmStyle:          B
-	bLetterForm:        B
-	bMidline:           B
-	bXHeight:           B
+    bFamilyType:        B
+    bSerifStyle:        B
+    bWeight:            B
+    bProportion:        B
+    bContrast:          B
+    bStrokeVariation:   B
+    bArmStyle:          B
+    bLetterForm:        B
+    bMidline:           B
+    bXHeight:           B
 """
 
 
@@ -45,64 +45,64 @@ class Panose(object):
 # 'sfnt' OS/2 and Windows Metrics table - 'OS/2'
 
 OS2_format_0 = """
-	>   # big endian
-	version:                H       # version
-	xAvgCharWidth:          h       # average character width
-	usWeightClass:          H       # degree of thickness of strokes
-	usWidthClass:           H       # aspect ratio
-	fsType:                 H       # type flags
-	ySubscriptXSize:        h       # subscript horizontal font size
-	ySubscriptYSize:        h       # subscript vertical font size
-	ySubscriptXOffset:      h       # subscript x offset
-	ySubscriptYOffset:      h       # subscript y offset
-	ySuperscriptXSize:      h       # superscript horizontal font size
-	ySuperscriptYSize:      h       # superscript vertical font size
-	ySuperscriptXOffset:    h       # superscript x offset
-	ySuperscriptYOffset:    h       # superscript y offset
-	yStrikeoutSize:         h       # strikeout size
-	yStrikeoutPosition:     h       # strikeout position
-	sFamilyClass:           h       # font family class and subclass
-	panose:                 10s     # panose classification number
-	ulUnicodeRange1:        L       # character range
-	ulUnicodeRange2:        L       # character range
-	ulUnicodeRange3:        L       # character range
-	ulUnicodeRange4:        L       # character range
-	achVendID:              4s      # font vendor identification
-	fsSelection:            H       # font selection flags
-	usFirstCharIndex:       H       # first unicode character index
-	usLastCharIndex:        H       # last unicode character index
-	sTypoAscender:          h       # typographic ascender
-	sTypoDescender:         h       # typographic descender
-	sTypoLineGap:           h       # typographic line gap
-	usWinAscent:            H       # Windows ascender
-	usWinDescent:           H       # Windows descender
+    >   # big endian
+    version:                H       # version
+    xAvgCharWidth:          h       # average character width
+    usWeightClass:          H       # degree of thickness of strokes
+    usWidthClass:           H       # aspect ratio
+    fsType:                 H       # type flags
+    ySubscriptXSize:        h       # subscript horizontal font size
+    ySubscriptYSize:        h       # subscript vertical font size
+    ySubscriptXOffset:      h       # subscript x offset
+    ySubscriptYOffset:      h       # subscript y offset
+    ySuperscriptXSize:      h       # superscript horizontal font size
+    ySuperscriptYSize:      h       # superscript vertical font size
+    ySuperscriptXOffset:    h       # superscript x offset
+    ySuperscriptYOffset:    h       # superscript y offset
+    yStrikeoutSize:         h       # strikeout size
+    yStrikeoutPosition:     h       # strikeout position
+    sFamilyClass:           h       # font family class and subclass
+    panose:                 10s     # panose classification number
+    ulUnicodeRange1:        L       # character range
+    ulUnicodeRange2:        L       # character range
+    ulUnicodeRange3:        L       # character range
+    ulUnicodeRange4:        L       # character range
+    achVendID:              4s      # font vendor identification
+    fsSelection:            H       # font selection flags
+    usFirstCharIndex:       H       # first unicode character index
+    usLastCharIndex:        H       # last unicode character index
+    sTypoAscender:          h       # typographic ascender
+    sTypoDescender:         h       # typographic descender
+    sTypoLineGap:           h       # typographic line gap
+    usWinAscent:            H       # Windows ascender
+    usWinDescent:           H       # Windows descender
 """
 
 OS2_format_1_addition = """
-	ulCodePageRange1:   L
-	ulCodePageRange2:   L
+    ulCodePageRange1:   L
+    ulCodePageRange2:   L
 """
 
 OS2_format_2_addition = (
     OS2_format_1_addition
     + """
-	sxHeight:           h
-	sCapHeight:         h
-	usDefaultChar:      H
-	usBreakChar:        H
-	usMaxContext:       H
+    sxHeight:           h
+    sCapHeight:         h
+    usDefaultChar:      H
+    usBreakChar:        H
+    usMaxContext:       H
 """
 )
 
 OS2_format_5_addition = (
     OS2_format_2_addition
     + """
-	usLowerOpticalPointSize:    H
-	usUpperOpticalPointSize:    H
+    usLowerOpticalPointSize:    H
+    usUpperOpticalPointSize:    H
 """
 )
 
-bigendian = "	>	# big endian\n"
+bigendian = "    >    # big endian\n"
 
 OS2_format_1 = OS2_format_0 + OS2_format_1_addition
 OS2_format_2 = OS2_format_0 + OS2_format_2_addition
@@ -668,79 +668,79 @@ def calcCodePageRanges(unicodes):
     """
     bits = set()
     hasAscii = set(range(0x20, 0x7E)).issubset(unicodes)
-    hasLineart = ord("┤") in unicodes
+    hasLineart = ord("â”¤") in unicodes
 
     for uni in unicodes:
-        if uni == ord("Þ") and hasAscii:
+        if uni == ord("Ãž") and hasAscii:
             bits.add(0)  # Latin 1
-        elif uni == ord("Ľ") and hasAscii:
+        elif uni == ord("Ä½") and hasAscii:
             bits.add(1)  # Latin 2: Eastern Europe
             if hasLineart:
                 bits.add(58)  # Latin 2
-        elif uni == ord("Б"):
+        elif uni == ord("Ð‘"):
             bits.add(2)  # Cyrillic
-            if ord("Ѕ") in unicodes and hasLineart:
+            if ord("Ð…") in unicodes and hasLineart:
                 bits.add(57)  # IBM Cyrillic
-            if ord("╜") in unicodes and hasLineart:
+            if ord("â•œ") in unicodes and hasLineart:
                 bits.add(49)  # MS-DOS Russian
-        elif uni == ord("Ά"):
+        elif uni == ord("Î†"):
             bits.add(3)  # Greek
-            if hasLineart and ord("½") in unicodes:
+            if hasLineart and ord("Â½") in unicodes:
                 bits.add(48)  # IBM Greek
-            if hasLineart and ord("√") in unicodes:
+            if hasLineart and ord("âˆš") in unicodes:
                 bits.add(60)  # Greek, former 437 G
-        elif uni == ord("İ") and hasAscii:
+        elif uni == ord("Ä°") and hasAscii:
             bits.add(4)  # Turkish
             if hasLineart:
                 bits.add(56)  # IBM turkish
-        elif uni == ord("א"):
+        elif uni == ord("×"):
             bits.add(5)  # Hebrew
-            if hasLineart and ord("√") in unicodes:
+            if hasLineart and ord("âˆš") in unicodes:
                 bits.add(53)  # Hebrew
-        elif uni == ord("ر"):
+        elif uni == ord("Ø±"):
             bits.add(6)  # Arabic
-            if ord("√") in unicodes:
+            if ord("âˆš") in unicodes:
                 bits.add(51)  # Arabic
             if hasLineart:
                 bits.add(61)  # Arabic; ASMO 708
-        elif uni == ord("ŗ") and hasAscii:
+        elif uni == ord("Å—") and hasAscii:
             bits.add(7)  # Windows Baltic
             if hasLineart:
                 bits.add(59)  # MS-DOS Baltic
-        elif uni == ord("₫") and hasAscii:
+        elif uni == ord("â‚«") and hasAscii:
             bits.add(8)  # Vietnamese
-        elif uni == ord("ๅ"):
+        elif uni == ord("à¹…"):
             bits.add(16)  # Thai
-        elif uni == ord("エ"):
+        elif uni == ord("ã‚¨"):
             bits.add(17)  # JIS/Japan
-        elif uni == ord("ㄅ"):
+        elif uni == ord("ã„…"):
             bits.add(18)  # Chinese: Simplified
-        elif uni == ord("ㄱ"):
+        elif uni == ord("ã„±"):
             bits.add(19)  # Korean wansung
-        elif uni == ord("央"):
+        elif uni == ord("å¤®"):
             bits.add(20)  # Chinese: Traditional
-        elif uni == ord("곴"):
+        elif uni == ord("ê³´"):
             bits.add(21)  # Korean Johab
-        elif uni == ord("♥") and hasAscii:
+        elif uni == ord("â™¥") and hasAscii:
             bits.add(30)  # OEM Character Set
         # TODO: Symbol bit has a special meaning (check the spec), we need
         # to confirm if this is wanted by default.
         # elif chr(0xF000) <= char <= chr(0xF0FF):
         #    codepageRanges.add(31)          # Symbol Character Set
-        elif uni == ord("þ") and hasAscii and hasLineart:
+        elif uni == ord("Ã¾") and hasAscii and hasLineart:
             bits.add(54)  # MS-DOS Icelandic
-        elif uni == ord("╚") and hasAscii:
+        elif uni == ord("â•š") and hasAscii:
             bits.add(62)  # WE/Latin 1
             bits.add(63)  # US
-        elif hasAscii and hasLineart and ord("√") in unicodes:
-            if uni == ord("Å"):
+        elif hasAscii and hasLineart and ord("âˆš") in unicodes:
+            if uni == ord("Ã…"):
                 bits.add(50)  # MS-DOS Nordic
-            elif uni == ord("é"):
+            elif uni == ord("Ã©"):
                 bits.add(52)  # MS-DOS Canadian French
-            elif uni == ord("õ"):
+            elif uni == ord("Ãµ"):
                 bits.add(55)  # MS-DOS Portuguese
 
-    if hasAscii and ord("‰") in unicodes and ord("∑") in unicodes:
+    if hasAscii and ord("â€°") in unicodes and ord("âˆ‘") in unicodes:
         bits.add(29)  # Macintosh Character Set (US Roman)
 
     return bits

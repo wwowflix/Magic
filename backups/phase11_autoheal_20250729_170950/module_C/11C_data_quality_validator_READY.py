@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("✅ [11C_data_quality_validator_READY.py] executed successfully (stub mode).")
 
 

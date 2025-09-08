@@ -80,7 +80,7 @@ class WeiboUserScraper(snscrape.base.Scraper):
             # Redirect to uid URL
             self._user = int(r.headers["Location"][3:])
             self._isUserId = True
-        elif r.status_code == 200 and '<p class="h5-4con">用户不存在</p>' in r.text:
+        elif r.status_code == 200 and '<p class="h5-4con">ç”¨æˆ·ä¸å­˜åœ¨</p>' in r.text:
             _logger.warning("User does not exist")
             self._user = _userDoesNotExist
         else:

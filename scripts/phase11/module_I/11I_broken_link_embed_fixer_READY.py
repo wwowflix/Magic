@@ -1,6 +1,6 @@
 def main():
     print(
-        "✅ [11I_broken_link_embed_fixer_READY.py] executed successfully (stub mode)."
+        "âœ… [11I_broken_link_embed_fixer_READY.py] executed successfully (stub mode)."
     )
 
 

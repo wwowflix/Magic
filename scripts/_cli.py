@@ -274,7 +274,7 @@ class CitationAction(argparse.Action):
         print(f'Title: {m["name"]}: {m["summary"]}')
         print(f'URL: {m["home-page"]}')
         print(f'Version: {m["version"]}')
-        print(f'Date: 2018‒{m["version"].split(".", 3)[3][:4]}')
+        print(f'Date: 2018â€’{m["version"].split(".", 3)[3][:4]}')
 
         if ".dev" in m["version"]:
             print()

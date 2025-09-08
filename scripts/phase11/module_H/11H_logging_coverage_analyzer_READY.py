@@ -1,6 +1,6 @@
 def main():
     print(
-        "✅ [11H_logging_coverage_analyzer_READY.py] executed successfully (stub mode)."
+        "âœ… [11H_logging_coverage_analyzer_READY.py] executed successfully (stub mode)."
     )
 
 

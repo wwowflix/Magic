@@ -14,10 +14,10 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
     for url in ENDPOINTS:
         try:
             r = requests.get(url, timeout=3)
-            status = f"{url} → ✅ {r.status_code}"
+            status = f"{url} â†’ âœ… {r.status_code}"
         except Exception as e:
-            status = f"{url} → ❌ {e}"
+            status = f"{url} â†’ âŒ {e}"
         print(status)
         f.write(status + "\n")
 
-print(f"📄 API health report saved to: {LOG_FILE}")
+print(f"ðŸ“„ API health report saved to: {LOG_FILE}")

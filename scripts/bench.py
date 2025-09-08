@@ -37,7 +37,7 @@ nmzl = numpy.ma.array(zl, mask=maskx)
 
 
 def timer(s, v="", nloop=500, nrep=3):
-    units = ["s", "ms", "µs", "ns"]
+    units = ["s", "ms", "Âµs", "ns"]
     scaling = [1, 1e3, 1e6, 1e9]
     print("%s : %-50s : " % (v, s), end=" ")
     varnames = ["%ss,nm%ss,%sl,nm%sl" % tuple(x * 4) for x in "xyz"]

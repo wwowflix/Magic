@@ -1042,9 +1042,9 @@ async def test_send_recv_variants() -> None:
 
 
 async def test_idna(monkeygai: MonkeypatchedGAI) -> None:
-    # This is the encoding for "faß.de", which uses one of the characters that
+    # This is the encoding for "faÃŸ.de", which uses one of the characters that
     # IDNA 2003 handles incorrectly:
-    monkeygai.set("ok faß.de", b"xn--fa-hia.de", 80)
+    monkeygai.set("ok faÃŸ.de", b"xn--fa-hia.de", 80)
     monkeygai.set("ok ::1", "::1", 80, flags=_NUMERIC_ONLY)
     monkeygai.set("ok ::1", b"::1", 80, flags=_NUMERIC_ONLY)
     # Some things that should not reach the underlying socket.getaddrinfo:
@@ -1054,9 +1054,9 @@ async def test_idna(monkeygai: MonkeypatchedGAI) -> None:
 
     assert await tsocket.getaddrinfo("::1", 80) == "ok ::1"
     assert await tsocket.getaddrinfo(b"::1", 80) == "ok ::1"
-    assert await tsocket.getaddrinfo("faß.de", 80) == "ok faß.de"
-    assert await tsocket.getaddrinfo("xn--fa-hia.de", 80) == "ok faß.de"
-    assert await tsocket.getaddrinfo(b"xn--fa-hia.de", 80) == "ok faß.de"
+    assert await tsocket.getaddrinfo("faÃŸ.de", 80) == "ok faÃŸ.de"
+    assert await tsocket.getaddrinfo("xn--fa-hia.de", 80) == "ok faÃŸ.de"
+    assert await tsocket.getaddrinfo(b"xn--fa-hia.de", 80) == "ok faÃŸ.de"
 
 
 async def test_getprotobyname() -> None:
@@ -1108,7 +1108,7 @@ async def test_custom_hostname_resolver(monkeygai: MonkeypatchedGAI) -> None:
         )
 
     # IDNA encoding is handled before calling the special object
-    got = await tsocket.getaddrinfo("föö", "foo")
+    got = await tsocket.getaddrinfo("fÃ¶Ã¶", "foo")
     expected = ("custom_gai", b"xn--f-1gaa", "foo", 0, 0, 0, 0)
     assert got == expected
 

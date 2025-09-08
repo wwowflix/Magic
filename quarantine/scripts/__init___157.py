@@ -135,7 +135,7 @@ class SourceDescriptor(SimpleDescriptor):
         s1.location = dict(weight=0)
         s1.familyName = "MasterFamilyName"
         s1.styleName = "MasterStyleNameOne"
-        s1.localisedFamilyName = dict(fr="Caractère")
+        s1.localisedFamilyName = dict(fr="CaractÃ¨re")
         s1.mutedGlyphNames.append("A")
         s1.mutedGlyphNames.append("Z")
         doc.addSource(s1)
@@ -393,7 +393,7 @@ class RuleDescriptor(SimpleDescriptor):
         -  Note: By default, rules are applied first, before other text
            shaping/OpenType layout, as they are part of the
            `Required Variation Alternates OpenType feature <https://docs.microsoft.com/en-us/typography/opentype/spec/features_pt#-tag-rvrn>`_.
-           See ref:`rules-element` § Attributes.
+           See ref:`rules-element` Â§ Attributes.
         """
 
 
@@ -952,8 +952,8 @@ class AxisDescriptor(AbstractAxisDescriptor):
         a1.default = 400
         a1.name = "weight"
         a1.tag = "wght"
-        a1.labelNames['fa-IR'] = "قطر"
-        a1.labelNames['en'] = "Wéíght"
+        a1.labelNames['fa-IR'] = "Ù‚Ø·Ø±"
+        a1.labelNames['en'] = "WÃ©Ã­ght"
         a1.map = [(1.0, 10.0), (400.0, 66.0), (1000.0, 990.0)]
         a1.axisOrdering = 1
         a1.axisLabels = [
@@ -1209,9 +1209,9 @@ class AxisLabelDescriptor(SimpleDescriptor):
         ===========  =========  ===========  ===========  ===============
         STAT Format  userValue  userMinimum  userMaximum  linkedUserValue
         ===========  =========  ===========  ===========  ===============
-        1            ✅          ❌            ❌            ❌
-        2            ✅          ✅            ✅            ❌
-        3            ✅          ❌            ❌            ✅
+        1            âœ…          âŒ            âŒ            âŒ
+        2            âœ…          âœ…            âœ…            âŒ
+        3            âœ…          âŒ            âŒ            âœ…
         ===========  =========  ===========  ===========  ===============
         """
         if self.linkedUserValue is not None:

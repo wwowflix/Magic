@@ -712,7 +712,7 @@ Hello, world!
         # Whitespace separating the values of a multi-valued attribute
         # should be ignored.
 
-        markup = '<div class=" foo bar	 "></a>'
+        markup = '<div class=" foo bar     "></a>'
         soup = self.soup(markup)
         assert ["foo", "bar"] == soup.div["class"]
 
@@ -763,7 +763,7 @@ Hello, world!
         # characters.
         markup = "<p>&#147;Hello&#148; &#45;&#9731;</p>"
         soup = self.soup(markup)
-        assert "“Hello” -☃" == soup.p.string
+        assert "â€œHelloâ€ -â˜ƒ" == soup.p.string
 
     def test_entities_in_attributes_converted_to_unicode(self):
         expect = '<p id="pi\N{LATIN SMALL LETTER N WITH TILDE}ata"></p>'

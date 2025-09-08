@@ -262,9 +262,9 @@ class TestTableOrient:
                 "_id": {"row_0": 0},
                 "category": {"row_0": "Goods"},
                 "recommender_id": {"row_0": 3},
-                "recommender_name_jp": {"row_0": "浦田"},
+                "recommender_name_jp": {"row_0": "æµ¦ç”°"},
                 "recommender_name_en": {"row_0": "Urata"},
-                "name_jp": {"row_0": "博多人形(松尾吉将まつお よしまさ)"},
+                "name_jp": {"row_0": "åšå¤šäººå½¢(æ¾å°¾å‰å°†ã¾ã¤ãŠ ã‚ˆã—ã¾ã•)"},
                 "name_en": {"row_0": "Hakata Dolls Matsuo"},
             }
         )

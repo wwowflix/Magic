@@ -104,9 +104,9 @@ class isoparser(object):
         Supported time zone offset formats are:
 
         - `Z` (UTC)
-        - `±HH:MM`
-        - `±HHMM`
-        - `±HH`
+        - `Â±HH:MM`
+        - `Â±HHMM`
+        - `Â±HH`
 
         Offsets will be represented as :class:`dateutil.tz.tzoffset` objects,
         with the exception of UTC, which will be represented as

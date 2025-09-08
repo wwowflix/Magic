@@ -19,10 +19,10 @@ for file in files:
         df = pd.read_csv(file)
         missing_cols = [col for col in required_columns[file] if col not in df.columns]
         if df.empty:
-            print(f"⚠️ Empty file: {file}")
+            print(f"âš ï¸ Empty file: {file}")
         elif missing_cols:
-            print(f"❌ Missing columns in {file}: {missing_cols}")
+            print(f"âŒ Missing columns in {file}: {missing_cols}")
         else:
-            print(f"✅ All required columns present in {file}")
+            print(f"âœ… All required columns present in {file}")
     except Exception as e:
-        print(f"❌ Failed to read {file}: {e}")
+        print(f"âŒ Failed to read {file}: {e}")

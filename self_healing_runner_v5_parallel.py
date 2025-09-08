@@ -86,7 +86,7 @@ def main():
     if not scripts:
         print("No matching scripts found.")
         return
-    print(f"🌀 Executing {len(scripts)} scripts with {args.max_workers} workers...")
+    print(f"ðŸŒ€ Executing {len(scripts)} scripts with {args.max_workers} workers...")
     if args.dry_run:
         for s in scripts:
             print(s)

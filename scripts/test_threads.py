@@ -225,7 +225,7 @@ async def test_named_thread() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙")
+    await test_thread_name("ðŸ’™")
 
 
 def _get_thread_name(ident: int | None = None) -> str | None:
@@ -306,7 +306,7 @@ async def test_named_thread_os() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙", expected="?")
+    await test_thread_name("ðŸ’™", expected="?")
 
 
 def test_has_pthread_setname_np() -> None:

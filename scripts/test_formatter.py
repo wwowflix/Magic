@@ -147,10 +147,10 @@ class TestFormatter(SoupTest):
     def test_entity_round_trip(self):
         # This is more an explanatory test and a way to avoid regressions than a test of functionality.
 
-        markup = "<p>Some division signs: ÷ &divide; &#247; &#xf7;. These are made with: ÷ &amp;divide; &amp;#247;</p>"
+        markup = "<p>Some division signs: Ã· &divide; &#247; &#xf7;. These are made with: Ã· &amp;divide; &amp;#247;</p>"
         soup = self.soup(markup)
         assert (
-            "Some division signs: ÷ ÷ ÷ ÷. These are made with: ÷ &divide; &#247;"
+            "Some division signs: Ã· Ã· Ã· Ã·. These are made with: Ã· &divide; &#247;"
             == soup.p.string
         )
 
@@ -158,7 +158,7 @@ class TestFormatter(SoupTest):
         soup.p.string = soup.p.string + " &#xf7;"
 
         assert (
-            "Some division signs: ÷ ÷ ÷ ÷. These are made with: ÷ &divide; &#247; &#xf7;"
+            "Some division signs: Ã· Ã· Ã· Ã·. These are made with: Ã· &divide; &#247; &#xf7;"
             == soup.p.string
         )
 

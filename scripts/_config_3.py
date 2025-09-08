@@ -144,7 +144,7 @@ class AreaConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -1129,7 +1129,7 @@ class BarConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -3461,7 +3461,7 @@ class LineConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -3999,7 +3999,7 @@ class MarkConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -4577,7 +4577,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -5303,7 +5303,7 @@ class ProjectionKwds(TypedDict, total=False):
     fraction
         The fraction parameter for the ``bottomley`` projection.
 
-        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+        **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
     lobes
         The number of lobes in projections that support multi-lobe views: ``berghaus``,
         ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -5329,7 +5329,7 @@ class ProjectionKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710...``.
+        which defaults to ``âˆš0.5 â‰… 0.70710...``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5446,7 +5446,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
     fraction
         The fraction parameter for the ``bottomley`` projection.
 
-        **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+        **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
     lobes
         The number of lobes in projections that support multi-lobe views: ``berghaus``,
         ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -5472,7 +5472,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``√0.5 ≅ 0.70710...``.
+        which defaults to ``âˆš0.5 â‰… 0.70710...``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5717,7 +5717,7 @@ class RectConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -6636,7 +6636,7 @@ class TickConfigKwds(TypedDict, total=False):
     color
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â–  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**

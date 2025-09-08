@@ -216,7 +216,7 @@ class _RawRevokedCertificate(RevokedCertificate):
     @property
     def revocation_date(self) -> datetime.datetime:
         warnings.warn(
-            "Properties that return a naïve datetime object have been "
+            "Properties that return a naÃ¯ve datetime object have been "
             "deprecated. Please switch to revocation_date_utc.",
             utils.DeprecatedIn42,
             stacklevel=2,

@@ -469,21 +469,21 @@ class RearrangementMorphAction(AATAction):
 
     _VERBS = {
         0: "no change",
-        1: "Ax ⇒ xA",
-        2: "xD ⇒ Dx",
-        3: "AxD ⇒ DxA",
-        4: "ABx ⇒ xAB",
-        5: "ABx ⇒ xBA",
-        6: "xCD ⇒ CDx",
-        7: "xCD ⇒ DCx",
-        8: "AxCD ⇒ CDxA",
-        9: "AxCD ⇒ DCxA",
-        10: "ABxD ⇒ DxAB",
-        11: "ABxD ⇒ DxBA",
-        12: "ABxCD ⇒ CDxAB",
-        13: "ABxCD ⇒ CDxBA",
-        14: "ABxCD ⇒ DCxAB",
-        15: "ABxCD ⇒ DCxBA",
+        1: "Ax â‡’ xA",
+        2: "xD â‡’ Dx",
+        3: "AxD â‡’ DxA",
+        4: "ABx â‡’ xAB",
+        5: "ABx â‡’ xBA",
+        6: "xCD â‡’ CDx",
+        7: "xCD â‡’ DCx",
+        8: "AxCD â‡’ CDxA",
+        9: "AxCD â‡’ DCxA",
+        10: "ABxD â‡’ DxAB",
+        11: "ABxD â‡’ DxBA",
+        12: "ABxCD â‡’ CDxAB",
+        13: "ABxCD â‡’ CDxBA",
+        14: "ABxCD â‡’ DCxAB",
+        15: "ABxCD â‡’ DCxBA",
     }
 
     def __init__(self):
@@ -1001,7 +1001,7 @@ class Coverage(FormatSwitchingBaseTable):
                 format = 2
                 rawTable = {"RangeRecord": ranges}
             # else:
-            # 	fallthrough; Format 1 is more compact
+            #     fallthrough; Format 1 is more compact
         self.Format = format
         return rawTable
 
@@ -2498,25 +2498,25 @@ def splitMarkBasePos(oldSubTable, newSubTable, overflowRecord):
 
 splitTable = {
     "GSUB": {
-        # 					1: splitSingleSubst,
+        #                     1: splitSingleSubst,
         2: splitMultipleSubst,
         3: splitAlternateSubst,
         4: splitLigatureSubst,
-        # 					5: splitContextSubst,
-        # 					6: splitChainContextSubst,
-        # 					7: splitExtensionSubst,
-        # 					8: splitReverseChainSingleSubst,
+        #                     5: splitContextSubst,
+        #                     6: splitChainContextSubst,
+        #                     7: splitExtensionSubst,
+        #                     8: splitReverseChainSingleSubst,
     },
     "GPOS": {
-        # 					1: splitSinglePos,
+        #                     1: splitSinglePos,
         2: splitPairPos,
-        # 					3: splitCursivePos,
+        #                     3: splitCursivePos,
         4: splitMarkBasePos,
-        # 					5: splitMarkLigPos,
-        # 					6: splitMarkMarkPos,
-        # 					7: splitContextPos,
-        # 					8: splitChainContextPos,
-        # 					9: splitExtensionPos,
+        #                     5: splitMarkLigPos,
+        #                     6: splitMarkMarkPos,
+        #                     7: splitContextPos,
+        #                     8: splitChainContextPos,
+        #                     9: splitExtensionPos,
     },
 }
 
