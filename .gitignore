@@ -42,3 +42,8 @@ outputs/metrics/
 *.whl
 /wheels/
 
+
+# ignore wheels
+*.whl
+/wheels/
+
