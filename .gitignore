@@ -37,3 +37,8 @@ outputs/metrics/
 # local backups
 *.BAK_*
 
+
+# ignore wheels
+*.whl
+/wheels/
+
