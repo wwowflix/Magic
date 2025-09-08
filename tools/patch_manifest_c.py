@@ -29,7 +29,11 @@ def main():
         mod = e.get("Module")
         fname = str(e.get("FinalFilename", "")).replace("\\", "/")
         # Drop C placeholders
-        if str(phase) == "11" and str(mod).lower() == "c" and "placeholder" in fname.lower():
+        if (
+            str(phase) == "11"
+            and str(mod).lower() == "c"
+            and "placeholder" in fname.lower()
+        ):
             removed += 1
             continue
         new_data.append(e)

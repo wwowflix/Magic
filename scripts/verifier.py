@@ -261,6 +261,7 @@ def _locate_engine_class(ffi, force_generic_engine):
             if ffi._backend is not _cffi_backend:
                 force_generic_engine = True
     if force_generic_engine:
+        pass
 from scripts import vengine_gen
 
         return vengine_gen.VGenericEngine

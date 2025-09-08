@@ -9,12 +9,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INCLUDE_SUFFIXES = {".py"}  # scan only Python sources
 EXCLUDE_TOP = {
-    ".git", "venv", "outputs", "backups", "quarantine",
-    ".pytest_cache", ".mypy_cache", ".ruff_cache", "__pycache__",
+    ".git",
+    "venv",
+    "outputs",
+    "backups",
+    "quarantine",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "__pycache__",
 }
 MAX_LINE_LEN = 120
 
-SMART_JUNK = re.compile(r"[\uFFFD\u200B\u2018\u2019\u201C\u201D\u2013\u2014]")  # replacement/ZWSP/smart quotes/dashes
+SMART_JUNK = re.compile(
+    r"[\uFFFD\u200B\u2018\u2019\u201C\u201D\u2013\u2014]"
+)  # replacement/ZWSP/smart quotes/dashes
+
 
 def iter_repo_files():
     for p in ROOT.rglob("*"):
@@ -27,21 +37,27 @@ def iter_repo_files():
         if p.suffix.lower() in INCLUDE_SUFFIXES:
             yield p
 
+
 def read_bytes(path: Path) -> bytes:
     with open(path, "rb") as fh:
         return fh.read()
 
+
 def read_text_utf8(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="strict")
 
+
 def has_bom(data: bytes) -> bool:
     return data.startswith(b"\xef\xbb\xbf")
+
 
 def newline_style(data: bytes) -> str:
     # detects if CRLF present
     return "CRLF" if b"\r\n" in data else "LF"
 
+
 # ---------- Tests ----------
+
 
 def test_utf8_decodable_and_no_bom():
     bad = []
@@ -56,14 +72,20 @@ def test_utf8_decodable_and_no_bom():
             b.decode("utf-8", "strict")
         except UnicodeDecodeError as e:
             bad.append(f"{p}  (decode error: {e})")
-    assert not bad, "Files failed UTF-8 strict decode or contain BOM:\n" + "\n".join(bad)
+    assert not bad, "Files failed UTF-8 strict decode or contain BOM:\n" + "\n".join(
+        bad
+    )
+
 
 def test_no_crlf_in_python_sources():
     offenders = []
     for p in iter_repo_files():
         if newline_style(read_bytes(p)) == "CRLF":
             offenders.append(str(p))
-    assert not offenders, "Found CRLF newlines in .py files (use LF):\n" + "\n".join(offenders)
+    assert not offenders, "Found CRLF newlines in .py files (use LF):\n" + "\n".join(
+        offenders
+    )
+
 
 def test_no_tabs_and_no_trailing_spaces():
     issues = []
@@ -75,13 +97,17 @@ def test_no_tabs_and_no_trailing_spaces():
                 issues.append(f"{p}:{i+1}  trailing whitespace")
     assert not issues, "Tab or trailing space violations:\n" + "\n".join(issues)
 
+
 def test_line_lengths_under_limit():
     long_lines = []
     for p in iter_repo_files():
         for i, line in enumerate(read_text_utf8(p).splitlines()):
             if len(line) > MAX_LINE_LEN:
                 long_lines.append(f"{p}:{i+1}  {len(line)} > {MAX_LINE_LEN}")
-    assert not long_lines, f"Lines exceed {MAX_LINE_LEN} columns:\n" + "\n".join(long_lines)
+    assert not long_lines, f"Lines exceed {MAX_LINE_LEN} columns:\n" + "\n".join(
+        long_lines
+    )
+
 
 def test_no_smart_quotes_or_zwsp_or_fffd():
     bad = []
@@ -90,6 +116,7 @@ def test_no_smart_quotes_or_zwsp_or_fffd():
         if SMART_JUNK.search(text):
             bad.append(str(p))
     assert not bad, "Smart quotes/ZWSP/FFFD found in:\n" + "\n".join(bad)
+
 
 def test_ast_parses_cleanly():
     errors = []
@@ -100,17 +127,20 @@ def test_ast_parses_cleanly():
             errors.append(f"{p}:{e.lineno}:{e.offset}  {e.msg}")
     assert not errors, "AST parse errors:\n" + "\n".join(errors)
 
+
 # ---- Optional: Black check (skips if black not installed) ----
 def test_black_is_clean_if_available():
     try:
         import black  # noqa: F401
     except Exception:
         import pytest
+
         pytest.skip("black not installed")
     else:
         # Run black in check mode via its API for speed
         from black import Mode, FileMode
         from black import format_str
+
         failures = []
         mode = Mode() if hasattr(Mode, "__call__") else FileMode()
         for p in iter_repo_files():
@@ -124,12 +154,14 @@ def test_black_is_clean_if_available():
                 failures.append(str(p))
         assert not failures, "Black would reformat these files:\n" + "\n".join(failures)
 
+
 # ---- Optional: mypy check (skips if mypy not installed) ----
 def test_mypy_repo_if_available():
     try:
         from mypy import api as mypy_api
     except Exception:
         import pytest
+
         pytest.skip("mypy not installed")
         return
     # Limit scope to speed; adjust as needed

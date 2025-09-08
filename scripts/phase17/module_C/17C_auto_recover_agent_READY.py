@@ -28,7 +28,9 @@ def auto_recover():
                 if not os.path.exists(ready_path):
                     with open(ready_path, "w", encoding="utf-8") as f:
                         f.write("# Auto-recovered script placeholder\n")
-                        f.write("print('✅ Auto-recovered script running successfully')\n")
+                        f.write(
+                            "print('✅ Auto-recovered script running successfully')\n"
+                        )
                     log(f"🔄 Recovered missing script: {ready_path}")
                     recovered += 1
     if recovered == 0:
