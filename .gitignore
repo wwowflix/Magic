@@ -33,3 +33,7 @@ tools/*.bak*
 
 
 outputs/metrics/
+
+# local backups
+*.BAK_*
+
