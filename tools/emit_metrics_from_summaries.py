@@ -19,8 +19,8 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)
 
-    totals = Counter()
-    by_phase = defaultdict(lambda: Counter())
+    totals: dict[str, int] = Counter()
+    by_phase: dict[str, dict[str, int]] = defaultdict(lambda: Counter())
 
     for tsv in sdir.glob("*.tsv"):
         with tsv.open("r", encoding="utf-8", newline="") as f:
