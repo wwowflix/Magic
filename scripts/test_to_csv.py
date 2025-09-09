@@ -1,13 +1,12 @@
 import csv
-from io import StringIO
 import os
+from io import StringIO
 
 import numpy as np
-import pytest
-
-from pandas.errors import ParserError
-
 import pandas as pd
+import pandas._testing as tm
+import pandas.core.common as com
+import pytest
 from pandas import (
     DataFrame,
     Index,
@@ -20,9 +19,7 @@ from pandas import (
     read_csv,
     to_datetime,
 )
-import pandas._testing as tm
-import pandas.core.common as com
-
+from pandas.errors import ParserError
 from pandas.io.common import get_handle
 
 
@@ -142,11 +139,13 @@ class TestDataFrameToCSV:
             timezone_frame.to_csv(path)
             result = read_csv(path, index_col=0, parse_dates=["A"])
 
-            converter = (
-                lambda c: to_datetime(result[c])
-                .dt.tz_convert("UTC")
-                .dt.tz_convert(timezone_frame[c].dt.tz)
-            )
+            def converter(c):
+                return (
+                    to_datetime(result[c])
+                    .dt.tz_convert("UTC")
+                    .dt.tz_convert(timezone_frame[c].dt.tz)
+                )
+
             result["B"] = converter("B")
             result["C"] = converter("C")
             tm.assert_frame_equal(result, timezone_frame)
@@ -468,7 +467,10 @@ class TestDataFrameToCSV:
     def test_to_csv_from_csv_w_some_infs(self, float_frame):
         # test roundtrip with inf, -inf, nan, as full columns and mix
         float_frame["G"] = np.nan
-        f = lambda x: [np.inf, np.nan][np.random.default_rng(2).random() < 0.5]
+
+        def f(x):
+            return [np.inf, np.nan][np.random.default_rng(2).random() < 0.5]
+
         float_frame["h"] = float_frame.index.map(f)
 
         with tm.ensure_clean() as path:
@@ -1042,7 +1044,10 @@ class TestDataFrameToCSV:
             ),
             # GH 21241, 21118
             (DataFrame([["abc", "def", "ghi"]], columns=["X", "Y", "Z"]), "ascii"),
-            (DataFrame(5 * [[123, "ä½ å¥½", "ä¸–ç•Œ"]], columns=["X", "Y", "Z"]), "gb2312"),
+            (
+                DataFrame(5 * [[123, "ä½ å¥½", "ä¸–ç•Œ"]], columns=["X", "Y", "Z"]),
+                "gb2312",
+            ),
             (
                 DataFrame(
                     5 * [[123, "Î“ÎµÎ¹Î¬ ÏƒÎ¿Ï…", "ÎšÏŒÏƒÎ¼Îµ"]],  # noqa: RUF001

@@ -1,1 +1,2 @@
-"""Placeholder script for 01G_null_data_detector_READY.py in Phase 1 Module G"""
+# placeholder stub (wire_joiner)
+pass

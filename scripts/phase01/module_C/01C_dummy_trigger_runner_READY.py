@@ -1,1 +1,2 @@
-"""Placeholder script for 01C_dummy_trigger_runner_READY.py in Phase 1 Module C"""
+# placeholder stub (wire_joiner)
+pass

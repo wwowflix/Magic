@@ -14,10 +14,11 @@ Supports any platform (Reddit, Google Trends, TikTok, etc.)
 - File saved under outputs/{platform}_trends_YYYYMMDD_HHMMSS.csv
 """
 
-import os
 import csv
-import pandas as pd
+import os
 from datetime import datetime
+
+import pandas as pd
 
 OUTPUT_DIR = "outputs"
 

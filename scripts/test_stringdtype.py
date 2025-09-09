@@ -5,9 +5,8 @@ import pickle
 import sys
 import tempfile
 
-import pytest
-
 import numpy as np
+import pytest
 from numpy._core.tests._natype import get_stringdtype_dtype as get_dtype
 from numpy._core.tests._natype import pd_NA
 from numpy.dtypes import StringDType
@@ -535,7 +534,7 @@ def test_creation_functions():
 
 def test_concatenate(string_list):
     sarr = np.array(string_list, dtype="T")
-    sarr_cat = np.array(string_list + string_list, dtype="T")
+    np.array(string_list + string_list, dtype="T")
 
     assert_array_equal(np.concatenate([sarr], axis=0), sarr)
 

@@ -13,6 +13,9 @@ be added to the array-specific tests in `pandas/tests/arrays/`.
 
 from __future__ import annotations
 
+import operator
+import pickle
+import re
 from datetime import (
     date,
     datetime,
@@ -24,15 +27,23 @@ from io import (
     BytesIO,
     StringIO,
 )
-import operator
-import pickle
-import re
 
 import numpy as np
+import pandas as pd
+import pandas._testing as tm
 import pytest
-
 from pandas._libs import lib
 from pandas._libs.tslibs import timezones
+from pandas.api.extensions import no_default
+from pandas.api.types import (
+    is_bool_dtype,
+    is_float_dtype,
+    is_integer_dtype,
+    is_numeric_dtype,
+    is_signed_integer_dtype,
+    is_string_dtype,
+    is_unsigned_integer_dtype,
+)
 from pandas.compat import (
     PY311,
     PY312,
@@ -44,23 +55,9 @@ from pandas.compat import (
     pa_version_under20p0,
     pa_version_under21p0,
 )
-
 from pandas.core.dtypes.dtypes import (
     ArrowDtype,
     CategoricalDtypeType,
-)
-
-import pandas as pd
-import pandas._testing as tm
-from pandas.api.extensions import no_default
-from pandas.api.types import (
-    is_bool_dtype,
-    is_float_dtype,
-    is_integer_dtype,
-    is_numeric_dtype,
-    is_signed_integer_dtype,
-    is_string_dtype,
-    is_unsigned_integer_dtype,
 )
 from pandas.tests.extension import base
 

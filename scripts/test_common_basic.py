@@ -3,33 +3,29 @@ Tests that work on both the Python and C engines but do not have a
 specific classification into the other test modules.
 """
 
+import os
+import sys
 from datetime import datetime
 from inspect import signature
 from io import StringIO
-import os
 from pathlib import Path
-import sys
 
 import numpy as np
+import pandas._testing as tm
 import pytest
-
-from pandas._config import using_string_dtype
-
-from pandas.compat import HAS_PYARROW
-from pandas.errors import (
-    EmptyDataError,
-    ParserError,
-    ParserWarning,
-)
-
 from pandas import (
     DataFrame,
     Index,
     Timestamp,
     compat,
 )
-import pandas._testing as tm
-
+from pandas._config import using_string_dtype
+from pandas.compat import HAS_PYARROW
+from pandas.errors import (
+    EmptyDataError,
+    ParserError,
+    ParserWarning,
+)
 from pandas.io.parsers import TextFileReader
 from pandas.io.parsers.c_parser_wrapper import CParserWrapper
 
@@ -686,7 +682,9 @@ def test_sub_character(all_parsers, csv_dir_path):
     tm.assert_frame_equal(result, expected)
 
 
-@pytest.mark.parametrize("filename", ["sÃ©-es-vÃ©.csv", "ru-sÐ¹.csv", "ä¸­æ–‡æ–‡ä»¶å.csv"])
+@pytest.mark.parametrize(
+    "filename", ["sÃ©-es-vÃ©.csv", "ru-sÐ¹.csv", "ä¸­æ–‡æ–‡ä»¶å.csv"]
+)
 def test_filename_with_special_chars(all_parsers, filename):
     # see gh-15086.
     parser = all_parsers

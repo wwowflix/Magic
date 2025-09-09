@@ -15,6 +15,7 @@ Insert cleaned trend data into SQLite DB for dashboard access.
 
 import os
 import sqlite3
+
 import pandas as pd
 
 DB_PATH = "outputs/mydata.db"
@@ -33,6 +34,8 @@ def insert_to_db(data, table_name="trend_data"):
         conn = sqlite3.connect(DB_PATH)
         data.to_sql(table_name, conn, if_exists="append", index=False)
         conn.close()
-        print(f"âœ… Inserted {len(data)} records into table '{table_name}' in {DB_PATH}")
+        print(
+            f"âœ… Inserted {len(data)} records into table '{table_name}' in {DB_PATH}"
+        )
     except Exception as e:
         print(f"âŒ Failed to insert data into DB: {e}")

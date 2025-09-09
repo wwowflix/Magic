@@ -34,7 +34,7 @@ def main():
                     log.write(f"âŒ Breakpoint: {module} has NO scripts.\n")
                 elif len(files) < 3:
                     log.write(
-                        f"âš ï¸ Potential issue: {module} has only {len(files)} scripts.\n"
+                        f"âš ï¸ Potential issue: {module} has only {len(files)} scripts.\n"
                     )
                 else:
                     log.write(

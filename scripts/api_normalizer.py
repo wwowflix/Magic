@@ -1,5 +1,6 @@
-import pandas as pd
 import argparse
+
+import pandas as pd
 
 
 def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):

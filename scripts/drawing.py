@@ -11,19 +11,18 @@ import decimal
 import math
 import re
 from collections import OrderedDict
-
 from collections.abc import Sequence
 from contextlib import contextmanager
-from typing import Optional, NamedTuple, Union
+from typing import NamedTuple, Optional, Union
 
 from .enums import (
     BlendMode,
     ClippingPathIntersectionRule,
     IntersectionRule,
     PathPaintRule,
+    PDFStyleKeys,
     StrokeCapStyle,
     StrokeJoinStyle,
-    PDFStyleKeys,
 )
 from .syntax import Name, Raw
 from .util import escape_parens

@@ -1,0 +1,17 @@
+import os
+
+import pandas as pd
+
+files = [
+    "outputs/google_trends.csv",
+    "outputs/reddit_scrape.csv",
+    "outputs/youtube_scrape.csv",
+    "outputs/tiktok_scrape.csv",
+]
+for f in files:
+    if os.path.exists(f):
+        try:
+            df = pd.read_csv(f)
+            print(f"\nðŸ§¾ {f}: {list(df.columns)}")
+        except Exception as e:
+            print(f"âŒ Error reading {f}: {e}")

@@ -39,7 +39,7 @@ def main():
                                 content = f.read()
                                 if "def main" not in content:
                                     bad_scripts.append(file)
-                                    log.write(f"âš ï¸ Missing main(): {file}\n")
+                                    log.write(f"âš ï¸ Missing main(): {file}\n")
 
             if not bad_scripts:
                 log.write("âœ… All scripts passed health check.\n")

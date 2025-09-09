@@ -9,9 +9,8 @@ import sys
 from io import StringIO
 from tempfile import NamedTemporaryFile, mkstemp
 
-import pytest
-
 import numpy as np
+import pytest
 from numpy.ma.testutils import assert_equal
 from numpy.testing import HAS_REFCOUNT, IS_PYPY, assert_array_equal
 
@@ -1027,7 +1026,9 @@ def test_parametric_unit_discovery(
 def test_str_dtype_unit_discovery_with_converter():
     data = ["spam-a-lot"] * 60000 + ["XXXtis_but_a_scratch"]
     expected = np.array(["spam-a-lot"] * 60000 + ["tis_but_a_scratch"], dtype="U17")
-    conv = lambda s: s.removeprefix("XXX")
+
+    def conv(s):
+        return s.removeprefix("XXX")
 
     # file-like path
     txt = StringIO("\n".join(data))

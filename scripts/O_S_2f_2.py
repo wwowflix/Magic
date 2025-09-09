@@ -1,10 +1,10 @@
-from fontTools.misc import sstruct
-from fontTools.misc.roundTools import otRound
-from fontTools.misc.textTools import safeEval, num2binary, binary2num
-from fontTools.ttLib.tables import DefaultTable
 import bisect
 import logging
 
+from fontTools.misc import sstruct
+from fontTools.misc.roundTools import otRound
+from fontTools.misc.textTools import binary2num, num2binary, safeEval
+from fontTools.ttLib.tables import DefaultTable
 
 log = logging.getLogger(__name__)
 

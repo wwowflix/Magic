@@ -1,6 +1,6 @@
 import numpy as np
+import pandas._testing as tm
 import pytest
-
 from pandas import (
     NA,
     DataFrame,
@@ -9,7 +9,6 @@ from pandas import (
     Series,
     Timestamp,
 )
-import pandas._testing as tm
 
 
 def _assert_almost_equal_both(a, b, **kwargs):
@@ -463,7 +462,9 @@ numpy array values are different \\(33\\.33333 %\\)
 \\[right\\]: \\[Ã¡, Ã , Ã¥\\]"""
 
     with pytest.raises(AssertionError, match=msg):
-        tm.assert_almost_equal(np.array(["Ã¡", "Ã ", "Ã¤"]), np.array(["Ã¡", "Ã ", "Ã¥"]))
+        tm.assert_almost_equal(
+            np.array(["Ã¡", "Ã ", "Ã¤"]), np.array(["Ã¡", "Ã ", "Ã¥"])
+        )
 
 
 def test_assert_almost_equal_timestamp():

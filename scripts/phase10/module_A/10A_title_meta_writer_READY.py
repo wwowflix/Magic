@@ -1,1 +1,2 @@
-"""Placeholder script for 10A_title_meta_writer_READY.py in Phase 10 Module A"""
+# placeholder stub (wire_joiner)
+pass

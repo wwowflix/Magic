@@ -1,7 +1,7 @@
 # 11C_script_integrity_checker_READY.py
+import ast
 import os
 import sys
-import ast
 
 # repo root (works when run from anywhere, incl. tests)
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))

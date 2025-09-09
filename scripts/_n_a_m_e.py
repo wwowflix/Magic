@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
+import logging
+import struct
+
+import fontTools.ttLib.tables.otTables as otTables
+from fontTools import ttLib
 from fontTools.misc import sstruct
+from fontTools.misc.encodingTools import getEncoding
 from fontTools.misc.textTools import (
     bytechr,
     byteord,
     bytesjoin,
+    safeEval,
     strjoin,
     tobytes,
     tostr,
-    safeEval,
 )
-from fontTools.misc.encodingTools import getEncoding
 from fontTools.ttLib import newTable
 from fontTools.ttLib.ttVisitor import TTVisitor
-from fontTools import ttLib
-import fontTools.ttLib.tables.otTables as otTables
-from scripts import DefaultTable
-import struct
-import logging
 
+from scripts import DefaultTable
 
 log = logging.getLogger(__name__)
 
@@ -88,7 +89,6 @@ class table__n_a_m_e(DefaultTable.DefaultTable):
         n = len(names)
         stringOffset = 6 + n * sstruct.calcsize(nameRecordFormat)
         data = struct.pack(b">HHH", format, n, stringOffset)
-        lastoffset = 0
         done = {}  # remember the data so we can reuse the "pointers"
         for name in names:
             string = name.toBytes()

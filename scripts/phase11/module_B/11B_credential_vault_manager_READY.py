@@ -1,4 +1,5 @@
 import os
+
 from dotenv import dotenv_values
 
 # CONFIG
@@ -42,7 +43,7 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
             for key in missing:
                 f.write(f" - {key}\n")
         if empty:
-            f.write("âš ï¸ Empty keys:\n")
+            f.write("âš ï¸ Empty keys:\n")
             for key in empty:
                 f.write(f" - {key}\n")
     if unknown:
@@ -50,4 +51,4 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
         for key in unknown:
             f.write(f" - {key}\n")
 
-print(f"ðŸ” Vault check complete. See: {LOG_FILE}")
+print(f"Vault check complete. See: {LOG_FILE}")

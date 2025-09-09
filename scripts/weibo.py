@@ -4,10 +4,10 @@ __all__ = ["Post", "User", "WeiboUserScraper"]
 import dataclasses
 import logging
 import re
-import snscrape.base
-import snscrape.utils
 import typing
 
+import snscrape.base
+import snscrape.utils
 
 _logger = logging.getLogger(__name__)
 _userDoesNotExist = object()

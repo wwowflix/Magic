@@ -1,4 +1,4 @@
-﻿"""
+"""
 Production smoke entrypoint for MAGIC.
 
 - Safe to run with no args.

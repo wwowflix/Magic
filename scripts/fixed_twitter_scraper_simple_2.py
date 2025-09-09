@@ -1,6 +1,7 @@
 import time
-from fake_useragent import UserAgent
+
 import requests
+from fake_useragent import UserAgent
 
 
 # Add retry logic
@@ -19,11 +20,13 @@ def safe_request(url, max_retries=3):
 
 # Original script content follows:
 import os
+
 import certifi
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
-import snscrape.modules.twitter as sntwitter
 import csv
+
+import snscrape.modules.twitter as sntwitter
 
 # Define query
 query = "AI video since:2025-07-10 until:2025-07-19"

@@ -4,15 +4,13 @@ import pickle
 import sys
 import warnings
 
+import numpy as np
 import numpy._core._operand_flag_tests as opflag_tests
 import numpy._core._rational_tests as _rational_tests
 import numpy._core._umath_tests as umt
-import pytest
-from pytest import param
-
-import numpy as np
 import numpy._core.umath as ncu
 import numpy.linalg._umath_linalg as uml
+import pytest
 from numpy.exceptions import AxisError
 from numpy.testing import (
     HAS_REFCOUNT,
@@ -29,6 +27,7 @@ from numpy.testing import (
     suppress_warnings,
 )
 from numpy.testing._private.utils import requires_memory
+from pytest import param
 
 UNARY_UFUNCS = [
     obj for obj in np._core.umath.__dict__.values() if isinstance(obj, np.ufunc)
@@ -149,7 +148,7 @@ class TestUfuncGenericLoops:
 
     def test_unary_PyUFunc_O_O_method_simple(self, foo=foo):
         x = np.full(10, foo(), dtype=object)
-        assert_(np.all(np.conjugate(x) == True))
+        assert_(np.all(np.conjugate(x)))
 
     def test_binary_PyUFunc_OO_O(self):
         x = np.ones(10, dtype=object)
@@ -1942,7 +1941,7 @@ class TestUfunc:
     @pytest.mark.parametrize("initial", (-np.inf, 5.0))
     def test_reduction_with_where_and_initial(self, axis, where, initial):
         a = np.arange(9.0).reshape(3, 3)
-        a_copy = a.copy()
+        a.copy()
         a_check = np.full(a.shape, -np.inf)
         np.positive(a, out=a_check, where=where)
 
@@ -2654,13 +2653,13 @@ class TestUfunc:
         a = np.array(b"1", dtype="V3")
         c = np.array([1.0, 2.0])
         assert_array_equal(ufunc(a, c), ufunc([True, True], True))
-        assert ufunc.reduce(a) == True
+        assert ufunc.reduce(a)
         # check that the output has no effect:
         out = np.zeros(2, dtype=np.int32)
         expected = ufunc([True, True], True).astype(out.dtype)
         assert_array_equal(ufunc(a, c, out=out), expected)
         out = np.zeros((), dtype=np.int32)
-        assert ufunc.reduce(a, out=out) == True
+        assert ufunc.reduce(a, out=out)
         # Last check, test reduction when out and a match (the complexity here
         # is that the "i,i->?" may seem right, but should not match.
         a = np.array([3], dtype="i")
@@ -3177,7 +3176,7 @@ def test_addition_reduce_negative_zero(dtype, use_initial):
 def test_addition_string_types(dt1, dt2):
     arr1 = np.array([1234234], dtype=dt1)
     arr2 = np.array([b"423"], dtype=dt2)
-    with pytest.raises(np._core._exceptions.UFuncTypeError) as exc:
+    with pytest.raises(np._core._exceptions.UFuncTypeError):
         np.add(arr1, arr2)
 
 

@@ -14,8 +14,8 @@ Skips:
   - .git/
   - outputs/data, outputs/trends, logs/archive (already-sorted)
 """
-import sys
 import os
+import sys
 
 # 1) Locate this script's directory (or fall back)
 try:
@@ -28,8 +28,8 @@ if sys.path and sys.path[0] == script_dir:
     sys.path.pop(0)
 
 # 3) Now it's safe to import stdlib
-import shutil
 import logging
+import shutil
 
 # 4) Determine project root (one level up)
 BASE_DIR = os.path.abspath(os.path.join(script_dir, ".."))

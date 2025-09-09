@@ -1,26 +1,23 @@
 import bz2
 import datetime as dt
-from datetime import datetime
 import gzip
 import io
 import os
 import struct
 import tarfile
 import zipfile
+from datetime import datetime
 
 import numpy as np
-import pytest
-
-import pandas.util._test_decorators as td
-
 import pandas as pd
-from pandas import CategoricalDtype
 import pandas._testing as tm
+import pandas.util._test_decorators as td
+import pytest
+from pandas import CategoricalDtype
 from pandas.core.frame import (
     DataFrame,
     Series,
 )
-
 from pandas.io.parsers import read_csv
 from pandas.io.stata import (
     CategoricalConversionWarning,
@@ -563,7 +560,10 @@ class TestStata:
 
         written_and_read_again = written_and_read_again.set_index("index")
         columns = list(written_and_read_again.columns)
-        convert_col_name = lambda x: int(x[1])
+
+        def convert_col_name(x):
+            return int(x[1])
+
         written_and_read_again.columns = map(convert_col_name, columns)
 
         expected = original.copy()
@@ -1559,7 +1559,10 @@ The repeated labels are:\n-+\nwolof
             index=pd.Index([f"i-{i}" for i in range(30)]),
         )
         df.index.name = "index"
-        reader = lambda x: read_stata(x).set_index("index")
+
+        def reader(x):
+            return read_stata(x).set_index("index")
+
         result = tm.round_trip_pathlib(df.to_stata, reader)
         tm.assert_frame_equal(df, result)
 
@@ -1570,7 +1573,10 @@ The repeated labels are:\n-+\nwolof
             index=pd.Index([f"i-{i}" for i in range(30)]),
         )
         df.index.name = "index"
-        reader = lambda x: read_stata(x).set_index("index")
+
+        def reader(x):
+            return read_stata(x).set_index("index")
+
         result = tm.round_trip_localpath(df.to_stata, reader)
         tm.assert_frame_equal(df, result)
 
@@ -1920,7 +1926,10 @@ the string values returned are correct."""
             data["strls"] = data["strls"].fillna("")
             # Variable with value labels is reread as categorical
             data["Î²"] = (
-                data["Î²"].replace(value_labels["Î²"]).astype("category").cat.as_ordered()
+                data["Î²"]
+                .replace(value_labels["Î²"])
+                .astype("category")
+                .cat.as_ordered()
             )
             tm.assert_frame_equal(data, reread_encoded)
             with StataReader(path) as reader:

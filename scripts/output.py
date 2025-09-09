@@ -16,11 +16,10 @@ from io import BytesIO
 from fontTools import subset as ftsubset
 
 from .annotations import PDFAnnotation
-from .enums import PDFResourceType, PageLabelStyle, SignatureFlag
-from .enums import OutputIntentSubType
+from .enums import OutputIntentSubType, PageLabelStyle, PDFResourceType, SignatureFlag
 from .errors import FPDFException
-from .line_break import TotalPagesSubstitutionFragment
 from .image_datastructures import RasterImageInfo
+from .line_break import TotalPagesSubstitutionFragment
 from .outline import build_outline_objs
 from .sign import Signature, sign_content
 from .syntax import (

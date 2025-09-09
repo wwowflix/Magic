@@ -1,0 +1,82 @@
+import logging
+import os
+
+import pytest
+from TikTokApi import TikTokApi
+
+ms_token = os.environ.get("ms_token", None)
+headless = os.environ.get("headless", "True").lower() == "true"
+
+
+@pytest.mark.asyncio
+async def test_hashtag_videos():
+    api = TikTokApi(logging_level=logging.INFO)
+    async with api:
+        await api.create_sessions(
+            ms_tokens=[ms_token],
+            num_sessions=1,
+            sleep_after=3,
+            browser=os.getenv("TIKTOK_BROWSER", "chromium"),
+            headless=headless,
+        )
+        tag = api.hashtag(name="funny")
+        video_count = 0
+        async for video in tag.videos(count=30):
+            video_count += 1
+
+        assert video_count >= 30
+
+
+@pytest.mark.asyncio
+async def test_hashtag_videos_multi_page():
+    api = TikTokApi(logging_level=logging.INFO)
+    async with api:
+        await api.create_sessions(
+            ms_tokens=[ms_token],
+            num_sessions=1,
+            sleep_after=3,
+            browser=os.getenv("TIKTOK_BROWSER", "chromium"),
+            headless=headless,
+        )
+        tag = api.hashtag(name="funny", id="5424")
+        video_count = 0
+        async for video in tag.videos(count=100):
+            video_count += 1
+
+        assert video_count >= 30
+
+
+@pytest.mark.asyncio
+async def test_hashtag_info():
+    api = TikTokApi(logging_level=logging.INFO)
+    async with api:
+        await api.create_sessions(
+            ms_tokens=[ms_token],
+            num_sessions=1,
+            sleep_after=3,
+            browser=os.getenv("TIKTOK_BROWSER", "chromium"),
+            headless=headless,
+        )
+        tag = api.hashtag(name="funny")
+        await tag.info()
+
+        assert tag.id == "5424"
+        assert tag.name == "funny"
+
+
+@pytest.mark.asyncio
+async def test_non_latin1():
+    api = TikTokApi(logging_level=logging.INFO)
+    async with api:
+        await api.create_sessions(
+            ms_tokens=[ms_token],
+            num_sessions=1,
+            sleep_after=3,
+            browser=os.getenv("TIKTOK_BROWSER", "chromium"),
+            headless=headless,
+        )
+        tag = api.hashtag(name="ÑÐµÐÑ„Ð¸")
+        await tag.info()
+
+        assert tag.name == "ÑÐµÐÑ„Ð¸"
+        assert tag.id == "4385126"

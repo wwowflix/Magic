@@ -1,6 +1,7 @@
-import snscrape.modules.twitter as sntwitter
 import time
 from random import randint
+
+import snscrape.modules.twitter as sntwitter
 
 
 def safe_scrape(query, max_tweets=10, max_retries=3):

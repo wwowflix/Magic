@@ -6,6 +6,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Literal
 
 from altair.utils import SchemaBase, Undefined, use_signature
+
 from scripts import core
 
 if TYPE_CHECKING:

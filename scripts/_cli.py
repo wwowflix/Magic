@@ -7,7 +7,6 @@ import importlib.metadata
 import inspect
 import logging
 import os
-import requests
 
 # Imported in parse_args() after setting up the logger:
 # import snscrape.base
@@ -16,6 +15,7 @@ import requests
 import sys
 import tempfile
 
+import requests
 
 ## Logging
 dumpLocals = False

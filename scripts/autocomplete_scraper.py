@@ -6,10 +6,11 @@ This script fetches YouTube autocomplete suggestions from Google's suggestion AP
 for a list of base keywords and saves them in Zephyr-compatible format.
 """
 
-import requests
-import pandas as pd
-from datetime import datetime
 import os
+from datetime import datetime
+
+import pandas as pd
+import requests
 
 # âœ… Define keywords to search for autocomplete suggestions
 keywords = ["ai", "chatgpt", "elon", "future", "python", "machine learning"]

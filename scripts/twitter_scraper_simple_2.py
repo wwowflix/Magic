@@ -1,7 +1,7 @@
 # scripts/twitter_scraper_simple.py
 
-import snscrape.modules.twitter as sntwitter
 import pandas as pd
+import snscrape.modules.twitter as sntwitter
 
 query = "AI automation since:2023-01-01 until:2023-12-31"
 max_tweets = 10

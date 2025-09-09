@@ -1,5 +1,7 @@
 def main():
-    print("âœ… [11E_broken_script_detector_READY.py] executed successfully (stub mode).")
+    print(
+        "âœ… [11E_broken_script_detector_READY.py] executed successfully (stub mode)."
+    )
 
 
 if __name__ == "__main__":

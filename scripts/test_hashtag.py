@@ -1,7 +1,8 @@
-from TikTokApi import TikTokApi
-import os
 import logging
+import os
+
 import pytest
+from TikTokApi import TikTokApi
 
 ms_token = os.environ.get("ms_token", None)
 headless = os.environ.get("headless", "True").lower() == "true"

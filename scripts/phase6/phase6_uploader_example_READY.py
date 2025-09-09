@@ -1,7 +1,7 @@
+import argparse
 import os
 import sys
 import time
-import argparse
 from datetime import datetime
 
 BASE = os.getcwd()

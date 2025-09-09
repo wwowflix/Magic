@@ -1,5 +1,6 @@
-from praw import Reddit
 from secrets import *
+
+from praw import Reddit
 
 print("ðŸ” Logging in to Reddit...")
 

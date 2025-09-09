@@ -2,9 +2,8 @@
 Tests related to the ``symbol`` attribute of the ABCPolyBase class.
 """
 
-import pytest
-
 import numpy.polynomial as poly
+import pytest
 from numpy._core import array
 from numpy.testing import assert_, assert_equal, assert_raises
 
@@ -31,7 +30,7 @@ class TestInit:
     )
     def test_symbol_bad_input(self, bad_input, exception):
         with pytest.raises(exception):
-            p = poly.Polynomial(self.c, symbol=bad_input)
+            poly.Polynomial(self.c, symbol=bad_input)
 
     @pytest.mark.parametrize(
         "symbol",
