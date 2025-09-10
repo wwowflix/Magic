@@ -1,9 +1,14 @@
-import os, re, time, shutil, csv, py_compile, pathlib
+import os
+import re
+import time
+import shutil
+import csv
+import py_compile
 
 ROOT = r"D:\MAGIC"
 LIST = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")
 BACKUP = os.path.join(
-    ROOT, "backups", f"fix_quotes_hard_{time.strftime("%Y%m%d_%H%M%S")}"
+    ROOT, "backups", f"fix_quotes_hard_{time.strftime('%Y%m%d_%H%M%S')}"
 )
 OUT = os.path.join(ROOT, "outputs", "reports", "fix_quotes_hard_report.tsv")
 os.makedirs(BACKUP, exist_ok=True)
@@ -13,24 +18,24 @@ os.makedirs(os.path.dirname(OUT), exist_ok=True)
 SANITIZE = {
     **{chr(c): "" for c in range(0x80, 0xA0)},  # U+0080..U+009F -> remove
     "\ufeff": "",
-    "Â": "",
-    "ðŸ": "",
-    "â€™": "'",
-    "â€œ": '"',
-    "â€�": '"',
-    "â€“": "-",
-    "â€”": "-",
-    "¤": "",
-    "¨": "",
-    "®": "",
-    "°": "",
-    "³": "",
-    "´": "",
-    "¸": "",
-    "¹": "",
-    "‹": "",
-    "€": "€",
-    "™": "TM",
+    "ÃƒÆ’Ã¢â‚¬Å¡": "",
+    "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸": "",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢": "'",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“": '"',
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½": '"',
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ": "-",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â": "-",
+    "Ãƒâ€šÃ‚Â¤": "",
+    "Ãƒâ€šÃ‚Â¨": "",
+    "Ãƒâ€šÃ‚Â®": "",
+    "Ãƒâ€šÃ‚Â°": "",
+    "Ãƒâ€šÃ‚Â³": "",
+    "Ãƒâ€šÃ‚Â´": "",
+    "Ãƒâ€šÃ‚Â¸": "",
+    "Ãƒâ€šÃ‚Â¹": "",
+    "ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¹": "",
+    "ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬": "ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬",
+    "ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢": "TM",
 }
 
 RX_F_TRIPLE_OPEN = re.compile(r'(\bf)\s*"""+')  # f"""" -> f"
@@ -54,7 +59,7 @@ def sanitize_text(s: str) -> str:
 
 
 def fix_line(line: str) -> str:
-    orig = line
+    _orig = line
     # f"""" & print(""" openers
     line = RX_F_TRIPLE_OPEN.sub(r'\1"', line)
     line = RX_PRINT_TRIPLE_OPEN.sub(r'\1"', line)

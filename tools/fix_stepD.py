@@ -1,4 +1,8 @@
-import os, re, time, shutil, py_compile, io
+import os
+import re
+import time
+import shutil
+import py_compile
 
 ROOT = r"D:\MAGIC"
 FAILTSV = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")
@@ -38,7 +42,7 @@ RX_ORPHAN_EXCEPT = re.compile(r"^(\s*)except\b[^\n]*:\s*$", re.M)
 RX_WARNMSG = re.compile(r'^(\s*)_warnmsg\s*=\s*".*$', re.M)
 
 # euro sign -> escape
-RX_EURO = re.compile(r"€")
+RX_EURO = re.compile(r"Ã¢â€šÂ¬")
 
 # specific giant constants -> blank them
 RX_CN = re.compile(r'^(?P<i>\s*)COMMON_CHINESE_CHARACTERS\s*=\s*".*$', re.M)
@@ -47,13 +51,13 @@ RX_JP = re.compile(r'^(?P<i>\s*)COMMON_JAPANESE_CHARACTERS\s*=\s*".*$', re.M)
 # bad lines like: \n on its own (outside a string)
 RX_STANDALONE_NL = re.compile(r"^\s*\\n\s*$", re.M)
 
-# _spinners: frames payload → empty string (garbled runes)
+# _spinners: frames payload Ã¢â€ â€™ empty string (garbled runes)
 RX_SPIN_FRAMES = re.compile(r'("frames"\s*:\s*)".*$', re.M)
 
 # uts46data broken tuple with euro/garble -> replace whole field to a clean empty string
 RX_UTS46_BAD = re.compile(r'\(\s*0x1FCD\s*,\s*"?3"?\s*,\s*".*?"\s*\)')
 
-# de-double “author” keys specifically
+# de-double Ã¢â‚¬Å“authorÃ¢â‚¬Â keys specifically
 RX_AUTHOR_LINE = re.compile(
     r'auto_df\[""author""\]\s*=\s*auto_df\.get\(""\s*author\s*"",\s*""\)'
 )
@@ -85,7 +89,7 @@ def wrap_top_prose(text: str) -> str:
 
 
 def normalize(text: str, path: str) -> str:
-    orig = text
+    _orig = text
 
     # 0) wrap top prose
     text = wrap_top_prose(text)

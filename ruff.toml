@@ -1,14 +1,14 @@
-﻿[tool.ruff]
-target-version = "py311"
 line-length = 100
+target-version = "py311"
 extend-exclude = [
-  "scripts",
-  "quarantine",
-  "outputs",
-  "wheels",
-  "venv",
-  ".venv",
-  "**/__pycache__",
+  "scripts", "quarantine", "outputs", "wheels", "venv", ".venv",
+  "clean_env", "magic_file_tracker_export.csv", "flow_export",
+  "backups", "tools/build_dashboard.py", "**/__pycache__",
 ]
-# If duplicate-dict-keys are noisy, you can un-comment:
-# ignore = ["F601"]
+
+[lint]
+# put lint options here if you add any later
+
+[lint.per-file-ignores]
+"tools/rediscover_magic.py" = ["F841"]
+"tools/repo_doctor.py"      = ["F601"]

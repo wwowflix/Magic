@@ -9,7 +9,13 @@ fix_indentation_pass.py — targeted pass to heal IndentationError/TabError and 
 - Only writes if content changed
 - Backs up originals to outputs/backups/indentfix_YYYYmmdd_HHMMSS/
 """
-import json, os, re, sys, shutil, time, io, py_compile
+import json
+import os
+import re
+import sys
+import time
+import io
+import py_compile
 from typing import List
 
 ROOT = r"D:\MAGIC"
@@ -71,7 +77,7 @@ def load_fail_list() -> List[str]:
     # Try helper (expected to emit JSON with {failed:int, fails:[{path,error},...]})
     if os.path.exists(HELPER):
         try:
-            import subprocess, tempfile
+            import subprocess
 
             out = subprocess.check_output(
                 [sys.executable, HELPER], stderr=subprocess.STDOUT

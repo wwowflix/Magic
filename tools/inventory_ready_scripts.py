@@ -1,5 +1,7 @@
 # Scans scripts/phase*/**/*_READY.py and writes audit_list.txt
-import os, sys, glob, pathlib
+import os
+import glob
+import pathlib
 
 root = r"D:\MAGIC"
 out = os.path.join(root, "audit_list.txt")

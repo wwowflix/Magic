@@ -72,3 +72,19 @@ docs/Untitled*.md
 !docs/FoldersReadme.md
 !docs/Magic project Root Structure.md
 !docs/progress_summary.md
+# dev/virtual envs & vendors
+venv/
+.venv/
+clean_env/
+**/__pycache__/
+
+# generated / artifacts
+outputs/
+backups/
+flow_export/
+wheels/
+magic_file_tracker_export.csv/
+
+# caches
+*.dist-info/
+*.egg-info/

@@ -1,4 +1,9 @@
-import os, re, time, shutil, py_compile, unicodedata
+import os
+import re
+import time
+import shutil
+import py_compile
+import unicodedata
 
 ROOT = r"D:\MAGIC"
 FAILTSV = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")
@@ -22,7 +27,7 @@ def strip_problem_runes(text: str) -> str:
                 out.append(" ")
             else:
                 # map euro to \u20AC explicitly (already safe ASCII)
-                if ch == "€":
+                if ch == "Ã¢â€šÂ¬":
                     out.append("\\u20AC")
                 else:
                     out.append(" ")
@@ -64,7 +69,7 @@ def compiles(path: str) -> bool:
         return False
 
 
-# --- Regexes we’ll reuse ------------------------------------------------------
+# --- Regexes weÃ¢â‚¬â„¢ll reuse ------------------------------------------------------
 RX_MANY_QUOTES = re.compile(r'("{6,}|\'{6,})')
 RX_SPLIT_TRIPLE = re.compile(
     r'("{3}\s*(?:\\n|\r?\n)?\s*"{3}|\'{3}\s*(?:\\n|\r?\n)?\s*\'{3})'
@@ -112,7 +117,7 @@ RX_AUTHOR_LINE = re.compile(
 
 
 def normalize(text: str, path: str) -> str:
-    orig = text
+    _orig = text
 
     # 0) scrub hostile runes early
     text = strip_problem_runes(text)

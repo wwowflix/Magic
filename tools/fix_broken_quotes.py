@@ -1,9 +1,15 @@
-import os, re, io, sys, csv, time, shutil, py_compile, pathlib
+import os
+import re
+import sys
+import csv
+import time
+import shutil
+import py_compile
 
 ROOT = r"D:\MAGIC"
 LIST = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")
 BACKUP = os.path.join(
-    ROOT, "backups", f"fix_broken_quotes_{time.strftime("%Y%m%d_%H%M%S")}"
+    ROOT, "backups", f"fix_broken_quotes_{time.strftime('%Y%m%d_%H%M%S')}"
 )
 OUT = os.path.join(ROOT, "outputs", "reports", "fix_broken_quotes_report.tsv")
 os.makedirs(BACKUP, exist_ok=True)
@@ -14,13 +20,13 @@ os.makedirs(os.path.dirname(OUT), exist_ok=True)
 SANITIZE_MAP = {
     **{chr(c): "" for c in range(0x80, 0xA0)},  # U+0080..U+009F -> remove
     "\ufeff": "",
-    "Â": "",
-    "ðŸ": "",
-    "â€™": "'",
-    "â€œ": '"',
-    "â€�": '"',
-    "â€“": "-",
-    "â€”": "-",
+    "ÃƒÆ’Ã¢â‚¬Å¡": "",
+    "ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸": "",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢": "'",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“": '"',
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¯Ã‚Â¿Ã‚Â½": '"',
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ": "-",
+    "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â": "-",
 }
 
 
@@ -44,7 +50,7 @@ RX_ALPHABET = re.compile(r'^\s*alphabet\s*=\s*"(.*)"\s*,?\s*$', re.UNICODE)
 def fix_quoting(text: str) -> str:
     out_lines = []
     for line in text.splitlines(True):
-        orig = line
+        _orig = line
         # quick skips: leave proper triple-quoted docstrings alone
         # but if we see f"""" or print(""" patterns, collapse to a single opener
         line = RX_F_TRIPLE_OPEN.sub(r'\1"', line)
@@ -59,7 +65,7 @@ def fix_quoting(text: str) -> str:
         # special case: alphabet="..." -> alphabet=r"""..."""
         m = RX_ALPHABET.match(line.strip())
         if m:
-            inner = m.group(1)
+            _inner = m.group(1)
             # keep as-is but guard with raw triple quotes so quotes/Unicode don't break parsing
             line = re.sub(RX_ALPHABET, 'alphabet=r"""\\1"""', line.rstrip("\n")) + "\n"
 

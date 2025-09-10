@@ -1,9 +1,14 @@
-import os, re, sys, py_compile, pathlib, shutil, time
+import os
+import re
+import sys
+import py_compile
+import shutil
+import time
 
 ROOT = r"D:\MAGIC"
 LIST = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")
 BACKUP = os.path.join(
-    ROOT, "backups", f"auto_insert_pass_{time.strftime("%Y%m%d_%H%M%S")}"
+    ROOT, "backups", f"auto_insert_pass_{time.strftime('%Y%m%d_%H%M%S')}"
 )
 os.makedirs(BACKUP, exist_ok=True)
 

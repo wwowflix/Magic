@@ -1,4 +1,8 @@
-import os, re, time, shutil, py_compile
+import os
+import re
+import time
+import shutil
+import py_compile
 
 ROOT = r"D:\MAGIC"
 FAIL = os.path.join(ROOT, "outputs", "reports", "compile_failures.tsv")

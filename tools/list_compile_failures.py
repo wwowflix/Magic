@@ -1,4 +1,7 @@
-import os, csv, py_compile, pathlib
+import os
+import csv
+import py_compile
+import pathlib
 
 ROOT = r"D:\MAGIC"
 SCRIPTS = os.path.join(ROOT, "scripts")

@@ -10,7 +10,7 @@ import tokenize
 ROOT = r"D:\MAGIC"
 OUT_DIR = os.path.join(ROOT, "outputs", "fix_common_syntax")
 BACKUP_DIR = os.path.join(
-    ROOT, "backups", f"fix_common_syntax_{time.strftime("%Y%m%d_%H%M%S")}"
+    ROOT, "backups", f"fix_common_syntax_{time.strftime('%Y%m%d_%H%M%S')}"
 )
 REPORT = os.path.join(OUT_DIR, "report.tsv")
 WIRE = os.path.join(ROOT, "outputs", "wire_joiner", "wire_joiner_report.tsv")
@@ -22,21 +22,21 @@ os.makedirs(BACKUP_DIR, exist_ok=True)
 def normalize_text(t: str) -> str:
     return (
         t.replace("\ufeff", "")
-        .replace("»", "")
-        .replace("«", "")
+        .replace("Â»", "")
+        .replace("Â«", "")
         .replace("\u00a0", " ")
         .replace("\r\n", "\n")
-        .replace("“", '"')
-        .replace("”", '"')
-        .replace("‘", "'")
-        .replace("’", "'")
-        .replace("ðŸ", "")
-        .replace("â€™", "'")
         .replace("â€œ", '"')
-        .replace("â€�", '"')
-        .replace("â€“", "-")
-        .replace("â€”", "-")
-        .replace("Â", "")
+        .replace("â€", '"')
+        .replace("â€˜", "'")
+        .replace("â€™", "'")
+        .replace("Ã°Å¸", "")
+        .replace("Ã¢â‚¬â„¢", "'")
+        .replace("Ã¢â‚¬Å“", '"')
+        .replace("Ã¢â‚¬ï¿½", '"')
+        .replace("Ã¢â‚¬â€œ", "-")
+        .replace("Ã¢â‚¬â€", "-")
+        .replace("Ã‚", "")
     )
 
 

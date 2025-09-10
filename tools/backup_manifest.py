@@ -1,4 +1,5 @@
-import shutil, time
+import shutil
+import time
 from pathlib import Path
 
 SRC = Path("phase_manifest.json")
