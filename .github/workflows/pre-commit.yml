@@ -1,4 +1,4 @@
-﻿name: pre-commit
+name: pre-commit
 
 on:
   pull_request:
@@ -14,3 +14,6 @@ jobs:
         with:
           python-version: '3.11'
       - uses: pre-commit/action@v3.0.1
+      - run: python --version
+      - run: pip --version
+      - run: python -m pre_commit --version
