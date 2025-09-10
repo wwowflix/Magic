@@ -47,3 +47,9 @@ outputs/metrics/
 *.whl
 /wheels/
 
+
+# local backups
+*.BAK_BOM
+*.bak
+*.tmp
+
