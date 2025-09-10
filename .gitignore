@@ -53,3 +53,22 @@ outputs/metrics/
 *.bak
 *.tmp
 
+
+# Local backups / temp
+*.BAK_BOM
+*.bak
+*.tmp
+venv/
+tmp/
+quarantine/
+scripts/logs/
+
+# Generated docs (keep curated docs)
+docs/*_READY*.md
+docs/Untitled*.md
+
+# Keep these docs tracked
+!docs/PRODUCTION_CERT.md
+!docs/FoldersReadme.md
+!docs/Magic project Root Structure.md
+!docs/progress_summary.md
