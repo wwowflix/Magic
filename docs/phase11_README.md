@@ -57,7 +57,7 @@ Each module is designed to monitor, recover, and safeguard the MAGIC automation 
 
 ## 🛠️ Automation Utilities
 
-- 
+-
 un_self_healing_agent.py – Monitors, heals, and syncs everything
 - File Watchdog + Resurrection + Anomaly Logger agents are always running in Phase 11
 

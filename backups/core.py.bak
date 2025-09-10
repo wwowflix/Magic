@@ -94,7 +94,7 @@ _MAX_INT = sys.maxsize
 
 # class __compat__(__config_flags):
     # """
-    #     
+    #
     # released in a future version. By setting values in this configuration to True,
     # those features can be enabled in prior versions for compatibility development
     # and testing.

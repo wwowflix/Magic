@@ -1,7 +1,7 @@
 ﻿# MAGIC Production Certificate
 
 **Date:** 09/09/2025 12:05:36
-**Commit:** 
+**Commit:**
 **Inventory snapshot:** inventory_snapshot_20250909_120530.tsv
 
 ## Gate Summary

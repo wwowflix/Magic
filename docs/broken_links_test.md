@@ -7,6 +7,3 @@ Here’s a missing image: !\[Missing](images/fake.png)
 
 
 Here’s a working one: \[Google](https://www.google.com)
-
-
-
