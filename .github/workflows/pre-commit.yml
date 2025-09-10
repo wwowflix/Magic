@@ -1,17 +1,16 @@
 name: CI
 on:
-  workflow_dispatch:
-  pull_request:
-  push:
-    branches: [ main, failover-protection, chore/fix-ci-conflict-20250904-1536 ]
-on:
   pull_request:
   push:
     branches: [ main, failover-protection, chore/fix-ci-conflict-20250904-1536 ]
   workflow_dispatch:
+
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,9 +21,9 @@ jobs:
           python -m pip install -U pip wheel
           python -m pip install pre-commit ruff mypy pytest
           if [ -f requirements.txt ]; then
-  python -m pip install -r requirements.txt \
-    || echo "::warning ::pip install -r requirements.txt failed; continuing (CI only)"
-fi
+            python -m pip install -r requirements.txt \
+              || echo "::warning ::pip install -r requirements.txt failed; continuing (CI only)"
+          fi
       - name: pre-commit
         uses: pre-commit/action@v3.0.1
       - name: pytest
