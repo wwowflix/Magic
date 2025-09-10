@@ -1,4 +1,4 @@
-﻿"""
+"""
 HTML renderer
 
 The contents of this module are internal to fpdf2, and not part of the public API.

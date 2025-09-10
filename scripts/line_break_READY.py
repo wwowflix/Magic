@@ -1,4 +1,4 @@
-﻿"""
+"""
 Routines for organizing lines and larger blocks of text, with manual and
 automatic line wrapping.
 

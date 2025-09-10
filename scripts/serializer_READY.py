@@ -1,4 +1,4 @@
-﻿from __future__ import absolute_import, division, unicode_literals
+from __future__ import absolute_import, division, unicode_literals
 
 import re
 from codecs import register_error, xmlcharrefreplace_errors

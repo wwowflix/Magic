@@ -1,4 +1,4 @@
-﻿"""
+"""
 Safe package initializer to avoid heavy side-effects at import time.
 
 The original contents were moved to __init__heavy.py.
