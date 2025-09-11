@@ -16,3 +16,5 @@ soupsieve==2.7
 typing_extensions==4.14.1
 urllib3==2.5.0
 
+matplotlib>=3.10
+matplotlib>=3.10
