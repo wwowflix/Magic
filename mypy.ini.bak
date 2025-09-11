@@ -1,0 +1,17 @@
+[mypy]
+python_version = 3.11
+ignore_missing_imports = True
+disable_error_code = var-annotated
+# mypy normalizes to forward slashes on Windows
+exclude = (?x)(
+    ^scripts/|
+    ^backups/|
+    ^quarantine/|
+    ^outputs/|
+    ^wheels/|
+    ^venv/|
+    ^\.venv/|
+    ^clean_env/|
+    ^flow_export/|
+    ^magic_file_tracker_export\.csv
+)
