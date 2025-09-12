@@ -1,4 +1,4 @@
-﻿from typing import DefaultDict
+from typing import DefaultDict
 
 #!/usr/bin/env python3
 import csv

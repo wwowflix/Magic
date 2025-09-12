@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("✅ [11H_dependency_graph_audit_READY.py] executed successfully (stub mode).")
 
 

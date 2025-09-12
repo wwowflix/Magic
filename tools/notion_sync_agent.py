@@ -1,4 +1,4 @@
-﻿"""
+"""
 Notion Sync Agent – Updates the MAGIC Automation Tracker with latest file metadata
 """
 
@@ -28,7 +28,9 @@ def update_notion_row(row):
 
     props = {
         "Status": {"select": {"name": row["Status"]}},
-        "Folder Location": {"rich_text": [{"text": {"content": row["Folder Location"]}}]},
+        "Folder Location": {
+            "rich_text": [{"text": {"content": row["Folder Location"]}}]
+        },
         "Last Moved": {"date": {"start": datetime.now().isoformat()}},
     }
 

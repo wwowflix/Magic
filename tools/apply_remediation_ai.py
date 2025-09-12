@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 def suggest_fix(msg: str) -> str:
     return "AUTO_PATCH: placeholder"
 

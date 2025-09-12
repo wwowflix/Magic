@@ -28,8 +28,6 @@ def filter_manifest(
     """Filter manifest entries by phase and module."""
     filtered = []
     for entry in entries:
-        if not isinstance(entry, dict):
-            continue
         phase = entry.get("Phase")
         module = entry.get("Module")
         if phase in wanted_phases and module in wanted_modules:
@@ -38,12 +36,16 @@ def filter_manifest(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Filter manifest entries by phase/module.")
+    parser = argparse.ArgumentParser(
+        description="Filter manifest entries by phase/module."
+    )
     parser.add_argument("--manifest", required=True, help="Path to manifest JSON file")
     parser.add_argument(
         "--phases", nargs="+", type=int, required=True, help="Phase numbers to include"
     )
-    parser.add_argument("--modules", nargs="+", required=True, help="Module letters to include")
+    parser.add_argument(
+        "--modules", nargs="+", required=True, help="Module letters to include"
+    )
     parser.add_argument("--list", action="store_true", help="List matching entries")
     args = parser.parse_args()
 

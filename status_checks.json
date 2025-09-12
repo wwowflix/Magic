@@ -1,7 +1,0 @@
-﻿{
-    "contexts":  [
-                     "CI / tests",
-                     "CI / mypy"
-                 ],
-    "strict":  true
-}

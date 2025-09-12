@@ -1,4 +1,4 @@
-﻿# self_healing_runner_v5.py
+# self_healing_runner_v5.py
 from __future__ import annotations
 import argparse
 import json
@@ -75,7 +75,7 @@ def filter_manifest(
         for r in reasons[:20]:
             print("  reason:", r)
         if len(reasons) > 20:
-            print(f"  ... and {len(reasons)-20} more")
+            print(f"  ... and {len(reasons) - 20} more")
     return selected
 
 
@@ -146,7 +146,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         for s in selected[:200]:
             print(f"- phase={s['phase']} module={s['module']} rel={s['rel']}")
         if len(selected) > 200:
-            print(f"... and {len(selected)-200} more")
+            print(f"... and {len(selected) - 200} more")
         return 0
 
     if args.dry_run:
@@ -217,9 +217,9 @@ def apply_remediation_ai(error_msg: str, script_path: Optional[str] = None) -> b
     except Exception:
         return False
 
+
 # ==== PARALLEL_MARKER ====
 # We use concurrent.futures to run module tasks concurrently
-from concurrent.futures import ThreadPoolExecutor  # scanner: ThreadPoolExecutor
 
 # PARALLEL_EXECUTION: Enabled via Start-Job / ForEach-Object -Parallel
 

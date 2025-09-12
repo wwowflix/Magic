@@ -45,3 +45,6 @@ backups/
 !outputs/reports/*.md
 !outputs/reports/*.txt
 !outputs/logs/notion_sync/*.txt
+# --- Keep reports (whitelist) ---
+!outputs/reports/
+!outputs/reports/**
