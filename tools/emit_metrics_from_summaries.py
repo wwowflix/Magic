@@ -1,4 +1,6 @@
-﻿#!/usr/bin/env python3
+﻿from typing import DefaultDict
+
+#!/usr/bin/env python3
 import csv
 import json
 from pathlib import Path
@@ -17,8 +19,8 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)
 
-    totals = Counter()
-    by_phase = defaultdict(lambda: Counter())
+    totals: Counter[str] = Counter()
+    by_phase: DefaultDict[str, Counter[str]] = defaultdict(Counter)
 
     for tsv in sdir.glob("*.tsv"):
         with tsv.open("r", encoding="utf-8", newline="") as f:
