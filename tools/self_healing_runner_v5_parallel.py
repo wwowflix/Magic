@@ -19,6 +19,8 @@ def test_build_task_list_from_manifest(tmp_path, monkeypatch):
 
 
 def test_dry_run_executes_no_scripts(tmp_path, monkeypatch):
-    monkeypatch.setattr(run, "execute_task", lambda *a, **k: 0)  # would be called if not dry-run
+    monkeypatch.setattr(
+        run, "execute_task", lambda *a, **k: 0
+    )  # would be called if not dry-run
     rc, ran = run.run_from_manifest({"entries": []}, dry_run=True)
     assert rc == 0 and ran == 0

@@ -1,5 +1,5 @@
 ﻿# Week 8 Demo – MAGIC Walkthrough
-Date: 2025-09-11
+Date: 2025-09-12
 
 Contents:
 - Runner overview

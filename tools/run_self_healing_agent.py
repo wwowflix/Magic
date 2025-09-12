@@ -1,4 +1,4 @@
-﻿import os
+import os
 import shutil
 from dotenv import load_dotenv
 
@@ -61,7 +61,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action="store_true", help="Dry run only")
-    parser.add_argument("--restore", action="store_true", help="Only restore missing scripts")
+    parser.add_argument(
+        "--restore", action="store_true", help="Only restore missing scripts"
+    )
     parser.add_argument("--clean", action="store_true", help="Only clean logs")
     parser.add_argument("--all", action="store_true", help="Full heal cycle")
     args = parser.parse_args()

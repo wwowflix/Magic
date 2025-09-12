@@ -1,4 +1,4 @@
-﻿# Ops Handoff Notes
-- Where to run: self_healing_runner_v5.py
-- Where to watch: dashboard outputs/dashboard/index.html
-- Where to recover: outputs/reports/restore_smoke_ok.txt
+﻿# Ops Handoff – Final Demo Notes
+- Final verifier: tools/verify_magic_complete.ps1
+- Scan script: tools/magic_scan_status.ps1
+- Nightly artifact location: outputs/reports

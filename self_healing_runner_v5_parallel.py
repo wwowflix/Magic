@@ -1,7 +1,8 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Self-Healing Runner v5 â€“ Parallel Execution
 """
+
 import argparse
 import subprocess
 import json

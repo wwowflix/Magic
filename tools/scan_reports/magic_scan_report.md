@@ -1,6 +1,6 @@
-﻿# MAGIC Project Scan Report
+# MAGIC Project Scan Report
 
-> Generated: 2025-09-11 20:35:57
+> Generated: 2025-09-12 16:38:13
 
 ## Summary
 - **ruff:** [FAIL] (exit 2)
@@ -648,3 +648,4 @@ options:
 - scripts/versioncontrol.py
 - scripts/webhdfs.py
 - scripts/youtube_api_2.py
+
