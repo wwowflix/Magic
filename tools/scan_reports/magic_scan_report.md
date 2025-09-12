@@ -1,11 +1,11 @@
-# MAGIC Project Scan Report
+﻿# MAGIC Project Scan Report
 
-> Generated: 2025-09-10 17:40:51
+> Generated: 2025-09-11 20:35:57
 
 ## Summary
 - **ruff:** [FAIL] (exit 2)
 - **black --check:** [FAIL] (exit 1)
-- **mypy:** [FAIL] (exit 1)
+- **mypy:** [FAIL] (exit 2)
 - **bandit:** [FAIL] (exit 2)
 - **detect-secrets:** [OK] (exit 0)
 - **pip-audit:** [OK] (exit 0)
@@ -58,26 +58,10 @@ For help with a specific command, see: `ruff help <command>`.\n``
 One of 'SRC' or 'code' is required.\n``
 
 ### mypy
-``\nagents\meta\fix_prefixes.py:1: error: Library stubs not installed for "pandas"  [import-untyped]
-agents\meta\fix_prefixes.py:1: note: Hint: "python3 -m pip install pandas-stubs"
-agents\meta\fix_prefixes.py:1: note: (or run "mypy --install-types" to install all missing stub packages)
-agents\meta\fix_prefixes.py:1: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
-tools\emit_metrics_from_summaries.py:20: error: Need type annotation for "totals"  [var-annotated]
-tools\emit_metrics_from_summaries.py:21: error: Need type annotation for "by_phase"  [var-annotated]
-tools\e2e_smoketest.py:44: error: Need type annotation for "totals"  [var-annotated]
-tools\e2e_smoketest.py:67: error: Incompatible types in assignment (expression has type "bool", target has type "str")  [assignment]
-tools\e2e_smoketest.py:72: error: Argument 1 to "append" of "list" has incompatible type "dict[str, str]"; expected "dict[str, object]"  [arg-type]
-tools\e2e_smoketest.py:72: note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_issues.html#variance
-tools\e2e_smoketest.py:72: note: Consider using "Mapping" instead, which is covariant in the value type
-tools\build_dashboard.py:34: error: Library stubs not installed for "pandas"  [import-untyped]
-tools\build_dashboard.py:35: error: Cannot find implementation or library stub for module named "matplotlib.pyplot"  [import-not-found]
-tools\build_dashboard.py:35: error: Cannot find implementation or library stub for module named "matplotlib"  [import-not-found]
-agents\meta\notion_patch_importer.py:4: error: Library stubs not installed for "pandas"  [import-untyped]
-agents\meta\notion_patch_final_importer.py:4: error: Library stubs not installed for "pandas"  [import-untyped]
-Found 11 errors in 6 files (checked 44 source files)\n``
 **stderr:**
-``\nmypy.ini: Source contains parsing errors: 'mypy.ini'
-	[line 17]: ')'\n``
+``\nusage: mypy [-h] [-v] [-V] [more options; see below]
+            [-m MODULE] [-p PACKAGE] [-c PROGRAM_TEXT] [files ...]
+mypy: error: Missing target module, package, files, or command.\n``
 
 ### bandit
 ``\nusage: bandit [-h] [-r] [-a {file,vuln}] [-n CONTEXT_LINES] [-c CONFIG_FILE]
