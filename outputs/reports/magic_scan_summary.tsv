@@ -1,5 +1,5 @@
 ﻿Week	Step	Status	Notes
-1	Inventory & Foundation	Done	scripts:1447; manifest:11C_manifest_consistency_checker_READY.data.json
+1	Inventory & Foundation	Done	scripts:1447; manifest:backup_manifest.data.json
 2	Logging & Retry	Done	logs:4
 3	Self-Healing Basics	Done	self-heal:True
 4	CI/CD Integration	Done (may be noisy)	pre-commit:True; workflows:True; triggers:True

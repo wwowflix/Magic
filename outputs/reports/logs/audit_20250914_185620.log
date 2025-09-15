@@ -1,0 +1,41 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250914185620
+Username: LAPTOP-L3KDTT0F\ASUS
+RunAs User: LAPTOP-L3KDTT0F\ASUS
+Configuration Name: 
+Machine: LAPTOP-L3KDTT0F (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 20428
+PSVersion: 5.1.26100.5074
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.5074
+BuildVersion: 10.0.26100.5074
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) try {
+  & powershell -NoProfile -ExecutionPolicy Bypass `
+    -File "$PSScriptRoot\magic_full_tree_audit.ps1" `
+    -Root $Root -OutDir $OutDir -LargeMB $LargeMB -OldDays $OldDays -HashMaxMB $HashMaxMB `
+    -IncludeGit:$IncludeGit -IncludeVenv:$IncludeVenv `
+    -ErrorAction Stop -Verbose
+}
+catch {
+  Write-Host "[RUNNER ERROR] $($_.Exception.Message)"
+  if ($_.InvocationInfo) { Write-Host "At: $($_.InvocationInfo.PositionMessage)" }
+  Stop-Transcript | Out-Null
+  exit 1
+}
+
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) Stop-Transcript | Out-Null
+**********************
+Windows PowerShell transcript end
+End time: 20250914185620
+**********************
