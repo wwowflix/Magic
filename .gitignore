@@ -58,3 +58,8 @@ env/
 .venv/
 venv/
 outputs/cache/
+clean_env/
+env/
+.venv/
+venv/
+outputs/cache/
