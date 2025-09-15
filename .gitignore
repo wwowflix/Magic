@@ -48,3 +48,8 @@ backups/
 # --- Keep reports (whitelist) ---
 !outputs/reports/
 !outputs/reports/**
+# Reports & heavy outputs
+outputs/reports/**/*.json
+outputs/reports/**/*.tsv
+outputs/reports/**/*.txt
+outputs/reports/**/*.log
