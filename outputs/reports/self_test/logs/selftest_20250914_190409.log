@@ -1,0 +1,514 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250914190409
+Username: LAPTOP-L3KDTT0F\ASUS
+RunAs User: LAPTOP-L3KDTT0F\ASUS
+Configuration Name: 
+Machine: LAPTOP-L3KDTT0F (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 20428
+PSVersion: 5.1.26100.5074
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.5074
+BuildVersion: 10.0.26100.5074
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) Info "Root: $Root"
+[2025-09-14T19:04:09][INFO] Root: D:\MAGIC
+PS D:\MAGIC>
+(venv) Info "Reports: $Reports"
+[2025-09-14T19:04:09][INFO] Reports: D:\MAGIC\outputs\reports\self_test
+PS D:\MAGIC>
+(venv) Info "LargeMB=$LargeMB, OldDays=$OldDays, HashMaxMB=$HashMaxMB"
+[2025-09-14T19:04:09][INFO] LargeMB=200, OldDays=120, HashMaxMB=1024
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # ---- Defaults / excludes
+PS D:\MAGIC>
+(venv) $defaultExcludes = @(
+  "*\outputs\dashboard\*",
+  "*\__pycache__\*",
+  "*.ipynb_checkpoints\*",
+  "*\node_modules\*",
+  "*\.pytest_cache\*",
+  "*\dist\*",
+  "*\build\*",
+  "*\*.tmp",
+  "*\*.log",
+  "*\*.lock",
+  "*\~$*"
+)
+PS D:\MAGIC>
+(venv) if (-not $IncludeGit)  { $defaultExcludes += "*\.git\*" }
+PS D:\MAGIC>
+(venv) if (-not $IncludeVenv) { $defaultExcludes += "*\venv\*", "*\.venv\*" }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $Warnings = New-Object System.Collections.ArrayList
+PS D:\MAGIC>
+(venv) $Failures = New-Object System.Collections.ArrayList
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # ========== 1) ENV CHECKS ==========
+PS D:\MAGIC>
+(venv) $envRows = @()
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.1 Python
+PS D:\MAGIC>
+(venv) $pythonOk=$false; $pyVer=""; $pyPath=""
+PS D:\MAGIC>
+(venv) try {
+  $pyVer   = (& python --version) 2>&1
+  $pyPath  = (& where python) 2>&1 | Select-Object -First 1
+  if ($pyVer -match "Python") { $pythonOk=$true }
+} catch {}
+(venv) CommandInvocation(Out-Null): "Out-Null"
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="python"; ok=$pythonOk; detail="$pyVer | $pyPath" }
+PS D:\MAGIC>
+(venv) if (-not $pythonOk){ $Failures.Add("python not found") | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.2 pip
+PS D:\MAGIC>
+(venv) $pipOk=$false; $pipVer=""
+PS D:\MAGIC>
+(venv) try { $pipVer = (& pip --version) 2>&1; if($pipVer -match "pip"){ $pipOk=$true } } catch {}
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="pip"; ok=$pipOk; detail=$pipVer }
+PS D:\MAGIC>
+(venv) if (-not $pipOk){ $Failures.Add("pip not found") | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.3 venv
+PS D:\MAGIC>
+(venv) $venvPath = Join-PathSafe $Root "venv"
+PS D:\MAGIC>
+(venv) $venvExists = Test-Path -LiteralPath $venvPath
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="venv exists"; ok=$venvExists; detail=$venvPath }
+PS D:\MAGIC>
+(venv) if (-not $venvExists){ $Warnings.Add("venv missing") | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.4 requirements
+PS D:\MAGIC>
+(venv) $reqPath = Join-PathSafe $Root "requirements.txt"
+PS D:\MAGIC>
+(venv) $reqExists = Test-Path -LiteralPath $reqPath
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="requirements.txt"; ok=$reqExists; detail=$reqPath }
+PS D:\MAGIC>
+(venv) if (-not $reqExists){ $Warnings.Add("requirements.txt missing") | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.5 pre-commit
+PS D:\MAGIC>
+(venv) $preCommitOk=$false; $preCommitRun=$null
+PS D:\MAGIC>
+(venv) try { $pc = (& pre-commit --version) 2>&1; if($pc -match "pre-commit"){ $preCommitOk=$true } } catch {}
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="pre-commit installed"; ok=$preCommitOk; detail=$pc }
+PS D:\MAGIC>
+(venv) if ($RunPreCommit -and $preCommitOk){
+  try { 
+    $preCommitRun = (& pre-commit run --all-files) 2>&1
+    $failed = ($preCommitRun | Select-String -Pattern "Failed" -SimpleMatch)
+    $ok = -not $failed
+    $envRows += [pscustomobject]@{ check="pre-commit run"; ok=$ok; detail=($preCommitRun -join " | ") }
+    if (-not $ok){ $Failures.Add("pre-commit failed") | Out-Null }
+  } catch {
+    $Warnings.Add("pre-commit run error: $($_.Exception.Message)") | Out-Null
+  }
+} elseif ($RunPreCommit -and -not $preCommitOk){
+  $Warnings.Add("pre-commit not installed; skipped run") | Out-Null
+}
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.6 pytest
+PS D:\MAGIC>
+(venv) $pytestOk=$false; $pytestRun=$null
+PS D:\MAGIC>
+(venv) try { $pv = (& pytest --version) 2>&1; if($pv -match "pytest"){ $pytestOk=$true } } catch {}
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="pytest installed"; ok=$pytestOk; detail=$pv }
+PS D:\MAGIC>
+(venv) if ($RunPytest -and $pytestOk){
+  try {
+    $pytestRun = (& pytest -q) 2>&1
+    $hadFail = ($LASTEXITCODE -ne 0)
+    $envRows += [pscustomobject]@{ check="pytest run"; ok=(-not $hadFail); detail=($pytestRun -join " | ") }
+    if ($hadFail){ $Failures.Add("pytest failed") | Out-Null }
+  } catch {
+    $Failures.Add("pytest run error: $($_.Exception.Message)") | Out-Null
+  }
+} elseif ($RunPytest -and -not $pytestOk){
+  $Warnings.Add("pytest not installed; skipped tests") | Out-Null
+}
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # 1.7 git status clean
+PS D:\MAGIC>
+(venv) $gitOk=$false; $gitStatus=""
+PS D:\MAGIC>
+(venv) try {
+  $gitV = (& git --version) 2>&1
+  $gitStatus = (& git status --porcelain) 2>&1
+  $gitOk = ($gitStatus -eq $null -or $gitStatus.Count -eq 0)
+} catch {}
+PS D:\MAGIC>
+(venv) $envRows += [pscustomobject]@{ check="git clean working tree"; ok=$gitOk; detail= ($gitStatus -join " | ") }
+PS D:\MAGIC>
+(venv) if (-not $gitOk){ $Warnings.Add("git has uncommitted changes") | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # save env checks
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $envRows -Path (Join-PathSafe $Reports "env_checks.tsv")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # ========== 2) STRUCTURE CHECKS ==========
+PS D:\MAGIC>
+(venv) $mustDirs = @(
+  "tools","docs","config","outputs","data","assets","tests","notebooks","scripts",
+  "scripts\phase0","scripts\phase1","scripts\phase2","scripts\phase3","scripts\phase4",
+  "scripts\phase5","scripts\phase6","scripts\phase7","scripts\phase8","scripts\phase9",
+  "scripts\phase10","scripts\phase11","scripts\phase12","scripts\phase13","scripts\phase14",
+  "scripts\phase15","scripts\phase16","scripts\phase17","scripts\phase18"
+)
+PS D:\MAGIC>
+(venv) $missingDirs = @()
+PS D:\MAGIC>
+(venv) foreach($d in $mustDirs){
+  $p = Join-PathSafe $Root $d
+  if (-not (Test-Path -LiteralPath $p)){ $missingDirs += $d }
+}
+PS D:\MAGIC>
+(venv) $structRows = @()
+PS D:\MAGIC>
+(venv) foreach($d in $mustDirs){
+  $exists = -not ($missingDirs -contains $d)
+  $structRows += [pscustomobject]@{ path=$d; exists=$exists }
+}
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $structRows -Path (Join-PathSafe $Reports "structure_gaps.tsv")
+PS D:\MAGIC>
+(venv) if ($missingDirs.Count -gt 0){ $Warnings.Add("Missing key dirs: " + ($missingDirs -join ", ")) | Out-Null }
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # ========== 3) INVENTORY ==========
+PS D:\MAGIC>
+(venv) Info "Enumerating files…"
+[2025-09-14T19:04:26][INFO] Enumerating files…
+PS D:\MAGIC>
+(venv) $files = @()
+PS D:\MAGIC>
+(venv) try { $files = Get-ChildItem -LiteralPath $Root -Recurse -File -Force -ErrorAction SilentlyContinue } catch { 
+  $Warnings.Add("Enumeration error: $($_.Exception.Message)") | Out-Null
+}
+PS D:\MAGIC>
+(venv) # Excludes
+PS D:\MAGIC>
+(venv) $allExcludes = $defaultExcludes
+PS D:\MAGIC>
+(venv) $files = $files | Where-Object {
+  $p=$_.FullName
+  -not ($allExcludes | Where-Object { $p -like $_ })
+}
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $hashCapBytes = [long]$HashMaxMB * 1MB
+PS D:\MAGIC>
+(venv) $inventory=@()
+PS D:\MAGIC>
+(venv) $idx=0; $total=$files.Count
+PS D:\MAGIC>
+(venv) foreach($f in $files){
+  $idx++
+  if ($idx % 1200 -eq 0){
+    Write-Progress -Activity "Indexing with hashes (<= $HashMaxMB MB)" -Status "$idx / $total" -PercentComplete ([int](($idx/$total)*100))
+  }
+  $rel = $f.FullName.Replace($Root,"").TrimStart("\","/")
+  $hash = Hash-IfSmall -File $f -BytesCap $hashCapBytes
+  $inventory += [pscustomobject]@{
+    path         = $f.FullName
+    rel_path     = $rel
+    name         = $f.Name
+    ext          = $f.Extension.ToLower()
+    dir          = $f.DirectoryName
+    size_bytes   = [long]$f.Length
+    size_mb      = [math]::Round($f.Length/1MB,2)
+    created_utc  = $f.CreationTimeUtc.ToString("s")
+    modified_utc = $f.LastWriteTimeUtc.ToString("s")
+    age_days     = [int]([datetime]::UtcNow - $f.LastWriteTimeUtc).TotalDays
+    sha256       = $hash
+  }
+}
+PS D:\MAGIC>
+(venv) Write-Progress -Activity "Indexing with hashes" -Completed
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) Write-TSV  -Rows $inventory -Path (Join-PathSafe $Reports "inventory_full.tsv")
+PS D:\MAGIC>
+(venv) Write-JSON -Obj  $inventory -Path (Join-PathSafe $Reports "inventory_full.json")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Large / Old
+PS D:\MAGIC>
+(venv) $large = $inventory | Where-Object { $_.size_mb -ge $LargeMB } | Sort-Object -Property size_mb -Descending
+PS D:\MAGIC>
+(venv) $old   = $inventory | Where-Object { $_.age_days -ge $OldDays } | Sort-Object -Property age_days -Descending
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $large -Path (Join-PathSafe $Reports "large_files.tsv")
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $old   -Path (Join-PathSafe $Reports "old_files.tsv")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Duplicates (by hash)
+PS D:\MAGIC>
+(venv) $dups=@()
+PS D:\MAGIC>
+(venv) $hashGroups = $inventory | Where-Object { $_.sha256 -and $_.sha256 -ne "" } | Group-Object -Property sha256
+PS D:\MAGIC>
+(venv) foreach($g in $hashGroups){
+  if ($g.Count -gt 1){
+    $totalBytes = ($g.Group | Measure-Object -Property size_bytes -Sum).Sum
+    $dups += [pscustomobject]@{
+      sha256      = $g.Name
+      count       = $g.Count
+      total_mb    = [math]::Round($totalBytes/1MB,2)
+      sample_name = $g.Group[0].name
+      paths       = ($g.Group | Select-Object -ExpandProperty path) -join "; "
+    }
+  }
+}
+PS D:\MAGIC>
+(venv) $dups = $dups | Sort-Object -Property @{Expression="count";Descending=$true}, @{Expression="total_mb";Descending=$true}
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $dups -Path (Join-PathSafe $Reports "duplicates_by_hash.tsv")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Orphans (heuristic)
+PS D:\MAGIC>
+(venv) $expectedRoots = @("\scripts\","\tools\","\docs\","\config\","\outputs\","\data\","\assets\","\tests\","\notebooks\","\dashboards\")
+PS D:\MAGIC>
+(venv) $orphanCandidates=@()
+PS D:\MAGIC>
+(venv) foreach($row in $inventory){
+  $rp = "\" + ($row.rel_path -replace "/","\")
+  $isExpected=$false
+  foreach($er in $expectedRoots){ if ($rp.StartsWith($er,[System.StringComparison]::OrdinalIgnoreCase)){ $isExpected=$true; break } }
+  $looksTemp = $false
+  if ($row.name -match '(^~\$)|(\.tmp$)|(\.bak$)|(\.old$)|(\.swp$)'){ $looksTemp=$true }
+  if (-not $isExpected -or $looksTemp){ $orphanCandidates += $row }
+}
+PS D:\MAGIC>
+(venv) $orphans = $orphanCandidates | Sort-Object -Property dir, name
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $orphans -Path (Join-PathSafe $Reports "orphans.tsv")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Phase scorecard
+PS D:\MAGIC>
+(venv) function Get-PhaseFromPath([string]$Rel){
+  if ($Rel -match "scripts[\\/]+phase(\d+)[\\/]"){ return [int]$Matches[1] }
+  return -1
+}
+PS D:\MAGIC>
+(venv) $invWithPhase = foreach($r in $inventory){
+  [pscustomobject]@{
+    phase   = Get-PhaseFromPath($r.rel_path)
+    rel     = $r.rel_path
+    ext     = $r.ext
+    name    = $r.name
+    size_mb = $r.size_mb
+  }
+}
+PS D:\MAGIC>
+(venv) $invPhases = $invWithPhase | Where-Object { $_.phase -ge 0 }
+PS D:\MAGIC>
+(venv) $codeExts = @(".ps1",".psm1",".py",".sh",".js",".ts",".sql",".ipynb",".yaml",".yml",".json",".md")
+PS D:\MAGIC>
+(venv) $phaseScore = $invPhases | Group-Object -Property phase | ForEach-Object {
+  $p=$_.Name; $rows=$_.Group
+  $scripts = $rows | Where-Object { $codeExts -contains $_.ext }
+  $sumMB = ($rows | Measure-Object -Property size_mb -Sum).Sum
+  [pscustomobject]@{
+    phase            = [int]$p
+    files_total      = $rows.Count
+    code_like_files  = $scripts.Count
+    total_mb         = [math]::Round($sumMB,2)
+  }
+} | Sort-Object phase
+PS D:\MAGIC>
+(venv) # fill 0..18
+PS D:\MAGIC>
+(venv) $fullPhase=@()
+PS D:\MAGIC>
+(venv) for($p=0;$p -le 18;$p++){
+  $row = $phaseScore | Where-Object { $_.phase -eq $p }
+  if ($null -eq $row){
+    $fullPhase += [pscustomobject]@{ phase=$p; files_total=0; code_like_files=0; total_mb=0 }
+  } else { $fullPhase += $row }
+}
+PS D:\MAGIC>
+(venv) Write-TSV -Rows $fullPhase -Path (Join-PathSafe $Reports "phase_scorecard.tsv")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # ========== 4) HIGH-LEVEL PASS/FAIL ==========
+PS D:\MAGIC>
+(venv) $scoreRows=@()
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) function Add-Score($name,$ok,$note){
+  $scoreRows += [pscustomobject]@{ check=$name; status=($(if($ok){"PASS"}else{"FAIL"})); note=$note }
+}
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) Add-Score "python found"                 $pythonOk        $pyVer
+PS D:\MAGIC>
+(venv) Add-Score "pip found"                    $pipOk           $pipVer
+PS D:\MAGIC>
+(venv) Add-Score "venv exists"                  $venvExists      (if($venvExists){$venvPath}else{"create venv"})
+>> TerminatingError(): "The term 'if' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+The term 'if' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+if : The term 'if' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling
+of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:60
++ Add-Score "venv exists"                  $venvExists      (if($venvEx ...
++                                                            ~~
+    + CategoryInfo          : ObjectNotFound: (if:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS D:\MAGIC>
+(venv) Add-Score "requirements.txt present"     $reqExists       $reqPath
+PS D:\MAGIC>
+(venv) if ($RunPreCommit){ Add-Score "pre-commit installed" $preCommitOk $pc }
+PS D:\MAGIC>
+(venv) if ($RunPreCommit -and $preCommitOk){
+  $pcOk = -not ( ($preCommitRun | Select-String -Pattern "Failed" -SimpleMatch) )
+  Add-Score "pre-commit run" $pcOk "See env_checks.tsv"
+}
+PS D:\MAGIC>
+(venv) if ($RunPytest){ Add-Score "pytest installed" $pytestOk $pv }
+PS D:\MAGIC>
+(venv) if ($RunPytest -and $pytestOk){
+  $pytestOkRun = ($LASTEXITCODE -eq 0)
+  Add-Score "pytest run" $pytestOkRun "See env_checks.tsv"
+}
+PS D:\MAGIC>
+(venv) Add-Score "git clean working tree"       $gitOk           "Uncommitted changes = WARN"
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $missingCount = ($missingDirs | Measure-Object).Count
+PS D:\MAGIC>
+(venv) Add-Score "structure: required dirs"     ($missingCount -eq 0) ("missing: " + ($missingDirs -join ", "))
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $dupsCount = ($dups | Measure-Object).Count
+PS D:\MAGIC>
+(venv) Add-Score "no duplicates by hash"        ($dupsCount -eq 0) ("dups=" + $dupsCount)
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $orphCount = ($orphans | Measure-Object).Count
+PS D:\MAGIC>
+(venv) Add-Score "no orphans"                   ($orphCount -eq 0) ("orphans=" + $orphCount)
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $largeCount = ($large | Measure-Object).Count
+>> CommandInvocation(Out-Null): "Out-Null"
+PS D:\MAGIC>
+(venv) Add-Score ("no files >= {0}MB" -f $LargeMB)  ($largeCount -eq 0) ("large=" + $largeCount)
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $oldCount = ($old | Measure-Object).Count
+>> CommandInvocation(Out-Null): "Out-Null"
+PS D:\MAGIC>
+(venv) Add-Score ("no files older than {0} days" -f $OldDays) ($oldCount -eq 0) ("old=" + $oldCount)
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Overall
+PS D:\MAGIC>
+(venv) $anyFail = ($scoreRows | Where-Object { $_.status -eq "FAIL" }).Count -gt 0
+(venv) TerminatingError(): "The property 'Count' cannot be found on this object. Verify that the property exists."
+The property 'Count' cannot be found on this object. Verify that the property exists.
+The property 'Count' cannot be found on this object. Verify that the property exists.
+At line:1 char:1
++ $anyFail = ($scoreRows | Where-Object { $_.status -eq "FAIL" }).Count ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : PropertyNotFoundStrict
+
+PS D:\MAGIC>
+(venv) $hasWarn = $Warnings.Count -gt 0 -or (-not $gitOk) -or ($missingCount -gt 0) -or ($dupsCount -gt 0) -or ($orphCount -gt 0) -or ($largeCount -gt 0) -or ($oldCount -gt 0)
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) $overall = if ($anyFail) {"FAIL"} elseif ($FailOnWarnings -and $hasWarn) {"FAIL"} elseif ($hasWarn) {"WARN"} else {"PASS"}
+>> TerminatingError(): "The variable '$anyFail' cannot be retrieved because it has not been set."
+The variable '$anyFail' cannot be retrieved because it has not been set.
+The variable '$anyFail' cannot be retrieved because it has not been set.
+At line:1 char:16
++ $overall = if ($anyFail) {"FAIL"} elseif ($FailOnWarnings -and $hasWa ...
++                ~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (anyFail:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : VariableIsUndefined
+
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Save scorecard
+PS D:\MAGIC>
+(venv) Write-TSV  -Rows $scoreRows -Path (Join-PathSafe $Reports "selftest_scorecard.tsv")
+PS D:\MAGIC>
+(venv) Write-JSON -Obj  $scoreRows -Path (Join-PathSafe $Reports "selftest_scorecard.json")
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) # Meta
+PS D:\MAGIC>
+(venv) $meta = [pscustomobject]@{
+  root                = $Root
+  reports             = $Reports
+  total_files         = $inventory.Count
+  total_mb            = [math]::Round((($inventory | Measure-Object -Property size_bytes -Sum).Sum)/1MB,2)
+  large_threshold_mb  = $LargeMB
+  old_threshold_days  = $OldDays
+  hash_cap_mb         = $HashMaxMB
+  excluded_globs      = $defaultExcludes
+  missing_dirs        = $missingDirs
+  warnings            = $Warnings
+  overall_status      = $overall
+  generated_at        = (Get-Date).ToString("s")
+  transcript          = $Transcript
+}
+(venv) TerminatingError(): "The variable '$overall' cannot be retrieved because it has not been set."
+The variable '$overall' cannot be retrieved because it has not been set.
+The variable '$overall' cannot be retrieved because it has not been set.
+At line:12 char:25
++   overall_status      = $overall
++                         ~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (overall:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : VariableIsUndefined
+
+PS D:\MAGIC>
+(venv) Write-JSON -Obj $meta -Path (Join-PathSafe $Reports "scan_meta.json")
+>> TerminatingError(): "The variable '$meta' cannot be retrieved because it has not been set."
+The variable '$meta' cannot be retrieved because it has not been set.
+The variable '$meta' cannot be retrieved because it has not been set.
+At line:1 char:17
++ Write-JSON -Obj $meta -Path (Join-PathSafe $Reports "scan_meta.json")
++                 ~~~~~
+    + CategoryInfo          : InvalidOperation: (meta:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : VariableIsUndefined
+
+PS D:\MAGIC>
+PS D:\MAGIC>
+(venv) Stop-Transcript | Out-Null
+**********************
+Windows PowerShell transcript end
+End time: 20250914190930
+**********************

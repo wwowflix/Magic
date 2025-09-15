@@ -4,7 +4,7 @@
                       "Step":  "Inventory \u0026 Foundation",
                       "Week":  1,
                       "Status":  "Done",
-                      "Notes":  "scripts:1447; manifest:11C_manifest_consistency_checker_READY.data.json"
+                      "Notes":  "scripts:1447; manifest:backup_manifest.data.json"
                   },
                   {
                       "Step":  "Logging \u0026 Retry",
