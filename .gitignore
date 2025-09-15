@@ -53,3 +53,8 @@ outputs/reports/**/*.json
 outputs/reports/**/*.tsv
 outputs/reports/**/*.txt
 outputs/reports/**/*.log
+clean_env/
+env/
+.venv/
+venv/
+outputs/cache/
