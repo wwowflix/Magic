@@ -1,12 +1,6 @@
 ﻿repos:
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.12.11
-  hooks: [{ id: ruff, args: ["--fix"] }]
-- repo: https://github.com/psf/black
-  rev: 25.1.0
-  hooks: [{ id: black }]
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.17.1
-  hooks:
-    - id: mypy
-      additional_dependencies: ["types-requests"]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

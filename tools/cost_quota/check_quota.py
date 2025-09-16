@@ -1,0 +1,1 @@
+﻿print("quota OK (stub)")

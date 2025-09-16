@@ -1,9 +1,6 @@
-﻿* text=auto
-*.yml  text eol=lf
-*.yaml text eol=lf
-
-tests/*.py text eol=lf
-
-
-mypy.ini text eol=lf
-
+*.py     text eol=lf
+*.toml   text eol=lf
+*.ini    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.ps1    text eol=crlf

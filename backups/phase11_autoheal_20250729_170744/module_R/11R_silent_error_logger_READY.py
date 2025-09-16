@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("✅ [11R_silent_error_logger_READY.py] executed successfully (stub mode).")
 
 

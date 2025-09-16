@@ -1,0 +1,5032 @@
+﻿[
+    {
+        "dir":  "scripts\\phase00\\INBOX",
+        "files":  3279,
+        "mb":  130.52
+    },
+    {
+        "dir":  "rclone-v1.70.3-windows-amd64",
+        "files":  5,
+        "mb":  72.29
+    },
+    {
+        "dir":  ".",
+        "files":  131,
+        "mb":  43.21
+    },
+    {
+        "dir":  "outputs\\reports",
+        "files":  72,
+        "mb":  29.98
+    },
+    {
+        "dir":  "outputs\\reports\\self_test",
+        "files":  11,
+        "mb":  26.6
+    },
+    {
+        "dir":  "wheels",
+        "files":  4,
+        "mb":  13.02
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935",
+        "files":  21,
+        "mb":  5.83
+    },
+    {
+        "dir":  "backups",
+        "files":  11,
+        "mb":  1.24
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\agents\\awareness",
+        "files":  2,
+        "mb":  0.61
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs",
+        "files":  17,
+        "mb":  0.43
+    },
+    {
+        "dir":  "tools",
+        "files":  73,
+        "mb":  0.34
+    },
+    {
+        "dir":  "magic_file_tracker_export.csv",
+        "files":  2,
+        "mb":  0.24
+    },
+    {
+        "dir":  "notion_export",
+        "files":  2,
+        "mb":  0.24
+    },
+    {
+        "dir":  "docs",
+        "files":  3,
+        "mb":  0.18
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\magic_file_tracker_export.csv",
+        "files":  937,
+        "mb":  0.16
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\outputs\\repo_doctor",
+        "files":  1,
+        "mb":  0.13
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_121743\\tools",
+        "files":  3,
+        "mb":  0.12
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_121824\\tools",
+        "files":  3,
+        "mb":  0.12
+    },
+    {
+        "dir":  "outputs\\repo_doctor",
+        "files":  1,
+        "mb":  0.12
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_122614\\tools",
+        "files":  3,
+        "mb":  0.12
+    },
+    {
+        "dir":  "agents\\meta",
+        "files":  10,
+        "mb":  0.09
+    },
+    {
+        "dir":  "outputs",
+        "files":  1,
+        "mb":  0.07
+    },
+    {
+        "dir":  "outputs\\dashboard",
+        "files":  3,
+        "mb":  0.07
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\outputs\\dashboard",
+        "files":  3,
+        "mb":  0.06
+    },
+    {
+        "dir":  "backups\\phase11",
+        "files":  107,
+        "mb":  0.05
+    },
+    {
+        "dir":  "backups\\phase11_final",
+        "files":  107,
+        "mb":  0.05
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\autofix_backups\\20250910_120537\\scripts",
+        "files":  4,
+        "mb":  0.04
+    },
+    {
+        "dir":  "tests",
+        "files":  21,
+        "mb":  0.04
+    },
+    {
+        "dir":  "data",
+        "files":  1,
+        "mb":  0.03
+    },
+    {
+        "dir":  "backups\\phase11_full_backup",
+        "files":  65,
+        "mb":  0.03
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\tools\\scan_reports",
+        "files":  1,
+        "mb":  0.02
+    },
+    {
+        "dir":  "outputs\\reports\\self_test\\logs",
+        "files":  1,
+        "mb":  0.02
+    },
+    {
+        "dir":  "tools\\scan_reports",
+        "files":  1,
+        "mb":  0.02
+    },
+    {
+        "dir":  "orchestration",
+        "files":  4,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\outputs\\rediscover",
+        "files":  2,
+        "mb":  0.01
+    },
+    {
+        "dir":  "tools\\gates",
+        "files":  2,
+        "mb":  0.01
+    },
+    {
+        "dir":  "agents",
+        "files":  5,
+        "mb":  0.01
+    },
+    {
+        "dir":  "scripts\\phase11\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\autofix_backups\\20250910_120537\\tools",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "agents\\awareness",
+        "files":  7,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_A",
+        "files":  11,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_I",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_A",
+        "files":  9,
+        "mb":  0.01
+    },
+    {
+        "dir":  "sync",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "dir":  "scripts\\phase14\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_L",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_A",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_H",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_G",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_I",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_J",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_D",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_C",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_E",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_G",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_C",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_B",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_A",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_C",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_B",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_A",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase16\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_F",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_D",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_D",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_J",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_I",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_H",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase14\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_C",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_B",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_A",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase15\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_I",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_L",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_H",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_B",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_A",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_D",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_C",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase10\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_I",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_H",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase1\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_A",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_O",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_N",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_M",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_P",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_S",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_R",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_Q",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_B",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_K",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_C",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_F",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_I",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_H",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase13\\module_G",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_H",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_G",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_I",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_K",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_J",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase11\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_A",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_C",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase12\\module_B",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase6\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts_backup",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase99\\module_ZZ",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase9\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase7\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase8\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_U",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_V",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase17\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_A",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_L",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_N",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_I",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_C",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_B",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_H",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_G",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase18\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase5\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase2\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase4\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase3\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163038\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162746\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163637\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_163323\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_H",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_F",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_I",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_W",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_V",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_N",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170744\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_H",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_F",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_I",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_W",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_V",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_N",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_143113\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_162520\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_H",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_F",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_I",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_W",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_V",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_N",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250729_170950\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_B",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_A",
+        "files":  19,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_H",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_G",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_B",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_A",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_I",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_C",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_F",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_E",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase02\\module_D",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_C",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_B",
+        "files":  12,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_A",
+        "files":  11,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_D",
+        "files":  12,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase05\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase04\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_I",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_H",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase03\\module_G",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase04\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase04\\module_D",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase04\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase04\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_O",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_N",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_M",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_P",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_S",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_R",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_Q",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_L",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_G",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_F",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_E",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_H",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_K",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_J",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_I",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_E",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_H",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase01\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_V",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_U",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_T",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_W",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_Z",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_Y",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_X",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  ".github\\workflows",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_N",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_I",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_E",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_H",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_A",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_B",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_D",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase09\\module_C",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_W",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_V",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_K",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_J",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_I",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_L",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_O",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_N",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_M",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_H",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_A",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_F",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_E",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_Z",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_Y",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_X",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase07\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase08\\module_A",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase07\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase07\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_W",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_R",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_Q",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_P",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_S",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_V",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_U",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase06\\module_T",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_H",
+        "files":  8,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_G",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_B",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_F",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_E",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_D",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_moduleA_before_upgrade",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_J",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_I",
+        "files":  10,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_H",
+        "files":  7,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_K",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_M",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_L",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_B",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_AB",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_AA",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_C",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_F",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_E",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_D",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_Y",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_X",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_Z",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_cleanup",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\outputs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_Q",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_P",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_O",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_R",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_U",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_T",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_autoheal_20250807_170218\\module_S",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "docs\\demos",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "configs\\central_config_hub",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "dir":  "configs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "docs\\flows",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "other_folder",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "inbox",
+        "files":  22,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_staleLogs_20250912_161218",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\flow_export",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\FileRouter_Magic_Flow",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs\\reports",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\outputs\\summaries",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\scripts\\phase11\\module_B\\reports",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\scripts\\data\\user_prefs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\scripts",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "quarantine",
+        "files":  11,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_122614",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_121824",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_A",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_D",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_C",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "scripts\\phase0\\module_B",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_121743\\scripts",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\rediscover",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\logs\\notion_sync",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\logs",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "assets",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\hotfix_backups\\20250910_121743",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\repo_doctor\\autofix_backups\\20250910_120537",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "outputs\\reports\\logs",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_R",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_Q",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_P",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_S",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_V",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_U",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_T",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_O",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_J",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_I",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_G",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_K",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_N",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_M",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_L",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\data",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\configs",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\config",
+        "files":  5,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs\\demos",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs\\releases",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs\\handoff",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\docs\\flows",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\clean_env\\Lib\\site-packages\\webencodings-0.5.1.dist-info",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_Y",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_X",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_W",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\module_Z",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\clean_env\\Lib\\site-packages\\snscrape-0.7.0.20230622.dist-info",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\QUARANTINE_20250912_142935\\clean_env\\Lib\\site-packages\\selenium\\webdriver\\firefox",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "dir":  "backups\\phase11_pre_rebuild\\outputs\\logs",
+        "files":  1,
+        "mb":  0
+    }
+]
