@@ -1,0 +1,122 @@
+﻿[
+    {
+        "FullName":  "D:\\MAGIC\\.git\\objects\\pack\\pack-f50d20cbb46fdaca7bb7b04401fdbee868456b5f.pack",
+        "SizeMB":  202.65
+    },
+    {
+        "FullName":  "D:\\MAGIC\\rclone-v1.70.3-windows-amd64\\rclone.exe",
+        "SizeMB":  64.27
+    },
+    {
+        "FullName":  "D:\\MAGIC\\.git\\lfs\\objects\\3e\\36\\3e36b396c4cb71b8eaae2300c21bec26700b27ce5f6be83ef6b86d214e294c8b",
+        "SizeMB":  64.27
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\AzureCLI_A1DB175C_A1DB175C.msi",
+        "SizeMB":  63.89
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Scripts\\ruff.exe",
+        "SizeMB":  36.59
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-860d95b1c38e637ce4509f5fa24fbf2a.dll",
+        "SizeMB":  19.46
+    },
+    {
+        "FullName":  "D:\\MAGIC\\chromedriver.exe",
+        "SizeMB":  18.41
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\chromedriver_2889FA77_2889FA77.exe",
+        "SizeMB":  18.41
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\edfc647aaf02b20aa651__mypyc.cp313-win_amd64.pyd",
+        "SizeMB":  16.31
+    },
+    {
+        "FullName":  "D:\\MAGIC\\numpy-1.24.4-cp310-cp310-win_amd64.whl",
+        "SizeMB":  14.15
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\inventory_full_462497A3_462497A3.json",
+        "SizeMB":  12.96
+    },
+    {
+        "FullName":  "D:\\MAGIC\\wheels\\numpy-2.2.6-cp310-cp310-win_amd64.whl",
+        "SizeMB":  12.31
+    },
+    {
+        "FullName":  "D:\\MAGIC\\pandas-2.0.3-cp310-cp310-win_amd64.whl",
+        "SizeMB":  10.17
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\cryptography\\hazmat\\bindings\\_rust.pyd",
+        "SizeMB":  8.56
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\PIL\\_avif.cp313-win_amd64.pyd",
+        "SizeMB":  7.47
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\inventory_full_CDECF0CF_CDECF0CF.tsv",
+        "SizeMB":  7.01
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\magic_full_scan_0DB0F3BC_0DB0F3BC.tsv",
+        "SizeMB":  6.21
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\quick_scan_BFA950C3_BFA950C3.tsv",
+        "SizeMB":  6.21
+    },
+    {
+        "FullName":  "D:\\MAGIC\\.mypy_cache\\3.11\\numpy\\__init__.data.json",
+        "SizeMB":  5.94
+    },
+    {
+        "FullName":  "D:\\MAGIC\\backups\\QUARANTINE_20250912_142935\\.mypy_cache\\3.11\\numpy\\__init__.data.json",
+        "SizeMB":  5.94
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\orphans_2E2BFD85_2E2BFD85.tsv",
+        "SizeMB":  5.88
+    },
+    {
+        "FullName":  "D:\\MAGIC\\.mypy_cache\\3.13\\numpy\\__init__.data.json",
+        "SizeMB":  5.84
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\inventory_full_8AF664A8_119DE9DE.json",
+        "SizeMB":  4.84
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\pydantic_core\\_pydantic_core.cp313-win_amd64.pyd",
+        "SizeMB":  4.83
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\notion_export_9C4469B6_9C4469B6.json",
+        "SizeMB":  4.51
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\numpy\\_core\\_multiarray_umath.cp313-win_amd64.pyd",
+        "SizeMB":  4.32
+    },
+    {
+        "FullName":  "D:\\MAGIC\\venv\\Lib\\site-packages\\lxml\\etree.cp313-win_amd64.pyd",
+        "SizeMB":  3.92
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\orphans_44F298B0_FF6FE280.json",
+        "SizeMB":  3.19
+    },
+    {
+        "FullName":  "D:\\MAGIC\\.mypy_cache\\3.11\\pandas\\core\\series.data.json",
+        "SizeMB":  3.03
+    },
+    {
+        "FullName":  "D:\\MAGIC\\scripts\\phase00\\INBOX\\cleanup_plan_B2B4E3CE_B2B4E3CE.tsv",
+        "SizeMB":  3.02
+    }
+]
