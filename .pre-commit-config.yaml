@@ -4,3 +4,10 @@
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
+-   repo: local
+    hooks:
+    -   id: forbid-binaries
+        name: Forbid committing large/binary artifacts
+        entry: bash -lc 'git diff --cached --name-only | egrep -i ""\.(exe|msi|whl|zip|7z|iso|dll)$"" && { echo ""❌ Blocked binary. Use Releases/LFS."" ; exit 1; } || exit 0'
+        language: system
+        pass_filenames: false
