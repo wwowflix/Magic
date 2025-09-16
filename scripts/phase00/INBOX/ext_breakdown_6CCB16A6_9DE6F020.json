@@ -1,0 +1,277 @@
+﻿[
+    {
+        "ext":  ".exe",
+        "files":  4,
+        "mb":  101.19
+    },
+    {
+        "ext":  ".msi",
+        "files":  1,
+        "mb":  63.89
+    },
+    {
+        "ext":  ".py",
+        "files":  6276,
+        "mb":  47.22
+    },
+    {
+        "ext":  ".whl",
+        "files":  6,
+        "mb":  37.35
+    },
+    {
+        "ext":  ".tsv",
+        "files":  46,
+        "mb":  34.56
+    },
+    {
+        "ext":  ".json",
+        "files":  58,
+        "mb":  28.6
+    },
+    {
+        "ext":  ".html",
+        "files":  4,
+        "mb":  4.03
+    },
+    {
+        "ext":  ".txt",
+        "files":  96,
+        "mb":  2.71
+    },
+    {
+        "ext":  ".1",
+        "files":  2,
+        "mb":  2.66
+    },
+    {
+        "ext":  ".zip",
+        "files":  10,
+        "mb":  1.31
+    },
+    {
+        "ext":  ".csv",
+        "files":  13,
+        "mb":  1.2
+    },
+    {
+        "ext":  ".chromedriver",
+        "files":  2,
+        "mb":  0.66
+    },
+    {
+        "ext":  ".md",
+        "files":  978,
+        "mb":  0.37
+    },
+    {
+        "ext":  ".db",
+        "files":  3,
+        "mb":  0.22
+    },
+    {
+        "ext":  ".ps1",
+        "files":  110,
+        "mb":  0.21
+    },
+    {
+        "ext":  ".log",
+        "files":  7,
+        "mb":  0.13
+    },
+    {
+        "ext":  ".bak_20250903_181728",
+        "files":  1,
+        "mb":  0.07
+    },
+    {
+        "ext":  ".bak",
+        "files":  16,
+        "mb":  0.02
+    },
+    {
+        "ext":  ".bak_week12_20250911_182307",
+        "files":  1,
+        "mb":  0.02
+    },
+    {
+        "ext":  ".bak_sync_20250911_181952",
+        "files":  1,
+        "mb":  0.02
+    },
+    {
+        "ext":  ".png",
+        "files":  3,
+        "mb":  0.02
+    },
+    {
+        "ext":  ".cpp",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".c",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".lib",
+        "files":  5,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".xlsx",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".h",
+        "files":  2,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak_20250911_181435",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak_20250903_122246",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak3",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak2",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak_week3_20250903_125855",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak_sync_20250911_181710",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".bak_w11_20250903_130057",
+        "files":  1,
+        "mb":  0.01
+    },
+    {
+        "ext":  ".dummy",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "ext":  ".cmd",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".pyi",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "ext":  "(no ext)",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".ini",
+        "files":  6,
+        "mb":  0
+    },
+    {
+        "ext":  ".coveragerc",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".sh",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".bak_20250903_171937",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".yml",
+        "files":  9,
+        "mb":  0
+    },
+    {
+        "ext":  ".main",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".bak_20250804135919",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".bat",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".bak_20250903_180350",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "ext":  ".bak_20250903_172545",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "ext":  ".gitignore",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".yaml",
+        "files":  4,
+        "mb":  0
+    },
+    {
+        "ext":  ".gitattributes",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".js",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".key",
+        "files":  3,
+        "mb":  0
+    },
+    {
+        "ext":  ".toml",
+        "files":  1,
+        "mb":  0
+    },
+    {
+        "ext":  ".cleanup-protect",
+        "files":  2,
+        "mb":  0
+    },
+    {
+        "ext":  ".cfg",
+        "files":  3,
+        "mb":  0
+    }
+]

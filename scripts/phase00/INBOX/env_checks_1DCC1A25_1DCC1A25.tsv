@@ -1,0 +1,10 @@
+﻿check	ok	detail
+python	True	Python 3.13.5 |
+pip	True	System.Object[]
+venv exists	True	D:\MAGIC\venv
+requirements.txt	True	D:\MAGIC\requirements.txt
+pre-commit installed	True	pre-commit 4.3.0
+pre-commit run	True	ruff.....................................................................Passed | ruff-format..............................................................Passed | black....................................................................Passed | mypy.....................................................................Passed
+pytest installed	True	pytest 8.4.2
+pytest run	True	.............                                                            [100%]
+git clean working tree	False	 M outputs/reports/magic_scan_summary.json |  M outputs/reports/magic_scan_summary.md |  M outputs/reports/magic_scan_summary.tsv | ?? outputs/reports/inventory_full.tsv | ?? outputs/reports/logs/ | ?? outputs/reports/magic_full_audit.json | ?? outputs/reports/magic_full_audit.tsv | ?? outputs/reports/magic_phase_scorecard.json | ?? outputs/reports/magic_phase_scorecard.tsv | ?? outputs/reports/orphans.tsv | ?? outputs/reports/phase_scorecard.tsv | ?? outputs/reports/self_test/ | ?? tools/magic_full_audit.ps1 | ?? tools/magic_full_tree_audit.ps1

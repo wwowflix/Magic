@@ -1,0 +1,34 @@
+[
+  {
+    "Project": "MAGIC",
+    "Root": "D:\\MAGIC",
+    "PyFiles": 1820,
+    "LOC": 69355,
+    "Funcs": 3441,
+    "Classes": 208,
+    "TopImports": "os, fontTools, pandas, sys, __future__, datetime",
+    "HasREADME": true,
+    "HasReqs": true,
+    "HasTests": true,
+    "LastWrite": "2025-09-10T10:39:57.045535",
+    "DaysSinceLast": 0.0,
+    "Notables": "11AA_self_healing_loop_generator_READY.py, 11D_deployment_readiness_auditor_READY.py, 11G_full_system_audit_report_READY.py, 11G_privacy_auditor_READY.py, 11H_dependency_graph_audit_READY.py, 11H_license_audit_log_scanner_READY.py, 11I_regression_test_runner_READY.py, 11P_license_file_auditor_READY.py, 11R_sneak_audit_agent_READY.py, 11T_audit_trail_renderer_READY.py, generate_patch_from_phase11.py, magic_phase11_full_cycle.py, phase11_module_C_placeholder_READY.py, phase11_outputs_placeholder_READY.py, phase11_sanity_runner.py, rediscover_magic.py, run_self_healing_agent.py, self_healing_runner.py, self_healing_runner_stub.py, self_healing_runner_v0.py, self_healing_runner_v4.2.py, self_healing_runner_v4.3.py, self_healing_runner_v4.4.py, self_healing_runner_v4.5.py, self_healing_runner_v4.6.py, self_healing_runner_v4.7.py, self_healing_runner_v4.8.py, self_healing_runner_v4.8_fixed.py, self_healing_runner_v4.9.py, self_healing_runner_v5.backup.py, self_healing_runner_v5.py, self_healing_runner_v5_parallel.py",
+    "MagicScore": 90.0
+  },
+  {
+    "Project": "scripts",
+    "Root": "D:\\MAGIC\\scripts",
+    "PyFiles": 6194,
+    "LOC": 1464638,
+    "Funcs": 57060,
+    "Classes": 5553,
+    "TopImports": "pandas, numpy, typing, pytest, fontTools, pip",
+    "HasREADME": true,
+    "HasReqs": true,
+    "HasTests": true,
+    "LastWrite": "2025-09-10T10:45:25.916026",
+    "DaysSinceLast": 0.0,
+    "Notables": "01C_dummy_trigger_runner_READY.py, 02H_push_viral_trends_to_scribe_agent_READY.py, 02H_trend_alert_trigger_to_orchestrator_READY.py, 02H_trend_burnout_feedback_to_scribe_READY.py, 03I_scribe_controller_READY.py, 06I_upload_audit_logger_READY.py, 08AA_visualization_overlay_for_scribe_nexus_READY.py, 08E_alert_trigger_to_orchestrator_READY.py, 08L_update_scribe_generation_prompts_READY.py, 08R_monthly_audit_summary_plan_trigger_READY.py, 09A_central_script_orchestrator_READY.py, 09C_compliance_audit_dashboard_READY.py, 10D_seo_audit_reporter_READY.py, 11AA_self_healing_loop_generator_READY.py, 11D_dependency_orphan_audit_READY.py, 11D_deployment_readiness_auditor_READY.py, 11G_full_system_audit_report_READY.py, 11G_privacy_auditor_READY.py, 11H_dependency_graph_audit_READY.py, 11H_license_audit_log_scanner_READY.py, 11I_regression_test_runner_READY.py, 11P_license_file_auditor_READY.py, 11R_sneak_audit_agent_READY.py, 11T_audit_trail_renderer_READY.py, 12M_voice_comment_transcriber_READY.py, 13C_subscriber_funnel_mapper_READY.py, 14D_decision_audit_log_READY.py, 14G_decision_audit_log_READY.py, 17A_api_failover_router_READY.py, 17C_automation_self_healing_layer_READY.py, 18N_monetization_audit_log_READY.py, 18T_scribe_midas_link_generator_READY.py, 18T_scribeÃ¢_midas_link_generator_READY.py, 18Z_midas_controller_orchestrator_READY.py, __pip-runner___READY.py, _magics_READY.py, audits_READY.py, describe_READY.py, folder_audit_2_READY.py, folder_audit_READY.py, generate_patch_from_phase11.py, magic_dashboard_READY.py, orchestrator.py, orchestrator_2_READY.py, orchestrator_READY.py, phase10_seo_keywords_READY.py, phase11_module_C_placeholder_READY.py, phase11_outputs_placeholder_READY.py, phase6_retry_scheduler_READY.py, phase6_uploader_example_READY.py, phase7_affiliate_handler_READY.py, phase8_traffic_sentiment_analysis_READY.py, phase9_orchestration_runner_READY.py, prod_smoke_runner_READY.py, scribe_feedback_READY.py, self_healing_runner.py, self_healing_runner_v4.2.py, self_healing_runner_v4.3.py, self_healing_runner_v4.4.py, self_healing_runner_v4.5.py, self_healing_runner_v4.6.py, self_healing_runner_v4.7.py, self_healing_runner_v4.8.py, self_healing_runner_v4.8_fixed.py, self_healing_runner_v4.9.py, self_healing_runner_v5.backup.py, self_healing_runner_v5.py, self_healing_runner_v5_parallel.py, subscribe_convertkit_2_READY.py, test_describe_READY.py",
+    "MagicScore": 90.0
+  }
+]
