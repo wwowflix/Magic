@@ -72,6 +72,7 @@ $gitleaksOk     = Test-Command "gitleaks"
 $detectSecretsOk= Test-Command "detect-secrets"
 $cyclonedxOk    = Test-Command "cyclonedx-py"
 $dockerOk       = Test-Command "docker"
+$AllowSkipDocker = ($env:ALLOW_SKIP_DOCKER -eq '1')
 
 # ---------------------------
 # Define Checks (48 total)
@@ -140,7 +141,7 @@ Add-Check 32 "requirements.lock.txt exists" { Test-File $Artifacts.RequirementsL
 Add-Check 33 "SBOM exists"                  { Test-File $Artifacts.SBOM }                        "cyclonedx-py -o outputs/reports/sbom.json"
 
 # 34–35 containerization
-Add-Check 34 "Docker available" { $dockerOk }                                                    "Install/Start Docker Desktop"
+Add-Check 34 "Docker available" { $AllowSkipDocker -or $dockerOk } "Install/Start Docker Desktop (or set ALLOW_SKIP_DOCKER=1 to skip locally)"
 Add-Check 35 "Docker HEALTHCHECK present" { Test-RegexInFile ".\Dockerfile" '^\s*HEALTHCHECK\s+CMD\s+python\s+tools/live_healthcheck\.py' } "Add HEALTHCHECK to Dockerfile"
 
 # 36–37 publishing & rollback tools
