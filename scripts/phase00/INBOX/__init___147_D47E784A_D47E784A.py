@@ -117,7 +117,7 @@ class CookieManager:
 
     def _remove_extra_spacing(self):
         st.markdown(
-            """ 
+            """
             <style>
                 .element-container:has(iframe[height="0"]) { display: none; }
             </style>

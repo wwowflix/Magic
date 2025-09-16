@@ -149,4 +149,3 @@ if __name__ == "__main__":
 
 # Week6: parallel execution capability marker
 from concurrent.futures import ProcessPoolExecutor  # marker for checker
-
