@@ -1,0 +1,347 @@
+﻿{
+    "root":  "D:\\MAGIC",
+    "timestamp":  "2025-09-16T17:35:09.6066348+05:30",
+    "summary":  {
+                    "pass":  48,
+                    "total":  48,
+                    "percent":  100
+                },
+    "results":  [
+                    {
+                        "Id":  0,
+                        "Step":  "Repo at D:\\MAGIC",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  1,
+                        "Step":  "git pull done / clean",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  2,
+                        "Step":  "On branch prod-release",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  3,
+                        "Step":  "venv present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  4,
+                        "Step":  "venv active",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  5,
+                        "Step":  "pip upgraded",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  6,
+                        "Step":  "requirements installed",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  7,
+                        "Step":  "MPLBACKEND=Agg set (session/env)",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  8,
+                        "Step":  "pre-commit installed",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  9,
+                        "Step":  "pre-commit runnable",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  10,
+                        "Step":  "pytest ok (collects)",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  11,
+                        "Step":  "coverage ≥ artifacts exist",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  12,
+                        "Step":  "Security tooling available",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  13,
+                        "Step":  "Secret scan tooling available",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  14,
+                        "Step":  "Full scan receipts exist",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  15,
+                        "Step":  "API contracts script present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  16,
+                        "Step":  "DAG smoke script present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  17,
+                        "Step":  "Data quality scripts present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  18,
+                        "Step":  "Dash index exists",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  19,
+                        "Step":  "scan_status tool present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  20,
+                        "Step":  "magic_scan_summary.json valid",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  21,
+                        "Step":  "todo audit tool present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  22,
+                        "Step":  "verify_magic_complete present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  23,
+                        "Step":  "self-test summary present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  24,
+                        "Step":  "check_spend.py present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  25,
+                        "Step":  "check_quota.py present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  26,
+                        "Step":  "chaos injector present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  27,
+                        "Step":  "restore script present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  28,
+                        "Step":  "Changes committed",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  29,
+                        "Step":  "Branch pushed",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  30,
+                        "Step":  "Re-scan before tag recorded",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  31,
+                        "Step":  "Tag v1.0-stable exists",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  32,
+                        "Step":  "requirements.lock.txt exists",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  33,
+                        "Step":  "SBOM exists",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  34,
+                        "Step":  "Docker available",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  35,
+                        "Step":  "Docker HEALTHCHECK present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  36,
+                        "Step":  "canary_post present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  37,
+                        "Step":  "rollback_to_tag present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  38,
+                        "Step":  "Nightly scan task registered (name contains MAGIC Nightly)",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  39,
+                        "Step":  "calc_sli.py present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  40,
+                        "Step":  "check_slo.py present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  41,
+                        "Step":  "plan_cleanup present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  42,
+                        "Step":  "quarantine script present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  43,
+                        "Step":  "pre-commit final pass runnable",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  44,
+                        "Step":  "verify_magic_complete final present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  45,
+                        "Step":  "Merge capability (git available)",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  46,
+                        "Step":  "GitHub Release (proxy check: git remote set)",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    },
+                    {
+                        "Id":  47,
+                        "Step":  "Offsite backup tool present",
+                        "Status":  "PASS",
+                        "FixHint":  "",
+                        "Error":  null
+                    }
+                ]
+}
