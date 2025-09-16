@@ -1,0 +1,8 @@
+﻿{
+    "phases": ["phase99"],
+    "phase99": {
+        "module_ZZ": [
+            "scripts/phase99/module_ZZ/99ZZ_dummy_script_v2_READY.py"
+        ]
+    }
+}
