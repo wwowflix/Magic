@@ -69,3 +69,6 @@ tests/__pycache__/
 outputs/reports/
 backups/
 tests/__pycache__/
+# Track report artifacts under outputs
+!outputs/reports/
+!outputs/reports/**
