@@ -72,3 +72,23 @@ tests/__pycache__/
 # Track report artifacts under outputs
 !outputs/reports/
 !outputs/reports/**
+# build + temp + caches
+outputs/**
+!outputs/reports/
+!outputs/reports/**
+
+.wheels/
+wheels/
+dist/
+build/
+.mypy_cache/
+__pycache__/
+*.egg-info/
+
+# local bins + installers
+*.exe
+*.msi
+*.whl
+*.zip
+tools/bin/**
+!tools/magic_space_audit.ps1
