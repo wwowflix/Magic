@@ -1,8 +1,11 @@
-[run]
-source = tools
+﻿[run]
 branch = True
+source = scripts
+parallel = True
 
 [report]
-include =
-    tools/create_manifest.py
-    tools/phase11_sanity_runner.py
+omit =
+    */tests/*
+    */venv/*
+    */site-packages/*
+    */__pycache__/*
