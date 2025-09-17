@@ -112,3 +112,10 @@ __pycache__/
 *.zip
 tools/bin/**
 !tools/magic_space_audit.ps1
+backups/
+**/__pycache__/
+*.pyc
+htmlcov/
+.pytest_cache/
+.coverage
+coverage.xml

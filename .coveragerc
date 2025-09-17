@@ -1,11 +1,12 @@
-﻿[run]
+[run]
 branch = True
-source = scripts
 parallel = True
+source =
+    your_scraper_module
+    trends_scraper
 
 [report]
-omit =
-    */tests/*
-    */venv/*
-    */site-packages/*
-    */__pycache__/*
+show_missing = True
+fail_under = 75
+# Tip: to broaden coverage later, change [run] source= scripts,trends_scraper,your_scraper_module
+# ---
