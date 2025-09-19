@@ -1,0 +1,31 @@
+﻿{
+    "generated_utc":  "2025-09-17T11:11:41Z",
+    "root":  "D:\\MAGIC",
+    "completion":  100,
+    "counts":  {
+                   "total":  1,
+                   "pass":  1,
+                   "fail":  0,
+                   "warn":  0
+               },
+    "gate_summary":  {
+                         "Step":  "Self-test summary stub",
+                         "Status":  "PASS"
+                     },
+    "signals":  {
+                    "Root":  "D:\\MAGIC",
+                    "OnBranch":  "ci-setup",
+                    "Detached":  false,
+                    "RebaseInProgress":  false,
+                    "LatestSHA":  "6538ea79",
+                    "Tag_v1.0-stable":  true,
+                    "PR_ci-setup":  "https://github.com/wwowflix/Magic/pull/27",
+                    "GitHubCLI":  "yes",
+                    "CoverageXML":  true,
+                    "HTMLCov":  true,
+                    "ActionsWorkflow":  false,
+                    "Coverage%":  "100.0"
+                },
+    "snapshot_note":  "INFO",
+    "digest_note":  "INFO"
+}
