@@ -9,12 +9,18 @@ on:
 jobs:
   test:
     runs-on: windows-latest
+    env:
+      MPLBACKEND: Agg
+      PIP_DISABLE_PIP_VERSION_CHECK: 1
+      PIP_NO_INPUT: 1
+      PIP_PREFER_BINARY: 1
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.11"  # widest Windows wheels
 
       - name: Cache pip
         uses: actions/cache@v4
@@ -26,18 +32,35 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install dependencies (pwsh-safe)
+      - name: Set PYTHONPATH (auto-detect cost_manager)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $ws = (Get-Location).Path
+          $roots = @($ws, "$ws\scripts", "$ws\agents", "$ws\tools")
+
+          # find cost_manager.py or a package folder named cost_manager
+          $dirs  = Get-ChildItem -Path $ws -Recurse -Directory -Filter 'cost_manager' -ErrorAction SilentlyContinue | ForEach-Object { Split-Path $_.FullName -Parent }
+          $files = Get-ChildItem -Path $ws -Recurse -File -Filter 'cost_manager.py' -ErrorAction SilentlyContinue | ForEach-Object { Split-Path $_.FullName -Parent }
+          $roots += $dirs + $files
+          $roots = $roots | Where-Object { $_ } | Sort-Object -Unique
+
+          $line = 'PYTHONPATH=' + ($roots -join [IO.Path]::PathSeparator)
+          $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "PYTHONPATH set to:"
+          $roots | ForEach-Object { '  ' + $_ }
+
+      - name: Install dependencies (PowerShell-safe)
         shell: pwsh
         run: |
           python -m pip install -U pip wheel setuptools
-          if (Test-Path "requirements.txt") {
-            python -m pip install -r requirements.txt
-          }
-          if (Test-Path "requirements-dev.txt") {
-            python -m pip install -r requirements-dev.txt
-          }
-          # Baseline test deps in case the files above are absent
+          if (Test-Path "requirements.txt")     { python -m pip install -r requirements.txt }
+          if (Test-Path "requirements-dev.txt") { python -m pip install -r requirements-dev.txt }
           python -m pip install pytest pytest-cov pandas matplotlib
+
+      - name: Sanity import (cost_manager)
+        shell: pwsh
+        run: python -c "import sys,importlib,os; print('sys.path:', sys.path[:12]); importlib.import_module('cost_manager'); print('import cost_manager: OK')"
 
       - name: Run tests
         shell: pwsh
