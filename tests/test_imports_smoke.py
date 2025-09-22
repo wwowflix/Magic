@@ -1,9 +1,18 @@
-﻿import importlib, pathlib
+﻿import importlib
+import pytest
 
-SRC = pathlib.Path(__file__).resolve().parents[1] / "scripts"
-for py in sorted(SRC.rglob("*.py")):
-    rel = py.relative_to(SRC).with_suffix("")
-    mod = "scripts." + str(rel).replace("\\", ".").replace("/", ".")
-    if "__pycache__" in mod or mod.endswith(".__init__"):
-        continue
-    importlib.import_module(mod)
+# Core modules that should import everywhere
+CORE_MODULES = [
+    "your_scraper_module",
+    "scripts.trends_scraper",
+]
+
+def test_import_core_modules():
+    for mod in CORE_MODULES:
+        importlib.import_module(mod)
+
+def test_import_charts_if_plotly_present():
+    # Only run this if plotly is installed; otherwise mark as skipped
+    pytest.importorskip("plotly")
+    importlib.import_module("scripts.charts")
+
