@@ -122,3 +122,10 @@ coverage.xml
 
 /outputs/reports/readiness/
 
+
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+venv/
+
