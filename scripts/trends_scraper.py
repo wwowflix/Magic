@@ -47,3 +47,12 @@ def scrape_data(*args, **kwargs):
             return fn(*args, **kwargs)
     return None
 
+def scrape_data(*args, **kwargs):
+    """Compatibility wrapper for tests; forwards to best-known entrypoint if present."""
+    # Prefer a real function if it exists
+    for name in ("scrape_trends", "run", "main", "collect", "collect_data"):
+        fn = globals().get(name)
+        if callable(fn):
+            return fn(*args, **kwargs)
+    return None
+
