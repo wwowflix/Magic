@@ -1,11 +1,6 @@
-﻿name: tests
+name: tests
 
 on:
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-  schedule:
-    - cron: "0 2 * * *"   # nightly at 02:00 UTC
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened, ready_for_review]
@@ -14,6 +9,8 @@ on:
       - main
       - "**"
   workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"   # nightly at 02:00 UTC
 
 concurrency:
   group: tests-${{ github.ref }}
@@ -24,10 +21,10 @@ jobs:
     runs-on: windows-latest
     env:
       MPLBACKEND: Agg
-      PYTHONPATH: '${{ github.workspace }}/src'
       PIP_DISABLE_PIP_VERSION_CHECK: 1
       PIP_NO_INPUT: 1
       PIP_PREFER_BINARY: 1
+      PYTHONPATH: ${{ github.workspace }}/src
 
     steps:
       - uses: actions/checkout@v4
@@ -68,7 +65,3 @@ jobs:
         with:
           name: htmlcov
           path: htmlcov
-
-
-
-
