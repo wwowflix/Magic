@@ -29,7 +29,9 @@
 | 4 | 4.3 | coverage_flags | ✅ | coverage flags in CI | OK |
 | 5 | 5.3 | pr_checks_live | ❌ | PR checks firing (gh runs) | gh query failed: The term 'if' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again. |
 | 5 | 5.3 | pr_trigger | ✅ | PR trigger in CI | OK |
+
 <!-- MAGIC-47-TABLE:END -->
+
 
 
 
