@@ -1,4 +1,4 @@
-﻿import os
+import os
 import pandas as pd
 
 csv_path = "outputs/notion_export/magic_patch.csv"

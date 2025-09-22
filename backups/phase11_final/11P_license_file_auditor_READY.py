@@ -1,4 +1,4 @@
-﻿"""
+"""
 11P_license_file_auditor_READY.py
 Description: Checks for missing, expired, or non-standard license files
 Phase 11 - Module P (Legal, Licensing & Compliance)

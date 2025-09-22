@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print(
         "✅ [11M_prompt_injection_tester_READY.py] executed successfully (stub mode)."
     )

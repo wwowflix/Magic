@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-import sqlite3
+﻿import sqlite3
 import os
 
 # Define DB path
@@ -13,8 +12,7 @@ conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Create table if not exists
-cursor.execute(
-    """
+cursor.execute("""
 CREATE TABLE IF NOT EXISTS trends (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT,
@@ -22,10 +20,9 @@ CREATE TABLE IF NOT EXISTS trends (
     platform TEXT,
     metric REAL
 );
-"""
-)
+""")
 
 conn.commit()
 conn.close()
 
-print("[OK] Trends table created successfully at:", db_path)
+print("✅ Trends table created successfully at:", db_path)

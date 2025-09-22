@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 import argparse
 import json
 import os
@@ -35,11 +34,11 @@ def scrape_google(keywords):
     return pd.DataFrame(rows)
 
 def scrape_youtube():
-    # stub � your existing YouTube code goes here
+    # stub – your existing YouTube code goes here
     return pd.DataFrame([])
 
 def scrape_tiktok():
-    # stub � your existing TikTok code goes here
+    # stub – your existing TikTok code goes here
     return pd.DataFrame([])
 
 def scrape_reddit(subreddits, limit=25):
@@ -80,15 +79,12 @@ def main():
         df = scrape_reddit(args.subreddits, args.limit)
 
     if df.empty:
-        print(f'? No data returned for {args.source}')
+        print(f'❌ No data returned for {args.source}')
         sys.exit(1)
 
     out = os.path.join(os.path.dirname(__file__), '..', 'data', f'{args.source}_trending.csv')
     df.to_csv(out, index=False, encoding='utf-8-sig')
-    print(f'[OK] {args.source.capitalize()} trending data saved to {out}')
+    print(f'✅ {args.source.capitalize()} trending data saved to {out}')
 
 if __name__ == '__main__':
     main()
-
-
-

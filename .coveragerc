@@ -1,8 +1,12 @@
 [run]
-source = tools
 branch = True
+parallel = True
+source =
+    your_scraper_module
+    trends_scraper
 
 [report]
-include =
-    tools/create_manifest.py
-    tools/phase11_sanity_runner.py
+show_missing = True
+fail_under = 75
+# Tip: to broaden coverage later, change [run] source= scripts,trends_scraper,your_scraper_module
+# ---

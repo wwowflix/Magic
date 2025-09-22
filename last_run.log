@@ -1,0 +1,409 @@
+﻿test	Set up job	∩╗┐2025-09-19T10:41:37.4434844Z Current runner version: '2.328.0'
+test	Set up job	2025-09-19T10:41:37.4616772Z ##[group]Runner Image Provisioner
+test	Set up job	2025-09-19T10:41:37.4617507Z Hosted Compute Agent
+test	Set up job	2025-09-19T10:41:37.4618131Z Version: 20250829.383
+test	Set up job	2025-09-19T10:41:37.4618697Z Commit: 27cb235aab5b0e52e153a26cd86b4742e89dac5d
+test	Set up job	2025-09-19T10:41:37.4619319Z Build Date: 2025-08-29T13:48:48Z
+test	Set up job	2025-09-19T10:41:37.4619882Z ##[endgroup]
+test	Set up job	2025-09-19T10:41:37.4620326Z ##[group]Operating System
+test	Set up job	2025-09-19T10:41:37.4620873Z Microsoft Windows Server 2025
+test	Set up job	2025-09-19T10:41:37.4621367Z 10.0.26100
+test	Set up job	2025-09-19T10:41:37.4621818Z Datacenter
+test	Set up job	2025-09-19T10:41:37.4622258Z ##[endgroup]
+test	Set up job	2025-09-19T10:41:37.4622729Z ##[group]Runner Image
+test	Set up job	2025-09-19T10:41:37.4623252Z Image: windows-2025
+test	Set up job	2025-09-19T10:41:37.4623681Z Version: 20250907.19.1
+test	Set up job	2025-09-19T10:41:37.4625120Z Included Software: https://github.com/actions/runner-images/blob/win25/20250907.19/images/windows/Windows2025-Readme.md
+test	Set up job	2025-09-19T10:41:37.4626450Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20250907.19
+test	Set up job	2025-09-19T10:41:37.4627827Z ##[endgroup]
+test	Set up job	2025-09-19T10:41:37.4628919Z ##[group]GITHUB_TOKEN Permissions
+test	Set up job	2025-09-19T10:41:37.4630618Z Contents: read
+test	Set up job	2025-09-19T10:41:37.4631213Z Metadata: read
+test	Set up job	2025-09-19T10:41:37.4631634Z Packages: read
+test	Set up job	2025-09-19T10:41:37.4632077Z ##[endgroup]
+test	Set up job	2025-09-19T10:41:37.4634048Z Secret source: Actions
+test	Set up job	2025-09-19T10:41:37.4634755Z Prepare workflow directory
+test	Set up job	2025-09-19T10:41:37.5024635Z Prepare all required actions
+test	Set up job	2025-09-19T10:41:37.5061624Z Getting action download info
+test	Set up job	2025-09-19T10:41:37.9269408Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+test	Set up job	2025-09-19T10:41:38.0806064Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+test	Set up job	2025-09-19T10:41:38.2350187Z Download action repository 'actions/cache@v4' (SHA:0400d5f644dc74513175e3cd8d07132dd4860809)
+test	Set up job	2025-09-19T10:41:38.3881539Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+test	Set up job	2025-09-19T10:41:38.7757305Z Complete job name: test
+test	Run actions/checkout@v4	∩╗┐2025-09-19T10:41:39.1570438Z ##[group]Run actions/checkout@v4
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1571821Z with:
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1572532Z   repository: wwowflix/Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1573673Z   token: ***
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1574371Z   ssh-strict: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1575090Z   ssh-user: git
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1575829Z   persist-credentials: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1576676Z   clean: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1577415Z   sparse-checkout-cone-mode: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1578324Z   fetch-depth: 1
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1579107Z   fetch-tags: false
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1579841Z   show-progress: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1580923Z   lfs: false
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1581620Z   submodules: false
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1582392Z   set-safe-directory: true
+test	Run actions/checkout@v4	2025-09-19T10:41:39.1583451Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:39.3764000Z Syncing repository: wwowflix/Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:39.3767042Z ##[group]Getting Git version info
+test	Run actions/checkout@v4	2025-09-19T10:41:39.3768152Z Working directory is 'D:\a\Magic\Magic'
+test	Run actions/checkout@v4	2025-09-19T10:41:39.4666194Z [command]"C:\Program Files\Git\bin\git.exe" version
+test	Run actions/checkout@v4	2025-09-19T10:41:40.9580339Z git version 2.51.0.windows.1
+test	Run actions/checkout@v4	2025-09-19T10:41:40.9632972Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:40.9654039Z Temporarily overriding HOME='D:\a\_temp\ab2b2745-692a-4a2a-a73c-a87c6ec04842' before making global git config changes
+test	Run actions/checkout@v4	2025-09-19T10:41:40.9655531Z Adding repository directory to the temporary git global config as a safe directory
+test	Run actions/checkout@v4	2025-09-19T10:41:40.9666438Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Magic\Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:41.1524287Z Deleting the contents of 'D:\a\Magic\Magic'
+test	Run actions/checkout@v4	2025-09-19T10:41:41.1530923Z ##[group]Initializing the repository
+test	Run actions/checkout@v4	2025-09-19T10:41:41.1540568Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Magic\Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:41.4395037Z Initialized empty Git repository in D:/a/Magic/Magic/.git/
+test	Run actions/checkout@v4	2025-09-19T10:41:41.4452315Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/wwowflix/Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6082707Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6083427Z ##[group]Disabling automatic garbage collection
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6092775Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6401998Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6402921Z ##[group]Setting up auth
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6416997Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+test	Run actions/checkout@v4	2025-09-19T10:41:41.6749046Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+test	Run actions/checkout@v4	2025-09-19T10:41:46.7351841Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Run actions/checkout@v4	2025-09-19T10:41:46.7667200Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+test	Run actions/checkout@v4	2025-09-19T10:41:47.2885278Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+test	Run actions/checkout@v4	2025-09-19T10:41:47.3187643Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:47.3188785Z ##[group]Fetching the repository
+test	Run actions/checkout@v4	2025-09-19T10:41:47.3203629Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5805fcf93fb0f774ed91d6dfaeb1b19c906aca89:refs/remotes/pull/29/merge
+test	Run actions/checkout@v4	2025-09-19T10:41:53.7679221Z From https://github.com/wwowflix/Magic
+test	Run actions/checkout@v4	2025-09-19T10:41:53.7680121Z  * [new ref]         5805fcf93fb0f774ed91d6dfaeb1b19c906aca89 -> pull/29/merge
+test	Run actions/checkout@v4	2025-09-19T10:41:53.8477659Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:53.8478183Z ##[group]Determining the checkout info
+test	Run actions/checkout@v4	2025-09-19T10:41:53.8481803Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:53.8493288Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+test	Run actions/checkout@v4	2025-09-19T10:41:53.9762559Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+test	Run actions/checkout@v4	2025-09-19T10:41:54.0045868Z ##[group]Checking out the ref
+test	Run actions/checkout@v4	2025-09-19T10:41:54.0056184Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/29/merge
+test	Run actions/checkout@v4	2025-09-19T10:41:55.1077562Z Updating files:  49% (3838/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.1280869Z Updating files:  50% (3864/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.1635626Z Updating files:  51% (3942/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.1794683Z Updating files:  52% (4019/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.1962837Z Updating files:  53% (4096/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.2188751Z Updating files:  54% (4174/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.2392547Z Updating files:  55% (4251/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.3144033Z Updating files:  56% (4328/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.3316803Z Updating files:  57% (4405/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.3695914Z Updating files:  58% (4483/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.3889430Z Updating files:  59% (4560/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.4364009Z Updating files:  60% (4637/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.4566299Z Updating files:  61% (4715/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.4755853Z Updating files:  62% (4792/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.5115482Z Updating files:  63% (4869/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.5307114Z Updating files:  64% (4946/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.5499094Z Updating files:  65% (5024/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.5674406Z Updating files:  66% (5101/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.5879728Z Updating files:  67% (5178/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6070791Z Updating files:  68% (5256/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6242071Z Updating files:  69% (5333/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6431419Z Updating files:  70% (5410/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6614432Z Updating files:  71% (5487/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6807194Z Updating files:  72% (5565/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.6985341Z Updating files:  73% (5642/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.7171588Z Updating files:  74% (5719/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.7358118Z Updating files:  75% (5796/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.7547518Z Updating files:  76% (5874/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.7735453Z Updating files:  77% (5951/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.7962043Z Updating files:  78% (6028/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.8146153Z Updating files:  79% (6106/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.8361394Z Updating files:  80% (6183/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.8549818Z Updating files:  81% (6260/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.9189216Z Updating files:  82% (6337/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:55.9479734Z Updating files:  83% (6415/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.0464819Z Updating files:  84% (6492/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.0611258Z Updating files:  85% (6569/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.0760790Z Updating files:  86% (6647/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.0920715Z Updating files:  87% (6724/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1067638Z Updating files:  88% (6801/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1083354Z Updating files:  89% (6878/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1219263Z Updating files:  89% (6884/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1364668Z Updating files:  90% (6956/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1503717Z Updating files:  91% (7033/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1670289Z Updating files:  92% (7110/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.1833530Z Updating files:  93% (7188/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.2002739Z Updating files:  94% (7265/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.2169753Z Updating files:  95% (7342/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.2340426Z Updating files:  96% (7419/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.2505283Z Updating files:  97% (7497/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.2644186Z Updating files:  98% (7574/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7099365Z Updating files:  99% (7651/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7099875Z Updating files: 100% (7728/7728)
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7100251Z Updating files: 100% (7728/7728), done.
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7623743Z Note: switching to 'refs/remotes/pull/29/merge'.
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7624179Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7624407Z You are in 'detached HEAD' state. You can look around, make experimental
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7624921Z changes and commit them, and you can discard any commits you make in this
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7626347Z state without impacting any branches by switching back to a branch.
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7628651Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7628856Z If you want to create a new branch to retain commits you create, you may
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7629324Z do so (now or later) by using -c with the switch command. Example:
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7629598Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7629704Z   git switch -c <new-branch-name>
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7629888Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7629987Z Or undo this operation with:
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7630150Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7630225Z   git switch -
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7630354Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7630573Z Turn off this advice by setting config variable advice.detachedHead to false
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7630901Z 
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7631274Z HEAD is now at 5805fcf Merge 1fb9f58abfc2c46a47384a67ee3d3926d202be06 into 89b1c625b041bc6820ab3d28f8b04973e4d806ce
+test	Run actions/checkout@v4	2025-09-19T10:41:56.7728070Z ##[endgroup]
+test	Run actions/checkout@v4	2025-09-19T10:41:56.8333826Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+test	Run actions/checkout@v4	2025-09-19T10:41:56.8664332Z 5805fcf93fb0f774ed91d6dfaeb1b19c906aca89
+test	Run actions/setup-python@v5	∩╗┐2025-09-19T10:41:56.9166974Z ##[group]Run actions/setup-python@v5
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9167314Z with:
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9167495Z   python-version: 3.13
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9167709Z   check-latest: false
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9168101Z   token: ***
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9168700Z   update-environment: true
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9168916Z   allow-prereleases: false
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9169120Z   freethreaded: false
+test	Run actions/setup-python@v5	2025-09-19T10:41:56.9169299Z ##[endgroup]
+test	Run actions/setup-python@v5	2025-09-19T10:41:57.1409796Z ##[group]Installed versions
+test	Run actions/setup-python@v5	2025-09-19T10:41:57.1522655Z Successfully set up CPython (3.13.7)
+test	Run actions/setup-python@v5	2025-09-19T10:41:57.1523275Z ##[endgroup]
+test	Cache pip	∩╗┐2025-09-19T10:41:58.5470299Z ##[group]Run actions/cache@v4
+test	Cache pip	2025-09-19T10:41:58.5470601Z with:
+test	Cache pip	2025-09-19T10:41:58.5470811Z   path: ~\AppData\Local\pip\Cache
+test	Cache pip	~/.cache/pip
+test	Cache pip	
+test	Cache pip	2025-09-19T10:41:58.5471245Z   key: Windows-pip-20f82489720f9e1bda4748e3bfbff7f4d5bd5ede88c8d41241dfbd5b63f52bcf
+test	Cache pip	2025-09-19T10:41:58.5471823Z   restore-keys: Windows-pip-
+test	Cache pip	
+test	Cache pip	2025-09-19T10:41:58.5472042Z   enableCrossOsArchive: false
+test	Cache pip	2025-09-19T10:41:58.5472238Z   fail-on-cache-miss: false
+test	Cache pip	2025-09-19T10:41:58.5472430Z   lookup-only: false
+test	Cache pip	2025-09-19T10:41:58.5472601Z   save-always: false
+test	Cache pip	2025-09-19T10:41:58.5472756Z env:
+test	Cache pip	2025-09-19T10:41:58.5472979Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Cache pip	2025-09-19T10:41:58.5473376Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.13.7\x64/lib/pkgconfig
+test	Cache pip	2025-09-19T10:41:58.5473788Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Cache pip	2025-09-19T10:41:58.5474136Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Cache pip	2025-09-19T10:41:58.5474490Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Cache pip	2025-09-19T10:41:58.5474797Z ##[endgroup]
+test	Cache pip	2025-09-19T10:41:59.3467372Z Cache not found for input keys: Windows-pip-20f82489720f9e1bda4748e3bfbff7f4d5bd5ede88c8d41241dfbd5b63f52bcf, Windows-pip-
+test	Install dependencies (pwsh-safe)	∩╗┐2025-09-19T10:41:59.3702764Z ##[group]Run python -m pip install -U pip wheel setuptools
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3703289Z [36;1mpython -m pip install -U pip wheel setuptools[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3703596Z [36;1mif (Test-Path "requirements.txt") {[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3703892Z [36;1m  python -m pip install -r requirements.txt[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3704172Z [36;1m}[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3704373Z [36;1mif (Test-Path "requirements-dev.txt") {[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3704673Z [36;1m  python -m pip install -r requirements-dev.txt[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3704919Z [36;1m}[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3705145Z [36;1m# Baseline test deps in case the files above are absent[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.3705505Z [36;1mpython -m pip install pytest pytest-cov pandas matplotlib[0m
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4401178Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4401504Z env:
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4401750Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4402161Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.13.7\x64/lib/pkgconfig
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4402614Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4402981Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4403333Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Install dependencies (pwsh-safe)	2025-09-19T10:41:59.4403599Z ##[endgroup]
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:30.4798905Z Requirement already satisfied: pip in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (25.2)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.0449461Z Collecting wheel
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.0678249Z   Downloading wheel-0.45.1-py3-none-any.whl.metadata (2.3 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.3512084Z Collecting setuptools
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.3552016Z   Downloading setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.4367642Z Downloading wheel-0.45.1-py3-none-any.whl (72 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.5030871Z Downloading setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.5846136Z    ---------------------------------------- 1.2/1.2 MB 16.5 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:31.6483727Z Installing collected packages: wheel, setuptools
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:33.8957179Z 
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:33.8969768Z Successfully installed setuptools-80.9.0 wheel-0.45.1
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.4248659Z Collecting beautifulsoup4==4.13.4 (from -r requirements.txt (line 1))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.4463972Z   Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.5358364Z Collecting certifi==2025.7.14 (from -r requirements.txt (line 2))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.5408216Z   Downloading certifi-2025.7.14-py3-none-any.whl.metadata (2.4 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.7110421Z Collecting charset-normalizer==3.4.2 (from -r requirements.txt (line 3))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.7163041Z   Downloading charset_normalizer-3.4.2-cp313-cp313-win_amd64.whl.metadata (36 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.8407672Z Collecting filelock==3.18.0 (from -r requirements.txt (line 4))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.8490531Z   Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.9637107Z Collecting idna==3.10 (from -r requirements.txt (line 5))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:36.9676943Z   Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.2437614Z Collecting lxml==6.0.0 (from -r requirements.txt (line 6))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.2490523Z   Downloading lxml-6.0.0-cp313-cp313-win_amd64.whl.metadata (6.8 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.3478423Z Collecting PySocks==1.7.1 (from -r requirements.txt (line 7))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.3518215Z   Downloading PySocks-1.7.1-py3-none-any.whl.metadata (13 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.4597219Z Collecting python-dateutil==2.9.0.post0 (from -r requirements.txt (line 8))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.4637469Z   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.5810256Z Collecting pytz==2025.2 (from -r requirements.txt (line 9))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.5867751Z   Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.6505556Z Collecting requests==2.32.4 (from -r requirements.txt (line 10))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.6552671Z   Downloading requests-2.32.4-py3-none-any.whl.metadata (4.9 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.7360937Z Collecting six==1.17.0 (from -r requirements.txt (line 11))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.7405099Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.8201390Z Collecting snscrape==0.7.0.20230622 (from -r requirements.txt (line 12))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.8251033Z   Downloading snscrape-0.7.0.20230622-py3-none-any.whl.metadata (4.9 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.8869956Z Collecting soupsieve==2.7 (from -r requirements.txt (line 13))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:37.8910181Z   Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.0011307Z Collecting typing_extensions==4.14.1 (from -r requirements.txt (line 14))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.0051810Z   Downloading typing_extensions-4.14.1-py3-none-any.whl.metadata (3.0 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.0998339Z Collecting urllib3==2.5.0 (from -r requirements.txt (line 15))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.1043951Z   Downloading urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.2832926Z Collecting matplotlib>=3.10 (from -r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.2888341Z   Downloading matplotlib-3.10.6-cp313-cp313-win_amd64.whl.metadata (11 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.5786148Z Collecting numpy>=2.0 (from -r requirements.txt (line 19))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.5834926Z   Downloading numpy-2.3.3-cp313-cp313-win_amd64.whl.metadata (60 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.7919146Z Collecting pandas>=2.2 (from -r requirements.txt (line 20))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.7963489Z   Downloading pandas-2.3.2-cp313-cp313-win_amd64.whl.metadata (19 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.9084877Z Collecting pytrends<5,>=4.9 (from -r requirements.txt (line 21))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:38.9134272Z   Downloading pytrends-4.9.2-py3-none-any.whl.metadata (13 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.1024048Z Collecting contourpy>=1.0.1 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.1126881Z   Downloading contourpy-1.3.3-cp313-cp313-win_amd64.whl.metadata (5.5 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.5285474Z Collecting cycler>=0.10 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.5328944Z   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.7591422Z Collecting fonttools>=4.22.0 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.7644250Z   Downloading fonttools-4.60.0-cp313-cp313-win_amd64.whl.metadata (113 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.9293980Z Collecting kiwisolver>=1.3.1 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:39.9345737Z   Downloading kiwisolver-1.4.9-cp313-cp313-win_amd64.whl.metadata (6.4 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.0344263Z Collecting packaging>=20.0 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.0382926Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.2964555Z Collecting pillow>=8 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.3015936Z   Downloading pillow-11.3.0-cp313-cp313-win_amd64.whl.metadata (9.2 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.3980020Z Collecting pyparsing>=2.3.1 (from matplotlib>=3.10->-r requirements.txt (line 17))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.4018878Z   Downloading pyparsing-3.2.4-py3-none-any.whl.metadata (5.0 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.5209207Z Collecting tzdata>=2022.7 (from pandas>=2.2->-r requirements.txt (line 20))
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.5246167Z   Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.6069141Z Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.6618200Z Downloading certifi-2025.7.14-py3-none-any.whl (162 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.6911193Z Downloading charset_normalizer-3.4.2-cp313-cp313-win_amd64.whl (105 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.7295784Z Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.7780356Z Downloading idna-3.10-py3-none-any.whl (70 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.8161081Z Downloading lxml-6.0.0-cp313-cp313-win_amd64.whl (4.0 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.9199108Z    ---------------------------------------- 4.0/4.0 MB 38.4 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.9235757Z Downloading PySocks-1.7.1-py3-none-any.whl (16 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:40.9648316Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.0170387Z Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.0967730Z Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.1171493Z Downloading urllib3-2.5.0-py3-none-any.whl (129 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.1909574Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.2494960Z Downloading snscrape-0.7.0.20230622-py3-none-any.whl (74 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.2894125Z Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.3600726Z Downloading typing_extensions-4.14.1-py3-none-any.whl (43 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.4048135Z Downloading pytrends-4.9.2-py3-none-any.whl (15 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.4497571Z Downloading matplotlib-3.10.6-cp313-cp313-win_amd64.whl (8.1 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.5845725Z    ---------------------------------------- 8.1/8.1 MB 60.0 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.5915883Z Downloading numpy-2.3.3-cp313-cp313-win_amd64.whl (12.8 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.8267461Z    ---------------------------------------- 12.8/12.8 MB 54.1 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:41.8322580Z Downloading pandas-2.3.2-cp313-cp313-win_amd64.whl (11.0 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.1563816Z    ---------------------------------------- 11.0/11.0 MB 33.4 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.1617175Z Downloading contourpy-1.3.3-cp313-cp313-win_amd64.whl (226 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.2197158Z Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.2640941Z Downloading fonttools-4.60.0-cp313-cp313-win_amd64.whl (2.3 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.3544688Z    ---------------------------------------- 2.3/2.3 MB 23.1 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.3596245Z Downloading kiwisolver-1.4.9-cp313-cp313-win_amd64.whl (73 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.4262115Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.4690494Z Downloading pillow-11.3.0-cp313-cp313-win_amd64.whl (7.0 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.5698787Z    ---------------------------------------- 7.0/7.0 MB 69.0 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.5740219Z Downloading pyparsing-3.2.4-py3-none-any.whl (113 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.6230993Z Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:42:42.9105143Z Installing collected packages: pytz, urllib3, tzdata, typing_extensions, soupsieve, six, PySocks, pyparsing, pillow, packaging, numpy, lxml, kiwisolver, idna, fonttools, filelock, cycler, charset-normalizer, certifi, requests, python-dateutil, contourpy, beautifulsoup4, pandas, matplotlib, snscrape, pytrends
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:06.9099435Z 
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:06.9141693Z Successfully installed PySocks-1.7.1 beautifulsoup4-4.13.4 certifi-2025.7.14 charset-normalizer-3.4.2 contourpy-1.3.3 cycler-0.12.1 filelock-3.18.0 fonttools-4.60.0 idna-3.10 kiwisolver-1.4.9 lxml-6.0.0 matplotlib-3.10.6 numpy-2.3.3 packaging-25.0 pandas-2.3.2 pillow-11.3.0 pyparsing-3.2.4 python-dateutil-2.9.0.post0 pytrends-4.9.2 pytz-2025.2 requests-2.32.4 six-1.17.0 snscrape-0.7.0.20230622 soupsieve-2.7 typing_extensions-4.14.1 tzdata-2025.2 urllib3-2.5.0
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.5666497Z Collecting pytest
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.5919106Z   Downloading pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.6732261Z Collecting pytest-cov
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.6770167Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.7167596Z Requirement already satisfied: pandas in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (2.3.2)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.7171528Z Requirement already satisfied: matplotlib in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (3.10.6)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.7496405Z Collecting colorama>=0.4 (from pytest)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.7534940Z   Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.8271184Z Collecting iniconfig>=1 (from pytest)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.8307509Z   Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.8729174Z Requirement already satisfied: packaging>=20 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from pytest) (25.0)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.9171836Z Collecting pluggy<2,>=1.5 (from pytest)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.9210426Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.9893950Z Collecting pygments>=2.7.2 (from pytest)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:08.9933528Z   Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.3887375Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.3926462Z   Downloading coverage-7.10.6-cp313-cp313-win_amd64.whl.metadata (9.2 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4265706Z Requirement already satisfied: numpy>=1.26.0 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from pandas) (2.3.3)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4270974Z Requirement already satisfied: python-dateutil>=2.8.2 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from pandas) (2.9.0.post0)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4276073Z Requirement already satisfied: pytz>=2020.1 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from pandas) (2025.2)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4281571Z Requirement already satisfied: tzdata>=2022.7 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from pandas) (2025.2)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4381301Z Requirement already satisfied: contourpy>=1.0.1 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (1.3.3)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4386080Z Requirement already satisfied: cycler>=0.10 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (0.12.1)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4391141Z Requirement already satisfied: fonttools>=4.22.0 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (4.60.0)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4396077Z Requirement already satisfied: kiwisolver>=1.3.1 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (1.4.9)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4405022Z Requirement already satisfied: pillow>=8 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (11.3.0)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4409897Z Requirement already satisfied: pyparsing>=2.3.1 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from matplotlib) (3.2.4)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4645361Z Requirement already satisfied: six>=1.5 in c:\hostedtoolcache\windows\python\3.13.7\x64\lib\site-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.4716103Z Downloading pytest-8.4.2-py3-none-any.whl (365 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.5234182Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.5636538Z Downloading pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.5998262Z Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.6231021Z Downloading coverage-7.10.6-cp313-cp313-win_amd64.whl (220 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.6736415Z Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.6956373Z Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.7690077Z    ---------------------------------------- 1.2/1.2 MB 13.8 MB/s  0:00:00
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:09.8615080Z Installing collected packages: pygments, pluggy, iniconfig, coverage, colorama, pytest, pytest-cov
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:12.8761830Z 
+test	Install dependencies (pwsh-safe)	2025-09-19T10:43:12.8809048Z Successfully installed colorama-0.4.6 coverage-7.10.6 iniconfig-2.1.0 pluggy-1.6.0 pygments-2.19.2 pytest-8.4.2 pytest-cov-7.0.0
+test	Run tests	∩╗┐2025-09-19T10:43:13.5942818Z ##[group]Run python -m pytest -q --maxfail=1 --cov --cov-report=term-missing --cov-report=xml --cov-report=html
+test	Run tests	2025-09-19T10:43:13.5943575Z [36;1mpython -m pytest -q --maxfail=1 --cov --cov-report=term-missing --cov-report=xml --cov-report=html[0m
+test	Run tests	2025-09-19T10:43:13.6009401Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+test	Run tests	2025-09-19T10:43:13.6009738Z env:
+test	Run tests	2025-09-19T10:43:13.6010000Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Run tests	2025-09-19T10:43:13.6010407Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.13.7\x64/lib/pkgconfig
+test	Run tests	2025-09-19T10:43:13.6011207Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Run tests	2025-09-19T10:43:13.6011575Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Run tests	2025-09-19T10:43:13.6011931Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Run tests	2025-09-19T10:43:13.6012212Z ##[endgroup]
+test	Run tests	2025-09-19T10:43:16.4873765Z 
+test	Run tests	2025-09-19T10:43:16.4874342Z =================================== ERRORS ====================================
+test	Run tests	2025-09-19T10:43:16.4875474Z ________________ ERROR collecting tests/test_imports_smoke.py _________________
+test	Run tests	2025-09-19T10:43:16.4876045Z ImportError while importing test module 'D:\a\Magic\Magic\tests\test_imports_smoke.py'.
+test	Run tests	2025-09-19T10:43:16.4876846Z Hint: make sure your test modules/packages have valid Python names.
+test	Run tests	2025-09-19T10:43:16.4877181Z Traceback:
+test	Run tests	2025-09-19T10:43:16.4877519Z C:\hostedtoolcache\windows\Python\3.13.7\x64\Lib\importlib\__init__.py:88: in import_module
+test	Run tests	2025-09-19T10:43:16.4877986Z     return _bootstrap._gcd_import(name[level:], package, level)
+test	Run tests	2025-09-19T10:43:16.4878300Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test	Run tests	2025-09-19T10:43:16.4878559Z tests\test_imports_smoke.py:9: in <module>
+test	Run tests	2025-09-19T10:43:16.4878828Z     importlib.import_module(mod)
+test	Run tests	2025-09-19T10:43:16.4879214Z C:\hostedtoolcache\windows\Python\3.13.7\x64\Lib\importlib\__init__.py:88: in import_module
+test	Run tests	2025-09-19T10:43:16.4879684Z     return _bootstrap._gcd_import(name[level:], package, level)
+test	Run tests	2025-09-19T10:43:16.4879998Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test	Run tests	2025-09-19T10:43:16.4880274Z scripts\amazon_bestseller_scraper.py:5: in <module>
+test	Run tests	2025-09-19T10:43:16.4880567Z     from cost_manager import track_cost
+test	Run tests	2025-09-19T10:43:16.4880853Z E   ModuleNotFoundError: No module named 'cost_manager'
+test	Run tests	2025-09-19T10:43:16.4881181Z =========================== short test summary info ===========================
+test	Run tests	2025-09-19T10:43:16.4881479Z ERROR tests/test_imports_smoke.py
+test	Run tests	2025-09-19T10:43:16.4881744Z !!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+test	Run tests	2025-09-19T10:43:16.7074654Z ##[error]Process completed with exit code 1.
+test	Upload HTML coverage	∩╗┐2025-09-19T10:43:16.7252175Z ##[group]Run actions/upload-artifact@v4
+test	Upload HTML coverage	2025-09-19T10:43:16.7252509Z with:
+test	Upload HTML coverage	2025-09-19T10:43:16.7252670Z   name: htmlcov
+test	Upload HTML coverage	2025-09-19T10:43:16.7270905Z   path: htmlcov
+test	Upload HTML coverage	2025-09-19T10:43:16.7271122Z   if-no-files-found: warn
+test	Upload HTML coverage	2025-09-19T10:43:16.7271336Z   compression-level: 6
+test	Upload HTML coverage	2025-09-19T10:43:16.7271520Z   overwrite: false
+test	Upload HTML coverage	2025-09-19T10:43:16.7271705Z   include-hidden-files: false
+test	Upload HTML coverage	2025-09-19T10:43:16.7271901Z env:
+test	Upload HTML coverage	2025-09-19T10:43:16.7272135Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Upload HTML coverage	2025-09-19T10:43:16.7272551Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.13.7\x64/lib/pkgconfig
+test	Upload HTML coverage	2025-09-19T10:43:16.7273354Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Upload HTML coverage	2025-09-19T10:43:16.7273710Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Upload HTML coverage	2025-09-19T10:43:16.7274273Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.13.7\x64
+test	Upload HTML coverage	2025-09-19T10:43:16.7274578Z ##[endgroup]
+test	Upload HTML coverage	2025-09-19T10:43:17.0194803Z ##[warning]No files were found with the provided path: htmlcov. No artifacts will be uploaded.
+test	Post Run actions/checkout@v4	∩╗┐2025-09-19T10:43:17.0448380Z Post job cleanup.
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.2791537Z [command]"C:\Program Files\Git\bin\git.exe" version
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3142371Z git version 2.51.0.windows.1
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3236753Z Temporarily overriding HOME='D:\a\_temp\f5cf6d67-b350-445f-96d4-98e9849f04d0' before making global git config changes
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3237904Z Adding repository directory to the temporary git global config as a safe directory
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3249570Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Magic\Magic
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3590206Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.3906454Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.9592222Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.9852273Z http.https://github.com/.extraheader
+test	Post Run actions/checkout@v4	2025-09-19T10:43:17.9900848Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+test	Post Run actions/checkout@v4	2025-09-19T10:43:18.0249077Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+test	Complete job	∩╗┐2025-09-19T10:43:18.5805432Z Cleaning up orphan processes

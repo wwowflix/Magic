@@ -34,3 +34,91 @@ tools/*.bak*
 
 backups/
 
+# --- allow MAGIC receipts under outputs/reports ---
+!outputs/reports/*.tsv
+!outputs/reports/*.md
+!outputs/reports/restore_smoke_ok.txt
+!outputs/reports/nightly_*.txt
+!outputs/reports/post_mortem_*.md
+# --- allow MAGIC receipts under outputs/reports ---
+!outputs/reports/*.tsv
+!outputs/reports/*.md
+!outputs/reports/*.txt
+!outputs/logs/notion_sync/*.txt
+# --- Keep reports (whitelist) ---
+!outputs/reports/
+!outputs/reports/**
+# Reports & heavy outputs
+outputs/reports/**/*.json
+outputs/reports/**/*.tsv
+outputs/reports/**/*.txt
+outputs/reports/**/*.log
+clean_env/
+env/
+.venv/
+venv/
+outputs/cache/
+clean_env/
+env/
+.venv/
+venv/
+outputs/cache/
+outputs/reports/
+backups/
+tests/__pycache__/
+outputs/reports/
+backups/
+tests/__pycache__/
+# Track report artifacts under outputs
+!outputs/reports/
+!outputs/reports/**
+# build + temp + caches
+outputs/**
+!outputs/reports/
+!outputs/reports/**
+
+.wheels/
+wheels/
+dist/
+build/
+.mypy_cache/
+__pycache__/
+*.egg-info/
+
+# local bins + installers
+*.exe
+*.msi
+*.whl
+*.zip
+tools/bin/**
+!tools/magic_space_audit.ps1
+# build + temp + caches
+outputs/**
+!outputs/reports/
+!outputs/reports/**
+
+.wheels/
+wheels/
+dist/
+build/
+.mypy_cache/
+__pycache__/
+*.egg-info/
+
+# local bins + installers
+*.exe
+*.msi
+*.whl
+*.zip
+tools/bin/**
+!tools/magic_space_audit.ps1
+backups/
+**/__pycache__/
+*.pyc
+htmlcov/
+.pytest_cache/
+.coverage
+coverage.xml
+
+/outputs/reports/readiness/
+

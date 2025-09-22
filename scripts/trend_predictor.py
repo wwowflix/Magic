@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-import pandas as pd
+﻿import pandas as pd
 import numpy as np
 import plotly.express as px
 
@@ -11,7 +10,10 @@ values = np.random.poisson(lam=500, size=60)
 # Add a sudden spike
 values[30] += 1000
 
-df = pd.DataFrame({"date": dates, "search_volume": values})
+df = pd.DataFrame({
+    "date": dates,
+    "search_volume": values
+})
 
 # Simple anomaly detection: flag values > mean + 2*std
 threshold = df["search_volume"].mean() + 2 * df["search_volume"].std()
@@ -23,7 +25,7 @@ fig.add_scatter(
     y=df.loc[df["anomaly"], "search_volume"],
     mode="markers",
     marker=dict(color="red", size=10),
-    name="Anomaly",
+    name="Anomaly"
 )
 
 fig.show()
