@@ -129,3 +129,10 @@ __pycache__/
 outputs/
 venv/
 
+
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+venv/
+
