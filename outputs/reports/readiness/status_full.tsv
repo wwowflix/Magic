@@ -1,2 +1,49 @@
-﻿id	week	step	action	purpose	mandatory	status	notes	path
-0	0	0	(empty)	(empty)	Yes	FAIL	No checks emitted	D:\MAGIC
+id	week	step	action	purpose	mandatory	status	notes	path
+0	0	0	Set-Location D:\MAGIC	Start at repo root	Yes	PASS	OK	D:\MAGIC
+1	1	1	git pull	Sync with remote	Yes	PASS	OK	origin/*
+2	2	1	git checkout -b prod-release	Work in safe branch	Yes	PASS	OK	branch prod-release
+3	3	1	python -m venv venv	Create virtualenv	Yes	PASS	OK	venv/
+4	4	1	Activate venv	Use project python	Yes	PASS	OK	venv/active
+5	5	1	pip upgrade	Fresh installer	No	PASS	OK	pip
+6	6	2	pip install -r requirements.txt	Install deps	Yes	PASS	OK	requirements.txt
+7	7	2	MPLBACKEND="Agg"	Headless plots	No	PASS	OK	env
+8	8	2	pre-commit install	Hooks installed	Yes	PASS	OK	.pre-commit-config.yaml
+9	9	2	pre-commit run --all-files	Hygiene run possible	No	PASS	OK	.git/
+10	10	3	pytest -q	Tests runnable	Yes	PASS	OK	pytest.ini
+11	11	3	pytest --cov --cov-fail-under=75	Coverage policy	No	PASS	OK	.coveragerc
+12	12	3	pip-audit/safety/bandit	Security tools present	No	PASS	OK	tools present
+13	13	3	detect-secrets/gitleaks	Secret scanners present	No	FAIL	Missing/Not detected	config present
+14	3.5		tools/magic_full_scan.ps1	Baseline repo scan capability	Yes	PASS	OK	tools/magic_full_scan.ps1
+15	4		mock_contract_tests.py	API contract tests present	No	PASS	OK	tools/contracts/mock_contract_tests.py
+16	4		tools/dag_smoke.py --dry-run	DAG integrity	No	PASS	OK	tools/dag_smoke.py
+17	4		data_quality/*.py	Data quality checks present	No	PASS	OK	tools/data_quality
+18	5		build_dashboard.py	Dashboard builder present	No	PASS	OK	tools/build_dashboard.py
+19	5		magic_scan_status.ps1	Scan completeness tool	No	PASS	OK	tools/magic_scan_status.ps1
+20	5		load magic_scan_summary.json	Scan summary consumable	No	PASS	OK	outputs/reports/scan/magic_scan_summary.json
+21	5		magic_todo_audit.ps1	To-do audit present	No	PASS	OK	tools/magic_todo_audit.ps1
+22	5		verify_magic_complete.ps1	Gatekeeper present	Yes	PASS	OK	tools/verify_magic_complete.ps1
+23	5.5		magic_self_test.ps1	Self-test pack present	No	PASS	OK	tools/magic_self_test.ps1
+24	6		check_spend.py	Cost guard	No	PASS	OK	tools/cost_quota/check_spend.py
+25	6		check_quota.py	Quota guard	No	PASS	OK	tools/cost_quota/check_quota.py
+26	6		chaos/inject_failures.py	Chaos test	No	PASS	OK	tools/chaos/inject_failures.py
+27	6		drill/restore_from_latest.py	Recovery drill	No	PASS	OK	tools/drill/restore_from_latest.py
+28	7		git commit "receipts"	Commit hygiene	Yes	PASS	OK	.git
+29	7		push prod-release	Remote branch exists	Yes	FAIL	Missing/Not detected	origin/prod-release
+30	7		re-scan before tag	Fresh scan exists	No	PASS	OK	outputs/reports/scan/files.tsv
+31	7		git tag v1.0-stable	Release tag exists	Yes	FAIL	Missing/Not detected	refs/tags/v1.0-stable
+32	7		requirements.lock.txt	Locked deps exist	No	PASS	OK	requirements.lock.txt
+33	7		SBOM (cyclonedx)	SBOM exists	No	PASS	OK	outputs/reports/sbom.json
+34	8		docker build	Dockerfile present	No	PASS	OK	Dockerfile
+35	8		HEALTHCHECK CMD	Healthcheck script present	No	PASS	OK	tools/live_healthcheck.py
+36	9		publish/canary_post.py	Canary publish tool present	No	PASS	OK	tools/publish/canary_post.py
+37	9		rollback_to_tag.py	Rollback tool present	No	PASS	OK	tools/release/rollback_to_tag.py
+38	10		Nightly scan task	ScheduledTask present (MAGIC)	No	PASS	OK	Task Scheduler
+39	10		ops/calc_sli.py	SLI metrics present	No	PASS	OK	tools/ops/calc_sli.py
+40	10		ops/check_slo.py	SLO policy present	No	PASS	OK	tools/ops/check_slo.py
+41	11		plan_cleanup.ps1	Cleanup planner present	No	PASS	OK	tools/plan_cleanup.ps1
+42	11		Quarantine script	Quarantine present	No	FAIL	A parameter cannot be found that matches parameter name 'or'.	tools/quarantine.ps1|.py
+43	12		pre-commit run --all-files (final pass)	Final hygiene capability	Yes	PASS	OK	.pre-commit-config.yaml
+44	12		verify_magic_complete.ps1 (final gate)	Gatekeeper present (final)	Yes	PASS	OK	tools/verify_magic_complete.ps1
+45	12		merge prod-release -> main	Main branch exists locally	Yes	FAIL	Missing/Not detected	branch main
+46	12		GitHub Release v1.0-stable	Release created	No	FAIL	Missing/Not detected	tag v1.0-stable exists
+47	12		Offsite backup uploaded	Cloud receipts present	No	PASS	OK	outputs/archives/**
