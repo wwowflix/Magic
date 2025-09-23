@@ -1,0 +1,19 @@
+# Load data from your CSV
+$data = Import-Csv -Path "D:\Fulfinal_File_with_Original_Path.csv"
+
+# Loop through each row to create module folders inside phase folders
+foreach ($row in $data) {
+    $phase = $row.Phase.Trim()
+    $module = $row.Module.Trim()
+
+    # Destination path: D:\MAGIC\scripts\phaseX\module_X
+    $targetPath = "D:\MAGIC\scripts\phase$phase\module_$module"
+
+    # Create the folder if it doesn't exist
+    if (!(Test-Path -Path $targetPath)) {
+        New-Item -ItemType Directory -Path $targetPath | Out-Null
+        Write-Output "✅ Created: $targetPath"
+    } else {
+        Write-Output "⚠️ Already exists: $targetPath"
+    }
+}
