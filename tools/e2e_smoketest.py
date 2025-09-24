@@ -66,7 +66,7 @@ def _summarize(
         if status.upper() == "FAIL":
             log_path = _derive_log_path(logs_root, folder, filename)
             found = log_path.exists()
-            entry["log_found"] = found
+            entry["log_found"] = bool(found)
             entry["log_path"] = str(log_path)
             if not found:
                 ok = False
@@ -123,5 +123,6 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
 

@@ -1,101 +1,47 @@
-﻿"""Self-heal helpers used by tests."""
-
-from __future__ import annotations
-import os
-import sys
+﻿from __future__ import annotations
 import subprocess
-from typing import Any
+import sys
+import os
+from typing import Any, Sequence
 
-__all__ = [
-    "fix_unicode",
-    "create_missing_inputs",
-    "pip_install",
-    "apply_remediation",
-    "_run",
-]
+__all__ = ["fix_unicode", "create_missing_inputs", "pip_install", "apply_remediation", "_run"]
 
-
-def fix_unicode(s: Any) -> Any:
-    """Remove common unicode line separators that break logs/parsers.
-
-    If `s` is not a string, return it unchanged.
-    """
-if not isinstance(s, str): return s
-return s.replace("\u2028", "").replace("\u2029", "")
-
+def fix_unicode(s: str) -> str:
+    """Remove common Unicode line separators that break logs/parsers."""
+    if not isinstance(s, str):
+        return s
+    return s.replace("\u2028", "").replace("\u2029", "")
 
 def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
-    """Safely create a missing input file (or its parent dirs)."""
-    try:
-        parent = os.path.dirname(path)
-        if parent and not os.path.exists(parent):
-            os.makedirs(parent, exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write("")
-    except Exception:
-        # Best-effort: ignore any OS errors in tests
-        pass
+    """Safely create a missing input file (and its parent dirs)."""
+    parent = os.path.dirname(path)
+    if parent and not os.path.exists(parent):
+        os.makedirs(parent, exist_ok=True)
+    if not os.path.exists(path):
+        with open(path, "a", encoding="utf-8"):
+            pass
 
+def pip_install(pkgs: Sequence[str]) -> int:
+    """Attempt to install missing packages; return subprocess exit code."""
+    if not pkgs:
+        return 0
+    args = [sys.executable, "-m", "pip", "install", *pkgs]
+    return subprocess.call(args)
 
-def _run(
-    cmd: list[str] | tuple[str, ...], **kwargs: Any,
-) -> subprocess.CompletedProcess:
-    """Wrapper for subprocess.run so tests can monkeypatch."""
-return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
+def _run(cmd: Sequence[str]) -> int:
+    """Run a command and return exit code (tiny wrapper to stub in tests)."""
+    return subprocess.call(list(cmd))
 
-
-def pip_install(package: str) -> bool:
+def apply_remediation(err: BaseException) -> str:
     """
-    Best-effort installer used by remediation. Tests monkeypatch _run to avoid
-    real network calls; we consider returncode==0 a success.
+    Decide a remediation label for a given exception (toy example for unit tests).
+    Return a short string tag describing what we’d do.
     """
-    try:
-        if not package:
-            return False
-        cmd = [sys.executable, "-m", "pip", "install", package]
-        res = _run(cmd)
-        rc = getattr(res, "returncode", 1)
-        return rc == 0
-    except Exception:
-        return False
-
-
-def apply_remediation(exc: Exception) -> bool:
-    """
-    Try to remediate a known class of errors.
-
-    - FileNotFoundError: create a placeholder input and return True
-    - ImportError: attempt pip install of a dummy pkg (tests monkeypatch pip_install) and return True
-    - UnicodeError: normalize and return True
-    - Anything else → False
-    """
-    msg = str(exc).strip()
-    lower = msg.lower()
-
-    # File not found
-    if isinstance(exc, FileNotFoundError) or "filenotfounderror" in lower:
-        target = "missing_placeholder.tmp"
-        if ":" in msg:
-            maybe = msg.split(":", 1)[1].strip()
-            if maybe:
-                target = maybe
-        create_missing_inputs(target)
-        return True
-
-    # Import error
-    if (
-        isinstance(exc, ImportError)
-        or "importerror" in lower
-        or "no module named" in lower
-    ):
-        _ = pip_install("missing-dependency")
-        return True
-
-    # Unicode problems
-    if isinstance(exc, UnicodeError) or "unicode" in lower:
-        _ = fix_unicode(msg)
-        return True
-
-    return False
-
-
+    msg = str(err)
+    if "No module named" in msg:
+        return "pip_install_missing"
+    if isinstance(err, FileNotFoundError):
+        return "create_missing_input"
+    if "UnicodeEncodeError" in msg or "line separator" in msg:
+        return "fix_unicode"
+    return "noop"
