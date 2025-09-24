@@ -18,7 +18,7 @@ __all__ = [
 def fix_unicode(s: str) -> str:
     """Remove common unicode line separators that break logs/parsers."""
     if not isinstance(s, str):
-return s  # type: ignore[unreachable]
+    return s  # type: ignore[unreachable]
     return s.replace("\u2028", "").replace("\u2029", "")
 
 
@@ -98,4 +98,5 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     return False
+
 
