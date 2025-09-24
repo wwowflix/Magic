@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 import subprocess
 from typing import Sequence, Any
 
@@ -25,7 +25,7 @@ def create_missing_inputs(path: str, *_, **__) -> None:
 def fix_unicode(s: str) -> str:
     """Strip U+2028/U+2029."""
     if not isinstance(s, str):
-        return s  # type: ignore[return-value]
+        return s 
     return s.replace("\u2028", "").replace("\u2029", "")
 
 def apply_remediation(err: Exception) -> bool:
