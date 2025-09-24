@@ -67,3 +67,16 @@ def apply_remediation(err: Exception) -> bool:
 
     # Not auto-remediable
     return False
+
+# --- test-driven hotfix: create_missing_inputs ---
+def create_missing_inputs(path: str, *_, **__) -> None:
+    """
+    Ensure the parent directory exists and the file exists (empty).
+    """
+    from pathlib import Path
+
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    if not p.exists():
+        p.write_text("", encoding="utf-8")
+
