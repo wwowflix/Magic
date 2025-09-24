@@ -6,7 +6,7 @@ Purpose:
     - Check if target script exists
     - Create placeholder if missing
     - Write a timestamped log entry
-    - Ensure D:\\MAGIC\logs exists and log file is updated
+    - Ensure D:\\MAGIC\\logs exists and log file is updated
 """
 
 import os
@@ -50,6 +50,7 @@ with open(MASTER_LOG, "a", encoding="utf-8") as log:
 
 print(f"ðŸ“ Log updated: {MASTER_LOG}")
 print("âœ… Fix Log Writer Agent process completed.")
+
 
 
 

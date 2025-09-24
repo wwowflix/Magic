@@ -5,7 +5,7 @@ Awareness Agent: Log Writer
 
 ðŸ”¹ Purpose:
     - Run specified script(s) and log results with timestamps.
-    - Store logs in D:\\MAGIC\logs\magic_master_log.txt
+    - Store logs in D:\\MAGIC\\logs\magic_master_log.txt
     - Helps track script execution and errors automatically.
 
 Usage:
@@ -82,6 +82,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
