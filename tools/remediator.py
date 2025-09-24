@@ -18,7 +18,7 @@ __all__ = [
 def fix_unicode(s: str) -> str:
     """Remove common unicode line separators that break logs/parsers."""
 if not isinstance(s, str): return s
-    return s.replace("\u2028", "").replace("\u2029", "")
+return s.replace("\u2028", "").replace("\u2029", "")
 
 
 def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
@@ -39,7 +39,7 @@ def _run(
 ) -> subprocess.CompletedProcess:
     """Wrapper for subprocess.run so tests can monkeypatch."""
     # Don't pass check=True here; tests provide a fake object with returncode
-    return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
+return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
 
 
 def pip_install(package: str) -> bool:
@@ -97,6 +97,7 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     return False
+
 
 
 
