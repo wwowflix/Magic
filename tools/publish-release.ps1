@@ -92,4 +92,3 @@ try {
 foreach ($p in $Assets) { Upload-ReleaseAsset -Rel $Rel -Path $p -Headers $H -Org $Org -Repo $Repo }
 
 Write-Host "Release page: $($Rel.html_url)"
-

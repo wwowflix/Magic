@@ -1,12 +1,43 @@
-﻿repos:
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.12.11
-  hooks: [{ id: ruff, args: ["--fix"] }]
-- repo: https://github.com/psf/black
-  rev: 25.1.0
-  hooks: [{ id: black }]
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.17.1
-  hooks:
-    - id: mypy
-      additional_dependencies: ["types-requests"]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+      - id: trailing-whitespace
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+      - id: check-yaml
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        args: [--line-length=100]
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.12
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: ^(tools/|src/|MAGIC/)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.17.1
+    hooks:
+      - id: mypy
+        files: ^(tools/|src/|MAGIC/|self_healing_runner.*\.py$)
+        exclude: ^(scripts/|quarantine/|outputs/|wheels/|venv/|\.venv/|clean_env/|magic_file_tracker_export\.csv/|backups/|flow_export/)
+        additional_dependencies:
+          - types-requests
+          - types-PyYAML

@@ -34,3 +34,14 @@ tools/*.bak*
 
 backups/
 
+# --- allow MAGIC receipts under outputs/reports ---
+!outputs/reports/*.tsv
+!outputs/reports/*.md
+!outputs/reports/restore_smoke_ok.txt
+!outputs/reports/nightly_*.txt
+!outputs/reports/post_mortem_*.md
+# --- allow MAGIC receipts under outputs/reports ---
+!outputs/reports/*.tsv
+!outputs/reports/*.md
+!outputs/reports/*.txt
+!outputs/logs/notion_sync/*.txt

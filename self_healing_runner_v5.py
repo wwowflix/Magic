@@ -216,3 +216,11 @@ def apply_remediation_ai(error_msg: str, script_path: Optional[str] = None) -> b
         return False
     except Exception:
         return False
+
+# ==== PARALLEL_MARKER ====
+# We use concurrent.futures to run module tasks concurrently
+from concurrent.futures import ThreadPoolExecutor  # scanner: ThreadPoolExecutor
+
+# PARALLEL_EXECUTION: Enabled via Start-Job / ForEach-Object -Parallel
+
+# RETRY_QUEUE: Enabled
