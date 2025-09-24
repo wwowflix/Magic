@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 # api_validator.py
-# Phase 1 Script � Auto Scaffolded
+# Phase 1 Script – Auto Scaffolded
+
