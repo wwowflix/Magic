@@ -112,3 +112,6 @@ __pycache__/
 *.zip
 tools/bin/**
 !tools/magic_space_audit.ps1
+
+.artifacts/
+
