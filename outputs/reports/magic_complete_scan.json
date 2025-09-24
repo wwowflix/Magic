@@ -1,0 +1,702 @@
+﻿[
+    {
+        "category":  "repo",
+        "name":  "root_path",
+        "value":  "D:\\MAGIC",
+        "status":  "INFO",
+        "notes":  ""
+    },
+    {
+        "category":  "repo",
+        "name":  "exists_.git",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "repo",
+        "name":  "git_branch",
+        "value":  "prod-release",
+        "status":  "INFO",
+        "notes":  "Expect \u0027prod-release\u0027 during readiness"
+    },
+    {
+        "category":  "python",
+        "name":  "venv_present",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "python",
+        "name":  "requirements.txt",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "python",
+        "name":  "requirements.lock.txt",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  "Created at step 32"
+    },
+    {
+        "category":  "hooks",
+        "name":  "pre-commit hook",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase0",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase1",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase2",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase3",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase4",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase5",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase6",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase7",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase8",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase9",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase10",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase11",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase12",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase13",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase14",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase15",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase16",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "scripts\\phase17",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "outputs",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "outputs\\logs",
+        "value":  "False",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "outputs\\reports",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "outputs\\archives",
+        "value":  "False",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "backups",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "agents",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "tools",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "skeleton",
+        "name":  "config",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase0",
+        "value":  "27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase00",
+        "value":  "3591 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=3591)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase01",
+        "value":  "30 files (READY=30, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase02",
+        "value":  "55 files (READY=55, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase03",
+        "value":  "49 files (READY=49, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase04",
+        "value":  "22 files (READY=22, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase05",
+        "value":  "51 files (READY=51, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase06",
+        "value":  "57 files (READY=57, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase07",
+        "value":  "9 files (READY=9, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase08",
+        "value":  "84 files (READY=78, DRAFT=0, HOLD=0, LOCKED=0, BAD=6)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase09",
+        "value":  "41 files (READY=41, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase1",
+        "value":  "26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase10",
+        "value":  "105 files (READY=104, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase11",
+        "value":  "127 files (READY=119, DRAFT=0, HOLD=0, LOCKED=0, BAD=8)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase12",
+        "value":  "106 files (READY=106, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase13",
+        "value":  "81 files (READY=81, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase14",
+        "value":  "79 files (READY=78, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase15",
+        "value":  "78 files (READY=77, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase16",
+        "value":  "41 files (READY=41, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase17",
+        "value":  "49 files (READY=48, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase18",
+        "value":  "116 files (READY=110, DRAFT=0, HOLD=0, LOCKED=0, BAD=6)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase2",
+        "value":  "26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase3",
+        "value":  "26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase4",
+        "value":  "26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase5",
+        "value":  "26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase6",
+        "value":  "28 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=28)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase7",
+        "value":  "27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase8",
+        "value":  "27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase9",
+        "value":  "27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "phase99",
+        "value":  "7 files (READY=3, DRAFT=0, HOLD=0, LOCKED=0, BAD=4)",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "inventory",
+        "name":  "totals",
+        "value":  "files=5044 READY=1159 DRAFT=0 HOLD=0 LOCKED=0 BAD=3885",
+        "status":  "INFO",
+        "notes":  ""
+    },
+    {
+        "category":  "orphans",
+        "name":  "non_matching_py",
+        "value":  "6878",
+        "status":  "WARN",
+        "notes":  "See outputs\\reports\\orphans_list.tsv"
+    },
+    {
+        "category":  "binaries",
+        "name":  "large_files_mb\u003e=50",
+        "value":  "6",
+        "status":  "WARN",
+        "notes":  "See outputs\\reports\\large_files.tsv"
+    },
+    {
+        "category":  "encoding",
+        "name":  "problem_files",
+        "value":  "2067",
+        "status":  "WARN",
+        "notes":  "See outputs\\reports\\encoding_issues.tsv"
+    },
+    {
+        "category":  "runner",
+        "name":  "log_error_markers",
+        "value":  "0",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "14_fullscan",
+        "value":  "outputs\\reports\\magic_full_scan.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "39_sli",
+        "value":  "outputs\\reports\\sli.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "27_restore",
+        "value":  "outputs\\reports\\restore_hash_check.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "33_sbom",
+        "value":  "outputs\\reports\\sbom.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "12_security",
+        "value":  "outputs\\reports\\pip_audit.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "25_quota",
+        "value":  "outputs\\reports\\quota_status.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "47_offsite",
+        "value":  "outputs\\reports\\offsite_backup_receipt.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "31_tag",
+        "value":  "outputs\\reports\\tag_receipt.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "11_coverage",
+        "value":  "outputs\\reports\\coverage.xml",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "37_rollback",
+        "value":  "outputs\\reports\\rollback_test.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "21_todo",
+        "value":  "outputs\\reports\\magic_todo_audit.tsv",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "41_cleanup",
+        "value":  "outputs\\reports\\plan_cleanup.tsv",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "24_spend",
+        "value":  "outputs\\reports\\cost_spend.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "32_lock",
+        "value":  "requirements.lock.txt",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "42_quarantine",
+        "value":  "outputs\\reports\\quarantine_receipt.tsv",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "26_chaos",
+        "value":  "outputs\\reports\\chaos_report.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "22_gate",
+        "value":  "outputs\\reports\\verify_magic_complete.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "38_task",
+        "value":  "outputs\\reports\\scheduled_task_receipt.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "23_selftest",
+        "value":  "outputs\\reports\\self_test_scorecard.tsv",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "46_release",
+        "value":  "outputs\\reports\\release_receipt.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "09_precommit",
+        "value":  "outputs\\reports\\precommit_receipt.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "10_pytest",
+        "value":  "outputs\\reports\\pytest_summary.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "34_docker",
+        "value":  "outputs\\reports\\docker_build_receipt.txt",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "36_canary",
+        "value":  "outputs\\reports\\canary_receipt.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "40_slo",
+        "value":  "outputs\\reports\\slo_check.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_receipts",
+        "name":  "20_scan_sum",
+        "value":  "outputs\\reports\\magic_scan_summary.json",
+        "status":  "FAIL",
+        "notes":  ""
+    },
+    {
+        "category":  "readiness_summary",
+        "name":  "receipts_pass",
+        "value":  "1/26",
+        "status":  "WARN",
+        "notes":  ""
+    },
+    {
+        "category":  "resilience",
+        "name":  "backups_dir",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "resilience",
+        "name":  "quarantine_dir",
+        "value":  "True",
+        "status":  "PASS",
+        "notes":  ""
+    },
+    {
+        "category":  "docker",
+        "name":  "Dockerfile",
+        "value":  "True",
+        "status":  "INFO",
+        "notes":  ""
+    },
+    {
+        "category":  "docker",
+        "name":  "tools\\live_healthcheck.py",
+        "value":  "True",
+        "status":  "INFO",
+        "notes":  ""
+    }
+]

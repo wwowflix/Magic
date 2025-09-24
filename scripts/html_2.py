@@ -103,7 +103,7 @@ _WS_CHARS = "".join(
         "\u0009-\u000d",  # combine the above
         "\u0020",  # SPACE
         "\u0085",  # NEXT LINE
-        # "\u00a0",  # NO-BREAK SPACE   (keep)
+        # "\ ",  # NO-BREAK SPACE   (keep)
         # "\u1680",  # OGHAM SPACE MARK (not actually white)
         # "\u2000",  # EN QUAD
         # "\u2001",  # EM QUAD
@@ -112,14 +112,14 @@ _WS_CHARS = "".join(
         # "\u2004",  # THREE-PER-EM SPACE
         # "\u2005",  # FOUR-PER-EM SPACE
         # "\u2006",  # SIX-PER-EM SPACE
-        # "\u2007",  # FIGURE SPACE
+        # "\ ",  # FIGURE SPACE
         # "\u2008",  # PUNCTUATION SPACE
-        # "\u2009",  # THIN SPACE
-        # "\u200a",  # HAIR SPACE
-        "\u2000-\u200a",  # combine the above
+        # "\ ",  # THIN SPACE
+        # "\ ",  # HAIR SPACE
+        "\u2000-\ ",  # combine the above
         "\u2028",  # LINE SEPARATOR
         "\u2029",  # PARAGRAPH SEPARATOR
-        # "\u202f",  # NARROW NO-BREAK SPACE (keep)
+        # "\ ",  # NARROW NO-BREAK SPACE (keep)
         "\u205f",  # MEDIUM MATHEMATICAL SPACE
         "\u3000",  # IDEOGRAPHIC SPACE
     )
@@ -849,7 +849,7 @@ class HTML2FPDF(HTMLParser):
                     bottom_margin=tag_style.b_margin,
                     indent=tag_style.l_margin,
                 )
-                self._write_paragraph("\u00a0")
+                self._write_paragraph("\ ")
             self._end_paragraph()
         if tag == "ol":
             self.indent += 1
@@ -876,7 +876,7 @@ class HTML2FPDF(HTMLParser):
                     bottom_margin=tag_style.b_margin,
                     indent=tag_style.l_margin,
                 )
-                self._write_paragraph("\u00a0")
+                self._write_paragraph("\ ")
             self._end_paragraph()
         if tag == "li":
             prev_text_color = self.pdf.text_color

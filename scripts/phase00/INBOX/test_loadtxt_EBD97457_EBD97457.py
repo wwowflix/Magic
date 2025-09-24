@@ -165,7 +165,7 @@ def test_bad_ndmin(badval):
         " ",  # space
         "\t",  # tab
         "\u2003",  # em
-        "\u00a0",  # non-break
+        "\ ",  # non-break
         "\u3000",  # ideographic space
     ),
 )
@@ -487,7 +487,7 @@ def test_object_cleanup_on_read_error():
 )
 def test_character_not_bytes_compatible():
     """Test exception when a character cannot be encoded as 'S'."""
-    data = StringIO("–")  # == \u2013
+    data = StringIO("–")  # == \-
     with pytest.raises(ValueError):
         np.loadtxt(data, dtype="S5")
 
@@ -723,10 +723,10 @@ def test_byteswapping_and_unaligned(dtype, value, swap):
 @pytest.mark.parametrize("dtype", np.typecodes["AllInteger"] + "efdFD" + "?")
 def test_unicode_whitespace_stripping(dtype):
     # Test that all numeric types (and bool) strip whitespace correctly
-    # \u202F is a narrow no-break space, `\n` is just a whitespace if quoted.
+    # \  is a narrow no-break space, `\n` is just a whitespace if quoted.
     # Currently, skip float128 as it did not always support this and has no
     # "custom" parsing:
-    txt = StringIO(' 3 ,"\u202f2\n"')
+    txt = StringIO(' 3 ,"\ 2\n"')
     res = np.loadtxt(txt, dtype=dtype, delimiter=",", quotechar='"')
     assert_array_equal(res, np.array([3, 2]).astype(dtype))
 
@@ -736,7 +736,7 @@ def test_unicode_whitespace_stripping_complex(dtype):
     # Complex has a few extra cases since it has two components and
     # parentheses
     line = " 1 , 2+3j , ( 4+5j ), ( 6+-7j )  , 8j , ( 9j ) \n"
-    data = [line, line.replace(" ", "\u202f")]
+    data = [line, line.replace(" ", "\ ")]
     res = np.loadtxt(data, dtype=dtype, delimiter=",")
     assert_array_equal(res, np.array([[1, 2 + 3j, 4 + 5j, 6 - 7j, 8j, 9j]] * 2))
 
@@ -958,7 +958,7 @@ def test_delimiter_and_multiple_comments_collision_raises():
         " ",  # space
         "\t",  # tab
         "\u2003",  # em
-        "\u00a0",  # non-break
+        "\ ",  # non-break
         "\u3000",  # ideographic space
     ),
 )

@@ -118,7 +118,7 @@ def test_unicode_encoding(all_parsers, csv_dir_path):
 def test_utf8_bom(all_parsers, data, kwargs, expected, request):
     # see gh-4793
     parser = all_parsers
-    bom = "\ufeff"
+    bom = "\"
     utf8 = "utf-8"
 
     def _encode_data_with_bom(_data):

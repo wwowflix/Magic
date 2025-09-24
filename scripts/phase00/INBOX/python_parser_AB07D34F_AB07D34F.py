@@ -54,7 +54,7 @@ if TYPE_CHECKING:
 # This exists at the beginning of a file to indicate endianness
 # of a file (stream). Unfortunately, this marker screws up parsing,
 # so we need to remove it if we see it.
-_BOM = "\ufeff"
+_BOM = "\"
 
 
 class PythonParser(ParserBase):

@@ -1,0 +1,25 @@
+﻿Step	Check	Status	Notes
+0	In repo root	PASS	.git present
+1	Git reachable	PASS	git ok
+2	On branch prod-release	PASS	prod-release
+3	venv folder exists	PASS	venv
+4	requirements.txt present	PASS	requirements.txt
+13	Secrets scan receipts	FAIL	run detect-secrets/gitleaks
+14	Full scan receipts present	FAIL	inventory_full.tsv or scan\\files.tsv
+20	magic_scan_summary.json	FAIL	D:\MAGIC\outputs\reports\magic_scan_summary.json
+21	verify_magic_complete.ps1	PASS	gatekeeper present
+23	self-test scorecard present	FAIL	D:\MAGIC\outputs\reports\self_test\selftest_scorecard.tsv
+24	cost quota: check_spend.py	PASS	present?
+25	cost quota: check_quota.py	PASS	present?
+26	chaos: inject_failures.py	PASS	present?
+27	restore_from_latest.py	PASS	present?
+28	Recent commit exists	PASS	HEAD=edfb30651
+29	Branch pushed (origin/prod-release)	PASS	git push -u origin prod-release
+30	Re-scan report exists	FAIL	re-scan done?
+31	Tag v1.0-stable exists	PASS	git tag v1.0-stable
+32	requirements.lock.txt present	PASS	lockfile present
+33	SBOM (cyclonedx) present	FAIL	outputs\\reports\\sbom.json
+41	plan_cleanup.ps1 exists	PASS	cleanup planner
+42	Quarantine helper present	FAIL	tools\\quarantine.ps1
+45	main merged from prod-release (remote)	FAIL	origin/prod-release=edfb306 -> origin/main=0d04cfa
+47	Offsite backup receipts	FAIL	any readiness tsv/json saved?

@@ -21,7 +21,7 @@ HYPHEN = "\u002d"
 SPACE = " "
 BREAKING_SPACE_SYMBOLS = [
     " ",
-    "\u200b",  # | ZERO WIDTH SPACE
+    "\",  # | ZERO WIDTH SPACE
     "\u2000",  # | EN QUAD
     "\u2001",  # | EM QUAD
     "\u2002",  # | EN SPACE
@@ -30,14 +30,14 @@ BREAKING_SPACE_SYMBOLS = [
     "\u2005",  # | FOUR-PER-EM SPACE
     "\u2006",  # | SIX-PER-EM SPACE
     "\u2008",  # | PUNCTUATION SPACE
-    "\u2009",  # | THIN SPACE
-    "\u200a",  # | HAIR SPACE
+    "\ ",  # | THIN SPACE
+    "\ ",  # | HAIR SPACE
     "\u205f",  # | MEDIUM MATHEMATICAL SPACE
     "\u3000",  # | IDEOGRAPHIC SPACE
     "\u0009",  # | TAB
 ]
 BREAKING_SPACE_SYMBOLS_STR = "".join(BREAKING_SPACE_SYMBOLS)
-NBSP = "\u00a0"
+NBSP = "\ "
 NEWLINE = "\n"
 FORM_FEED = "\u000c"
 

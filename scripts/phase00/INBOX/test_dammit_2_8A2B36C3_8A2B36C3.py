@@ -22,7 +22,7 @@ class TestUnicodeDammit(object):
     @pytest.mark.parametrize(
         "smart_quotes_to,expect_converted",
         [
-            (None, "\u2018\u2019\u201c\u201d"),
+            (None, "\'\'\"\""),
             ("xml", "&#x2018;&#x2019;&#x201C;&#x201D;"),
             ("html", "&lsquo;&rsquo;&ldquo;&rdquo;"),
             ("ascii", "''" + '""'),
