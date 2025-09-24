@@ -1,11 +1,11 @@
 ﻿name: CI
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
-
-jobs:
+    types: [opened, reopened, synchronize, ready_for_review]
+  push:
+    branches: [ main, prod-release ]
+  workflow_dispatch:jobs:
   tests:
     name: tests
     runs-on: windows-latest
@@ -47,4 +47,5 @@ jobs:
 
 
 workflow_dispatch:
+
 
