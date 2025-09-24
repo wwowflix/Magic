@@ -73,9 +73,7 @@ xpath_tokenizer_re = re.compile(
 
 def xpath_tokenizer(pattern, namespaces=None, with_prefixes=True):
     # ElementTree uses '', lxml used None originally.
-    default_namespace = (
-        (namespaces.get(None) or namespaces.get("")) if namespaces else None
-    )
+    default_namespace = (namespaces.get(None) or namespaces.get("")) if namespaces else None
     parsing_attribute = False
     for token in xpath_tokenizer_re.findall(pattern):
         ttype, tag = token
@@ -202,9 +200,7 @@ def prepare_predicate(next, token):
                     break
 
         return select
-    if signature == ".='" or (
-        signature == "-='" and not re.match(r"-?\d+$", predicate[0])
-    ):
+    if signature == ".='" or (signature == "-='" and not re.match(r"-?\d+$", predicate[0])):
         # [.='value'] or [tag='value']
         tag = predicate[0]
         value = predicate[-1]
@@ -232,9 +228,7 @@ def prepare_predicate(next, token):
             index = int(predicate[0]) - 1
             if index < 0:
                 if index == -1:
-                    raise SyntaxError(
-                        "indices in path predicates are 1-based, not 0-based"
-                    )
+                    raise SyntaxError("indices in path predicates are 1-based, not 0-based")
                 else:
                     raise SyntaxError("path index >= 1 expected")
         else:

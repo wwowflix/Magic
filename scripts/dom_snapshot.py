@@ -173,16 +173,10 @@ class DOMNode:
             backend_node_id=dom.BackendNodeId.from_json(json["backendNodeId"]),
             text_value=str(json["textValue"]) if "textValue" in json else None,
             input_value=str(json["inputValue"]) if "inputValue" in json else None,
-            input_checked=(
-                bool(json["inputChecked"]) if "inputChecked" in json else None
-            ),
-            option_selected=(
-                bool(json["optionSelected"]) if "optionSelected" in json else None
-            ),
+            input_checked=(bool(json["inputChecked"]) if "inputChecked" in json else None),
+            option_selected=(bool(json["optionSelected"]) if "optionSelected" in json else None),
             child_node_indexes=(
-                [int(i) for i in json["childNodeIndexes"]]
-                if "childNodeIndexes" in json
-                else None
+                [int(i) for i in json["childNodeIndexes"]] if "childNodeIndexes" in json else None
             ),
             attributes=(
                 [NameValue.from_json(i) for i in json["attributes"]]
@@ -194,31 +188,21 @@ class DOMNode:
                 if "pseudoElementIndexes" in json
                 else None
             ),
-            layout_node_index=(
-                int(json["layoutNodeIndex"]) if "layoutNodeIndex" in json else None
-            ),
+            layout_node_index=(int(json["layoutNodeIndex"]) if "layoutNodeIndex" in json else None),
             document_url=str(json["documentURL"]) if "documentURL" in json else None,
             base_url=str(json["baseURL"]) if "baseURL" in json else None,
-            content_language=(
-                str(json["contentLanguage"]) if "contentLanguage" in json else None
-            ),
+            content_language=(str(json["contentLanguage"]) if "contentLanguage" in json else None),
             document_encoding=(
                 str(json["documentEncoding"]) if "documentEncoding" in json else None
             ),
             public_id=str(json["publicId"]) if "publicId" in json else None,
             system_id=str(json["systemId"]) if "systemId" in json else None,
-            frame_id=(
-                page.FrameId.from_json(json["frameId"]) if "frameId" in json else None
-            ),
+            frame_id=(page.FrameId.from_json(json["frameId"]) if "frameId" in json else None),
             content_document_index=(
-                int(json["contentDocumentIndex"])
-                if "contentDocumentIndex" in json
-                else None
+                int(json["contentDocumentIndex"]) if "contentDocumentIndex" in json else None
             ),
             pseudo_type=(
-                dom.PseudoType.from_json(json["pseudoType"])
-                if "pseudoType" in json
-                else None
+                dom.PseudoType.from_json(json["pseudoType"]) if "pseudoType" in json else None
             ),
             shadow_root_type=(
                 dom.ShadowRootType.from_json(json["shadowRootType"])
@@ -227,10 +211,7 @@ class DOMNode:
             ),
             is_clickable=bool(json["isClickable"]) if "isClickable" in json else None,
             event_listeners=(
-                [
-                    dom_debugger.EventListener.from_json(i)
-                    for i in json["eventListeners"]
-                ]
+                [dom_debugger.EventListener.from_json(i) for i in json["eventListeners"]]
                 if "eventListeners" in json
                 else None
             ),
@@ -238,12 +219,8 @@ class DOMNode:
                 str(json["currentSourceURL"]) if "currentSourceURL" in json else None
             ),
             origin_url=str(json["originURL"]) if "originURL" in json else None,
-            scroll_offset_x=(
-                float(json["scrollOffsetX"]) if "scrollOffsetX" in json else None
-            ),
-            scroll_offset_y=(
-                float(json["scrollOffsetY"]) if "scrollOffsetY" in json else None
-            ),
+            scroll_offset_x=(float(json["scrollOffsetX"]) if "scrollOffsetX" in json else None),
+            scroll_offset_y=(float(json["scrollOffsetY"]) if "scrollOffsetY" in json else None),
         )
 
 
@@ -584,18 +561,10 @@ class DocumentSnapshot:
             nodes=NodeTreeSnapshot.from_json(json["nodes"]),
             layout=LayoutTreeSnapshot.from_json(json["layout"]),
             text_boxes=TextBoxSnapshot.from_json(json["textBoxes"]),
-            scroll_offset_x=(
-                float(json["scrollOffsetX"]) if "scrollOffsetX" in json else None
-            ),
-            scroll_offset_y=(
-                float(json["scrollOffsetY"]) if "scrollOffsetY" in json else None
-            ),
-            content_width=(
-                float(json["contentWidth"]) if "contentWidth" in json else None
-            ),
-            content_height=(
-                float(json["contentHeight"]) if "contentHeight" in json else None
-            ),
+            scroll_offset_x=(float(json["scrollOffsetX"]) if "scrollOffsetX" in json else None),
+            scroll_offset_y=(float(json["scrollOffsetY"]) if "scrollOffsetY" in json else None),
+            content_width=(float(json["contentWidth"]) if "contentWidth" in json else None),
+            content_height=(float(json["contentHeight"]) if "contentHeight" in json else None),
         )
 
 
@@ -700,21 +669,15 @@ class NodeTreeSnapshot:
     @classmethod
     def from_json(cls, json):
         return cls(
-            parent_index=(
-                [int(i) for i in json["parentIndex"]] if "parentIndex" in json else None
-            ),
-            node_type=(
-                [int(i) for i in json["nodeType"]] if "nodeType" in json else None
-            ),
+            parent_index=([int(i) for i in json["parentIndex"]] if "parentIndex" in json else None),
+            node_type=([int(i) for i in json["nodeType"]] if "nodeType" in json else None),
             shadow_root_type=(
                 RareStringData.from_json(json["shadowRootType"])
                 if "shadowRootType" in json
                 else None
             ),
             node_name=(
-                [StringIndex.from_json(i) for i in json["nodeName"]]
-                if "nodeName" in json
-                else None
+                [StringIndex.from_json(i) for i in json["nodeName"]] if "nodeName" in json else None
             ),
             node_value=(
                 [StringIndex.from_json(i) for i in json["nodeValue"]]
@@ -732,19 +695,13 @@ class NodeTreeSnapshot:
                 else None
             ),
             text_value=(
-                RareStringData.from_json(json["textValue"])
-                if "textValue" in json
-                else None
+                RareStringData.from_json(json["textValue"]) if "textValue" in json else None
             ),
             input_value=(
-                RareStringData.from_json(json["inputValue"])
-                if "inputValue" in json
-                else None
+                RareStringData.from_json(json["inputValue"]) if "inputValue" in json else None
             ),
             input_checked=(
-                RareBooleanData.from_json(json["inputChecked"])
-                if "inputChecked" in json
-                else None
+                RareBooleanData.from_json(json["inputChecked"]) if "inputChecked" in json else None
             ),
             option_selected=(
                 RareBooleanData.from_json(json["optionSelected"])
@@ -757,9 +714,7 @@ class NodeTreeSnapshot:
                 else None
             ),
             pseudo_type=(
-                RareStringData.from_json(json["pseudoType"])
-                if "pseudoType" in json
-                else None
+                RareStringData.from_json(json["pseudoType"]) if "pseudoType" in json else None
             ),
             pseudo_identifier=(
                 RareStringData.from_json(json["pseudoIdentifier"])
@@ -767,9 +722,7 @@ class NodeTreeSnapshot:
                 else None
             ),
             is_clickable=(
-                RareBooleanData.from_json(json["isClickable"])
-                if "isClickable" in json
-                else None
+                RareBooleanData.from_json(json["isClickable"]) if "isClickable" in json else None
             ),
             current_source_url=(
                 RareStringData.from_json(json["currentSourceURL"])
@@ -777,9 +730,7 @@ class NodeTreeSnapshot:
                 else None
             ),
             origin_url=(
-                RareStringData.from_json(json["originURL"])
-                if "originURL" in json
-                else None
+                RareStringData.from_json(json["originURL"]) if "originURL" in json else None
             ),
         )
 
@@ -841,9 +792,7 @@ class LayoutTreeSnapshot:
         if self.client_rects is not None:
             json["clientRects"] = [i.to_json() for i in self.client_rects]
         if self.blended_background_colors is not None:
-            json["blendedBackgroundColors"] = [
-                i.to_json() for i in self.blended_background_colors
-            ]
+            json["blendedBackgroundColors"] = [i.to_json() for i in self.blended_background_colors]
         if self.text_color_opacities is not None:
             json["textColorOpacities"] = [i for i in self.text_color_opacities]
         return json
@@ -856,9 +805,7 @@ class LayoutTreeSnapshot:
             bounds=[Rectangle.from_json(i) for i in json["bounds"]],
             text=[StringIndex.from_json(i) for i in json["text"]],
             stacking_contexts=RareBooleanData.from_json(json["stackingContexts"]),
-            paint_orders=(
-                [int(i) for i in json["paintOrders"]] if "paintOrders" in json else None
-            ),
+            paint_orders=([int(i) for i in json["paintOrders"]] if "paintOrders" in json else None),
             offset_rects=(
                 [Rectangle.from_json(i) for i in json["offsetRects"]]
                 if "offsetRects" in json
@@ -954,9 +901,7 @@ def get_snapshot(
 ) -> typing.Generator[
     T_JSON_DICT,
     T_JSON_DICT,
-    typing.Tuple[
-        typing.List[DOMNode], typing.List[LayoutTreeNode], typing.List[ComputedStyle]
-    ],
+    typing.Tuple[typing.List[DOMNode], typing.List[LayoutTreeNode], typing.List[ComputedStyle]],
 ]:
     """
     Returns a document snapshot, including the full DOM tree of the root node (including iframes,

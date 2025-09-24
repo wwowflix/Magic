@@ -11,9 +11,7 @@ from numpy._core._multiarray_umath import __cpu_baseline__
 from numpy._core._simd import clear_floatstatus, get_floatstatus, targets
 
 
-def check_floatstatus(
-    divbyzero=False, overflow=False, underflow=False, invalid=False, all=False
-):
+def check_floatstatus(divbyzero=False, overflow=False, underflow=False, invalid=False, all=False):
     # define NPY_FPE_DIVIDEBYZERO  1
     # define NPY_FPE_OVERFLOW      2
     # define NPY_FPE_UNDERFLOW     4
@@ -226,9 +224,7 @@ class _SIMD_BOOL(_Test_Utility):
             vpack = pack_simd(vrdata, vrdata, vdata, vdata)
         elif self.sfx == "b64":
             spack = [(i & 0xFF) for i in (4 * list(rdata) + 4 * list(data))]
-            vpack = pack_simd(
-                vrdata, vrdata, vrdata, vrdata, vdata, vdata, vdata, vdata
-            )
+            vpack = pack_simd(vrdata, vrdata, vrdata, vrdata, vdata, vdata, vdata, vdata)
         assert vpack == spack
 
     @pytest.mark.parametrize("intrin", ["any", "all"])
@@ -425,9 +421,7 @@ class _SIMD_FP(_Test_Utility):
             sqrt = self.sqrt(self.setall(case))
             assert sqrt == pytest.approx(data_sqrt, nan_ok=True)
 
-        data_sqrt = self.load(
-            [math.sqrt(x) for x in data]
-        )  # load to truncate precision
+        data_sqrt = self.load([math.sqrt(x) for x in data])  # load to truncate precision
         sqrt = self.sqrt(vdata)
         assert sqrt == data_sqrt
 
@@ -769,18 +763,14 @@ class _SIMD_ALL(_Test_Utility):
             if stride < 0:
                 data = self._data(stride, -stride * self.nlanes)
                 data_stride = list(
-                    itertools.chain(
-                        *zip(*[data[-i::stride] for i in range(scale, 0, -1)])
-                    )
+                    itertools.chain(*zip(*[data[-i::stride] for i in range(scale, 0, -1)]))
                 )
             elif stride == 0:
                 data = self._data()
                 data_stride = data[0:scale] * (self.nlanes // scale)
             else:
                 data = self._data(count=stride * self.nlanes)
-                data_stride = list(
-                    itertools.chain(*zip(*[data[i::stride] for i in range(scale)]))
-                )
+                data_stride = list(itertools.chain(*zip(*[data[i::stride] for i in range(scale)])))
             data_stride = self.load(data_stride)  # cast unsigned
             loadn = npyv_loadn(data, stride)
             assert loadn == data_stride
@@ -802,18 +792,14 @@ class _SIMD_ALL(_Test_Utility):
             if stride < 0:
                 data = self._data(stride, -stride * self.nlanes)
                 data_stride = list(
-                    itertools.chain(
-                        *zip(*[data[-i::stride] for i in range(scale, 0, -1)])
-                    )
+                    itertools.chain(*zip(*[data[-i::stride] for i in range(scale, 0, -1)]))
                 )
             elif stride == 0:
                 data = self._data()
                 data_stride = data[0:scale] * (self.nlanes // scale)
             else:
                 data = self._data(count=stride * self.nlanes)
-                data_stride = list(
-                    itertools.chain(*zip(*[data[i::stride] for i in range(scale)]))
-                )
+                data_stride = list(itertools.chain(*zip(*[data[i::stride] for i in range(scale)])))
             data_stride = list(self.load(data_stride))  # cast unsigned
             for n in lanes:
                 nscale = n * scale
@@ -1045,9 +1031,7 @@ class _SIMD_ALL(_Test_Utility):
         for i in range(permn):
             indices = [(i >> shf) & permd for shf in shfl]
             vperm = self.permi128(data, *indices)
-            data_vperm = [
-                data[j + (e & -permn)] for e, j in enumerate(indices * nlane128)
-            ]
+            data_vperm = [data[j + (e & -permn)] for e, j in enumerate(indices * nlane128)]
             assert vperm == data_vperm
 
     @pytest.mark.parametrize(
@@ -1362,13 +1346,9 @@ for target_name, npyv in targets.items():
         skip = f"target '{pretty_name}' isn't supported by NPYV"
     else:
         if not npyv.simd_f32:
-            skip_sfx["f32"] = (
-                f"target '{pretty_name}' " "doesn't support single-precision"
-            )
+            skip_sfx["f32"] = f"target '{pretty_name}' " "doesn't support single-precision"
         if not npyv.simd_f64:
-            skip_sfx["f64"] = (
-                f"target '{pretty_name}' doesn't" "support double-precision"
-            )
+            skip_sfx["f64"] = f"target '{pretty_name}' doesn't" "support double-precision"
 
     for sfxes, cls in tests_registry.items():
         for sfx in sfxes:
@@ -1379,9 +1359,7 @@ for target_name, npyv in targets.items():
                 "sfx": sfx,
                 "target_name": target_name,
             }
-            tcls = type(
-                f"Test{cls.__name__}_{simd_width}_{target_name}_{sfx}", inhr, attr
-            )
+            tcls = type(f"Test{cls.__name__}_{simd_width}_{target_name}_{sfx}", inhr, attr)
             if skip_m:
                 pytest.mark.skip(reason=skip_m)(tcls)
             globals()[tcls.__name__] = tcls

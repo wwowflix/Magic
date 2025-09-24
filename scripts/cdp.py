@@ -75,9 +75,7 @@ def import_devtools(ver):
         return devtools
 
 
-_connection_context: contextvars.ContextVar = contextvars.ContextVar(
-    "connection_context"
-)
+_connection_context: contextvars.ContextVar = contextvars.ContextVar("connection_context")
 _session_context: contextvars.ContextVar = contextvars.ContextVar("session_context")
 
 
@@ -135,9 +133,7 @@ def set_global_connection(connection):
     certain use cases such as running inside Jupyter notebook.
     """
     global _connection_context
-    _connection_context = contextvars.ContextVar(
-        "_connection_context", default=connection
-    )
+    _connection_context = contextvars.ContextVar("_connection_context", default=connection)
 
 
 def set_global_session(session):
@@ -232,9 +228,7 @@ class CdpBase:
             logger.debug(f"Received CDP message: {response}")
         if isinstance(response, Exception):
             if logger.isEnabledFor(logging.DEBUG):
-                logger.debug(
-                    f"Exception raised by {cmd_event} message: {type(response).__name__}"
-                )
+                logger.debug(f"Exception raised by {cmd_event} message: {type(response).__name__}")
             raise response
         return response
 
@@ -286,9 +280,7 @@ class CdpBase:
         try:
             cmd, event = self.inflight_cmd.pop(cmd_id)
         except KeyError:
-            logger.warning(
-                "Got a message with a command ID that does not exist: %s", data
-            )
+            logger.warning("Got a message with a command ID that does not exist: %s", data)
             return
         if "error" in data:
             # If the server reported an error, convert it to an exception and do
@@ -299,9 +291,7 @@ class CdpBase:
             # into a CDP object.
             try:
                 _ = cmd.send(data["result"])
-                raise InternalError(
-                    "The command's generator function did not exit when expected!"
-                )
+                raise InternalError("The command's generator function did not exit when expected!")
             except StopIteration as exit:
                 return_ = exit.value
             self.inflight_result[cmd_id] = return_
@@ -320,9 +310,7 @@ class CdpBase:
             try:
                 sender.send_nowait(event)
             except trio.WouldBlock:
-                logger.error(
-                    'Unable to send event "%r" due to full channel %s', event, sender
-                )
+                logger.error('Unable to send event "%r" due to full channel %s', event, sender)
             except trio.BrokenResourceError:
                 to_remove.add(sender)
         if to_remove:
@@ -441,9 +429,7 @@ class CdpConnection(CdpBase, trio.abc.AsyncResource):
         """Returns a new :class:`CdpSession` connected to the specified
         target."""
         global devtools
-        session_id = await self.execute(
-            devtools.target.attach_to_target(target_id, True)
-        )
+        session_id = await self.execute(devtools.target.attach_to_target(target_id, True))
         session = CdpSession(self.ws, session_id, target_id)
         self.sessions[session_id] = session
         return session

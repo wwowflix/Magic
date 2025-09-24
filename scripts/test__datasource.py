@@ -265,9 +265,7 @@ class TestRepositoryAbspath:
 
     def test_ValidHTTP(self):
         scheme, netloc, upath, pms, qry, frg = urlparse(valid_httpurl())
-        local_path = os.path.join(
-            self.repos._destpath, netloc, upath.strip(os.sep).strip("/")
-        )
+        local_path = os.path.join(self.repos._destpath, netloc, upath.strip(os.sep).strip("/"))
         filepath = self.repos.abspath(valid_httpfile())
         assert_equal(local_path, filepath)
 

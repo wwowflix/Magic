@@ -1,4 +1,4 @@
-﻿# longevity_predictor.py
+# longevity_predictor.py
 def predict_trend_longevity():
     print("Predicting trend longevity...")
     # TODO: Implement longevity prediction

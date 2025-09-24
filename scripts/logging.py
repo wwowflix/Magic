@@ -20,9 +20,7 @@ def configure():
     out_handler = logging.StreamHandler(sys.stdout)
     out_handler.addFilter(_not_warning)
     handlers = err_handler, out_handler
-    logging.basicConfig(
-        format="{message}", style="{", handlers=handlers, level=logging.DEBUG
-    )
+    logging.basicConfig(format="{message}", style="{", handlers=handlers, level=logging.DEBUG)
     if hasattr(distutils.log, "Log"):
         monkey.patch_func(set_threshold, distutils.log, "set_threshold")
         # For some reason `distutils.log` module is getting cached in `distutils.dist`

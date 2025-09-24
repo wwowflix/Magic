@@ -1,4 +1,4 @@
-﻿# ----------------------------------------
+# ----------------------------------------
 Write-Host "`n🎉 ALL MAGIC SCRIPTS HAVE BEEN RUN SUCCESSFULLY!"
 Write-Host "🧪 Running all tests with pytest..."
 cd scripts

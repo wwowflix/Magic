@@ -184,9 +184,7 @@ class WrappedArray(NDArrayOperatorsMixin):
 
     def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
         if method == "__call__":
-            inputs = [
-                arg._array if isinstance(arg, self.__class__) else arg for arg in inputs
-            ]
+            inputs = [arg._array if isinstance(arg, self.__class__) else arg for arg in inputs]
             return self.__class__(ufunc(*inputs, **kwargs), **self.attrs)
         else:
             return NotImplemented
@@ -359,9 +357,7 @@ class TestSubclassing:
         assert_startswith(repr(mx), "masked_array")
         xsub = SubArray(x)
         mxsub = masked_array(xsub, mask=[True, False, True, False, False])
-        assert_startswith(
-            repr(mxsub), f"masked_{SubArray.__name__}(data=[--, 1, --, 3, 4]"
-        )
+        assert_startswith(repr(mxsub), f"masked_{SubArray.__name__}(data=[--, 1, --, 3, 4]")
 
     def test_subclass_str(self):
         """test str with subclass that has overridden str, setitem"""

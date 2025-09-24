@@ -90,9 +90,7 @@ class CompilerOptions:
         self._user_header = str(user_header) if user_header is not None else ""
 
     def __repr__(self) -> str:
-        return "stanc_options={}, cpp_options={}".format(
-            self._stanc_options, self._cpp_options
-        )
+        return "stanc_options={}, cpp_options={}".format(self._stanc_options, self._cpp_options)
 
     def __eq__(self, other: Any) -> bool:
         """Overrides the default implementation"""
@@ -108,11 +106,7 @@ class CompilerOptions:
 
     def is_empty(self) -> bool:
         """True if no options specified."""
-        return (
-            self._stanc_options == {}
-            and self._cpp_options == {}
-            and self._user_header == ""
-        )
+        return self._stanc_options == {} and self._cpp_options == {} and self._user_header == ""
 
     @property
     def stanc_options(self) -> Dict[str, Union[bool, int, str, Iterable[str]]]:
@@ -158,9 +152,7 @@ class CompilerOptions:
                         deprecated,
                         replacement,
                     )
-                    self._stanc_options[replacement] = copy(
-                        self._stanc_options[deprecated]
-                    )
+                    self._stanc_options[replacement] = copy(self._stanc_options[deprecated])
                     del self._stanc_options[deprecated]
                 else:
                     get_logger().warning(
@@ -202,9 +194,7 @@ class CompilerOptions:
         if paths is not None:
             bad_paths = [dir for dir in paths if not os.path.exists(dir)]
             if any(bad_paths):
-                raise ValueError(
-                    "invalid include paths: {}".format(", ".join(bad_paths))
-                )
+                raise ValueError("invalid include paths: {}".format(", ".join(bad_paths)))
 
             self._stanc_options["include-paths"] = [
                 os.path.abspath(os.path.expanduser(path)) for path in paths
@@ -232,25 +222,17 @@ class CompilerOptions:
         Raise ValueError if bad config is found.
         """
         if self._user_header != "":
-            if not (
-                os.path.exists(self._user_header) and os.path.isfile(self._user_header)
-            ):
-                raise ValueError(
-                    f"User header file {self._user_header} cannot be found"
-                )
+            if not (os.path.exists(self._user_header) and os.path.isfile(self._user_header)):
+                raise ValueError(f"User header file {self._user_header} cannot be found")
             if self._user_header[-4:] != ".hpp":
-                raise ValueError(
-                    f"Header file must end in .hpp, got {self._user_header}"
-                )
+                raise ValueError(f"Header file must end in .hpp, got {self._user_header}")
             if "allow-undefined" not in self._stanc_options:
                 self._stanc_options["allow-undefined"] = True
             # set full path
             self._user_header = os.path.abspath(self._user_header)
 
             if " " in self._user_header:
-                raise ValueError(
-                    "User header must be in a location with no spaces in path!"
-                )
+                raise ValueError("User header must be in a location with no spaces in path!")
 
             if (
                 "USER_HEADER" in self._cpp_options
@@ -304,10 +286,7 @@ class CompilerOptions:
                     opts.append(
                         "--include-paths="
                         + ",".join(
-                            (
-                                Path(p).as_posix()
-                                for p in self._stanc_options["include-paths"]
-                            )
+                            (Path(p).as_posix() for p in self._stanc_options["include-paths"])
                         )
                     )
                 elif key == "name":
@@ -352,8 +331,7 @@ def src_info(stan_file: str, compiler_options: CompilerOptions) -> Dict[str, Any
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
     if proc.returncode:
         raise ValueError(
-            f"Failed to get source info for Stan model "
-            f"'{stan_file}'. Console:\n{proc.stderr}"
+            f"Failed to get source info for Stan model " f"'{stan_file}'. Console:\n{proc.stderr}"
         )
     result: Dict[str, Any] = json.loads(proc.stdout)
     return result
@@ -403,12 +381,9 @@ def compile_stan_file(
     if exe_target.exists():
         exe_time = os.path.getmtime(exe_target)
         included_files = [src]
-        included_files.extend(
-            src_info(str(src), compiler_options).get("included_files", [])
-        )
+        included_files.extend(src_info(str(src), compiler_options).get("included_files", []))
         out_of_date = any(
-            os.path.getmtime(included_file) > exe_time
-            for included_file in included_files
+            os.path.getmtime(included_file) > exe_time for included_file in included_files
         )
         if not out_of_date and not force:
             get_logger().debug("found newer exe file, not recompiling")
@@ -471,9 +446,7 @@ def compile_stan_file(
                     "Please run cmdstanpy.rebuild_cmdstan().\n"
                     "If the issue persists please open a bug report"
                 )
-            raise ValueError(
-                f"Failed to compile Stan model '{src}'. " f"Console:\n{console}"
-            )
+            raise ValueError(f"Failed to compile Stan model '{src}'. " f"Console:\n{console}")
         return str(exe_target)
 
 
@@ -558,9 +531,7 @@ def format_stan_file(
                 if backup:
                     shutil.copyfile(
                         stan_file,
-                        str(stan_file)
-                        + ".bak-"
-                        + datetime.now().strftime("%Y%m%d%H%M%S"),
+                        str(stan_file) + ".bak-" + datetime.now().strftime("%Y%m%d%H%M%S"),
                     )
                 stan_file.write_text(result)
         else:

@@ -1,4 +1,4 @@
-﻿# patch_dashboard.ps1 — replace CSV reads with SQLite queries in dashboard.py
+# patch_dashboard.ps1 — replace CSV reads with SQLite queries in dashboard.py
 
 # 1) Backup the original
 Copy-Item -Path .\dashboard.py -Destination .\dashboard.py.bak -Force

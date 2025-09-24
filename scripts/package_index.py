@@ -61,18 +61,14 @@ __all__ = [
 _SOCKET_TIMEOUT = 15
 
 _tmpl = "setuptools/{setuptools.__version__} Python-urllib/{py_major}"
-user_agent = _tmpl.format(
-    py_major="{}.{}".format(*sys.version_info), setuptools=setuptools
-)
+user_agent = _tmpl.format(py_major="{}.{}".format(*sys.version_info), setuptools=setuptools)
 
 
 def parse_requirement_arg(spec):
     try:
         return Requirement.parse(spec)
     except ValueError as e:
-        raise DistutilsError(
-            "Not a URL, existing file, or requirement spec: %r" % (spec,)
-        ) from e
+        raise DistutilsError("Not a URL, existing file, or requirement spec: %r" % (spec,)) from e
 
 
 def parse_bdist_wininst(name):
@@ -161,9 +157,7 @@ def distros_for_location(location, basename, metadata=None):
 
 def distros_for_filename(filename, metadata=None):
     """Yield possible egg or source distribution objects based on a filename"""
-    return distros_for_location(
-        normalize_path(filename), os.path.basename(filename), metadata
-    )
+    return distros_for_location(normalize_path(filename), os.path.basename(filename), metadata)
 
 
 def interpret_distro_name(
@@ -267,8 +261,7 @@ class ContentChecker:
 
 class HashChecker(ContentChecker):
     pattern = re.compile(
-        r"(?P<hash_name>sha1|sha224|sha384|sha256|sha512|md5)="
-        r"(?P<expected>[a-f0-9]+)"
+        r"(?P<hash_name>sha1|sha224|sha384|sha256|sha512|md5)=" r"(?P<expected>[a-f0-9]+)"
     )
 
     def __init__(self, hash_name, expected):
@@ -308,7 +301,7 @@ class PackageIndex(Environment):
         ca_bundle=None,
         verify_ssl=True,
         *args,
-        **kw
+        **kw,
     ):
         super().__init__(*args, **kw)
         self.index_url = index_url + "/"[: not index_url.endswith("/")]
@@ -402,10 +395,7 @@ class PackageIndex(Environment):
         is_file = s and s.group(1).lower() == "file"
         if is_file or self.allows(urllib.parse.urlparse(url)[1]):
             return True
-        msg = (
-            "\nNote: Bypassing %s (disallowed host; see "
-            "http://bit.ly/2hrImnY for details).\n"
-        )
+        msg = "\nNote: Bypassing %s (disallowed host; see " "http://bit.ly/2hrImnY for details).\n"
         if fatal:
             raise DistutilsError(msg % url)
         else:
@@ -478,14 +468,11 @@ class PackageIndex(Environment):
                     self.need_version_info(url)
             self.scan_url(new_url)
 
-        return PYPI_MD5.sub(
-            lambda m: '<a href="%s#md5=%s">%s</a>' % m.group(1, 3, 2), page
-        )
+        return PYPI_MD5.sub(lambda m: '<a href="%s#md5=%s">%s</a>' % m.group(1, 3, 2), page)
 
     def need_version_info(self, url):
         self.scan_all(
-            "Page at %s links to .py file(s) without version info; an index "
-            "scan is required.",
+            "Page at %s links to .py file(s) without version info; an index " "scan is required.",
             url,
         )
 
@@ -530,8 +517,7 @@ class PackageIndex(Environment):
             os.unlink(filename)
             raise DistutilsError(
                 "%s validation failed for %s; "
-                "possible download problem?"
-                % (checker.hash.name, os.path.basename(filename))
+                "possible download problem?" % (checker.hash.name, os.path.basename(filename))
             )
 
     def add_find_links(self, urls):
@@ -697,11 +683,7 @@ class PackageIndex(Environment):
         match = EGG_FRAGMENT.match(fragment)
         dists = (
             match
-            and [
-                d
-                for d in interpret_distro_name(filename, match.group(1), None)
-                if d.version
-            ]
+            and [d for d in interpret_distro_name(filename, match.group(1), None) if d.version]
             or []
         )
 
@@ -749,9 +731,7 @@ class PackageIndex(Environment):
             checker = HashChecker.from_url(url)
             fp = self.open_url(url)
             if isinstance(fp, urllib.error.HTTPError):
-                raise DistutilsError(
-                    "Can't download %s: %s %s" % (url, fp.code, fp.msg)
-                )
+                raise DistutilsError("Can't download %s: %s %s" % (url, fp.code, fp.msg))
             headers = fp.info()
             blocknum = 0
             bs = self.dl_blocksize
@@ -798,16 +778,13 @@ class PackageIndex(Environment):
             if warning:
                 self.warn(warning, v.reason)
             else:
-                raise DistutilsError(
-                    "Download error for %s: %s" % (url, v.reason)
-                ) from v
+                raise DistutilsError("Download error for %s: %s" % (url, v.reason)) from v
         except http.client.BadStatusLine as v:
             if warning:
                 self.warn(warning, v.line)
             else:
                 raise DistutilsError(
-                    "%s returned a bad status line. The server might be "
-                    "down, %s" % (url, v.line)
+                    "%s returned a bad status line. The server might be " "down, %s" % (url, v.line)
                 ) from v
         except (http.client.HTTPException, socket.error) as v:
             if warning:
@@ -1047,9 +1024,7 @@ class PyPIConfig(configparser.RawConfigParser):
     @property
     def creds_by_repository(self):
         sections_with_repositories = [
-            section
-            for section in self.sections()
-            if self.get(section, "repository").strip()
+            section for section in self.sections() if self.get(section, "repository").strip()
         ]
 
         return dict(map(self._get_repo_cred, sections_with_repositories))
@@ -1151,9 +1126,7 @@ def local_open(url):
                 f += "/"
             files.append('<a href="{name}">{name}</a>'.format(name=f))
         else:
-            tmpl = (
-                "<html><head><title>{url}</title>" "</head><body>{files}</body></html>"
-            )
+            tmpl = "<html><head><title>{url}</title>" "</head><body>{files}</body></html>"
             body = tmpl.format(url=url, files="\n".join(files))
         status, message = 200, "OK"
     else:

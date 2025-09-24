@@ -13,13 +13,13 @@ CATEGORIES = {
 # Simulate monitoring
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
-    f.write("💸 Budget Burn Monitor Started\n")
+    f.write("ðŸ’¸ Budget Burn Monitor Started\n")
     for name, threshold in CATEGORIES.items():
         usage = round(random.uniform(threshold - 20, threshold + 20), 2)
-        status = "⚠️ Exceeded" if usage > threshold else "✅ OK"
-        log_line = f"{name}: {usage} → {status} (Limit: {threshold})"
+        status = "âš ï¸ Exceeded" if usage > threshold else "âœ… OK"
+        log_line = f"{name}: {usage} â†’ {status} (Limit: {threshold})"
         print(log_line)
         f.write(log_line + "\n")
-    f.write("✅ Monitoring complete.\n")
+    f.write("âœ… Monitoring complete.\n")
 
-print(f"📄 Budget report saved to: {LOG_FILE}")
+print(f"ðŸ“„ Budget report saved to: {LOG_FILE}")

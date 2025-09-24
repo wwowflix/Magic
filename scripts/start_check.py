@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import os
 
 REQUIRED_FILES = ["README.md", "docs/naming.md"]

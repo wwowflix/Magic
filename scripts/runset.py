@@ -97,9 +97,7 @@ class RunSet:
         repr = f"{repr}\n per-chain output files (showing chain 1 only):"
         repr = "{}\n csv_file:\n\t{}".format(repr, self._csv_files[0])
         if self._args.save_latent_dynamics:
-            repr = "{}\n diagnostics_file:\n\t{}".format(
-                repr, self._diagnostic_files[0]
-            )
+            repr = "{}\n diagnostics_file:\n\t{}".format(repr, self._diagnostic_files[0])
         if self._args.save_profile:
             repr = "{}\n profile_file:\n\t{}".format(repr, self._profile_files[0])
         repr = "{}\n console_msgs (if any):\n\t{}".format(repr, self._stdout_files[0])
@@ -151,13 +149,9 @@ class RunSet:
                 idx,
                 csv_file=self.csv_files[idx],
                 diagnostic_file=(
-                    self.diagnostic_files[idx]
-                    if self._args.save_latent_dynamics
-                    else None
+                    self.diagnostic_files[idx] if self._args.save_latent_dynamics else None
                 ),
-                profile_file=(
-                    self.profile_files[idx] if self._args.save_profile else None
-                ),
+                profile_file=(self.profile_files[idx] if self._args.save_profile else None),
             )
         else:
             return self._args.compose_command(
@@ -169,9 +163,7 @@ class RunSet:
                     else None
                 ),
                 profile_file=(
-                    self.file_path(".csv", extra="-profile")
-                    if self._args.save_profile
-                    else None
+                    self.file_path(".csv", extra="-profile") if self._args.save_profile else None
                 ),
             )
 
@@ -206,9 +198,7 @@ class RunSet:
         return self._profile_files
 
     # pylint: disable=invalid-name
-    def file_path(
-        self, suffix: str, *, extra: str = "", id: Optional[int] = None
-    ) -> str:
+    def file_path(self, suffix: str, *, extra: str = "", id: Optional[int] = None) -> str:
         if id is not None:
             suffix = f"_{id}{suffix}"
         file = os.path.join(self._output_dir, f"{self._base_outfile}{extra}{suffix}")
@@ -230,10 +220,7 @@ class RunSet:
         """Checks console messages for each CmdStan run."""
         msgs = []
         for i in range(self._num_procs):
-            if (
-                os.path.exists(self._stdout_files[i])
-                and os.stat(self._stdout_files[i]).st_size > 0
-            ):
+            if os.path.exists(self._stdout_files[i]) and os.stat(self._stdout_files[i]).st_size > 0:
                 if self._args.method == Method.OPTIMIZE:
                     msgs.append("console log output:\n")
                     with open(self._stdout_files[0], "r") as fd:
@@ -277,9 +264,7 @@ class RunSet:
             if os.path.exists(to_path):
                 raise ValueError("File exists, not overwriting: {}".format(to_path))
             try:
-                get_logger().debug(
-                    'saving tmpfile: "%s" as: "%s"', self._csv_files[i], to_path
-                )
+                get_logger().debug('saving tmpfile: "%s" as: "%s"', self._csv_files[i], to_path)
                 shutil.move(self._csv_files[i], to_path)
                 self._csv_files[i] = to_path
             except (IOError, OSError, PermissionError) as e:

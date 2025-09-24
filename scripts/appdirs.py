@@ -144,12 +144,8 @@ def site_data_dir(appname=None, appauthor=None, version=None, multipath=False):
     else:
         # XDG default for $XDG_DATA_DIRS
         # only first, if multipath is False
-        path = os.getenv(
-            "XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"])
-        )
-        pathlist = [
-            os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)
-        ]
+        path = os.getenv("XDG_DATA_DIRS", os.pathsep.join(["/usr/local/share", "/usr/share"]))
+        pathlist = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
         if appname:
             if version:
                 appname = os.path.join(appname, version)
@@ -244,9 +240,7 @@ def site_config_dir(appname=None, appauthor=None, version=None, multipath=False)
         # XDG default for $XDG_CONFIG_DIRS
         # only first, if multipath is False
         path = os.getenv("XDG_CONFIG_DIRS", "/etc/xdg")
-        pathlist = [
-            os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)
-        ]
+        pathlist = [os.path.expanduser(x.rstrip(os.sep)) for x in path.split(os.pathsep)]
         if appname:
             if version:
                 appname = os.path.join(appname, version)
@@ -410,9 +404,7 @@ def user_log_dir(appname=None, appauthor=None, version=None, opinion=True):
 class AppDirs(object):
     """Convenience wrapper for getting application dirs."""
 
-    def __init__(
-        self, appname=None, appauthor=None, version=None, roaming=False, multipath=False
-    ):
+    def __init__(self, appname=None, appauthor=None, version=None, roaming=False, multipath=False):
         self.appname = appname
         self.appauthor = appauthor
         self.version = version

@@ -17,10 +17,7 @@ class FPDFPageFormatException(FPDFException):
         self.one = one
 
     def __repr__(self):
-        return (
-            f"{self.__class__.__name__}"
-            f"({self.argument!r}, {self.unknown!r}, {self.one!r})"
-        )
+        return f"{self.__class__.__name__}" f"({self.argument!r}, {self.unknown!r}, {self.one!r})"
 
     def __str__(self):
         if self.unknown:

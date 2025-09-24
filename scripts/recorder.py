@@ -6,7 +6,8 @@ They may change at any time without prior warning or any deprecation period,
 in non-backward-compatible ways.
 """
 
-import types, warnings
+import types
+import warnings
 from copy import deepcopy
 
 from .deprecation import get_stack_level

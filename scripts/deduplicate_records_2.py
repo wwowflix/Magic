@@ -1,4 +1,4 @@
-﻿import sqlite3
+ï¿import sqlite3
 
 conn = sqlite3.connect("outputs/mydata.db")
 
@@ -22,9 +22,9 @@ for table, columns in tables_columns.items():
         )
         """
         )
-        print(f"✅ Deduplicated: {table}")
+        print(f"â�"… Deduplicated: {table}")
     except Exception as e:
-        print(f"⚠️ Error deduplicating {table}: {e}")
+        print(f"âš ï¸� Error deduplicating {table}: {e}")
 
 conn.commit()
 conn.close()

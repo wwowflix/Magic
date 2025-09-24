@@ -63,9 +63,7 @@ class NumericDtype(BaseMaskedDtype):
     def _is_numeric(self) -> bool:
         return True
 
-    def __from_arrow__(
-        self, array: pyarrow.Array | pyarrow.ChunkedArray
-    ) -> BaseMaskedArray:
+    def __from_arrow__(self, array: pyarrow.Array | pyarrow.ChunkedArray) -> BaseMaskedArray:
         """
         Construct IntegerArray/FloatingArray from pyarrow Array/ChunkedArray.
         """
@@ -85,9 +83,7 @@ class NumericDtype(BaseMaskedDtype):
             if rt_dtype.kind not in ["i", "u", "f"]:
                 # Could allow "c" or potentially disallow float<->int conversion,
                 #  but at the moment we specifically test that uint<->int works
-                raise TypeError(
-                    f"Expected array of {self} type, got {array.type} instead"
-                )
+                raise TypeError(f"Expected array of {self} type, got {array.type} instead")
 
             array = array.cast(pyarrow_type)
 
@@ -104,9 +100,7 @@ class NumericDtype(BaseMaskedDtype):
             results.append(num_arr)
 
         if not results:
-            return array_class(
-                np.array([], dtype=self.numpy_dtype), np.array([], dtype=np.bool_)
-            )
+            return array_class(np.array([], dtype=self.numpy_dtype), np.array([], dtype=np.bool_))
         elif len(results) == 1:
             # avoid additional copy in _concat_same_type
             return results[0]
@@ -223,9 +217,7 @@ class NumericArray(BaseMaskedArray):
 
     _dtype_cls: type[NumericDtype]
 
-    def __init__(
-        self, values: np.ndarray, mask: npt.NDArray[np.bool_], copy: bool = False
-    ) -> None:
+    def __init__(self, values: np.ndarray, mask: npt.NDArray[np.bool_], copy: bool = False) -> None:
         checker = self._dtype_cls._checker
         if not (isinstance(values, np.ndarray) and checker(values.dtype)):
             descr = (
@@ -234,8 +226,7 @@ class NumericArray(BaseMaskedArray):
                 else "integer"
             )
             raise TypeError(
-                f"values should be {descr} numpy array. Use "
-                "the 'pd.array' function instead"
+                f"values should be {descr} numpy array. Use " "the 'pd.array' function instead"
             )
         if values.dtype == np.float16:
             # If we don't raise here, then accessing self.dtype would raise

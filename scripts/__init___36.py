@@ -63,9 +63,7 @@ from . import umath
 
 # Check that multiarray,umath are pure python modules wrapping
 # _multiarray_umath and not either of the old c-extension modules
-if not (
-    hasattr(multiarray, "_multiarray_umath") and hasattr(umath, "_multiarray_umath")
-):
+if not (hasattr(multiarray, "_multiarray_umath") and hasattr(umath, "_multiarray_umath")):
     import sys
 
     path = sys.modules["numpy"].__path__

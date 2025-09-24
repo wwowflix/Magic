@@ -1,4 +1,4 @@
-﻿# data_quality.ps1 — clean & reload your CSVs with quality checks (skips empty files)
+# data_quality.ps1 — clean & reload your CSVs with quality checks (skips empty files)
 
 Set-Location "D:\MAGIC\scripts"
 

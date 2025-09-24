@@ -1,6 +1,6 @@
-﻿def main():
+def main():
     print(
-        "✅ [11U_conflict_detector_between_agents_READY.py] executed successfully (stub mode)."
+        "âœ… [11U_conflict_detector_between_agents_READY.py] executed successfully (stub mode)."
     )
 
 

@@ -332,9 +332,7 @@ def visibility_of_any_elements_located(
 
     def _predicate(driver: WebDriverOrWebElement):
         return [
-            element
-            for element in driver.find_elements(*locator)
-            if _element_if_visible(element)
+            element for element in driver.find_elements(*locator) if _element_if_visible(element)
         ]
 
     return _predicate
@@ -733,9 +731,7 @@ def element_located_to_be_selected(
     return _predicate
 
 
-def element_selection_state_to_be(
-    element: WebElement, is_selected: bool
-) -> Callable[[Any], bool]:
+def element_selection_state_to_be(element: WebElement, is_selected: bool) -> Callable[[Any], bool]:
     """An expectation for checking if the given element is selected.
 
     Parameters:
@@ -917,9 +913,7 @@ def element_attribute_to_include(
     return _predicate
 
 
-def any_of(
-    *expected_conditions: Callable[[D], T]
-) -> Callable[[D], Union[Literal[False], T]]:
+def any_of(*expected_conditions: Callable[[D], T]) -> Callable[[D], Union[Literal[False], T]]:
     """An expectation that any of multiple expected conditions is true.
 
     Parameters:

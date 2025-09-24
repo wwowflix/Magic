@@ -139,9 +139,7 @@ def test_nep50_integer_conversion_errors():
         np.uint8(1) + 300
 
     # Error message depends on platform (maybe unsigned int or unsigned long)
-    with pytest.raises(
-        OverflowError, match="Python integer -1 out of bounds for uint8"
-    ):
+    with pytest.raises(OverflowError, match="Python integer -1 out of bounds for uint8"):
         np.uint8(1) + -1
 
 
@@ -207,9 +205,7 @@ def test_nep50_in_concat_and_choose():
 @hypothesis.given(data=strategies.data())
 def test_expected_promotion(expected, dtypes, optional_dtypes, data):
     # Sample randomly while ensuring "dtypes" is always present:
-    optional = data.draw(
-        strategies.lists(strategies.sampled_from(dtypes + optional_dtypes))
-    )
+    optional = data.draw(strategies.lists(strategies.sampled_from(dtypes + optional_dtypes)))
     all_dtypes = dtypes + optional
     dtypes_sample = data.draw(strategies.permutations(all_dtypes))
 

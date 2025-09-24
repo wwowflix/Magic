@@ -224,8 +224,7 @@ def _unify_entry_points(project_table: dict):
 
     if entry_points:
         project["entry-points"] = {
-            name: [f"{k} = {v}" for k, v in group.items()]
-            for name, group in entry_points.items()
+            name: [f"{k} = {v}" for k, v in group.items()] for name, group in entry_points.items()
         }
 
 

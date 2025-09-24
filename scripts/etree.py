@@ -207,10 +207,7 @@ def getETreeBuilder(ElementTreeImplementation, fullTree=False):
                 if element.get("publicId") or element.get("systemId"):
                     publicId = element.get("publicId") or ""
                     systemId = element.get("systemId") or ""
-                    rv.append(
-                        """<!DOCTYPE %s "%s" "%s">"""
-                        % (element.text, publicId, systemId)
-                    )
+                    rv.append("""<!DOCTYPE %s "%s" "%s">""" % (element.text, publicId, systemId))
                 else:
                     rv.append("<!DOCTYPE %s>" % (element.text,))
             elif element.tag == "DOCUMENT_ROOT":
@@ -224,9 +221,10 @@ def getETreeBuilder(ElementTreeImplementation, fullTree=False):
             elif element.tag == ElementTreeCommentType:
                 rv.append("|%s<!-- %s -->" % (" " * indent, element.text))
             else:
-                assert isinstance(
-                    element.tag, text_type
-                ), "Expected unicode, got %s, %s" % (type(element.tag), element.tag)
+                assert isinstance(element.tag, text_type), "Expected unicode, got %s, %s" % (
+                    type(element.tag),
+                    element.tag,
+                )
                 nsmatch = tag_regexp.match(element.tag)
 
                 if nsmatch is None:
@@ -277,8 +275,7 @@ def getETreeBuilder(ElementTreeImplementation, fullTree=False):
                     publicId = element.get("publicId") or ""
                     systemId = element.get("systemId") or ""
                     rv.append(
-                        """<!DOCTYPE %s PUBLIC "%s" "%s">"""
-                        % (element.text, publicId, systemId)
+                        """<!DOCTYPE %s PUBLIC "%s" "%s">""" % (element.text, publicId, systemId)
                     )
                 else:
                     rv.append("<!DOCTYPE %s>" % (element.text,))
@@ -338,9 +335,7 @@ def getETreeBuilder(ElementTreeImplementation, fullTree=False):
                 return self.document._element
             else:
                 if self.defaultNamespace is not None:
-                    return self.document._element.find(
-                        "{%s}html" % self.defaultNamespace
-                    )
+                    return self.document._element.find("{%s}html" % self.defaultNamespace)
                 else:
                     return self.document._element.find("html")
 

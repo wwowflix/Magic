@@ -217,7 +217,7 @@ def is_unprintable(character: str) -> bool:
         character.isspace() is False  # includes \n \t \r \v
         and character.isprintable() is False
         and character != "\x1a"  # Why? Its the ASCII substitute character.
-        and character != "\ufeff"  # bug discovered in Python,
+        and character != "\"  # bug discovered in Python,
         # Zero Width No-Break Space located in 	Arabic Presentation Forms-B, Unicode 1.1 not acknowledged as space.
     )
 
@@ -340,8 +340,7 @@ def is_cp_similar(iana_name_a: str, iana_name_b: str) -> bool:
     the function cp_similarity.
     """
     return (
-        iana_name_a in IANA_SUPPORTED_SIMILAR
-        and iana_name_b in IANA_SUPPORTED_SIMILAR[iana_name_a]
+        iana_name_a in IANA_SUPPORTED_SIMILAR and iana_name_b in IANA_SUPPORTED_SIMILAR[iana_name_a]
     )
 
 
@@ -396,10 +395,7 @@ def cut_sequence_chunks(
             if is_multi_byte_decoder and i > 0:
                 chunk_partial_size_chk: int = min(chunk_size, 16)
 
-                if (
-                    decoded_payload
-                    and chunk[:chunk_partial_size_chk] not in decoded_payload
-                ):
+                if decoded_payload and chunk[:chunk_partial_size_chk] not in decoded_payload:
                     for j in range(i, i - 4, -1):
                         cut_sequence = sequences[j:chunk_end]
 

@@ -52,13 +52,9 @@ class Server:
         Mapping that defines the environment variables for the server process
     """
 
-    def __init__(
-        self, host=None, port=4444, path=None, version=None, log_level="INFO", env=None
-    ):
+    def __init__(self, host=None, port=4444, path=None, version=None, log_level="INFO", env=None):
         if path and version:
-            raise TypeError(
-                "Not allowed to specify a version when using an existing server path"
-            )
+            raise TypeError("Not allowed to specify a version when using an existing server path")
 
         self.host = host
         self.port = port
@@ -92,9 +88,7 @@ class Server:
         try:
             port = int(port)
         except ValueError:
-            raise TypeError(
-                f"{__class__.__name__}.__init__() got an invalid port: '{port}'"
-            )
+            raise TypeError(f"{__class__.__name__}.__init__() got an invalid port: '{port}'")
         if not (0 <= port <= 65535):
             raise ValueError("port must be 0-65535")
         self._port = port
@@ -197,9 +191,7 @@ class Server:
             self.process = subprocess.Popen(command, env=self.env)
             print(f"Selenium server running as process: {self.process.pid}")
             if not self._wait_for_server():
-                raise TimeoutError(
-                    f"Timed out waiting for Selenium server at {self.status_url}"
-                )
+                raise TimeoutError(f"Timed out waiting for Selenium server at {self.status_url}")
             print("Selenium server is ready")
         return self.process
 

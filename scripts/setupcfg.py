@@ -49,9 +49,7 @@ AllCommandOptions = Dict["str", SingleCommandOptions]  # cmd name => its options
 Target = TypeVar("Target", bound=Union["Distribution", "DistributionMetadata"])
 
 
-def read_configuration(
-    filepath: _Path, find_others=False, ignore_option_errors=False
-) -> dict:
+def read_configuration(filepath: _Path, find_others=False, ignore_option_errors=False) -> dict:
     """Read given configuration file and returns options from it as a dict.
 
     :param str|unicode filepath: Path to configuration file
@@ -262,9 +260,7 @@ class ConfigHandler(Generic[Target]):
     @property
     def parsers(self):
         """Metadata item name to parser function mapping."""
-        raise NotImplementedError(
-            "%s must provide .parsers property" % self.__class__.__name__
-        )
+        raise NotImplementedError("%s must provide .parsers property" % self.__class__.__name__)
 
     def __setitem__(self, option_name, value):
         unknown = tuple()
@@ -336,9 +332,7 @@ class ConfigHandler(Generic[Target]):
         for line in cls._parse_list(value):
             key, sep, val = line.partition(separator)
             if sep != separator:
-                raise DistutilsOptionError(
-                    "Unable to parse option value to dict: %s" % value
-                )
+                raise DistutilsOptionError("Unable to parse option value to dict: %s" % value)
             result[key.strip()] = val.strip()
 
         return result
@@ -575,8 +569,7 @@ class ConfigMetadataHandler(ConfigHandler["DistributionMetadata"]):
             "license": exclude_files_parser("license"),
             "license_file": self._deprecated_config_handler(
                 exclude_files_parser("license_file"),
-                "The license_file parameter is deprecated, "
-                "use license_files instead.",
+                "The license_file parameter is deprecated, " "use license_files instead.",
                 SetuptoolsDeprecationWarning,
             ),
             "license_files": parse_list,
@@ -602,10 +595,7 @@ class ConfigMetadataHandler(ConfigHandler["DistributionMetadata"]):
             try:
                 Version(version)
             except InvalidVersion:
-                tmpl = (
-                    "Version loaded from {value} does not "
-                    "comply with PEP 440: {version}"
-                )
+                tmpl = "Version loaded from {value} does not " "comply with PEP 440: {version}"
                 raise DistutilsOptionError(tmpl.format(**locals()))
 
             return version
@@ -664,9 +654,7 @@ class ConfigOptionsHandler(ConfigHandler["Distribution"]):
                 "consider using implicit namespaces instead (PEP 420).",
                 SetuptoolsDeprecationWarning,
             ),
-            "install_requires": partial(
-                self._parse_requirements_list, "install_requires"
-            ),
+            "install_requires": partial(self._parse_requirements_list, "install_requires"),
             "setup_requires": self._parse_list_semicolon,
             "tests_require": self._parse_list_semicolon,
             "packages": self._parse_packages,
@@ -693,9 +681,7 @@ class ConfigOptionsHandler(ConfigHandler["Distribution"]):
             return self._parse_list(value)
 
         # Read function arguments from a dedicated section.
-        find_kwargs = self.parse_section_packages__find(
-            self.sections.get("packages.find", {})
-        )
+        find_kwargs = self.parse_section_packages__find(self.sections.get("packages.find", {}))
 
         find_kwargs.update(
             namespaces=(trimmed_value == find_directives[1]),
@@ -716,9 +702,7 @@ class ConfigOptionsHandler(ConfigHandler["Distribution"]):
 
         valid_keys = ["where", "include", "exclude"]
 
-        find_kwargs = dict(
-            [(k, v) for k, v in section_data.items() if k in valid_keys and v]
-        )
+        find_kwargs = dict([(k, v) for k, v in section_data.items() if k in valid_keys and v])
 
         where = find_kwargs.get("where")
         if where is not None:

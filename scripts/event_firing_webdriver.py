@@ -40,9 +40,7 @@ class EventFiringWebDriver:
     """A wrapper around an arbitrary WebDriver instance which supports firing
     events."""
 
-    def __init__(
-        self, driver: WebDriver, event_listener: AbstractEventListener
-    ) -> None:
+    def __init__(self, driver: WebDriver, event_listener: AbstractEventListener) -> None:
         """Creates a new instance of the EventFiringWebDriver.
 
         :Args:
@@ -73,9 +71,7 @@ class EventFiringWebDriver:
         if not isinstance(driver, WebDriver):
             raise WebDriverException("A WebDriver instance must be supplied")
         if not isinstance(event_listener, AbstractEventListener):
-            raise WebDriverException(
-                "Event listener must be a subclass of AbstractEventListener"
-            )
+            raise WebDriverException("Event listener must be a subclass of AbstractEventListener")
         self._driver = driver
         self._driver._wrap_value = self._wrap_value
         self._listener = event_listener
@@ -117,18 +113,12 @@ class EventFiringWebDriver:
         self._dispatch("quit", (self._driver,), "quit", ())
 
     def find_element(self, by=By.ID, value=None) -> WebElement:
-        return self._dispatch(
-            "find", (by, value, self._driver), "find_element", (by, value)
-        )
+        return self._dispatch("find", (by, value, self._driver), "find_element", (by, value))
 
     def find_elements(self, by=By.ID, value=None) -> list[WebElement]:
-        return self._dispatch(
-            "find", (by, value, self._driver), "find_elements", (by, value)
-        )
+        return self._dispatch("find", (by, value, self._driver), "find_elements", (by, value))
 
-    def _dispatch(
-        self, l_call: str, l_args: tuple[Any, ...], d_call: str, d_args: tuple[Any, ...]
-    ):
+    def _dispatch(self, l_call: str, l_args: tuple[Any, ...], d_call: str, d_args: tuple[Any, ...]):
         getattr(self._listener, f"before_{l_call}")(*l_args)
         try:
             result = getattr(self._driver, d_call)(*d_args)
@@ -202,19 +192,13 @@ class EventFiringWebElement:
         self._dispatch("change_value_of", (self._webelement, self._driver), "clear", ())
 
     def send_keys(self, *value) -> None:
-        self._dispatch(
-            "change_value_of", (self._webelement, self._driver), "send_keys", value
-        )
+        self._dispatch("change_value_of", (self._webelement, self._driver), "send_keys", value)
 
     def find_element(self, by=By.ID, value=None) -> WebElement:
-        return self._dispatch(
-            "find", (by, value, self._driver), "find_element", (by, value)
-        )
+        return self._dispatch("find", (by, value, self._driver), "find_element", (by, value))
 
     def find_elements(self, by=By.ID, value=None) -> list[WebElement]:
-        return self._dispatch(
-            "find", (by, value, self._driver), "find_elements", (by, value)
-        )
+        return self._dispatch("find", (by, value, self._driver), "find_elements", (by, value))
 
     def _dispatch(self, l_call, l_args, d_call, d_args):
         getattr(self._listener, f"before_{l_call}")(*l_args)

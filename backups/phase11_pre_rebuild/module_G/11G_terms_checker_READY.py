@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 # CONFIG
 SCRIPTS_ROOT = "scripts/"
@@ -16,16 +16,16 @@ for root, _, files in os.walk(SCRIPTS_ROOT):
                     content = f.read().lower()
                     for term in BANNED_TERMS:
                         if term in content:
-                            violations.append(f"{path} → 🚫 contains '{term}'")
+                            violations.append(f"{path} â†’ ðŸš contains '{term}'")
             except Exception as e:
-                violations.append(f"{path} → ⚠️ {e}")
+                violations.append(f"{path} â†’ âš ï¸ {e}")
 
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if violations:
-        f.write("❌ Violations Found:\n")
+        f.write("âŒ Violations Found:\n")
         f.write("\n".join(violations))
     else:
-        f.write("✅ No legal term violations found.\n")
+        f.write("âœ… No legal term violations found.\n")
 
-print(f"📄 Report saved to: {LOG_FILE}")
+print(f"ðŸ“„ Report saved to: {LOG_FILE}")

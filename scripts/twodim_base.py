@@ -47,9 +47,7 @@ __all__ = [
 ]
 
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
 i1 = iinfo(int8)
@@ -622,9 +620,7 @@ def vander(x, N=None, increasing=False):
     return v
 
 
-def _histogram2d_dispatcher(
-    x, y, bins=None, range=None, normed=None, weights=None, density=None
-):
+def _histogram2d_dispatcher(x, y, bins=None, range=None, normed=None, weights=None, density=None):
     yield x
     yield y
 
@@ -928,10 +924,7 @@ def tril_indices(n, k=0, m=None):
     """
     tri_ = tri(n, m, k=k, dtype=bool)
 
-    return tuple(
-        broadcast_to(inds, tri_.shape)[tri_]
-        for inds in indices(tri_.shape, sparse=True)
-    )
+    return tuple(broadcast_to(inds, tri_.shape)[tri_] for inds in indices(tri_.shape, sparse=True))
 
 
 def _trilu_indices_form_dispatcher(arr, k=None):
@@ -1049,10 +1042,7 @@ def triu_indices(n, k=0, m=None):
     """
     tri_ = ~tri(n, m, k=k - 1, dtype=bool)
 
-    return tuple(
-        broadcast_to(inds, tri_.shape)[tri_]
-        for inds in indices(tri_.shape, sparse=True)
-    )
+    return tuple(broadcast_to(inds, tri_.shape)[tri_] for inds in indices(tri_.shape, sparse=True))
 
 
 @array_function_dispatch(_trilu_indices_form_dispatcher)

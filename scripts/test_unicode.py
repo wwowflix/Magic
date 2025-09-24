@@ -112,9 +112,7 @@ class CreateValues:
         # Small check that data in array element is ok
         assert_(ua_scalar == self.ucs_value * self.ulen)
         # Encode to UTF-8 and double check
-        assert_(
-            ua_scalar.encode("utf-8") == (self.ucs_value * self.ulen).encode("utf-8")
-        )
+        assert_(ua_scalar.encode("utf-8") == (self.ucs_value * self.ulen).encode("utf-8"))
         # Check buffer lengths for scalars
         if self.ucs_value == ucs4_value:
             # In UCS2, the \U0010FFFF will be represented using a
@@ -138,9 +136,7 @@ class CreateValues:
 
     def test_valuesMD(self):
         # Check creation of multi-dimensional objects with values
-        ua = np.array(
-            [[[self.ucs_value * self.ulen] * 2] * 3] * 4, dtype=f"U{self.ulen}"
-        )
+        ua = np.array([[[self.ucs_value * self.ulen] * 2] * 3] * 4, dtype=f"U{self.ulen}")
         self.content_check(ua, ua[0, 0, 0], 4 * self.ulen * 2 * 3 * 4)
         self.content_check(ua, ua[-1, -1, -1], 4 * self.ulen * 2 * 3 * 4)
 
@@ -204,9 +200,7 @@ class AssignValues:
         # Small check that data in array element is ok
         assert_(ua_scalar == self.ucs_value * self.ulen)
         # Encode to UTF-8 and double check
-        assert_(
-            ua_scalar.encode("utf-8") == (self.ucs_value * self.ulen).encode("utf-8")
-        )
+        assert_(ua_scalar.encode("utf-8") == (self.ucs_value * self.ulen).encode("utf-8"))
         # Check buffer lengths for scalars
         if self.ucs_value == ucs4_value:
             # In UCS2, the \U0010FFFF will be represented using a
@@ -314,9 +308,7 @@ class ByteorderValues:
 
     def test_valuesMD(self):
         # Check byteorder of multi-dimensional objects
-        ua = np.array(
-            [[[self.ucs_value * self.ulen] * 2] * 3] * 4, dtype=f"U{self.ulen}"
-        )
+        ua = np.array([[[self.ucs_value * self.ulen] * 2] * 3] * 4, dtype=f"U{self.ulen}")
         ua2 = ua.view(ua.dtype.newbyteorder())
         assert_((ua != ua2).all())
         assert_(ua[-1, -1, -1] != ua2[-1, -1, -1])

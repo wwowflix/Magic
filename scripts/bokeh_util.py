@@ -53,9 +53,7 @@ def filled_to_bokeh(
                     codes = codes_or_offsets[outer_offsets[j] : outer_offsets[j + 1]]
                     offsets = offsets_from_codes(codes) + outer_offsets[j]
                 else:
-                    offsets = codes_or_offsets[
-                        outer_offsets[j] : outer_offsets[j + 1] + 1
-                    ]
+                    offsets = codes_or_offsets[outer_offsets[j] : outer_offsets[j + 1] + 1]
                 xs.append([])  # New outer with zero or more holes.
                 ys.append([])
                 for k in range(len(offsets) - 1):
@@ -63,9 +61,7 @@ def filled_to_bokeh(
                     xs[-1].append(xys[:, 0])
                     ys[-1].append(xys[:, 1])
     else:
-        raise RuntimeError(
-            f"Conversion of FillType {fill_type} to Bokeh is not implemented"
-        )
+        raise RuntimeError(f"Conversion of FillType {fill_type} to Bokeh is not implemented")
 
     return xs, ys
 

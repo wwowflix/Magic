@@ -10,8 +10,7 @@ class VastFCompiler(GnuFCompiler):
     compiler_aliases = ()
     description = "Pacific-Sierra Research Fortran 90 Compiler"
     version_pattern = (
-        r"\s*Pacific-Sierra Research vf90 "
-        r"(Personal|Professional)\s+(?P<version>[^\s]*)"
+        r"\s*Pacific-Sierra Research vf90 " r"(Personal|Professional)\s+(?P<version>[^\s]*)"
     )
 
     # VAST f90 does not support -o with -c. So, object files are created

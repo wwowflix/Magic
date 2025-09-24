@@ -85,20 +85,12 @@ class TraceConfig:
         return cls(
             record_mode=str(json["recordMode"]) if "recordMode" in json else None,
             trace_buffer_size_in_kb=(
-                float(json["traceBufferSizeInKb"])
-                if "traceBufferSizeInKb" in json
-                else None
+                float(json["traceBufferSizeInKb"]) if "traceBufferSizeInKb" in json else None
             ),
-            enable_sampling=(
-                bool(json["enableSampling"]) if "enableSampling" in json else None
-            ),
-            enable_systrace=(
-                bool(json["enableSystrace"]) if "enableSystrace" in json else None
-            ),
+            enable_sampling=(bool(json["enableSampling"]) if "enableSampling" in json else None),
+            enable_systrace=(bool(json["enableSystrace"]) if "enableSystrace" in json else None),
             enable_argument_filter=(
-                bool(json["enableArgumentFilter"])
-                if "enableArgumentFilter" in json
-                else None
+                bool(json["enableArgumentFilter"]) if "enableArgumentFilter" in json else None
             ),
             included_categories=(
                 [str(i) for i in json["includedCategories"]]
@@ -111,9 +103,7 @@ class TraceConfig:
                 else None
             ),
             synthetic_delays=(
-                [str(i) for i in json["syntheticDelays"]]
-                if "syntheticDelays" in json
-                else None
+                [str(i) for i in json["syntheticDelays"]] if "syntheticDelays" in json else None
             ),
             memory_dump_config=(
                 MemoryDumpConfig.from_json(json["memoryDumpConfig"])
@@ -385,13 +375,9 @@ class TracingComplete:
     def from_json(cls, json: T_JSON_DICT) -> TracingComplete:
         return cls(
             data_loss_occurred=bool(json["dataLossOccurred"]),
-            stream=(
-                io.StreamHandle.from_json(json["stream"]) if "stream" in json else None
-            ),
+            stream=(io.StreamHandle.from_json(json["stream"]) if "stream" in json else None),
             trace_format=(
-                StreamFormat.from_json(json["traceFormat"])
-                if "traceFormat" in json
-                else None
+                StreamFormat.from_json(json["traceFormat"]) if "traceFormat" in json else None
             ),
             stream_compression=(
                 StreamCompression.from_json(json["streamCompression"])

@@ -1,4 +1,4 @@
-﻿import os
+import os
 import shutil
 import json
 import re
@@ -32,7 +32,7 @@ def quarantine_script(script_path):
     os.makedirs(QUARANTINE_DIR, exist_ok=True)
     dest_path = os.path.join(QUARANTINE_DIR, os.path.basename(script_path))
     shutil.move(script_path, dest_path)
-    print(f"🛑 Quarantined script: {script_path} → {dest_path}")
+    print(f"ðŸ›' Quarantined script: {script_path} â†' {dest_path}")
 
 
 def main():
@@ -50,7 +50,7 @@ def main():
                 if script_path and os.path.exists(script_path):
                     quarantine_script(script_path)
                 else:
-                    print(f"⚠️ Script not found or missing in map: {script_name}")
+                    print(f"âš ï¸ Script not found or missing in map: {script_name}")
 
 
 if __name__ == "__main__":

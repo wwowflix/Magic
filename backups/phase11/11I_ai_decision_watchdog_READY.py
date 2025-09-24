@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 # CONFIG
 DECISION_LOGS_FOLDER = "outputs/logs/decisions/"  # where AI decisions would be logged
@@ -29,16 +29,18 @@ for root, _, files in os.walk(DECISION_LOGS_FOLDER):
                     for i, line in enumerate(lines, 1):
                         for keyword in RISKY_DECISION_KEYWORDS:
                             if keyword.lower() in line.lower():
-                                matches.append(f"{path} → Line {i}: '{keyword}' found")
+                                matches.append(
+                                    f"{path} â†’ Line {i}: '{keyword}' found"
+                                )
             except Exception as e:
-                matches.append(f"{path} → ⚠️ {e}")
+                matches.append(f"{path} â†’ âš ï¸ {e}")
 
 # Save results
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if matches:
-        f.write("🚨 Risky AI decisions flagged:\n" + "\n".join(matches))
+        f.write("ðŸš¨ Risky AI decisions flagged:\n" + "\n".join(matches))
     else:
-        f.write("✅ No risky AI decisions found.\n")
+        f.write("âœ… No risky AI decisions found.\n")
 
-print(f"📄 AI Decision Watchdog scan complete. Report saved to: {LOG_FILE}")
+print(f"ðŸ“„ AI Decision Watchdog scan complete. Report saved to: {LOG_FILE}")

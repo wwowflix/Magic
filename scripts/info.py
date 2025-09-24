@@ -428,10 +428,7 @@ class BaseInfo(ABC):
                 # size_qualifier is just a best effort; not guaranteed to catch
                 # all cases (e.g., it misses categorical data even with object
                 # categories)
-                if (
-                    "object" in self.dtype_counts
-                    or self.data.index._is_memory_usage_qualified()
-                ):
+                if "object" in self.dtype_counts or self.data.index._is_memory_usage_qualified():
                     size_qualifier = "+"
         return size_qualifier
 
@@ -546,8 +543,7 @@ class SeriesInfo(BaseInfo):
     ) -> None:
         if max_cols is not None:
             raise ValueError(
-                "Argument `max_cols` can only be passed "
-                "in DataFrame.info, not Series.info"
+                "Argument `max_cols` can only be passed " "in DataFrame.info, not Series.info"
             )
         printer = SeriesInfoPrinter(
             info=self,
@@ -778,9 +774,7 @@ class TableBuilderAbstract(ABC):
 
     def add_dtypes_line(self) -> None:
         """Add summary line with dtypes present in dataframe."""
-        collected_dtypes = [
-            f"{key}({val:d})" for key, val in sorted(self.dtype_counts.items())
-        ]
+        collected_dtypes = [f"{key}({val:d})" for key, val in sorted(self.dtype_counts.items())]
         self._lines.append(f"dtypes: {', '.join(collected_dtypes)}")
 
 
@@ -876,10 +870,7 @@ class TableBuilderVerboseMixin(TableBuilderAbstract):
     def _get_gross_column_widths(self) -> Sequence[int]:
         """Get widths of columns containing both headers and actual content."""
         body_column_widths = self._get_body_column_widths()
-        return [
-            max(*widths)
-            for widths in zip(self.header_column_widths, body_column_widths)
-        ]
+        return [max(*widths) for widths in zip(self.header_column_widths, body_column_widths)]
 
     def _get_body_column_widths(self) -> Sequence[int]:
         """Get widths of table content columns."""

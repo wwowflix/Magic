@@ -60,16 +60,12 @@ class AnnotationMixin:
         self.t = PDFString(title, encrypt=True) if title else None
         self.m = PDFDate(modification_time, encrypt=True) if modification_time else None
         self.quad_points = (
-            pdf_list(f"{quad_point:.2f}" for quad_point in quad_points)
-            if quad_points
-            else None
+            pdf_list(f"{quad_point:.2f}" for quad_point in quad_points) if quad_points else None
         )
         self.p = None  # must always be set before calling .serialize()
         self.name = name
         self.ink_list = (
-            ("[" + pdf_list(f"{coord:.2f}" for coord in ink_list) + "]")
-            if ink_list
-            else None
+            ("[" + pdf_list(f"{coord:.2f}" for coord in ink_list) + "]") if ink_list else None
         )
         self.f_s = file_spec
         self.d_a = default_appearance

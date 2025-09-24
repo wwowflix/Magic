@@ -59,8 +59,6 @@ def exclude(*what):
     cls, names, attrs = _split_what(what)
 
     def exclude_(attribute, value):
-        return not (
-            value.__class__ in cls or attribute.name in names or attribute in attrs
-        )
+        return not (value.__class__ in cls or attribute.name in names or attribute in attrs)
 
     return exclude_

@@ -20,9 +20,7 @@ class Filter(base.Filter):
         for previous, token, next in self.slider():
             type = token["type"]
             if type == "StartTag":
-                if token["data"] or not self.is_optional_start(
-                    token["name"], previous, next
-                ):
+                if token["data"] or not self.is_optional_start(token["name"], previous, next):
                     yield token
             elif type == "EndTag":
                 if not self.is_optional_end(token["name"], next):

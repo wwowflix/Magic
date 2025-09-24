@@ -103,9 +103,7 @@ typedefs[
 typedef long double long_double;
 #endif
 """
-typedefs["complex_long_double"] = (
-    "typedef struct {long double r,i;} complex_long_double;"
-)
+typedefs["complex_long_double"] = "typedef struct {long double r,i;} complex_long_double;"
 typedefs["complex_float"] = "typedef struct {float r,i;} complex_float;"
 typedefs["complex_double"] = "typedef struct {double r,i;} complex_double;"
 typedefs["string"] = """typedef char * string;"""
@@ -341,12 +339,8 @@ cppmacros[
 #endif
 """
 needs["pyobj_from_long_double1"] = ["long_double"]
-cppmacros["pyobj_from_long_double1"] = (
-    "#define pyobj_from_long_double1(v) (PyFloat_FromDouble(v))"
-)
-cppmacros["pyobj_from_double1"] = (
-    "#define pyobj_from_double1(v) (PyFloat_FromDouble(v))"
-)
+cppmacros["pyobj_from_long_double1"] = "#define pyobj_from_long_double1(v) (PyFloat_FromDouble(v))"
+cppmacros["pyobj_from_double1"] = "#define pyobj_from_double1(v) (PyFloat_FromDouble(v))"
 cppmacros["pyobj_from_float1"] = "#define pyobj_from_float1(v) (PyFloat_FromDouble(v))"
 needs["pyobj_from_complex_long_double1"] = ["complex_long_double"]
 cppmacros["pyobj_from_complex_long_double1"] = (
@@ -361,9 +355,7 @@ cppmacros["pyobj_from_complex_float1"] = (
     "#define pyobj_from_complex_float1(v) (PyComplex_FromDoubles(v.r,v.i))"
 )
 needs["pyobj_from_string1"] = ["string"]
-cppmacros["pyobj_from_string1"] = (
-    "#define pyobj_from_string1(v) (PyUnicode_FromString((char *)v))"
-)
+cppmacros["pyobj_from_string1"] = "#define pyobj_from_string1(v) (PyUnicode_FromString((char *)v))"
 needs["pyobj_from_string1size"] = ["string"]
 cppmacros["pyobj_from_string1size"] = (
     "#define pyobj_from_string1size(v,len) (PyUnicode_FromStringAndSize((char *)v, len))"
@@ -1406,9 +1398,9 @@ def buildcfuncs():
 
     for k in c2capi_map.keys():
         m = "pyarr_from_p_%s1" % k
-        cppmacros[m] = (
-            "#define %s(v) (PyArray_SimpleNewFromData(0,NULL,%s,(char *)v))"
-            % (m, c2capi_map[k])
+        cppmacros[m] = "#define %s(v) (PyArray_SimpleNewFromData(0,NULL,%s,(char *)v))" % (
+            m,
+            c2capi_map[k],
         )
     k = "string"
     m = "pyarr_from_p_%s1" % k

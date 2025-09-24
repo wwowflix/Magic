@@ -51,9 +51,7 @@ def begin_frame(
     interval: typing.Optional[float] = None,
     no_display_updates: typing.Optional[bool] = None,
     screenshot: typing.Optional[ScreenshotParams] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[bool, typing.Optional[str]]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[bool, typing.Optional[str]]]:
     """
     Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a
     screenshot from the resulting frame. Requires that the target was created with enabled

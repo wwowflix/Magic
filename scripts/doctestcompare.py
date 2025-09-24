@@ -131,9 +131,7 @@ class LXMLOutputChecker(OutputChecker):
             parser = html_fromstring
         elif PARSE_XML & optionflags:
             parser = etree.XML
-        elif want.strip().lower().startswith("<html") and got.strip().startswith(
-            "<html"
-        ):
+        elif want.strip().lower().startswith("<html") and got.strip().startswith("<html"):
             parser = html_fromstring
         elif self._looks_like_markup(want) and self._looks_like_markup(got):
             parser = self.get_default_parser()
@@ -322,19 +320,13 @@ class LXMLOutputChecker(OutputChecker):
         got_children = list(got)
         while want_children or got_children:
             if not want_children:
-                parts.append(
-                    self.format_doc(got_children.pop(0), html, indent + 2, "+")
-                )
+                parts.append(self.format_doc(got_children.pop(0), html, indent + 2, "+"))
                 continue
             if not got_children:
-                parts.append(
-                    self.format_doc(want_children.pop(0), html, indent + 2, "-")
-                )
+                parts.append(self.format_doc(want_children.pop(0), html, indent + 2, "-"))
                 continue
             parts.append(
-                self.collect_diff(
-                    want_children.pop(0), got_children.pop(0), html, indent + 2
-                )
+                self.collect_diff(want_children.pop(0), got_children.pop(0), html, indent + 2)
             )
         parts.append(" " * indent)
         parts.append(self.collect_diff_end_tag(want, got))
@@ -437,15 +429,11 @@ def temp_install(html=False, del_module=None):
     # Because we can't patch up func_globals, this is the only global
     # in check_output that we care about:
     doctest.etree = etree
-    _RestoreChecker(
-        dt_self, old_checker, checker, check_func, checker_check_func, del_module
-    )
+    _RestoreChecker(dt_self, old_checker, checker, check_func, checker_check_func, del_module)
 
 
 class _RestoreChecker:
-    def __init__(
-        self, dt_self, old_checker, new_checker, check_func, clone_func, del_module
-    ):
+    def __init__(self, dt_self, old_checker, new_checker, check_func, clone_func, del_module):
         self.dt_self = dt_self
         self.checker = old_checker
         self.checker._temp_call_super_check_output = self.call_super
@@ -508,9 +496,7 @@ def _find_doctest_frame():
             # Sign of doctest
             return frame
         frame = frame.f_back
-    raise LookupError(
-        "Could not find doctest (only use this function *inside* a doctest)"
-    )
+    raise LookupError("Could not find doctest (only use this function *inside* a doctest)")
 
 
 __test__ = {

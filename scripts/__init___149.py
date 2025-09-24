@@ -10,9 +10,7 @@ if IS_RELEASE:
     build_path = os.path.join(absolute_path, "frontend/build")
     _component_func = components.declare_component("stepper_bar", path=build_path)
 else:
-    _component_func = components.declare_component(
-        "stepper_bar", url="http://localhost:3000"
-    )
+    _component_func = components.declare_component("stepper_bar", url="http://localhost:3000")
 
 
 def stepper_bar(

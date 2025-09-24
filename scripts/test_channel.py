@@ -454,9 +454,7 @@ async def test_as_safe_channel_cancelled() -> None:
 
         @as_safe_channel
         async def agen() -> AsyncGenerator[None]:  # pragma: no cover
-            raise AssertionError(
-                "cancel before consumption means generator should not be iterated"
-            )
+            raise AssertionError("cancel before consumption means generator should not be iterated")
             yield  # indicate that we're an iterator
 
         async with agen():

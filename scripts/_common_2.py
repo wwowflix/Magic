@@ -246,9 +246,7 @@ class _tzinfo(tzinfo):
         # ambiguous dates.
         dtdst = enfold(dt, fold=1).dst()
         if dtdst is None:
-            raise ValueError(
-                "fromutc(): dt.dst gave inconsistent " "results; cannot convert"
-            )
+            raise ValueError("fromutc(): dt.dst gave inconsistent " "results; cannot convert")
         return dt + dtdst
 
     @_validate_fromutc_inputs

@@ -349,9 +349,7 @@ def getstrlength(var):
         else:
             errmess("getstrlength: function %s has no return value?!\n" % a)
     if not isstring(var):
-        errmess(
-            "getstrlength: expected a signature of a string but got: %s\n" % (repr(var))
-        )
+        errmess("getstrlength: expected a signature of a string but got: %s\n" % (repr(var)))
     len = "1"
     if "charselector" in var:
         a = var["charselector"]
@@ -414,10 +412,7 @@ def getarrdims(a, var, verbose=0):
             if d not in ["*", ":", "(*)", "(:)"]:
                 ret["cbsetdims"] = "%s#varname#_Dims[%d]=%s," % (ret["cbsetdims"], i, d)
             elif isintent_in(var):
-                outmess(
-                    "getarrdims:warning: assumed shape array, using 0 instead of %r\n"
-                    % (d)
-                )
+                outmess("getarrdims:warning: assumed shape array, using 0 instead of %r\n" % (d))
                 ret["cbsetdims"] = "%s#varname#_Dims[%d]=%s," % (ret["cbsetdims"], i, 0)
             elif verbose:
                 errmess(
@@ -512,11 +507,7 @@ def getpydocsign(a, var):
             )
     elif isexternal(var):
         ua = ""
-        if (
-            a in lcb_map
-            and lcb_map[a] in lcb2_map
-            and "argname" in lcb2_map[lcb_map[a]]
-        ):
+        if a in lcb_map and lcb_map[a] in lcb2_map and "argname" in lcb2_map[lcb_map[a]]:
             ua = lcb2_map[lcb_map[a]]["argname"]
             if not ua == a:
                 ua = " => %s" % ua
@@ -633,8 +624,7 @@ def sign2map(a, var):
         else:
             ret["cbname"] = a
             errmess(
-                "sign2map: Confused: external %s is not in lcb_map%s.\n"
-                % (a, list(lcb_map.keys()))
+                "sign2map: Confused: external %s is not in lcb_map%s.\n" % (a, list(lcb_map.keys()))
             )
     if isstring(var):
         ret["length"] = getstrlength(var)
@@ -787,9 +777,7 @@ def routsign2map(rout):
             ret["rformat"] = c2buildvalue_map[ret["ctype"]]
         else:
             ret["rformat"] = "O"
-            errmess(
-                "routsign2map: no c2buildvalue key for type %s\n" % (repr(ret["ctype"]))
-            )
+            errmess("routsign2map: no c2buildvalue key for type %s\n" % (repr(ret["ctype"])))
         if debugcapi(rout):
             if ret["ctype"] in cformat_map:
                 ret["routdebugshowvalue"] = "debug-capi:%s=%s" % (

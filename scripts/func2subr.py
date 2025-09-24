@@ -278,10 +278,7 @@ def assubr(rout):
     if isfunction_wrap(rout):
         fortranname = getfortranname(rout)
         name = rout["name"]
-        outmess(
-            '\t\tCreating wrapper for Fortran function "%s"("%s")...\n'
-            % (name, fortranname)
-        )
+        outmess('\t\tCreating wrapper for Fortran function "%s"("%s")...\n' % (name, fortranname))
         rout = copy.copy(rout)
         fname = name
         rname = fname
@@ -305,10 +302,7 @@ def assubr(rout):
     if issubroutine_wrap(rout):
         fortranname = getfortranname(rout)
         name = rout["name"]
-        outmess(
-            '\t\tCreating wrapper for Fortran subroutine "%s"("%s")...\n'
-            % (name, fortranname)
-        )
+        outmess('\t\tCreating wrapper for Fortran subroutine "%s"("%s")...\n' % (name, fortranname))
         rout = copy.copy(rout)
         return rout, createsubrwrapper(rout)
     return rout, ""

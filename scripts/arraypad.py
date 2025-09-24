@@ -107,9 +107,7 @@ def _pad_simple(array, pad_width, fill_value=None):
         A tuple of slices pointing to the area of the original array.
     """
     # Allocate grown array
-    new_shape = tuple(
-        left + size + right for size, (left, right) in zip(array.shape, pad_width)
-    )
+    new_shape = tuple(left + size + right for size, (left, right) in zip(array.shape, pad_width))
     order = "F" if array.flags.fnc else "C"  # Fortran and not also C-order
     padded = np.empty(new_shape, dtype=array.dtype, order=order)
 
@@ -783,9 +781,7 @@ def pad(array, pad_width, mode="constant", **kwargs):
         raise ValueError("mode '{}' is not supported".format(mode)) from None
     if unsupported_kwargs:
         raise ValueError(
-            "unsupported keyword arguments for mode '{}': {}".format(
-                mode, unsupported_kwargs
-            )
+            "unsupported keyword arguments for mode '{}': {}".format(mode, unsupported_kwargs)
         )
 
     stat_functions = {
@@ -875,8 +871,6 @@ def pad(array, pad_width, mode="constant", **kwargs):
                 # Iteratively pad until dimension is filled with wrapped
                 # values. This is necessary if the pad area is larger than
                 # the length of the original values in the current dimension.
-                left_index, right_index = _set_wrap_both(
-                    roi, axis, (left_index, right_index)
-                )
+                left_index, right_index = _set_wrap_both(roi, axis, (left_index, right_index))
 
     return padded

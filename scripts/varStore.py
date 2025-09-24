@@ -1,4 +1,4 @@
-from fontTools.misc.roundTools import noRound, otRound
+from fontTools.misc.roundTools import noRound
 from fontTools.misc.intTools import bit_count
 from fontTools.ttLib.tables import otTables as ot
 from fontTools.varLib.models import supportScalar
@@ -282,9 +282,7 @@ def VarStore_subset_varidxes(
         newItems = []
         if major == 0 and retainFirstMap:
             for minor in range(len(items)):
-                newItems.append(
-                    items[minor] if minor in usedMinors else [0] * len(items[minor])
-                )
+                newItems.append(items[minor] if minor in usedMinors else [0] * len(items[minor]))
                 varDataMap[minor] = minor
         else:
             if major == 0:

@@ -20,9 +20,7 @@ from numpy.testing import (
 
 class TestFromrecords:
     def test_fromrecords(self):
-        r = np.rec.fromrecords(
-            [[456, "dbe", 1.2], [2, "de", 1.3]], names="col1,col2,col3"
-        )
+        r = np.rec.fromrecords([[456, "dbe", 1.2], [2, "de", 1.3]], names="col1,col2,col3")
         assert_equal(r[0].item(), (456, "dbe", 1.2))
         assert_equal(r["col1"].dtype.kind, "i")
         assert_equal(r["col2"].dtype.kind, "U")
@@ -300,9 +298,7 @@ class TestFromrecords:
         assert_(isinstance(ra.field, collections.abc.Callable))
 
     def test_fromrecords_with_explicit_dtype(self):
-        a = np.rec.fromrecords(
-            [(1, "a"), (2, "bbb")], dtype=[("a", int), ("b", object)]
-        )
+        a = np.rec.fromrecords([(1, "a"), (2, "bbb")], dtype=[("a", int), ("b", object)])
         assert_equal(a.a, [1, 2])
         assert_equal(a[0].a, 1)
         assert_equal(a.b, ["a", "bbb"])

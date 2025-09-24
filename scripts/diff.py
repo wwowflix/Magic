@@ -56,9 +56,7 @@ group_by_first_item = functools.partial(itertools.groupby, key=operator.itemgett
 
 
 @cython.cfunc
-def html_escape(
-    text: str, _escapes: tuple = ("&amp;", "&lt;", "&gt;", "&quot;", "&#x27;")
-) -> str:
+def html_escape(text: str, _escapes: tuple = ("&amp;", "&lt;", "&gt;", "&quot;", "&#x27;")) -> str:
     # Not so slow compiled version of 'html.escape()'.
     # Most of the time, we replace little to nothing, so use a fast decision what needs to be done.
     ch: cython.Py_UCS4
@@ -603,9 +601,7 @@ class tag_token(token):
     the <img> tag, which takes up visible space just like a word but
     is only represented in a document by a tag."""
 
-    def __new__(
-        cls, tag, data, html_repr, pre_tags=None, post_tags=None, trailing_whitespace=""
-    ):
+    def __new__(cls, tag, data, html_repr, pre_tags=None, post_tags=None, trailing_whitespace=""):
         obj = token.__new__(
             cls,
             f"{type}: {data}",
@@ -742,9 +738,7 @@ def fixup_chunks(chunks):
 
         if is_word(chunk):
             chunk, trailing_whitespace = split_trailing_whitespace(chunk)
-            cur_word = token(
-                chunk, pre_tags=tag_accum, trailing_whitespace=trailing_whitespace
-            )
+            cur_word = token(chunk, pre_tags=tag_accum, trailing_whitespace=trailing_whitespace)
             tag_accum = []
             result.append(cur_word)
 
@@ -755,9 +749,7 @@ def fixup_chunks(chunks):
             if tag_accum:
                 tag_accum.append(chunk)
             else:
-                assert (
-                    cur_word
-                ), "Weird state, cur_word=%r, result=%r, chunks=%r of %r" % (
+                assert cur_word, "Weird state, cur_word=%r, result=%r, chunks=%r of %r" % (
                     cur_word,
                     result,
                     chunk,
@@ -881,9 +873,7 @@ def start_tag(el):
     """
     The text representation of the start tag for a tag.
     """
-    attributes = "".join(
-        [f' {name}="{html_escape(value)}"' for name, value in el.attrib.items()]
-    )
+    attributes = "".join([f' {name}="{html_escape(value)}"' for name, value in el.attrib.items()])
     return f"<{el.tag}{attributes}>"
 
 
@@ -923,9 +913,7 @@ def serialize_html_fragment(el, skip_outer=False):
 
     If skip_outer is true, then don't serialize the outermost tag
     """
-    assert not isinstance(
-        el, str
-    ), f"You should pass in an element, not a string like {el!r}"
+    assert not isinstance(el, str), f"You should pass in an element, not a string like {el!r}"
     html = etree.tostring(el, method="html", encoding="unicode")
     if skip_outer:
         # Get rid of the extra starting tag:

@@ -147,9 +147,7 @@ class FFI(object):
         linked to a particular library, just like C headers; in the
         library we only look for the actual (untyped) symbols.
         """
-        if not (
-            isinstance(name, basestring) or name is None or isinstance(name, self.CData)
-        ):
+        if not (isinstance(name, basestring) or name is None or isinstance(name, self.CData)):
             raise TypeError(
                 "dlopen(name): name must be a file name, None, "
                 "or an already-opened 'void *' handle"
@@ -196,8 +194,7 @@ class FFI(object):
         btype, really_a_function_type = result
         if really_a_function_type and not consider_function_as_funcptr:
             raise CDefError(
-                "the type %r is a function type, not a "
-                "pointer-to-function type" % (cdecl,)
+                "the type %r is a function type, not a " "pointer-to-function type" % (cdecl,)
             )
         return btype
 
@@ -485,9 +482,7 @@ class FFI(object):
     def _set_errno(self, errno):
         self._backend.set_errno(errno)
 
-    errno = property(
-        _get_errno, _set_errno, None, "the value of 'errno' from/to the C calls"
-    )
+    errno = property(_get_errno, _set_errno, None, "the value of 'errno' from/to the C calls")
 
     def getwinerror(self, code=-1):
         return self._backend.getwinerror(code)
@@ -653,9 +648,7 @@ class FFI(object):
         import os
 
         if hasattr(self, "_assigned_source"):
-            raise ValueError(
-                "set_source() cannot be called several times " "per ffi object"
-            )
+            raise ValueError("set_source() cannot be called several times " "per ffi object")
         if not isinstance(module_name, basestring):
             raise TypeError("'module_name' must be a string")
         if os.sep in module_name or (os.altsep and os.altsep in module_name):
@@ -671,9 +664,7 @@ class FFI(object):
         from . import pkgconfig
 
         if not isinstance(pkgconfig_libs, list):
-            raise TypeError(
-                "the pkgconfig_libs argument must be a list " "of package names"
-            )
+            raise TypeError("the pkgconfig_libs argument must be a list " "of package names")
         kwds2 = pkgconfig.flags_from_pkgconfig(pkgconfig_libs)
         pkgconfig.merge_flags(kwds, kwds2)
         self.set_source(module_name, source, source_extension, **kwds)
@@ -686,9 +677,7 @@ class FFI(object):
         if not hasattr(self, "_assigned_source"):
             if hasattr(self, "verifier"):  # fallback, 'tmpdir' ignored
                 return self.verifier.get_extension()
-            raise ValueError(
-                "set_source() must be called before" " distutils_extension()"
-            )
+            raise ValueError("set_source() must be called before" " distutils_extension()")
         module_name, source, source_extension, kwds = self._assigned_source
         if source is None:
             raise TypeError(
@@ -705,7 +694,7 @@ class FFI(object):
             extradir=tmpdir,
             source_extension=source_extension,
             call_c_compiler=False,
-            **kwds
+            **kwds,
         )
         if verbose:
             if updated:
@@ -733,7 +722,7 @@ class FFI(object):
             c_file=filename,
             call_c_compiler=False,
             uses_ffiplatform=False,
-            **kwds
+            **kwds,
         )
 
     def emit_python_code(self, filename):
@@ -755,7 +744,7 @@ class FFI(object):
             c_file=filename,
             call_c_compiler=False,
             uses_ffiplatform=False,
-            **kwds
+            **kwds,
         )
 
     def compile(self, tmpdir=".", verbose=0, target=None, debug=None):
@@ -783,7 +772,7 @@ class FFI(object):
             source_extension=source_extension,
             compiler_verbose=verbose,
             debug=debug,
-            **kwds
+            **kwds,
         )
 
     def init_once(self, func, tag):
@@ -838,9 +827,7 @@ class FFI(object):
         self._embedding = pysource
 
     def def_extern(self, *args, **kwds):
-        raise ValueError(
-            "ffi.def_extern() is only available on API-mode FFI " "objects"
-        )
+        raise ValueError("ffi.def_extern() is only available on API-mode FFI " "objects")
 
     def list_types(self):
         """Returns the user type names known to this FFI instance.
@@ -886,10 +873,7 @@ def _load_backend_lib(backend, name, flags):
                 "dlopen(None) cannot work on Windows for Python 3 "
                 "(see http://bugs.python.org/issue23606)"
             )
-        msg = (
-            "ctypes.util.find_library() did not manage "
-            "to locate a library called %r" % (name,)
-        )
+        msg = "ctypes.util.find_library() did not manage " "to locate a library called %r" % (name,)
         if first_error is not None:
             msg = "%s.  Additionally, %s" % (first_error, msg)
         raise OSError(msg)
@@ -943,8 +927,7 @@ def _make_ffi_library(ffi, libname, flags):
     #
     def accessor_constant(name):
         raise NotImplementedError(
-            "non-integer constant '%s' cannot be "
-            "accessed from a dlopen() library" % (name,)
+            "non-integer constant '%s' cannot be " "accessed from a dlopen() library" % (name,)
         )
 
     #
@@ -1024,8 +1007,7 @@ def _make_ffi_library(ffi, libname, flags):
             if name in FFILibrary.__dict__:
                 return addressof_var(name)
             raise AttributeError(
-                "cffi library has no function or "
-                "global variable named '%s'" % (name,)
+                "cffi library has no function or " "global variable named '%s'" % (name,)
             )
 
         def __cffi_close__(self):

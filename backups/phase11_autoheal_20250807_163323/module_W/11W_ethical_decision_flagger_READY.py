@@ -1,6 +1,6 @@
-﻿def main():
+def main():
     print(
-        "✅ [11W_ethical_decision_flagger_READY.py] executed successfully (stub mode)."
+        "âœ… [11W_ethical_decision_flagger_READY.py] executed successfully (stub mode)."
     )
 
 

@@ -1,4 +1,4 @@
-﻿function Run-Script {
+function Run-Script {
     param(
         [string]$ScriptPath,
         [string]$LogFile

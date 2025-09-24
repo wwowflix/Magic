@@ -13,9 +13,7 @@ from numpy.core._multiarray_umath import (
 from numpy.compat._inspect import getargspec
 
 
-ARRAY_FUNCTION_ENABLED = bool(
-    int(os.environ.get("NUMPY_EXPERIMENTAL_ARRAY_FUNCTION", 1))
-)
+ARRAY_FUNCTION_ENABLED = bool(int(os.environ.get("NUMPY_EXPERIMENTAL_ARRAY_FUNCTION", 1)))
 
 array_function_like_doc = """like : array_like
         Reference object to allow the creation of arrays which are not
@@ -152,9 +150,7 @@ _wrapped_func_source = textwrap.dedent(
 )
 
 
-def array_function_dispatch(
-    dispatcher, module=None, verify=True, docs_from_dispatcher=False
-):
+def array_function_dispatch(dispatcher, module=None, verify=True, docs_from_dispatcher=False):
     """Decorator for adding dispatch with the __array_function__ protocol.
 
     See NEP-18 for example usage.
@@ -211,9 +207,7 @@ def array_function_dispatch(
         # dispatcher gets an invalid keyword argument.
         source = _wrapped_func_source.format(name=implementation.__name__)
 
-        source_object = compile(
-            source, filename="<__array_function__ internals>", mode="exec"
-        )
+        source_object = compile(source, filename="<__array_function__ internals>", mode="exec")
         scope = {
             "implementation": implementation,
             "dispatcher": dispatcher,

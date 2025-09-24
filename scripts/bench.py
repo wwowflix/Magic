@@ -59,15 +59,11 @@ def compare_functions_1v(func, nloop=500, xs=xs, nmxs=nmxs, xl=xl, nmxl=nmxl):
     print("-" * 50)
     print(f"{funcname} on small arrays")
     module, data = "numpy.ma", "nmxs"
-    timer(
-        "%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop
-    )
+    timer("%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop)
 
     print("%s on large arrays" % funcname)
     module, data = "numpy.ma", "nmxl"
-    timer(
-        "%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop
-    )
+    timer("%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop)
     return
 
 
@@ -102,15 +98,11 @@ def compare_functions_2v(
     print("-" * 50)
     print(f"{funcname} on small arrays")
     module, data = "numpy.ma", "nmxs,nmys"
-    timer(
-        "%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop
-    )
+    timer("%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop)
 
     print(f"{funcname} on large arrays")
     module, data = "numpy.ma", "nmxl,nmyl"
-    timer(
-        "%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop
-    )
+    timer("%(module)s.%(funcname)s(%(data)s)" % locals(), v="%11s" % module, nloop=nloop)
     return
 
 

@@ -1,4 +1,4 @@
-﻿\D:\MAGIC = 'D:\MAGIC'
+\D:\MAGIC = 'D:\MAGIC'
 \D:\MAGIC\scripts = Join-Path \D:\MAGIC 'scripts'
 \D:\MAGIC\scripts\orchestrator.py = Join-Path \D:\MAGIC\scripts 'orchestrator.py'
 

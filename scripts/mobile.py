@@ -49,9 +49,7 @@ class Mobile:
 
     @property
     def network_connection(self):
-        return self.ConnectionType(
-            self._driver.execute(Command.GET_NETWORK_CONNECTION)["value"]
-        )
+        return self.ConnectionType(self._driver.execute(Command.GET_NETWORK_CONNECTION)["value"])
 
     def set_network_connection(self, network):
         """Set the network connection for the remote device.

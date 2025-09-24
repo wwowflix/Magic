@@ -82,9 +82,7 @@ class GistFileSystem(AbstractFileSystem):
 
         r = requests.get(url, timeout=self.timeout, **self.kw)
         if r.status_code == 404:
-            raise FileNotFoundError(
-                f"Gist not found: {self.gist_id}@{self.sha or 'latest'}"
-            )
+            raise FileNotFoundError(f"Gist not found: {self.gist_id}@{self.sha or 'latest'}")
         r.raise_for_status()
         return r.json()
 

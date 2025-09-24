@@ -1,6 +1,6 @@
+import json
 import os
 import zipfile
-import json
 
 # Output zip file path
 OUTPUT_ZIP = "FileRouter_Magic_Flow.zip"

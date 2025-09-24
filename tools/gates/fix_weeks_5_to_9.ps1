@@ -1,4 +1,4 @@
-﻿# tools/gates/fix_weeks_5_to_9.ps1
+# tools/gates/fix_weeks_5_to_9.ps1
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $PSCommandPath
 $root = (Resolve-Path "$here\..\..").Path

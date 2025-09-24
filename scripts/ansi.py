@@ -171,13 +171,11 @@ class AnsiDecoder:
                         # styles
                         self.style += _Style.parse(SGR_STYLE_MAP[code])
                     elif code == 38:
-                        #  Foreground
+                        # Â Foreground
                         with suppress(StopIteration):
                             color_type = next(iter_codes)
                             if color_type == 5:
-                                self.style += _Style.from_color(
-                                    from_ansi(next(iter_codes))
-                                )
+                                self.style += _Style.from_color(from_ansi(next(iter_codes)))
                             elif color_type == 2:
                                 self.style += _Style.from_color(
                                     from_rgb(
@@ -191,9 +189,7 @@ class AnsiDecoder:
                         with suppress(StopIteration):
                             color_type = next(iter_codes)
                             if color_type == 5:
-                                self.style += _Style.from_color(
-                                    None, from_ansi(next(iter_codes))
-                                )
+                                self.style += _Style.from_color(None, from_ansi(next(iter_codes)))
                             elif color_type == 2:
                                 self.style += _Style.from_color(
                                     None,

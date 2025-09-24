@@ -73,11 +73,7 @@ def install_version(
 ) -> None:
     """Install specified toolchain version."""
     with pushd("."):
-        print(
-            "Installing the C++ toolchain: {}".format(
-                os.path.splitext(installation_file)[0]
-            )
-        )
+        print("Installing the C++ toolchain: {}".format(os.path.splitext(installation_file)[0]))
         cmd = [installation_file]
         cmd.extend(get_config(installation_dir, silent))
         print(" ".join(cmd))
@@ -148,11 +144,7 @@ def install_mingw32_make(toolchain_loc: str, verbose: bool = False) -> None:
                     print(output, flush=True)
         _, stderr = proc.communicate()
         if proc.returncode:
-            print(
-                "mingw32-make installation failed: returncode={}".format(
-                    proc.returncode
-                )
-            )
+            print("mingw32-make installation failed: returncode={}".format(proc.returncode))
             if stderr:
                 print(stderr.decode("utf-8").strip())
             sys.exit(3)
@@ -203,9 +195,7 @@ def retrieve_toolchain(filename: str, url: str, progress: bool = True) -> None:
                 progress_hook = wrap_url_progress_hook()
             else:
                 progress_hook = None
-            _ = urllib.request.urlretrieve(
-                url, filename=filename, reporthook=progress_hook
-            )
+            _ = urllib.request.urlretrieve(url, filename=filename, reporthook=progress_hook)
             break
         except urllib.error.URLError as err:
             print("Failed to download C++ toolchain")
@@ -321,9 +311,7 @@ def run_rtools_install(args: Dict[str, Any]) -> None:
             and (platform.system() == "Windows")
             and (version in ("4.0", "4", "40"))
         ):
-            if os.path.exists(
-                os.path.join(toolchain_folder, "mingw64", "bin", "mingw32-make.exe")
-            ):
+            if os.path.exists(os.path.join(toolchain_folder, "mingw64", "bin", "mingw32-make.exe")):
                 print("mingw32-make.exe already installed")
             else:
                 install_mingw32_make(toolchain_folder, verbose)
@@ -332,9 +320,7 @@ def run_rtools_install(args: Dict[str, Any]) -> None:
 def parse_cmdline_args() -> Dict[str, Any]:
     parser = argparse.ArgumentParser()
     parser.add_argument("--version", "-v", help="version, defaults to latest")
-    parser.add_argument(
-        "--dir", "-d", help="install directory, defaults to '~/.cmdstan"
-    )
+    parser.add_argument("--dir", "-d", help="install directory, defaults to '~/.cmdstan")
     parser.add_argument(
         "--silent",
         "-s",

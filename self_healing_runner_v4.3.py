@@ -1,4 +1,4 @@
-﻿import json
+ï¿import json
 import subprocess
 import sys
 from pathlib import Path
@@ -21,7 +21,7 @@ results = []
 for script in scripts:
     script_path = Path(script)
     log_path = logs_dir / f"{script_path.stem}.log"
-    print(f"▶ Running {script}")
+    print(f"â�"¶ Running {script}")
 
     try:
         proc = subprocess.run(
@@ -57,4 +57,4 @@ with open(summary_file, "w", encoding="utf-8") as s:
     for script, status, error in results:
         s.write(f"{script}\t{status}\t{error}\n")
 
-print(f"✅ Completed {len(results)} scripts. Summary saved to {summary_file}")
+print(f"â�"… Completed {len(results)} scripts. Summary saved to {summary_file}")

@@ -9,9 +9,9 @@ from .style import Style
 
 # There are left-aligned characters for 1/8 to 7/8, but
 # the right-aligned characters exist only for 1/8 and 4/8.
-BEGIN_BLOCK_ELEMENTS = ["█", "█", "█", "▐", "▐", "▐", "▕", "▕"]
-END_BLOCK_ELEMENTS = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉"]
-FULL_BLOCK = "█"
+BEGIN_BLOCK_ELEMENTS = ["â�"ˆ", "â�"ˆ", "â�"ˆ", "â�"�", "â�"�", "â�"�", "â�"•", "â�"•"]
+END_BLOCK_ELEMENTS = [" ", "â�"�", "â�"Ž", "â�"�", "â�"�'", "â�"‹", "â�"� ", "â�"‰"]
+FULL_BLOCK = "â�"ˆ"
 
 
 class Bar(JupyterMixin):
@@ -45,9 +45,7 @@ class Bar(JupyterMixin):
     def __repr__(self) -> str:
         return f"Bar({self.size}, {self.begin}, {self.end})"
 
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
+    def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
 
         width = min(
             self.width if self.width is not None else options.max_width,
@@ -84,9 +82,7 @@ class Bar(JupyterMixin):
         yield Segment(prefix + body[len(prefix) :] + suffix, self.style)
         yield Segment.line()
 
-    def __rich_measure__(
-        self, console: Console, options: ConsoleOptions
-    ) -> Measurement:
+    def __rich_measure__(self, console: Console, options: ConsoleOptions) -> Measurement:
         return (
             Measurement(self.width, self.width)
             if self.width is not None

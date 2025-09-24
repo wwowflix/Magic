@@ -88,15 +88,11 @@ class TelegramChannelScraper(snscrape.base.Scraper):
             r = self._get(f"https://t.me/s/{self._name}", headers=self._headers)
             if r.status_code != 200:
                 raise snscrape.base.ScraperException(f"Got status code {r.status_code}")
-            self._initialPage, self._initialPageSoup = r, bs4.BeautifulSoup(
-                r.text, "lxml"
-            )
+            self._initialPage, self._initialPageSoup = r, bs4.BeautifulSoup(r.text, "lxml")
         return self._initialPage, self._initialPageSoup
 
     def _soup_to_items(self, soup, pageUrl, onlyUsername=False):
-        posts = soup.find_all(
-            "div", attrs={"class": "tgme_widget_message", "data-post": True}
-        )
+        posts = soup.find_all("div", attrs={"class": "tgme_widget_message", "data-post": True})
         for post in reversed(posts):
             if onlyUsername:
                 yield post["data-post"].split("/")[0]
@@ -144,30 +140,20 @@ class TelegramChannelScraper(snscrape.base.Scraper):
                 content = None
                 outlinks = []
             linkPreview = None
-            if linkPreviewA := post.find(
-                "a", class_="tgme_widget_message_link_preview"
-            ):
+            if linkPreviewA := post.find("a", class_="tgme_widget_message_link_preview"):
                 kwargs = {}
                 kwargs["href"] = urllib.parse.urljoin(pageUrl, linkPreviewA["href"])
-                if siteNameDiv := linkPreviewA.find(
-                    "div", class_="link_preview_site_name"
-                ):
+                if siteNameDiv := linkPreviewA.find("div", class_="link_preview_site_name"):
                     kwargs["siteName"] = siteNameDiv.text
                 if titleDiv := linkPreviewA.find("div", class_="link_preview_title"):
                     kwargs["title"] = titleDiv.text
-                if descriptionDiv := linkPreviewA.find(
-                    "div", class_="link_preview_description"
-                ):
+                if descriptionDiv := linkPreviewA.find("div", class_="link_preview_description"):
                     kwargs["description"] = descriptionDiv.text
                 if imageI := linkPreviewA.find("i", class_="link_preview_image"):
                     if imageI["style"].startswith("background-image:url('"):
-                        kwargs["image"] = imageI["style"][
-                            22 : imageI["style"].index("'", 22)
-                        ]
+                        kwargs["image"] = imageI["style"][22 : imageI["style"].index("'", 22)]
                     else:
-                        _logger.warning(
-                            f"Could not process link preview image on {url}"
-                        )
+                        _logger.warning(f"Could not process link preview image on {url}")
                 linkPreview = LinkPreview(**kwargs)
             yield TelegramPost(
                 url=url,
@@ -184,9 +170,7 @@ class TelegramChannelScraper(snscrape.base.Scraper):
             return
         while True:
             yield from self._soup_to_items(soup, r.url)
-            pageLink = soup.find(
-                "a", attrs={"class": "tme_messages_more", "data-before": True}
-            )
+            pageLink = soup.find("a", attrs={"class": "tme_messages_more", "data-before": True})
             if not pageLink:
                 break
             nextPageUrl = urllib.parse.urljoin(r.url, pageLink["href"])
@@ -218,9 +202,7 @@ class TelegramChannelScraper(snscrape.base.Scraper):
         # The username in the channel info is not canonicalised, nor is the one on the /channel page anywhere.
         # However, the post URLs are, so extract the first post and use that.
         try:
-            kwargs["username"] = next(
-                self._soup_to_items(soup, r.url, onlyUsername=True)
-            )
+            kwargs["username"] = next(self._soup_to_items(soup, r.url, onlyUsername=True))
         except StopIteration:
             # If there are no posts, fall back to the channel info div, although that should never happen due to the 'Channel created' entry.
             _logger.warning(
@@ -231,9 +213,7 @@ class TelegramChannelScraper(snscrape.base.Scraper):
             ).text[
                 1:
             ]  # Remove @
-        if descriptionDiv := channelInfoDiv.find(
-            "div", class_="tgme_channel_info_description"
-        ):
+        if descriptionDiv := channelInfoDiv.find("div", class_="tgme_channel_info_description"):
             kwargs["description"] = descriptionDiv.text
 
         def parse_num(s):
@@ -250,9 +230,7 @@ class TelegramChannelScraper(snscrape.base.Scraper):
                 return int(s), 1
 
         for div in channelInfoDiv.find_all("div", class_="tgme_channel_info_counter"):
-            value, granularity = parse_num(
-                div.find("span", class_="counter_value").text
-            )
+            value, granularity = parse_num(div.find("span", class_="counter_value").text)
             type_ = div.find("span", class_="counter_type").text
             if type_ == "members":
                 # Already extracted more accurately from /channel, skip

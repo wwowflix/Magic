@@ -412,9 +412,7 @@ class TestParamEval:
         }
         params = {}
         dimspec = ""
-        pytest.raises(
-            ValueError, crackfortran.param_eval, v, g_params, params, dimspec=dimspec
-        )
+        pytest.raises(ValueError, crackfortran.param_eval, v, g_params, params, dimspec=dimspec)
 
     def test_param_eval_non_array_param(self):
         v = "3.14_dp"
@@ -436,9 +434,7 @@ class TestParamEval:
         }
         params = {}
         dimspec = "(0:4, 3:12, 5)"
-        pytest.raises(
-            ValueError, crackfortran.param_eval, v, g_params, params, dimspec=dimspec
-        )
+        pytest.raises(ValueError, crackfortran.param_eval, v, g_params, params, dimspec=dimspec)
 
 
 @pytest.mark.slow

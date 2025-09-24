@@ -169,9 +169,7 @@ class TestSFloat:
         res = a + b
         # addition uses the type promotion rules for the result:
         assert res.dtype == np.result_type(a.dtype, b.dtype)
-        expected_view = a.astype(res.dtype).view(np.float64) + b.astype(res.dtype).view(
-            np.float64
-        )
+        expected_view = a.astype(res.dtype).view(np.float64) + b.astype(res.dtype).view(np.float64)
         assert_array_equal(res.view(np.float64), expected_view)
 
     def test_addition_cast_safety(self):
@@ -295,9 +293,7 @@ class TestSFloat:
     )
     def test_flatiter_index(self, index):
         arr = np.array([1.0, 2.0, 3.0], dtype=SF(1.0))
-        np.testing.assert_array_equal(
-            arr[index].view(np.float64), arr.flat[index].view(np.float64)
-        )
+        np.testing.assert_array_equal(arr[index].view(np.float64), arr.flat[index].view(np.float64))
 
         arr2 = arr.copy()
         arr[index] = 5.0

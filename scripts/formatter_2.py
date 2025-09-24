@@ -63,9 +63,7 @@ class Formatter(EntitySubstitution):
     #: rendered this way.)
     empty_attributes_are_booleans: bool
 
-    def _default(
-        self, language: str, value: Optional[Set[str]], kwarg: str
-    ) -> Set[str]:
+    def _default(self, language: str, value: Optional[Set[str]], kwarg: str) -> Set[str]:
         if value is not None:
             return value
         if language == self.XML:
@@ -167,9 +165,7 @@ class Formatter(EntitySubstitution):
         """
         return self.substitute(value)
 
-    def attributes(
-        self, tag: bs4.element.Tag
-    ) -> Iterable[Tuple[str, Optional[_AttributeValue]]]:
+    def attributes(self, tag: bs4.element.Tag) -> Iterable[Tuple[str, Optional[_AttributeValue]]]:
         """Reorder a tag's attributes however you want.
 
         By default, attributes are sorted alphabetically. This makes
@@ -185,8 +181,7 @@ class Formatter(EntitySubstitution):
 
         items: Iterable[Tuple[str, _AttributeValue]] = list(tag.attrs.items())
         return sorted(
-            (k, (None if self.empty_attributes_are_booleans and v == "" else v))
-            for k, v in items
+            (k, (None if self.empty_attributes_are_booleans and v == "" else v)) for k, v in items
         )
 
 
@@ -255,9 +250,7 @@ HTMLFormatter.REGISTRY["minimal"] = HTMLFormatter(
     entity_substitution=EntitySubstitution.substitute_xml
 )
 HTMLFormatter.REGISTRY[None] = HTMLFormatter(entity_substitution=None)
-XMLFormatter.REGISTRY["html"] = XMLFormatter(
-    entity_substitution=EntitySubstitution.substitute_html
-)
+XMLFormatter.REGISTRY["html"] = XMLFormatter(entity_substitution=EntitySubstitution.substitute_html)
 XMLFormatter.REGISTRY["minimal"] = XMLFormatter(
     entity_substitution=EntitySubstitution.substitute_xml
 )

@@ -1,4 +1,4 @@
-﻿# v0.11.0 – Phase 11 wrap-up
+# v0.11.0 – Phase 11 wrap-up
 - E2E smoketest (robust, FAIL-aware)
 - Live dashboard (PNG + HTML), Phase 11
 - CI workflow (pytest + coverage >=80% + E2E + artifacts)

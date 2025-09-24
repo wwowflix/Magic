@@ -294,9 +294,7 @@ class DistributionPath(object):
             try:
                 matcher = self._scheme.matcher("%s (%s)" % (name, version))
             except ValueError:
-                raise DistlibException(
-                    "invalid name or version: %r, %r" % (name, version)
-                )
+                raise DistlibException("invalid name or version: %r, %r" % (name, version))
 
         for dist in self.get_distributions():
             # We hit a problem on Travis where enum34 was installed and doesn't
@@ -411,9 +409,7 @@ class Distribution(object):
     def _get_requirements(self, req_attr):
         md = self.metadata
         reqts = getattr(md, req_attr)
-        logger.debug(
-            "%s: got requirements %r from metadata: %r", self.name, req_attr, reqts
-        )
+        logger.debug("%s: got requirements %r from metadata: %r", self.name, req_attr, reqts)
         return set(md.get_requirements(reqts, extras=self.extras, env=self.context))
 
     @property
@@ -692,9 +688,7 @@ class InstalledDistribution(BaseInstalledDistribution):
                 for relative, destination in resources_reader:
                     if relative == relative_path:
                         return destination
-        raise KeyError(
-            "no resource file with relative path %r " "is installed" % relative_path
-        )
+        raise KeyError("no resource file with relative path %r " "is installed" % relative_path)
 
     def list_installed_files(self):
         """
@@ -730,9 +724,7 @@ class InstalledDistribution(BaseInstalledDistribution):
                     size = "%d" % os.path.getsize(path)
                     with open(path, "rb") as fp:
                         hash_value = self.get_hash(fp.read())
-                if path.startswith(base) or (
-                    base_under_prefix and path.startswith(prefix)
-                ):
+                if path.startswith(base) or (base_under_prefix and path.startswith(prefix)):
                     path = os.path.relpath(path, base)
                 writer.writerow((path, hash_value, size))
 
@@ -936,18 +928,14 @@ class EggInfoDistribution(BaseInstalledDistribution):
             for line in lines:
                 line = line.strip()
                 if line.startswith("["):
-                    logger.warning(
-                        "Unexpected line: quitting requirement scan: %r", line
-                    )
+                    logger.warning("Unexpected line: quitting requirement scan: %r", line)
                     break
                 r = parse_requirement(line)
                 if not r:
                     logger.warning("Not recognised as a requirement: %r", line)
                     continue
                 if r.extras:
-                    logger.warning(
-                        "extra requirements in requires.txt are " "not supported"
-                    )
+                    logger.warning("extra requirements in requires.txt are " "not supported")
                 if not r.constraints:
                     reqs.append(r.name)
                 else:
@@ -997,9 +985,7 @@ class EggInfoDistribution(BaseInstalledDistribution):
                 tl_path = os.path.join(path, "top_level.txt")
             metadata = Metadata(path=path, scheme="legacy")
         else:
-            raise DistlibException(
-                "path must end with .egg-info or .egg, " "got %r" % path
-            )
+            raise DistlibException("path must end with .egg-info or .egg, " "got %r" % path)
 
         if requires:
             metadata.add_requirements(requires)
@@ -1212,9 +1198,7 @@ class DependencyGraph(object):
                 disconnected.append(dist)
             for other, label in adjs:
                 if label is not None:
-                    f.write(
-                        '"%s" -> "%s" [label="%s"]\n' % (dist.name, other.name, label)
-                    )
+                    f.write('"%s" -> "%s" [label="%s"]\n' % (dist.name, other.name, label))
                 else:
                     f.write('"%s" -> "%s"\n' % (dist.name, other.name))
         if not skip_disconnected and len(disconnected) > 0:
@@ -1292,12 +1276,7 @@ def make_graph(dists, scheme="default"):
 
     # now make the edges
     for dist in dists:
-        requires = (
-            dist.run_requires
-            | dist.meta_requires
-            | dist.build_requires
-            | dist.dev_requires
-        )
+        requires = dist.run_requires | dist.meta_requires | dist.build_requires | dist.dev_requires
         for req in requires:
             try:
                 matcher = scheme.matcher(req)
@@ -1334,9 +1313,7 @@ def get_dependent_dists(dists, dist):
     :param dist: a distribution, member of *dists* for which we are interested
     """
     if dist not in dists:
-        raise DistlibException(
-            "given distribution %r is not a member " "of the list" % dist.name
-        )
+        raise DistlibException("given distribution %r is not a member " "of the list" % dist.name)
     graph = make_graph(dists)
 
     dep = [dist]  # dependent distributions
@@ -1362,9 +1339,7 @@ def get_required_dists(dists, dist):
                  in finding the dependencies.
     """
     if dist not in dists:
-        raise DistlibException(
-            "given distribution %r is not a member " "of the list" % dist.name
-        )
+        raise DistlibException("given distribution %r is not a member " "of the list" % dist.name)
     graph = make_graph(dists)
 
     req = set()  # required distributions

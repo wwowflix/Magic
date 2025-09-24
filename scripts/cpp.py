@@ -378,9 +378,7 @@ class Preprocessor(object):
         if (i < tokenlen) and (tokenlist[i].value == "("):
             positions.append(i + 1)
         else:
-            self.error(
-                self.source, tokenlist[0].lineno, "Missing '(' in macro arguments"
-            )
+            self.error(self.source, tokenlist[0].lineno, "Missing '(' in macro arguments")
             return 0, [], []
 
         i += 1
@@ -424,10 +422,7 @@ class Preprocessor(object):
         macro.var_comma_patch = []  # Variadic macro comma patch
         i = 0
         while i < len(macro.value):
-            if (
-                macro.value[i].type == self.t_ID
-                and macro.value[i].value in macro.arglist
-            ):
+            if macro.value[i].type == self.t_ID and macro.value[i].value in macro.arglist:
                 argnum = macro.arglist.index(macro.value[i].value)
                 # Conversion of argument to a string
                 if i > 0 and macro.value[i - 1].value == "#":
@@ -478,9 +473,9 @@ class Preprocessor(object):
         str_expansion = {}
         for argnum, i in macro.str_patch:
             if argnum not in str_expansion:
-                str_expansion[argnum] = (
-                    '"%s"' % "".join([x.value for x in args[argnum]])
-                ).replace("\\", "\\\\")
+                str_expansion[argnum] = ('"%s"' % "".join([x.value for x in args[argnum]])).replace(
+                    "\\", "\\\\"
+                )
             rep[i] = copy.copy(rep[i])
             rep[i].value = str_expansion[argnum]
 
@@ -534,9 +529,7 @@ class Preprocessor(object):
                     m = self.macros[t.value]
                     if not m.arglist:
                         # A simple macro
-                        ex = self.expand_macros(
-                            [copy.copy(_x) for _x in m.value], expanded
-                        )
+                        ex = self.expand_macros([copy.copy(_x) for _x in m.value], expanded)
                         for e in ex:
                             e.lineno = t.lineno
                         tokens[i : i + 1] = ex
@@ -552,8 +545,7 @@ class Preprocessor(object):
                                 self.error(
                                     self.source,
                                     t.lineno,
-                                    "Macro %s requires %d arguments"
-                                    % (t.value, len(m.arglist)),
+                                    "Macro %s requires %d arguments" % (t.value, len(m.arglist)),
                                 )
                                 i = j + tokcount
                             elif m.variadic and len(args) < len(m.arglist) - 1:
@@ -578,10 +570,7 @@ class Preprocessor(object):
                                         args.append([])
                                     else:
                                         args[len(m.arglist) - 1] = tokens[
-                                            j
-                                            + positions[len(m.arglist) - 1] : j
-                                            + tokcount
-                                            - 1
+                                            j + positions[len(m.arglist) - 1] : j + tokcount - 1
                                         ]
                                         del args[len(m.arglist) :]
 
@@ -754,9 +743,7 @@ class Preprocessor(object):
                             iftrigger = True
                 elif name == "elif":
                     if ifstack:
-                        if ifstack[-1][
-                            0
-                        ]:  # We only pay attention if outer "if" allows this
+                        if ifstack[-1][0]:  # We only pay attention if outer "if" allows this
                             if enable:  # If already true, we flip enable False
                                 enable = False
                             elif (
@@ -903,16 +890,10 @@ class Preprocessor(object):
                     i = 0
                     while i < len(mvalue):
                         if i + 1 < len(mvalue):
-                            if (
-                                mvalue[i].type in self.t_WS
-                                and mvalue[i + 1].value == "##"
-                            ):
+                            if mvalue[i].type in self.t_WS and mvalue[i + 1].value == "##":
                                 del mvalue[i]
                                 continue
-                            elif (
-                                mvalue[i].value == "##"
-                                and mvalue[i + 1].type in self.t_WS
-                            ):
+                            elif mvalue[i].value == "##" and mvalue[i + 1].type in self.t_WS:
                                 del mvalue[i + 1]
                         i += 1
                     m = Macro(name.value, mvalue, [x[0].value for x in args], variadic)

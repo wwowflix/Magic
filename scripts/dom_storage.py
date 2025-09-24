@@ -50,13 +50,9 @@ class StorageId:
     def from_json(cls, json):
         return cls(
             is_local_storage=bool(json["isLocalStorage"]),
-            security_origin=(
-                str(json["securityOrigin"]) if "securityOrigin" in json else None
-            ),
+            security_origin=(str(json["securityOrigin"]) if "securityOrigin" in json else None),
             storage_key=(
-                SerializedStorageKey.from_json(json["storageKey"])
-                if "storageKey" in json
-                else None
+                SerializedStorageKey.from_json(json["storageKey"]) if "storageKey" in json else None
             ),
         )
 
@@ -187,9 +183,7 @@ class DomStorageItemRemoved:
 
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> DomStorageItemRemoved:
-        return cls(
-            storage_id=StorageId.from_json(json["storageId"]), key=str(json["key"])
-        )
+        return cls(storage_id=StorageId.from_json(json["storageId"]), key=str(json["key"]))
 
 
 @event_class("DOMStorage.domStorageItemUpdated")

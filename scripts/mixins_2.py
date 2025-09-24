@@ -89,7 +89,7 @@ class _MarkDef(SchemaBase):
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -152,7 +152,7 @@ class _MarkDef(SchemaBase):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"…"``
+        **Default value:** ``"â€¦"``
     fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
@@ -224,25 +224,25 @@ class _MarkDef(SchemaBase):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -412,12 +412,12 @@ class _MarkDef(SchemaBase):
         Placeholder text if the ``text`` channel is not specified
     theta : dict, float, :class:`ExprRef`
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or â€œnorthâ€, increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2 : dict, float, :class:`ExprRef`
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or â€œnorthâ€,
         increasing values proceed clockwise.
     theta2Offset : dict, float, :class:`ExprRef`
         Offset for theta2.
@@ -508,17 +508,11 @@ class _MarkDef(SchemaBase):
         color: Optional[str | Parameter | SchemaBase | Map | ColorName_T] = Undefined,
         continuousBandSize: Optional[float] = Undefined,
         cornerRadius: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        cornerRadiusBottomLeft: Optional[
-            float | Parameter | SchemaBase | Map
-        ] = Undefined,
-        cornerRadiusBottomRight: Optional[
-            float | Parameter | SchemaBase | Map
-        ] = Undefined,
+        cornerRadiusBottomLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
+        cornerRadiusBottomRight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusEnd: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cornerRadiusTopLeft: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        cornerRadiusTopRight: Optional[
-            float | Parameter | SchemaBase | Map
-        ] = Undefined,
+        cornerRadiusTopRight: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         cursor: Optional[Parameter | SchemaBase | Map | Cursor_T] = Undefined,
         description: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         dir: Optional[Parameter | SchemaBase | Map | TextDirection_T] = Undefined,
@@ -526,9 +520,7 @@ class _MarkDef(SchemaBase):
         dx: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         dy: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         ellipsis: Optional[str | Parameter | SchemaBase | Map] = Undefined,
-        fill: Optional[
-            str | Parameter | SchemaBase | Map | ColorName_T | None
-        ] = Undefined,
+        fill: Optional[str | Parameter | SchemaBase | Map | ColorName_T | None] = Undefined,
         fillOpacity: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         filled: Optional[bool] = Undefined,
         font: Optional[str | Parameter | SchemaBase | Map] = Undefined,
@@ -558,13 +550,9 @@ class _MarkDef(SchemaBase):
         shape: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         size: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         smooth: Optional[bool | Parameter | SchemaBase | Map] = Undefined,
-        stroke: Optional[
-            str | Parameter | SchemaBase | Map | ColorName_T | None
-        ] = Undefined,
+        stroke: Optional[str | Parameter | SchemaBase | Map | ColorName_T | None] = Undefined,
         strokeCap: Optional[Parameter | SchemaBase | Map | StrokeCap_T] = Undefined,
-        strokeDash: Optional[
-            Parameter | SchemaBase | Sequence[float] | Map
-        ] = Undefined,
+        strokeDash: Optional[Parameter | SchemaBase | Sequence[float] | Map] = Undefined,
         strokeDashOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         strokeJoin: Optional[Parameter | SchemaBase | Map | StrokeJoin_T] = Undefined,
         strokeMiterLimit: Optional[float | Parameter | SchemaBase | Map] = Undefined,
@@ -581,25 +569,15 @@ class _MarkDef(SchemaBase):
         thickness: Optional[float] = Undefined,
         timeUnitBandPosition: Optional[float] = Undefined,
         timeUnitBandSize: Optional[float] = Undefined,
-        tooltip: Optional[
-            str | bool | float | Parameter | SchemaBase | Map | None
-        ] = Undefined,
+        tooltip: Optional[str | bool | float | Parameter | SchemaBase | Map | None] = Undefined,
         url: Optional[str | Parameter | SchemaBase | Map] = Undefined,
         width: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        x: Optional[
-            float | Parameter | SchemaBase | Literal["width"] | Map
-        ] = Undefined,
-        x2: Optional[
-            float | Parameter | SchemaBase | Literal["width"] | Map
-        ] = Undefined,
+        x: Optional[float | Parameter | SchemaBase | Literal["width"] | Map] = Undefined,
+        x2: Optional[float | Parameter | SchemaBase | Literal["width"] | Map] = Undefined,
         x2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         xOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
-        y: Optional[
-            float | Parameter | SchemaBase | Literal["height"] | Map
-        ] = Undefined,
-        y2: Optional[
-            float | Parameter | SchemaBase | Literal["height"] | Map
-        ] = Undefined,
+        y: Optional[float | Parameter | SchemaBase | Literal["height"] | Map] = Undefined,
+        y2: Optional[float | Parameter | SchemaBase | Literal["height"] | Map] = Undefined,
         y2Offset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         yOffset: Optional[float | Parameter | SchemaBase | Map] = Undefined,
         **kwds,
@@ -708,7 +686,7 @@ class _BoxPlotDef(SchemaBase):
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -733,25 +711,25 @@ class _BoxPlotDef(SchemaBase):
         represent invalid values (``null`` and ``NaN`` in continuous scales *without*
         defined output for invalid values).
 
-        * ``"filter"`` — *Exclude* all invalid values from the visualization's *marks* and
+        * ``"filter"`` â€" *Exclude* all invalid values from the visualization's *marks* and
           *scales*. For path marks (for line, area, trail), this option will create paths
           that connect valid points, as if the data rows with invalid values do not exist.
 
-        * ``"break-paths-filter-domains"`` — Break path marks (for line, area, trail) at
+        * ``"break-paths-filter-domains"`` â€" Break path marks (for line, area, trail) at
           invalid values.  For non-path marks, this is equivalent to ``"filter"``. All
           *scale* domains will *exclude* these filtered data points.
 
-        * ``"break-paths-show-domains"`` — Break paths (for line, area, trail) at invalid
+        * ``"break-paths-show-domains"`` â€" Break paths (for line, area, trail) at invalid
           values.  Hide invalid values for non-path marks. All *scale* domains will
           *include* these filtered data points (for both path and non-path marks).
 
-        * ``"show"`` or ``null`` — Show all data points in the marks and scale domains. Each
+        * ``"show"`` or ``null`` â€" Show all data points in the marks and scale domains. Each
           scale will use the output for invalid values defined in ``config.scale.invalid``
           or, if unspecified, by default invalid values will produce the same visual values
           as zero (if the scale includes zero) or the minimum value (if the scale does not
           include zero).
 
-        * ``"break-paths-show-path-domains"`` (default) — This is equivalent to
+        * ``"break-paths-show-path-domains"`` (default) â€" This is equivalent to
           ``"break-paths-show-domains"`` for path-based marks (line/area/trail) and
           ``"filter"`` for non-path marks.
 
@@ -825,7 +803,7 @@ class _ErrorBarDef(SchemaBase):
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**
@@ -904,7 +882,7 @@ class _ErrorBandDef(SchemaBase):
     color : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple']
         Default color.
 
-        **Default value:**  :raw-html:`<span style="color: #4682b4;">` ■ :raw-html:`</span>`
+        **Default value:**  :raw-html:`<span style="color: #4682b4;">` â-  :raw-html:`</span>`
         ``"#4682b4"``
 
         **Note:**

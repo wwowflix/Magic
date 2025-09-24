@@ -1742,9 +1742,7 @@ class TestStatistic:
         assert_equal(a[0], a[-1])
 
     @pytest.mark.parametrize("mode", ["mean", "median", "minimum", "maximum"])
-    @pytest.mark.parametrize(
-        "stat_length", [-2, (-2,), (3, -1), ((5, 2), (-2, 3)), ((-4,), (2,))]
-    )
+    @pytest.mark.parametrize("stat_length", [-2, (-2,), (3, -1), ((5, 2), (-2, 3)), ((-4,), (2,))])
     def test_check_negative_stat_length(self, mode, stat_length):
         arr = np.arange(30).reshape((6, 5))
         match = "index can't contain negative values"
@@ -2315,9 +2313,7 @@ class TestConstant:
 
     def test_check_constant_pad_2d(self):
         arr = np.arange(4).reshape(2, 2)
-        test = np.pad(
-            arr, ((1, 2), (1, 3)), mode="constant", constant_values=((1, 2), (3, 4))
-        )
+        test = np.pad(arr, ((1, 2), (1, 3)), mode="constant", constant_values=((1, 2), (3, 4)))
         expected = np.array(
             [
                 [3, 1, 1, 4, 4, 4],
@@ -3103,9 +3099,7 @@ class TestEmptyArray:
         sorted(_all_modes.keys() - {"constant", "empty"}),
     )
     def test_pad_empty_dimension(self, mode):
-        match = (
-            "can't extend empty axis 0 using modes other than 'constant' " "or 'empty'"
-        )
+        match = "can't extend empty axis 0 using modes other than 'constant' " "or 'empty'"
         with pytest.raises(ValueError, match=match):
             np.pad([], 4, mode=mode)
         with pytest.raises(ValueError, match=match):
@@ -4533,15 +4527,11 @@ class TestPadWidth:
     @pytest.mark.parametrize("mode", _all_modes.keys())
     def test_misshaped_pad_width_2(self, mode):
         arr = np.arange(30).reshape((6, 5))
-        match = (
-            "input operand has more dimensions than allowed by the axis " "remapping"
-        )
+        match = "input operand has more dimensions than allowed by the axis " "remapping"
         with pytest.raises(ValueError, match=match):
             np.pad(arr, (((3,), (4,), (5,)), ((0,), (1,), (2,))), mode)
 
-    @pytest.mark.parametrize(
-        "pad_width", [-2, (-2,), (3, -1), ((5, 2), (-2, 3)), ((-4,), (2,))]
-    )
+    @pytest.mark.parametrize("pad_width", [-2, (-2,), (3, -1), ((5, 2), (-2, 3)), ((-4,), (2,))])
     @pytest.mark.parametrize("mode", _all_modes.keys())
     def test_negative_pad_width(self, pad_width, mode):
         arr = np.arange(30).reshape((6, 5))

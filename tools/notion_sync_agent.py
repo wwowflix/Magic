@@ -1,9 +1,10 @@
-﻿"""
-Notion Sync Agent – Updates the MAGIC Automation Tracker with latest file metadata
+"""
+Notion Sync Agent â€" Updates the MAGIC Automation Tracker with latest file metadata
 """
 
-import os
 import csv
+import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -28,9 +29,7 @@ def update_notion_row(row):
 
     props = {
         "Status": {"select": {"name": row["Status"]}},
-        "Folder Location": {
-            "rich_text": [{"text": {"content": row["Folder Location"]}}]
-        },
+        "Folder Location": {"rich_text": [{"text": {"content": row["Folder Location"]}}]},
         "Last Moved": {"date": {"start": datetime.now().isoformat()}},
     }
 
@@ -40,7 +39,7 @@ def update_notion_row(row):
 
 def main():
     if not os.path.exists(PATCH_FILE):
-        print(f"❌ Patch file not found: {PATCH_FILE}")
+        print(f"âŒ Patch file not found: {PATCH_FILE}")
         return
 
     with open(PATCH_FILE, newline="", encoding="utf-8") as csvfile:
@@ -49,9 +48,9 @@ def main():
             if row.get("NotionPageID") and row.get("Status"):
                 try:
                     update_notion_row(row)
-                    print(f"✅ Synced: {row['Filename']}")
+                    print(f"âœ... Synced: {row['Filename']}")
                 except Exception as e:
-                    print(f"❌ Failed: {row['Filename']} → {e}")
+                    print(f"âŒ Failed: {row['Filename']} â†' {e}")
 
 
 if __name__ == "__main__":

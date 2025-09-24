@@ -554,9 +554,7 @@ class HtmlFormatter(Formatter):
             text_style = ""
             if Text in self.ttype2class:
                 text_style = " " + self.class2style[self.ttype2class[Text]][0]
-            lines.insert(
-                0, "%s{ background: %s;%s }" % (prefix(""), bg_color, text_style)
-            )
+            lines.insert(0, "%s{ background: %s;%s }" % (prefix(""), bg_color, text_style))
         if hl_color is not None:
             lines.insert(0, "%s { background-color: %s }" % (prefix("hll"), hl_color))
 
@@ -597,19 +595,16 @@ class HtmlFormatter(Formatter):
 
     @property
     def _linenos_style(self):
-        return (
-            "color: %s; background-color: %s; padding-left: 5px; padding-right: 5px;"
-            % (self.style.line_number_color, self.style.line_number_background_color)
+        return "color: %s; background-color: %s; padding-left: 5px; padding-right: 5px;" % (
+            self.style.line_number_color,
+            self.style.line_number_background_color,
         )
 
     @property
     def _linenos_special_style(self):
-        return (
-            "color: %s; background-color: %s; padding-left: 5px; padding-right: 5px;"
-            % (
-                self.style.line_number_special_color,
-                self.style.line_number_special_background_color,
-            )
+        return "color: %s; background-color: %s; padding-left: 5px; padding-right: 5px;" % (
+            self.style.line_number_special_color,
+            self.style.line_number_special_background_color,
         )
 
     def _decodeifneeded(self, value):
@@ -642,10 +637,7 @@ class HtmlFormatter(Formatter):
             try:
                 if not os.path.exists(cssfilename) or not self.noclobber_cssfile:
                     with open(cssfilename, "w") as cf:
-                        cf.write(
-                            CSSFILE_TEMPLATE
-                            % {"styledefs": self.get_style_defs("body")}
-                        )
+                        cf.write(CSSFILE_TEMPLATE % {"styledefs": self.get_style_defs("body")})
             except OSError as err:
                 err.strerror = "Error writing CSS file: " + err.strerror
                 raise
@@ -776,9 +768,7 @@ class HtmlFormatter(Formatter):
                 linenos = line
 
             if aln:
-                yield 1, (
-                    '<a href="#%s-%d">%s</a>' % (anchor_name, num, linenos) + inner_line
-                )
+                yield 1, ('<a href="#%s-%d">%s</a>' % (anchor_name, num, linenos) + inner_line)
             else:
                 yield 1, linenos + inner_line
             num += 1
@@ -807,11 +797,7 @@ class HtmlFormatter(Formatter):
 
     def _wrap_div(self, inner):
         style = []
-        if (
-            self.noclasses
-            and not self.nobackground
-            and self.style.background_color is not None
-        ):
+        if self.noclasses and not self.nobackground and self.style.background_color is not None:
             style.append("background: %s" % (self.style.background_color,))
         if self.cssstyles:
             style.append(self.cssstyles)
@@ -868,9 +854,7 @@ class HtmlFormatter(Formatter):
             try:
                 cspan = self.span_element_openers[ttype]
             except KeyError:
-                title = (
-                    ' title="%s"' % ".".join(ttype) if self.debug_token_types else ""
-                )
+                title = ' title="%s"' % ".".join(ttype) if self.debug_token_types else ""
                 if nocls:
                     css_style = self._get_css_inline_styles(ttype)
                     if css_style:
@@ -966,9 +950,7 @@ class HtmlFormatter(Formatter):
                 if self.noclasses:
                     style = ""
                     if self.style.highlight_color is not None:
-                        style = ' style="background-color: %s"' % (
-                            self.style.highlight_color,
-                        )
+                        style = ' style="background-color: %s"' % (self.style.highlight_color,)
                     yield 1, "<span%s>%s</span>" % (style, value)
                 else:
                     yield 1, '<span class="hll">%s</span>' % value

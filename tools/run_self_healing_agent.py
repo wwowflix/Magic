@@ -1,4 +1,4 @@
-﻿import os
+import os
 import shutil
 from dotenv import load_dotenv
 
@@ -15,7 +15,7 @@ PATCH_CSV = "outputs/notion_export/magic_patch.csv"
 
 # 🧠 Self-Healing Actions
 def restore_missing_scripts():
-    print("🔍 Checking for missing scripts...")
+    print("Checking for missing scripts...")
     restored = 0
     for root, _, files in os.walk(BACKUP_DIR):
         for file in files:
@@ -61,9 +61,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action="store_true", help="Dry run only")
-    parser.add_argument(
-        "--restore", action="store_true", help="Only restore missing scripts"
-    )
+    parser.add_argument("--restore", action="store_true", help="Only restore missing scripts")
     parser.add_argument("--clean", action="store_true", help="Only clean logs")
     parser.add_argument("--all", action="store_true", help="Full heal cycle")
     args = parser.parse_args()

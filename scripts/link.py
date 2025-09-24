@@ -302,9 +302,7 @@ class Link(KeyBasedCompareMixin):
         else:
             rp = ""
         if self.comes_from:
-            return "{} (from {}){}".format(
-                redact_auth_from_url(self._url), self.comes_from, rp
-            )
+            return "{} (from {}){}".format(redact_auth_from_url(self._url), self.comes_from, rp)
         else:
             return redact_auth_from_url(str(self._url))
 
@@ -363,9 +361,7 @@ class Link(KeyBasedCompareMixin):
     _egg_fragment_re = re.compile(r"[#&]egg=([^&]*)")
 
     # Per PEP 508.
-    _project_name_re = re.compile(
-        r"^([A-Z0-9]|[A-Z0-9][A-Z0-9._-]*[A-Z0-9])$", re.IGNORECASE
-    )
+    _project_name_re = re.compile(r"^([A-Z0-9]|[A-Z0-9][A-Z0-9._-]*[A-Z0-9])$", re.IGNORECASE)
 
     def _egg_fragment(self) -> Optional[str]:
         match = self._egg_fragment_re.search(self._url)

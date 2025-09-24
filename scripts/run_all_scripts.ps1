@@ -1,4 +1,4 @@
-﻿# --------------------------------------------------------------
+# --------------------------------------------------------------
 Write-Host "`nResults saved to run_results.csv" -ForegroundColor Cyan
 $results | Export-Csv -Path (Join-Path $scriptRoot 'run_results.csv') -NoTypeInformation -Encoding UTF8
 $excludeList = @(

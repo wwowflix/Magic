@@ -83,9 +83,7 @@ class CygwinCCompiler(UnixCCompiler):
         super().__init__(verbose, dry_run, force)
 
         status, details = check_config_h()
-        self.debug_print(
-            "Python's GCC status: {} (details: {})".format(status, details)
-        )
+        self.debug_print("Python's GCC status: {} (details: {})".format(status, details))
         if status is not CONFIG_H_OK:
             self.warn(
                 "Python's pyconfig.h doesn't seem to support your compiler. "
@@ -136,9 +134,7 @@ class CygwinCCompiler(UnixCCompiler):
                 raise CompileError(msg)
         else:  # for other files use the C-compiler
             try:
-                self.spawn(
-                    self.compiler_so + cc_args + [src, "-o", obj] + extra_postargs
-                )
+                self.spawn(self.compiler_so + cc_args + [src, "-o", obj] + extra_postargs)
             except DistutilsExecError as msg:
                 raise CompileError(msg)
 
@@ -185,9 +181,7 @@ class CygwinCCompiler(UnixCCompiler):
             # where are the object files
             temp_dir = os.path.dirname(objects[0])
             # name of dll to give the helper files the same base name
-            (dll_name, dll_extension) = os.path.splitext(
-                os.path.basename(output_filename)
-            )
+            (dll_name, dll_extension) = os.path.splitext(os.path.basename(output_filename))
 
             # generate the filenames for these files
             def_file = os.path.join(temp_dir, dll_name + ".def")

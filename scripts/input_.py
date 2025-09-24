@@ -78,14 +78,10 @@ class TouchPoint:
             y=float(json["y"]),
             radius_x=float(json["radiusX"]) if "radiusX" in json else None,
             radius_y=float(json["radiusY"]) if "radiusY" in json else None,
-            rotation_angle=(
-                float(json["rotationAngle"]) if "rotationAngle" in json else None
-            ),
+            rotation_angle=(float(json["rotationAngle"]) if "rotationAngle" in json else None),
             force=float(json["force"]) if "force" in json else None,
             tangential_pressure=(
-                float(json["tangentialPressure"])
-                if "tangentialPressure" in json
-                else None
+                float(json["tangentialPressure"]) if "tangentialPressure" in json else None
             ),
             tilt_x=float(json["tiltX"]) if "tiltX" in json else None,
             tilt_y=float(json["tiltY"]) if "tiltY" in json else None,

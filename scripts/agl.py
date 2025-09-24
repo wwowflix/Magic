@@ -11,7 +11,7 @@ to their Unicode equivalents. Example usage:
 
         >>> from fontTools.agl import toUnicode
         >>> toUnicode("nahiragana")
-        'な'
+        'ã�ª'
 
 It also contains two dictionaries, ``UV2AGL`` and ``AGL2UV``, which map from
 Unicode codepoints to AGL names and vice versa:
@@ -5108,7 +5108,7 @@ _builddicts()
 
 
 def toUnicode(glyph, isZapfDingbats=False):
-    """Convert glyph names to Unicode, such as ``'longs_t.oldstyle'`` --> ``u'ſt'``
+    """Convert glyph names to Unicode, such as ``'longs_t.oldstyle'`` --> ``u'�...¿t'``
 
     If ``isZapfDingbats`` is ``True``, the implementation recognizes additional
     glyph names (as required by the AGL specification).
@@ -5146,7 +5146,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "uni" (U+0075,
     # U+006E, and U+0069) followed by a sequence of uppercase
-    # hexadecimal digits (0–9 and A–F, meaning U+0030 through
+    # hexadecimal digits (0â€“9 and Aâ€“F, meaning U+0030 through
     # U+0039 and U+0041 through U+0046), if the length of that
     # sequence is a multiple of four, and if each group of four
     # digits represents a value in the ranges 0000 through D7FF
@@ -5161,7 +5161,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "u" (U+0075)
     # followed by a sequence of four to six uppercase hexadecimal
-    # digits (0–9 and A–F, meaning U+0030 through U+0039 and
+    # digits (0â€“9 and Aâ€“F, meaning U+0030 through U+0039 and
     # U+0041 through U+0046), and those digits represents a value
     # in the ranges 0000 through D7FF or E000 through 10FFFF, then
     # interpret it as a Unicode scalar value and map the component
@@ -5176,10 +5176,10 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
 # https://github.com/adobe-type-tools/agl-aglfn/blob/master/zapfdingbats.txt
 _AGL_ZAPF_DINGBATS = (
-    " ✁✂✄☎✆✝✞✟✠✡☛☞✌✍✎✏✑✒✓✔✕✖✗✘✙✚✛✜✢✣✤✥✦✧★✩✪✫✬✭✮✯✰✱✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀"
-    "❁❂❃❄❅❆❇❈❉❊❋●❍■❏❑▲▼◆❖ ◗❘❙❚❯❱❲❳❨❩❬❭❪❫❴❵❛❜❝❞❡❢❣❤✐❥❦❧♠♥♦♣    ✉✈✇"
-    "①②③④⑤⑥⑦⑧⑨⑩❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔→➣↔"
-    "↕➙➛➜➝➞➟➠➡➢➤➥➦➧➨➩➫➭➯➲➳➵➸➺➻➼➽➾➚➪➶➹➘➴➷➬➮➱✃❐❒❮❰"
+    " â�"�â�"‚â�"„â˜Žâ�"� â�"�â�"žâ�"Ÿâ�" â�"¡â˜›â˜žâ�"�'â�"�â�"Žâ�"�â�"‘â�"’â�"“â�"�â�"•â�"�"â�"�"â�"˜â�"™â�"šâ�"›â�"�"â�"¢â�"£â�"¤â�"¥â�"¦â�"§â˜…â�"©â�"ªâ�"â�"¬â�"­â�"®â�"¯â�"°â�"±â�"²â�"³â�"´â�"µâ�"¶â�"·â�"¸â�"¹â�"ºâ�"â�"¼â�"½â�"¾â�"¿â�€"
+    "â��â�‚â��'â�„â�…â�� â�‡â�ˆâ�‰â�� â�‹â�"�â��â�" â��â�‘â�"²â�"¼â�"� â��" â�"�"â�˜â�™â�šâ�¯â�±â�²â�³â�¨â�©â�¬â�­â�ªâ�â�´â�µâ�›â��"â��â�žâ�¡â�¢â�£â�¤â�"�â�¥â�¦â�§â™ â™¥â™¦â™£    â�"‰â�"ˆâ�"‡"
+    "â‘ â‘¡â‘¢â‘£â‘¤â‘¥â‘¦â‘§â‘¨â‘©â�¶â�·â�¸â�¹â�ºâ�â�¼â�½â�¾â�¿âž€âž�âž‚âž�'âž„âž…âž� âž‡âžˆâž‰âž� âž‹âž�'âž�âžŽâž�âž�âž‘âž’âž“âž�â� ’âž£â� �"
+    "â� •âž™âž›âž�"âž�âžžâžŸâž âž¡âž¢âž¤âž¥âž¦âž§âž¨âž©âžâž­âž¯âž²âž³âžµâž¸âžºâžâž¼âž½âž¾âžšâžªâž¶âž¹âž˜âž´âž·âž¬âž®âž±â�"�'â��â�’â�®â�°"
 )
 
 

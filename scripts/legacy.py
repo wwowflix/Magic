@@ -89,9 +89,7 @@ def install(
                 pycompile=pycompile,
             )
 
-            runner = runner_with_spinner_message(
-                f"Running setup.py install for {req_name}"
-            )
+            runner = runner_with_spinner_message(f"Running setup.py install for {req_name}")
             with build_env:
                 runner(
                     cmd=install_args,

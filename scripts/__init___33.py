@@ -168,9 +168,7 @@ else:
         "https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations"
     )
 
-    _specific_msg = (
-        "If you specifically wanted the numpy scalar type, use `np.{}` here."
-    )
+    _specific_msg = "If you specifically wanted the numpy scalar type, use `np.{}` here."
 
     _int_extended_msg = (
         "When replacing `np.{}`, you may wish to use e.g. `np.int64` "
@@ -326,9 +324,7 @@ else:
 
                 return Tester
 
-            raise AttributeError(
-                "module {!r} has no attribute " "{!r}".format(__name__, attr)
-            )
+            raise AttributeError("module {!r} has no attribute " "{!r}".format(__name__, attr))
 
         def __dir__():
             return list(globals().keys() | {"Tester", "testing"})
@@ -395,9 +391,7 @@ else:
             # Throw runtime error, if the test failed Check for warning and error_message
             error_message = ""
             if len(w) > 0:
-                error_message = "{}: {}".format(
-                    w[-1].category.__name__, str(w[-1].message)
-                )
+                error_message = "{}: {}".format(w[-1].category.__name__, str(w[-1].message))
                 msg = (
                     "Polyfit sanity test emitted a warning, most likely due "
                     "to using a buggy Accelerate backend. If you compiled "

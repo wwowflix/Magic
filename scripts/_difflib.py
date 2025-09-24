@@ -450,10 +450,7 @@ class SequenceMatcher:
         # interesting match, this is clearly the right thing to do,
         # because no other kind of match is possible in the regions.
         while (
-            besti > alo
-            and bestj > blo
-            and b[bestj - 1] in bjunk
-            and a[besti - 1] == b[bestj - 1]
+            besti > alo and bestj > blo and b[bestj - 1] in bjunk and a[besti - 1] == b[bestj - 1]
         ):
             besti, bestj, bestsize = besti - 1, bestj - 1, bestsize + 1
         while (
@@ -752,11 +749,7 @@ def get_close_matches(word, possibilities, n=3, cutoff=0.6):
     s.set_seq2(word)
     for x in possibilities:
         s.set_seq1(x)
-        if (
-            s.real_quick_ratio() >= cutoff
-            and s.quick_ratio() >= cutoff
-            and s.ratio() >= cutoff
-        ):
+        if s.real_quick_ratio() >= cutoff and s.quick_ratio() >= cutoff and s.ratio() >= cutoff:
             result.append((s.ratio(), x))
 
     # Move the best scorers to head of list
@@ -767,9 +760,7 @@ def get_close_matches(word, possibilities, n=3, cutoff=0.6):
 
 def _keep_original_ws(s, tag_s):
     """Replace whitespace with the original whitespace characters in `s`"""
-    return "".join(
-        c if tag_c == " " and c.isspace() else tag_c for c, tag_c in zip(s, tag_s)
-    )
+    return "".join(c if tag_c == " " and c.isspace() else tag_c for c, tag_c in zip(s, tag_s))
 
 
 class Differ:
@@ -1144,9 +1135,7 @@ def _format_range_unified(start, stop):
     return "{},{}".format(beginning, length)
 
 
-def unified_diff(
-    a, b, fromfile="", tofile="", fromfiledate="", tofiledate="", n=3, lineterm="\n"
-):
+def unified_diff(a, b, fromfile="", tofile="", fromfiledate="", tofiledate="", n=3, lineterm="\n"):
     r"""
     Compare two sequences of lines; generate the delta as a unified diff.
 
@@ -1232,9 +1221,7 @@ def _format_range_context(start, stop):
 
 
 # See http://www.unix.org/single_unix_specification/
-def context_diff(
-    a, b, fromfile="", tofile="", fromfiledate="", tofiledate="", n=3, lineterm="\n"
-):
+def context_diff(a, b, fromfile="", tofile="", fromfiledate="", tofiledate="", n=3, lineterm="\n"):
     r"""
     Compare two sequences of lines; generate the delta as a context diff.
 
@@ -1318,21 +1305,13 @@ def _check_types(a, b, *args):
     #   +++ b'newfile.txt'
     # because of how str.format() incorporates bytes objects.
     if a and not isinstance(a[0], str):
-        raise TypeError(
-            "lines to compare must be str, not %s (%r)" % (type(a[0]).__name__, a[0])
-        )
+        raise TypeError("lines to compare must be str, not %s (%r)" % (type(a[0]).__name__, a[0]))
     if b and not isinstance(b[0], str):
-        raise TypeError(
-            "lines to compare must be str, not %s (%r)" % (type(b[0]).__name__, b[0])
-        )
+        raise TypeError("lines to compare must be str, not %s (%r)" % (type(b[0]).__name__, b[0]))
     if isinstance(a, str):
-        raise TypeError(
-            "input must be a sequence of strings, not %s" % type(a).__name__
-        )
+        raise TypeError("input must be a sequence of strings, not %s" % type(a).__name__)
     if isinstance(b, str):
-        raise TypeError(
-            "input must be a sequence of strings, not %s" % type(b).__name__
-        )
+        raise TypeError("input must be a sequence of strings, not %s" % type(b).__name__)
     for arg in args:
         if not isinstance(arg, str):
             raise TypeError("all arguments must be str, not: %r" % (arg,))
@@ -1798,9 +1777,7 @@ class HtmlDiff(object):
     _legend = _legend
     _default_prefix = 0
 
-    def __init__(
-        self, tabsize=8, wrapcolumn=None, linejunk=None, charjunk=IS_CHARACTER_JUNK
-    ):
+    def __init__(self, tabsize=8, wrapcolumn=None, linejunk=None, charjunk=IS_CHARACTER_JUNK):
         """HtmlDiff instance initializer
 
         Arguments:
@@ -2080,9 +2057,7 @@ class HtmlDiff(object):
 
         return fromlist, tolist, flaglist, next_href, next_id
 
-    def make_table(
-        self, fromlines, tolines, fromdesc="", todesc="", context=False, numlines=5
-    ):
+    def make_table(self, fromlines, tolines, fromdesc="", todesc="", context=False, numlines=5):
         """Returns HTML table of side by side comparison with change highlights
 
         Arguments:
@@ -2144,10 +2119,7 @@ class HtmlDiff(object):
                 if i > 0:
                     s.append("        </tbody>        \n        <tbody>\n")
             else:
-                s.append(
-                    fmt
-                    % (next_id[i], next_href[i], fromlist[i], next_href[i], tolist[i])
-                )
+                s.append(fmt % (next_id[i], next_href[i], fromlist[i], next_href[i], tolist[i]))
         if fromdesc or todesc:
             header_row = "<thead><tr>%s%s%s%s</tr></thead>" % (
                 '<th class="diff_next"><br /></th>',

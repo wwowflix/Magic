@@ -5,7 +5,7 @@ from typing import Callable, List
 from ._cell_widths import CELL_WIDTHS
 
 # Regex to match sequence of the most common character ranges
-_is_single_cell_widths = re.compile("^[\u0020-\u006f\u00a0\u02ff\u0370-\u0482]*$").match
+_is_single_cell_widths = re.compile("^[\u0020-\u006f\ \u02ff\u0370-\u0482]*$").match
 
 
 @lru_cache(4096)
@@ -125,9 +125,7 @@ def chop_cells(text: str, max_size: int, position: int = 0) -> List[str]:
     """Break text in to equal (cell) length strings, returning the characters in reverse
     order"""
     _get_character_cell_size = get_character_cell_size
-    characters = [
-        (character, _get_character_cell_size(character)) for character in text
-    ]
+    characters = [(character, _get_character_cell_size(character)) for character in text]
     total_size = position
     lines: List[List[str]] = [[]]
     append = lines[-1].append
@@ -146,15 +144,17 @@ def chop_cells(text: str, max_size: int, position: int = 0) -> List[str]:
 
 if __name__ == "__main__":  # pragma: no cover
 
-    print(get_character_cell_size("😽"))
+    print(get_character_cell_size("Ã°Å¸ËœÂ½"))
     for line in chop_cells(
-        """这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑。""", 8
+        """Ã¨Â¿â„¢Ã¦ËœÂ¯Ã¥Â¯Â¹Ã¤ÂºÅ¡Ã¦Â´Â²Ã¨Â¯Â­Ã¨Â¨â‚¬Ã¦â€Â¯Ã¦Å'ÂÃ§Å¡â€žÃ¦Âµâ€¹Ã¨Â¯â€¢Ã£â‚¬â€šÃ©ÂÂ¢Ã¥Â¯Â¹Ã¦Â¨Â¡Ã¦Â£Â±Ã¤Â¸Â¤Ã¥ÂÂ¯Ã§Å¡â€žÃ¦Æ'Â³Ã¦Â³â€¢Ã¯Â¼Å'Ã¦â€¹â€™Ã§ÂÃ§Å'Å"Ã¦Âµâ€¹Ã§Å¡â€žÃ¨Â¯Â±Ã¦Æ'â€˜Ã£â‚¬â€š""",
+        8,
     ):
         print(line)
     for n in range(80, 1, -1):
         print(
             set_cell_size(
-                """这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑。""", n
+                """Ã¨Â¿â„¢Ã¦ËœÂ¯Ã¥Â¯Â¹Ã¤ÂºÅ¡Ã¦Â´Â²Ã¨Â¯Â­Ã¨Â¨â‚¬Ã¦â€Â¯Ã¦Å'ÂÃ§Å¡â€žÃ¦Âµâ€¹Ã¨Â¯â€¢Ã£â‚¬â€šÃ©ÂÂ¢Ã¥Â¯Â¹Ã¦Â¨Â¡Ã¦Â£Â±Ã¤Â¸Â¤Ã¥ÂÂ¯Ã§Å¡â€žÃ¦Æ'Â³Ã¦Â³â€¢Ã¯Â¼Å'Ã¦â€¹â€™Ã§ÂÃ§Å'Å"Ã¦Âµâ€¹Ã§Å¡â€žÃ¨Â¯Â±Ã¦Æ'â€˜Ã£â‚¬â€š""",
+                n,
             )
             + "|"
         )

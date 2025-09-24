@@ -175,8 +175,7 @@ class ElementMaker:
         def add_cdata(elem, cdata):
             if elem.text:
                 raise ValueError(
-                    "Can't add a CDATA section. Element already has some text: %r"
-                    % elem.text
+                    "Can't add a CDATA section. Element already has some text: %r" % elem.text
                 )
             elem.text = cdata
 
@@ -227,9 +226,7 @@ class ElementMaker:
                     if t is not None:
                         break
                 else:
-                    raise TypeError(
-                        "bad argument type: %s(%r)" % (type(item).__name__, item)
-                    )
+                    raise TypeError("bad argument type: %s(%r)" % (type(item).__name__, item))
             v = t(elem, item)
             if v:
                 typemap.get(type(v))(elem, v)

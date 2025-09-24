@@ -89,9 +89,7 @@ class BackgroundServiceEvent:
         json = dict()
         json["timestamp"] = self.timestamp.to_json()
         json["origin"] = self.origin
-        json["serviceWorkerRegistrationId"] = (
-            self.service_worker_registration_id.to_json()
-        )
+        json["serviceWorkerRegistrationId"] = self.service_worker_registration_id.to_json()
         json["service"] = self.service.to_json()
         json["eventName"] = self.event_name
         json["instanceId"] = self.instance_id

@@ -265,9 +265,7 @@ def process_str(astr):
     return "".join(code)
 
 
-include_src_re = re.compile(
-    r"(\n|\A)#include\s*['\"]" r"(?P<name>[\w\d./\\]+[.]src)['\"]", re.I
-)
+include_src_re = re.compile(r"(\n|\A)#include\s*['\"]" r"(?P<name>[\w\d./\\]+[.]src)['\"]", re.I)
 
 
 def resolve_includes(source):

@@ -177,8 +177,7 @@ def set_default_printstyle(style):
     """
     if style not in ("unicode", "ascii"):
         raise ValueError(
-            f"Unsupported format string '{style}'. Valid options are 'ascii' "
-            f"and 'unicode'"
+            f"Unsupported format string '{style}'. Valid options are 'ascii' " f"and 'unicode'"
         )
     _use_unicode = True
     if style == "ascii":

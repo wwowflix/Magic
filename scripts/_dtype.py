@@ -26,9 +26,7 @@ def _kind_name(dtype):
     try:
         return _kind_to_stem[dtype.kind]
     except KeyError:
-        raise RuntimeError(
-            "internal dtype error, unknown kind {!r}".format(dtype.kind)
-        ) from None
+        raise RuntimeError("internal dtype error, unknown kind {!r}".format(dtype.kind)) from None
 
 
 def __str__(dtype):
@@ -205,9 +203,7 @@ def _struct_dict_str(dtype, includealignedflag):
 
     # Second, the formats
     ret += "], 'formats':["
-    ret += ",".join(
-        _construction_repr(fld_dtype, short=True) for fld_dtype in fld_dtypes
-    )
+    ret += ",".join(_construction_repr(fld_dtype, short=True) for fld_dtype in fld_dtypes)
 
     # Third, the offsets
     ret += "], 'offsets':["

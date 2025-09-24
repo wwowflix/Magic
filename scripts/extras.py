@@ -198,9 +198,7 @@ def masked_all(shape, dtype=float):
     dtype('int32')
 
     """
-    a = masked_array(
-        np.empty(shape, dtype), mask=np.ones(shape, make_mask_descr(dtype))
-    )
+    a = masked_array(np.empty(shape, dtype), mask=np.ones(shape, make_mask_descr(dtype)))
     return a
 
 
@@ -530,9 +528,7 @@ def apply_over_axes(func, a, axes):
             if res.ndim == val.ndim:
                 val = res
             else:
-                raise ValueError(
-                    "function is not returning " "an array of the correct shape"
-                )
+                raise ValueError("function is not returning " "an array of the correct shape")
     return val
 
 
@@ -664,17 +660,11 @@ def average(a, axis=None, weights=None, returned=False):
         # Sanity checks
         if a.shape != wgt.shape:
             if axis is None:
-                raise TypeError(
-                    "Axis must be specified when shapes of a and weights " "differ."
-                )
+                raise TypeError("Axis must be specified when shapes of a and weights " "differ.")
             if wgt.ndim != 1:
-                raise TypeError(
-                    "1D weights expected when shapes of a and weights differ."
-                )
+                raise TypeError("1D weights expected when shapes of a and weights differ.")
             if wgt.shape[0] != a.shape[axis]:
-                raise ValueError(
-                    "Length of weights not compatible with specified axis."
-                )
+                raise ValueError("Length of weights not compatible with specified axis.")
 
             # setup wgt to broadcast along axis
             wgt = np.broadcast_to(wgt, (a.ndim - 1) * (1,) + wgt.shape, subok=True)
@@ -773,9 +763,7 @@ def median(a, axis=None, out=None, overwrite_input=False, keepdims=False):
         else:
             return m
 
-    r, k = _ureduce(
-        a, func=_median, axis=axis, out=out, overwrite_input=overwrite_input
-    )
+    r, k = _ureduce(a, func=_median, axis=axis, out=out, overwrite_input=overwrite_input)
     if keepdims:
         return r.reshape(k)
     else:
@@ -1285,9 +1273,9 @@ def isin(element, test_elements, assume_unique=False, invert=False):
 
     """
     element = ma.asarray(element)
-    return in1d(
-        element, test_elements, assume_unique=assume_unique, invert=invert
-    ).reshape(element.shape)
+    return in1d(element, test_elements, assume_unique=assume_unique, invert=invert).reshape(
+        element.shape
+    )
 
 
 def union1d(ar1, ar2):
@@ -1453,9 +1441,7 @@ def cov(x, y=None, rowvar=True, bias=False, allow_masked=True, ddof=None):
     return result
 
 
-def corrcoef(
-    x, y=None, rowvar=True, bias=np._NoValue, allow_masked=True, ddof=np._NoValue
-):
+def corrcoef(x, y=None, rowvar=True, bias=np._NoValue, allow_masked=True, ddof=np._NoValue):
     """
     Return Pearson product-moment correlation coefficients.
 

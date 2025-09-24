@@ -1,6 +1,6 @@
-﻿def main():
+def main():
     print(
-        "✅ [11AA_failure_memory_builder_READY.py] executed successfully (stub mode)."
+        "âœ… [11AA_failure_memory_builder_READY.py] executed successfully (stub mode)."
     )
 
 

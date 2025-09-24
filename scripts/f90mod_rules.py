@@ -178,14 +178,9 @@ def buildhooks(pymod):
                     )
                     use_fgetdims2 = fgetdims2_sa
                 else:
-                    cadd(
-                        '\t{"%s",%s,{{%s}},%s},'
-                        % (undo_rmbadname1(n), dm["rank"], dms, at)
-                    )
+                    cadd('\t{"%s",%s,{{%s}},%s},' % (undo_rmbadname1(n), dm["rank"], dms, at))
             else:
-                cadd(
-                    '\t{"%s",%s,{{%s}},%s},' % (undo_rmbadname1(n), dm["rank"], dms, at)
-                )
+                cadd('\t{"%s",%s,{{%s}},%s},' % (undo_rmbadname1(n), dm["rank"], dms, at))
             dadd("\\item[]{{}\\verb@%s@{}}" % (capi_maps.getarrdocsign(n, var)))
             if hasnote(var):
                 note = var["note"]
@@ -216,10 +211,7 @@ def buildhooks(pymod):
         if hasbody(m):
             for b in m["body"]:
                 if not isroutine(b):
-                    outmess(
-                        "f90mod_rules.buildhooks:"
-                        f" skipping {b['block']} {b['name']}\n"
-                    )
+                    outmess("f90mod_rules.buildhooks:" f" skipping {b['block']} {b['name']}\n")
                     continue
                 modobjs.append("%s()" % (b["name"]))
                 b["modulename"] = m["name"]
@@ -292,9 +284,7 @@ def buildhooks(pymod):
         dadd("\n".join(ret["latexdoc"]).replace(r"\subsection{", r"\subsubsection{"))
 
         ret["latexdoc"] = []
-        ret["docs"].append(
-            '"\t%s --- %s"' % (m["name"], ",".join(undo_rmbadname(modobjs)))
-        )
+        ret["docs"].append('"\t%s --- %s"' % (m["name"], ",".join(undo_rmbadname(modobjs))))
 
     ret["routine_defs"] = ""
     ret["doc"] = []

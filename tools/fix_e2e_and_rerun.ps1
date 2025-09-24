@@ -1,4 +1,4 @@
-﻿param(
+param(
   [int]$Phase = 11,
   [string]$SummaryPath = "outputs\summaries\phase_master_summary.tsv",
   [string]$LogsRoot = "outputs\logs",

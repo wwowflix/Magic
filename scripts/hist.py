@@ -82,9 +82,7 @@ class HistPlot(LinePlot):
         values = np.ravel(nd_values)
         values = values[~isna(values)]
 
-        hist, bins = np.histogram(
-            values, bins=self.bins, range=self.kwds.get("range", None)
-        )
+        hist, bins = np.histogram(values, bins=self.bins, range=self.kwds.get("range", None))
         return bins
 
     @classmethod
@@ -115,9 +113,7 @@ class HistPlot(LinePlot):
 
         # Re-create iterated data if `by` is assigned by users
         data = (
-            create_iter_data_given_by(self.data, self._kind)
-            if self.by is not None
-            else self.data
+            create_iter_data_given_by(self.data, self._kind) if self.by is not None else self.data
         )
 
         for i, (label, y) in enumerate(self._iter_data(data=data)):
@@ -265,8 +261,7 @@ def _grouped_plot(
     if figsize == "default":
         # allowed to specify mpl default with 'default'
         raise ValueError(
-            "figsize='default' is no longer supported. "
-            "Specify figure size by tuple instead"
+            "figsize='default' is no longer supported. " "Specify figure size by tuple instead"
         )
 
     grouped = data.groupby(by)
@@ -362,13 +357,9 @@ def _grouped_hist(
         rot=rot,
     )
 
-    set_ticks_props(
-        axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot
-    )
+    set_ticks_props(axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot)
 
-    maybe_adjust_figure(
-        fig, bottom=0.15, top=0.9, left=0.1, right=0.9, hspace=0.5, wspace=0.3
-    )
+    maybe_adjust_figure(fig, bottom=0.15, top=0.9, left=0.1, right=0.9, hspace=0.5, wspace=0.3)
     return axes
 
 
@@ -395,9 +386,7 @@ def hist_series(
         if kwds.get("layout", None) is not None:
             raise ValueError("The 'layout' keyword is not supported when 'by' is None")
         # hack until the plotting interface is a bit more unified
-        fig = kwds.pop(
-            "figure", plt.gcf() if plt.get_fignums() else plt.figure(figsize=figsize)
-        )
+        fig = kwds.pop("figure", plt.gcf() if plt.get_fignums() else plt.figure(figsize=figsize))
         if figsize is not None and tuple(figsize) != tuple(fig.get_size_inches()):
             fig.set_size_inches(*figsize, forward=True)
         if ax is None:
@@ -413,9 +402,7 @@ def hist_series(
         ax.grid(grid)
         axes = np.array([ax])
 
-        set_ticks_props(
-            axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot
-        )
+        set_ticks_props(axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot)
 
     else:
         if "figure" in kwds:
@@ -490,15 +477,11 @@ def hist_frame(
             column = [column]
         data = data[column]
     # GH32590
-    data = data.select_dtypes(
-        include=(np.number, "datetime64", "datetimetz"), exclude="timedelta"
-    )
+    data = data.select_dtypes(include=(np.number, "datetime64", "datetimetz"), exclude="timedelta")
     naxes = len(data.columns)
 
     if naxes == 0:
-        raise ValueError(
-            "hist method requires numerical or datetime columns, nothing to plot."
-        )
+        raise ValueError("hist method requires numerical or datetime columns, nothing to plot.")
 
     fig, axes = create_subplots(
         naxes=naxes,
@@ -523,9 +506,7 @@ def hist_frame(
         if legend:
             ax.legend()
 
-    set_ticks_props(
-        axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot
-    )
+    set_ticks_props(axes, xlabelsize=xlabelsize, xrot=xrot, ylabelsize=ylabelsize, yrot=yrot)
     maybe_adjust_figure(fig, wspace=0.3, hspace=0.3)
 
     return axes

@@ -19,12 +19,8 @@ class TestABC:
 
     def test_floats(self):
         for t in sctypes["float"]:
-            assert_(
-                isinstance(t(), numbers.Real), f"{t.__name__} is not instance of Real"
-            )
-            assert_(
-                issubclass(t, numbers.Real), f"{t.__name__} is not subclass of Real"
-            )
+            assert_(isinstance(t(), numbers.Real), f"{t.__name__} is not instance of Real")
+            assert_(issubclass(t, numbers.Real), f"{t.__name__} is not subclass of Real")
             assert_(
                 not isinstance(t(), numbers.Rational),
                 f"{t.__name__} is instance of Rational",
@@ -44,12 +40,8 @@ class TestABC:
                 issubclass(t, numbers.Complex),
                 f"{t.__name__} is not subclass of Complex",
             )
-            assert_(
-                not isinstance(t(), numbers.Real), f"{t.__name__} is instance of Real"
-            )
-            assert_(
-                not issubclass(t, numbers.Real), f"{t.__name__} is subclass of Real"
-            )
+            assert_(not isinstance(t(), numbers.Real), f"{t.__name__} is instance of Real")
+            assert_(not issubclass(t, numbers.Real), f"{t.__name__} is subclass of Real")
 
     def test_int(self):
         for t in sctypes["int"]:

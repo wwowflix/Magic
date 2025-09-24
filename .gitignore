@@ -34,3 +34,27 @@ tools/*.bak*
 
 backups/
 
+# allow Module-F resilience stubs
+!scripts/
+!scripts/phase11/
+!scripts/phase11/module_f/
+!scripts/phase11/module_f/11F_*.py
+# allow Module-F resilience stubs
+!scripts/
+!scripts/phase11/
+!scripts/phase11/module_f/
+!scripts/phase11/module_f/11F_*.py
+# allow Module-F resilience stubs
+!scripts/
+!scripts/phase11/
+!scripts/phase11/module_f/
+!scripts/phase11/module_f/11F_*.py
+# allow Module-F resilience stubs
+!scripts/
+!scripts/phase11/
+!scripts/phase11/module_f/
+!scripts/phase11/module_f/11F_*.py
+
+*.bak
+.pc_mypy_log.txt
+.pc_mypy_log.txt

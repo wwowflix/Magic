@@ -58,7 +58,7 @@ def run_script(phase, module, script_path):
 
 def main():
     print(
-        f"\n▶ Starting Self-Healing Runner v4.6 with per-module summaries on {len(manifest)} scripts...\n"
+        f"\nâ�"¶ Starting Self-Healing Runner v4.6 with per-module summaries on {len(manifest)} scripts...\n"
     )
 
     total = 0
@@ -83,7 +83,7 @@ def main():
             results[(phase, module)].append((os.path.basename(script_path), "MISSING"))
             continue
 
-        print(f"▶ Running: {os.path.basename(script_path)}")
+        print(f"â�"¶ Running: {os.path.basename(script_path)}")
         code = run_script(phase, module, script_path)
 
         total += 1
@@ -96,9 +96,7 @@ def main():
         results[(phase, module)].append((os.path.basename(script_path), status))
 
     for (phase, module), scripts in results.items():
-        summary_path = os.path.join(
-            SUMMARY_BASE, f"phase{phase}_module_{module}_summary.tsv"
-        )
+        summary_path = os.path.join(SUMMARY_BASE, f"phase{phase}_module_{module}_summary.tsv")
         with open(summary_path, "w", encoding="utf-8") as f:
             f.write("Script\tStatus\n")
             for script_name, status in scripts:

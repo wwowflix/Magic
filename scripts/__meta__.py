@@ -38,9 +38,7 @@ DEV_STATUS = {
 PRE_REL_MAP = {"a": "alpha", "b": "beta", "rc": "candidate"}
 
 
-class Version(
-    namedtuple("Version", ["major", "minor", "micro", "release", "pre", "post", "dev"])
-):
+class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre", "post", "dev"])):
     """
     Get the version (PEP 440).
 
@@ -98,9 +96,7 @@ class Version(
         # Ensure all parts are positive integers.
         for value in (major, minor, micro, pre, post):
             if not (isinstance(value, int) and value >= 0):
-                raise ValueError(
-                    "All version parts except 'release' should be integers."
-                )
+                raise ValueError("All version parts except 'release' should be integers.")
 
         if release not in REL_MAP:
             raise ValueError(f"'{release}' is not a valid release type.")

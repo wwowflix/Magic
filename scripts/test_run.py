@@ -1753,9 +1753,7 @@ def test_calling_asyncio_function_gives_nice_error() -> None:
         _core.run(misguided)
 
     # The traceback should point to the location of the foreign await
-    assert any(  # pragma: no branch
-        entry.name == "child_xyzzy" for entry in excinfo.traceback
-    )
+    assert any(entry.name == "child_xyzzy" for entry in excinfo.traceback)  # pragma: no branch
 
 
 async def test_asyncio_function_inside_nursery_does_not_explode() -> None:
@@ -2658,9 +2656,7 @@ def test_setting_strict_exception_groups(
     if multiple_exceptions:
         with RaisesGroup(matcher, matcher):
             run_main()
-    elif open_nursery_strict or (
-        open_nursery_strict is None and run_strict is not False
-    ):
+    elif open_nursery_strict or (open_nursery_strict is None and run_strict is not False):
         with RaisesGroup(matcher):
             run_main()
     else:

@@ -49,9 +49,7 @@ WrapsFunc = TypeAliasType("WrapsFunc", Callable[..., R], type_params=(R,))
 WrappedFunc = TypeAliasType("WrappedFunc", Callable[P, R], type_params=(P, R))
 # NOTE: Requires stringized form to avoid `< (3, 11)` issues
 # See: https://github.com/vega/altair/actions/runs/10667859416/job/29567290871?pr=3565
-WrapsMethod = TypeAliasType(
-    "WrapsMethod", "Callable[Concatenate[T, ...], R]", type_params=(T, R)
-)
+WrapsMethod = TypeAliasType("WrapsMethod", "Callable[Concatenate[T, ...], R]", type_params=(T, R))
 WrappedMethod = TypeAliasType(
     "WrappedMethod", Callable[Concatenate[T, P], R], type_params=(T, P, R)
 )
@@ -59,9 +57,7 @@ WrappedMethod = TypeAliasType(
 
 @runtime_checkable
 class DataFrameLike(Protocol):
-    def __dataframe__(
-        self, nan_as_null: bool = False, allow_copy: bool = True
-    ) -> DfiDataFrame: ...
+    def __dataframe__(self, nan_as_null: bool = False, allow_copy: bool = True) -> DfiDataFrame: ...
 
 
 TYPECODE_MAP = {
@@ -216,8 +212,8 @@ SHORTHAND_UNITS = {
     "timeUnit": "(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
 }
 
-SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = (
-    frozenset(("field", "aggregate", "type", "timeUnit"))
+SHORTHAND_KEYS: frozenset[Literal["field", "aggregate", "type", "timeUnit"]] = frozenset(
+    ("field", "aggregate", "type", "timeUnit")
 )
 
 
@@ -262,8 +258,7 @@ def infer_vegalite_type_for_pandas(
         return "temporal"
     else:
         warnings.warn(
-            f"I don't know how to infer vegalite type from '{typ}'.  "
-            "Defaulting to nominal.",
+            f"I don't know how to infer vegalite type from '{typ}'.  " "Defaulting to nominal.",
             stacklevel=1,
         )
         return "nominal"
@@ -412,9 +407,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # parses full ISO-8601 dates as local time, and dates in Vega and
             # Vega-Lite are displayed in local time by default.
             # (see https://github.com/vega/altair/issues/1027)
-            df[col_name] = (
-                df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
-            )
+            df[col_name] = df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
         elif dtype_name.startswith("timedelta"):
             msg = (
                 f'Field "{col_name}" has type "{dtype}" which is '
@@ -472,9 +465,7 @@ def sanitize_narwhals_dataframe(
         if dtype == nw.Date and is_polars:
             # Polars doesn't allow formatting `Date` with time directives.
             # The date -> datetime cast is extremely fast compared with `to_string`
-            columns.append(
-                nw.col(name).cast(nw.Datetime).dt.to_string(local_iso_fmt_string)
-            )
+            columns.append(nw.col(name).cast(nw.Datetime).dt.to_string(local_iso_fmt_string))
         elif dtype == nw.Date:
             columns.append(nw.col(name).dt.to_string(local_iso_fmt_string))
         elif dtype == nw.Datetime:
@@ -634,10 +625,7 @@ def parse_shorthand(  # noqa: C901
     if parse_types:
         patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
-    regexps = (
-        re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL)
-        for p in patterns
-    )
+    regexps = (re.compile(r"\A" + p.format(**SHORTHAND_UNITS) + r"\Z", re.DOTALL) for p in patterns)
 
     # find matches depending on valid fields passed
     if isinstance(shorthand, dict):
@@ -707,9 +695,7 @@ def infer_vegalite_type_for_narwhals(
         and not (categories := column.cat.get_categories()).is_empty()
     ):
         return "ordinal", categories.to_list()
-    if (
-        dtype == nw.String or dtype == nw.Categorical or dtype == nw.Boolean
-    ):  # noqa: PLR1714
+    if dtype == nw.String or dtype == nw.Categorical or dtype == nw.Boolean:  # noqa: PLR1714
         return "nominal"
     elif dtype.is_numeric():
         return "quantitative"

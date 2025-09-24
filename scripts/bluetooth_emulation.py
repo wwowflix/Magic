@@ -249,9 +249,7 @@ class CharacteristicProperties:
             broadcast=bool(json["broadcast"]) if "broadcast" in json else None,
             read=bool(json["read"]) if "read" in json else None,
             write_without_response=(
-                bool(json["writeWithoutResponse"])
-                if "writeWithoutResponse" in json
-                else None
+                bool(json["writeWithoutResponse"]) if "writeWithoutResponse" in json else None
             ),
             write=bool(json["write"]) if "write" in json else None,
             notify=bool(json["notify"]) if "notify" in json else None,
@@ -262,9 +260,7 @@ class CharacteristicProperties:
                 else None
             ),
             extended_properties=(
-                bool(json["extendedProperties"])
-                if "extendedProperties" in json
-                else None
+                bool(json["extendedProperties"]) if "extendedProperties" in json else None
             ),
         )
 
@@ -445,9 +441,7 @@ def simulate_descriptor_operation_response(
     json = yield cmd_dict
 
 
-def add_service(
-    address: str, service_uuid: str
-) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, str]:
+def add_service(address: str, service_uuid: str) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, str]:
     """
     Adds a service with ``serviceUuid`` to the peripheral with ``address``.
 

@@ -149,21 +149,13 @@ class VirtualAuthenticatorOptions:
             protocol=AuthenticatorProtocol.from_json(json["protocol"]),
             transport=AuthenticatorTransport.from_json(json["transport"]),
             ctap2_version=(
-                Ctap2Version.from_json(json["ctap2Version"])
-                if "ctap2Version" in json
-                else None
+                Ctap2Version.from_json(json["ctap2Version"]) if "ctap2Version" in json else None
             ),
-            has_resident_key=(
-                bool(json["hasResidentKey"]) if "hasResidentKey" in json else None
-            ),
+            has_resident_key=(bool(json["hasResidentKey"]) if "hasResidentKey" in json else None),
             has_user_verification=(
-                bool(json["hasUserVerification"])
-                if "hasUserVerification" in json
-                else None
+                bool(json["hasUserVerification"]) if "hasUserVerification" in json else None
             ),
-            has_large_blob=(
-                bool(json["hasLargeBlob"]) if "hasLargeBlob" in json else None
-            ),
+            has_large_blob=(bool(json["hasLargeBlob"]) if "hasLargeBlob" in json else None),
             has_cred_blob=bool(json["hasCredBlob"]) if "hasCredBlob" in json else None,
             has_min_pin_length=(
                 bool(json["hasMinPinLength"]) if "hasMinPinLength" in json else None
@@ -174,18 +166,14 @@ class VirtualAuthenticatorOptions:
                 if "automaticPresenceSimulation" in json
                 else None
             ),
-            is_user_verified=(
-                bool(json["isUserVerified"]) if "isUserVerified" in json else None
-            ),
+            is_user_verified=(bool(json["isUserVerified"]) if "isUserVerified" in json else None),
             default_backup_eligibility=(
                 bool(json["defaultBackupEligibility"])
                 if "defaultBackupEligibility" in json
                 else None
             ),
             default_backup_state=(
-                bool(json["defaultBackupState"])
-                if "defaultBackupState" in json
-                else None
+                bool(json["defaultBackupState"]) if "defaultBackupState" in json else None
             ),
         )
 
@@ -272,9 +260,7 @@ class Credential:
             ),
             backup_state=bool(json["backupState"]) if "backupState" in json else None,
             user_name=str(json["userName"]) if "userName" in json else None,
-            user_display_name=(
-                str(json["userDisplayName"]) if "userDisplayName" in json else None
-            ),
+            user_display_name=(str(json["userDisplayName"]) if "userDisplayName" in json else None),
         )
 
 

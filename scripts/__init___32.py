@@ -49,39 +49,27 @@ _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
 
 
 # the iso-schematron skeleton implementation steps aka xsl transformations
-extract_xsd = _etree.XSLT(
-    _etree.parse(os.path.join(_resources_dir, "xsl", "XSD2Schtrn.xsl"))
-)
-extract_rng = _etree.XSLT(
-    _etree.parse(os.path.join(_resources_dir, "xsl", "RNG2Schtrn.xsl"))
-)
+extract_xsd = _etree.XSLT(_etree.parse(os.path.join(_resources_dir, "xsl", "XSD2Schtrn.xsl")))
+extract_rng = _etree.XSLT(_etree.parse(os.path.join(_resources_dir, "xsl", "RNG2Schtrn.xsl")))
 iso_dsdl_include = _etree.XSLT(
     _etree.parse(
-        os.path.join(
-            _resources_dir, "xsl", "iso-schematron-xslt1", "iso_dsdl_include.xsl"
-        )
+        os.path.join(_resources_dir, "xsl", "iso-schematron-xslt1", "iso_dsdl_include.xsl")
     )
 )
 iso_abstract_expand = _etree.XSLT(
     _etree.parse(
-        os.path.join(
-            _resources_dir, "xsl", "iso-schematron-xslt1", "iso_abstract_expand.xsl"
-        )
+        os.path.join(_resources_dir, "xsl", "iso-schematron-xslt1", "iso_abstract_expand.xsl")
     )
 )
 iso_svrl_for_xslt1 = _etree.XSLT(
     _etree.parse(
-        os.path.join(
-            _resources_dir, "xsl", "iso-schematron-xslt1", "iso_svrl_for_xslt1.xsl"
-        )
+        os.path.join(_resources_dir, "xsl", "iso-schematron-xslt1", "iso_svrl_for_xslt1.xsl")
     )
 )
 
 
 # svrl result accessors
-svrl_validation_errors = _etree.XPath(
-    "//svrl:failed-assert", namespaces={"svrl": SVRL_NS}
-)
+svrl_validation_errors = _etree.XPath("//svrl:failed-assert", namespaces={"svrl": SVRL_NS})
 
 # RelaxNG validator for schematron schemas
 schematron_schema_valid_supported = False
@@ -93,9 +81,7 @@ try:
 except _etree.RelaxNGParseError:
     # Some distributions delete the file due to licensing issues.
     def schematron_schema_valid(arg):
-        raise NotImplementedError(
-            "Validating the ISO schematron requires iso-schematron.rng"
-        )
+        raise NotImplementedError("Validating the ISO schematron requires iso-schematron.rng")
 
 
 def stylesheet_params(**kwargs):
@@ -306,9 +292,7 @@ class Schematron(_etree._Validator):
             elif file is not None:
                 root = _etree.parse(file).getroot()
         except Exception:
-            raise _etree.SchematronParseError(
-                "No tree or file given: %s" % sys.exc_info()[1]
-            )
+            raise _etree.SchematronParseError("No tree or file given: %s" % sys.exc_info()[1])
         if root is None:
             raise ValueError("Empty tree")
         if root.tag == _schematron_root:

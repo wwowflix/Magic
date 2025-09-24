@@ -52,8 +52,7 @@ LABELS = {
     ]
     max_len = max(len(label) for label, name in labels)
     parts.extend(
-        "    %s:%s %s,\n" % (label, " " * (max_len - len(label)), name)
-        for label, name in labels
+        "    %s:%s %s,\n" % (label, " " * (max_len - len(label)), name) for label, name in labels
     )
     parts.append("}")
     return "".join(parts)

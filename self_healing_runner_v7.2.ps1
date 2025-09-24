@@ -1,4 +1,4 @@
-﻿# self_healing_runner_v7.2.ps1
+# self_healing_runner_v7.2.ps1
 param([string]$ManifestPath = ".\phase_manifest.json", [switch]$Force)
 
 Write-Host "=== 🚀 Starting Self-Healing Runner v7.2 ===`n" -ForegroundColor Cyan

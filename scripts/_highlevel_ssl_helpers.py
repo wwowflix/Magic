@@ -114,21 +114,19 @@ async def serve_ssl_over_tcp(
     https_compatible: bool = False,
     backlog: int | None = None,
     handler_nursery: trio.Nursery | None = None,
-    task_status: trio.TaskStatus[
-        list[trio.SSLListener[SocketStream]]
-    ] = trio.TASK_STATUS_IGNORED,
+    task_status: trio.TaskStatus[list[trio.SSLListener[SocketStream]]] = trio.TASK_STATUS_IGNORED,
 ) -> NoReturn:
     """Listen for incoming TCP connections, and for each one start a task
     running ``handler(stream)``.
 
     This is a thin convenience wrapper around
-    :func:`open_ssl_over_tcp_listeners` and :func:`serve_listeners` – see them
+    :func:`open_ssl_over_tcp_listeners` and :func:`serve_listeners` â€" see them
     for full details.
 
     .. warning::
 
        If ``handler`` raises an exception, then this function doesn't do
-       anything special to catch it – so by default the exception will
+       anything special to catch it â€" so by default the exception will
        propagate out and crash your server. If you don't want this, then catch
        exceptions inside your ``handler``, or use a ``handler_nursery`` object
        that responds to exceptions in some other way.

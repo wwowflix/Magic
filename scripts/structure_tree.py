@@ -1,7 +1,7 @@
 """
 Quoting the PDF spec:
-> PDF’s logical _structure facilities_ provide a mechanism for incorporating
-> structural information about a document’s content into a PDF file.
+> PDFâ€™s logical _structure facilities_ provide a mechanism for incorporating
+> structural information about a documentâ€™s content into a PDF file.
 
 > The logical structure of a document is described by a hierarchy of objects called
 > the _structure hierarchy_ or _structure tree_.
@@ -23,8 +23,8 @@ class NumberTree(PDFObject):
     """A number tree is similar to a name tree, except that its keys are integers
     instead of strings and are sorted in ascending numerical order.
 
-    A name tree serves a similar purpose to a dictionary—associating keys and
-    values—but by different means.
+    A name tree serves a similar purpose to a dictionaryâ€"associating keys and
+    valuesâ€"but by different means.
 
     The values associated with the keys may be objects of any type. Stream objects
     are required to be specified by indirect object references. It is recommended,

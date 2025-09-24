@@ -28,9 +28,7 @@ class MacOS(PlatformDirsABC):
     @property
     def user_config_dir(self) -> str:
         """:return: config directory tied to the user, e.g. ``~/Library/Preferences/$appname/$version``"""
-        return self._append_app_name_and_version(
-            os.path.expanduser("~/Library/Preferences/")
-        )
+        return self._append_app_name_and_version(os.path.expanduser("~/Library/Preferences/"))
 
     @property
     def site_config_dir(self) -> str:

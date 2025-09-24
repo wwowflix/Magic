@@ -187,8 +187,7 @@ class relativedelta(object):
             # Check for non-integer values in integer-only quantities
             if any(x is not None and x != int(x) for x in (years, months)):
                 raise ValueError(
-                    "Non-integer years and months are "
-                    "ambiguous and not currently supported."
+                    "Non-integer years and months are " "ambiguous and not currently supported."
                 )
 
             # Relative information
@@ -371,9 +370,7 @@ class relativedelta(object):
                 minute=(other.minute if other.minute is not None else self.minute),
                 second=(other.second if other.second is not None else self.second),
                 microsecond=(
-                    other.microsecond
-                    if other.microsecond is not None
-                    else self.microsecond
+                    other.microsecond if other.microsecond is not None else self.microsecond
                 ),
             )
         if isinstance(other, datetime.timedelta):
@@ -462,9 +459,7 @@ class relativedelta(object):
             hour=(self.hour if self.hour is not None else other.hour),
             minute=(self.minute if self.minute is not None else other.minute),
             second=(self.second if self.second is not None else other.second),
-            microsecond=(
-                self.microsecond if self.microsecond is not None else other.microsecond
-            ),
+            microsecond=(self.microsecond if self.microsecond is not None else other.microsecond),
         )
 
     def __abs__(self):
@@ -649,9 +644,7 @@ class relativedelta(object):
             value = getattr(self, attr)
             if value is not None:
                 l.append("{attr}={value}".format(attr=attr, value=repr(value)))
-        return "{classname}({attrs})".format(
-            classname=self.__class__.__name__, attrs=", ".join(l)
-        )
+        return "{classname}({attrs})".format(classname=self.__class__.__name__, attrs=", ".join(l))
 
 
 def _sign(x):

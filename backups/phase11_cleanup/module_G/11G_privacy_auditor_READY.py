@@ -1,4 +1,4 @@
-﻿import os
+import os
 import re
 
 # CONFIG
@@ -22,16 +22,16 @@ for root, _, files in os.walk(SCRIPTS_ROOT):
                     content = f.read()
                     for label, pattern in PATTERNS.items():
                         for match in re.findall(pattern, content, re.IGNORECASE):
-                            matches.append(f"{path} → 🛑 {label}: {match}")
+                            matches.append(f"{path} â†’ ðŸ›‘ {label}: {match}")
             except Exception as e:
-                matches.append(f"{path} → ⚠️ {e}")
+                matches.append(f"{path} â†’ âš ï¸ {e}")
 
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if matches:
-        f.write("❌ Privacy risks detected:\n")
+        f.write("âŒ Privacy risks detected:\n")
         f.write("\n".join(matches))
     else:
-        f.write("✅ No privacy leaks found.\n")
+        f.write("âœ… No privacy leaks found.\n")
 
-print(f"📄 Report saved to: {LOG_FILE}")
+print(f"ðŸ“„ Report saved to: {LOG_FILE}")

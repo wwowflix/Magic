@@ -305,10 +305,7 @@ def test_warn_set_wakeup_fd_overwrite() -> None:
         signal.set_wakeup_fd(a.fileno())
         try:
             with pytest.warns(RuntimeWarning, match="signal handling code.*collided"):
-                assert (
-                    trivial_guest_run(trio_main, host_uses_signal_set_wakeup_fd=False)
-                    == "ok"
-                )
+                assert trivial_guest_run(trio_main, host_uses_signal_set_wakeup_fd=False) == "ok"
         finally:
             assert signal.set_wakeup_fd(-1) == a.fileno()
 
@@ -319,10 +316,7 @@ def test_warn_set_wakeup_fd_overwrite() -> None:
 
         with warnings.catch_warnings():
             warnings.simplefilter("error")
-            assert (
-                trivial_guest_run(trio_main, host_uses_signal_set_wakeup_fd=True)
-                == "ok"
-            )
+            assert trivial_guest_run(trio_main, host_uses_signal_set_wakeup_fd=True) == "ok"
 
         # If there's already a wakeup fd, but we've been told to trust it,
         # then it's left alone and there's no warning
@@ -367,8 +361,7 @@ def test_host_wakeup_doesnt_trigger_wait_all_tasks_blocked() -> None:
                 # only by cancellation.
                 await trio.testing.wait_all_tasks_blocked(cushion=9999)
                 raise AssertionError(  # pragma: no cover
-                    "wait_all_tasks_blocked should *not* return normally, "
-                    "only by cancellation.",
+                    "wait_all_tasks_blocked should *not* return normally, " "only by cancellation.",
                 )
             assert watb_cscope.cancelled_caught
 

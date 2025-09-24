@@ -347,9 +347,7 @@ class SortedList(MutableSequence):
                 return
 
         _load = self._load
-        _lists.extend(
-            values[pos : (pos + _load)] for pos in range(0, len(values), _load)
-        )
+        _lists.extend(values[pos : (pos + _load)] for pos in range(0, len(values), _load))
         _maxes.extend(sublist[-1] for sublist in _lists)
         self._len = len(values)
         del self._index[:]
@@ -1848,9 +1846,7 @@ class SortedKeyList(SortedList):
                 return
 
         _load = self._load
-        _lists.extend(
-            values[pos : (pos + _load)] for pos in range(0, len(values), _load)
-        )
+        _lists.extend(values[pos : (pos + _load)] for pos in range(0, len(values), _load))
         _keys.extend(list(map(self._key, _list)) for _list in _lists)
         _maxes.extend(sublist[-1] for sublist in _keys)
         self._len = len(values)
@@ -2101,9 +2097,7 @@ class SortedKeyList(SortedList):
             reverse=reverse,
         )
 
-    def irange_key(
-        self, min_key=None, max_key=None, inclusive=(True, True), reverse=False
-    ):
+    def irange_key(self, min_key=None, max_key=None, inclusive=(True, True), reverse=False):
         """Create an iterator of values between `min_key` and `max_key`.
 
         Both `min_key` and `max_key` default to `None` which is automatically

@@ -31,22 +31,20 @@ def apply_remediation(error_msg, script_path):
             try:
                 with open(missing_file, "w", encoding="utf-8") as f:
                     f.write("# Auto-created missing input file\n")
-                print(f"🔧 Auto-fix applied: created missing file '{missing_file}'")
+                print(f"ðŸ�§ Auto-fix applied: created missing file '{missing_file}'")
                 return True
             except Exception as e:
-                print(f"⚠️ Failed to auto-create file '{missing_file}': {e}")
+                print(f"âš ï¸� Failed to auto-create file '{missing_file}': {e}")
                 return False
     elif "UnicodeDecodeError" in error_msg:
         # Could implement input/output cleaning here
-        print(
-            "🔧 Auto-fix applied: UnicodeDecodeError detected (manual cleanup recommended)"
-        )
+        print("ðŸ�§ Auto-fix applied: UnicodeDecodeError detected (manual cleanup recommended)")
         return False
     elif "ImportError" in error_msg:
         mod_match = re.search(r"No module named '([^']+)'", error_msg)
         if mod_match:
             module = mod_match.group(1)
-            print(f"🔧 Auto-fix applied: installing missing module '{module}' via pip")
+            print(f"ðŸ�§ Auto-fix applied: installing missing module '{module}' via pip")
             subprocess.run(["pip", "install", module])
             return True
     return False
@@ -95,13 +93,11 @@ def run_script(phase, module, script_path):
 
                     # Try remediation if possible
                     if apply_remediation(result.stderr, script_path):
-                        print(f"🔧 Remediation applied, retrying script: {script_name}")
+                        print(f"ðŸ�§ Remediation applied, retrying script: {script_name}")
                         continue
                     else:
                         if attempt == MAX_RETRIES:
-                            print(
-                                f"❌ {script_name} failed after {MAX_RETRIES} attempts."
-                            )
+                            print(f"â��' {script_name} failed after {MAX_RETRIES} attempts.")
                             return 1
                         else:
                             continue
@@ -109,15 +105,13 @@ def run_script(phase, module, script_path):
             except Exception as e:
                 log.write(f"[ERROR] Exception while running script: {e}\n")
                 if attempt == MAX_RETRIES:
-                    print(
-                        f"❌ {script_name} failed after {MAX_RETRIES} attempts due to exception."
-                    )
+                    print(f"â��' {script_name} failed after {MAX_RETRIES} attempts due to exception.")
                     return 1
 
 
 def main():
     print(
-        f"\n▶ Starting Self-Healing Runner v4.7 with auto-remediation on {len(manifest)} scripts...\n"
+        f"\nâ�"¶ Starting Self-Healing Runner v4.7 with auto-remediation on {len(manifest)} scripts...\n"
     )
 
     total = 0
@@ -129,7 +123,7 @@ def main():
     for script_path in manifest:
         parts = os.path.normpath(script_path).split(os.sep)
         if len(parts) < 3:
-            print(f"⚠️ Unexpected script path format: {script_path}")
+            print(f"âš ï¸� Unexpected script path format: {script_path}")
             failed += 1
             continue
 
@@ -137,12 +131,12 @@ def main():
         module = parts[-2].replace("module_", "")
 
         if not os.path.exists(script_path):
-            print(f"⚠️ Missing script: {script_path}")
+            print(f"âš ï¸� Missing script: {script_path}")
             failed += 1
             results[(phase, module)].append((os.path.basename(script_path), "MISSING"))
             continue
 
-        print(f"▶ Running: {os.path.basename(script_path)}")
+        print(f"â�"¶ Running: {os.path.basename(script_path)}")
         code = run_script(phase, module, script_path)
 
         total += 1
@@ -156,9 +150,7 @@ def main():
 
     # Write per-module summaries
     for (phase, module), scripts in results.items():
-        summary_path = os.path.join(
-            SUMMARY_BASE, f"phase{phase}_module_{module}_summary.tsv"
-        )
+        summary_path = os.path.join(SUMMARY_BASE, f"phase{phase}_module_{module}_summary.tsv")
         with open(summary_path, "w", encoding="utf-8") as f:
             f.write("Script\tStatus\n")
             for script_name, status in scripts:

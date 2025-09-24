@@ -1,4 +1,4 @@
-﻿import os
+import os
 import csv
 
 PHASE_DIR = "scripts/phase11"
@@ -32,4 +32,4 @@ with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
     writer.writeheader()
     writer.writerows(entries)
 
-print(f"✅ Patch generated: {OUTPUT_CSV}")
+print(f"EUR Patch generated: {OUTPUT_CSV}")

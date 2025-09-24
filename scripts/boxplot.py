@@ -90,8 +90,7 @@ class BoxPlot(LinePlot):
         if "color" in self.kwds:
             if self.colormap is not None:
                 warnings.warn(
-                    "'color' and 'colormap' cannot be used "
-                    "simultaneously. Using 'color'",
+                    "'color' and 'colormap' cannot be used " "simultaneously. Using 'color'",
                     stacklevel=find_stack_level(),
                 )
             self.color = self.kwds.pop("color")
@@ -168,15 +167,11 @@ class BoxPlot(LinePlot):
 
                     # When `by` is assigned, the ticklabels will become unique grouped
                     # values, instead of label which is used as subtitle in this case.
-                    ticklabels = [
-                        pprint_thing(col) for col in self.data.columns.levels[0]
-                    ]
+                    ticklabels = [pprint_thing(col) for col in self.data.columns.levels[0]]
                 else:
                     ticklabels = [pprint_thing(label)]
 
-                ret, bp = self._plot(
-                    ax, y, column_num=i, return_type=self.return_type, **kwds
-                )
+                ret, bp = self._plot(ax, y, column_num=i, return_type=self.return_type, **kwds)
                 self.maybe_color_bp(bp)
                 self._return_obj[label] = ret
                 self._set_ticklabels(ax, ticklabels)
@@ -185,9 +180,7 @@ class BoxPlot(LinePlot):
             ax = self._get_ax(0)
             kwds = self.kwds.copy()
 
-            ret, bp = self._plot(
-                ax, y, column_num=0, return_type=self.return_type, **kwds
-            )
+            ret, bp = self._plot(ax, y, column_num=0, return_type=self.return_type, **kwds)
             self.maybe_color_bp(bp)
             self._return_obj = ret
 
@@ -426,9 +419,7 @@ def boxplot(
         data = data._get_numeric_data()
         naxes = len(data.columns)
         if naxes == 0:
-            raise ValueError(
-                "boxplot method requires numerical columns, nothing to plot."
-            )
+            raise ValueError("boxplot method requires numerical columns, nothing to plot.")
         if columns is None:
             columns = data.columns
         else:
@@ -502,9 +493,7 @@ def boxplot_frame_groupby(
         ret = pd.Series(dtype=object)
 
         for (key, group), ax in zip(grouped, axes):
-            d = group.boxplot(
-                ax=ax, column=column, fontsize=fontsize, rot=rot, grid=grid, **kwds
-            )
+            d = group.boxplot(ax=ax, column=column, fontsize=fontsize, rot=rot, grid=grid, **kwds)
             ax.set_title(pprint_thing(key))
             ret.loc[key] = d
         maybe_adjust_figure(fig, bottom=0.15, top=0.9, left=0.1, right=0.9, wspace=0.2)

@@ -125,9 +125,7 @@ def _flatten(x, f):
     elif isinstance(x, int_or_long):
         f.write("%di" % (x,))
     else:
-        raise TypeError(
-            "the keywords to verify() contains unsupported object %r" % (x,)
-        )
+        raise TypeError("the keywords to verify() contains unsupported object %r" % (x,))
 
 
 def flatten(x):

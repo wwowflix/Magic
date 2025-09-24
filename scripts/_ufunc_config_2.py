@@ -105,9 +105,7 @@ def seterr(all=None, divide=None, over=None, under=None, invalid=None):
     old.pop("call", None)
     old.pop("bufsize", None)
 
-    extobj = _make_extobj(
-        all=all, divide=divide, over=over, under=under, invalid=invalid
-    )
+    extobj = _make_extobj(all=all, divide=divide, over=over, under=under, invalid=invalid)
     _extobj_contextvar.set(extobj)
     return old
 
@@ -442,14 +440,7 @@ class errstate:
     )
 
     def __init__(
-        self,
-        *,
-        call=_Unspecified,
-        all=None,
-        divide=None,
-        over=None,
-        under=None,
-        invalid=None
+        self, *, call=_Unspecified, all=None, divide=None, over=None, under=None, invalid=None
     ):
         self._token = None
         self._call = call

@@ -22,12 +22,8 @@ def wrap_escape(s: str) -> str:
     return "^" + re.escape(s) + "$"
 
 
-def fails_raises_group(
-    msg: str, add_prefix: bool = True
-) -> RaisesContext[AssertionError]:
-    assert (
-        msg[-1] != "\n"
-    ), "developer error, expected string should not end with newline"
+def fails_raises_group(msg: str, add_prefix: bool = True) -> RaisesContext[AssertionError]:
+    assert msg[-1] != "\n", "developer error, expected string should not end with newline"
     prefix = "Raised exception group did not match: " if add_prefix else ""
     return pytest.raises(AssertionError, match=wrap_escape(prefix + msg))
 
@@ -80,9 +76,7 @@ def test_incorrect_number_exceptions() -> None:
     # We previously gave an error saying the number of exceptions was wrong,
     # but we now instead indicate excess/missing exceptions
     with (
-        fails_raises_group(
-            "1 matched exception. Unexpected exception(s): [RuntimeError()]"
-        ),
+        fails_raises_group("1 matched exception. Unexpected exception(s): [RuntimeError()]"),
         RaisesGroup(ValueError),
     ):
         raise ExceptionGroup("", (RuntimeError(), ValueError()))
@@ -364,9 +358,7 @@ def test_match() -> None:
         raise e
 
     with (
-        fails_raises_group(
-            "Regex pattern 'foo' did not match 'bar' of 'ExceptionGroup'"
-        ),
+        fails_raises_group("Regex pattern 'foo' did not match 'bar' of 'ExceptionGroup'"),
         RaisesGroup(ValueError, match="foo"),
     ):
         raise ExceptionGroup("bar", (ValueError(),))
@@ -561,17 +553,13 @@ def test_assert_message() -> None:
         )
 
     with (
-        fails_raises_group(
-            "1 matched exception. 'AssertionError' is not of type 'TypeError'"
-        ),
+        fails_raises_group("1 matched exception. 'AssertionError' is not of type 'TypeError'"),
         RaisesGroup(ValueError, TypeError),
     ):
         raise ExceptionGroup("a", [ValueError(), AssertionError()])
 
     with (
-        fails_raises_group(
-            "Matcher(ValueError): 'TypeError' is not of type 'ValueError'"
-        ),
+        fails_raises_group("Matcher(ValueError): 'TypeError' is not of type 'ValueError'"),
         RaisesGroup(Matcher(ValueError)),
     ):
         raise ExceptionGroup("a", [TypeError()])
@@ -881,9 +869,7 @@ def test_misordering_example() -> None:
             "    Matcher(ValueError, match='foo'): Regex pattern 'foo' did not match 'bar'\n"
             "There exist a possible match when attempting an exhaustive check, but RaisesGroup uses a greedy algorithm. Please make your expected exceptions more stringent with `Matcher` etc so the greedy algorithm can function."
         ),
-        RaisesGroup(
-            ValueError, ValueError, ValueError, Matcher(ValueError, match="foo")
-        ),
+        RaisesGroup(ValueError, ValueError, ValueError, Matcher(ValueError, match="foo")),
     ):
         raise ExceptionGroup(
             "",
@@ -901,9 +887,7 @@ def test_brief_error_on_one_fail() -> None:
     the raised exception would match one of the expected that previously got matched"""
     # no also-matched
     with (
-        fails_raises_group(
-            "1 matched exception. 'TypeError' is not of type 'RuntimeError'"
-        ),
+        fails_raises_group("1 matched exception. 'TypeError' is not of type 'RuntimeError'"),
         RaisesGroup(ValueError, RuntimeError),
     ):
         raise ExceptionGroup("", [ValueError(), TypeError()])
@@ -947,14 +931,10 @@ def test_identity_oopsies() -> None:
     # this previously messed up the logic
 
     with (
-        fails_raises_group(
-            "3 matched exceptions. 'RuntimeError' is not of type 'TypeError'"
-        ),
+        fails_raises_group("3 matched exceptions. 'RuntimeError' is not of type 'TypeError'"),
         RaisesGroup(ValueError, ValueError, ValueError, TypeError),
     ):
-        raise ExceptionGroup(
-            "", [ValueError(), ValueError(), ValueError(), RuntimeError()]
-        )
+        raise ExceptionGroup("", [ValueError(), ValueError(), ValueError(), RuntimeError()])
 
     e = ValueError("foo")
     m = Matcher(match="bar")
@@ -999,9 +979,7 @@ def test_matcher() -> None:
     with RaisesGroup(Matcher(ValueError)):
         raise ExceptionGroup("", (ValueError(),))
     with (
-        fails_raises_group(
-            "Matcher(TypeError): 'ValueError' is not of type 'TypeError'"
-        ),
+        fails_raises_group("Matcher(TypeError): 'ValueError' is not of type 'TypeError'"),
         RaisesGroup(Matcher(TypeError)),
     ):
         raise ExceptionGroup("", (ValueError(),))
@@ -1022,9 +1000,7 @@ def test_matcher_match() -> None:
     with RaisesGroup(Matcher(match="foo")):
         raise ExceptionGroup("", (ValueError("foo"),))
     with (
-        fails_raises_group(
-            "Matcher(match='foo'): Regex pattern 'foo' did not match 'bar'"
-        ),
+        fails_raises_group("Matcher(match='foo'): Regex pattern 'foo' did not match 'bar'"),
         RaisesGroup(Matcher(match="foo")),
     ):
         raise ExceptionGroup("", (ValueError("bar"),))

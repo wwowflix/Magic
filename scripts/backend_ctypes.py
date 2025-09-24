@@ -27,9 +27,7 @@ class CTypesData(object):
 
     @classmethod
     def _newp(cls, init):
-        raise TypeError(
-            "expected a pointer or array ctype, got '%s'" % (cls._get_c_name(),)
-        )
+        raise TypeError("expected a pointer or array ctype, got '%s'" % (cls._get_c_name(),))
 
     @staticmethod
     def _to_ctypes(value):
@@ -89,9 +87,7 @@ class CTypesData(object):
         if BClass is None:
             raise TypeError("cannot convert %r to an address" % (self._get_c_name(),))
         else:
-            raise TypeError(
-                "cannot convert %r to %r" % (self._get_c_name(), BClass._get_c_name())
-            )
+            raise TypeError("cannot convert %r to %r" % (self._get_c_name(), BClass._get_c_name()))
 
     @classmethod
     def _get_size(cls):
@@ -125,9 +121,7 @@ class CTypesData(object):
                 other, CTypesGenericPrimitive
             )
             if v_is_ptr and w_is_ptr:
-                return cmpfunc(
-                    self._convert_to_address(None), other._convert_to_address(None)
-                )
+                return cmpfunc(self._convert_to_address(None), other._convert_to_address(None))
             elif v_is_ptr or w_is_ptr:
                 return NotImplemented
             else:
@@ -197,9 +191,7 @@ class CTypesGenericPtr(CTypesData):
         elif isinstance(source, (int, long)):
             address = source
         else:
-            raise TypeError(
-                "bad type for cast to %r: %r" % (cls, type(source).__name__)
-            )
+            raise TypeError("bad type for cast to %r: %r" % (cls, type(source).__name__))
         return cls._new_pointer_at(address)
 
     @classmethod
@@ -241,11 +233,7 @@ class CTypesGenericPtr(CTypesData):
             ctypes_ptr.contents = cls._to_ctypes(value).contents
 
     def _convert_to_address(self, BClass):
-        if (
-            BClass in (self.__class__, None)
-            or BClass._automatic_casts
-            or self._automatic_casts
-        ):
+        if BClass in (self.__class__, None) or BClass._automatic_casts or self._automatic_casts:
             return self._address
         else:
             return CTypesData._convert_to_address(self, BClass)
@@ -356,9 +344,7 @@ class CTypesBackend(object):
             @staticmethod
             def _to_ctypes(novalue):
                 if novalue is not None:
-                    raise TypeError(
-                        "None expected, got %s object" % (type(novalue).__name__,)
-                    )
+                    raise TypeError("None expected, got %s object" % (type(novalue).__name__,))
                 return None
 
         CTypesVoid._fix_class()
@@ -393,8 +379,7 @@ class CTypesBackend(object):
                 source = 0
             else:
                 raise TypeError(
-                    "bad type for cast to %r: %r"
-                    % (CTypesPrimitive, type(source).__name__)
+                    "bad type for cast to %r: %r" % (CTypesPrimitive, type(source).__name__)
                 )
             return source
 
@@ -481,9 +466,7 @@ class CTypesBackend(object):
                         if isinstance(x, CTypesData):
                             x = int(x)
                         else:
-                            raise TypeError(
-                                "integer expected, got %s" % type(x).__name__
-                            )
+                            raise TypeError("integer expected, got %s" % type(x).__name__)
                     if ctype(x).value != x:
                         if not is_signed and x < 0:
                             raise OverflowError("%s: negative integer" % name)
@@ -574,9 +557,7 @@ class CTypesBackend(object):
             def __init__(self, init):
                 ctypeobj = BItem._create_ctype_obj(init)
                 if kind == "charp":
-                    self.__as_strbuf = ctypes.create_string_buffer(
-                        ctypeobj.value + b"\x00"
-                    )
+                    self.__as_strbuf = ctypes.create_string_buffer(ctypeobj.value + b"\x00")
                     self._as_ctype_ptr = ctypes.cast(self.__as_strbuf, self._ctype)
                 else:
                     self._as_ctype_ptr = ctypes.pointer(ctypeobj)
@@ -585,17 +566,13 @@ class CTypesBackend(object):
 
             def __add__(self, other):
                 if isinstance(other, (int, long)):
-                    return self._new_pointer_at(
-                        self._address + other * self._bitem_size
-                    )
+                    return self._new_pointer_at(self._address + other * self._bitem_size)
                 else:
                     return NotImplemented
 
             def __sub__(self, other):
                 if isinstance(other, (int, long)):
-                    return self._new_pointer_at(
-                        self._address - other * self._bitem_size
-                    )
+                    return self._new_pointer_at(self._address - other * self._bitem_size)
                 elif type(self) is type(other):
                     return (self._address - other._address) // self._bitem_size
                 else:
@@ -631,9 +608,7 @@ class CTypesBackend(object):
 
             def _get_own_repr(self):
                 if getattr(self, "_own", False):
-                    return "owning %d bytes" % (
-                        ctypes.sizeof(self._as_ctype_ptr.contents),
-                    )
+                    return "owning %d bytes" % (ctypes.sizeof(self._as_ctype_ptr.contents),)
                 return super(CTypesPtr, self)._get_own_repr()
 
         #
@@ -755,8 +730,7 @@ class CTypesBackend(object):
             def __add__(self, other):
                 if isinstance(other, (int, long)):
                     return CTypesPtr._new_pointer_at(
-                        ctypes.addressof(self._blob)
-                        + other * ctypes.sizeof(BItem._ctype)
+                        ctypes.addressof(self._blob) + other * ctypes.sizeof(BItem._ctype)
                     )
                 else:
                     return NotImplemented
@@ -855,8 +829,7 @@ class CTypesBackend(object):
                 init = tuple(init)
                 if len(init) > len(fnames):
                     raise ValueError(
-                        "too many values for %s initializer"
-                        % CTypesStructOrUnion._get_c_name()
+                        "too many values for %s initializer" % CTypesStructOrUnion._get_c_name()
                     )
                 init = dict(zip(fnames, init))
             addr = ctypes.addressof(blob)
@@ -875,9 +848,7 @@ class CTypesBackend(object):
             if fname == "":
                 raise NotImplementedError("nested anonymous structs/unions")
             if hasattr(CTypesStructOrUnion, fname):
-                raise ValueError(
-                    "the field name %r conflicts in " "the ctypes backend" % fname
-                )
+                raise ValueError("the field name %r conflicts in " "the ctypes backend" % fname)
             if bitsize < 0:
 
                 def getter(
@@ -930,9 +901,7 @@ class CTypesBackend(object):
         CTypesPtr = self.ffi._get_cached_btype(model.PointerType(tp))
         for fname in fnames:
             if hasattr(CTypesPtr, fname):
-                raise ValueError(
-                    "the field name %r conflicts in " "the ctypes backend" % fname
-                )
+                raise ValueError("the field name %r conflicts in " "the ctypes backend" % fname)
 
             def getter(self, fname=fname):
                 return getattr(self[0], fname)
@@ -952,9 +921,7 @@ class CTypesBackend(object):
         class CTypesFunctionPtr(CTypesGenericPtr):
             __slots__ = ["_own_callback", "_name"]
             _ctype = ctypes.CFUNCTYPE(
-                getattr(BResult, "_ctype", None),
-                *[BArg._ctype for BArg in BArgs],
-                use_errno=True
+                getattr(BResult, "_ctype", None), *[BArg._ctype for BArg in BArgs], use_errno=True
             )
             _reftypename = BResult._get_c_name("(* &)(%s)" % (nameargs,))
 
@@ -991,9 +958,7 @@ class CTypesBackend(object):
                     # The only pointers callbacks can return are void*s:
                     # http://bugs.python.org/issue5710
                     callback_ctype = ctypes.CFUNCTYPE(
-                        ctypes.c_void_p,
-                        *[BArg._ctype for BArg in BArgs],
-                        use_errno=True
+                        ctypes.c_void_p, *[BArg._ctype for BArg in BArgs], use_errno=True
                     )
                 else:
                     callback_ctype = CTypesFunctionPtr._ctype
@@ -1005,8 +970,7 @@ class CTypesBackend(object):
             def _initialize(ctypes_ptr, value):
                 if value:
                     raise NotImplementedError(
-                        "ctypes backend: not supported: "
-                        "initializers for function pointers"
+                        "ctypes backend: not supported: " "initializers for function pointers"
                     )
 
             def __repr__(self):
@@ -1143,8 +1107,7 @@ class CTypesBackend(object):
                 del weak_cache[MyRef(cdata)]
             except KeyError:
                 raise TypeError(
-                    "Can remove destructor only on a object "
-                    "previously returned by ffi.gc()"
+                    "Can remove destructor only on a object " "previously returned by ffi.gc()"
                 )
             return None
 
@@ -1190,9 +1153,7 @@ class CTypesBackend(object):
         if isinstance(cdata, CTypesBaseStructOrUnion):
             ptr = ctypes.pointer(type(cdata)._to_ctypes(cdata))
         elif isinstance(cdata, CTypesGenericPtr):
-            if offset is None or not issubclass(
-                type(cdata)._BItem, CTypesBaseStructOrUnion
-            ):
+            if offset is None or not issubclass(type(cdata)._BItem, CTypesBaseStructOrUnion):
                 raise TypeError("unexpected cdata type")
             ptr = type(cdata)._to_ctypes(cdata)
         elif isinstance(cdata, CTypesGenericArray):

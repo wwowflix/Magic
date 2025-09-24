@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+�¿from pathlib import Path
 
 # Read original file
 file_path = Path(".\reddit_api.py")
@@ -14,4 +14,4 @@ fixed_content = content.replace(
 fixed_path = Path(".\reddit_api_proper_fix.py")
 fixed_path.write_text(fixed_content, encoding="utf-8")
 
-print("✅ Reddit script fixed and saved as reddit_api_proper_fix.py")
+print("â�"… Reddit script fixed and saved as reddit_api_proper_fix.py")

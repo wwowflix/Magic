@@ -1,4 +1,4 @@
-﻿name: release-notes
+name: release-notes
 on:
   push:
     paths:

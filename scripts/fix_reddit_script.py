@@ -1,4 +1,4 @@
-﻿import re
+import re
 from pathlib import Path
 
 
@@ -8,9 +8,7 @@ def fix_reddit_script(script_path):
         content = Path(script_path).read_text(encoding="utf-8")
 
         # Fix common issues
-        fixed = re.sub(
-            r"(if subreddit_list is None:\s*)(subreddits =)", r"\1    \2", content
-        )
+        fixed = re.sub(r"(if subreddit_list is None:\s*)(subreddits =)", r"\1    \2", content)
         fixed = re.sub(r"[^\x00-\x7F]+", "", fixed)  # Remove non-ASCII
 
         # Save with BOM to ensure Windows compatibility

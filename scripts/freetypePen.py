@@ -4,10 +4,7 @@
 
 __all__ = ["FreeTypePen"]
 
-import os
 import ctypes
-import platform
-import subprocess
 import collections
 import math
 
@@ -132,9 +129,7 @@ class FreeTypePen(BasePen):
             for point in contour.points:
                 point = transform.transformPoint(point)
                 points.append(
-                    FT_Vector(
-                        FT_Pos(otRound(point[0] * 64)), FT_Pos(otRound(point[1] * 64))
-                    )
+                    FT_Vector(FT_Pos(otRound(point[0] * 64)), FT_Pos(otRound(point[1] * 64)))
                 )
         tags = []
         for contour in self.contours:
@@ -155,9 +150,7 @@ class FreeTypePen(BasePen):
             (ctypes.c_int)(flags),
         )
 
-    def buffer(
-        self, width=None, height=None, transform=None, contain=False, evenOdd=False
-    ):
+    def buffer(self, width=None, height=None, transform=None, contain=False, evenOdd=False):
         """Renders the current contours within a bitmap buffer.
 
         Args:
@@ -185,7 +178,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -247,9 +240,7 @@ class FreeTypePen(BasePen):
             raise FT_Exception(err)
         return buf.raw, (width, height)
 
-    def array(
-        self, width=None, height=None, transform=None, contain=False, evenOdd=False
-    ):
+    def array(self, width=None, height=None, transform=None, contain=False, evenOdd=False):
         """Returns the rendered contours as a numpy array. Requires `numpy`.
 
         Args:
@@ -276,7 +267,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -301,9 +292,7 @@ class FreeTypePen(BasePen):
         )
         return np.frombuffer(buf, "B").reshape((size[1], size[0])) / 255.0
 
-    def show(
-        self, width=None, height=None, transform=None, contain=False, evenOdd=False
-    ):
+    def show(self, width=None, height=None, transform=None, contain=False, evenOdd=False):
         """Plots the rendered contours with `pyplot`. Requires `numpy` and
         `matplotlib`.
 
@@ -327,7 +316,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -350,9 +339,7 @@ class FreeTypePen(BasePen):
         plt.imshow(a, cmap="gray_r", vmin=0, vmax=1)
         plt.show()
 
-    def image(
-        self, width=None, height=None, transform=None, contain=False, evenOdd=False
-    ):
+    def image(self, width=None, height=None, transform=None, contain=False, evenOdd=False):
         """Returns the rendered contours as a PIL image. Requires `Pillow`.
         Can be used to display a glyph image in Jupyter Notebook.
 
@@ -380,7 +367,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -420,7 +407,7 @@ class FreeTypePen(BasePen):
 
     @property
     def cbox(self):
-        """Returns an outline's ‘control box’.
+        """Returns an outline's 'control box'.
 
         Returns:
             A tuple of ``(xMin, yMin, xMax, yMax)``.

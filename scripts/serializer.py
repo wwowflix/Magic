@@ -50,9 +50,7 @@ def htmlentityreplace_errors(exc):
                 continue
             index = i + exc.start
             if _utils.isSurrogatePair(exc.object[index : min([exc.end, index + 2])]):
-                codepoint = _utils.surrogatePairToCodepoint(
-                    exc.object[index : index + 2]
-                )
+                codepoint = _utils.surrogatePairToCodepoint(exc.object[index : index + 2])
                 skip = True
             else:
                 codepoint = ord(c)
@@ -226,8 +224,7 @@ class HTMLSerializer(object):
         unexpected_args = frozenset(kwargs) - frozenset(self.options)
         if len(unexpected_args) > 0:
             raise TypeError(
-                "__init__() got an unexpected keyword argument '%s'"
-                % next(iter(unexpected_args))
+                "__init__() got an unexpected keyword argument '%s'" % next(iter(unexpected_args))
             )
         if "quote_char" in kwargs:
             self.use_best_quote_char = False
@@ -340,8 +337,7 @@ class HTMLSerializer(object):
                             quote_attr = _quoteAttributeLegacy.search(v) is not None
                         else:
                             raise ValueError(
-                                "quote_attr_values must be one of: "
-                                "'always', 'spec', or 'legacy'"
+                                "quote_attr_values must be one of: " "'always', 'spec', or 'legacy'"
                             )
                         v = v.replace("&", "&amp;")
                         if self.escape_lt_in_attrs:

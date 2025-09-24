@@ -270,8 +270,7 @@ def filter_unallowed_hashes(
     """
     if not hashes:
         logger.debug(
-            "Given no hashes to check %s links for project %r: "
-            "discarding no candidates",
+            "Given no hashes to check %s links for project %r: " "discarding no candidates",
             len(candidates),
             project_name,
         )
@@ -309,8 +308,7 @@ def filter_unallowed_hashes(
         )
 
     logger.debug(
-        "Checked %s links for project %r against %s hashes "
-        "(%s matches, %s no digest): %s",
+        "Checked %s links for project %r against %s hashes " "(%s matches, %s no digest): %s",
         len(candidates),
         project_name,
         hashes.digest_count,
@@ -444,9 +442,7 @@ class CandidateEvaluator:
         # Since the index of the tag in the _supported_tags list is used
         # as a priority, precompute a map from tag to index/priority to be
         # used in wheel.find_most_preferred_tag.
-        self._wheel_tag_preferences = {
-            tag: idx for idx, tag in enumerate(supported_tags)
-        }
+        self._wheel_tag_preferences = {tag: idx for idx, tag in enumerate(supported_tags)}
 
     def get_applicable_candidates(
         self,
@@ -523,11 +519,7 @@ class CandidateEvaluator:
             # can raise InvalidWheelFilename
             wheel = Wheel(link.filename)
             try:
-                pri = -(
-                    wheel.find_most_preferred_tag(
-                        valid_tags, self._wheel_tag_preferences
-                    )
-                )
+                pri = -(wheel.find_most_preferred_tag(valid_tags, self._wheel_tag_preferences))
             except ValueError:
                 raise UnsupportedWheel(
                     "{} is not a supported wheel for this platform. It "
@@ -930,15 +922,12 @@ class PackageFinder:
 
         if installed_version is None and best_candidate is None:
             logger.critical(
-                "Could not find a version that satisfies the requirement %s "
-                "(from versions: %s)",
+                "Could not find a version that satisfies the requirement %s " "(from versions: %s)",
                 req,
                 _format_versions(best_candidate_result.iter_all()),
             )
 
-            raise DistributionNotFound(
-                "No matching distribution found for {}".format(req)
-            )
+            raise DistributionNotFound("No matching distribution found for {}".format(req))
 
         def _should_install_candidate(
             candidate: Optional[InstallationCandidate],

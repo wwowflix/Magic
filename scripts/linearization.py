@@ -29,7 +29,7 @@ class PDFLinearization(PDFObject):
         self.n = pages_count
         # Primary hint stream offset and length (part 5):
         self.h = HINT_STREAM_OFFSET_LENGTH_PLACEHOLDER
-        self.o = None  # Object number of first page’s page object (part 6)
+        self.o = None  # Object number of first page's page object (part 6)
         self.e = FIRST_PAGE_END_OFFSET_PLACEHOLDER  # Offset of end of first page
         # Offset of first entry in main cross-reference table (part 11):
         self.t = MAIN_XREF_1ST_ENTRY_OFFSET_PLACEHOLDER
@@ -189,10 +189,7 @@ class LinearizedOutputProducer(OutputProducer):
         # Re-assigning IDs of all PDF objects in the 1st xref table:
         first_xref.start_obj_id = self.obj_id + 1
         for pdf_obj in first_xref_pdf_objs:
-            if (
-                not isinstance(pdf_obj, ContentWithoutID)
-                and pdf_obj is not hint_stream_obj
-            ):
+            if not isinstance(pdf_obj, ContentWithoutID) and pdf_obj is not hint_stream_obj:
                 self.obj_id += 1
                 pdf_obj.obj_id = self.obj_id
         # The hint streams shall be assigned the last object numbers in the file:

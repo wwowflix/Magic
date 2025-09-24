@@ -98,9 +98,7 @@ class Bounds:
             width=int(json["width"]) if "width" in json else None,
             height=int(json["height"]) if "height" in json else None,
             window_state=(
-                WindowState.from_json(json["windowState"])
-                if "windowState" in json
-                else None
+                WindowState.from_json(json["windowState"]) if "windowState" in json else None
             ),
         )
 
@@ -221,9 +219,7 @@ class PermissionDescriptor:
                 else None
             ),
             allow_without_gesture=(
-                bool(json["allowWithoutGesture"])
-                if "allowWithoutGesture" in json
-                else None
+                bool(json["allowWithoutGesture"]) if "allowWithoutGesture" in json else None
             ),
             pan_tilt_zoom=bool(json["panTiltZoom"]) if "panTiltZoom" in json else None,
         )
@@ -514,9 +510,7 @@ def get_version() -> (
     )
 
 
-def get_browser_command_line() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[str]]
-):
+def get_browser_command_line() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.List[str]]:
     """
     Returns the command line switches for the browser process if, and only if
     --enable-automation is on the commandline.

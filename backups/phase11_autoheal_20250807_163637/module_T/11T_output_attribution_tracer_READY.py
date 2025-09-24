@@ -1,6 +1,6 @@
-﻿def main():
+def main():
     print(
-        "✅ [11T_output_attribution_tracer_READY.py] executed successfully (stub mode)."
+        "âœ… [11T_output_attribution_tracer_READY.py] executed successfully (stub mode)."
     )
 
 

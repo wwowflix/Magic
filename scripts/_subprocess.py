@@ -114,8 +114,8 @@ class Process(metaclass=NoPublicConstructor):
     cleaned up properly, while optionally checking the return value, feeding
     it input, and so on.
 
-    If you need more control – for example, because you want to spawn a child
-    process that outlives your program – then another option is to use
+    If you need more control â€" for example, because you want to spawn a child
+    process that outlives your program â€" then another option is to use
     `trio.lowlevel.open_process`::
 
        process_object = await trio.lowlevel.open_process(...)
@@ -486,7 +486,7 @@ async def _run_process(
     describing the results. Use this if you want to treat a process like a
     function call.
 
-    The other option is to run it as a task using `Nursery.start` – the enhanced version
+    The other option is to run it as a task using `Nursery.start` â€" the enhanced version
     of `~Nursery.start_soon` that lets a task pass back a value during startup::
 
         process = await nursery.start(trio.run_process, ...)
@@ -627,7 +627,7 @@ async def _run_process(
                  process.send_signal(signal.SIGKILL)
 
           When the process actually exits, the ``deliver_cancel`` function
-          will automatically be cancelled – so if the process exits after
+          will automatically be cancelled â€" so if the process exits after
           ``SIGTERM``, then we'll never reach the ``SIGKILL``.
 
           In any case, `run_process` will always wait for the child process to
@@ -642,10 +642,10 @@ async def _run_process(
 
     Returns:
 
-      When called normally – a `subprocess.CompletedProcess` instance
+      When called normally â€" a `subprocess.CompletedProcess` instance
       describing the return code and outputs.
 
-      When called via `Nursery.start` – a `trio.Process` instance.
+      When called via `Nursery.start` â€" a `trio.Process` instance.
 
     Raises:
       UnicodeError: if ``stdin`` is specified as a Unicode string, rather
@@ -903,7 +903,7 @@ if TYPE_CHECKING:
             describing the results. Use this if you want to treat a process like a
             function call.
 
-            The other option is to run it as a task using `Nursery.start` – the enhanced version
+            The other option is to run it as a task using `Nursery.start` â€" the enhanced version
             of `~Nursery.start_soon` that lets a task pass back a value during startup::
 
                 process = await nursery.start(trio.run_process, ...)
@@ -1044,7 +1044,7 @@ if TYPE_CHECKING:
                          process.send_signal(signal.SIGKILL)
 
                   When the process actually exits, the ``deliver_cancel`` function
-                  will automatically be cancelled – so if the process exits after
+                  will automatically be cancelled â€" so if the process exits after
                   ``SIGTERM``, then we'll never reach the ``SIGKILL``.
 
                   In any case, `run_process` will always wait for the child process to
@@ -1059,10 +1059,10 @@ if TYPE_CHECKING:
 
             Returns:
 
-              When called normally – a `subprocess.CompletedProcess` instance
+              When called normally â€" a `subprocess.CompletedProcess` instance
               describing the return code and outputs.
 
-              When called via `Nursery.start` – a `trio.Process` instance.
+              When called via `Nursery.start` â€" a `trio.Process` instance.
 
             Raises:
               UnicodeError: if ``stdin`` is specified as a Unicode string, rather

@@ -41,8 +41,7 @@ class bdist(Command):
         (
             "plat-name=",
             "p",
-            "platform name to embed in generated filenames "
-            "(default: %s)" % get_platform(),
+            "platform name to embed in generated filenames " "(default: %s)" % get_platform(),
         ),
         ("formats=", None, "formats for distribution (comma-separated list)"),
         (
@@ -122,8 +121,7 @@ class bdist(Command):
                 self.formats = [self.default_format[os.name]]
             except KeyError:
                 raise DistutilsPlatformError(
-                    "don't know how to create built distributions "
-                    "on platform %s" % os.name
+                    "don't know how to create built distributions " "on platform %s" % os.name
                 )
 
         if self.dist_dir is None:

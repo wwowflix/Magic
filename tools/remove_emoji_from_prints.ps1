@@ -1,7 +1,7 @@
 @"
 <#
 .SYNOPSIS
-    Executes all *_READY.py scripts in a given Phase 11 module and logs output.
+    Executes all *_READY.py scripts in a given Phase 11 module and logs output.
 .DESCRIPTION
     - Takes a module letter (e.g. B, C, D…) as a parameter.
     - Discovers each READY script under scripts/phase11/module_<Module>.
@@ -10,7 +10,7 @@
     - Writes a summary.tsv with Script and Status columns.
     - Prints colored status to the console.
 .PARAMETER Module
-    The Phase 11 module letter to run (e.g. "B").
+    The Phase 11 module letter to run (e.g. "B").
 .EXAMPLE
     .\run_phase11_module.ps1 -Module B
 #>

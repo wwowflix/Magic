@@ -17,7 +17,7 @@ timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 summary_path = f"outputs/summaries/self_healing_summary_{timestamp}.tsv"
 summary_lines = []
 
-print(f"\n🔹 Starting Self-Healing Runner v4.8 on {len(manifest)} scripts...\n")
+print(f"\nðŸ�¹ Starting Self-Healing Runner v4.8 on {len(manifest)} scripts...\n")
 
 for script_path in manifest:
     script_name = os.path.basename(script_path)
@@ -29,15 +29,13 @@ for script_path in manifest:
         phase_num = parts[1].replace("phase", "")
         module_name = parts[2].replace("module_", "")
 
-    log_dir = os.path.join(
-        "outputs", "logs", f"phase{phase_num}", f"module_{module_name}"
-    )
+    log_dir = os.path.join("outputs", "logs", f"phase{phase_num}", f"module_{module_name}")
     os.makedirs(log_dir, exist_ok=True)
     log_file = os.path.join(log_dir, f"{script_name}_{timestamp}.log")
 
     success = False
     for attempt in range(1, 4):
-        print(f"▶ Running {script_name} (attempt {attempt}) ...")
+        print(f"â�"¶ Running {script_name} (attempt {attempt}) ...")
         process = subprocess.Popen(
             ["python", script_path],
             stdout=subprocess.PIPE,
@@ -52,12 +50,12 @@ for script_path in manifest:
             log.write(stderr)
 
         if process.returncode == 0:
-            print(f"✅ {script_name} completed successfully on attempt {attempt}.")
+            print(f"â�"… {script_name} completed successfully on attempt {attempt}.")
             success = True
             break
         else:
             error_msg = stderr.strip().lower()
-            print(f"⚠️  {script_name} failed on attempt {attempt}. Retrying...")
+            print(f"âš ï¸�  {script_name} failed on attempt {attempt}. Retrying...")
 
             # Self-healing: handle missing file
             if "filenotfounderror" in error_msg:
@@ -68,19 +66,17 @@ for script_path in manifest:
                         os.makedirs(dir_path, exist_ok=True)
                     with open(missing_file, "w", encoding="utf-8") as f:
                         f.write("AUTO-CREATED BY SELF-HEALING RUNNER")
-                    print(f"🔧 Auto-fixing: creating missing file {missing_file}")
+                    print(f"ðŸ�§ Auto-fixing: creating missing file {missing_file}")
                 except Exception as e:
-                    print(f"⚠️ Self-healing skipped due to error: {e}")
+                    print(f"âš ï¸� Self-healing skipped due to error: {e}")
 
             # Self-healing: handle unicode errors
             if "unicode" in error_msg:
-                print("🔧 Auto-fixing: Unicode error detected, cleaning script output")
+                print("ðŸ�§ Auto-fixing: Unicode error detected, cleaning script output")
 
             # Self-healing: handle missing package
             if "importerror" in error_msg:
-                print(
-                    "🔧 Auto-fixing: Import error detected (manual package install needed)"
-                )
+                print("ðŸ�§ Auto-fixing: Import error detected (manual package install needed)")
 
     status = "PASS" if success else "FAIL"
     first_error = stderr.splitlines()[0] if stderr else ""
@@ -89,4 +85,4 @@ for script_path in manifest:
 with open(summary_path, "w", encoding="utf-8") as summary:
     summary.write("\n".join(summary_lines))
 
-print(f"\n✅ Completed {len(manifest)} scripts. Summary saved to {summary_path}")
+print(f"\nâ�"… Completed {len(manifest)} scripts. Summary saved to {summary_path}")

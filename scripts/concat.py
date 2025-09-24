@@ -406,9 +406,7 @@ class _Concatenator:
         elif join == "inner":
             self.intersect = True
         else:  # pragma: no cover
-            raise ValueError(
-                "Only can inner (intersect) or outer (union) join the other axis"
-            )
+            raise ValueError("Only can inner (intersect) or outer (union) join the other axis")
 
         if isinstance(objs, abc.Mapping):
             if keys is None:
@@ -469,9 +467,7 @@ class _Concatenator:
         else:
             # filter out the empties if we have not multi-index possibilities
             # note to keep empty Series as it affect to result columns / name
-            non_empties = [
-                obj for obj in objs if sum(obj.shape) > 0 or isinstance(obj, ABCSeries)
-            ]
+            non_empties = [obj for obj in objs if sum(obj.shape) > 0 or isinstance(obj, ABCSeries)]
 
             if len(non_empties) and (
                 keys is None and names is None and levels is None and not self.intersect
@@ -498,9 +494,7 @@ class _Concatenator:
 
         self._is_series = isinstance(sample, ABCSeries)
         if not 0 <= axis <= sample.ndim:
-            raise AssertionError(
-                f"axis must be between 0 and {sample.ndim}, input was {axis}"
-            )
+            raise AssertionError(f"axis must be between 0 and {sample.ndim}, input was {axis}")
 
         # if we have mixed ndims, then convert to highest ndim
         # creating column numbers as needed
@@ -516,8 +510,7 @@ class _Concatenator:
 
                 elif ndim != max_ndim - 1:
                     raise ValueError(
-                        "cannot concatenate unaligned mixed "
-                        "dimensional NDFrame objects"
+                        "cannot concatenate unaligned mixed " "dimensional NDFrame objects"
                     )
 
                 else:
@@ -686,9 +679,7 @@ class _Concatenator:
                 raise ValueError("levels supported only when keys is not None")
             concat_axis = _concat_indexes(indexes)
         else:
-            concat_axis = _make_concat_multiindex(
-                indexes, self.keys, self.levels, self.names
-            )
+            concat_axis = _make_concat_multiindex(indexes, self.keys, self.levels, self.names)
 
         self._maybe_check_integrity(concat_axis)
 
@@ -707,9 +698,7 @@ def _concat_indexes(indexes) -> Index:
 
 def _make_concat_multiindex(indexes, keys, levels=None, names=None) -> MultiIndex:
 
-    if (levels is None and isinstance(keys[0], tuple)) or (
-        levels is not None and len(levels) > 1
-    ):
+    if (levels is None and isinstance(keys[0], tuple)) or (levels is not None and len(levels) > 1):
         zipped = list(zip(*keys))
         if names is None:
             names = [None] * len(zipped)
@@ -773,9 +762,7 @@ def _make_concat_multiindex(indexes, keys, levels=None, names=None) -> MultiInde
             # also copies
             names = list(names) + list(get_unanimous_names(*indexes))
 
-        return MultiIndex(
-            levels=levels, codes=codes_list, names=names, verify_integrity=False
-        )
+        return MultiIndex(levels=levels, codes=codes_list, names=names, verify_integrity=False)
 
     new_index = indexes[0]
     n = len(new_index)
@@ -811,6 +798,4 @@ def _make_concat_multiindex(indexes, keys, levels=None, names=None) -> MultiInde
     if len(new_names) < len(new_levels):
         new_names.extend(new_index.names)
 
-    return MultiIndex(
-        levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False
-    )
+    return MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)

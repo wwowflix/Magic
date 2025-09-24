@@ -89,9 +89,7 @@ def concat_offsets(list_of_offsets: list[cpy.OffsetArray]) -> cpy.OffsetArray:
         raise ValueError("Empty list passed to concat_offsets")
 
     n = len(list_of_offsets)
-    cumulative = np.cumsum(
-        [offsets[-1] for offsets in list_of_offsets], dtype=offset_dtype
-    )
+    cumulative = np.cumsum([offsets[-1] for offsets in list_of_offsets], dtype=offset_dtype)
     ret: cpy.OffsetArray = np.concatenate(
         (
             list_of_offsets[0],
@@ -106,9 +104,7 @@ def concat_offsets_or_none(
     list_of_offsets_or_none: list[cpy.OffsetArray | None],
 ) -> cpy.OffsetArray | None:
     """Concatenate a list of offsets arrays or None into a single offset array or None."""
-    list_of_offsets = [
-        offsets for offsets in list_of_offsets_or_none if offsets is not None
-    ]
+    list_of_offsets = [offsets for offsets in list_of_offsets_or_none if offsets is not None]
     if list_of_offsets:
         return concat_offsets(list_of_offsets)
     else:
@@ -163,9 +159,7 @@ def concat_points_with_nan(list_of_points: list[cpy.PointArray]) -> cpy.PointArr
         return concat_points(list_of_points)
 
 
-def insert_nan_at_offsets(
-    points: cpy.PointArray, offsets: cpy.OffsetArray
-) -> cpy.PointArray:
+def insert_nan_at_offsets(points: cpy.PointArray, offsets: cpy.OffsetArray) -> cpy.PointArray:
     """Insert NaNs into a point array at locations specified by an offset array."""
     check_point_array(points)
     check_offset_array(offsets)
@@ -213,9 +207,7 @@ def outer_offsets_from_list_of_offsets(
     if not list_of_offsets:
         raise ValueError("Empty list passed to outer_offsets_from_list_of_offsets")
 
-    return np.cumsum(
-        [0] + [len(offsets) - 1 for offsets in list_of_offsets], dtype=offset_dtype
-    )
+    return np.cumsum([0] + [len(offsets) - 1 for offsets in list_of_offsets], dtype=offset_dtype)
 
 
 def remove_nan(points: cpy.PointArray) -> tuple[cpy.PointArray, cpy.OffsetArray]:
@@ -235,9 +227,7 @@ def remove_nan(points: cpy.PointArray) -> tuple[cpy.PointArray, cpy.OffsetArray]
         return points, offsets
 
 
-def split_codes_by_offsets(
-    codes: cpy.CodeArray, offsets: cpy.OffsetArray
-) -> list[cpy.CodeArray]:
+def split_codes_by_offsets(codes: cpy.CodeArray, offsets: cpy.OffsetArray) -> list[cpy.CodeArray]:
     """Split a code array at locations specified by an offset array into a list of code arrays."""
     check_code_array(codes)
     check_offset_array(offsets)

@@ -387,9 +387,7 @@ def _merge_arrays_dispatcher(
 
 
 @array_function_dispatch(_merge_arrays_dispatcher)
-def merge_arrays(
-    seqarrays, fill_value=-1, flatten=False, usemask=False, asrecarray=False
-):
+def merge_arrays(seqarrays, fill_value=-1, flatten=False, usemask=False, asrecarray=False):
     """
     Merge arrays field by field.
 
@@ -669,9 +667,7 @@ def rename_fields(base, namemapper):
             newname = namemapper.get(name, name)
             current = ndtype[name]
             if current.names is not None:
-                newdtype.append(
-                    (newname, _recursive_rename_fields(current, namemapper))
-                )
+                newdtype.append((newname, _recursive_rename_fields(current, namemapper)))
             else:
                 newdtype.append((newname, current))
         return newdtype
@@ -688,9 +684,7 @@ def _append_fields_dispatcher(
 
 
 @array_function_dispatch(_append_fields_dispatcher)
-def append_fields(
-    base, names, data, dtypes=None, fill_value=-1, usemask=True, asrecarray=False
-):
+def append_fields(base, names, data, dtypes=None, fill_value=-1, usemask=True, asrecarray=False):
     """
     Add new fields to an existing array.
 
@@ -803,9 +797,7 @@ def rec_append_fields(base, names, data, dtypes=None):
     -------
     appended_array : np.recarray
     """
-    return append_fields(
-        base, names, data=data, dtypes=dtypes, asrecarray=True, usemask=False
-    )
+    return append_fields(base, names, data=data, dtypes=dtypes, asrecarray=True, usemask=False)
 
 
 def _repack_fields_dispatcher(a, align=None, recurse=None):
@@ -1024,9 +1016,7 @@ def structured_to_unstructured(arr, dtype=None, copy=False, casting="unsafe"):
         arr = arr.view(flattened_fields)
 
     # next cast to a packed format with all fields converted to new dtype
-    packed_fields = np.dtype(
-        {"names": names, "formats": [(out_dtype, dt.shape) for dt in dts]}
-    )
+    packed_fields = np.dtype({"names": names, "formats": [(out_dtype, dt.shape) for dt in dts]})
     arr = arr.astype(packed_fields, copy=copy, casting=casting)
 
     # finally is it safe to view the packed fields as the unstructured type
@@ -1132,9 +1122,7 @@ def unstructured_to_structured(
     # Use a series of views and casts to convert to a structured array:
 
     # first view as a packed structured array of one dtype
-    packed_fields = np.dtype(
-        {"names": names, "formats": [(arr.dtype, dt.shape) for dt in dts]}
-    )
+    packed_fields = np.dtype({"names": names, "formats": [(arr.dtype, dt.shape) for dt in dts]})
     arr = np.ascontiguousarray(arr).view(packed_fields)
 
     # next cast to an unpacked but flattened format with varied dtypes
@@ -1297,9 +1285,7 @@ def _stack_arrays_dispatcher(
 
 
 @array_function_dispatch(_stack_arrays_dispatcher)
-def stack_arrays(
-    arrays, defaults=None, usemask=True, asrecarray=False, autoconvert=False
-):
+def stack_arrays(arrays, defaults=None, usemask=True, asrecarray=False, autoconvert=False):
     """
     Superposes arrays fields by fields
 
@@ -1380,9 +1366,7 @@ def stack_arrays(
                     if name not in seen:
                         seen.append(name)
     #
-    return _fix_output(
-        _fix_defaults(output, defaults), usemask=usemask, asrecarray=asrecarray
-    )
+    return _fix_output(_fix_defaults(output, defaults), usemask=usemask, asrecarray=asrecarray)
 
 
 def _find_duplicates_dispatcher(a, key=None, ignoremask=None, return_index=None):
@@ -1650,16 +1634,12 @@ def join_by(
     return _fix_output(_fix_defaults(output, defaults), **kwargs)
 
 
-def _rec_join_dispatcher(
-    key, r1, r2, jointype=None, r1postfix=None, r2postfix=None, defaults=None
-):
+def _rec_join_dispatcher(key, r1, r2, jointype=None, r1postfix=None, r2postfix=None, defaults=None):
     return (r1, r2)
 
 
 @array_function_dispatch(_rec_join_dispatcher)
-def rec_join(
-    key, r1, r2, jointype="inner", r1postfix="1", r2postfix="2", defaults=None
-):
+def rec_join(key, r1, r2, jointype="inner", r1postfix="1", r2postfix="2", defaults=None):
     """
     Join arrays `r1` and `r2` on keys.
     Alternative to join_by, that always returns a np.recarray.

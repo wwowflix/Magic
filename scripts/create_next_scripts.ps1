@@ -1,4 +1,4 @@
-﻿# create_next_scripts.ps1 — generates your next automation scripts
+# create_next_scripts.ps1 — generates your next automation scripts
 
 # Ensure .github\workflows directory exists
 New-Item -ItemType Directory -Path .\.github\workflows -Force | Out-Null

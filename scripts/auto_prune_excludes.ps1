@@ -1,4 +1,4 @@
-﻿$inFile = ".\my_exclude_list.txt"
+$inFile = ".\my_exclude_list.txt"
 $outFile = ".\my_clean_exclude_list.txt"
 
 if (Test-Path $inFile) {

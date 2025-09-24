@@ -1,9 +1,10 @@
 """Self-heal helpers used by tests."""
 
 from __future__ import annotations
+
 import os
-import sys
 import subprocess
+import sys
 from typing import Any
 
 __all__ = [
@@ -35,9 +36,7 @@ def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
         pass
 
 
-def _run(
-    cmd: list[str] | tuple[str, ...], **kwargs: Any
-) -> subprocess.CompletedProcess:
+def _run(cmd: list[str] | tuple[str, ...], **kwargs: Any) -> subprocess.CompletedProcess:
     """Wrapper for subprocess.run so tests can monkeypatch."""
     # Don't pass check=True here; tests provide a fake object with returncode
     return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
@@ -66,7 +65,7 @@ def apply_remediation(exc: Exception) -> bool:
     - FileNotFoundError: create a placeholder input and return True
     - ImportError: attempt pip install of a dummy pkg (tests monkeypatch pip_install) and return True
     - UnicodeError: normalize and return True
-    Anything else → False.
+    Anything else â†' False.
     """
     msg = str(exc)
     lower = msg.lower()
@@ -83,12 +82,8 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     # Import error
-    if (
-        isinstance(exc, ImportError)
-        or "importerror" in lower
-        or "no module named" in lower
-    ):
-        # The tests monkeypatch pip_install → we just need to call it and return True
+    if isinstance(exc, ImportError) or "importerror" in lower or "no module named" in lower:
+        # The tests monkeypatch pip_install â†' we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True
 

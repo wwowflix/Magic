@@ -65,9 +65,7 @@ _gentype = types.GeneratorType
 # save away Python sum
 _sum_ = sum
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy")
 
 
 # functions that are now methods
@@ -573,8 +571,7 @@ def put(a, ind, v, mode="raise"):
         put = a.put
     except AttributeError as e:
         raise TypeError(
-            "argument 1 must be numpy.ndarray, "
-            "not {name}".format(name=type(a).__name__)
+            "argument 1 must be numpy.ndarray, " "not {name}".format(name=type(a).__name__)
         ) from e
 
     return put(ind, v, mode=mode)
@@ -1742,13 +1739,9 @@ def trace(a, offset=0, axis1=0, axis2=1, dtype=None, out=None):
     """
     if isinstance(a, np.matrix):
         # Get trace of matrix via an array to preserve backward compatibility.
-        return asarray(a).trace(
-            offset=offset, axis1=axis1, axis2=axis2, dtype=dtype, out=out
-        )
+        return asarray(a).trace(offset=offset, axis1=axis1, axis2=axis2, dtype=dtype, out=out)
     else:
-        return asanyarray(a).trace(
-            offset=offset, axis1=axis1, axis2=axis2, dtype=dtype, out=out
-        )
+        return asanyarray(a).trace(offset=offset, axis1=axis1, axis2=axis2, dtype=dtype, out=out)
 
 
 def _ravel_dispatcher(a, order=None):
@@ -2155,9 +2148,7 @@ def clip(a, a_min, a_max, out=None, **kwargs):
     return _wrapfunc(a, "clip", a_min, a_max, out=out, **kwargs)
 
 
-def _sum_dispatcher(
-    a, axis=None, dtype=None, out=None, keepdims=None, initial=None, where=None
-):
+def _sum_dispatcher(a, axis=None, dtype=None, out=None, keepdims=None, initial=None, where=None):
     return (a, out)
 
 
@@ -2413,9 +2404,7 @@ def any(a, axis=None, out=None, keepdims=np._NoValue, *, where=np._NoValue):
     (191614240, 191614240)
 
     """
-    return _wrapreduction(
-        a, np.logical_or, "any", axis, None, out, keepdims=keepdims, where=where
-    )
+    return _wrapreduction(a, np.logical_or, "any", axis, None, out, keepdims=keepdims, where=where)
 
 
 def _all_dispatcher(a, axis=None, out=None, keepdims=None, *, where=None):
@@ -2505,9 +2494,7 @@ def all(a, axis=None, out=None, keepdims=np._NoValue, *, where=np._NoValue):
     (28293632, 28293632, array(True)) # may vary
 
     """
-    return _wrapreduction(
-        a, np.logical_and, "all", axis, None, out, keepdims=keepdims, where=where
-    )
+    return _wrapreduction(a, np.logical_and, "all", axis, None, out, keepdims=keepdims, where=where)
 
 
 def _cumsum_dispatcher(a, axis=None, dtype=None, out=None):
@@ -2694,9 +2681,7 @@ def _amax_dispatcher(a, axis=None, out=None, keepdims=None, initial=None, where=
 
 
 @array_function_dispatch(_amax_dispatcher)
-def amax(
-    a, axis=None, out=None, keepdims=np._NoValue, initial=np._NoValue, where=np._NoValue
-):
+def amax(a, axis=None, out=None, keepdims=np._NoValue, initial=np._NoValue, where=np._NoValue):
     """
     Return the maximum of an array or maximum along an axis.
 
@@ -2828,9 +2813,7 @@ def _amin_dispatcher(a, axis=None, out=None, keepdims=None, initial=None, where=
 
 
 @array_function_dispatch(_amin_dispatcher)
-def amin(
-    a, axis=None, out=None, keepdims=np._NoValue, initial=np._NoValue, where=np._NoValue
-):
+def amin(a, axis=None, out=None, keepdims=np._NoValue, initial=np._NoValue, where=np._NoValue):
     """
     Return the minimum of an array or minimum along an axis.
 
@@ -2993,18 +2976,14 @@ def alen(a):
 
     """
     # NumPy 1.18.0, 2019-08-02
-    warnings.warn(
-        "`np.alen` is deprecated, use `len` instead", DeprecationWarning, stacklevel=2
-    )
+    warnings.warn("`np.alen` is deprecated, use `len` instead", DeprecationWarning, stacklevel=2)
     try:
         return len(a)
     except TypeError:
         return len(array(a, ndmin=1))
 
 
-def _prod_dispatcher(
-    a, axis=None, dtype=None, out=None, keepdims=None, initial=None, where=None
-):
+def _prod_dispatcher(a, axis=None, dtype=None, out=None, keepdims=None, initial=None, where=None):
     return (a, out)
 
 
@@ -3413,9 +3392,7 @@ def _mean_dispatcher(a, axis=None, dtype=None, out=None, keepdims=None, *, where
 
 
 @array_function_dispatch(_mean_dispatcher)
-def mean(
-    a, axis=None, dtype=None, out=None, keepdims=np._NoValue, *, where=np._NoValue
-):
+def mean(a, axis=None, dtype=None, out=None, keepdims=np._NoValue, *, where=np._NoValue):
     """
     Compute the arithmetic mean along the specified axis.
 
@@ -3534,23 +3511,12 @@ def mean(
     return _methods._mean(a, axis=axis, dtype=dtype, out=out, **kwargs)
 
 
-def _std_dispatcher(
-    a, axis=None, dtype=None, out=None, ddof=None, keepdims=None, *, where=None
-):
+def _std_dispatcher(a, axis=None, dtype=None, out=None, ddof=None, keepdims=None, *, where=None):
     return (a, where, out)
 
 
 @array_function_dispatch(_std_dispatcher)
-def std(
-    a,
-    axis=None,
-    dtype=None,
-    out=None,
-    ddof=0,
-    keepdims=np._NoValue,
-    *,
-    where=np._NoValue
-):
+def std(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue, *, where=np._NoValue):
     """
     Compute the standard deviation along the specified axis.
 
@@ -3683,23 +3649,12 @@ def std(
     return _methods._std(a, axis=axis, dtype=dtype, out=out, ddof=ddof, **kwargs)
 
 
-def _var_dispatcher(
-    a, axis=None, dtype=None, out=None, ddof=None, keepdims=None, *, where=None
-):
+def _var_dispatcher(a, axis=None, dtype=None, out=None, ddof=None, keepdims=None, *, where=None):
     return (a, where, out)
 
 
 @array_function_dispatch(_var_dispatcher)
-def var(
-    a,
-    axis=None,
-    dtype=None,
-    out=None,
-    ddof=0,
-    keepdims=np._NoValue,
-    *,
-    where=np._NoValue
-):
+def var(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue, *, where=np._NoValue):
     """
     Compute the variance along the specified axis.
 

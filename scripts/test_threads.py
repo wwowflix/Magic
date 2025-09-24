@@ -225,7 +225,7 @@ async def test_named_thread() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙")
+    await test_thread_name("ðŸ'™")
 
 
 def _get_thread_name(ident: int | None = None) -> str | None:
@@ -306,7 +306,7 @@ async def test_named_thread_os() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙", expected="?")
+    await test_thread_name("ðŸ'™", expected="?")
 
 
 def test_has_pthread_setname_np() -> None:
@@ -535,9 +535,7 @@ async def test_run_in_worker_thread_limiter(
             # sure no-one is sneaking past, and to make sure the high_water
             # check below won't fail due to scheduling issues. (It could still
             # fail if too many threads are let through here.)
-            while (  # noqa: ASYNC110
-                state.parked != MAX or c.statistics().tasks_waiting != MAX
-            ):
+            while state.parked != MAX or c.statistics().tasks_waiting != MAX:  # noqa: ASYNC110
                 await sleep(0.01)  # pragma: no cover
             # Then release the threads
             gate.set()
@@ -682,8 +680,7 @@ async def test_trio_to_thread_run_sync_contextvars() -> None:
     assert parent_value == "main"
     assert inner_value == "worker"
     assert current_value == "main", (
-        "The contextvar value set on the worker would not propagate back to the main"
-        " thread"
+        "The contextvar value set on the worker would not propagate back to the main" " thread"
     )
     assert sniffio.current_async_library() == "trio"
 

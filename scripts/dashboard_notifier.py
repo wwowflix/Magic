@@ -7,12 +7,11 @@ Currently just prints confirmation, but can be extended to Slack, Notion, etc.
 """
 
 import datetime
-import os
 
 timestamp = datetime.datetime.utcnow().isoformat()
 signal_file = "D:/MAGIC/outputs/trends/dashboard_signal.log"
 
 with open(signal_file, "a", encoding="utf-8") as f:
-    f.write(f"[{timestamp}] ✅ Dashboard updated with new trends\n")
+    f.write(f"[{timestamp}] â�"… Dashboard updated with new trends\n")
 
-print(f"✅ Dashboard notified at {timestamp}")
+print(f"â�"… Dashboard notified at {timestamp}")

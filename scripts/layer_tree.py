@@ -92,9 +92,7 @@ class StickyPositionConstraint:
         json["stickyBoxRect"] = self.sticky_box_rect.to_json()
         json["containingBlockRect"] = self.containing_block_rect.to_json()
         if self.nearest_layer_shifting_sticky_box is not None:
-            json["nearestLayerShiftingStickyBox"] = (
-                self.nearest_layer_shifting_sticky_box.to_json()
-            )
+            json["nearestLayerShiftingStickyBox"] = self.nearest_layer_shifting_sticky_box.to_json()
         if self.nearest_layer_shifting_containing_block is not None:
             json["nearestLayerShiftingContainingBlock"] = (
                 self.nearest_layer_shifting_containing_block.to_json()
@@ -245,18 +243,14 @@ class Layer:
             paint_count=int(json["paintCount"]),
             draws_content=bool(json["drawsContent"]),
             parent_layer_id=(
-                LayerId.from_json(json["parentLayerId"])
-                if "parentLayerId" in json
-                else None
+                LayerId.from_json(json["parentLayerId"]) if "parentLayerId" in json else None
             ),
             backend_node_id=(
                 dom.BackendNodeId.from_json(json["backendNodeId"])
                 if "backendNodeId" in json
                 else None
             ),
-            transform=(
-                [float(i) for i in json["transform"]] if "transform" in json else None
-            ),
+            transform=([float(i) for i in json["transform"]] if "transform" in json else None),
             anchor_x=float(json["anchorX"]) if "anchorX" in json else None,
             anchor_y=float(json["anchorY"]) if "anchorY" in json else None,
             anchor_z=float(json["anchorZ"]) if "anchorZ" in json else None,
@@ -292,9 +286,7 @@ class PaintProfile(list):
 
 def compositing_reasons(
     layer_id: LayerId,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[str], typing.List[str]]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.List[str], typing.List[str]]]:
     """
     Provides the reasons why the given layer was composited.
 
@@ -496,9 +488,5 @@ class LayerTreeDidChange:
     @classmethod
     def from_json(cls, json: T_JSON_DICT) -> LayerTreeDidChange:
         return cls(
-            layers=(
-                [Layer.from_json(i) for i in json["layers"]]
-                if "layers" in json
-                else None
-            )
+            layers=([Layer.from_json(i) for i in json["layers"]] if "layers" in json else None)
         )

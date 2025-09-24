@@ -1,4 +1,4 @@
-﻿# 🛡️ Phase 11 – SHIELD: Audit & Fortification Layer
+# 🛡️ Phase 11 – SHIELD: Audit & Fortification Layer
 
 This phase includes 28 powerful modules (A to AB) dedicated to system protection, compliance, self-healing, anomaly detection, and AI governance.
 

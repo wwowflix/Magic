@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import argparse
 import csv
 import json
@@ -32,9 +32,7 @@ def _read_rows(summary_path: Path) -> List[Dict[str, str]]:
         return [dict(row) for row in reader]
 
 
-def _filter_rows(
-    rows: List[Dict[str, str]], phase: Optional[int]
-) -> List[Dict[str, str]]:
+def _filter_rows(rows: List[Dict[str, str]], phase: Optional[int]) -> List[Dict[str, str]]:
     if phase is None:
         return rows
     return [r for r in rows if str(r.get("Phase", "")).strip() == str(phase)]
@@ -82,7 +80,7 @@ def main(argv=None) -> int:
     ap.add_argument("--summary", required=True, help="Path to phase_master_summary.tsv")
     ap.add_argument("--logs_root", required=True, help="Root of outputs/logs")
     ap.add_argument("--report", required=True, help="Where to write JSON report")
-    # 🔧 make --phase optional; aggregate if omitted
+    # ðŸ"§ make --phase optional; aggregate if omitted
     ap.add_argument(
         "--phase",
         type=int,

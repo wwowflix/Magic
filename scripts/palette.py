@@ -81,9 +81,7 @@ if __name__ == "__main__":  # pragma: no cover
     from pip._vendor.rich.style import Style
 
     class ColorBox:
-        def __rich_console__(
-            self, console: Console, options: ConsoleOptions
-        ) -> Iterable[Segment]:
+        def __rich_console__(self, console: Console, options: ConsoleOptions) -> Iterable[Segment]:
             height = console.size.height - 3
             for y in range(0, height):
                 for x in range(options.max_width):
@@ -93,7 +91,7 @@ if __name__ == "__main__":  # pragma: no cover
                     r2, g2, b2 = colorsys.hls_to_rgb(h, l + (1 / height / 2), 1.0)
                     bgcolor = Color.from_rgb(r1 * 255, g1 * 255, b1 * 255)
                     color = Color.from_rgb(r2 * 255, g2 * 255, b2 * 255)
-                    yield Segment("▄", Style(color=color, bgcolor=bgcolor))
+                    yield Segment("â-„", Style(color=color, bgcolor=bgcolor))
                 yield Segment.line()
 
     console = Console()

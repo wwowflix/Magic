@@ -158,10 +158,7 @@ class MaskedRecords(MaskedArray):
                 elif nm == nd:
                     mask = np.reshape(mask, self.shape)
                 else:
-                    msg = (
-                        "Mask and data not compatible: data size is %i, "
-                        + "mask size is %i."
-                    )
+                    msg = "Mask and data not compatible: data size is %i, " + "mask size is %i."
                     raise MAError(msg % (nd, nm))
                 copy = True
             if not keep_mask:
@@ -171,9 +168,7 @@ class MaskedRecords(MaskedArray):
                 if mask.dtype == mdtype:
                     _mask = mask
                 else:
-                    _mask = np.array(
-                        [tuple([m] * len(mdtype)) for m in mask], dtype=mdtype
-                    )
+                    _mask = np.array([tuple([m] * len(mdtype)) for m in mask], dtype=mdtype)
                 self._mask = _mask
         return self
 
@@ -187,9 +182,9 @@ class MaskedRecords(MaskedArray):
                 _mask = ma.make_mask_none(self.shape, dtype=_dtype)
             else:
                 mdescr = ma.make_mask_descr(_dtype)
-                _mask = narray(
-                    [tuple([m] * len(mdescr)) for m in objmask], dtype=mdescr
-                ).view(recarray)
+                _mask = narray([tuple([m] * len(mdescr)) for m in objmask], dtype=mdescr).view(
+                    recarray
+                )
         # Update some of the attributes
         _dict = self.__dict__
         _dict.update(_mask=_mask)
@@ -241,9 +236,7 @@ class MaskedRecords(MaskedArray):
         _data = ndarray.view(self, _localdict["_baseclass"])
         obj = _data.getfield(*res)
         if obj.dtype.names is not None:
-            raise NotImplementedError(
-                "MaskedRecords is currently limited to" "simple records."
-            )
+            raise NotImplementedError("MaskedRecords is currently limited to" "simple records.")
         # Get some special attributes
         # Reset the object's mask
         hasmasked = False

@@ -68,17 +68,13 @@ def validate_dir(install_dir: str) -> None:
             raise ValueError("Cannot create directory: {}".format(install_dir)) from e
     else:
         if not os.path.isdir(install_dir):
-            raise ValueError(
-                "File exists, should be a directory: {}".format(install_dir)
-            )
+            raise ValueError("File exists, should be a directory: {}".format(install_dir))
         try:
             with open("tmp_test_w", "w"):
                 pass
             os.remove("tmp_test_w")  # cleanup
         except OSError as e:
-            raise ValueError(
-                "Cannot write files to directory {}".format(install_dir)
-            ) from e
+            raise ValueError("Cannot write files to directory {}".format(install_dir)) from e
 
 
 def get_latest_cmdstan(cmdstan_dir: str) -> Optional[str]:
@@ -94,8 +90,7 @@ def get_latest_cmdstan(cmdstan_dir: str) -> Optional[str]:
     versions = [
         name[8:]
         for name in os.listdir(cmdstan_dir)
-        if os.path.isdir(os.path.join(cmdstan_dir, name))
-        and name.startswith("cmdstan-")
+        if os.path.isdir(os.path.join(cmdstan_dir, name)) and name.startswith("cmdstan-")
     ]
     if len(versions) == 0:
         return None
@@ -231,9 +226,7 @@ def cmdstan_version() -> Optional[Tuple[int, ...]]:
     return tuple(int(x) for x in splits[0:2])
 
 
-def cmdstan_version_before(
-    major: int, minor: int, info: Optional[Dict[str, str]] = None
-) -> bool:
+def cmdstan_version_before(major: int, minor: int, info: Optional[Dict[str, str]] = None) -> bool:
     """
     Check that CmdStan version is less than Major.minor version.
 
@@ -251,9 +244,7 @@ def cmdstan_version_before(
             int(info["stan_version_minor"]),
         )
     if cur_version is None:
-        get_logger().info(
-            "Cannot determine whether version is before %d.%d.", major, minor
-        )
+        get_logger().info("Cannot determine whether version is before %d.%d.", major, minor)
         return False
     if cur_version[0] < major or (cur_version[0] == major and cur_version[1] < minor):
         return True
@@ -410,11 +401,7 @@ def cxx_toolchain_path(
         )
     logger.info("Add C++ toolchain to $PATH: %s", toolchain_root)
     os.environ["PATH"] = ";".join(
-        list(
-            OrderedDict.fromkeys(
-                [compiler_path, tool_path] + os.getenv("PATH", "").split(";")
-            )
-        )
+        list(OrderedDict.fromkeys([compiler_path, tool_path] + os.getenv("PATH", "").split(";")))
     )
     return compiler_path, tool_path
 

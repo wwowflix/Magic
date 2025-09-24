@@ -439,9 +439,7 @@ def _extremum_fill_value(obj, extremum, extremum_name):
         try:
             return extremum[dtype]
         except KeyError:
-            raise TypeError(
-                f"Unsuitable type {dtype} for calculating {extremum_name}."
-            ) from None
+            raise TypeError(f"Unsuitable type {dtype} for calculating {extremum_name}.") from None
 
     dtype = _get_dtype_of(obj)
     return _recursive_fill_value(dtype, _scalar_fill_value)
@@ -604,9 +602,7 @@ def _check_fill_value(fill_value, ndtype):
                 raise ValueError(err_msg % (fill_value, ndtype)) from e
         else:
             fill_value = np.asarray(fill_value, dtype=object)
-            fill_value = np.array(
-                _recursive_set_fill_value(fill_value, ndtype), dtype=ndtype
-            )
+            fill_value = np.array(_recursive_set_fill_value(fill_value, ndtype), dtype=ndtype)
     else:
         if isinstance(fill_value, str) and (ndtype.char not in "OSVU"):
             # Note this check doesn't work if fill_value is not a scalar
@@ -1377,9 +1373,7 @@ tan = _MaskedUnaryOperation(umath.tan, 0.0, _DomainTan(1e-35))
 arcsin = _MaskedUnaryOperation(umath.arcsin, 0.0, _DomainCheckInterval(-1.0, 1.0))
 arccos = _MaskedUnaryOperation(umath.arccos, 0.0, _DomainCheckInterval(-1.0, 1.0))
 arccosh = _MaskedUnaryOperation(umath.arccosh, 1.0, _DomainGreaterEqual(1.0))
-arctanh = _MaskedUnaryOperation(
-    umath.arctanh, 0.0, _DomainCheckInterval(-1.0 + 1e-15, 1.0 - 1e-15)
-)
+arctanh = _MaskedUnaryOperation(umath.arctanh, 0.0, _DomainCheckInterval(-1.0 + 1e-15, 1.0 - 1e-15))
 
 # Binary ufuncs
 add = _MaskedBinaryOperation(umath.add)
@@ -2699,9 +2693,7 @@ def flatten_structured_array(a):
     if isinstance(a, MaskedArray):
         out = np.array([tuple(flatten_sequence(d.item())) for d in a._data])
         out = out.view(MaskedArray)
-        out._mask = np.array(
-            [tuple(flatten_sequence(d.item())) for d in getmaskarray(a)]
-        )
+        out._mask = np.array([tuple(flatten_sequence(d.item())) for d in getmaskarray(a)])
     else:
         out = np.array([tuple(flatten_sequence(d.item())) for d in a])
     if len(inishape) > 1:
@@ -3000,9 +2992,7 @@ class MaskedArray(ndarray):
 
         """
         # Process data.
-        _data = np.array(
-            data, dtype=dtype, copy=copy, order=order, subok=True, ndmin=ndmin
-        )
+        _data = np.array(data, dtype=dtype, copy=copy, order=order, subok=True, ndmin=ndmin)
         _baseclass = getattr(data, "_baseclass", type(_data))
         # Check that we're not erasing the mask.
         if isinstance(data, MaskedArray) and (data.shape != _data.shape):
@@ -3039,10 +3029,7 @@ class MaskedArray(ndarray):
                 try:
                     # If data is a sequence of masked array
                     mask = np.array(
-                        [
-                            getmaskarray(np.asanyarray(m, dtype=_data.dtype))
-                            for m in data
-                        ],
+                        [getmaskarray(np.asanyarray(m, dtype=_data.dtype)) for m in data],
                         dtype=mdtype,
                     )
                 except ValueError:
@@ -3072,9 +3059,7 @@ class MaskedArray(ndarray):
                     mask = np.array(mask, copy=copy, dtype=mdtype)
                 # Or assume it's a sequence of bool/int
                 except TypeError:
-                    mask = np.array(
-                        [tuple([m] * len(mdtype)) for m in mask], dtype=mdtype
-                    )
+                    mask = np.array([tuple([m] * len(mdtype)) for m in mask], dtype=mdtype)
             # Make sure the mask and the data have the same shape
             if mask.shape != _data.shape:
                 (nd, nm) = (_data.size, mask.size)
@@ -3083,10 +3068,7 @@ class MaskedArray(ndarray):
                 elif nm == nd:
                     mask = np.reshape(mask, _data.shape)
                 else:
-                    msg = (
-                        "Mask and data not compatible: data size is %i, "
-                        + "mask size is %i."
-                    )
+                    msg = "Mask and data not compatible: data size is %i, " + "mask size is %i."
                     raise MaskError(msg % (nd, nm))
                 copy = True
             # Set the mask to the new value
@@ -3206,8 +3188,7 @@ class MaskedArray(ndarray):
             # side-effecting 'obj' as well.
             if (
                 _mask is not nomask
-                and obj.__array_interface__["data"][0]
-                != self.__array_interface__["data"][0]
+                and obj.__array_interface__["data"][0] != self.__array_interface__["data"][0]
             ):
                 # We should make a copy. But we could get here via astype,
                 # in which case the mask might need a new dtype as well
@@ -3668,9 +3649,7 @@ class MaskedArray(ndarray):
                     mask = np.array(mask, copy=copy, dtype=mdtype)
                 # Or assume it's a sequence of bool/int
                 except TypeError:
-                    mask = np.array(
-                        [tuple([m] * len(mdtype)) for m in mask], dtype=mdtype
-                    )
+                    mask = np.array([tuple([m] * len(mdtype)) for m in mask], dtype=mdtype)
             # Hardmask: don't unmask the data
             if self._hardmask:
                 for n in idtype.names:
@@ -4112,9 +4091,7 @@ class MaskedArray(ndarray):
                 data = self._data
                 # For big arrays, to avoid a costly conversion to the
                 # object dtype, extract the corners before the conversion.
-                print_width = (
-                    self._print_width if self.ndim > 1 else self._print_width_1d
-                )
+                print_width = self._print_width if self.ndim > 1 else self._print_width_1d
                 for axis in range(self.ndim):
                     if data.shape[axis] > print_width:
                         ind = print_width // 2
@@ -4155,9 +4132,7 @@ class MaskedArray(ndarray):
                 dtype=str(self.dtype),
             )
             is_structured = bool(self.dtype.names)
-            key = "{}_{}".format(
-                "long" if is_long else "short", "flx" if is_structured else "std"
-            )
+            key = "{}_{}".format("long" if is_long else "short", "flx" if is_structured else "std")
             return _legacy_print_templates[key] % parameters
 
         prefix = f"masked_{name}("
@@ -4544,9 +4519,7 @@ class MaskedArray(ndarray):
 
         """
         if self.size > 1:
-            raise TypeError(
-                "Only length-1 arrays can be converted " "to Python scalars"
-            )
+            raise TypeError("Only length-1 arrays can be converted " "to Python scalars")
         elif self._mask:
             warnings.warn("Warning: converting a masked element to nan.", stacklevel=2)
             return np.nan
@@ -4558,9 +4531,7 @@ class MaskedArray(ndarray):
 
         """
         if self.size > 1:
-            raise TypeError(
-                "Only length-1 arrays can be converted " "to Python scalars"
-            )
+            raise TypeError("Only length-1 arrays can be converted " "to Python scalars")
         elif self._mask:
             raise MaskError("Cannot convert masked element to a Python int.")
         return int(self.item())
@@ -5526,10 +5497,7 @@ class MaskedArray(ndarray):
                     out.flat = 0
                     out.__setmask__(True)
                 elif out.dtype.kind in "biu":
-                    errmsg = (
-                        "Masked data information would be lost in one or "
-                        "more location."
-                    )
+                    errmsg = "Masked data information would be lost in one or " "more location."
                     raise MaskError(errmsg)
                 else:
                     out.flat = np.nan
@@ -5594,9 +5562,7 @@ class MaskedArray(ndarray):
             out.__setmask__(self._mask)
         return out
 
-    def argsort(
-        self, axis=np._NoValue, kind=None, order=None, endwith=True, fill_value=None
-    ):
+    def argsort(self, axis=np._NoValue, kind=None, order=None, endwith=True, fill_value=None):
         """
         Return an ndarray of indices that sort the array along the
         specified axis.  Masked values are filled beforehand to
@@ -5880,11 +5846,7 @@ class MaskedArray(ndarray):
             fill_value = minimum_fill_value(self)
         # No explicit output
         if out is None:
-            result = (
-                self.filled(fill_value)
-                .min(axis=axis, out=out, **kwargs)
-                .view(type(self))
-            )
+            result = self.filled(fill_value).min(axis=axis, out=out, **kwargs).view(type(self))
             if result.ndim:
                 # Set the mask
                 result.__setmask__(newmask)
@@ -5903,9 +5865,7 @@ class MaskedArray(ndarray):
             outmask.flat = newmask
         else:
             if out.dtype.kind in "biu":
-                errmsg = (
-                    "Masked data information would be lost in one or more" " location."
-                )
+                errmsg = "Masked data information would be lost in one or more" " location."
                 raise MaskError(errmsg)
             np.copyto(out, np.nan, where=newmask)
         return out
@@ -5973,8 +5933,7 @@ class MaskedArray(ndarray):
 
         # 2016-04-13, 1.13.0, gh-8764
         warnings.warn(
-            "`mini` is deprecated; use the `min` method or "
-            "`np.ma.minimum.reduce instead.",
+            "`mini` is deprecated; use the `min` method or " "`np.ma.minimum.reduce instead.",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -6020,11 +5979,7 @@ class MaskedArray(ndarray):
             fill_value = maximum_fill_value(self)
         # No explicit output
         if out is None:
-            result = (
-                self.filled(fill_value)
-                .max(axis=axis, out=out, **kwargs)
-                .view(type(self))
-            )
+            result = self.filled(fill_value).max(axis=axis, out=out, **kwargs).view(type(self))
             if result.ndim:
                 # Set the mask
                 result.__setmask__(newmask)
@@ -6044,9 +5999,7 @@ class MaskedArray(ndarray):
         else:
 
             if out.dtype.kind in "biu":
-                errmsg = (
-                    "Masked data information would be lost in one or more" " location."
-                )
+                errmsg = "Masked data information would be lost in one or more" " location."
                 raise MaskError(errmsg)
             np.copyto(out, np.nan, where=newmask)
         return out
@@ -6130,25 +6083,21 @@ class MaskedArray(ndarray):
             result = self.max(axis=axis, fill_value=fill_value, keepdims=keepdims)
             result -= self.min(axis=axis, fill_value=fill_value, keepdims=keepdims)
             return result
-        out.flat = self.max(
-            axis=axis, out=out, fill_value=fill_value, keepdims=keepdims
-        )
+        out.flat = self.max(axis=axis, out=out, fill_value=fill_value, keepdims=keepdims)
         min_value = self.min(axis=axis, fill_value=fill_value, keepdims=keepdims)
         np.subtract(out, min_value, out=out, casting="unsafe")
         return out
 
     def partition(self, *args, **kwargs):
         warnings.warn(
-            "Warning: 'partition' will ignore the 'mask' "
-            f"of the {self.__class__.__name__}.",
+            "Warning: 'partition' will ignore the 'mask' " f"of the {self.__class__.__name__}.",
             stacklevel=2,
         )
         return super().partition(*args, **kwargs)
 
     def argpartition(self, *args, **kwargs):
         warnings.warn(
-            "Warning: 'argpartition' will ignore the 'mask' "
-            f"of the {self.__class__.__name__}.",
+            "Warning: 'argpartition' will ignore the 'mask' " f"of the {self.__class__.__name__}.",
             stacklevel=2,
         )
         return super().argpartition(*args, **kwargs)
@@ -6364,9 +6313,7 @@ class MaskedArray(ndarray):
         # And get its dtype
         mdtype = self._mask.dtype
 
-        record = np.ndarray(
-            shape=self.shape, dtype=[("_data", ddtype), ("_mask", mdtype)]
-        )
+        record = np.ndarray(shape=self.shape, dtype=[("_data", ddtype), ("_mask", mdtype)])
         record["_data"] = self._data
         record["_mask"] = self._mask
         return record
@@ -7002,9 +6949,7 @@ class _frommethod:
 
     def getdoc(self):
         "Return the doc of the function (from the doc of the method)."
-        meth = getattr(MaskedArray, self.__name__, None) or getattr(
-            np, self.__name__, None
-        )
+        meth = getattr(MaskedArray, self.__name__, None) or getattr(np, self.__name__, None)
         signature = self.__name__ + get_object_signature(meth)
         if meth is not None:
             doc = """    %s\n%s""" % (signature, getattr(meth, "__doc__", None))
@@ -7126,9 +7071,7 @@ def argsort(a, axis=np._NoValue, kind=None, order=None, endwith=True, fill_value
         axis = _deprecate_argsort_axis(a)
 
     if isinstance(a, MaskedArray):
-        return a.argsort(
-            axis=axis, kind=kind, order=order, endwith=endwith, fill_value=fill_value
-        )
+        return a.argsort(axis=axis, kind=kind, order=order, endwith=endwith, fill_value=fill_value)
     else:
         return a.argsort(axis=axis, kind=kind, order=order)
 
@@ -7155,9 +7098,7 @@ def sort(a, axis=-1, kind=None, order=None, endwith=True, fill_value=None):
         axis = 0
 
     if isinstance(a, MaskedArray):
-        a.sort(
-            axis=axis, kind=kind, order=order, endwith=endwith, fill_value=fill_value
-        )
+        a.sort(axis=axis, kind=kind, order=order, endwith=endwith, fill_value=fill_value)
     else:
         a.sort(axis=axis, kind=kind, order=order)
     return a
@@ -7665,9 +7606,7 @@ def choose(indices, choices, out=None, mode="raise"):
     data = [fmask(x) for x in choices]
     # Construct the mask
     outputmask = np.choose(c, masks, mode=mode)
-    outputmask = make_mask(
-        mask_or(outputmask, getmask(indices)), copy=False, shrink=True
-    )
+    outputmask = make_mask(mask_or(outputmask, getmask(indices)), copy=False, shrink=True)
     # Get the choices.
     d = np.choose(c, data, mode=mode, out=out).view(MaskedArray)
     if out is not None:
@@ -8213,9 +8152,7 @@ def asarray(a, dtype=None, order=None):
 
     """
     order = order or "C"
-    return masked_array(
-        a, dtype=dtype, copy=False, keep_mask=True, subok=False, order=order
-    )
+    return masked_array(a, dtype=dtype, copy=False, keep_mask=True, subok=False, order=order)
 
 
 def asanyarray(a, dtype=None):

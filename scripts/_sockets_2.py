@@ -46,9 +46,7 @@ else:
 
 IPPROTO_IPV6 = getattr(socket, "IPPROTO_IPV6", 41)  # https://bugs.python.org/issue29515
 
-AnyIPAddressFamily = Literal[
-    AddressFamily.AF_UNSPEC, AddressFamily.AF_INET, AddressFamily.AF_INET6
-]
+AnyIPAddressFamily = Literal[AddressFamily.AF_UNSPEC, AddressFamily.AF_INET, AddressFamily.AF_INET6]
 IPAddressFamily = Literal[AddressFamily.AF_INET, AddressFamily.AF_INET6]
 
 
@@ -397,7 +395,7 @@ async def create_udp_socket(
     If ``port`` has been given, the socket will be bound to this port on the local
     machine, making this socket suitable for providing UDP based services.
 
-    :param family: address family (``AF_INET`` or ``AF_INET6``) – automatically
+    :param family: address family (``AF_INET`` or ``AF_INET6``) â€" automatically
         determined from ``local_host`` if omitted
     :param local_host: IP address or host name of the local interface to bind to
     :param local_port: local port to bind to
@@ -424,9 +422,7 @@ async def create_udp_socket(
     else:
         local_address = ("0.0.0.0", 0)
 
-    sock = await get_async_backend().create_udp_socket(
-        family, local_address, None, reuse_port
-    )
+    sock = await get_async_backend().create_udp_socket(family, local_address, None, reuse_port)
     return cast(UDPSocket, sock)
 
 
@@ -447,7 +443,7 @@ async def create_connected_udp_socket(
 
     :param remote_host: remote host to set as the default target
     :param remote_port: port on the remote host to set as the default target
-    :param family: address family (``AF_INET`` or ``AF_INET6``) – automatically
+    :param family: address family (``AF_INET`` or ``AF_INET6``) â€" automatically
         determined from ``local_host`` or ``remote_host`` if omitted
     :param local_host: IP address or host name of the local interface to bind to
     :param local_port: local port to bind to
@@ -502,9 +498,7 @@ async def create_unix_datagram_socket(
     :return: a UNIX datagram socket
 
     """
-    raw_socket = await setup_unix_local_socket(
-        local_path, local_mode, socket.SOCK_DGRAM
-    )
+    raw_socket = await setup_unix_local_socket(local_path, local_mode, socket.SOCK_DGRAM)
     return await get_async_backend().create_unix_datagram_socket(raw_socket, None)
 
 
@@ -533,12 +527,8 @@ async def create_connected_unix_datagram_socket(
 
     """
     remote_path = os.fspath(remote_path)
-    raw_socket = await setup_unix_local_socket(
-        local_path, local_mode, socket.SOCK_DGRAM
-    )
-    return await get_async_backend().create_unix_datagram_socket(
-        raw_socket, remote_path
-    )
+    raw_socket = await setup_unix_local_socket(local_path, local_mode, socket.SOCK_DGRAM)
+    return await get_async_backend().create_unix_datagram_socket(raw_socket, remote_path)
 
 
 async def getaddrinfo(

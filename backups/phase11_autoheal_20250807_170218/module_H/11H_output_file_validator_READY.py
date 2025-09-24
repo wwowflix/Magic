@@ -1,5 +1,5 @@
-﻿def main():
-    print("✅ [11H_output_file_validator_READY.py] executed successfully (stub mode).")
+def main():
+    print("âœ… [11H_output_file_validator_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

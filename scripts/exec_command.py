@@ -101,8 +101,7 @@ def forward_bytes_to_stdout(val):
 def temp_file_name():
     # 2019-01-30, 1.17
     warnings.warn(
-        "temp_file_name is deprecated since NumPy v1.17, use "
-        "tempfile.mkstemp instead",
+        "temp_file_name is deprecated since NumPy v1.17, use " "tempfile.mkstemp instead",
         DeprecationWarning,
         stacklevel=1,
     )
@@ -186,9 +185,7 @@ def _update_environment(**env):
         os.environ[name] = value or ""
 
 
-def exec_command(
-    command, execute_in="", use_shell=None, use_tee=None, _with_python=1, **env
-):
+def exec_command(command, execute_in="", use_shell=None, use_tee=None, _with_python=1, **env):
     """
     Return (status,output) of executed command.
 
@@ -224,10 +221,7 @@ def exec_command(
         DeprecationWarning,
         stacklevel=1,
     )
-    log.debug(
-        "exec_command(%r,%s)"
-        % (command, ",".join(["%s=%r" % kv for kv in env.items()]))
-    )
+    log.debug("exec_command(%r,%s)" % (command, ",".join(["%s=%r" % kv for kv in env.items()])))
 
     if use_tee is None:
         use_tee = os.name == "posix"

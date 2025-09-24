@@ -8,9 +8,7 @@ PACKAGE = "praw"
 
 
 def mock_response(response, latest_version="5.0.0"):
-    response.json = mock.Mock(
-        return_value={"releases": {"0.0.1": [], latest_version: []}}
-    )
+    response.json = mock.Mock(return_value={"releases": {"0.0.1": [], latest_version: []}})
     response.status_code = 200
 
 

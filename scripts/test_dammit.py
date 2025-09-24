@@ -58,19 +58,19 @@ class TestUnicodeDammit(object):
         assert dammit.unicode_markup.encode("utf-8") == utf_8
 
     def test_ignore_inappropriate_codecs(self):
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃ¤ksmÃ¶rgÃ¥s".encode("utf-8")
         dammit = UnicodeDammit(utf8_data, ["iso-8859-8"])
         assert dammit.original_encoding.lower() == "utf-8"
 
     def test_ignore_invalid_codecs(self):
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃ¤ksmÃ¶rgÃ¥s".encode("utf-8")
         for bad_encoding in [".utf8", "...", "utF---16.!"]:
             dammit = UnicodeDammit(utf8_data, [bad_encoding])
             assert dammit.original_encoding.lower() == "utf-8"
 
     def test_exclude_encodings(self):
         # This is UTF-8.
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃ¤ksmÃ¶rgÃ¥s".encode("utf-8")
 
         # But if we exclude UTF-8 from consideration, the guess is
         # Windows-1252.
@@ -141,7 +141,7 @@ class TestEncodingDetector(object):
         # A document written in UTF-16LE will have its byte order marker stripped.
         data = b"\xff\xfe<\x00a\x00>\x00\xe1\x00\xe9\x00<\x00/\x00a\x00>\x00"
         dammit = UnicodeDammit(data)
-        assert "<a>áé</a>" == dammit.unicode_markup
+        assert "<a>Ã¡Ã©</a>" == dammit.unicode_markup
         assert "utf-16le" == dammit.original_encoding
 
     def test_known_definite_versus_user_encodings(self):
@@ -195,9 +195,7 @@ class TestEncodingDetector(object):
 
         # known_definite_encodings and override_encodings were tried
         # before user_encodings.
-        assert ["shift-jis", "utf-8", "iso-8859-8"] == (
-            [x[0] for x in dammit.tried_encodings]
-        )
+        assert ["shift-jis", "utf-8", "iso-8859-8"] == ([x[0] for x in dammit.tried_encodings])
 
     def test_detwingle(self):
         # Here's a UTF8 document.
@@ -205,8 +203,7 @@ class TestEncodingDetector(object):
 
         # Here's a Windows-1252 document.
         windows_1252 = (
-            "\N{LEFT DOUBLE QUOTATION MARK}Hi, I like Windows!"
-            "\N{RIGHT DOUBLE QUOTATION MARK}"
+            "\N{LEFT DOUBLE QUOTATION MARK}Hi, I like Windows!" "\N{RIGHT DOUBLE QUOTATION MARK}"
         ).encode("windows_1252")
 
         # Through some unholy alchemy, they've been stuck together.
@@ -217,11 +214,11 @@ class TestEncodingDetector(object):
             doc.decode("utf8")
 
         # Unicode, Dammit thinks the whole document is Windows-1252,
-        # and decodes it into "â˜ƒâ˜ƒâ˜ƒ“Hi, I like Windows!”â˜ƒâ˜ƒâ˜ƒ"
+        # and decodes it into "Ã¢ËœÆ'Ã¢ËœÆ'Ã¢ËœÆ'â€œHi, I like Windows!â€Ã¢ËœÆ'Ã¢ËœÆ'Ã¢ËœÆ'"
 
         # But if we run it through fix_embedded_windows_1252, it's fixed:
         fixed = UnicodeDammit.detwingle(doc)
-        assert "☃☃☃“Hi, I like Windows!”☃☃☃" == fixed.decode("utf8")
+        assert "â˜ƒâ˜ƒâ˜ƒâ€œHi, I like Windows!â€â˜ƒâ˜ƒâ˜ƒ" == fixed.decode("utf8")
 
     def test_detwingle_ignores_multibyte_characters(self):
         # Each of these characters has a UTF-8 representation ending
@@ -268,9 +265,7 @@ class TestEncodingDetector(object):
 
         # But you can tell find_declared_encoding to search an entire
         # HTML document.
-        assert (
-            m(spacer + html_bytes, is_html=True, search_entire_document=True) == "utf-8"
-        )
+        assert m(spacer + html_bytes, is_html=True, search_entire_document=True) == "utf-8"
 
         # The XML encoding declaration has to be the very first thing
         # in the document. We'll allow whitespace before the document
@@ -294,7 +289,7 @@ class TestEntitySubstitution(object):
             ("foo\u2200\N{SNOWMAN}\u00f5bar", "foo&forall;\N{SNOWMAN}&otilde;bar"),
             # MS smart quotes are a common source of frustration, so we
             # give them a special test.
-            ("‘’foo“”", "&lsquo;&rsquo;foo&ldquo;&rdquo;"),
+            ("â€˜â€™fooâ€œâ€", "&lsquo;&rsquo;foo&ldquo;&rdquo;"),
         ],
     )
     def test_substitute_html(self, original, substituted):
@@ -372,10 +367,7 @@ class TestEntitySubstitution(object):
         assert self.sub.substitute_xml("&Aacute;T&T") == "&amp;Aacute;T&amp;T"
 
     def test_xml_quoting_ignoring_ampersands_when_they_are_part_of_an_entity(self):
-        assert (
-            self.sub.substitute_xml_containing_entities("&Aacute;T&T")
-            == "&Aacute;T&amp;T"
-        )
+        assert self.sub.substitute_xml_containing_entities("&Aacute;T&T") == "&Aacute;T&amp;T"
 
     def test_quotes_not_html_substituted(self):
         """There's no need to do this except inside attribute values."""
@@ -425,9 +417,7 @@ class TestEntitySubstitution(object):
         assert self.sub.substitute_html5(markup) == html5
         assert self.sub.substitute_html5_raw(markup) == html5raw
 
-    @pytest.mark.parametrize(
-        "markup,expect", [("&nosuchentity;", "&amp;nosuchentity;")]
-    )
+    @pytest.mark.parametrize("markup,expect", [("&nosuchentity;", "&amp;nosuchentity;")])
     def test_ambiguous_ampersands_escaped(self, markup, expect):
         assert self.sub.substitute_html(markup) == expect
         assert self.sub.substitute_html5_raw(markup) == expect

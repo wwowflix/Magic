@@ -8,8 +8,7 @@ description = """\
 """
 
 parser = optparse.OptionParser(
-    usage="%prog [OPTIONS] FILE1 FILE2\n"
-    "%prog --annotate [OPTIONS] INFO1 FILE1 INFO2 FILE2 ...",
+    usage="%prog [OPTIONS] FILE1 FILE2\n" "%prog --annotate [OPTIONS] INFO1 FILE1 INFO2 FILE2 ...",
     description=description,
 )
 

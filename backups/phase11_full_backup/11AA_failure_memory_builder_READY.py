@@ -1,8 +1,8 @@
-﻿"""Tracks previous failures to build institutional memory"""
+"""Tracks previous failures to build institutional memory"""
 
 
 def main():
-    print("✅ Failure Memory Builder running...")
+    print("âœ… Failure Memory Builder running...")
 
 
 if __name__ == "__main__":

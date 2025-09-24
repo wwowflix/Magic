@@ -95,24 +95,16 @@ class TestFormatters(SoupTest):
         )
 
     def test_formatter_html(self):
-        markup = (
-            "<br><b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
-        )
+        markup = "<br><b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
         soup = self.soup(markup)
         decoded = soup.decode(formatter="html")
-        assert decoded == self.document_for(
-            "<br/><b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>"
-        )
+        assert decoded == self.document_for("<br/><b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>")
 
     def test_formatter_html5(self):
-        markup = (
-            "<br><b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
-        )
+        markup = "<br><b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
         soup = self.soup(markup)
         decoded = soup.decode(formatter="html5")
-        assert decoded == self.document_for(
-            "<br><b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>"
-        )
+        assert decoded == self.document_for("<br><b>&lt;&lt;Sacr&eacute; bleu!&gt;&gt;</b>")
 
     def test_formatter_minimal(self):
         markup = "<b>&lt;&lt;Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</b>"
@@ -233,9 +225,7 @@ class TestFormatters(SoupTest):
     def test_encoding_substitution(self):
         # Here's the <meta> tag saying that a document is
         # encoded in Shift-JIS.
-        meta_tag = (
-            '<meta content="text/html; charset=x-sjis" ' 'http-equiv="Content-type"/>'
-        )
+        meta_tag = '<meta content="text/html; charset=x-sjis" ' 'http-equiv="Content-type"/>'
         soup = self.soup(meta_tag)
 
         # Parse the document, and the charset apprears unchanged.
@@ -320,7 +310,7 @@ class TestPersistence(SoupTest):
         soup = BeautifulSoup(b"<p>&nbsp;</p>", "html.parser")
         encoding = soup.original_encoding
         copy = soup.__copy__()
-        assert "<p> </p>" == str(copy)
+        assert "<p> </p>" == str(copy)
         assert encoding == copy.original_encoding
 
     def test_copy_preserves_builder_information(self):

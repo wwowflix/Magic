@@ -162,12 +162,8 @@ class NDArrayOperatorsMixin:
     __mul__, __rmul__, __imul__ = _numeric_methods(um.multiply, "mul")
     __matmul__, __rmatmul__, __imatmul__ = _numeric_methods(um.matmul, "matmul")
     # Python 3 does not use __div__, __rdiv__, or __idiv__
-    __truediv__, __rtruediv__, __itruediv__ = _numeric_methods(
-        um.true_divide, "truediv"
-    )
-    __floordiv__, __rfloordiv__, __ifloordiv__ = _numeric_methods(
-        um.floor_divide, "floordiv"
-    )
+    __truediv__, __rtruediv__, __itruediv__ = _numeric_methods(um.true_divide, "truediv")
+    __floordiv__, __rfloordiv__, __ifloordiv__ = _numeric_methods(um.floor_divide, "floordiv")
     __mod__, __rmod__, __imod__ = _numeric_methods(um.remainder, "mod")
     __divmod__ = _binary_method(um.divmod, "divmod")
     __rdivmod__ = _reflected_binary_method(um.divmod, "divmod")

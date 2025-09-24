@@ -22,9 +22,7 @@ class TestData(util.F2PyTest):
         )
         assert self.module.cmplxdat.medium_ref_index == np.array(1.0 + 0.0j)
         assert np.all(self.module.cmplxdat.z == np.array([3.5, 7.0]))
-        assert np.all(
-            self.module.cmplxdat.my_array == np.array([1.0 + 2.0j, -3.0 + 4.0j])
-        )
+        assert np.all(self.module.cmplxdat.my_array == np.array([1.0 + 2.0j, -3.0 + 4.0j]))
         assert np.all(self.module.cmplxdat.my_real_array == np.array([1.0, 2.0, 3.0]))
         assert np.all(self.module.cmplxdat.ref_index_one == np.array([13.0 + 21.0j]))
         assert np.all(self.module.cmplxdat.ref_index_two == np.array([-30.0 + 43.0j]))

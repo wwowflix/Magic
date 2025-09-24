@@ -207,17 +207,13 @@ class CmdStanGQ(Generic[Fit]):
         self._assemble_generated_quantities()
         inc_warmup |= inc_iterations
         if inc_warmup:
-            if (
-                isinstance(self.previous_fit, CmdStanMCMC)
-                and not self.previous_fit._save_warmup
-            ):
+            if isinstance(self.previous_fit, CmdStanMCMC) and not self.previous_fit._save_warmup:
                 get_logger().warning(
                     "Sample doesn't contain draws from warmup iterations,"
                     ' rerun sampler with "save_warmup=True".'
                 )
             elif (
-                isinstance(self.previous_fit, CmdStanMLE)
-                and not self.previous_fit._save_iterations
+                isinstance(self.previous_fit, CmdStanMLE) and not self.previous_fit._save_iterations
             ):
                 get_logger().warning(
                     "MLE doesn't contain draws from pre-convergence iterations,"
@@ -225,16 +221,13 @@ class CmdStanGQ(Generic[Fit]):
                 )
             elif isinstance(self.previous_fit, CmdStanVB):
                 get_logger().warning(
-                    "Variational fit doesn't make sense with argument "
-                    '"inc_warmup=True"'
+                    "Variational fit doesn't make sense with argument " '"inc_warmup=True"'
                 )
 
         if inc_sample:
             cols_1 = self.previous_fit.column_names
             cols_2 = self.column_names
-            dups = [
-                item for item, count in Counter(cols_1 + cols_2).items() if count > 1
-            ]
+            dups = [item for item, count in Counter(cols_1 + cols_2).items() if count > 1]
             drop_cols: List[int] = []
             for dup in dups:
                 drop_cols.extend(self.previous_fit._metadata.stan_vars[dup].columns())
@@ -295,17 +288,13 @@ class CmdStanGQ(Generic[Fit]):
             vars_list = list(dict.fromkeys(vars_list))
 
         if inc_warmup:
-            if (
-                isinstance(self.previous_fit, CmdStanMCMC)
-                and not self.previous_fit._save_warmup
-            ):
+            if isinstance(self.previous_fit, CmdStanMCMC) and not self.previous_fit._save_warmup:
                 get_logger().warning(
                     "Sample doesn't contain draws from warmup iterations,"
                     ' rerun sampler with "save_warmup=True".'
                 )
             elif (
-                isinstance(self.previous_fit, CmdStanMLE)
-                and not self.previous_fit._save_iterations
+                isinstance(self.previous_fit, CmdStanMLE) and not self.previous_fit._save_iterations
             ):
                 get_logger().warning(
                     "MLE doesn't contain draws from pre-convergence iterations,"
@@ -313,8 +302,7 @@ class CmdStanGQ(Generic[Fit]):
                 )
             elif isinstance(self.previous_fit, CmdStanVB):
                 get_logger().warning(
-                    "Variational fit doesn't make sense with argument "
-                    '"inc_warmup=True"'
+                    "Variational fit doesn't make sense with argument " '"inc_warmup=True"'
                 )
 
         self._assemble_generated_quantities()
@@ -330,9 +318,7 @@ class CmdStanGQ(Generic[Fit]):
                     gq_cols.extend(self.column_names[info.start_idx : info.end_idx])
                 elif inc_sample and var in self.previous_fit._metadata.stan_vars:
                     info = self.previous_fit._metadata.stan_vars[var]
-                    mcmc_vars.extend(
-                        self.previous_fit.column_names[info.start_idx : info.end_idx]
-                    )
+                    mcmc_vars.extend(self.previous_fit.column_names[info.start_idx : info.end_idx])
                 elif var in ["chain__", "iter__", "draw__"]:
                     gq_cols.append(var)
                 else:
@@ -346,17 +332,9 @@ class CmdStanGQ(Generic[Fit]):
         draws = self.draws(inc_warmup=inc_warmup)
         # add long-form columns for chain, iteration, draw
         n_draws, n_chains, _ = draws.shape
-        chains_col = (
-            np.repeat(np.arange(1, n_chains + 1), n_draws)
-            .reshape(1, n_chains, n_draws)
-            .T
-        )
-        iter_col = (
-            np.tile(np.arange(1, n_draws + 1), n_chains).reshape(1, n_chains, n_draws).T
-        )
-        draw_col = (
-            np.arange(1, (n_draws * n_chains) + 1).reshape(1, n_chains, n_draws).T
-        )
+        chains_col = np.repeat(np.arange(1, n_chains + 1), n_draws).reshape(1, n_chains, n_draws).T
+        iter_col = np.tile(np.arange(1, n_draws + 1), n_chains).reshape(1, n_chains, n_draws).T
+        draw_col = np.arange(1, (n_draws * n_chains) + 1).reshape(1, n_chains, n_draws).T
         draws = np.concatenate([chains_col, iter_col, draw_col, draws], axis=2)
 
         draws_pd = pd.DataFrame(
@@ -378,9 +356,7 @@ class CmdStanGQ(Generic[Fit]):
         elif inc_sample and vars is None:
             cols_1 = list(previous_draws_pd.columns)
             cols_2 = list(draws_pd.columns)
-            dups = [
-                item for item, count in Counter(cols_1 + cols_2).items() if count > 1
-            ]
+            dups = [item for item, count in Counter(cols_1 + cols_2).items() if count > 1]
             return pd.concat(
                 [
                     previous_draws_pd.drop(columns=dups).reset_index(drop=True),
@@ -434,13 +410,10 @@ class CmdStanGQ(Generic[Fit]):
         CmdStanMCMC.draws_xr
         """
         if not XARRAY_INSTALLED:
-            raise RuntimeError(
-                'Package "xarray" is not installed, cannot produce draws array.'
-            )
+            raise RuntimeError('Package "xarray" is not installed, cannot produce draws array.')
         if not isinstance(self.previous_fit, CmdStanMCMC):
             raise RuntimeError(
-                'Method "draws_xr" is only available when '
-                "original fit is done via Sampling."
+                'Method "draws_xr" is only available when ' "original fit is done via Sampling."
             )
         mcmc_vars_list = []
         dup_vars = []
@@ -500,9 +473,7 @@ class CmdStanGQ(Generic[Fit]):
                     self.previous_fit.draws(inc_warmup=inc_warmup),
                 )
 
-        return xr.Dataset(data, coords=coordinates, attrs=attrs).transpose(
-            "chain", "draw", ...
-        )
+        return xr.Dataset(data, coords=coordinates, attrs=attrs).transpose("chain", "draw", ...)
 
     def stan_variable(self, var: str, **kwargs: bool) -> np.ndarray:
         """
@@ -557,16 +528,13 @@ class CmdStanGQ(Generic[Fit]):
             )
         if var not in gq_var_names:
             # TODO(2.0) atleast1d may not be needed
-            return np.atleast_1d(  # type: ignore
-                self.previous_fit.stan_variable(var, **kwargs)
-            )
+            return np.atleast_1d(self.previous_fit.stan_variable(var, **kwargs))  # type: ignore
 
         # is gq variable
         self._assemble_generated_quantities()
 
         draw1, _ = self._draws_start(
-            inc_warmup=kwargs.get("inc_warmup", False)
-            or kwargs.get("inc_iterations", False)
+            inc_warmup=kwargs.get("inc_warmup", False) or kwargs.get("inc_iterations", False)
         )
         draws = flatten_chains(self._draws[draw1:])
         out: np.ndarray = self._metadata.stan_vars[var].extract_reshape(draws)
@@ -663,9 +631,7 @@ class CmdStanGQ(Generic[Fit]):
             )[:, None]
         else:  # CmdStanVB:
             if inc_warmup:
-                return np.vstack(
-                    [p_fit.variational_params_np, p_fit.variational_sample]
-                )[:, None]
+                return np.vstack([p_fit.variational_params_np, p_fit.variational_sample])[:, None]
             return p_fit.variational_sample[:, None]
 
     def _previous_draws_pd(self, vars: List[str], inc_warmup: bool) -> pd.DataFrame:
@@ -705,7 +671,5 @@ class CmdStanGQ(Generic[Fit]):
     # TODO(2.0): remove
     @property
     def mcmc_sample(self) -> Union[CmdStanMCMC, CmdStanMLE, CmdStanVB]:
-        get_logger().warning(
-            "Property `mcmc_sample` is deprecated, use `previous_fit` instead"
-        )
+        get_logger().warning("Property `mcmc_sample` is deprecated, use `previous_fit` instead")
         return self.previous_fit

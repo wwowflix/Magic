@@ -167,8 +167,7 @@ class CCompiler:
         for key in kwargs:
             if key not in self.executables:
                 raise ValueError(
-                    "unknown executable '%s' for class %s"
-                    % (key, self.__class__.__name__)
+                    "unknown executable '%s' for class %s" % (key, self.__class__.__name__)
                 )
             self.set_executable(key, kwargs[key])
 
@@ -194,10 +193,7 @@ class CCompiler:
         for defn in definitions:
             if not (
                 isinstance(defn, tuple)
-                and (
-                    len(defn) in (1, 2)
-                    and (isinstance(defn[1], str) or defn[1] is None)
-                )
+                and (len(defn) in (1, 2) and (isinstance(defn[1], str) or defn[1] is None))
                 and isinstance(defn[0], str)
             ):
                 raise TypeError(
@@ -459,13 +455,9 @@ class CCompiler:
         if runtime_library_dirs is None:
             runtime_library_dirs = self.runtime_library_dirs
         elif isinstance(runtime_library_dirs, (list, tuple)):
-            runtime_library_dirs = list(runtime_library_dirs) + (
-                self.runtime_library_dirs or []
-            )
+            runtime_library_dirs = list(runtime_library_dirs) + (self.runtime_library_dirs or [])
         else:
-            raise TypeError(
-                "'runtime_library_dirs' (if supplied) " "must be a list of strings"
-            )
+            raise TypeError("'runtime_library_dirs' (if supplied) " "must be a list of strings")
 
         return (libraries, library_dirs, runtime_library_dirs)
 
@@ -865,9 +857,7 @@ int main (int argc, char **argv) {
             os.remove(fname)
 
         try:
-            self.link_executable(
-                objects, "a.out", libraries=libraries, library_dirs=library_dirs
-            )
+            self.link_executable(objects, "a.out", libraries=libraries, library_dirs=library_dirs)
         except (LinkError, TypeError):
             return False
         else:
@@ -924,8 +914,7 @@ int main (int argc, char **argv) {
         if output_dir is None:
             output_dir = ""
         return list(
-            self._make_out_path(output_dir, strip_dir, src_name)
-            for src_name in source_filenames
+            self._make_out_path(output_dir, strip_dir, src_name) for src_name in source_filenames
         )
 
     @property
@@ -938,9 +927,7 @@ int main (int argc, char **argv) {
         try:
             new_ext = self.out_extensions[ext]
         except LookupError:
-            raise UnknownFileError(
-                "unknown file type '{}' (from '{}')".format(ext, src_name)
-            )
+            raise UnknownFileError("unknown file type '{}' (from '{}')".format(ext, src_name))
         if strip_dir:
             base = os.path.basename(base)
         return os.path.join(output_dir, base + new_ext)
@@ -1043,10 +1030,7 @@ def get_default_compiler(osname=None, platform=None):
     if platform is None:
         platform = sys.platform
     for pattern, compiler in _default_compilers:
-        if (
-            re.match(pattern, platform) is not None
-            or re.match(pattern, osname) is not None
-        ):
+        if re.match(pattern, platform) is not None or re.match(pattern, osname) is not None:
             return compiler
     # Default to Unix compiler
     return "unix"
@@ -1212,9 +1196,7 @@ def gen_lib_options(compiler, library_dirs, runtime_library_dirs, libraries):
             if lib_file:
                 lib_opts.append(lib_file)
             else:
-                compiler.warn(
-                    "no library file corresponding to " "'%s' found (skipping)" % lib
-                )
+                compiler.warn("no library file corresponding to " "'%s' found (skipping)" % lib)
         else:
             lib_opts.append(compiler.library_option(lib))
     return lib_opts

@@ -83,9 +83,7 @@ __all__ = [
 
 _globalvar = 0
 
-array_function_dispatch = functools.partial(
-    overrides.array_function_dispatch, module="numpy.char"
-)
+array_function_dispatch = functools.partial(overrides.array_function_dispatch, module="numpy.char")
 
 
 def _use_unicode(*args):
@@ -719,9 +717,7 @@ def expandtabs(a, tabsize=8):
     str.expandtabs
 
     """
-    return _to_string_or_unicode_array(
-        _vec_string(a, object_, "expandtabs", (tabsize,))
-    )
+    return _to_string_or_unicode_array(_vec_string(a, object_, "expandtabs", (tabsize,)))
 
 
 @array_function_dispatch(_count_dispatcher)
@@ -1692,9 +1688,7 @@ def translate(a, table, deletechars=None):
     if issubclass(a_arr.dtype.type, unicode_):
         return _vec_string(a_arr, a_arr.dtype, "translate", (table,))
     else:
-        return _vec_string(
-            a_arr, a_arr.dtype, "translate", [table] + _clean_args(deletechars)
-        )
+        return _vec_string(a_arr, a_arr.dtype, "translate", [table] + _clean_args(deletechars))
 
 
 @array_function_dispatch(_unary_op_dispatcher)
@@ -2725,9 +2719,7 @@ def array(obj, itemsize=None, copy=True, unicode=None, order=None):
             itemsize = len(obj)
         shape = len(obj) // itemsize
 
-        return chararray(
-            shape, itemsize=itemsize, unicode=unicode, buffer=obj, order=order
-        )
+        return chararray(shape, itemsize=itemsize, unicode=unicode, buffer=obj, order=order)
 
     if isinstance(obj, (list, tuple)):
         obj = numpy.asarray(obj)

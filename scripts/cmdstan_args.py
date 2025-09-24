@@ -65,9 +65,7 @@ class SamplerArgs:
         save_warmup: bool = False,
         thin: Optional[int] = None,
         max_treedepth: Optional[int] = None,
-        metric: Union[
-            str, Dict[str, Any], List[str], List[Dict[str, Any]], None
-        ] = None,
+        metric: Union[str, Dict[str, Any], List[str], List[Dict[str, Any]], None] = None,
         step_size: Union[float, List[float], None] = None,
         adapt_engaged: bool = True,
         adapt_delta: Optional[float] = None,
@@ -119,29 +117,21 @@ class SamplerArgs:
                 if self.adapt_init_phase is not None:
                     msg = "{}, adapt_init_phase: {}".format(msg, self.adapt_init_phase)
                 if self.adapt_metric_window is not None:
-                    msg = "{}, adapt_metric_window: {}".format(
-                        msg, self.adapt_metric_window
-                    )
+                    msg = "{}, adapt_metric_window: {}".format(msg, self.adapt_metric_window)
                 if self.adapt_step_size is not None:
                     msg = "{}, adapt_step_size: {}".format(msg, self.adapt_step_size)
                 raise ValueError(msg)
 
         if self.iter_warmup is not None:
-            if self.iter_warmup < 0 or not isinstance(
-                self.iter_warmup, (int, np.integer)
-            ):
+            if self.iter_warmup < 0 or not isinstance(self.iter_warmup, (int, np.integer)):
                 raise ValueError(
                     "Value for iter_warmup must be a non-negative integer,"
                     " found {}.".format(self.iter_warmup)
                 )
             if self.iter_warmup == 0 and self.adapt_engaged:
-                raise ValueError(
-                    "Must specify iter_warmup > 0 when adapt_engaged=True."
-                )
+                raise ValueError("Must specify iter_warmup > 0 when adapt_engaged=True.")
         if self.iter_sampling is not None:
-            if self.iter_sampling < 0 or not isinstance(
-                self.iter_sampling, (int, np.integer)
-            ):
+            if self.iter_sampling < 0 or not isinstance(self.iter_sampling, (int, np.integer)):
                 raise ValueError(
                     'Argument "iter_sampling" must be a non-negative integer,'
                     " found {}.".format(self.iter_sampling)
@@ -154,8 +144,7 @@ class SamplerArgs:
             if isinstance(self.step_size, (float, int, np.integer, np.floating)):
                 if self.step_size <= 0:
                     raise ValueError(
-                        'Argument "step_size" must be > 0, '
-                        "found {}.".format(self.step_size)
+                        'Argument "step_size" must be > 0, ' "found {}.".format(self.step_size)
                     )
             else:
                 if len(self.step_size) != chains:
@@ -194,18 +183,14 @@ class SamplerArgs:
                     self.metric_type = "diag_e"
                 else:
                     self.metric_type = "dense_e"
-                dict_file = create_named_text_file(
-                    dir=_TMPDIR, prefix="metric", suffix=".json"
-                )
+                dict_file = create_named_text_file(dir=_TMPDIR, prefix="metric", suffix=".json")
                 write_stan_json(dict_file, self.metric)
                 self.metric_file = dict_file
             elif isinstance(self.metric, (list, tuple)):
                 if len(self.metric) != chains:
                     raise ValueError(
                         "Number of metric files must match number of chains,"
-                        " found {} metric files for {} chains.".format(
-                            len(self.metric), chains
-                        )
+                        " found {} metric files for {} chains.".format(len(self.metric), chains)
                     )
                 if all(isinstance(elem, dict) for elem in self.metric):
                     metric_files: List[str] = []
@@ -249,16 +234,12 @@ class SamplerArgs:
                             if len(dims) != len(dims2):
                                 raise ValueError(
                                     "Metrics files {}, {},"
-                                    " inconsistent metrics".format(
-                                        self.metric[0], metric
-                                    )
+                                    " inconsistent metrics".format(self.metric[0], metric)
                                 )
                             if dims != dims2:
                                 raise ValueError(
                                     "Metrics files {}, {},"
-                                    " inconsistent metrics".format(
-                                        self.metric[0], metric
-                                    )
+                                    " inconsistent metrics".format(self.metric[0], metric)
                                 )
                         metric_files.append(metric)
                     if len(dims) == 1:
@@ -302,9 +283,7 @@ class SamplerArgs:
                     " integer, found {}".format(self.adapt_metric_window)
                 )
         if self.adapt_step_size is not None:
-            if self.adapt_step_size < 0 or not isinstance(
-                self.adapt_step_size, (int, np.integer)
-            ):
+            if self.adapt_step_size < 0 or not isinstance(self.adapt_step_size, (int, np.integer)):
                 raise ValueError(
                     'Argument "adapt_step_size" must be a non-negative integer,'
                     "found {}".format(self.adapt_step_size)
@@ -322,9 +301,7 @@ class SamplerArgs:
                 and self.adapt_step_size is None
             )
         ):
-            raise ValueError(
-                "When fixed_param=True, cannot specify adaptation parameters."
-            )
+            raise ValueError("When fixed_param=True, cannot specify adaptation parameters.")
 
     def compose(self, idx: int, cmd: List[str]) -> List[str]:
         """
@@ -432,9 +409,7 @@ class OptimizeArgs:
         if self.algorithm.lower() not in {"bfgs", "lbfgs"}:
             for arg in self.bfgs_only:
                 if getattr(self, arg) is not None:
-                    raise ValueError(
-                        f"{arg} requires that algorithm be set to bfgs or lbfgs"
-                    )
+                    raise ValueError(f"{arg} requires that algorithm be set to bfgs or lbfgs")
         if self.algorithm.lower() != "lbfgs":
             if self.history_size is not None:
                 raise ValueError("history_size requires that algorithm be set to lbfgs")
@@ -479,9 +454,7 @@ class OptimizeArgs:
 class LaplaceArgs:
     """Arguments needed for laplace method."""
 
-    def __init__(
-        self, mode: str, draws: Optional[int] = None, jacobian: bool = True
-    ) -> None:
+    def __init__(self, mode: str, draws: Optional[int] = None, jacobian: bool = True) -> None:
         self.mode = mode
         self.jacobian = jacobian
         self.draws = draws
@@ -609,9 +582,7 @@ class GenerateQuantitiesArgs:
         """Initialize object."""
         self.sample_csv_files = csv_files
 
-    def validate(
-        self, chains: Optional[int] = None  # pylint: disable=unused-argument
-    ) -> None:
+    def validate(self, chains: Optional[int] = None) -> None:  # pylint: disable=unused-argument
         """
         Check arguments correctness and consistency.
 
@@ -659,9 +630,7 @@ class VariationalArgs:
         self.eval_elbo = eval_elbo
         self.output_samples = output_samples
 
-    def validate(
-        self, chains: Optional[int] = None  # pylint: disable=unused-argument
-    ) -> None:
+    def validate(self, chains: Optional[int] = None) -> None:  # pylint: disable=unused-argument
         """
         Check arguments correctness and consistency.
         """
@@ -767,9 +736,7 @@ class CmdStanArgs:
         elif isinstance(method_args, PathfinderArgs):
             self.method = Method.PATHFINDER
         else:
-            raise ValueError(
-                "Unsupported method args type: {}".format(type(method_args))
-            )
+            raise ValueError("Unsupported method args type: {}".format(type(method_args)))
         self.method_args.validate(len(chain_ids) if chain_ids else None)
         self.validate()
 
@@ -799,14 +766,11 @@ class CmdStanArgs:
                     get_logger().info("created output directory: %s", self.output_dir)
                 except (RuntimeError, PermissionError) as exc:
                     raise ValueError(
-                        "Invalid path for output files, "
-                        "no such dir: {}.".format(self.output_dir)
+                        "Invalid path for output files, " "no such dir: {}.".format(self.output_dir)
                     ) from exc
             if not os.path.isdir(self.output_dir):
                 raise ValueError(
-                    "Specified output_dir is not a directory: {}.".format(
-                        self.output_dir
-                    )
+                    "Specified output_dir is not a directory: {}.".format(self.output_dir)
                 )
             try:
                 testpath = os.path.join(self.output_dir, str(time()))
@@ -869,9 +833,7 @@ class CmdStanArgs:
                 if len(self.seed) != len(self.chain_ids):
                     raise ValueError(
                         "Number of seeds must match number of chains,"
-                        " found {} seed for {} chains.".format(
-                            len(self.seed), len(self.chain_ids)
-                        )
+                        " found {} seed for {} chains.".format(len(self.seed), len(self.chain_ids))
                     )
                 for seed in self.seed:
                     if seed < 0 or seed > 2**32 - 1:
@@ -890,9 +852,7 @@ class CmdStanArgs:
         if self.inits is not None:
             if isinstance(self.inits, (float, int, np.floating, np.integer)):
                 if self.inits < 0:
-                    raise ValueError(
-                        'Argument "inits" must be > 0, found {}'.format(self.inits)
-                    )
+                    raise ValueError('Argument "inits" must be > 0, found {}'.format(self.inits))
             elif isinstance(self.inits, str):
                 if not (
                     isinstance(self.method_args, SamplerArgs)
@@ -934,9 +894,7 @@ class CmdStanArgs:
         if idx is not None and self.chain_ids is not None:
             if idx < 0 or idx > len(self.chain_ids) - 1:
                 raise ValueError(
-                    "index ({}) exceeds number of chains ({})".format(
-                        idx, len(self.chain_ids)
-                    )
+                    "index ({}) exceeds number of chains ({})".format(idx, len(self.chain_ids))
                 )
             cmd.append(self.model_exe)  # type: ignore # guaranteed by validate
             cmd.append(f"id={self.chain_ids[idx]}")

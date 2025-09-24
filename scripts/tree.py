@@ -69,9 +69,7 @@ class Tree(JupyterMixin):
         self.children.append(node)
         return node
 
-    def __rich_console__(
-        self, console: "Console", options: "ConsoleOptions"
-    ) -> "RenderResult":
+    def __rich_console__(self, console: "Console", options: "ConsoleOptions") -> "RenderResult":
 
         stack: List[Iterator[Tuple[bool, Tree]]] = []
         pop = stack.pop
@@ -85,9 +83,9 @@ class Tree(JupyterMixin):
 
         ASCII_GUIDES = ("    ", "|   ", "+-- ", "`-- ")
         TREE_GUIDES = [
-            ("    ", "│   ", "├── ", "└── "),
-            ("    ", "┃   ", "┣━━ ", "┗━━ "),
-            ("    ", "║   ", "╠══ ", "╚══ "),
+            ("    ", "�"�   ", "�"��"��"� ", "�""�"��"� "),
+            ("    ", "�"�   ", "�"��"�" ", "�"-�"�" "),
+            ("    ", "�'   ", "� �� ", "╚�� "),
         ]
         _Segment = Segment
 
@@ -131,8 +129,7 @@ class Tree(JupyterMixin):
             renderable_lines = console.render_lines(
                 Styled(node.label, style),
                 options.update(
-                    width=options.max_width
-                    - sum(level.cell_length for level in prefix),
+                    width=options.max_width - sum(level.cell_length for level in prefix),
                     highlight=self.highlight,
                     height=None,
                 ),
@@ -155,20 +152,14 @@ class Tree(JupyterMixin):
                         )
 
             if node.expanded and node.children:
-                levels[-1] = make_guide(
-                    SPACE if last else CONTINUE, levels[-1].style or null_style
-                )
-                levels.append(
-                    make_guide(END if len(node.children) == 1 else FORK, guide_style)
-                )
+                levels[-1] = make_guide(SPACE if last else CONTINUE, levels[-1].style or null_style)
+                levels.append(make_guide(END if len(node.children) == 1 else FORK, guide_style))
                 style_stack.push(get_style(node.style))
                 guide_style_stack.push(get_style(node.guide_style))
                 push(iter(loop_last(node.children)))
                 depth += 1
 
-    def __rich_measure__(
-        self, console: "Console", options: "ConsoleOptions"
-    ) -> "Measurement":
+    def __rich_measure__(self, console: "Console", options: "ConsoleOptions") -> "Measurement":
         stack: List[Iterator[Tree]] = [iter([self])]
         pop = stack.pop
         push = stack.append
@@ -234,17 +225,15 @@ class Segment(NamedTuple):
 
     node = root.add(":file_folder: Renderables", guide_style="red")
     simple_node = node.add(":file_folder: [bold yellow]Atomic", guide_style="uu green")
-    simple_node.add(Group("📄 Syntax", syntax))
-    simple_node.add(Group("📄 Markdown", Panel(markdown, border_style="green")))
+    simple_node.add(Group("�"� Syntax", syntax))
+    simple_node.add(Group("�"� Markdown", Panel(markdown, border_style="green")))
 
-    containers_node = node.add(
-        ":file_folder: [bold magenta]Containers", guide_style="bold magenta"
-    )
+    containers_node = node.add(":file_folder: [bold magenta]Containers", guide_style="bold magenta")
     containers_node.expanded = True
     panel = Panel.fit("Just a panel", border_style="red")
-    containers_node.add(Group("📄 Panels", panel))
+    containers_node.add(Group("�"� Panels", panel))
 
-    containers_node.add(Group("📄 [b magenta]Table", table))
+    containers_node.add(Group("�"� [b magenta]Table", table))
 
     console = Console()
 

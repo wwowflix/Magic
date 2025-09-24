@@ -1,8 +1,8 @@
-﻿"""Identifies and suggests removal of duplicate agent functions"""
+"""Identifies and suggests removal of duplicate agent functions"""
 
 
 def main():
-    print("✅ Redundancy Reducer running...")
+    print("âœ… Redundancy Reducer running...")
 
 
 if __name__ == "__main__":

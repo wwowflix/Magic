@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Phase 11 - Module A
 Script: Missing Module Detector
@@ -45,12 +45,12 @@ def main():
                 for mf in missing_files:
                     log.write(f"- {mf}\n")
             else:
-                log.write("✅ No missing files. All expected scripts are present.\n")
+                log.write("âœ… No missing files. All expected scripts are present.\n")
 
         print("PASS")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"❌ Error occurred: {str(e)}\n")
+            log.write(f"âŒ Error occurred: {str(e)}\n")
         print("FAIL")
 
 

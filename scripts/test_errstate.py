@@ -15,9 +15,7 @@ arm_softfloat = False if hosttype is None else hosttype.endswith("gnueabi")
 
 class TestErrstate:
     @pytest.mark.skipif(IS_WASM, reason="fp errors don't work in wasm")
-    @pytest.mark.skipif(
-        arm_softfloat, reason="platform/cpu issue with FPU (gh-413,-15562)"
-    )
+    @pytest.mark.skipif(arm_softfloat, reason="platform/cpu issue with FPU (gh-413,-15562)")
     def test_invalid(self):
         with np.errstate(all="raise", under="ignore"):
             a = -np.arange(3)

@@ -49,9 +49,7 @@ class isoparser(object):
         """
         if sep is not None:
             if len(sep) != 1 or ord(sep) >= 128 or sep in "0123456789":
-                raise ValueError(
-                    "Separator must be a single, non-numeric " + "ASCII character"
-                )
+                raise ValueError("Separator must be a single, non-numeric " + "ASCII character")
 
             sep = sep.encode("ascii")
 
@@ -160,8 +158,7 @@ class isoparser(object):
         components, pos = self._parse_isodate(datestr)
         if pos < len(datestr):
             raise ValueError(
-                "String contains unknown ISO "
-                + "components: {!r}".format(datestr.decode("ascii"))
+                "String contains unknown ISO " + "components: {!r}".format(datestr.decode("ascii"))
             )
         return date(*components)
 

@@ -94,20 +94,14 @@ def _json_dataclass_to_dict(obj, forBuggyIntParser=False):
             for k, v in obj.items()
         }
     elif isinstance(obj, set):
-        return {
-            _json_dataclass_to_dict(v, forBuggyIntParser=forBuggyIntParser) for v in obj
-        }
+        return {_json_dataclass_to_dict(v, forBuggyIntParser=forBuggyIntParser) for v in obj}
     else:
         return copy.deepcopy(obj)
     # Transform IntWithGranularity and handle buggy int parser output
-    for key, value in list(
-        out.items()
-    ):  # Modifying the dict below, so make a copy first
+    for key, value in list(out.items()):  # Modifying the dict below, so make a copy first
         if isinstance(value, IntWithGranularity):
             out[key] = int(value)
-            assert (
-                f"{key}.granularity" not in out
-            ), f"Granularity collision on {key}.granularity"
+            assert f"{key}.granularity" not in out, f"Granularity collision on {key}.granularity"
             out[f"{key}.granularity"] = value.granularity
         elif forBuggyIntParser and isinstance(value, int) and abs(value) > 2**53:
             assert f"{key}.str" not in out, f"Buggy int collision on {key}.str"
@@ -188,9 +182,7 @@ class _HTTPSAdapter(requests.adapters.HTTPAdapter):
         super().init_poolmanager(*args, **kwargs)
         # FIXME: Uses private urllib3.PoolManager attribute pool_classes_by_scheme.
         try:
-            self.poolmanager.pool_classes_by_scheme["https"].ConnectionCls = (
-                _HTTPSConnection
-            )
+            self.poolmanager.pool_classes_by_scheme["https"].ConnectionCls = _HTTPSConnection
         except (AttributeError, KeyError) as e:
             _logger.debug(
                 f"Could not install TLS cipher logger: {type(e).__module__}.{type(e).__name__} {e!s}"
@@ -308,9 +300,7 @@ class Scraper:
                         _logger.debug(
                             f'... request {i}: {redirect.request.url}: {redirect.status_code} (Location: {redirect.headers.get("Location")})'
                         )
-                        _logger.debug(
-                            f"... ... with response headers: {redirect.headers!r}"
-                        )
+                        _logger.debug(f"... ... with response headers: {redirect.headers!r}")
                 if responseOkCallback is not None:
                     success, msg = responseOkCallback(r)
                     errors.append(msg)

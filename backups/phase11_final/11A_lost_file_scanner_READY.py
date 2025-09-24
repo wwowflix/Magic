@@ -1,17 +1,17 @@
-﻿import os
+import os
 import pandas as pd
 
 csv_path = "outputs/notion_export/magic_patch.csv"
 df = pd.read_csv(csv_path)
 
-print("📋 Columns found in CSV:", list(df.columns))
+print("ðŸ“‹ Columns found in CSV:", list(df.columns))
 
 # Try fallback if FullPath is not present
 if "FullPath" in df.columns:
     paths_to_check = df["FullPath"].dropna().tolist()
 else:
     # Build full path manually from parts
-    print("🔧 Rebuilding paths from Phase, Module, and Filename...")
+    print("ðŸ”§ Rebuilding paths from Phase, Module, and Filename...")
     base_dir = "D:/MAGIC/scripts"
     paths_to_check = []
 
@@ -25,8 +25,8 @@ else:
 missing_files = [p for p in paths_to_check if not os.path.exists(p)]
 
 if not missing_files:
-    print("✅ All expected scripts are present.")
+    print("âœ… All expected scripts are present.")
 else:
-    print(f"❌ Missing {len(missing_files)} files:")
+    print(f"âŒ Missing {len(missing_files)} files:")
     for p in missing_files:
         print(f" - {p}")

@@ -1,13 +1,13 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 One-Time Organizer: Bulk-moves project files into canonical folders
 
 Rules:
-  - *.py         → scripts/
-  - *.md         → docs/
-  - *reddit*.csv → outputs/trends/
-  - *.csv        → outputs/data/
-  - *.log        → logs/archive/
+  - *.py         â†' scripts/
+  - *.md         â†' docs/
+  - *reddit*.csv â†' outputs/trends/
+  - *.csv        â†' outputs/data/
+  - *.log        â†' logs/archive/
 
 Skips:
   - venv/
@@ -75,7 +75,7 @@ def organize():
                         break
                     os.makedirs(dest_dir, exist_ok=True)
                     shutil.move(src, dst)
-                    logging.info(f"Moved {src} → {dst}")
+                    logging.info(f"Moved {src} â†' {dst}")
                     break
     logging.info("Done.")
 

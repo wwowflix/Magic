@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)] [string]$Tag,
   [string]$Title = "$Tag – Phase 11 wrap-up",

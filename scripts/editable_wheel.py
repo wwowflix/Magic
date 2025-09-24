@@ -179,9 +179,7 @@ class editable_wheel(Command):
         candidates = map(str, parent_dir.glob("*.egg-info"))
         return next(candidates, None)
 
-    def _configure_build(
-        self, name: str, unpacked_wheel: _Path, build_lib: _Path, tmp_dir: _Path
-    ):
+    def _configure_build(self, name: str, unpacked_wheel: _Path, build_lib: _Path, tmp_dir: _Path):
         """Configure commands to behave in the following ways:
 
         - Build commands can write to ``build_lib`` if they really want to...
@@ -369,9 +367,7 @@ class editable_wheel(Command):
 
 
 class EditableStrategy(Protocol):
-    def __call__(
-        self, wheel: "WheelFile", files: List[str], mapping: Dict[str, str]
-    ): ...
+    def __call__(self, wheel: "WheelFile", files: List[str], mapping: Dict[str, str]): ...
 
     def __enter__(self): ...
 
@@ -529,9 +525,7 @@ def _can_symlink_files(base_dir: Path) -> bool:
         return False
 
 
-def _simple_layout(
-    packages: Iterable[str], package_dir: Dict[str, str], project_dir: Path
-) -> bool:
+def _simple_layout(packages: Iterable[str], package_dir: Dict[str, str], project_dir: Path) -> bool:
     """Return ``True`` if:
     - all packages are contained by the same parent directory, **and**
     - all packages become importable if the parent directory is added to ``sys.path``.
@@ -696,9 +690,7 @@ def _is_nested(pkg: str, pkg_path: str, parent: str, parent_path: str) -> bool:
     """
     norm_pkg_path = _normalize_path(pkg_path)
     rest = pkg.replace(parent, "", 1).strip(".").split(".")
-    return pkg.startswith(parent) and norm_pkg_path == _normalize_path(
-        Path(parent_path, *rest)
-    )
+    return pkg.startswith(parent) and norm_pkg_path == _normalize_path(Path(parent_path, *rest))
 
 
 def _normalize_path(filename: _Path) -> str:

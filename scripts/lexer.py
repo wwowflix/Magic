@@ -190,11 +190,11 @@ class Lexer(metaclass=LexerMeta):
                 text = decoded
             else:
                 text = text.decode(self.encoding)
-                if text.startswith("\ufeff"):
-                    text = text[len("\ufeff") :]
+                if text.startswith("\"):
+                    text = text[len("\") :]
         else:
-            if text.startswith("\ufeff"):
-                text = text[len("\ufeff") :]
+            if text.startswith("\"):
+                text = text[len("\") :]
 
         # text now *is* a unicode string
         text = text.replace("\r\n", "\n")
@@ -258,9 +258,7 @@ class DelegatingLexer(Lexer):
                 lng_buffer.append((i, t, v))
         if lng_buffer:
             insertions.append((len(buffered), lng_buffer))
-        return do_insertions(
-            insertions, self.root_lexer.get_tokens_unprocessed(buffered)
-        )
+        return do_insertions(insertions, self.root_lexer.get_tokens_unprocessed(buffered))
 
 
 # ------------------------------------------------------------------------------
@@ -346,9 +344,7 @@ def bygroups(*args):
                 if data is not None:
                     if ctx:
                         ctx.pos = match.start(i + 1)
-                    for item in action(
-                        lexer, _PseudoMatch(match.start(i + 1), data), ctx
-                    ):
+                    for item in action(lexer, _PseudoMatch(match.start(i + 1), data), ctx):
                         if item:
                             yield item
         if ctx:
@@ -534,8 +530,7 @@ class RegexLexerMeta(LexerMeta):
                 rex = cls._process_regex(tdef[0], rflags, state)
             except Exception as err:
                 raise ValueError(
-                    "uncompilable regex %r in state %r of %r: %s"
-                    % (tdef[0], state, cls, err)
+                    "uncompilable regex %r in state %r of %r: %s" % (tdef[0], state, cls, err)
                 ) from err
 
             token = cls._process_token(tdef[1])
@@ -927,3 +922,4 @@ class ProfilingRegexLexer(RegexLexer, metaclass=ProfilingRegexLexerMeta):
         for d in data:
             print("%-20s %-65s %5d %8.4f %8.4f" % d)
         print("=" * 110)
+

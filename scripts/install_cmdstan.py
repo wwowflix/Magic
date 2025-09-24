@@ -224,10 +224,7 @@ class InteractiveSettings:
     @cached_property
     def cores(self) -> int:
         max_cpus = os.cpu_count() or 1
-        print(
-            "How many CPU cores would you like to use for installing "
-            "and compiling CmdStan?"
-        )
+        print("How many CPU cores would you like to use for installing " "and compiling CmdStan?")
         print(f"Default: 1, Max: {max_cpus}")
         answer = input("Enter a number or hit enter to continue: ")
         try:
@@ -357,9 +354,7 @@ def compile_example(verbose: bool = False) -> None:
         raise CmdStanInstallError("Failed to generate example binary")
 
 
-def rebuild_cmdstan(
-    verbose: bool = False, progress: bool = True, cores: int = 1
-) -> None:
+def rebuild_cmdstan(verbose: bool = False, progress: bool = True, cores: int = 1) -> None:
     """
     Rebuilds the existing CmdStan installation.
     This assumes CmdStan has already been installed,
@@ -379,9 +374,7 @@ def rebuild_cmdstan(
             build(verbose, progress, cores)
             compile_example(verbose)
     except ValueError as e:
-        raise CmdStanInstallError(
-            "Failed to rebuild CmdStan. Are you sure it is installed?"
-        ) from e
+        raise CmdStanInstallError("Failed to rebuild CmdStan. Are you sure it is installed?") from e
 
 
 def install_version(
@@ -432,11 +425,7 @@ def is_version_available(version: str) -> bool:
             break
         except urllib.error.URLError as e:
             if i < 5:
-                print(
-                    "checking version {} availability, retry ({}/5)".format(
-                        version, i + 1
-                    )
-                )
+                print("checking version {} availability, retry ({}/5)".format(version, i + 1))
                 sleep(1)
                 continue
             print("Release {} is unavailable from URL {}".format(version, url))
@@ -475,14 +464,10 @@ def retrieve_version(version: str, progress: bool = True) -> None:
     for i in range(6):  # always retry to allow for transient URLErrors
         try:
             if progress and progbar.allow_show_progress():
-                progress_hook: Optional[Callable[[int, int, int], None]] = (
-                    wrap_url_progress_hook()
-                )
+                progress_hook: Optional[Callable[[int, int, int], None]] = wrap_url_progress_hook()
             else:
                 progress_hook = None
-            file_tmp, _ = urllib.request.urlretrieve(
-                url, filename=None, reporthook=progress_hook
-            )
+            file_tmp, _ = urllib.request.urlretrieve(url, filename=None, reporthook=progress_hook)
             break
         except urllib.error.HTTPError as e:
             raise CmdStanRetrieveError(
@@ -490,9 +475,7 @@ def retrieve_version(version: str, progress: bool = True) -> None:
                 "Version {} not available from github.com.".format(e.code, version)
             ) from e
         except urllib.error.URLError as e:
-            print(
-                "Failed to download CmdStan version {} from github.com".format(version)
-            )
+            print("Failed to download CmdStan version {} from github.com".format(version))
             print(e)
             if i < 5:
                 print("retry ({}/5)".format(i + 1))
@@ -533,9 +516,7 @@ def retrieve_version(version: str, progress: bool = True) -> None:
         else:
             tar.extractall()
     except Exception as e:  # pylint: disable=broad-except
-        raise CmdStanInstallError(
-            f"Failed to unpack file {file_tmp}, error:\n\t{str(e)}"
-        ) from e
+        raise CmdStanInstallError(f"Failed to unpack file {file_tmp}, error:\n\t{str(e)}") from e
     finally:
         tar.close()
     print(f"Unpacked download as {cmdstan_dir}")
@@ -646,9 +627,7 @@ def parse_cmdline_args() -> Dict[str, Any]:
         "If git is installed, you can also specify a git tag or branch, "
         "e.g. git:develop",
     )
-    parser.add_argument(
-        "--dir", "-d", help="install directory, defaults to '$HOME/.cmdstan"
-    )
+    parser.add_argument("--dir", "-d", help="install directory, defaults to '$HOME/.cmdstan")
     parser.add_argument(
         "--overwrite",
         action="store_true",

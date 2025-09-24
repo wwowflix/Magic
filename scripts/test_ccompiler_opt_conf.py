@@ -44,21 +44,16 @@ class _TestConfFeatures(FakeCCompilerOpt):
     def conf_features_partial(self):
         conf_all = self.conf_features
         for feature_name, feature in conf_all.items():
-            self.test_feature(
-                "attribute conf_features", conf_all, feature_name, feature
-            )
+            self.test_feature("attribute conf_features", conf_all, feature_name, feature)
 
         conf_partial = FakeCCompilerOpt.conf_features_partial(self)
         for feature_name, feature in conf_partial.items():
-            self.test_feature(
-                "conf_features_partial()", conf_partial, feature_name, feature
-            )
+            self.test_feature("conf_features_partial()", conf_partial, feature_name, feature)
         return conf_partial
 
     def test_feature(self, log, search_in, feature_name, feature_dict):
         error_msg = (
-            "during validate '{}' within feature '{}', "
-            "march '{}' and compiler '{}'\n>> "
+            "during validate '{}' within feature '{}', " "march '{}' and compiler '{}'\n>> "
         ).format(log, feature_name, self.cc_march, self.cc_name)
 
         if not feature_name.isupper():
@@ -114,9 +109,7 @@ class _TestConfFeatures(FakeCCompilerOpt):
             val = val.split()
 
         if len(val) != len(set(val)):
-            raise AssertionError(
-                error_msg + "duplicated values in option '%s'" % option
-            )
+            raise AssertionError(error_msg + "duplicated values in option '%s'" % option)
 
     def test_implies(self, error_msg, search_in, feature_name, feature_dict):
         if feature_dict.get("disabled") is not None:
@@ -134,9 +127,7 @@ class _TestConfFeatures(FakeCCompilerOpt):
             impl_dict = search_in.get(impl)
             if impl_dict is not None:
                 if "disable" in impl_dict:
-                    raise AssertionError(
-                        error_msg + "implies disabled feature '%s'" % impl
-                    )
+                    raise AssertionError(error_msg + "implies disabled feature '%s'" % impl)
                 continue
             raise AssertionError(error_msg + "implies non-exist feature '%s'" % impl)
 
@@ -154,8 +145,7 @@ class _TestConfFeatures(FakeCCompilerOpt):
             if not impl_dict or "disable" in impl_dict:
                 continue
             raise AssertionError(
-                error_msg
-                + "in option 'group', '%s' already exists as a feature name" % f
+                error_msg + "in option 'group', '%s' already exists as a feature name" % f
             )
 
     def test_extra_checks(self, error_msg, search_in, feature_name, feature_dict):

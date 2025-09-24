@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import csv
 import json
+from collections import Counter, defaultdict
 from pathlib import Path
-from collections import defaultdict, Counter
 
 __all__ = ["emit_metrics", "main"]
 

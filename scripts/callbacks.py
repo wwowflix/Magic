@@ -297,9 +297,7 @@ class TqdmCallback(Callback):
             from tqdm import tqdm
 
         except ImportError as exce:
-            raise ImportError(
-                "Using TqdmCallback requires tqdm to be installed"
-            ) from exce
+            raise ImportError("Using TqdmCallback requires tqdm to be installed") from exce
 
         self._tqdm_cls = kwargs.pop("tqdm_cls", tqdm)
         self._tqdm_kwargs = tqdm_kwargs or {}

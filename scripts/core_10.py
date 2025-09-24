@@ -527,8 +527,7 @@ def open_local(
     of = open_files(url, mode=mode, **storage_options)
     if not getattr(of[0].fs, "local_file", False):
         raise ValueError(
-            "open_local can only be used on a filesystem which"
-            " has attribute local_file=True"
+            "open_local can only be used on a filesystem which" " has attribute local_file=True"
         )
     with of as files:
         paths = [f.name for f in files]
@@ -586,9 +585,7 @@ def expand_paths_if_needed(paths, mode, num, fs, name_function):
 
     if "w" in mode:  # read mode
         if sum(1 for p in paths if "*" in p) > 1:
-            raise ValueError(
-                "When writing data, only one filename mask can be specified."
-            )
+            raise ValueError("When writing data, only one filename mask can be specified.")
         num = max(num, len(paths))
 
         for curr_path in paths:
@@ -666,9 +663,7 @@ def get_fs_token_paths(
     paths, protocol, _ = chain[0]
     fs = filesystem(protocol, **inkwargs)
     if isinstance(urlpath, (list, tuple, set)):
-        pchains = [
-            _un_chain(stringify_path(u), storage_options or {})[0] for u in urlpath
-        ]
+        pchains = [_un_chain(stringify_path(u), storage_options or {})[0] for u in urlpath]
         if len({pc[1] for pc in pchains}) > 1:
             raise ValueError("Protocol mismatch getting fs from %s", urlpath)
         paths = [pc[0] for pc in pchains]

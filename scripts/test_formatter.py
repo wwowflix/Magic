@@ -71,12 +71,8 @@ class TestFormatter(SoupTest):
         for markup in ("<option selected></option>", '<option selected=""></option>'):
             soup = self.soup(markup)
             for formatter in ("html", "minimal", "xml", None):
-                assert b'<option selected=""></option>' == soup.option.encode(
-                    formatter="html"
-                )
-                assert b"<option selected></option>" == soup.option.encode(
-                    formatter="html5"
-                )
+                assert b'<option selected=""></option>' == soup.option.encode(formatter="html")
+                assert b"<option selected></option>" == soup.option.encode(formatter="html5")
 
     @pytest.mark.parametrize(
         "indent,expect",
@@ -150,8 +146,7 @@ class TestFormatter(SoupTest):
         markup = "<p>Some division signs: ÷ &divide; &#247; &#xf7;. These are made with: ÷ &amp;divide; &amp;#247;</p>"
         soup = self.soup(markup)
         assert (
-            "Some division signs: ÷ ÷ ÷ ÷. These are made with: ÷ &divide; &#247;"
-            == soup.p.string
+            "Some division signs: ÷ ÷ ÷ ÷. These are made with: ÷ &divide; &#247;" == soup.p.string
         )
 
         # Oops, I forgot to mention the entity.

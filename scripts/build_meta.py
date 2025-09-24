@@ -108,9 +108,7 @@ def no_install_setup_requires():
 
 
 def _get_immediate_subdirectories(a_dir):
-    return [
-        name for name in os.listdir(a_dir) if os.path.isdir(os.path.join(a_dir, name))
-    ]
+    return [name for name in os.listdir(a_dir) if os.path.isdir(os.path.join(a_dir, name))]
 
 
 def _file_with_extension(directory, extension):
@@ -366,9 +364,7 @@ class _BuildMetaBackend(_ConfigSettingsTranslator):
         msg = f"No {suffix} directory found in {metadata_directory}"
         raise errors.InternalError(msg)
 
-    def prepare_metadata_for_build_wheel(
-        self, metadata_directory, config_settings=None
-    ):
+    def prepare_metadata_for_build_wheel(self, metadata_directory, config_settings=None):
         sys.argv = [
             *sys.argv[:1],
             *self._global_args(config_settings),
@@ -411,9 +407,7 @@ class _BuildMetaBackend(_ConfigSettingsTranslator):
 
         return result_basename
 
-    def build_wheel(
-        self, wheel_directory, config_settings=None, metadata_directory=None
-    ):
+    def build_wheel(self, wheel_directory, config_settings=None, metadata_directory=None):
         with suppress_known_deprecation():
             return self._build_with_temp_dir(
                 ["bdist_wheel"], ".whl", wheel_directory, config_settings
@@ -437,27 +431,19 @@ class _BuildMetaBackend(_ConfigSettingsTranslator):
         # build_editable
         # get_requires_for_build_editable
         # prepare_metadata_for_build_editable
-        def build_editable(
-            self, wheel_directory, config_settings=None, metadata_directory=None
-        ):
+        def build_editable(self, wheel_directory, config_settings=None, metadata_directory=None):
             # XXX can or should we hide our editable_wheel command normally?
             info_dir = self._get_dist_info_dir(metadata_directory)
             opts = ["--dist-info-dir", info_dir] if info_dir else []
             cmd = ["editable_wheel", *opts, *self._editable_args(config_settings)]
             with suppress_known_deprecation():
-                return self._build_with_temp_dir(
-                    cmd, ".whl", wheel_directory, config_settings
-                )
+                return self._build_with_temp_dir(cmd, ".whl", wheel_directory, config_settings)
 
         def get_requires_for_build_editable(self, config_settings=None):
             return self.get_requires_for_build_wheel(config_settings)
 
-        def prepare_metadata_for_build_editable(
-            self, metadata_directory, config_settings=None
-        ):
-            return self.prepare_metadata_for_build_wheel(
-                metadata_directory, config_settings
-            )
+        def prepare_metadata_for_build_editable(self, metadata_directory, config_settings=None):
+            return self.prepare_metadata_for_build_wheel(metadata_directory, config_settings)
 
 
 class _BuildMetaLegacyBackend(_BuildMetaBackend):

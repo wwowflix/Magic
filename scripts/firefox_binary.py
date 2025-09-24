@@ -95,9 +95,7 @@ class FirefoxBinary:
         if self.command_line:
             for cli in self.command_line:
                 command.append(cli)
-        self.process = Popen(
-            command, stdout=self._log_file, stderr=STDOUT, env=self._firefox_env
-        )
+        self.process = Popen(command, stdout=self._log_file, stderr=STDOUT, env=self._firefox_env)
 
     def _wait_until_connectable(self, timeout=30):
         """Blocks until the extension is connectable in the firefox."""
@@ -224,9 +222,7 @@ class FirefoxBinary:
             import shutil
 
             shutil.copy(
-                os.path.join(
-                    os.path.dirname(__file__), path, self.NO_FOCUS_LIBRARY_NAME
-                ),
+                os.path.join(os.path.dirname(__file__), path, self.NO_FOCUS_LIBRARY_NAME),
                 library_path,
             )
             built_path += library_path + ":"

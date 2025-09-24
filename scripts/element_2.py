@@ -66,9 +66,7 @@ if TYPE_CHECKING:
         _StrainableString,
     )
 
-_OneOrMoreStringTypes: TypeAlias = Union[
-    Type["NavigableString"], Iterable[Type["NavigableString"]]
-]
+_OneOrMoreStringTypes: TypeAlias = Union[Type["NavigableString"], Iterable[Type["NavigableString"]]]
 
 _FindMethodName: TypeAlias = Optional[Union["_StrainableElement", "ElementFilter"]]
 
@@ -412,11 +410,7 @@ class PageElement(object):
         if self.next_sibling is not None:
             self.next_sibling.previous_sibling = self
 
-        if (
-            previous_sibling is None
-            and self.parent is not None
-            and self.parent.contents
-        ):
+        if previous_sibling is None and self.parent is not None and self.parent.contents:
             previous_sibling = self.parent.contents[-1]
 
         self.previous_sibling = previous_sibling
@@ -619,15 +613,9 @@ class PageElement(object):
         last_child.next_element = None
 
         self.parent = None
-        if (
-            self.previous_sibling is not None
-            and self.previous_sibling is not self.next_sibling
-        ):
+        if self.previous_sibling is not None and self.previous_sibling is not self.next_sibling:
             self.previous_sibling.next_sibling = self.next_sibling
-        if (
-            self.next_sibling is not None
-            and self.next_sibling is not self.previous_sibling
-        ):
+        if self.next_sibling is not None and self.next_sibling is not self.previous_sibling:
             self.next_sibling.previous_sibling = self.previous_sibling
         self.previous_sibling = self.next_sibling = None
         return self
@@ -682,9 +670,7 @@ class PageElement(object):
             last_child = None
         return last_child
 
-    _lastRecursiveChild = _deprecated_alias(
-        "_lastRecursiveChild", "_last_descendant", "4.0.0"
-    )
+    _lastRecursiveChild = _deprecated_alias("_lastRecursiveChild", "_last_descendant", "4.0.0")
 
     def insert_before(self, *args: _InsertableElement) -> List[PageElement]:
         """Makes the given element(s) the immediate predecessor of this one.
@@ -820,9 +806,7 @@ class PageElement(object):
         """
         return self._find_one(self.find_next_siblings, name, attrs, string, **kwargs)
 
-    findNextSibling = _deprecated_function_alias(
-        "findNextSibling", "find_next_sibling", "4.0.0"
-    )
+    findNextSibling = _deprecated_function_alias("findNextSibling", "find_next_sibling", "4.0.0")
 
     def find_next_siblings(
         self,
@@ -856,9 +840,7 @@ class PageElement(object):
             **kwargs,
         )
 
-    findNextSiblings = _deprecated_function_alias(
-        "findNextSiblings", "find_next_siblings", "4.0.0"
-    )
+    findNextSiblings = _deprecated_function_alias("findNextSiblings", "find_next_siblings", "4.0.0")
     fetchNextSiblings = _deprecated_function_alias(
         "fetchNextSiblings", "find_next_siblings", "3.0.0"
     )
@@ -917,12 +899,8 @@ class PageElement(object):
             **kwargs,
         )
 
-    findAllPrevious = _deprecated_function_alias(
-        "findAllPrevious", "find_all_previous", "4.0.0"
-    )
-    fetchAllPrevious = _deprecated_function_alias(
-        "fetchAllPrevious", "find_all_previous", "3.0.0"
-    )
+    findAllPrevious = _deprecated_function_alias("findAllPrevious", "find_all_previous", "4.0.0")
+    fetchAllPrevious = _deprecated_function_alias("fetchAllPrevious", "find_all_previous", "3.0.0")
 
     def find_previous_sibling(
         self,
@@ -942,9 +920,7 @@ class PageElement(object):
         :param string: A filter for a `NavigableString` with specific text.
         :kwargs: Additional filters on attribute values.
         """
-        return self._find_one(
-            self.find_previous_siblings, name, attrs, string, **kwargs
-        )
+        return self._find_one(self.find_previous_siblings, name, attrs, string, **kwargs)
 
     findPreviousSibling = _deprecated_function_alias(
         "findPreviousSibling", "find_previous_sibling", "4.0.0"
@@ -1133,8 +1109,7 @@ class PageElement(object):
                     if not isinstance(element, Tag):
                         continue
                     if element.name == name or (
-                        element.name == local_name
-                        and (prefix is None or element.prefix == prefix)
+                        element.name == local_name and (prefix is None or element.prefix == prefix)
                     ):
                         result.append(element)
                 return ResultSet(matcher, result)
@@ -1229,9 +1204,7 @@ class PageElement(object):
         """
         return self._self_and(self.parents)
 
-    def _self_and(
-        self, other_generator: Iterator[PageElement]
-    ) -> Iterator[PageElement]:
+    def _self_and(self, other_generator: Iterator[PageElement]) -> Iterator[PageElement]:
         """Modify a generator by yielding this element, then everything
         yielded by the other generator.
         """
@@ -1687,9 +1660,7 @@ class Tag(PageElement):
             self.attrs = attr_dict_class()
         else:
             if builder is not None and builder.cdata_list_attributes:
-                self.attrs = builder._replace_cdata_list_attribute_values(
-                    self.name, attrs
-                )
+                self.attrs = builder._replace_cdata_list_attribute_values(self.name, attrs)
             else:
                 self.attrs = attr_dict_class()
                 # Make sure that the values of any multi-valued
@@ -1925,9 +1896,7 @@ class Tag(PageElement):
 
     strings = property(_all_strings)
 
-    def insert(
-        self, position: int, *new_children: _InsertableElement
-    ) -> List[PageElement]:
+    def insert(self, position: int, *new_children: _InsertableElement) -> List[PageElement]:
         """Insert one or more new PageElements as a child of this `Tag`.
 
         This works similarly to :py:meth:`list.insert`, except you can insert
@@ -1946,9 +1915,7 @@ class Tag(PageElement):
             position += 1
         return inserted
 
-    def _insert(
-        self, position: int, new_child: _InsertableElement
-    ) -> List[PageElement]:
+    def _insert(self, position: int, new_child: _InsertableElement) -> List[PageElement]:
         if new_child is None:
             raise ValueError("Cannot insert None into a tag.")
         if new_child is self:
@@ -1994,9 +1961,7 @@ class Tag(PageElement):
         if new_child.previous_element is not None:
             new_child.previous_element.next_element = new_child
 
-        new_childs_last_element = new_child._last_descendant(
-            is_initialized=False, accept_self=True
-        )
+        new_childs_last_element = new_child._last_descendant(is_initialized=False, accept_self=True)
         # new_childs_last_element can't be None because we passed
         # accept_self=True into _last_descendant. Worst case,
         # new_childs_last_element will be new_child itself. Making
@@ -2029,9 +1994,7 @@ class Tag(PageElement):
             new_childs_last_element.next_element = next_child
 
         if new_childs_last_element.next_element is not None:
-            new_childs_last_element.next_element.previous_element = (
-                new_childs_last_element
-            )
+            new_childs_last_element.next_element.previous_element = new_childs_last_element
         self.contents.insert(position, new_child)
 
         return [new_child]
@@ -2070,9 +2033,7 @@ class Tag(PageElement):
         """
         return self.insert(len(self.contents), tag)[0]
 
-    def extend(
-        self, tags: Union[Iterable[_InsertableElement], Tag]
-    ) -> List[PageElement]:
+    def extend(self, tags: Union[Iterable[_InsertableElement], Tag]) -> List[PageElement]:
         """Appends one or more objects to the contents of this
         `Tag`.
 
@@ -2176,9 +2137,7 @@ class Tag(PageElement):
                 return i
         raise ValueError("Tag.index: element not in tag")
 
-    def get(
-        self, key: str, default: Optional[_AttributeValue] = None
-    ) -> Optional[_AttributeValue]:
+    def get(self, key: str, default: Optional[_AttributeValue] = None) -> Optional[_AttributeValue]:
         """Returns the value of the 'key' attribute for the tag, or
         the value given for 'default' if it doesn't have that
         attribute.
@@ -2261,9 +2220,7 @@ class Tag(PageElement):
         """Calling a Tag like a function is the same as calling its
         find_all() method. Eg. tag('a') returns a list of all the A tags
         found within this tag."""
-        return self.find_all(
-            name, attrs, recursive, string, limit, _stacklevel, **kwargs
-        )
+        return self.find_all(name, attrs, recursive, string, limit, _stacklevel, **kwargs)
 
     def __getattr__(self, subtag: str) -> Optional[Tag]:
         """Calling tag.subtag is the same as calling tag.find(name="subtag")"""
@@ -2283,9 +2240,7 @@ class Tag(PageElement):
         elif not subtag.startswith("__") and not subtag == "contents":
             result = self.find(subtag)
         else:
-            raise AttributeError(
-                "'%s' object has no attribute '%s'" % (self.__class__, subtag)
-            )
+            raise AttributeError("'%s' object has no attribute '%s'" % (self.__class__, subtag))
         return cast(Optional[Tag], result)
 
     def __eq__(self, other: Any) -> bool:
@@ -2544,9 +2499,7 @@ class Tag(PageElement):
 
         return space_before + s + space_after
 
-    def _format_tag(
-        self, eventual_encoding: str, formatter: Formatter, opening: bool
-    ) -> str:
+    def _format_tag(self, eventual_encoding: str, formatter: Formatter, opening: bool) -> str:
         if self.hidden:
             # A hidden tag is invisible, although its contents
             # are visible.
@@ -2613,8 +2566,7 @@ class Tag(PageElement):
         documents) should not.
         """
         return indent_level is not None and (
-            not self.preserve_whitespace_tags
-            or self.name not in self.preserve_whitespace_tags
+            not self.preserve_whitespace_tags or self.name not in self.preserve_whitespace_tags
         )
 
     def prettify(
@@ -2659,9 +2611,7 @@ class Tag(PageElement):
         :param formatter: A `Formatter` object, or a string naming one of
             the standard Formatters.
         """
-        return self.decode(
-            indent_level, eventual_encoding, formatter, iterator=self.descendants
-        )
+        return self.decode(indent_level, eventual_encoding, formatter, iterator=self.descendants)
 
     def encode_contents(
         self,
@@ -2724,9 +2674,7 @@ class Tag(PageElement):
         :kwargs: Additional filters on attribute values.
         """
         r = None
-        results = self.find_all(
-            name, attrs, recursive, string, 1, _stacklevel=3, **kwargs
-        )
+        results = self.find_all(name, attrs, recursive, string, 1, _stacklevel=3, **kwargs)
         if results:
             r = results[0]
         return r

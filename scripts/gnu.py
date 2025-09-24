@@ -142,9 +142,7 @@ class GnuFCompiler(FCompiler):
 
     def get_libgcc_dir(self):
         try:
-            output = subprocess.check_output(
-                self.compiler_f77 + ["-print-libgcc-file-name"]
-            )
+            output = subprocess.check_output(self.compiler_f77 + ["-print-libgcc-file-name"])
         except (OSError, subprocess.CalledProcessError):
             pass
         else:
@@ -208,11 +206,7 @@ class GnuFCompiler(FCompiler):
         if g2c is not None:
             opt.append(g2c)
         c_compiler = self.c_compiler
-        if (
-            sys.platform == "win32"
-            and c_compiler
-            and c_compiler.compiler_type == "msvc"
-        ):
+        if sys.platform == "win32" and c_compiler and c_compiler.compiler_type == "msvc":
             opt.append("gcc")
         if sys.platform == "darwin":
             opt.append("cc_dynamic")
@@ -415,9 +409,7 @@ class Gnu95FCompiler(GnuFCompiler):
         text = text.decode("ascii")
         return text.rstrip("=")
 
-    def _link_wrapper_lib(
-        self, objects, output_dir, extra_dll_dir, chained_dlls, is_archive
-    ):
+    def _link_wrapper_lib(self, objects, output_dir, extra_dll_dir, chained_dlls, is_archive):
         """Create a wrapper shared library for the given objects
 
         Return an MSVC-compatible lib
@@ -448,9 +440,7 @@ class Gnu95FCompiler(GnuFCompiler):
             return lib_path, dll_path
 
         if is_archive:
-            objects = (
-                ["-Wl,--whole-archive"] + list(objects) + ["-Wl,--no-whole-archive"]
-            )
+            objects = ["-Wl,--whole-archive"] + list(objects) + ["-Wl,--no-whole-archive"]
         self.link_shared_object(
             objects,
             dll_name,

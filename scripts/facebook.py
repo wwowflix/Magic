@@ -68,9 +68,7 @@ class _FacebookCommonScraper(snscrape.base.Scraper):
                 u.scheme,
                 u.netloc,
                 u.path,
-                urllib.parse.urlencode(
-                    (("story_fbid", q["story_fbid"][0]), ("id", q["id"][0]))
-                ),
+                urllib.parse.urlencode((("story_fbid", q["story_fbid"][0]), ("id", q["id"][0]))),
                 "",
             )
         elif u.path == "/photo.php":
@@ -112,9 +110,7 @@ class _FacebookCommonScraper(snscrape.base.Scraper):
             elif u.path.count("/") == 5:
                 # Strip out the third path component
                 pathcomps = u.path.split("/")
-                pathcomps.pop(
-                    3
-                )  # Don't forget about the empty string at the beginning!
+                pathcomps.pop(3)  # Don't forget about the empty string at the beginning!
                 clean = (u.scheme, u.netloc, "/".join(pathcomps), "", "")
             else:
                 return dirtyUrl
@@ -139,11 +135,7 @@ class _FacebookCommonScraper(snscrape.base.Scraper):
                     "/media/set/",
                 )
             ):
-                if (
-                    href == "#"
-                    and "new photo" in entryText
-                    and "to the album" in entryText
-                ):
+                if href == "#" and "new photo" in entryText and "to the album" in entryText:
                     # Don't print a warning if it's a "User added 5 new photos to the album"-type entry, which doesn't have a permalink.
                     return True, False
                 elif href.startswith("/business/help/788160621327601/?"):
@@ -182,9 +174,7 @@ class _FacebookCommonScraper(snscrape.base.Scraper):
             )  # There can be more than one, e.g. when a post is shared by another user, but the first one is always the one of this entry.
             mediaSetA = entry.find("a", class_="_17z-")
             if not mediaSetA and not entryA:
-                _logger.warning(
-                    f"Ignoring link-less entry after {cleanUrl}: {entry.text!r}"
-                )
+                _logger.warning(f"Ignoring link-less entry after {cleanUrl}: {entry.text!r}")
                 continue
             if mediaSetA and (not entryA or entryA["href"] == "#"):
                 href = mediaSetA["href"]
@@ -269,8 +259,7 @@ class _FacebookUserAndCommunityScraper(_FacebookCommonScraper):
             # The web app sends a bunch of additional parameters. Most of them would be easy to add, but there's also __dyn, which is a compressed list of the "modules" loaded in the browser.
             # Reproducing that would be difficult to get right, especially as Facebook's codebase evolves, so it's just not sent at all here.
             r = self._get(
-                urllib.parse.urljoin(self._baseUrl, nextPageLink.get("ajaxify"))
-                + "&__a=1",
+                urllib.parse.urljoin(self._baseUrl, nextPageLink.get("ajaxify")) + "&__a=1",
                 headers=self._headers,
             )
             if r.status_code != 200:
@@ -317,9 +306,7 @@ class FacebookUserScraper(_FacebookUserAndCommunityScraper):
         nameVerifiedMarkupPattern = re.compile(
             r'"markup":\[\["__markup_a588f507_0_0",\{"__html":(".*?")\}'
         )
-        handleDivPattern = re.compile(
-            r'<div\s[^>]*(?<=\s)data-key\s*=\s*"tab_home".*?</div>'
-        )
+        handleDivPattern = re.compile(r'<div\s[^>]*(?<=\s)data-key\s*=\s*"tab_home".*?</div>')
         handlePattern = re.compile(r'<a\s[^>]*(?<=\s)href="/([^/]+)')
         months = [
             "January",
@@ -380,21 +367,18 @@ class FacebookUserScraper(_FacebookUserAndCommunityScraper):
                 if not img:
                     continue
                 if (
-                    img["src"]
-                    == "https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/vfXKA62x4Da.png"
+                    img["src"] == "https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/vfXKA62x4Da.png"
                 ):  # Address
                     rawAddress = div.find("div", class_="_2wzd").text
                     kwargs["address"] = re.sub(
                         r" \((\d+,)?\d+(\.\d+)? mi\)", "\n", rawAddress
                     )  # Remove distance from inferred IP location, restore linebreak
                 elif (
-                    img["src"]
-                    == "https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/mYv88EsODOI.png"
+                    img["src"] == "https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/mYv88EsODOI.png"
                 ):  # Phone number
                     kwargs["phone"] = div.find("div", class_="_4bl9").text
                 elif (
-                    img["src"]
-                    == "https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/xVA3lB-GVep.png"
+                    img["src"] == "https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/xVA3lB-GVep.png"
                 ):  # Web link
                     for a in div.find_all("a"):
                         if a.text == "" or "href" not in a.attrs or a.find("span"):
@@ -407,12 +391,9 @@ class FacebookUserScraper(_FacebookUserAndCommunityScraper):
                             dirtyWeb.split("=", 1)[1].split("&", 1)[0]
                         )
                 elif (
-                    img["src"]
-                    == "https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/LwDWwC1d0Rx.png"
+                    img["src"] == "https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/LwDWwC1d0Rx.png"
                 ):  # Keywords
-                    kwargs["keywords"] = div.find("div", class_="_4bl9").text.split(
-                        " · "
-                    )
+                    kwargs["keywords"] = div.find("div", class_="_4bl9").text.split(" · ")
 
         androidUrlMeta = soup.find("meta", property="al:android:url")
         assert androidUrlMeta["content"].startswith("fb://page/") and androidUrlMeta[
@@ -468,26 +449,18 @@ class FacebookGroupScraper(_FacebookCommonScraper):
             'content:{pagelet_group_mall:{container_id:"',
             'content:{group_mall_after_tti:{container_id:"',
         ):
-            codeContainerIdPos = r.text.index(codeContainerIdStart) + len(
-                codeContainerIdStart
-            )
-            codeContainerId = r.text[
-                codeContainerIdPos : r.text.index('"', codeContainerIdPos)
-            ]
+            codeContainerIdPos = r.text.index(codeContainerIdStart) + len(codeContainerIdStart)
+            codeContainerId = r.text[codeContainerIdPos : r.text.index('"', codeContainerIdPos)]
             codeContainer = soup.find("code", id=codeContainerId)
             if not codeContainer:
                 raise snscrape.base.ScraperException("Code container not found")
             if type(codeContainer.string) is not bs4.element.Comment:
-                raise snscrape.base.ScraperException(
-                    "Code container does not contain a comment"
-                )
+                raise snscrape.base.ScraperException("Code container does not contain a comment")
             codeSoup = bs4.BeautifulSoup(codeContainer.string, "lxml")
             yield from self._soup_to_items(codeSoup, baseUrl, "group")
 
         # Pagination
-        while data := pageletDataPattern.search(r.text).group(0)[
-            pageletDataPrefixLength:
-        ]:
+        while data := pageletDataPattern.search(r.text).group(0)[pageletDataPrefixLength:]:
             # As on the user profile pages, the web app sends a lot of additional parameters, but those all seem to be unnecessary (although some change the response format, e.g. from JSON to HTML)
             r = self._get(
                 "https://upload.facebook.com/ajax/pagelet/generic.php/GroupEntstreamPagelet",

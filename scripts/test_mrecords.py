@@ -84,9 +84,7 @@ class TestMRecords:
         assert_equal(mbase_sl.recordmask, [0, 1])
         assert_equal_records(
             mbase_sl.mask,
-            np.array(
-                [(False, False, False), (True, True, True)], dtype=mbase._mask.dtype
-            ),
+            np.array([(False, False, False), (True, True, True)], dtype=mbase._mask.dtype),
         )
         assert_equal_records(mbase_sl, base[:2].view(mrecarray))
         for field in ("a", "b", "c"):
@@ -110,9 +108,7 @@ class TestMRecords:
         assert_equal(mbase.recordmask, [False] * 5)
         assert_equal(
             mbase._mask.tolist(),
-            np.array(
-                [(0, 0, 0), (0, 1, 1), (0, 0, 0), (0, 0, 0), (0, 1, 1)], dtype=bool
-            ),
+            np.array([(0, 0, 0), (0, 1, 1), (0, 0, 0), (0, 0, 0), (0, 1, 1)], dtype=bool),
         )
         # Set a field to mask ........................
         mbase.c = masked
@@ -123,9 +119,7 @@ class TestMRecords:
         assert_equal(ma.getdata(mbase["c"]), [b"N/A"] * 5)
         assert_equal(
             mbase._mask.tolist(),
-            np.array(
-                [(0, 0, 1), (0, 1, 1), (0, 0, 1), (0, 0, 1), (0, 1, 1)], dtype=bool
-            ),
+            np.array([(0, 0, 1), (0, 1, 1), (0, 0, 1), (0, 0, 1), (0, 1, 1)], dtype=bool),
         )
         # Set fields by slices .......................
         mbase = base.view(mrecarray).copy()
@@ -154,9 +148,7 @@ class TestMRecords:
         assert_equal(mbase.a, [1, 2, 3, 4, 5])
         assert_equal(mbase.a._mask, [0, 1, 0, 1, 1])
         # This one has not yet
-        mbase = fromarrays(
-            [np.arange(5), np.random.rand(5)], dtype=[("a", int), ("b", float)]
-        )
+        mbase = fromarrays([np.arange(5), np.random.rand(5)], dtype=[("a", int), ("b", float)])
         mbase["a"][-2] = masked
         assert_equal(mbase.a, [0, 1, 2, 3, 4])
         assert_equal(mbase.a._mask, [0, 0, 0, 1, 0])
@@ -214,9 +206,7 @@ class TestMRecords:
         mbase[-2] = masked
         assert_equal(
             mbase._mask.tolist(),
-            np.array(
-                [(0, 0, 0), (1, 1, 1), (0, 0, 0), (1, 1, 1), (1, 1, 1)], dtype=bool
-            ),
+            np.array([(0, 0, 0), (1, 1, 1), (0, 0, 0), (1, 1, 1), (1, 1, 1)], dtype=bool),
         )
         # Used to be mask, now it's recordmask!
         assert_equal(mbase.recordmask, [0, 1, 0, 1, 1])
@@ -301,9 +291,7 @@ class TestMRecords:
         _b = ma.array([1.1, 2.2, 3.3], mask=[0, 0, 1], dtype=float)
         _c = ma.array(["one", "two", "three"], mask=[0, 0, 1], dtype="|S8")
         ddtype = [("a", int), ("b", float), ("c", "|S8")]
-        mrec = fromarrays(
-            [_a, _b, _c], dtype=ddtype, fill_value=(99999, 99999.0, "N/A")
-        )
+        mrec = fromarrays([_a, _b, _c], dtype=ddtype, fill_value=(99999, 99999.0, "N/A"))
         mrecfilled = mrec.filled()
         assert_equal(mrecfilled["a"], np.array((1, 2, 99999), dtype=int))
         assert_equal(mrecfilled["b"], np.array((1.1, 2.2, 99999.0), dtype=float))
@@ -315,13 +303,9 @@ class TestMRecords:
         _b = ma.array([1.1, 2.2, 3.3], mask=[0, 0, 1], dtype=float)
         _c = ma.array(["one", "two", "three"], mask=[1, 0, 0], dtype="|S8")
         ddtype = [("a", int), ("b", float), ("c", "|S8")]
-        mrec = fromarrays(
-            [_a, _b, _c], dtype=ddtype, fill_value=(99999, 99999.0, "N/A")
-        )
+        mrec = fromarrays([_a, _b, _c], dtype=ddtype, fill_value=(99999, 99999.0, "N/A"))
 
-        assert_equal(
-            mrec.tolist(), [(1, 1.1, None), (2, 2.2, b"two"), (None, None, b"three")]
-        )
+        assert_equal(mrec.tolist(), [(1, 1.1, None), (2, 2.2, b"two"), (None, None, b"three")])
 
     def test_withnames(self):
         # Test the creation w/ format and names
@@ -343,9 +327,7 @@ class TestMRecords:
         mult[0] = masked
         mult[1] = (1, 1, 1)
         mult.filled(0)
-        assert_equal_records(
-            mult.filled(0), np.array([(0, 0, 0), (1, 1, 1)], dtype=mult.dtype)
-        )
+        assert_equal_records(mult.filled(0), np.array([(0, 0, 0), (1, 1, 1)], dtype=mult.dtype))
 
 
 class TestView:
@@ -392,9 +374,7 @@ class TestMRecordsImport:
     _b = ma.array([1.1, 2.2, 3.3], mask=[0, 0, 1], dtype=float)
     _c = ma.array([b"one", b"two", b"three"], mask=[0, 0, 1], dtype="|S8")
     ddtype = [("a", int), ("b", float), ("c", "|S8")]
-    mrec = fromarrays(
-        [_a, _b, _c], dtype=ddtype, fill_value=(b"99999", b"99999.", b"N/A")
-    )
+    mrec = fromarrays([_a, _b, _c], dtype=ddtype, fill_value=(b"99999", b"99999.", b"N/A"))
     nrec = recfromarrays((_a._data, _b._data, _c._data), dtype=ddtype)
     data = (mrec, nrec, ddtype)
 

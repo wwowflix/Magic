@@ -1,6 +1,6 @@
 # generate_manifest.py
-import os
 import json
+import os
 
 # Adjust if your scripts live somewhere else
 ROOT = os.path.join(os.getcwd(), "scripts")

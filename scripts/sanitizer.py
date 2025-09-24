@@ -832,8 +832,7 @@ class Filter(base.Filter):
             name = token["name"]
             namespace = token["namespace"]
             if (namespace, name) in self.allowed_elements or (
-                namespace is None
-                and (namespaces["html"], name) in self.allowed_elements
+                namespace is None and (namespaces["html"], name) in self.allowed_elements
             ):
                 return self.allowed_token(token)
             else:
@@ -882,9 +881,7 @@ class Filter(base.Filter):
 
             for attr in self.svg_attr_val_allows_ref:
                 if attr in attrs:
-                    attrs[attr] = re.sub(
-                        r"url\s*\(\s*[^#\s][^)]+?\)", " ", unescape(attrs[attr])
-                    )
+                    attrs[attr] = re.sub(r"url\s*\(\s*[^#\s][^)]+?\)", " ", unescape(attrs[attr]))
             if (
                 token["name"] in self.svg_allow_local_href
                 and (namespaces["xlink"], "href") in attrs

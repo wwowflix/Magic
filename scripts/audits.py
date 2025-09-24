@@ -67,9 +67,7 @@ class AffectedRequest:
         return cls(
             url=str(json["url"]),
             request_id=(
-                network.RequestId.from_json(json["requestId"])
-                if "requestId" in json
-                else None
+                network.RequestId.from_json(json["requestId"]) if "requestId" in json else None
             ),
         )
 
@@ -95,9 +93,7 @@ class AffectedFrame:
 
 
 class CookieExclusionReason(enum.Enum):
-    EXCLUDE_SAME_SITE_UNSPECIFIED_TREATED_AS_LAX = (
-        "ExcludeSameSiteUnspecifiedTreatedAsLax"
-    )
+    EXCLUDE_SAME_SITE_UNSPECIFIED_TREATED_AS_LAX = "ExcludeSameSiteUnspecifiedTreatedAsLax"
     EXCLUDE_SAME_SITE_NONE_INSECURE = "ExcludeSameSiteNoneInsecure"
     EXCLUDE_SAME_SITE_LAX = "ExcludeSameSiteLax"
     EXCLUDE_SAME_SITE_STRICT = "ExcludeSameSiteStrict"
@@ -120,17 +116,11 @@ class CookieExclusionReason(enum.Enum):
 
 
 class CookieWarningReason(enum.Enum):
-    WARN_SAME_SITE_UNSPECIFIED_CROSS_SITE_CONTEXT = (
-        "WarnSameSiteUnspecifiedCrossSiteContext"
-    )
+    WARN_SAME_SITE_UNSPECIFIED_CROSS_SITE_CONTEXT = "WarnSameSiteUnspecifiedCrossSiteContext"
     WARN_SAME_SITE_NONE_INSECURE = "WarnSameSiteNoneInsecure"
-    WARN_SAME_SITE_UNSPECIFIED_LAX_ALLOW_UNSAFE = (
-        "WarnSameSiteUnspecifiedLaxAllowUnsafe"
-    )
+    WARN_SAME_SITE_UNSPECIFIED_LAX_ALLOW_UNSAFE = "WarnSameSiteUnspecifiedLaxAllowUnsafe"
     WARN_SAME_SITE_STRICT_LAX_DOWNGRADE_STRICT = "WarnSameSiteStrictLaxDowngradeStrict"
-    WARN_SAME_SITE_STRICT_CROSS_DOWNGRADE_STRICT = (
-        "WarnSameSiteStrictCrossDowngradeStrict"
-    )
+    WARN_SAME_SITE_STRICT_CROSS_DOWNGRADE_STRICT = "WarnSameSiteStrictCrossDowngradeStrict"
     WARN_SAME_SITE_STRICT_CROSS_DOWNGRADE_LAX = "WarnSameSiteStrictCrossDowngradeLax"
     WARN_SAME_SITE_LAX_CROSS_DOWNGRADE_STRICT = "WarnSameSiteLaxCrossDowngradeStrict"
     WARN_SAME_SITE_LAX_CROSS_DOWNGRADE_LAX = "WarnSameSiteLaxCrossDowngradeLax"
@@ -202,9 +192,7 @@ class CookieIssueInsight:
     def from_json(cls, json):
         return cls(
             type_=InsightType.from_json(json["type"]),
-            table_entry_url=(
-                str(json["tableEntryUrl"]) if "tableEntryUrl" in json else None
-            ),
+            table_entry_url=(str(json["tableEntryUrl"]) if "tableEntryUrl" in json else None),
         )
 
 
@@ -243,12 +231,8 @@ class CookieIssueDetails:
 
     def to_json(self):
         json = dict()
-        json["cookieWarningReasons"] = [
-            i.to_json() for i in self.cookie_warning_reasons
-        ]
-        json["cookieExclusionReasons"] = [
-            i.to_json() for i in self.cookie_exclusion_reasons
-        ]
+        json["cookieWarningReasons"] = [i.to_json() for i in self.cookie_warning_reasons]
+        json["cookieExclusionReasons"] = [i.to_json() for i in self.cookie_exclusion_reasons]
         json["operation"] = self.operation.to_json()
         if self.cookie is not None:
             json["cookie"] = self.cookie.to_json()
@@ -271,30 +255,15 @@ class CookieIssueDetails:
                 CookieWarningReason.from_json(i) for i in json["cookieWarningReasons"]
             ],
             cookie_exclusion_reasons=[
-                CookieExclusionReason.from_json(i)
-                for i in json["cookieExclusionReasons"]
+                CookieExclusionReason.from_json(i) for i in json["cookieExclusionReasons"]
             ],
             operation=CookieOperation.from_json(json["operation"]),
-            cookie=(
-                AffectedCookie.from_json(json["cookie"]) if "cookie" in json else None
-            ),
-            raw_cookie_line=(
-                str(json["rawCookieLine"]) if "rawCookieLine" in json else None
-            ),
-            site_for_cookies=(
-                str(json["siteForCookies"]) if "siteForCookies" in json else None
-            ),
+            cookie=(AffectedCookie.from_json(json["cookie"]) if "cookie" in json else None),
+            raw_cookie_line=(str(json["rawCookieLine"]) if "rawCookieLine" in json else None),
+            site_for_cookies=(str(json["siteForCookies"]) if "siteForCookies" in json else None),
             cookie_url=str(json["cookieUrl"]) if "cookieUrl" in json else None,
-            request=(
-                AffectedRequest.from_json(json["request"])
-                if "request" in json
-                else None
-            ),
-            insight=(
-                CookieIssueInsight.from_json(json["insight"])
-                if "insight" in json
-                else None
-            ),
+            request=(AffectedRequest.from_json(json["request"]) if "request" in json else None),
+            insight=(CookieIssueInsight.from_json(json["insight"]) if "insight" in json else None),
         )
 
 
@@ -390,9 +359,7 @@ class MixedContentIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            resolution_status=MixedContentResolutionStatus.from_json(
-                json["resolutionStatus"]
-            ),
+            resolution_status=MixedContentResolutionStatus.from_json(json["resolutionStatus"]),
             insecure_url=str(json["insecureURL"]),
             main_resource_url=str(json["mainResourceURL"]),
             resource_type=(
@@ -400,11 +367,7 @@ class MixedContentIssueDetails:
                 if "resourceType" in json
                 else None
             ),
-            request=(
-                AffectedRequest.from_json(json["request"])
-                if "request" in json
-                else None
-            ),
+            request=(AffectedRequest.from_json(json["request"]) if "request" in json else None),
             frame=AffectedFrame.from_json(json["frame"]) if "frame" in json else None,
         )
 
@@ -472,14 +435,10 @@ class BlockedByResponseIssueDetails:
             request=AffectedRequest.from_json(json["request"]),
             reason=BlockedByResponseReason.from_json(json["reason"]),
             parent_frame=(
-                AffectedFrame.from_json(json["parentFrame"])
-                if "parentFrame" in json
-                else None
+                AffectedFrame.from_json(json["parentFrame"]) if "parentFrame" in json else None
             ),
             blocked_frame=(
-                AffectedFrame.from_json(json["blockedFrame"])
-                if "blockedFrame" in json
-                else None
+                AffectedFrame.from_json(json["blockedFrame"]) if "blockedFrame" in json else None
             ),
         )
 
@@ -579,9 +538,7 @@ class SourceCodeLocation:
             line_number=int(json["lineNumber"]),
             column_number=int(json["columnNumber"]),
             script_id=(
-                runtime.ScriptId.from_json(json["scriptId"])
-                if "scriptId" in json
-                else None
+                runtime.ScriptId.from_json(json["scriptId"]) if "scriptId" in json else None
             ),
         )
 
@@ -631,9 +588,7 @@ class ContentSecurityPolicyIssueDetails:
             ),
             blocked_url=str(json["blockedURL"]) if "blockedURL" in json else None,
             frame_ancestor=(
-                AffectedFrame.from_json(json["frameAncestor"])
-                if "frameAncestor" in json
-                else None
+                AffectedFrame.from_json(json["frameAncestor"]) if "frameAncestor" in json else None
             ),
             source_code_location=(
                 SourceCodeLocation.from_json(json["sourceCodeLocation"])
@@ -683,9 +638,7 @@ class SharedArrayBufferIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            source_code_location=SourceCodeLocation.from_json(
-                json["sourceCodeLocation"]
-            ),
+            source_code_location=SourceCodeLocation.from_json(json["sourceCodeLocation"]),
             is_warning=bool(json["isWarning"]),
             type_=SharedArrayBufferIssueType.from_json(json["type"]),
         )
@@ -770,19 +723,13 @@ class CorsIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            cors_error_status=network.CorsErrorStatus.from_json(
-                json["corsErrorStatus"]
-            ),
+            cors_error_status=network.CorsErrorStatus.from_json(json["corsErrorStatus"]),
             is_warning=bool(json["isWarning"]),
             request=AffectedRequest.from_json(json["request"]),
             location=(
-                SourceCodeLocation.from_json(json["location"])
-                if "location" in json
-                else None
+                SourceCodeLocation.from_json(json["location"]) if "location" in json else None
             ),
-            initiator_origin=(
-                str(json["initiatorOrigin"]) if "initiatorOrigin" in json else None
-            ),
+            initiator_origin=(str(json["initiatorOrigin"]) if "initiatorOrigin" in json else None),
             resource_ip_address_space=(
                 network.IPAddressSpace.from_json(json["resourceIPAddressSpace"])
                 if "resourceIPAddressSpace" in json
@@ -819,9 +766,7 @@ class AttributionReportingIssueType(enum.Enum):
     NO_REGISTER_TRIGGER_HEADER = "NoRegisterTriggerHeader"
     NO_REGISTER_OS_SOURCE_HEADER = "NoRegisterOsSourceHeader"
     NO_REGISTER_OS_TRIGGER_HEADER = "NoRegisterOsTriggerHeader"
-    NAVIGATION_REGISTRATION_UNIQUE_SCOPE_ALREADY_SET = (
-        "NavigationRegistrationUniqueScopeAlreadySet"
-    )
+    NAVIGATION_REGISTRATION_UNIQUE_SCOPE_ALREADY_SET = "NavigationRegistrationUniqueScopeAlreadySet"
 
     def to_json(self):
         return self.value
@@ -835,9 +780,7 @@ class SharedDictionaryError(enum.Enum):
     USE_ERROR_CROSS_ORIGIN_NO_CORS_REQUEST = "UseErrorCrossOriginNoCorsRequest"
     USE_ERROR_DICTIONARY_LOAD_FAILURE = "UseErrorDictionaryLoadFailure"
     USE_ERROR_MATCHING_DICTIONARY_NOT_USED = "UseErrorMatchingDictionaryNotUsed"
-    USE_ERROR_UNEXPECTED_CONTENT_DICTIONARY_HEADER = (
-        "UseErrorUnexpectedContentDictionaryHeader"
-    )
+    USE_ERROR_UNEXPECTED_CONTENT_DICTIONARY_HEADER = "UseErrorUnexpectedContentDictionaryHeader"
     WRITE_ERROR_COSS_ORIGIN_NO_CORS_REQUEST = "WriteErrorCossOriginNoCorsRequest"
     WRITE_ERROR_DISALLOWED_BY_SETTINGS = "WriteErrorDisallowedBySettings"
     WRITE_ERROR_EXPIRED_RESPONSE = "WriteErrorExpiredResponse"
@@ -871,24 +814,14 @@ class SRIMessageSignatureError(enum.Enum):
     MISSING_SIGNATURE_INPUT_HEADER = "MissingSignatureInputHeader"
     INVALID_SIGNATURE_HEADER = "InvalidSignatureHeader"
     INVALID_SIGNATURE_INPUT_HEADER = "InvalidSignatureInputHeader"
-    SIGNATURE_HEADER_VALUE_IS_NOT_BYTE_SEQUENCE = (
-        "SignatureHeaderValueIsNotByteSequence"
-    )
+    SIGNATURE_HEADER_VALUE_IS_NOT_BYTE_SEQUENCE = "SignatureHeaderValueIsNotByteSequence"
     SIGNATURE_HEADER_VALUE_IS_PARAMETERIZED = "SignatureHeaderValueIsParameterized"
     SIGNATURE_HEADER_VALUE_IS_INCORRECT_LENGTH = "SignatureHeaderValueIsIncorrectLength"
     SIGNATURE_INPUT_HEADER_MISSING_LABEL = "SignatureInputHeaderMissingLabel"
-    SIGNATURE_INPUT_HEADER_VALUE_NOT_INNER_LIST = (
-        "SignatureInputHeaderValueNotInnerList"
-    )
-    SIGNATURE_INPUT_HEADER_VALUE_MISSING_COMPONENTS = (
-        "SignatureInputHeaderValueMissingComponents"
-    )
-    SIGNATURE_INPUT_HEADER_INVALID_COMPONENT_TYPE = (
-        "SignatureInputHeaderInvalidComponentType"
-    )
-    SIGNATURE_INPUT_HEADER_INVALID_COMPONENT_NAME = (
-        "SignatureInputHeaderInvalidComponentName"
-    )
+    SIGNATURE_INPUT_HEADER_VALUE_NOT_INNER_LIST = "SignatureInputHeaderValueNotInnerList"
+    SIGNATURE_INPUT_HEADER_VALUE_MISSING_COMPONENTS = "SignatureInputHeaderValueMissingComponents"
+    SIGNATURE_INPUT_HEADER_INVALID_COMPONENT_TYPE = "SignatureInputHeaderInvalidComponentType"
+    SIGNATURE_INPUT_HEADER_INVALID_COMPONENT_NAME = "SignatureInputHeaderInvalidComponentName"
     SIGNATURE_INPUT_HEADER_INVALID_HEADER_COMPONENT_PARAMETER = (
         "SignatureInputHeaderInvalidHeaderComponentParameter"
     )
@@ -942,14 +875,8 @@ class AttributionReportingIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            violation_type=AttributionReportingIssueType.from_json(
-                json["violationType"]
-            ),
-            request=(
-                AffectedRequest.from_json(json["request"])
-                if "request" in json
-                else None
-            ),
+            violation_type=AttributionReportingIssueType.from_json(json["violationType"]),
+            request=(AffectedRequest.from_json(json["request"]) if "request" in json else None),
             violating_node_id=(
                 dom.BackendNodeId.from_json(json["violatingNodeId"])
                 if "violatingNodeId" in json
@@ -1018,9 +945,7 @@ class NavigatorUserAgentIssueDetails:
         return cls(
             url=str(json["url"]),
             location=(
-                SourceCodeLocation.from_json(json["location"])
-                if "location" in json
-                else None
+                SourceCodeLocation.from_json(json["location"]) if "location" in json else None
             ),
         )
 
@@ -1040,9 +965,7 @@ class SharedDictionaryIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            shared_dictionary_error=SharedDictionaryError.from_json(
-                json["sharedDictionaryError"]
-            ),
+            shared_dictionary_error=SharedDictionaryError.from_json(json["sharedDictionaryError"]),
             request=AffectedRequest.from_json(json["request"]),
         )
 
@@ -1080,17 +1003,13 @@ class GenericIssueErrorType(enum.Enum):
     FORM_DUPLICATE_ID_FOR_INPUT_ERROR = "FormDuplicateIdForInputError"
     FORM_INPUT_WITH_NO_LABEL_ERROR = "FormInputWithNoLabelError"
     FORM_AUTOCOMPLETE_ATTRIBUTE_EMPTY_ERROR = "FormAutocompleteAttributeEmptyError"
-    FORM_EMPTY_ID_AND_NAME_ATTRIBUTES_FOR_INPUT_ERROR = (
-        "FormEmptyIdAndNameAttributesForInputError"
-    )
+    FORM_EMPTY_ID_AND_NAME_ATTRIBUTES_FOR_INPUT_ERROR = "FormEmptyIdAndNameAttributesForInputError"
     FORM_ARIA_LABELLED_BY_TO_NON_EXISTING_ID = "FormAriaLabelledByToNonExistingId"
     FORM_INPUT_ASSIGNED_AUTOCOMPLETE_VALUE_TO_ID_OR_NAME_ATTRIBUTE_ERROR = (
         "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
     )
     FORM_LABEL_HAS_NEITHER_FOR_NOR_NESTED_INPUT = "FormLabelHasNeitherForNorNestedInput"
-    FORM_LABEL_FOR_MATCHES_NON_EXISTING_ID_ERROR = (
-        "FormLabelForMatchesNonExistingIdError"
-    )
+    FORM_LABEL_FOR_MATCHES_NON_EXISTING_ID_ERROR = "FormLabelForMatchesNonExistingIdError"
     FORM_INPUT_HAS_WRONG_BUT_WELL_INTENDED_AUTOCOMPLETE_VALUE_ERROR = (
         "FormInputHasWrongButWellIntendedAutocompleteValueError"
     )
@@ -1138,24 +1057,16 @@ class GenericIssueDetails:
     def from_json(cls, json):
         return cls(
             error_type=GenericIssueErrorType.from_json(json["errorType"]),
-            frame_id=(
-                page.FrameId.from_json(json["frameId"]) if "frameId" in json else None
-            ),
+            frame_id=(page.FrameId.from_json(json["frameId"]) if "frameId" in json else None),
             violating_node_id=(
                 dom.BackendNodeId.from_json(json["violatingNodeId"])
                 if "violatingNodeId" in json
                 else None
             ),
             violating_node_attribute=(
-                str(json["violatingNodeAttribute"])
-                if "violatingNodeAttribute" in json
-                else None
+                str(json["violatingNodeAttribute"]) if "violatingNodeAttribute" in json else None
             ),
-            request=(
-                AffectedRequest.from_json(json["request"])
-                if "request" in json
-                else None
-            ),
+            request=(AffectedRequest.from_json(json["request"]) if "request" in json else None),
         )
 
 
@@ -1184,14 +1095,10 @@ class DeprecationIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            source_code_location=SourceCodeLocation.from_json(
-                json["sourceCodeLocation"]
-            ),
+            source_code_location=SourceCodeLocation.from_json(json["sourceCodeLocation"]),
             type_=str(json["type"]),
             affected_frame=(
-                AffectedFrame.from_json(json["affectedFrame"])
-                if "affectedFrame" in json
-                else None
+                AffectedFrame.from_json(json["affectedFrame"]) if "affectedFrame" in json else None
             ),
         )
 
@@ -1274,9 +1181,7 @@ class FederatedAuthRequestIssueDetails:
 
     def to_json(self):
         json = dict()
-        json["federatedAuthRequestIssueReason"] = (
-            self.federated_auth_request_issue_reason.to_json()
-        )
+        json["federatedAuthRequestIssueReason"] = self.federated_auth_request_issue_reason.to_json()
         return json
 
     @classmethod
@@ -1355,9 +1260,7 @@ class FederatedAuthRequestIssueReason(enum.Enum):
 
 @dataclass
 class FederatedAuthUserInfoRequestIssueDetails:
-    federated_auth_user_info_request_issue_reason: (
-        FederatedAuthUserInfoRequestIssueReason
-    )
+    federated_auth_user_info_request_issue_reason: FederatedAuthUserInfoRequestIssueReason
 
     def to_json(self):
         json = dict()
@@ -1420,12 +1323,8 @@ class ClientHintIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            source_code_location=SourceCodeLocation.from_json(
-                json["sourceCodeLocation"]
-            ),
-            client_hint_issue_reason=ClientHintIssueReason.from_json(
-                json["clientHintIssueReason"]
-            ),
+            source_code_location=SourceCodeLocation.from_json(json["sourceCodeLocation"]),
+            client_hint_issue_reason=ClientHintIssueReason.from_json(json["clientHintIssueReason"]),
         )
 
 
@@ -1453,9 +1352,7 @@ class FailedRequestInfo:
             url=str(json["url"]),
             failure_message=str(json["failureMessage"]),
             request_id=(
-                network.RequestId.from_json(json["requestId"])
-                if "requestId" in json
-                else None
+                network.RequestId.from_json(json["requestId"]) if "requestId" in json else None
             ),
         )
 
@@ -1573,9 +1470,7 @@ class StylesheetLoadingIssueDetails:
     def to_json(self):
         json = dict()
         json["sourceCodeLocation"] = self.source_code_location.to_json()
-        json["styleSheetLoadingIssueReason"] = (
-            self.style_sheet_loading_issue_reason.to_json()
-        )
+        json["styleSheetLoadingIssueReason"] = self.style_sheet_loading_issue_reason.to_json()
         if self.failed_request_info is not None:
             json["failedRequestInfo"] = self.failed_request_info.to_json()
         return json
@@ -1583,9 +1478,7 @@ class StylesheetLoadingIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            source_code_location=SourceCodeLocation.from_json(
-                json["sourceCodeLocation"]
-            ),
+            source_code_location=SourceCodeLocation.from_json(json["sourceCodeLocation"]),
             style_sheet_loading_issue_reason=StyleSheetLoadingIssueReason.from_json(
                 json["styleSheetLoadingIssueReason"]
             ),
@@ -1638,15 +1531,11 @@ class PropertyRuleIssueDetails:
     @classmethod
     def from_json(cls, json):
         return cls(
-            source_code_location=SourceCodeLocation.from_json(
-                json["sourceCodeLocation"]
-            ),
+            source_code_location=SourceCodeLocation.from_json(json["sourceCodeLocation"]),
             property_rule_issue_reason=PropertyRuleIssueReason.from_json(
                 json["propertyRuleIssueReason"]
             ),
-            property_value=(
-                str(json["propertyValue"]) if "propertyValue" in json else None
-            ),
+            property_value=(str(json["propertyValue"]) if "propertyValue" in json else None),
         )
 
 
@@ -1685,11 +1574,7 @@ class UserReidentificationIssueDetails:
     def from_json(cls, json):
         return cls(
             type_=UserReidentificationIssueType.from_json(json["type"]),
-            request=(
-                AffectedRequest.from_json(json["request"])
-                if "request" in json
-                else None
-            ),
+            request=(AffectedRequest.from_json(json["request"]) if "request" in json else None),
         )
 
 
@@ -1746,37 +1631,25 @@ class InspectorIssueDetails:
 
     mixed_content_issue_details: typing.Optional[MixedContentIssueDetails] = None
 
-    blocked_by_response_issue_details: typing.Optional[
-        BlockedByResponseIssueDetails
-    ] = None
+    blocked_by_response_issue_details: typing.Optional[BlockedByResponseIssueDetails] = None
 
     heavy_ad_issue_details: typing.Optional[HeavyAdIssueDetails] = None
 
-    content_security_policy_issue_details: typing.Optional[
-        ContentSecurityPolicyIssueDetails
-    ] = None
+    content_security_policy_issue_details: typing.Optional[ContentSecurityPolicyIssueDetails] = None
 
-    shared_array_buffer_issue_details: typing.Optional[
-        SharedArrayBufferIssueDetails
-    ] = None
+    shared_array_buffer_issue_details: typing.Optional[SharedArrayBufferIssueDetails] = None
 
     low_text_contrast_issue_details: typing.Optional[LowTextContrastIssueDetails] = None
 
     cors_issue_details: typing.Optional[CorsIssueDetails] = None
 
-    attribution_reporting_issue_details: typing.Optional[
-        AttributionReportingIssueDetails
-    ] = None
+    attribution_reporting_issue_details: typing.Optional[AttributionReportingIssueDetails] = None
 
     quirks_mode_issue_details: typing.Optional[QuirksModeIssueDetails] = None
 
-    partitioning_blob_url_issue_details: typing.Optional[
-        PartitioningBlobURLIssueDetails
-    ] = None
+    partitioning_blob_url_issue_details: typing.Optional[PartitioningBlobURLIssueDetails] = None
 
-    navigator_user_agent_issue_details: typing.Optional[
-        NavigatorUserAgentIssueDetails
-    ] = None
+    navigator_user_agent_issue_details: typing.Optional[NavigatorUserAgentIssueDetails] = None
 
     generic_issue_details: typing.Optional[GenericIssueDetails] = None
 
@@ -1784,9 +1657,7 @@ class InspectorIssueDetails:
 
     client_hint_issue_details: typing.Optional[ClientHintIssueDetails] = None
 
-    federated_auth_request_issue_details: typing.Optional[
-        FederatedAuthRequestIssueDetails
-    ] = None
+    federated_auth_request_issue_details: typing.Optional[FederatedAuthRequestIssueDetails] = None
 
     bounce_tracking_issue_details: typing.Optional[BounceTrackingIssueDetails] = None
 
@@ -1794,9 +1665,7 @@ class InspectorIssueDetails:
         CookieDeprecationMetadataIssueDetails
     ] = None
 
-    stylesheet_loading_issue_details: typing.Optional[StylesheetLoadingIssueDetails] = (
-        None
-    )
+    stylesheet_loading_issue_details: typing.Optional[StylesheetLoadingIssueDetails] = None
 
     property_rule_issue_details: typing.Optional[PropertyRuleIssueDetails] = None
 
@@ -1804,34 +1673,24 @@ class InspectorIssueDetails:
         FederatedAuthUserInfoRequestIssueDetails
     ] = None
 
-    shared_dictionary_issue_details: typing.Optional[SharedDictionaryIssueDetails] = (
-        None
-    )
+    shared_dictionary_issue_details: typing.Optional[SharedDictionaryIssueDetails] = None
 
     select_element_accessibility_issue_details: typing.Optional[
         SelectElementAccessibilityIssueDetails
     ] = None
 
-    sri_message_signature_issue_details: typing.Optional[
-        SRIMessageSignatureIssueDetails
-    ] = None
+    sri_message_signature_issue_details: typing.Optional[SRIMessageSignatureIssueDetails] = None
 
-    user_reidentification_issue_details: typing.Optional[
-        UserReidentificationIssueDetails
-    ] = None
+    user_reidentification_issue_details: typing.Optional[UserReidentificationIssueDetails] = None
 
     def to_json(self):
         json = dict()
         if self.cookie_issue_details is not None:
             json["cookieIssueDetails"] = self.cookie_issue_details.to_json()
         if self.mixed_content_issue_details is not None:
-            json["mixedContentIssueDetails"] = (
-                self.mixed_content_issue_details.to_json()
-            )
+            json["mixedContentIssueDetails"] = self.mixed_content_issue_details.to_json()
         if self.blocked_by_response_issue_details is not None:
-            json["blockedByResponseIssueDetails"] = (
-                self.blocked_by_response_issue_details.to_json()
-            )
+            json["blockedByResponseIssueDetails"] = self.blocked_by_response_issue_details.to_json()
         if self.heavy_ad_issue_details is not None:
             json["heavyAdIssueDetails"] = self.heavy_ad_issue_details.to_json()
         if self.content_security_policy_issue_details is not None:
@@ -1839,13 +1698,9 @@ class InspectorIssueDetails:
                 self.content_security_policy_issue_details.to_json()
             )
         if self.shared_array_buffer_issue_details is not None:
-            json["sharedArrayBufferIssueDetails"] = (
-                self.shared_array_buffer_issue_details.to_json()
-            )
+            json["sharedArrayBufferIssueDetails"] = self.shared_array_buffer_issue_details.to_json()
         if self.low_text_contrast_issue_details is not None:
-            json["lowTextContrastIssueDetails"] = (
-                self.low_text_contrast_issue_details.to_json()
-            )
+            json["lowTextContrastIssueDetails"] = self.low_text_contrast_issue_details.to_json()
         if self.cors_issue_details is not None:
             json["corsIssueDetails"] = self.cors_issue_details.to_json()
         if self.attribution_reporting_issue_details is not None:
@@ -1873,29 +1728,21 @@ class InspectorIssueDetails:
                 self.federated_auth_request_issue_details.to_json()
             )
         if self.bounce_tracking_issue_details is not None:
-            json["bounceTrackingIssueDetails"] = (
-                self.bounce_tracking_issue_details.to_json()
-            )
+            json["bounceTrackingIssueDetails"] = self.bounce_tracking_issue_details.to_json()
         if self.cookie_deprecation_metadata_issue_details is not None:
             json["cookieDeprecationMetadataIssueDetails"] = (
                 self.cookie_deprecation_metadata_issue_details.to_json()
             )
         if self.stylesheet_loading_issue_details is not None:
-            json["stylesheetLoadingIssueDetails"] = (
-                self.stylesheet_loading_issue_details.to_json()
-            )
+            json["stylesheetLoadingIssueDetails"] = self.stylesheet_loading_issue_details.to_json()
         if self.property_rule_issue_details is not None:
-            json["propertyRuleIssueDetails"] = (
-                self.property_rule_issue_details.to_json()
-            )
+            json["propertyRuleIssueDetails"] = self.property_rule_issue_details.to_json()
         if self.federated_auth_user_info_request_issue_details is not None:
             json["federatedAuthUserInfoRequestIssueDetails"] = (
                 self.federated_auth_user_info_request_issue_details.to_json()
             )
         if self.shared_dictionary_issue_details is not None:
-            json["sharedDictionaryIssueDetails"] = (
-                self.shared_dictionary_issue_details.to_json()
-            )
+            json["sharedDictionaryIssueDetails"] = self.shared_dictionary_issue_details.to_json()
         if self.select_element_accessibility_issue_details is not None:
             json["selectElementAccessibilityIssueDetails"] = (
                 self.select_element_accessibility_issue_details.to_json()
@@ -1924,9 +1771,7 @@ class InspectorIssueDetails:
                 else None
             ),
             blocked_by_response_issue_details=(
-                BlockedByResponseIssueDetails.from_json(
-                    json["blockedByResponseIssueDetails"]
-                )
+                BlockedByResponseIssueDetails.from_json(json["blockedByResponseIssueDetails"])
                 if "blockedByResponseIssueDetails" in json
                 else None
             ),
@@ -1943,16 +1788,12 @@ class InspectorIssueDetails:
                 else None
             ),
             shared_array_buffer_issue_details=(
-                SharedArrayBufferIssueDetails.from_json(
-                    json["sharedArrayBufferIssueDetails"]
-                )
+                SharedArrayBufferIssueDetails.from_json(json["sharedArrayBufferIssueDetails"])
                 if "sharedArrayBufferIssueDetails" in json
                 else None
             ),
             low_text_contrast_issue_details=(
-                LowTextContrastIssueDetails.from_json(
-                    json["lowTextContrastIssueDetails"]
-                )
+                LowTextContrastIssueDetails.from_json(json["lowTextContrastIssueDetails"])
                 if "lowTextContrastIssueDetails" in json
                 else None
             ),
@@ -1962,9 +1803,7 @@ class InspectorIssueDetails:
                 else None
             ),
             attribution_reporting_issue_details=(
-                AttributionReportingIssueDetails.from_json(
-                    json["attributionReportingIssueDetails"]
-                )
+                AttributionReportingIssueDetails.from_json(json["attributionReportingIssueDetails"])
                 if "attributionReportingIssueDetails" in json
                 else None
             ),
@@ -1974,16 +1813,12 @@ class InspectorIssueDetails:
                 else None
             ),
             partitioning_blob_url_issue_details=(
-                PartitioningBlobURLIssueDetails.from_json(
-                    json["partitioningBlobURLIssueDetails"]
-                )
+                PartitioningBlobURLIssueDetails.from_json(json["partitioningBlobURLIssueDetails"])
                 if "partitioningBlobURLIssueDetails" in json
                 else None
             ),
             navigator_user_agent_issue_details=(
-                NavigatorUserAgentIssueDetails.from_json(
-                    json["navigatorUserAgentIssueDetails"]
-                )
+                NavigatorUserAgentIssueDetails.from_json(json["navigatorUserAgentIssueDetails"])
                 if "navigatorUserAgentIssueDetails" in json
                 else None
             ),
@@ -2003,9 +1838,7 @@ class InspectorIssueDetails:
                 else None
             ),
             federated_auth_request_issue_details=(
-                FederatedAuthRequestIssueDetails.from_json(
-                    json["federatedAuthRequestIssueDetails"]
-                )
+                FederatedAuthRequestIssueDetails.from_json(json["federatedAuthRequestIssueDetails"])
                 if "federatedAuthRequestIssueDetails" in json
                 else None
             ),
@@ -2022,9 +1855,7 @@ class InspectorIssueDetails:
                 else None
             ),
             stylesheet_loading_issue_details=(
-                StylesheetLoadingIssueDetails.from_json(
-                    json["stylesheetLoadingIssueDetails"]
-                )
+                StylesheetLoadingIssueDetails.from_json(json["stylesheetLoadingIssueDetails"])
                 if "stylesheetLoadingIssueDetails" in json
                 else None
             ),
@@ -2041,9 +1872,7 @@ class InspectorIssueDetails:
                 else None
             ),
             shared_dictionary_issue_details=(
-                SharedDictionaryIssueDetails.from_json(
-                    json["sharedDictionaryIssueDetails"]
-                )
+                SharedDictionaryIssueDetails.from_json(json["sharedDictionaryIssueDetails"])
                 if "sharedDictionaryIssueDetails" in json
                 else None
             ),
@@ -2055,16 +1884,12 @@ class InspectorIssueDetails:
                 else None
             ),
             sri_message_signature_issue_details=(
-                SRIMessageSignatureIssueDetails.from_json(
-                    json["sriMessageSignatureIssueDetails"]
-                )
+                SRIMessageSignatureIssueDetails.from_json(json["sriMessageSignatureIssueDetails"])
                 if "sriMessageSignatureIssueDetails" in json
                 else None
             ),
             user_reidentification_issue_details=(
-                UserReidentificationIssueDetails.from_json(
-                    json["userReidentificationIssueDetails"]
-                )
+                UserReidentificationIssueDetails.from_json(json["userReidentificationIssueDetails"])
                 if "userReidentificationIssueDetails" in json
                 else None
             ),
@@ -2124,9 +1949,7 @@ def get_encoded_response(
     encoding: str,
     quality: typing.Optional[float] = None,
     size_only: typing.Optional[bool] = None,
-) -> typing.Generator[
-    T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.Optional[str], int, int]
-]:
+) -> typing.Generator[T_JSON_DICT, T_JSON_DICT, typing.Tuple[typing.Optional[str], int, int]]:
     """
     Returns the response body and size if it were re-encoded with the specified settings. Only
     applies to images.

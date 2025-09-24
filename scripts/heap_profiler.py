@@ -198,9 +198,7 @@ def get_object_by_heap_object_id(
     return runtime.RemoteObject.from_json(json["result"])
 
 
-def get_sampling_profile() -> (
-    typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingHeapProfile]
-):
+def get_sampling_profile() -> typing.Generator[T_JSON_DICT, T_JSON_DICT, SamplingHeapProfile]:
     """
 
 
@@ -227,13 +225,9 @@ def start_sampling(
     if sampling_interval is not None:
         params["samplingInterval"] = sampling_interval
     if include_objects_collected_by_major_gc is not None:
-        params["includeObjectsCollectedByMajorGC"] = (
-            include_objects_collected_by_major_gc
-        )
+        params["includeObjectsCollectedByMajorGC"] = include_objects_collected_by_major_gc
     if include_objects_collected_by_minor_gc is not None:
-        params["includeObjectsCollectedByMinorGC"] = (
-            include_objects_collected_by_minor_gc
-        )
+        params["includeObjectsCollectedByMinorGC"] = include_objects_collected_by_minor_gc
     cmd_dict: T_JSON_DICT = {
         "method": "HeapProfiler.startSampling",
         "params": params,

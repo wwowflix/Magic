@@ -194,9 +194,7 @@ def _msvc14_get_vc_env(plat_spec):
             stderr=subprocess.STDOUT,
         ).decode("utf-16le", errors="replace")
     except subprocess.CalledProcessError as exc:
-        raise distutils.errors.DistutilsPlatformError(
-            "Error executing {}".format(exc.cmd)
-        ) from exc
+        raise distutils.errors.DistutilsPlatformError("Error executing {}".format(exc.cmd)) from exc
 
     env = {
         key.lower(): value
@@ -356,11 +354,7 @@ class PlatformInfo:
         return (
             ""
             if (self.current_cpu == "x86" and hidex86)
-            else (
-                r"\x64"
-                if (self.current_cpu == "amd64" and x64)
-                else r"\%s" % self.current_cpu
-            )
+            else (r"\x64" if (self.current_cpu == "amd64" and x64) else r"\%s" % self.current_cpu)
         )
 
     def target_dir(self, hidex86=False, x64=False):
@@ -382,11 +376,7 @@ class PlatformInfo:
         return (
             ""
             if (self.target_cpu == "x86" and hidex86)
-            else (
-                r"\x64"
-                if (self.target_cpu == "amd64" and x64)
-                else r"\%s" % self.target_cpu
-            )
+            else (r"\x64" if (self.target_cpu == "amd64" and x64) else r"\%s" % self.target_cpu)
         )
 
     def cross_dir(self, forcex86=False):
@@ -407,9 +397,7 @@ class PlatformInfo:
         """
         current = "x86" if forcex86 else self.current_cpu
         return (
-            ""
-            if self.target_cpu == current
-            else self.target_dir().replace("\\", "\\%s_" % current)
+            "" if self.target_cpu == current else self.target_dir().replace("\\", "\\%s_" % current)
         )
 
 
@@ -640,9 +628,7 @@ class SystemInfo:
         reg_vc_vers = self.find_reg_vs_vers()
 
         if not (reg_vc_vers or self.known_vs_paths):
-            raise distutils.errors.DistutilsPlatformError(
-                "No Microsoft Visual C++ version found"
-            )
+            raise distutils.errors.DistutilsPlatformError("No Microsoft Visual C++ version found")
 
         vc_vers = set(reg_vc_vers)
         vc_vers.update(self.known_vs_paths)
@@ -711,9 +697,7 @@ class SystemInfo:
                 listdir(join(vs_path, r"VC\Tools\MSVC"))
 
                 # Store version and path
-                vs_versions[self._as_float_version(state["installationVersion"])] = (
-                    vs_path
-                )
+                vs_versions[self._as_float_version(state["installationVersion"])] = vs_path
 
             except (OSError, IOError, KeyError):
                 # Skip if "state.json" file is missing or bad format
@@ -749,9 +733,7 @@ class SystemInfo:
             path
         """
         # Default path
-        default = join(
-            self.ProgramFilesx86, "Microsoft Visual Studio %0.1f" % self.vs_ver
-        )
+        default = join(self.ProgramFilesx86, "Microsoft Visual Studio %0.1f" % self.vs_ver)
 
         # Try to get path from registry, if fail use default path
         return self.ri.lookup(self.ri.vs, "%0.1f" % self.vs_ver) or default
@@ -813,9 +795,7 @@ class SystemInfo:
         str
             path
         """
-        default = join(
-            self.ProgramFilesx86, r"Microsoft Visual Studio %0.1f\VC" % self.vs_ver
-        )
+        default = join(self.ProgramFilesx86, r"Microsoft Visual Studio %0.1f\VC" % self.vs_ver)
 
         # Try to get "VC++ for Python" path from registry as default path
         reg_path = join(self.ri.vc_for_python, "%0.1f" % self.vs_ver)
@@ -1275,15 +1255,11 @@ class EnvironmentInfo:
             tools += [join(si.VCInstallDir, path)]
 
         elif self.vs_ver >= 15.0:
-            host_dir = (
-                r"bin\HostX86%s" if self.pi.current_is_x86() else r"bin\HostX64%s"
-            )
+            host_dir = r"bin\HostX86%s" if self.pi.current_is_x86() else r"bin\HostX64%s"
             tools += [join(si.VCInstallDir, host_dir % self.pi.target_dir(x64=True))]
 
             if self.pi.current_cpu != self.pi.target_cpu:
-                tools += [
-                    join(si.VCInstallDir, host_dir % self.pi.current_dir(x64=True))
-                ]
+                tools += [join(si.VCInstallDir, host_dir % self.pi.current_dir(x64=True))]
 
         else:
             tools += [join(si.VCInstallDir, "Bin")]

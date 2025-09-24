@@ -26,7 +26,6 @@ from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables.otBase import OTTableWriter
 from fontTools.ttLib.tables.otBase import OTTableReader
 from fontTools.ttLib.tables import otTables as ot
-from io import BytesIO
 import struct
 import logging
 import re
@@ -265,9 +264,7 @@ class CFFFontSet(object):
                 if not hasattr(self, "fontNames"):
                     self.fontNames = ["CFF2Font"]
                 cff2GetGlyphOrder = self.otFont.getGlyphOrder
-                topDict = TopDict(
-                    GlobalSubrs=self.GlobalSubrs, cff2GetGlyphOrder=cff2GetGlyphOrder
-                )
+                topDict = TopDict(GlobalSubrs=self.GlobalSubrs, cff2GetGlyphOrder=cff2GetGlyphOrder)
                 self.topDictIndex = TopDictIndex(None, cff2GetGlyphOrder)
             self.topDictIndex.append(topDict)
             for element in content:
@@ -729,9 +726,7 @@ class GlobalSubrsIndex(Index):
                 tt["CFF "].cff[0].GlobalSubrs.toXML(writer)
 
         """
-        xmlWriter.comment(
-            "The 'index' attribute is only for humans; " "it is ignored when parsed."
-        )
+        xmlWriter.comment("The 'index' attribute is only for humans; " "it is ignored when parsed.")
         xmlWriter.newline()
         for i in range(len(self)):
             subr = self[i]
@@ -1722,7 +1717,7 @@ class EncodingConverter(SimpleConverter):
 
 
 def readSID(file):
-    """Read a String ID (SID) — 2-byte unsigned integer."""
+    """Read a String ID (SID) â€" 2-byte unsigned integer."""
     data = file.read(2)
     if len(data) != 2:
         raise EOFError("Unexpected end of file while reading SID")
@@ -1761,7 +1756,7 @@ def parseEncoding0(charset, file):
 
 def parseEncoding1(charset, file):
     """
-    Format 1: range-based encoding.
+    Format 1: range-based encoding.
     After reading the base ranges, optionally parse the supplement.
     """
     nRanges = readCard8(file)
@@ -2357,9 +2352,7 @@ class TopDictCompiler(DictCompiler):
                 else:
                     charsetCode = getStdCharSet(self.dictObj.charset)
                 if charsetCode is None:
-                    children.append(
-                        CharsetCompiler(strings, self.dictObj.charset, self)
-                    )
+                    children.append(CharsetCompiler(strings, self.dictObj.charset, self))
                 else:
                     self.rawDict["charset"] = charsetCode
             if hasattr(self.dictObj, "Encoding") and self.dictObj.Encoding:
@@ -2530,9 +2523,7 @@ class BaseDict(object):
             conv.xmlWrite(xmlWriter, name, value)
         ignoredNames = set(self.rawDict) - set(self.order)
         if ignoredNames:
-            xmlWriter.comment(
-                "some keys were ignored: %s" % " ".join(sorted(ignoredNames))
-            )
+            xmlWriter.comment("some keys were ignored: %s" % " ".join(sorted(ignoredNames)))
             xmlWriter.newline()
 
     def fromXML(self, name, attrs, content):

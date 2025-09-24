@@ -53,16 +53,10 @@ if TYPE_CHECKING or HAVE_LITERAL:
     _LongDoubleCodes = Literal["longdouble", "longfloat", "g", "=g", "<g", ">g"]
 
     _CSingleCodes = Literal["csingle", "singlecomplex", "F", "=F", "<F", ">F"]
-    _CDoubleCodes = Literal[
-        "cdouble", "complex", "complex_", "cfloat", "D", "=D", "<D", ">D"
-    ]
-    _CLongDoubleCodes = Literal[
-        "clongdouble", "clongfloat", "longcomplex", "G", "=G", "<G", ">G"
-    ]
+    _CDoubleCodes = Literal["cdouble", "complex", "complex_", "cfloat", "D", "=D", "<D", ">D"]
+    _CLongDoubleCodes = Literal["clongdouble", "clongfloat", "longcomplex", "G", "=G", "<G", ">G"]
 
-    _StrCodes = Literal[
-        "str", "str_", "str0", "unicode", "unicode_", "U", "=U", "<U", ">U"
-    ]
+    _StrCodes = Literal["str", "str_", "str0", "unicode", "unicode_", "U", "=U", "<U", ">U"]
     _BytesCodes = Literal["bytes", "bytes_", "bytes0", "S", "=S", "<S", ">S"]
     _VoidCodes = Literal["void", "void0", "V", "=V", "<V", ">V"]
     _ObjectCodes = Literal["object", "object_", "O", "=O", "<O", ">O"]

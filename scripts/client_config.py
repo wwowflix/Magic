@@ -136,11 +136,7 @@ class ClientConfig:
                     if n_url.path in remote_add.netloc:
                         return None
             return os.environ.get(
-                (
-                    "https_proxy"
-                    if self.remote_server_addr.startswith("https://")
-                    else "http_proxy"
-                ),
+                ("https_proxy" if self.remote_server_addr.startswith("https://") else "http_proxy"),
                 os.environ.get(
                     "HTTPS_PROXY"
                     if self.remote_server_addr.startswith("https://")
@@ -159,9 +155,7 @@ class ClientConfig:
         """Returns the authorization to add to the request headers."""
         if self.auth_type is AuthType.BASIC and self.username and self.password:
             credentials = f"{self.username}:{self.password}"
-            encoded_credentials = base64.b64encode(credentials.encode("utf-8")).decode(
-                "utf-8"
-            )
+            encoded_credentials = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
             return {"Authorization": f"{AuthType.BASIC.value} {encoded_credentials}"}
         if self.auth_type is AuthType.BEARER and self.token:
             return {"Authorization": f"{AuthType.BEARER.value} {self.token}"}

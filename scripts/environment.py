@@ -34,9 +34,7 @@ class EnvironmentConfig:
         try:
             conf_desc = self._conf_keys[name]
         except KeyError:
-            raise AttributeError(
-                f"'EnvironmentConfig' object has no attribute '{name}'"
-            ) from None
+            raise AttributeError(f"'EnvironmentConfig' object has no attribute '{name}'") from None
 
         return self._get_var(name, conf_desc)
 
@@ -76,9 +74,7 @@ class EnvironmentConfig:
         return var
 
     def clone(self, hook_handler):
-        ec = self.__class__(
-            distutils_section=self._distutils_section, **self._conf_keys
-        )
+        ec = self.__class__(distutils_section=self._distutils_section, **self._conf_keys)
         ec._hook_handler = hook_handler
         return ec
 

@@ -1,4 +1,4 @@
-﻿# Your API Key
+# Your API Key
 $apiKey = "AIzaSyAFhk0N5grMqInsZkH4pTJBdyXVJ-n5xs4"
 
 # Keyword you want to search on YouTube

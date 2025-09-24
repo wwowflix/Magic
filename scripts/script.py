@@ -252,15 +252,11 @@ class Script:
 
     def add_console_message_handler(self, handler):
         self._subscribe_to_log_entries()
-        return self.conn.add_callback(
-            LogEntryAdded, self._handle_log_entry("console", handler)
-        )
+        return self.conn.add_callback(LogEntryAdded, self._handle_log_entry("console", handler))
 
     def add_javascript_error_handler(self, handler):
         self._subscribe_to_log_entries()
-        return self.conn.add_callback(
-            LogEntryAdded, self._handle_log_entry("javascript", handler)
-        )
+        return self.conn.add_callback(LogEntryAdded, self._handle_log_entry("javascript", handler))
 
     def remove_console_message_handler(self, id):
         self.conn.remove_callback(LogEntryAdded, id)
@@ -308,9 +304,7 @@ class Script:
         """
 
         if self.driver is None:
-            raise WebDriverException(
-                "Driver reference is required for script execution"
-            )
+            raise WebDriverException("Driver reference is required for script execution")
         browsing_context_id = self.driver.current_window_handle
 
         # Convert arguments to the format expected by BiDi call_function (LocalValue Type)
@@ -373,11 +367,7 @@ class Script:
             # Convert Python datetime to JavaScript Date (ISO 8601 format)
             return {
                 "type": "date",
-                "value": (
-                    value.isoformat() + "Z"
-                    if value.tzinfo is None
-                    else value.isoformat()
-                ),
+                "value": (value.isoformat() + "Z" if value.tzinfo is None else value.isoformat()),
             }
         elif isinstance(value, datetime.date):
             # Convert Python date to JavaScript Date
@@ -594,10 +584,7 @@ class Script:
             self.log_entry_subscribed = True
 
     def _unsubscribe_from_log_entries(self):
-        if (
-            self.log_entry_subscribed
-            and LogEntryAdded.event_class not in self.conn.callbacks
-        ):
+        if self.log_entry_subscribed and LogEntryAdded.event_class not in self.conn.callbacks:
             session = Session(self.conn)
             self.conn.execute(session.unsubscribe(LogEntryAdded.event_class))
             self.log_entry_subscribed = False

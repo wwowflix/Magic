@@ -1,4 +1,4 @@
-﻿# deploy_to_github.ps1
+# deploy_to_github.ps1
 # =====================
 # This script automates:
 # git add . → git commit → git push

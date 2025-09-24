@@ -1,4 +1,4 @@
-﻿param (
+param (
     [string]$csvPath = "D:\Final_File_FOR_Automate.csv",
     [string]$scriptsRoot = "D:\MAGIC\scripts",
     [string]$reportPath = "D:\MAGIC\outputs\placeholder_rebuild_report.txt"

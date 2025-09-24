@@ -30,9 +30,7 @@ with np.errstate(all="ignore"):
 xfail_complex_tests = not sys.platform.startswith("linux") or functions_seem_flaky
 
 # TODO This can be xfail when the generator functions are got rid of.
-platform_skip = pytest.mark.skipif(
-    xfail_complex_tests, reason="Inadequate C99 complex support"
-)
+platform_skip = pytest.mark.skipif(xfail_complex_tests, reason="Inadequate C99 complex support")
 
 
 class TestCexp:
@@ -487,9 +485,7 @@ class TestCarg:
         check_real_value(ncu._arg, ncu.PZERO, ncu.PZERO, ncu.PZERO)
 
     # TODO This can be xfail when the generator functions are got rid of.
-    @pytest.mark.skip(
-        reason="Complex arithmetic with signed zero fails on most platforms"
-    )
+    @pytest.mark.skip(reason="Complex arithmetic with signed zero fails on most platforms")
     def test_zero(self):
         # carg(-0 +- 0i) returns +- pi
         check_real_value(ncu._arg, ncu.NZERO, ncu.PZERO, np.pi, False)
@@ -607,9 +603,7 @@ class TestSpecialComplexAVX:
 
 
 class TestComplexAbsoluteAVX:
-    @pytest.mark.parametrize(
-        "arraysize", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 18, 19]
-    )
+    @pytest.mark.parametrize("arraysize", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 18, 19])
     @pytest.mark.parametrize("stride", [-4, -3, -2, -1, 1, 2, 3, 4])
     @pytest.mark.parametrize("astype", [np.complex64, np.complex128])
     # test to ensure masking and strides work as intended in the AVX implementation

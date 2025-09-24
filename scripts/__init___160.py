@@ -3,7 +3,6 @@
 # Google Author(s): Behdad Esfahbod, Roozbeh Pournader
 
 from fontTools import ttLib
-import fontTools.merge.base
 from fontTools.merge.cmap import (
     computeMegaGlyphOrder,
     computeMegaCmap,
@@ -11,7 +10,6 @@ from fontTools.merge.cmap import (
 )
 from fontTools.merge.layout import layoutPreMerge, layoutPostMerge
 from fontTools.merge.options import Options
-import fontTools.merge.tables
 from fontTools.misc.loggingTools import Timer
 from functools import reduce
 import sys
@@ -187,9 +185,7 @@ def main(args=None):
     if options.input_file:
         with open(options.input_file) as inputfile:
             fontfiles = [
-                line.strip()
-                for line in inputfile.readlines()
-                if not line.lstrip().startswith("#")
+                line.strip() for line in inputfile.readlines() if not line.lstrip().startswith("#")
             ]
     for g in args:
         fontfiles.append(g)

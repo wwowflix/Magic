@@ -1,4 +1,4 @@
-﻿import requests
+import requests
 from bs4 import BeautifulSoup
 import time
 import random
@@ -84,21 +84,15 @@ class TwitterScraperV3:
         if len(results) < max_tweets:
             try:
                 print("Trying mobile site...")
-                mobile_url = (
-                    f"https://mobile.twitter.com/search?q={requests.utils.quote(query)}"
-                )
+                mobile_url = f"https://mobile.twitter.com/search?q={requests.utils.quote(query)}"
                 response = self.session.get(mobile_url, timeout=10)
 
                 if response.status_code == 200:
                     soup = BeautifulSoup(response.text, "html.parser")
-                    tweets = soup.select('div[data-testid="tweet"]') or soup.select(
-                        "div.tweet"
-                    )
+                    tweets = soup.select('div[data-testid="tweet"]') or soup.select("div.tweet")
 
                     for tweet in tweets:
-                        content = tweet.select_one(
-                            'div[data-testid="tweetText"], div.tweet-text'
-                        )
+                        content = tweet.select_one('div[data-testid="tweetText"], div.tweet-text')
                         if content:
                             results.append(
                                 {
@@ -116,7 +110,9 @@ class TwitterScraperV3:
         if len(results) < max_tweets:
             try:
                 print("Falling back to HTML scraping...")
-                html_url = f"https://twitter.com/search?q={requests.utils.quote(query)}&src=typed_query"
+                html_url = (
+                    f"https://twitter.com/search?q={requests.utils.quote(query)}&src=typed_query"
+                )
                 response = self.session.get(html_url, timeout=10)
 
                 if response.status_code == 200:

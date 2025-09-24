@@ -65,9 +65,7 @@ M366MASK = tuple(
 )
 M365MASK = list(M366MASK)
 M29, M30, M31 = list(range(1, 30)), list(range(1, 31)), list(range(1, 32))
-MDAY366MASK = tuple(
-    M31 + M29 + M31 + M30 + M31 + M30 + M31 + M31 + M30 + M31 + M30 + M31 + M31[:7]
-)
+MDAY366MASK = tuple(M31 + M29 + M31 + M30 + M31 + M30 + M31 + M31 + M30 + M31 + M30 + M31 + M31[:7])
 MDAY365MASK = list(MDAY366MASK)
 M29, M30, M31 = list(range(-29, 0)), list(range(-30, 0)), list(range(-31, 0))
 NMDAY366MASK = tuple(
@@ -513,8 +511,7 @@ class rrule(rrulebase):
                 # > then the UNTIL rule part MUST be specified as a date with
                 # > UTC time.
                 raise ValueError(
-                    "RRULE UNTIL values must be specified in UTC when DTSTART "
-                    "is timezone-aware"
+                    "RRULE UNTIL values must be specified in UTC when DTSTART " "is timezone-aware"
                 )
 
         if count is not None and until:
@@ -536,9 +533,7 @@ class rrule(rrulebase):
             self._bysetpos = None
         elif isinstance(bysetpos, integer_types):
             if bysetpos == 0 or not (-366 <= bysetpos <= 366):
-                raise ValueError(
-                    "bysetpos must be between 1 and 366, " "or between -366 and -1"
-                )
+                raise ValueError("bysetpos must be between 1 and 366, " "or between -366 and -1")
             self._bysetpos = (bysetpos,)
         else:
             self._bysetpos = tuple(bysetpos)
@@ -690,9 +685,7 @@ class rrule(rrulebase):
                 byhour = (byhour,)
 
             if freq == HOURLY:
-                self._byhour = self.__construct_byset(
-                    start=dtstart.hour, byxxx=byhour, base=24
-                )
+                self._byhour = self.__construct_byset(start=dtstart.hour, byxxx=byhour, base=24)
             else:
                 self._byhour = set(byhour)
 
@@ -787,9 +780,7 @@ class rrule(rrulebase):
             wday_strings = []
             for wday in original_rule["byweekday"]:
                 if wday.n:
-                    wday_strings.append(
-                        "{n:+d}{wday}".format(n=wday.n, wday=repr(wday)[0:2])
-                    )
+                    wday_strings.append("{n:+d}{wday}".format(n=wday.n, wday=repr(wday)[0:2]))
                 else:
                     wday_strings.append(repr(wday))
 
@@ -812,9 +803,7 @@ class rrule(rrulebase):
         ]:
             value = original_rule.get(key)
             if value:
-                parts.append(
-                    partfmt.format(name=name, vals=(",".join(str(v) for v in value)))
-                )
+                parts.append(partfmt.format(name=name, vals=(",".join(str(v) for v in value))))
 
         output.append("RRULE:" + ";".join(parts))
         return "\n".join(output)
@@ -836,9 +825,7 @@ class rrule(rrulebase):
         return rrule(**new_kwargs)
 
     def _iter(self):
-        year, month, day, hour, minute, second, weekday, yearday, _ = (
-            self._dtstart.timetuple()
-        )
+        year, month, day, hour, minute, second, weekday, yearday, _ = self._dtstart.timetuple()
 
         # Some local variables to speed things up a bit
         freq = self._freq
@@ -880,12 +867,8 @@ class rrule(rrulebase):
             }[freq]
             if (
                 (freq >= HOURLY and self._byhour and hour not in self._byhour)
-                or (
-                    freq >= MINUTELY and self._byminute and minute not in self._byminute
-                )
-                or (
-                    freq >= SECONDLY and self._bysecond and second not in self._bysecond
-                )
+                or (freq >= MINUTELY and self._byminute and minute not in self._byminute)
+                or (freq >= SECONDLY and self._bysecond and second not in self._bysecond)
             ):
                 timeset = ()
             else:
@@ -1017,9 +1000,7 @@ class rrule(rrulebase):
                     hour += ((23 - hour) // interval) * interval
 
                 if byhour:
-                    ndays, hour = self.__mod_distance(
-                        value=hour, byxxx=self._byhour, base=24
-                    )
+                    ndays, hour = self.__mod_distance(value=hour, byxxx=self._byhour, base=24)
                 else:
                     ndays, hour = divmod(hour + interval, 24)
 
@@ -1055,8 +1036,7 @@ class rrule(rrulebase):
 
                 if not valid:
                     raise ValueError(
-                        "Invalid combination of interval and "
-                        + "byhour resulting in empty rule."
+                        "Invalid combination of interval and " + "byhour resulting in empty rule."
                     )
 
                 timeset = gettimeset(hour, minute, second)
@@ -1305,9 +1285,7 @@ class _iterinfo(object):
                         lyearlen = 365 + calendar.isleap(year - 1)
                         if lno1wkst >= 4:
                             lno1wkst = 0
-                            lnumweeks = (
-                                52 + (lyearlen + (lyearweekday - rr._wkst) % 7) % 7 // 4
-                            )
+                            lnumweeks = 52 + (lyearlen + (lyearweekday - rr._wkst) % 7) % 7 // 4
                         else:
                             lnumweeks = 52 + (self.yearlen - no1wkst) % 7 // 4
                     else:
@@ -1632,9 +1610,7 @@ class _rrulestr(object):
 
     _handle_BYDAY = _handle_BYWEEKDAY
 
-    def _parse_rfc_rrule(
-        self, line, dtstart=None, cache=False, ignoretz=False, tzinfos=None
-    ):
+    def _parse_rfc_rrule(self, line, dtstart=None, cache=False, ignoretz=False, tzinfos=None):
         if line.find(":") != -1:
             name, value = line.split(":")
             if name != "RRULE":
@@ -1656,9 +1632,7 @@ class _rrulestr(object):
                 raise ValueError("invalid '%s': %s" % (name, value))
         return rrule(dtstart=dtstart, cache=cache, **rrkwargs)
 
-    def _parse_date_value(
-        self, date_value, parms, rule_tzids, ignoretz, tzids, tzinfos
-    ):
+    def _parse_date_value(self, date_value, parms, rule_tzids, ignoretz, tzids, tzinfos):
         global parser
         if not parser:
             from dateutil import parser
@@ -1682,10 +1656,7 @@ class _rrulestr(object):
                 else:
                     tzlookup = getattr(tzids, "get", None)
                     if tzlookup is None:
-                        msg = (
-                            "tzids must be a callable, mapping, or None, "
-                            "not %s" % tzids
-                        )
+                        msg = "tzids must be a callable, mapping, or None, " "not %s" % tzids
                         raise ValueError(msg)
 
                 TZID = tzlookup(tzkey)
@@ -1729,9 +1700,7 @@ class _rrulestr(object):
             forceset = True
             unfold = True
 
-        TZID_NAMES = dict(
-            map(lambda x: (x.upper(), x), re.findall("TZID=(?P<name>[^:]+):", s))
-        )
+        TZID_NAMES = dict(map(lambda x: (x.upper(), x), re.findall("TZID=(?P<name>[^:]+):", s)))
         s = s.upper()
         if not s.strip():
             raise ValueError("empty string")
@@ -1749,11 +1718,7 @@ class _rrulestr(object):
                     i += 1
         else:
             lines = s.split()
-        if (
-            not forceset
-            and len(lines) == 1
-            and (s.find(":") == -1 or s.startswith("RRULE:"))
-        ):
+        if not forceset and len(lines) == 1 and (s.find(":") == -1 or s.startswith("RRULE:")):
             return self._parse_rfc_rrule(
                 lines[0],
                 cache=cache,
@@ -1794,9 +1759,7 @@ class _rrulestr(object):
                     exrulevals.append(value)
                 elif name == "EXDATE":
                     exdatevals.extend(
-                        self._parse_date_value(
-                            value, parms, TZID_NAMES, ignoretz, tzids, tzinfos
-                        )
+                        self._parse_date_value(value, parms, TZID_NAMES, ignoretz, tzids, tzinfos)
                     )
                 elif name == "DTSTART":
                     dtvals = self._parse_date_value(
@@ -1819,9 +1782,7 @@ class _rrulestr(object):
                     )
                 for value in rdatevals:
                     for datestr in value.split(","):
-                        rset.rdate(
-                            parser.parse(datestr, ignoretz=ignoretz, tzinfos=tzinfos)
-                        )
+                        rset.rdate(parser.parse(datestr, ignoretz=ignoretz, tzinfos=tzinfos))
                 for value in exrulevals:
                     rset.exrule(
                         self._parse_rfc_rrule(

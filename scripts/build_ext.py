@@ -67,8 +67,7 @@ class build_ext(Command):
         (
             "plat-name=",
             "p",
-            "platform name to cross-compile for, if supported "
-            "(default: %s)" % get_platform(),
+            "platform name to cross-compile for, if supported " "(default: %s)" % get_platform(),
         ),
         (
             "inplace",
@@ -224,9 +223,7 @@ class build_ext(Command):
             if not sysconfig.python_build:
                 # building third party extensions
                 self.library_dirs.append(
-                    os.path.join(
-                        sys.prefix, "lib", "python" + get_python_version(), "config"
-                    )
+                    os.path.join(sys.prefix, "lib", "python" + get_python_version(), "config")
                 )
             else:
                 # building python standard extensions
@@ -356,9 +353,7 @@ class build_ext(Command):
         just returns otherwise.
         """
         if not isinstance(extensions, list):
-            raise DistutilsSetupError(
-                "'ext_modules' option must be a list of Extension instances"
-            )
+            raise DistutilsSetupError("'ext_modules' option must be a list of Extension instances")
 
         for i, ext in enumerate(extensions):
             if isinstance(ext, Extension):
@@ -424,8 +419,7 @@ class build_ext(Command):
                 for macro in macros:
                     if not (isinstance(macro, tuple) and len(macro) in (1, 2)):
                         raise DistutilsSetupError(
-                            "'macros' element of build info dict "
-                            "must be 1- or 2-tuple"
+                            "'macros' element of build info dict " "must be 1- or 2-tuple"
                         )
                     if len(macro) == 1:
                         ext.undef_macros.append(macro[0])
@@ -479,9 +473,7 @@ class build_ext(Command):
             return
 
         with ThreadPoolExecutor(max_workers=workers) as executor:
-            futures = [
-                executor.submit(self.build_extension, ext) for ext in self.extensions
-            ]
+            futures = [executor.submit(self.build_extension, ext) for ext in self.extensions]
             for ext, fut in zip(self.extensions, futures):
                 with self._filter_build_errors(ext):
                     fut.result()
@@ -599,11 +591,7 @@ class build_ext(Command):
         if self.swig_cpp:
             log.warn("--swig-cpp is deprecated - use --swig-opts=-c++")
 
-        if (
-            self.swig_cpp
-            or ("-c++" in self.swig_opts)
-            or ("-c++" in extension.swig_opts)
-        ):
+        if self.swig_cpp or ("-c++" in self.swig_opts) or ("-c++" in extension.swig_opts):
             target_ext = ".cpp"
         else:
             target_ext = ".c"
@@ -657,8 +645,7 @@ class build_ext(Command):
                 return "swig.exe"
         else:
             raise DistutilsPlatformError(
-                "I don't know how to find (much less run) SWIG "
-                "on platform '%s'" % os.name
+                "I don't know how to find (much less run) SWIG " "on platform '%s'" % os.name
             )
 
     # -- Name generators -----------------------------------------------

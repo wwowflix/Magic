@@ -226,9 +226,7 @@ class BaseAsyncFileLock(BaseFileLock, metaclass=AsyncFileLockMeta):
         try:
             while True:
                 if not self.is_locked:
-                    _LOGGER.debug(
-                        "Attempting to acquire lock %s on %s", lock_id, lock_filename
-                    )
+                    _LOGGER.debug("Attempting to acquire lock %s on %s", lock_id, lock_filename)
                     await self._run_internal_method(self._acquire)
                 if self.is_locked:
                     _LOGGER.debug("Lock %s acquired on %s", lock_id, lock_filename)
@@ -241,9 +239,7 @@ class BaseAsyncFileLock(BaseFileLock, metaclass=AsyncFileLockMeta):
                     )
                     raise Timeout(lock_filename)  # noqa: TRY301
                 if 0 <= timeout < time.perf_counter() - start_time:
-                    _LOGGER.debug(
-                        "Timeout on acquiring lock %s on %s", lock_id, lock_filename
-                    )
+                    _LOGGER.debug("Timeout on acquiring lock %s on %s", lock_id, lock_filename)
                     raise Timeout(lock_filename)  # noqa: TRY301
                 msg = "Lock %s not acquired on %s, waiting %s seconds ..."
                 _LOGGER.debug(msg, lock_id, lock_filename, poll_interval)
@@ -267,9 +263,7 @@ class BaseAsyncFileLock(BaseFileLock, metaclass=AsyncFileLockMeta):
             if self._context.lock_counter == 0 or force:
                 lock_id, lock_filename = id(self), self.lock_file
 
-                _LOGGER.debug(
-                    "Attempting to release lock %s on %s", lock_id, lock_filename
-                )
+                _LOGGER.debug("Attempting to release lock %s on %s", lock_id, lock_filename)
                 await self._run_internal_method(self._release)
                 self._context.lock_counter = 0
                 _LOGGER.debug("Lock %s released on %s", lock_id, lock_filename)

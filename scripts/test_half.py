@@ -525,12 +525,8 @@ class TestHalf:
             assert_raises_fpe("underflow", lambda a, b: a / b, sx16, by16)
             assert_raises_fpe("underflow", lambda a, b: a / b, sy16, bx16)
             assert_raises_fpe("underflow", lambda a, b: a / b, sy16, by16)
-            assert_raises_fpe(
-                "underflow", lambda a, b: a / b, float16(2.0**-14), float16(2**11)
-            )
-            assert_raises_fpe(
-                "underflow", lambda a, b: a / b, float16(-(2.0**-14)), float16(2**11)
-            )
+            assert_raises_fpe("underflow", lambda a, b: a / b, float16(2.0**-14), float16(2**11))
+            assert_raises_fpe("underflow", lambda a, b: a / b, float16(-(2.0**-14)), float16(2**11))
             assert_raises_fpe(
                 "underflow", lambda a, b: a / b, float16(2.0**-14 + 2**-24), float16(2)
             )
@@ -553,16 +549,10 @@ class TestHalf:
             assert_raises_fpe("overflow", lambda a, b: a / b, bx16, sy16)
             assert_raises_fpe("overflow", lambda a, b: a / b, by16, sx16)
             assert_raises_fpe("overflow", lambda a, b: a / b, by16, sy16)
-            assert_raises_fpe(
-                "overflow", lambda a, b: a + b, float16(65504), float16(17)
-            )
-            assert_raises_fpe(
-                "overflow", lambda a, b: a - b, float16(-65504), float16(17)
-            )
+            assert_raises_fpe("overflow", lambda a, b: a + b, float16(65504), float16(17))
+            assert_raises_fpe("overflow", lambda a, b: a - b, float16(-65504), float16(17))
             assert_raises_fpe("overflow", np.nextafter, float16(65504), float16(np.inf))
-            assert_raises_fpe(
-                "overflow", np.nextafter, float16(-65504), float16(-np.inf)
-            )
+            assert_raises_fpe("overflow", np.nextafter, float16(-65504), float16(-np.inf))
             assert_raises_fpe("overflow", np.spacing, float16(65504))
 
             # Invalid value errors

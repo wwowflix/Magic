@@ -69,9 +69,7 @@ class Poll:
     multiple: bool
     options: typing.List["PollOption"]
     votesCount: int
-    votersCount: typing.Optional[int] = (
-        None  # Available since version 3.0.0 (commit 3babf846)
-    )
+    votersCount: typing.Optional[int] = None  # Available since version 3.0.0 (commit 3babf846)
 
 
 @dataclasses.dataclass
@@ -84,9 +82,9 @@ class PollOption:
 class User(snscrape.base.Item):
     account: str  # @username@domain.invalid
     displayName: typing.Optional[str] = None
-    displayNameWithCustomEmojis: typing.Optional[
-        typing.List[typing.Union[str, "CustomEmoji"]]
-    ] = None
+    displayNameWithCustomEmojis: typing.Optional[typing.List[typing.Union[str, "CustomEmoji"]]] = (
+        None
+    )
     avatarUrl: typing.Optional[str] = None
     _url: typing.Optional[str] = None
 
@@ -169,8 +167,7 @@ class _MastodonCommonScraper(snscrape.base.Scraper):
             else:
                 tootKwargs["text"] = content.find("span", class_="p-summary").text
                 tootKwargs["spoilerText"] = "\n\n".join(
-                    p.text
-                    for p in content.find("div", class_="e-content").find_all("p")
+                    p.text for p in content.find("div", class_="e-content").find_all("p")
                 )
 
             if attachmentsDiv := entry.find("div", class_="attachment-list"):
@@ -303,9 +300,7 @@ class _MastodonCommonScraper(snscrape.base.Scraper):
     def _url_to_account(url):
         if url.count("/") == 3 and url.count("/@") == 1:
             return "@".join(reversed(url.split("/")[2:]))
-        if (
-            url.count("/") == 4 and "/users/" in url
-        ):  # E.g. Pleroma, also supported by Mastodon
+        if url.count("/") == 4 and "/users/" in url:  # E.g. Pleroma, also supported by Mastodon
             return "@" + "@".join(reversed(url.split("/")[2::2]))
         if url.count("/") == 4 and "/accounts/" in url:  # E.g. Peertube
             return "@" + "@".join(reversed(url.split("/")[2::2]))
@@ -330,40 +325,28 @@ class MastodonProfileScraper(_MastodonCommonScraper):
         initial = True
         while True:
             if initial:
-                r = self._rate_limited_get(
-                    f"{self._url}/with_replies", headers=self._headers
-                )
+                r = self._rate_limited_get(f"{self._url}/with_replies", headers=self._headers)
                 if r.status_code not in (200, 404):
-                    raise snscrape.base.ScraperException(
-                        f"Got status code {r.status_code}"
-                    )
+                    raise snscrape.base.ScraperException(f"Got status code {r.status_code}")
                 if (
                     r.status_code == 404
                 ):  # Possibly an old instance where with_replies doesn't exist, try without that.
                     r = self._rate_limited_get(self._url, headers=self._headers)
                     if r.status_code not in (200, 404):
-                        raise snscrape.base.ScraperException(
-                            f"Got status code {r.status_code}"
-                        )
+                        raise snscrape.base.ScraperException(f"Got status code {r.status_code}")
                     if r.status_code == 404:
                         _logger.warning("Account does not exist")
                         return
-                    _logger.warning(
-                        "Old Mastodon instance, cannot retrieve reply toots"
-                    )
+                    _logger.warning("Old Mastodon instance, cannot retrieve reply toots")
                 initial = False
             else:
                 r = self._rate_limited_get(url, headers=self._headers)
                 if r.status_code != 200:
-                    raise snscrape.base.ScraperException(
-                        f"Got status code {r.status_code}"
-                    )
+                    raise snscrape.base.ScraperException(f"Got status code {r.status_code}")
             soup = bs4.BeautifulSoup(r.text, "lxml")
 
             yield from self._entries_to_items(
-                soup.find("div", class_="activity-stream").find_all(
-                    "div", class_="entry"
-                ),
+                soup.find("div", class_="activity-stream").find_all("div", class_="entry"),
                 r.url,
             )
 
@@ -426,9 +409,7 @@ class MastodonTootScraper(_MastodonCommonScraper):
             yield from self._entries_to_items([entry], r.url)
         elif self._mode is MastodonTootScraperMode.THREAD:
             yield from self._entries_to_items(
-                soup.find("div", class_="activity-stream").find_all(
-                    "div", class_="entry"
-                ),
+                soup.find("div", class_="activity-stream").find_all("div", class_="entry"),
                 r.url,
             )
 
@@ -447,6 +428,4 @@ class MastodonTootScraper(_MastodonCommonScraper):
 
     @classmethod
     def _cli_from_args(cls, args):
-        return cls._cli_construct(
-            args, args.url, mode=MastodonTootScraperMode._cli_from_args(args)
-        )
+        return cls._cli_construct(args, args.url, mode=MastodonTootScraperMode._cli_from_args(args))

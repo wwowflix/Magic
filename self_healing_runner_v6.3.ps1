@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Self-healing runner to apply remediation scripts in phases and update manifest.
 #>

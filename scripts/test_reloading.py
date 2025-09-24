@@ -72,6 +72,4 @@ def test_full_reimport():
     )
     p = subprocess.run([sys.executable, "-c", code], capture_output=True)
     if p.returncode:
-        raise AssertionError(
-            f"Non-zero return code: {p.returncode!r}\n\n{p.stderr.decode()}"
-        )
+        raise AssertionError(f"Non-zero return code: {p.returncode!r}\n\n{p.stderr.decode()}")
