@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import subprocess
 from typing import Sequence, Any
@@ -36,7 +36,7 @@ def fix_unicode(s: str) -> str:
     Remove problematic Unicode line/paragraph separators.
     """
     if not isinstance(s, str):
-        return s  # type: ignore[return-value]
+        return s
     return s.replace("\u2028", "").replace("\u2029", "")
 
 
@@ -69,7 +69,7 @@ def apply_remediation(err: Exception) -> bool:
     return False
 
 # --- test-driven hotfix: create_missing_inputs ---
-def create_missing_inputs(path: str, *_, **__) -> None:
+def create_missing_inputs(path: str, *_, **__) -> None:  # type: ignore[no-redef]
     """
     Ensure the parent directory exists and the file exists (empty).
     """
