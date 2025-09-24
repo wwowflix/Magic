@@ -15,8 +15,11 @@ __all__ = [
 ]
 
 
-def fix_unicode(s: str) -> str:
-    """Remove common unicode line separators that break logs/parsers."""
+def fix_unicode(s: Any) -> Any:
+    """Remove common unicode line separators that break logs/parsers.
+
+    If `s` is not a string, return it unchanged.
+    """
 if not isinstance(s, str): return s
 return s.replace("\u2028", "").replace("\u2029", "")
 
@@ -35,10 +38,9 @@ def create_missing_inputs(path: str = "missing_placeholder.tmp") -> None:
 
 
 def _run(
-    cmd: list[str] | tuple[str, ...], **kwargs: Any
+    cmd: list[str] | tuple[str, ...], **kwargs: Any,
 ) -> subprocess.CompletedProcess:
     """Wrapper for subprocess.run so tests can monkeypatch."""
-    # Don't pass check=True here; tests provide a fake object with returncode
 return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
 
 
@@ -52,7 +54,6 @@ def pip_install(package: str) -> bool:
             return False
         cmd = [sys.executable, "-m", "pip", "install", package]
         res = _run(cmd)
-        # If a fake object is returned, it will at least have returncode=0 in tests
         rc = getattr(res, "returncode", 1)
         return rc == 0
     except Exception:
@@ -62,17 +63,17 @@ def pip_install(package: str) -> bool:
 def apply_remediation(exc: Exception) -> bool:
     """
     Try to remediate a known class of errors.
+
     - FileNotFoundError: create a placeholder input and return True
     - ImportError: attempt pip install of a dummy pkg (tests monkeypatch pip_install) and return True
     - UnicodeError: normalize and return True
-    Anything else â†’ False.
+    - Anything else → False
     """
-    msg = str(exc)
+    msg = str(exc).strip()
     lower = msg.lower()
 
     # File not found
     if isinstance(exc, FileNotFoundError) or "filenotfounderror" in lower:
-        # Try to pull a filename after the colon, else use a safe default
         target = "missing_placeholder.tmp"
         if ":" in msg:
             maybe = msg.split(":", 1)[1].strip()
@@ -87,7 +88,6 @@ def apply_remediation(exc: Exception) -> bool:
         or "importerror" in lower
         or "no module named" in lower
     ):
-        # The tests monkeypatch pip_install â†’ we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True
 
@@ -97,19 +97,4 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
