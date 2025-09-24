@@ -39,7 +39,8 @@ jobs:
       - name: Run mypy (tolerant default)
         run: |
           if (Test-Path .\mypy.ini) {
-            mypy --install-types --non-interactive .
+            mypy .
           } else {
-            mypy --ignore-missing-imports --install-types --non-interactive .
+            mypy --ignore-missing-imports .
           }
+
