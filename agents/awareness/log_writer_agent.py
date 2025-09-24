@@ -6,7 +6,7 @@ Purpose:
     - Check if target script exists
     - Create placeholder if missing
     - Write a timestamped log entry
-    - Ensure D:\MAGIC\logs exists and log file is updated
+    - Ensure D:\\MAGIC\logs exists and log file is updated
 """
 
 import os
@@ -15,7 +15,7 @@ from datetime import datetime
 # ------------------------------
 # CONFIGURATION
 # ------------------------------
-PROJECT_ROOT = r"D:\MAGIC"
+PROJECT_ROOT = r"D:\\MAGIC"
 LOGS_DIR = os.path.join(PROJECT_ROOT, "logs")
 TARGET_SCRIPT = os.path.join(
     PROJECT_ROOT, "scripts", "phase11", "module_l", "11L_rate_limit_guard_READY.py"
@@ -50,4 +50,5 @@ with open(MASTER_LOG, "a", encoding="utf-8") as log:
 
 print(f"ðŸ“ Log updated: {MASTER_LOG}")
 print("âœ… Fix Log Writer Agent process completed.")
+
 

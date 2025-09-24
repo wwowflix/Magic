@@ -5,7 +5,7 @@ Awareness Agent: Log Writer
 
 ðŸ”¹ Purpose:
     - Run specified script(s) and log results with timestamps.
-    - Store logs in D:\MAGIC\logs\magic_master_log.txt
+    - Store logs in D:\\MAGIC\logs\magic_master_log.txt
     - Helps track script execution and errors automatically.
 
 Usage:
@@ -22,7 +22,7 @@ import subprocess
 from datetime import datetime
 
 # --- CONFIG ---
-PROJECT_ROOT = r"D:\MAGIC"
+PROJECT_ROOT = r"D:\\MAGIC"
 LOG_DIR = os.path.join(PROJECT_ROOT, "logs")
 LOG_FILE = os.path.join(LOG_DIR, "magic_master_log.txt")
 
@@ -82,4 +82,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

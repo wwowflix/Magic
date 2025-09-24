@@ -29,7 +29,7 @@ def filter_manifest(
     filtered = []
     for entry in entries:
         if not isinstance(entry, dict):
-continue  # type: ignore[unreachable]
+    continue  # type: ignore[unreachable]
         phase = entry.get("Phase")
         module = entry.get("Module")
         if phase in wanted_phases and module in wanted_modules:
@@ -67,4 +67,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
