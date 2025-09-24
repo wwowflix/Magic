@@ -1,4 +1,4 @@
-"""Self-heal helpers used by tests."""
+﻿"""Self-heal helpers used by tests."""
 
 from __future__ import annotations
 import os
@@ -18,7 +18,7 @@ __all__ = [
 def fix_unicode(s: str) -> str:
     """Remove common unicode line separators that break logs/parsers."""
     if not isinstance(s, str):
-        return s
+return s  # type: ignore[unreachable]
     return s.replace("\u2028", "").replace("\u2029", "")
 
 
@@ -66,7 +66,7 @@ def apply_remediation(exc: Exception) -> bool:
     - FileNotFoundError: create a placeholder input and return True
     - ImportError: attempt pip install of a dummy pkg (tests monkeypatch pip_install) and return True
     - UnicodeError: normalize and return True
-    Anything else → False.
+    Anything else â†’ False.
     """
     msg = str(exc)
     lower = msg.lower()
@@ -88,7 +88,7 @@ def apply_remediation(exc: Exception) -> bool:
         or "importerror" in lower
         or "no module named" in lower
     ):
-        # The tests monkeypatch pip_install → we just need to call it and return True
+        # The tests monkeypatch pip_install â†’ we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True
 
@@ -98,3 +98,4 @@ def apply_remediation(exc: Exception) -> bool:
         return True
 
     return False
+

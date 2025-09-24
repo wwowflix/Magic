@@ -3,6 +3,7 @@ import csv
 import json
 from pathlib import Path
 from collections import defaultdict, Counter
+from typing import DefaultDict
 
 __all__ = ["emit_metrics", "main"]
 
@@ -17,8 +18,8 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)
 
-    totals = Counter()
-    by_phase = defaultdict(lambda: Counter())
+    totals: Counter[str] = Counter()
+    by_phase: DefaultDict[str, Counter[str]] = defaultdict(Counter))
 
     for tsv in sdir.glob("*.tsv"):
         with tsv.open("r", encoding="utf-8", newline="") as f:
@@ -57,3 +58,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

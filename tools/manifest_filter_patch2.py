@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 import argparse
 import json
 import sys
@@ -29,7 +29,7 @@ def filter_manifest(
     filtered = []
     for entry in entries:
         if not isinstance(entry, dict):
-            continue
+continue  # type: ignore[unreachable]
         phase = entry.get("Phase")
         module = entry.get("Module")
         if phase in wanted_phases and module in wanted_modules:
@@ -67,3 +67,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

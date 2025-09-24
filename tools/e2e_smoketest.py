@@ -5,7 +5,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 
 LOG_FOLDER_RE = re.compile(r"scripts/(phase\d+)/(module_[^/]+)/", re.IGNORECASE)
 
@@ -43,7 +43,7 @@ def _filter_rows(
 def _summarize(
     rows: List[Dict[str, str]], logs_root: Path
 ) -> Tuple[Dict[str, int], List[Dict[str, object]], bool]:
-    totals = Counter()
+    totals: Counter[str] = Counter()
     checked: List[Dict[str, object]] = []
     ok = True
 
@@ -123,3 +123,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
