@@ -1,0 +1,55 @@
+name: Release CI Dashboard
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure GitHub CLI & jq
+        run: |
+          gh --version
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+
+      - name: Collect last 25 PR CI runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p outputs/reports
+          gh run list --workflow "PR CI" --event pull_request -L 25 \
+            --json databaseId,headBranch,conclusion,createdAt,displayTitle \
+            > outputs/reports/runs.json
+
+          # Build a markdown table with mypy/tests conclusions when present
+          {
+            echo "# PR CI Runs (latest → oldest)"
+            echo
+            echo "| Created (UTC) | Branch | Overall | mypy | tests | Run |"
+            echo "|---:|---|---:|---:|---:|---|"
+            jq -r '.[] | "\(.createdAt) \(.headBranch) \(.conclusion) \(.databaseId) \(.displayTitle)"' outputs/reports/runs.json \
+            | while read CREATED BRANCH OVERALL RUNID TITLE; do
+                # fetch job conclusions (best-effort)
+                JOBS=$(gh run view "$RUNID" --json jobs 2>/dev/null | jq -r '.jobs[] | "\(.name)=\(.conclusion)"' || true)
+                MYPY=$(echo "$JOBS" | awk -F= '$1=="mypy"{print $2}')
+                TESTS=$(echo "$JOBS" | awk -F= '$1=="tests"{print $2}')
+                icon() { case "$1" in success) printf "✅";; failure) printf "❌";; *) printf "—";; esac; }
+                echo "| $CREATED | $BRANCH | $(icon "$OVERALL") | $(icon "$MYPY") | $(icon "$TESTS") | https://github.com/${GITHUB_REPOSITORY}/actions/runs/$RUNID |"
+              done \
+            > outputs/reports/magic_ci_dashboard.md
+          } > outputs/reports/magic_ci_dashboard.md.tmp
+          mv outputs/reports/magic_ci_dashboard.md.tmp outputs/reports/magic_ci_dashboard.md
+
+      - name: Upload dashboard to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          gh release upload "$TAG" outputs/reports/magic_ci_dashboard.md --clobber
