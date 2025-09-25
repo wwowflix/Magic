@@ -1,0 +1,18 @@
+﻿==== MAGIC FULL SCAN SUMMARY ====
+Scanned folder : D:\MAGIC
+Total files    : 42728
+Total size MB  : 1,209.66
+
+Top 5 Largest Files:
+  106.06 MB - D:\MAGIC\.git\objects\pack\pack-ab44703e4fdb2998f914799ad4f3cd93f1678a7e.pack
+  80.1 MB - D:\MAGIC\.git\objects\pack\pack-01931098ff95813d1e3a53e3948e578ad28f0155.pack
+  64.27 MB - D:\MAGIC\.git\lfs\objects\3e\36\3e36b396c4cb71b8eaae2300c21bec26700b27ce5f6be83ef6b86d214e294c8b
+  64.27 MB - D:\MAGIC\rclone-v1.70.3-windows-amd64\rclone.exe
+  63.89 MB - D:\MAGIC\scripts\AzureCLI.msi
+
+Top 5 Oldest Files (by ModifiedDate):
+  2025-06-11 18:09 - D:\MAGIC\venv\Scripts\deactivate.bat
+  2025-06-11 18:10 - D:\MAGIC\venv\Scripts\python.exe
+  2025-06-11 18:10 - D:\MAGIC\venv\Scripts\pythonw.exe
+  2025-06-11 18:11 - D:\MAGIC\venv\Scripts\Activate.ps1
+  2025-07-12 17:01 - D:\MAGIC\.git\hooks\pre-rebase.sample

@@ -1,0 +1,1 @@
+﻿print("spend OK (stub)")

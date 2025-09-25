@@ -1,0 +1,11 @@
+﻿name: cleanup-logs
+on:
+  schedule: [ { cron: '0 2 * * 0' } ]
+  workflow_dispatch: {}
+jobs:
+  clean:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cleanup
+        run: pwsh tools/cleanup_logs.ps1 -Days 14

@@ -1,0 +1,59 @@
+﻿name: CI / lint-and-test
+on:
+  push:
+    branches: [ "prod-release", "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pre-commit pytest pytest-cov pip-audit safety bandit
+      - name: Configure headless plotting
+  env:
+    MPLBACKEND: Agg
+  run: echo ""MPLBACKEND="" >> ""\""
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+- name: Run pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure
+      - name: Run unit tests (quick)
+        run: pytest -q
+      - name: Run coverage (fail under 75%)
+        run: pytest --cov=./ --cov-report=xml --cov-fail-under=75
+      - name: Security scans (non-blocking)
+        run: |
+          pip-audit -r requirements.txt || true
+          safety check -r requirements.txt || true
+          bandit -r . -ll || true
+      - name: Collect receipts
+        if: always()
+        run: |
+          mkdir -p outputs/reports
+          [ -f coverage.xml ] && cp coverage.xml outputs/reports/coverage.xml || true
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-receipts
+          path: outputs/reports
+          retention-days: 14
+          retention-days: 14
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-

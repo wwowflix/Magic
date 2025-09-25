@@ -1,0 +1,216 @@
+# 📂 MAGIC Project – Final Full Root Structure with Rule Mapping, AI Logic, and Documentation Layer
+
+This structure represents the complete automation and self-healing architecture of the MAGIC project, incorporating all agents, flows, logic routes, documentation references, health checks, audit logs, and AI-human explanation support discussed across 22 rulebook phases.
+
+---
+
+## 🔧 Root Directory: `D:/MAGIC/`
+
+---
+
+### 1. `agents/` – Self-Healing Agents, Watchdogs, & Monitors
+
+Organized by function, logic category, and mapped to 22-phase rulebook.
+
+```
+agents/
+├── general/                        # General routing, fallback, naming, escalators
+│   ├── inbox_reloader.py
+│   ├── hold_escalator.py
+│   ├── approval_router.py
+│   ├── auto_review_recovery.py
+│   ├── quarantine_detector.py
+│   └── move_logger.py
+│
+├── phase_sorters/                 # Sorts by script naming (00A_, 03B_, etc.) into phase folders
+│   ├── phase0_sorter.py
+│   ├── phase1_sorter.py
+│   └── ...
+│   └── phase17_sorter.py
+│
+├── drift_protection/              # Detects misplacement, duplicates, missing links
+│   ├── phase_mismatch_checker.py
+│   ├── folder_drift_detector.py
+│   ├── broken_link_resolver.py
+│   └── duplicate_detector.py
+│
+├── damage_prevention/             # Guards against critical mistakes
+│   ├── vault_guard.py             # Prevents movement of _LOCKED files
+│   ├── config_sync_checker.py     # Monitors uncommitted config edits
+│   └── phase_skipper_guard.py     # Detects skipped phases
+│
+├── stale_cleanup/                 # Deletes/moves unused or old files
+│   ├── unused_file_pruner.py
+│   ├── log_cleanup_agent.py
+│   ├── stranded_file_sentinel.py
+│   └── ghost_file_detector.py
+│
+├── recovery/                      # Self-healing, restoration, linting, re-documentation
+│   ├── auto_restore.py
+│   ├── script_health_monitor.py
+│   ├── phase_summary_writer.py
+│   └── agent_error_catcher.py
+│
+├── awareness/                     # Health checks and structural integrity
+│   └── system_heartbeat.py        # Checks folder and config existence
+│
+├── meta/                          # Master controllers and config monitors
+│   ├── agent_runner.py            # Executes all agents
+│   ├── config_watcher.py
+│   └── index_builder.py           # Generates live file_index.csv
+│
+├── docs/                          # Agent explainers for humans & AI
+│   └── *.md                       # Per-agent documentation (logic, risk, flow)
+│
+├── README_agents.md              # Explains each agent group’s purpose
+├── agents_index.csv              # Index of agent triggers, categories, phase mapping
+```
+
+---
+
+### 2. `scripts/` – Executable Core Scripts Sorted by Phase
+
+Scripts are tagged as `03B_toolname_READY.py` or `_HOLD`, `_REVIEW` for routing.
+
+```
+scripts/
+├── phase0/
+├── phase1/
+├── ...
+└── phase17/
+```
+
+---
+
+### 3. `inbox/` – Central Drop Folder
+
+All incoming files land here. Routed by naming tags.
+
+---
+
+### 4. `hold/` – TEMP Staging for `_HOLD.py`
+
+Escalated or reclassified by `hold_escalator.py`
+
+---
+
+### 5. `review/` – Human Review Queue
+
+Files marked `_REVIEW.py` go here for manual checks.
+
+---
+
+### 6. `approved/` – Passed Files
+
+Files marked `_APPROVED.py` get stored here.
+
+---
+
+### 7. `quarantine/` – Suspicious Files Holding Zone
+
+Used by fallback agents like `quarantine_detector.py` and `agent_error_catcher.py`
+
+---
+
+### 8. `cold_storage/` – Archived Safe Files
+
+Older than 30 days, not modified — stored by `unused_file_pruner.py`
+
+---
+
+### 9. `outputs/` – Generated Results, Reports, Data
+
+```
+outputs/
+├── data/         # Clean structured output files (.csv, .json)
+├── trends/       # Platform trends from Reddit, YouTube, Twitter
+├── reports/      # Final results, summaries, evaluations
+├── metrics/      # Auto-generated agent statistics and status logs
+```
+
+---
+
+### 10. `logs/` – Agent & Rule Logs
+
+```
+logs/
+├── archive/       # Compressed old logs
+├── config/        # Config warnings & watch logs
+├── agents/        # Logs from self-healing agents
+├── lint_log.csv   # Output from script_health_monitor.py
+├── automation_log.csv # Full move log from move_logger.py
+├── agent_errors.csv   # Captures exceptions in agent execution
+```
+
+---
+
+### 11. `docs/` – Reference & System Explanation Files
+
+```
+docs/
+├── naming_conventions.md
+├── magic_phases.md
+├── rulebook.md                   # Full 22-phase rule mapping
+├── self_healing_root_structure.md
+├── versioning_policy.md
+├── README.md
+├── MAGIC_overview.md            # Top-level doc for new contributors
+├── flowcharts/
+│   ├── file_lifecycle_flow.png
+│   └── escalation_decision_tree.png
+```
+
+---
+
+### 12. `tests/` – Dry Runs, Dummy Data, QA Scripts
+
+Test coverage for agents, escalation, routing logic, and fallback scenarios.
+
+```
+tests/
+├── dummy_scripts/
+├── review_simulation/
+├── error_case_generator.py
+├── test_runner.py
+└── test_coverage.md
+```
+
+---
+
+### 13. `venv/` – Python Virtual Environment
+
+Ignored by Git, used for dependency isolation
+
+---
+
+### 14. `.git/` – Git Metadata
+
+Managed by version control system
+
+---
+
+### ✅ Embedded AI-Human Support Layer
+
+| File / Folder                          | Purpose                                                       | Status       |
+| -------------------------------------- | ------------------------------------------------------------- | ------------ |
+| `agents/awareness/system_heartbeat.py` | Check if all key folders/configs exist                        | 🔲 Not yet   |
+| `agents/meta/index_builder.py`         | Generate fresh `file_index.csv` from root                     | 🔲 Suggested |
+| `agents/README_agents.md`              | Human-readable doc per agent category                         | 🔲 Suggested |
+| `agents_index.csv`                     | Master table: Agent → Trigger → Folder → Rule Phase → Status  | 🔲 Suggested |
+| `agents/.../*.md`                      | Each agent has explainer doc (trigger, logic, risk, fallback) | 🔲 Suggested |
+
+---
+
+✅ This refined structure ensures:
+
+* Full traceability of every rule, file, agent, and phase
+* Human + AI collaboration in automation workflows
+* Scalable and self-documenting infrastructure
+
+Would you like me to now scaffold:
+
+* All agent `.md` explainers?
+* Starter `README_agents.md`?
+* `agents_index.csv` with column structure?
+
+Say the word and I’ll launch that phase.

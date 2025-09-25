@@ -1,0 +1,15 @@
+﻿name: backup-manifest
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 3 * * *'
+jobs:
+  backup:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run backup
+        run: python tools/backup_manifest.py

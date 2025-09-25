@@ -1,4 +1,4 @@
-﻿def main():
+def main():
     print("Running 11A_watchdog_agent_READY.py placeholder.")
 
 
