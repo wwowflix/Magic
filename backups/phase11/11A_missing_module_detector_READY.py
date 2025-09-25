@@ -20,7 +20,7 @@ for _, row in ready_scripts.iterrows():
         expected_path = os.path.normpath(path_value)
         if not os.path.exists(expected_path):
             missing_files.append(
-                f'{row["Phase"]} | {row["Module"]} | {row["Filename"]} → MISSING'
+                f"{row['Phase']} | {row['Module']} | {row['Filename']} → MISSING"
             )
 
 # Output to log file

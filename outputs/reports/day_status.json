@@ -1,0 +1,23 @@
+﻿[
+    {
+        "day":  "Day1",
+        "required":  9,
+        "missing":  0,
+        "status":  "PASS",
+        "missing_list":  ""
+    },
+    {
+        "day":  "Day2",
+        "required":  5,
+        "missing":  0,
+        "status":  "PASS",
+        "missing_list":  ""
+    },
+    {
+        "day":  "Day3",
+        "required":  9,
+        "missing":  0,
+        "status":  "PASS",
+        "missing_list":  ""
+    }
+]

@@ -1,0 +1,20 @@
+﻿name: Self-Heal Runner
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Echo run (placeholder)
+        run: echo "runner executing..."
+
+      # Alerts: placeholder receipt for audit (replace with real Slack later)
+      - name: Slack alert (placeholder)
+        if: failure()
+        run: echo "slack alert would fire here"

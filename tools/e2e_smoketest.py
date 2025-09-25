@@ -5,7 +5,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 
 LOG_FOLDER_RE = re.compile(r"scripts/(phase\d+)/(module_[^/]+)/", re.IGNORECASE)
 
@@ -26,24 +26,24 @@ def _derive_log_path(logs_root: Path, folder_field: str, filename: str) -> Path:
     return logs_root / log_dir / log_name
 
 
-def _read_rows(summary_path: Path) -> List[Dict[str, str]]:
+def _read_rows(summary_path: Path) -> List[Dict[str, object]]:
     with summary_path.open("r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f, delimiter="\t")
         return [dict(row) for row in reader]
 
 
 def _filter_rows(
-    rows: List[Dict[str, str]], phase: Optional[int]
-) -> List[Dict[str, str]]:
+    rows: List[Dict[str, object]], phase: Optional[int]
+) -> List[Dict[str, object]]:
     if phase is None:
         return rows
     return [r for r in rows if str(r.get("Phase", "")).strip() == str(phase)]
 
 
 def _summarize(
-    rows: List[Dict[str, str]], logs_root: Path
+    rows: List[Dict[str, object]], logs_root: Path
 ) -> Tuple[Dict[str, int], List[Dict[str, object]], bool]:
-    totals = Counter()
+    totals: Counter[str] = Counter()
     checked: List[Dict[str, object]] = []
     ok = True
 
@@ -66,7 +66,7 @@ def _summarize(
         if status.upper() == "FAIL":
             log_path = _derive_log_path(logs_root, folder, filename)
             found = log_path.exists()
-            entry["log_found"] = found
+            entry["log_found"] = bool(found)
             entry["log_path"] = str(log_path)
             if not found:
                 ok = False
@@ -123,3 +123,6 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+

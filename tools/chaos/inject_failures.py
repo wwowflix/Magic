@@ -1,0 +1,1 @@
+﻿print("chaos injected (stub)")
