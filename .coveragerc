@@ -1,8 +1,12 @@
 [run]
-source = tools
 branch = True
 
+omit =
+    **/venv/**
+    **/.venv/**
+    **/Lib/site-packages/**
+    **/site-packages/**
+    **/tests/**
+
 [report]
-include =
-    tools/create_manifest.py
-    tools/phase11_sanity_runner.py
+show_missing = True
