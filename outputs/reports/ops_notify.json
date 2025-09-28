@@ -1,5 +1,12 @@
 ﻿{
-    "notes":  "Notify stub",
-    "ok":  true,
-    "ts":  "2025-09-28T22:21:36"
+    "top_fails":  {
+
+                  },
+    "counts":  {
+                   "pass":  0,
+                   "fail":  0,
+                   "total":  10,
+                   "warn":  0
+               },
+    "ts":  "2025-09-28T23:40:42"
 }
