@@ -1,0 +1,7 @@
+﻿{
+    "notes":  "bootstrap receipt",
+    "breach":  false,
+    "window_ok":  true,
+    "slo":  "99.0% success (7d window)",
+    "ts":  "2025-09-29T00:16:16"
+}
