@@ -1,100 +1,10 @@
 ﻿repo`troot_path`tD:\MAGIC`tINFO`t
-repo`texists_.git`tTrue`tPASS`t
-repo`tgit_branch`tprod-release`tINFO`tExpect 'prod-release' during readiness
-python`tvenv_present`tTrue`tPASS`t
-python`trequirements.txt`tTrue`tPASS`t
-python`trequirements.lock.txt`tTrue`tPASS`tCreated at step 32
-hooks`tpre-commit hook`tTrue`tPASS`t
-skeleton`tscripts`tTrue`tPASS`t
-skeleton`tscripts\phase0`tTrue`tPASS`t
-skeleton`tscripts\phase1`tTrue`tPASS`t
-skeleton`tscripts\phase2`tTrue`tPASS`t
-skeleton`tscripts\phase3`tTrue`tPASS`t
-skeleton`tscripts\phase4`tTrue`tPASS`t
-skeleton`tscripts\phase5`tTrue`tPASS`t
-skeleton`tscripts\phase6`tTrue`tPASS`t
-skeleton`tscripts\phase7`tTrue`tPASS`t
-skeleton`tscripts\phase8`tTrue`tPASS`t
-skeleton`tscripts\phase9`tTrue`tPASS`t
-skeleton`tscripts\phase10`tTrue`tPASS`t
-skeleton`tscripts\phase11`tTrue`tPASS`t
-skeleton`tscripts\phase12`tTrue`tPASS`t
-skeleton`tscripts\phase13`tTrue`tPASS`t
-skeleton`tscripts\phase14`tTrue`tPASS`t
-skeleton`tscripts\phase15`tTrue`tPASS`t
-skeleton`tscripts\phase16`tTrue`tPASS`t
-skeleton`tscripts\phase17`tTrue`tPASS`t
-skeleton`toutputs`tTrue`tPASS`t
-skeleton`toutputs\logs`tFalse`tFAIL`t
-skeleton`toutputs\reports`tTrue`tPASS`t
-skeleton`toutputs\archives`tFalse`tFAIL`t
-skeleton`tbackups`tTrue`tPASS`t
-skeleton`tagents`tTrue`tPASS`t
-skeleton`ttools`tTrue`tPASS`t
-skeleton`tconfig`tTrue`tPASS`t
-inventory`tphase0`t27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)`tWARN`t
-inventory`tphase00`t3591 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=3591)`tWARN`t
-inventory`tphase01`t30 files (READY=30, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase02`t55 files (READY=55, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase03`t49 files (READY=49, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase04`t22 files (READY=22, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase05`t51 files (READY=51, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase06`t57 files (READY=57, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase07`t9 files (READY=9, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase08`t84 files (READY=78, DRAFT=0, HOLD=0, LOCKED=0, BAD=6)`tWARN`t
-inventory`tphase09`t41 files (READY=41, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase1`t26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)`tWARN`t
-inventory`tphase10`t105 files (READY=104, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)`tWARN`t
-inventory`tphase11`t127 files (READY=119, DRAFT=0, HOLD=0, LOCKED=0, BAD=8)`tWARN`t
-inventory`tphase12`t106 files (READY=106, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase13`t81 files (READY=81, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase14`t79 files (READY=78, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)`tWARN`t
-inventory`tphase15`t78 files (READY=77, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)`tWARN`t
-inventory`tphase16`t41 files (READY=41, DRAFT=0, HOLD=0, LOCKED=0, BAD=0)`tPASS`t
-inventory`tphase17`t49 files (READY=48, DRAFT=0, HOLD=0, LOCKED=0, BAD=1)`tWARN`t
-inventory`tphase18`t116 files (READY=110, DRAFT=0, HOLD=0, LOCKED=0, BAD=6)`tWARN`t
-inventory`tphase2`t26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)`tWARN`t
-inventory`tphase3`t26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)`tWARN`t
-inventory`tphase4`t26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)`tWARN`t
-inventory`tphase5`t26 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=26)`tWARN`t
-inventory`tphase6`t28 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=28)`tWARN`t
-inventory`tphase7`t27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)`tWARN`t
-inventory`tphase8`t27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)`tWARN`t
-inventory`tphase9`t27 files (READY=0, DRAFT=0, HOLD=0, LOCKED=0, BAD=27)`tWARN`t
-inventory`tphase99`t7 files (READY=3, DRAFT=0, HOLD=0, LOCKED=0, BAD=4)`tWARN`t
-inventory`ttotals`tfiles=5044 READY=1159 DRAFT=0 HOLD=0 LOCKED=0 BAD=3885`tINFO`t
-orphans`tnon_matching_py`t6878`tWARN`tSee outputs\reports\orphans_list.tsv
-binaries`tlarge_files_mb>=50`t6`tWARN`tSee outputs\reports\large_files.tsv
-encoding`tproblem_files`t2067`tWARN`tSee outputs\reports\encoding_issues.tsv
-runner`tlog_error_markers`t0`tPASS`t
-readiness_receipts`t14_fullscan`toutputs\reports\magic_full_scan.json`tFAIL`t
-readiness_receipts`t39_sli`toutputs\reports\sli.json`tFAIL`t
-readiness_receipts`t27_restore`toutputs\reports\restore_hash_check.txt`tFAIL`t
-readiness_receipts`t33_sbom`toutputs\reports\sbom.json`tFAIL`t
-readiness_receipts`t12_security`toutputs\reports\pip_audit.json`tFAIL`t
-readiness_receipts`t25_quota`toutputs\reports\quota_status.json`tFAIL`t
-readiness_receipts`t47_offsite`toutputs\reports\offsite_backup_receipt.txt`tFAIL`t
-readiness_receipts`t31_tag`toutputs\reports\tag_receipt.txt`tFAIL`t
-readiness_receipts`t11_coverage`toutputs\reports\coverage.xml`tFAIL`t
-readiness_receipts`t37_rollback`toutputs\reports\rollback_test.txt`tFAIL`t
-readiness_receipts`t21_todo`toutputs\reports\magic_todo_audit.tsv`tFAIL`t
-readiness_receipts`t41_cleanup`toutputs\reports\plan_cleanup.tsv`tFAIL`t
-readiness_receipts`t24_spend`toutputs\reports\cost_spend.json`tFAIL`t
-readiness_receipts`t32_lock`trequirements.lock.txt`tPASS`t
-readiness_receipts`t42_quarantine`toutputs\reports\quarantine_receipt.tsv`tFAIL`t
-readiness_receipts`t26_chaos`toutputs\reports\chaos_report.json`tFAIL`t
-readiness_receipts`t22_gate`toutputs\reports\verify_magic_complete.txt`tFAIL`t
-readiness_receipts`t38_task`toutputs\reports\scheduled_task_receipt.txt`tFAIL`t
-readiness_receipts`t23_selftest`toutputs\reports\self_test_scorecard.tsv`tFAIL`t
-readiness_receipts`t46_release`toutputs\reports\release_receipt.json`tFAIL`t
-readiness_receipts`t09_precommit`toutputs\reports\precommit_receipt.txt`tFAIL`t
-readiness_receipts`t10_pytest`toutputs\reports\pytest_summary.txt`tFAIL`t
-readiness_receipts`t34_docker`toutputs\reports\docker_build_receipt.txt`tFAIL`t
-readiness_receipts`t36_canary`toutputs\reports\canary_receipt.json`tFAIL`t
-readiness_receipts`t40_slo`toutputs\reports\slo_check.json`tFAIL`t
-readiness_receipts`t20_scan_sum`toutputs\reports\magic_scan_summary.json`tFAIL`t
-readiness_summary`treceipts_pass`t1/26`tWARN`t
-resilience`tbackups_dir`tTrue`tPASS`t
-resilience`tquarantine_dir`tTrue`tPASS`t
-docker`tDockerfile`tTrue`tINFO`t
-docker`ttools\live_healthcheck.py`tTrue`tINFO`t
+repo`thas_git`tTrue`tPASS`t
+python`tvenv`tTrue`tPASS`t
+hooks`tpre-commit`tTrue`tPASS`t
+receipt`tcommit`toutputs\reports\commit_receipt.txt`tFAIL`t
+receipt`tslo`toutputs\reports\slo_enforce.json`tFAIL`t
+receipt`tsbom`toutputs\reports\sbom.json`tPASS`t
+receipt`ttag`toutputs\reports\tag_receipt.txt`tFAIL`t
+receipt`tsli`toutputs\reports\sli_metrics.json`tFAIL`t
+receipt`tpush`toutputs\reports\push_receipt.txt`tPASS`t
