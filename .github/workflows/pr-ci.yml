@@ -1,4 +1,4 @@
-﻿name: PR CI
+name: PR CI
 
 on:
   pull_request:
@@ -40,4 +40,4 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
       - name: pytest
-        run: pytest -q
+        run: pytest --cov=tools.create_manifest --cov=tools.remediator --cov-branch --cov-report=term-missing --cov-fail-under=75
