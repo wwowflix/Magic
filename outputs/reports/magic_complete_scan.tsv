@@ -7,4 +7,4 @@ receipt`tslo`toutputs\reports\slo_enforce.json`tFAIL`t
 receipt`tsbom`toutputs\reports\sbom.json`tPASS`t
 receipt`ttag`toutputs\reports\tag_receipt.txt`tFAIL`t
 receipt`tsli`toutputs\reports\sli_metrics.json`tFAIL`t
-receipt`tpush`toutputs\reports\push_receipt.txt`tFAIL`t
+receipt`tpush`toutputs\reports\push_receipt.txt`tPASS`t

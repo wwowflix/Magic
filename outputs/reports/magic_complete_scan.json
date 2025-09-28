@@ -66,7 +66,7 @@
         "category":  "receipt",
         "name":  "push",
         "value":  "outputs\\reports\\push_receipt.txt",
-        "status":  "FAIL",
+        "status":  "PASS",
         "notes":  ""
     }
 ]
