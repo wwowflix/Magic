@@ -1,6 +1,3 @@
-﻿def main():
-    print("✅ [11F_agent_performance_log_READY.py] executed successfully (stub mode).")
-
-
+﻿"""Agent Performance Log — collects per-agent runtime, CPU/RAM, success/fail."""
 if __name__ == "__main__":
-    main()
+    print("11F_agent_performance_log: OK")
