@@ -121,3 +121,9 @@ outputs/reports/commit_receipt.txt
 outputs/reports/sli_metrics.json
 outputs/reports/slo_enforce.json
 outputs/reports/weekly_status_*.txt
+
+# runtime status_now reports
+outputs/reports/status_now.*
+
+# runtime status_now reports
+outputs/reports/status_now.*
