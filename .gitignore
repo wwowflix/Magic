@@ -116,3 +116,8 @@ tools/bin/**
 .artifacts/
 
 .github/workflows/*.bak
+# Runtime receipts (not versioned)
+outputs/reports/commit_receipt.txt
+outputs/reports/sli_metrics.json
+outputs/reports/slo_enforce.json
+outputs/reports/weekly_status_*.txt
