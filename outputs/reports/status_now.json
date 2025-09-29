@@ -1,0 +1,105 @@
+﻿{
+    "rows":  [
+                 {
+                     "category":  "repo",
+                     "name":  "root_path",
+                     "value":  "D:\\MAGIC",
+                     "status":  "INFO",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "repo",
+                     "name":  "has_git",
+                     "value":  true,
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "python",
+                     "name":  "venv_exists",
+                     "value":  true,
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "hooks",
+                     "name":  "pre-commit",
+                     "value":  true,
+                     "status":  "PASS",
+                     "notes":  "hook file present"
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "sbom",
+                     "value":  "outputs\\reports\\sbom.json",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "sli",
+                     "value":  "outputs\\reports\\sli_metrics.json",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "commit_receipt",
+                     "value":  "outputs\\reports\\commit_receipt.txt",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "magic_scan_json",
+                     "value":  "outputs\\reports\\magic_complete_scan.json",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "restore_probe",
+                     "value":  "outputs\\reports\\restore_probe_receipt.txt",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "slo",
+                     "value":  "outputs\\reports\\slo_enforce.json",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "offsite_backup",
+                     "value":  "outputs\\reports\\offsite_backup_receipt.txt",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "receipt",
+                     "name":  "magic_scan_tsv",
+                     "value":  "outputs\\reports\\magic_complete_scan.tsv",
+                     "status":  "PASS",
+                     "notes":  ""
+                 },
+                 {
+                     "category":  "restore",
+                     "name":  "restore_receipt_age_days",
+                     "value":  0.04,
+                     "status":  "PASS",
+                     "notes":  "≤7 days"
+                 }
+             ],
+    "errors":  [
+
+               ],
+    "counts":  {
+                   "pass":  12,
+                   "fail":  0,
+                   "total":  13,
+                   "warn":  0
+               },
+    "ts":  "2025-09-29T18:18:24"
+}
