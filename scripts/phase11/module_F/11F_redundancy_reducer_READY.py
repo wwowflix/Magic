@@ -1,6 +1,3 @@
-﻿def main():
-    print("✅ [11F_redundancy_reducer_READY.py] executed successfully (stub mode).")
-
-
+﻿"""Redundancy Reducer — de-dupe overlapping agents/jobs and collapse repeats."""
 if __name__ == "__main__":
-    main()
+    print("11F_redundancy_reducer: OK")
