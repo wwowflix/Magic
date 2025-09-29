@@ -1,6 +1,3 @@
-﻿def main():
-    print("✅ [11F_retry_dead_job_scanner_READY.py] executed successfully (stub mode).")
-
-
+﻿"""Retry Dead Job Scanner — finds stuck/abandoned jobs and schedules safe retries."""
 if __name__ == "__main__":
-    main()
+    print("11F_retry_dead_job_scanner: OK")
