@@ -127,3 +127,5 @@ outputs/reports/status_now.*
 
 # runtime status_now reports
 outputs/reports/status_now.*
+
+pr-up.sh
