@@ -129,3 +129,6 @@ outputs/reports/status_now.*
 outputs/reports/status_now.*
 
 pr-up.sh
+
+# Large/secret scans
+secrets_found.csv
