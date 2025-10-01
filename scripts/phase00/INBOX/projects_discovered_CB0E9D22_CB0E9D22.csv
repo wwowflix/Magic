@@ -1,3 +1,0 @@
-﻿"project"	"files"	"latest_write"	"days_since_edit"	"size_kb"	"has_git"	"has_pyproject"	"has_ready_files"	"top_imports"	"summary"	"magic_score"
-"D:\MAGIC"	"1637"	"9/10/2025 12:06:28 PM"	"0"	"983"	"True"	"False"	"True"	"os, argparse, json, datetime, sys"	"Magic"	"95"
-"D:\MAGIC\scripts"	"4635"	"9/10/2025 12:17:45 PM"	"0"	"47243.7"	"False"	"False"	"True"	"bs4, praw, logging, pytest, datetime"	"-*- coding: utf-8 -*-"	"70"
