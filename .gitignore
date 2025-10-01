@@ -129,3 +129,7 @@ outputs/reports/status_now.*
 outputs/reports/status_now.*
 
 pr-up.sh
+
+# Local demo/sample scripts (not tracked)
+/scripts/phase*/module_*/**/*_sample_READY.py
+/scripts/phase*/module_*/**/*_demo_READY.py
