@@ -1,0 +1,15 @@
+﻿name: Nightly Smoke
+on:
+  schedule:
+    - cron: "15 18 * * *"   # 00:45 IST nightly (adjust if you want)
+jobs:
+  smoke-latest:
+    runs-on: ubuntu-latest
+    steps:
+      - run: docker pull wwowdocker/magic:latest
+      - run: |
+          id=$(docker run -d wwowdocker/magic:latest)
+          sleep 8
+          docker logs $id | tail -n 80
+          docker logs $id | grep -q "MAGIC container ready"
+          docker stop $id
