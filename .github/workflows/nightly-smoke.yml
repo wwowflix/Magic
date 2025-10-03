@@ -1,0 +1,55 @@
+﻿name: Nightly Smoke (latest)
+on:
+  schedule:
+    - cron: "15 18 * * *"   # 00:45 IST
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull latest
+        run: docker pull '"$ImageNS"':latest
+
+      - name: Run container
+        id: runit
+        run: |
+          set -e
+          cid=$(docker run -d '"$ImageNS"':latest)
+          echo "cid=$cid" >> "$GITHUB_OUTPUT"
+          sleep 8
+          docker logs $cid | tail -n 120
+          docker logs $cid | grep -q "MAGIC container ready"
+
+      - name: Execute runner & collect summary
+        run: |
+          cid="${{ steps.runit.outputs.cid }}"
+          docker exec $cid python /app/scripts/phase11/self_healing_runner_v5.py --summary /tmp/runner_summary.tsv
+          docker cp $cid:/tmp/runner_summary.tsv ./runner_summary.tsv
+          docker stop $cid
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nightly-runner-summary
+          path: runner_summary.tsv
+
+  # If smoke fails  open GH Issue ping
+  notify_on_failure:
+    if: failure()
+    runs-on: ubuntu-latest
+    needs: smoke
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Nightly Smoke FAILED for '"$ImageNS"' :latest`;
+            const body = [
+              'Nightly smoke failed.',
+              'Check logs in workflow artifacts.',
+              'Consider rollback to previous passing tag.'
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title, body, labels: ['ops','smoke-fail']
+            });
