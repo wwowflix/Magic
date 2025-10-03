@@ -1,0 +1,32 @@
+﻿name: Repo Maintenance - Cleanup
+on:
+  schedule:
+    - cron: "30 19 1 * *"  # 01:00 IST on day 1 monthly
+  workflow_dispatch:
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Delete workflow run artifacts older than 30 days
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const cutoff = 30; // days
+            const { owner, repo } = context.repo;
+            let page = 1;
+            while (true) {
+              const runs = await github.rest.actions.listWorkflowRunsForRepo({ owner, repo, per_page: 50, page });
+              if (!runs.data.workflow_runs.length) break;
+              for (const run of runs.data.workflow_runs) {
+                const ageDays = (Date.now() - new Date(run.created_at)) / (1000*60*60*24);
+                if (ageDays > cutoff) {
+                  try {
+                    await github.rest.actions.deleteWorkflowRun({ owner, repo, run_id: run.id });
+                  } catch (e) {}
+                }
+              }
+              page++;
+            }
