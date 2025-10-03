@@ -1,0 +1,110 @@
+﻿[
+    {
+        "ID":  0,
+        "Step":  "Set-Location D:\\MAGIC",
+        "Status":  "PASS",
+        "Notes":  "Path: D:\\MAGIC"
+    },
+    {
+        "ID":  1,
+        "Step":  "git branch",
+        "Status":  "PASS",
+        "Notes":  "HEAD=prod-release"
+    },
+    {
+        "ID":  2,
+        "Step":  "git remote",
+        "Status":  "PASS",
+        "Notes":  "origin\thttps://github.com/wwowflix/Magic (fetch); origin\thttps://github.com/wwowflix/Magic (push)"
+    },
+    {
+        "ID":  3,
+        "Step":  "python --version",
+        "Status":  "PASS",
+        "Notes":  "Python 3.11.9"
+    },
+    {
+        "ID":  4,
+        "Step":  "venv exists",
+        "Status":  "PASS",
+        "Notes":  "D:\\MAGIC\\venv"
+    },
+    {
+        "ID":  5,
+        "Step":  "requirements.txt",
+        "Status":  "PASS",
+        "Notes":  "Found"
+    },
+    {
+        "ID":  6,
+        "Step":  "pre-commit install",
+        "Status":  "PASS",
+        "Notes":  ".git\\hooks\\pre-commit active"
+    },
+    {
+        "ID":  7,
+        "Step":  "pre-commit --version",
+        "Status":  "PASS",
+        "Notes":  "pre-commit 4.3.0"
+    },
+    {
+        "ID":  16,
+        "Step":  "CI workflows present",
+        "Status":  "PASS",
+        "Notes":  "ci-dashboard-on-release.yml, ci-tests.yml, ci.yml, ci.yml.bak, lint-and-test.yml, pr-ci.yml, pre-commit.yml.bak"
+    },
+    {
+        "ID":  17,
+        "Step":  "CODEOWNERS present",
+        "Status":  "PASS",
+        "Notes":  "D:\\MAGIC\\.github\\CODEOWNERS"
+    },
+    {
+        "ID":  18,
+        "Step":  "PR template present",
+        "Status":  "PASS",
+        "Notes":  "D:\\MAGIC\\.github\\PULL_REQUEST_TEMPLATE.md, D:\\MAGIC\\.github\\pull_request_template.md"
+    },
+    {
+        "ID":  19,
+        "Step":  "pytest -q",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  20,
+        "Step":  "coverage 75%",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  21,
+        "Step":  "pip-audit",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  22,
+        "Step":  "safety check",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  23,
+        "Step":  "bandit -r . -ll",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  24,
+        "Step":  "gitleaks detect",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    },
+    {
+        "ID":  25,
+        "Step":  "detect-secrets scan",
+        "Status":  "WARN",
+        "Notes":  "Skipped (use -Deep)"
+    }
+]
