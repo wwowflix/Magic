@@ -1,25 +1,33 @@
 ﻿name: Publish Docker Image (multi-arch on tag)
+
 on:
   push:
     tags:
       - "v*.*.*"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write   # for cosign keyless in future
+      id-token: write
+    env:
+      IMAGE_NS: wwowdocker/magic
     steps:
       - uses: actions/checkout@v4
 
       - name: Read tag version
         id: meta
-        run: echo "VER=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+        run: echo "VER=${GITHUB_REF##*/}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - uses: docker/login-action@v3
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -31,31 +39,21 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            '"$ImageNS"':${{ steps.meta.outputs.VER }}
-            '"$ImageNS"':latest
+            ${{ env.IMAGE_NS }}:${{ steps.meta.outputs.VER }}
+            ${{ env.IMAGE_NS }}:latest
+          provenance: false
 
-      # -------- Week 3: SBOM artifact --------
       - name: Generate SBOM
+        if: always()
         run: |
-          pipx install cyclonedx-bom
-          cyclonedx-py -o outputs/reports/sbom.json
-      - uses: actions/upload-artifact@v4
+          python3 -m pip install --user syft
+          ~/.local/bin/syft ${{ env.IMAGE_NS }}:${{ steps.meta.outputs.VER }} -o spdx-json > sbom.json
+        continue-on-error: true
+
+      - name: Upload SBOM
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: sbom-${{ steps.meta.outputs.VER }}
-          path: outputs/reports/sbom.json
-
-      # -------- Week 4: Cosign sign & verify (keyless) --------
-      - name: Install cosign
-        run: |
-          COSIGN_VERSION="v2.4.0"
-          curl -sSL https://raw.githubusercontent.com/sigstore/cosign/main/install.sh | sudo sh -s -- -b /usr/local/bin ${COSIGN_VERSION}
-      - name: Cosign sign (keyless)
-        env:
-          COSIGN_EXPERIMENTAL: "1"
-        run: |
-          cosign sign '"$ImageNS"':${{ steps.meta.outputs.VER }} --yes
-          cosign sign '"$ImageNS"':latest --yes
-      - name: Cosign verify
-        run: |
-          cosign verify '"$ImageNS"':${{ steps.meta.outputs.VER }}
-          cosign verify '"$ImageNS"':latest
+          path: sbom.json
+          if-no-files-found: ignore

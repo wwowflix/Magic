@@ -1,12 +1,20 @@
-﻿.git
-.gitignore
-__pycache__/
-*.pyc
-.venv
-venv
-.env
-.artifacts/
-outputs/
-.cache/
-.dist/
-build/
+﻿# Ignore everything by default
+**
+
+# --- Whitelist only what the image needs ---
+!Dockerfile
+!requirements.txt
+
+# if the runner is all you need:
+!scripts/
+!scripts/phase11/
+!scripts/phase11/self_healing_runner_v5.py
+
+# If your runner imports package code, whitelist those packages too, e.g.:
+#!magic_core/
+#!magic_core/**
+
+# You can whitelist any other *small* files needed at runtime:
+#!pyproject.toml
+#!setup.cfg
+#!README.md

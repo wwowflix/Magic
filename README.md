@@ -5,3 +5,42 @@
 
 ![CI](https://img.shields.io/badge/CI-passing-brightgreen)
 ![Release](https://img.shields.io/badge/release-v1.0--stable-blue)
+## Run with Docker
+
+```bash
+docker pull wwowdocker/magic:latest
+
+# Show help
+docker run --rm wwowdocker/magic:latest --help
+
+# Version
+docker run --rm wwowdocker/magic:latest --version
+
+# Run self-healing summary
+docker run --rm -v ${PWD}/outputs/logs:/app/outputs/logs `
+  wwowdocker/magic:latest --summary /app/outputs/logs/runner_summary.tsv
+## Status
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/wwowdocker/magic)](https://hub.docker.com/r/wwowdocker/magic)
+[![GitHub Actions CI](https://github.com/wwowflix/Magic/actions/workflows/publish.yml/badge.svg)](https://github.com/wwowflix/Magic/actions/workflows/publish.yml)
+[![Release](https://img.shields.io/github/v/release/wwowflix/Magic)](https://github.com/wwowflix/Magic/releases)
+## Troubleshooting Docker login/pull
+
+If `docker pull wwowdocker/magic:<tag>` hangs or fails on Windows Desktop,
+bypass Desktop’s web login and use a token:
+
+```powershell
+# Log out first (ignore "credstore-updated" warnings)
+docker logout
+
+# Log in with token (Settings → Security → New Access Token on DockerHub)
+"__REPLACE_WITH_YOUR_DOCKERHUB_TOKEN__" | docker login -u "wwowdocker" --password-stdin
+
+# Pull specific platform or full multi-arch tag
+docker pull wwowdocker/magic:v1.3.2
+# or
+docker pull --platform linux/amd64 wwowdocker/magic:v1.3.2
+docker pull --platform linux/arm64 wwowdocker/magic:v1.3.2
+
+
+
