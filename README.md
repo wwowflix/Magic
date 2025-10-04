@@ -19,3 +19,8 @@ docker run --rm wwowdocker/magic:latest --version
 # Run self-healing summary
 docker run --rm -v ${PWD}/outputs/logs:/app/outputs/logs `
   wwowdocker/magic:latest --summary /app/outputs/logs/runner_summary.tsv
+## Status
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/wwowdocker/magic)](https://hub.docker.com/r/wwowdocker/magic)
+[![GitHub Actions CI](https://github.com/wwowflix/Magic/actions/workflows/publish.yml/badge.svg)](https://github.com/wwowflix/Magic/actions/workflows/publish.yml)
+[![Release](https://img.shields.io/github/v/release/wwowflix/Magic)](https://github.com/wwowflix/Magic/releases)
