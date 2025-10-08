@@ -1,0 +1,7 @@
+.git
+venv
+outputs
+__pycache__
+*.log
+*.tsv
+*.json
