@@ -1,8 +1,5 @@
-*.py     text eol=lf
-*.toml   text eol=lf
-*.ini    text eol=lf
-*.yml    text eol=lf
-*.yaml   text eol=lf
-*.ps1    text eol=crlf
-*.yml  text eol=lf
-*.yaml text eol=lf
+﻿* text=auto
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.sh  text eol=lf
+*.py  text eol=lf
