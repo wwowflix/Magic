@@ -33,3 +33,13 @@ clean_env/
 pip-wheel-metadata/
 # --- local runs / transient reports you don't want in git ---
 outputs/reports/status_now.*
+# --- Local env & secrets
+.env
+
+# --- Coverage outputs
+.coverage
+coverage/
+htmlcov/
+
+# --- Local build/test artifacts
+.artifacts/
