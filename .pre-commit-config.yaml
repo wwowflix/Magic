@@ -29,3 +29,11 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit]  # updated from deprecated 'commit'
+  - repo: local
+    hooks:
+      - id: block-ignored-secrets-and-artifacts
+        name: Block .env / .coverage / .artifacts from being committed
+        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_ignored_paths.ps1
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
