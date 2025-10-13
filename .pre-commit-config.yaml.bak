@@ -1,27 +1,23 @@
 ﻿repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/|\.github/workflows/).*
+      - id: check-json
+        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/).*
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.14.0
     hooks:
       - id: ruff
-        args: [--fix]
-        files: ^(agents|tools|self_healing_runner_v5\.py)(/|\\)
-        exclude: ^(backups|outputs|scripts|venv|clean_env|\.git|\.mypy_cache|\.ruff_cache)(/|\\)|_BACKUP_
+        args: [--fix, --exclude, backups, --exclude, outputs, --exclude, scripts/phase00/INBOX, --exclude, scripts/phase00/INBOX_REVIEW_NEEDS_ATTENTION, --exclude, scripts/phase00/INBOX_REVIEW_FIXED]
       - id: ruff-format
-        files: ^(agents|tools|self_healing_runner_v5\.py)(/|\\)
-        exclude: ^(backups|outputs|scripts|venv|clean_env|\.git|\.mypy_cache|\.ruff_cache)(/|\\)|_BACKUP_
-
-  - repo: https://github.com/psf/black
-    rev: 24.8.0
-    hooks:
-      - id: black
-        files: ^(agents|tools|self_healing_runner_v5\.py)(/|\\)
-        exclude: ^(backups|outputs|scripts|venv|clean_env|\.git|\.mypy_cache|\.ruff_cache)(/|\\)|_BACKUP_
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
-    hooks:
-      - id: mypy
-        files: ^(agents|tools|self_healing_runner_v5\.py)(/|\\)
-        exclude: ^(backups|outputs|scripts|venv|clean_env|\.git|\.mypy_cache|\.ruff_cache)(/|\\)|_BACKUP_
-        additional_dependencies:
-          - pandas-stubs
+        args: [--exclude, backups, --exclude, outputs, --exclude, scripts/phase00/INBOX, --exclude, scripts/phase00/INBOX_REVIEW_NEEDS_ATTENTION, --exclude, scripts/phase00/INBOX_REVIEW_FIXED]
+- repo: local
+  hooks:
+    - id: block-ignored-secrets-and-artifacts
+      name: Block .env / .coverage / .artifacts from being committed
+      entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_ignored_paths.ps1
+      language: system
+      pass_filenames: false

@@ -43,3 +43,7 @@ htmlcov/
 
 # --- Local build/test artifacts
 .artifacts/
+
+# local-only, not for git
+configs/local/
+

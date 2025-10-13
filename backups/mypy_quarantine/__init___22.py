@@ -156,9 +156,9 @@ def pprint(walker):
             output.append('%s"%s"' % (" " * indent, token["data"]))
 
         elif type == "SpaceCharacters":
-            assert (
-                False
-            ), "concatenateCharacterTokens should have got rid of all Space tokens"
+            assert False, (
+                "concatenateCharacterTokens should have got rid of all Space tokens"
+            )
 
         else:
             raise ValueError("Unknown token type, %s" % type)
