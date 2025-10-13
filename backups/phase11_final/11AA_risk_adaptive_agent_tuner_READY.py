@@ -1,4 +1,4 @@
-﻿"""Dynamically adjusts agent behavior based on past risk scores"""
+"""Dynamically adjusts agent behavior based on past risk scores"""
 
 
 def main():

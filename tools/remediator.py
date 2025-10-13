@@ -1,10 +1,12 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 import subprocess
 from typing import Sequence, Any
+
 
 def _run(cmd: Sequence[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
     """Thin wrapper so tests can monkeypatch."""
     return subprocess.run(cmd, capture_output=True, text=True, **kwargs)
+
 
 def pip_install(requirement: str) -> bool:
     """Install one requirement; True on success."""
@@ -14,19 +16,23 @@ def pip_install(requirement: str) -> bool:
     except Exception:
         return False
 
+
 def create_missing_inputs(path: str, *_, **__) -> None:
     """mkdir -p and touch empty file at the given path."""
     from pathlib import Path
+
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     if not p.exists():
         p.write_text("", encoding="utf-8")
 
+
 def fix_unicode(s: str) -> str:
     """Strip U+2028/U+2029."""
     if not isinstance(s, str):
-        return s 
+        return s
     return s.replace("\u2028", "").replace("\u2029", "")
+
 
 def apply_remediation(err: Exception) -> bool:
     """

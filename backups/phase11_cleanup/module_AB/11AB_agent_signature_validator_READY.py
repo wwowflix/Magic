@@ -1,4 +1,4 @@
-﻿"""Validates digital signatures of AI agents"""
+"""Validates digital signatures of AI agents"""
 
 
 def main():

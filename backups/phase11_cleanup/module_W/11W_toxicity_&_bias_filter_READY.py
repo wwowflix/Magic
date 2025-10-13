@@ -1,4 +1,4 @@
-﻿\"\"\" Placeholder for 11W_toxicity_&_bias_filter_READY.py \"\"\"
+""" Placeholder for 11W_toxicity_&_bias_filter_READY.py """
 
 def main():
     print("✅ 11W_toxicity_&_bias_filter_READY.py placeholder executed successfully.")

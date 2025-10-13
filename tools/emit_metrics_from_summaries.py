@@ -1,9 +1,10 @@
-﻿from collections import Counter
+from collections import Counter
+
 #!/usr/bin/env python3
 import csv
 import json
 from pathlib import Path
-from collections import defaultdict, Counter
+from collections import defaultdict
 from typing import DefaultDict
 
 __all__ = ["emit_metrics", "main"]
@@ -59,8 +60,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
-
-
-

@@ -1,19 +1,16 @@
 ﻿repos:
-  - repo: local
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
     hooks:
-      - id: forbid-binaries
-        name: Forbid committing large/binary artifacts (Windows)
-        entry: powershell
-        args:
-          - -NoProfile
-          - -ExecutionPolicy
-          - Bypass
-          - -File
-          - .\tools\hooks\forbid_binaries.ps1
-        language: system
-        pass_filenames: falserepos:
-- repo: https://github.com/Yelp/detect-secrets
-  rev: v1.5.0
-  hooks:
-    - id: detect-secrets
-      args: ["--baseline", ".secrets.baseline"]
+      - id: check-yaml
+        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/|\.github/workflows/).*
+      - id: check-json
+        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/).*
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix, --exclude, backups, --exclude, outputs, --exclude, scripts/phase00/INBOX, --exclude, scripts/phase00/INBOX_REVIEW_NEEDS_ATTENTION, --exclude, scripts/phase00/INBOX_REVIEW_FIXED]
+      - id: ruff-format
+        args: [--exclude, backups, --exclude, outputs, --exclude, scripts/phase00/INBOX, --exclude, scripts/phase00/INBOX_REVIEW_NEEDS_ATTENTION, --exclude, scripts/phase00/INBOX_REVIEW_FIXED]

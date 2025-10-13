@@ -1,4 +1,4 @@
-﻿\"\"\" Placeholder for 11Y_multi_tier_auto_restarter_READY.py \"\"\"
+""" Placeholder for 11Y_multi_tier_auto_restarter_READY.py """
 
 def main():
     print("✅ 11Y_multi_tier_auto_restarter_READY.py placeholder executed successfully.")

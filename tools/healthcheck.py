@@ -1,5 +1,6 @@
-﻿#!/usr/bin/env python3
-import sys, os
+#!/usr/bin/env python3
+import sys
+import os
 
 must_exist = [
     "requirements.txt",

@@ -1,4 +1,4 @@
-﻿"""
+"""
 Notion Sync Agent – Updates the MAGIC Automation Tracker with latest file metadata
 """
 

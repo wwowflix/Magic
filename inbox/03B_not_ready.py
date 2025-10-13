@@ -1,1 +1,1 @@
-﻿print('not ready')
+print("not ready")
