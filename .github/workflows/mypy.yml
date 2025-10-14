@@ -1,0 +1,28 @@
+﻿name: mypy
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main, chore/**, feat/** ]
+
+jobs:
+  typecheck:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install mypy + deps
+        shell: pwsh
+        run: |
+          python -m pip install -U pip
+          pip install mypy
+          if (Test-Path requirements.txt) { pip install -r requirements.txt }
+      - name: Run mypy (soft)
+        shell: pwsh
+        run: |
+          mypy scripts tools || exit 0   # start soft; flip to hard fail later
