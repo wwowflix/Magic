@@ -1,0 +1,38 @@
+name: guard-proof
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  guard:
+    name: Guard - block forbidden files
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage forbidden files
+        shell: pwsh
+        run: |
+          'key=oops' | Set-Content -Encoding UTF8 .env
+          'data'     | Set-Content -Encoding UTF8 .coverage
+          New-Item -ItemType Directory -Force -Path .artifacts | Out-Null
+          'x'        | Set-Content -Encoding UTF8 .artifacts/secret.txt
+          git add -f .env .coverage .artifacts/secret.txt
+
+      - name: Run repo guard directly (should print markers)
+        shell: pwsh
+        run: |
+          $repo  = (git rev-parse --show-toplevel).Trim()
+          $guard = Join-Path $repo 'tools/hooks/block_ignored_paths.ps1'
+          if (!(Test-Path $guard)) { throw "Missing guard: $guard" }
+          $files = git diff --cached --name-only
+          pwsh -NoProfile -ExecutionPolicy Bypass -File $guard $files
+
+      - name: Reminder
+        shell: pwsh
+        run: |
+          Write-Host "Check logs for these lines:" -ForegroundColor Yellow
+          Write-Host "  MAGIC_GUARD_BLOCK: .env"
+          Write-Host "  MAGIC_GUARD_BLOCK: .coverage"
+          Write-Host "  MAGIC_GUARD_BLOCK: .artifacts/secret.txt"
