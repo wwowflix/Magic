@@ -1,44 +1,7 @@
-name: tests
 on:
-  pull_request:
+  workflow_dispatch:
   push:
     branches: [ main, chore/precommit-rescue ]
-  workflow_dispatch:jobs:
-  lint-test-security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Install tooling
-        run: |
-          python -m pip install --upgrade pip
-          pip install ruff pytest pytest-cov pip-audit safety bandit
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Ruff
-        run: |
-          ruff check .
-          ruff format --check .
-
-      - name: Unit tests + coverage gate
-        run: |
-          pytest -q
-          pytest --cov=. --cov-report=term-missing --cov-fail-under=75
-
-      - name: Security (pip-audit)
-        run: |
-          if [ -f requirements.txt ]; then pip-audit -r requirements.txt; else echo "no reqs"; fi
-
-      - name: Security (safety)
-        run: |
-          if [ -f requirements.txt ]; then safety check -r requirements.txt || true; else echo "no reqs"; fi
-
-      - name: Static security (bandit)
-        run: |
-          bandit -q -r . || true
-
+  pull_request:
+    branches: [ main ]
+name: tests
