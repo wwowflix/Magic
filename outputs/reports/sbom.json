@@ -1,185 +1,6 @@
 {
   "components": [
     {
-      "bom-ref": "Authlib==1.6.4",
-      "description": "The ultimate Python library in building OAuth and OpenID Connect servers and clients.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://docs.authlib.org/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/authlib/authlib/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Purchase",
-          "type": "other",
-          "url": "https://authlib.org/plans"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Blog",
-          "type": "other",
-          "url": "https://blog.authlib.org/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/authlib/authlib"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Donate",
-          "type": "other",
-          "url": "https://github.com/sponsors/lepture"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "Authlib",
-      "purl": "pkg:pypi/authlib@1.6.4",
-      "type": "library",
-      "version": "1.6.4"
-    },
-    {
-      "bom-ref": "CacheControl==0.14.3",
-      "description": "httplib2 caching for requests",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/psf/cachecontrol/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/psf/cachecontrol"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://pypi.org/project/CacheControl/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "name": "CacheControl",
-      "properties": [
-        {
-          "name": "cdx:python:package:required-extra",
-          "value": "filecache"
-        }
-      ],
-      "purl": "pkg:pypi/cachecontrol@0.14.3",
-      "type": "library",
-      "version": "0.14.3"
-    },
-    {
-      "bom-ref": "Jinja2==3.1.6",
-      "description": "A very fast and expressive template engine.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://discord.gg/pallets"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://jinja.palletsprojects.com/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pallets/jinja/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Donate",
-          "type": "other",
-          "url": "https://palletsprojects.com/donate"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://jinja.palletsprojects.com/changes/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "Jinja2",
-      "purl": "pkg:pypi/jinja2@3.1.6",
-      "type": "library",
-      "version": "3.1.6"
-    },
-    {
-      "bom-ref": "MarkupSafe==3.0.2",
-      "description": "Safely add untrusted strings to HTML/XML markup.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://discord.gg/pallets"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://markupsafe.palletsprojects.com/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pallets/markupsafe/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Donate",
-          "type": "other",
-          "url": "https://palletsprojects.com/donate"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://markupsafe.palletsprojects.com/changes/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "MarkupSafe",
-      "purl": "pkg:pypi/markupsafe@3.0.2",
-      "type": "library",
-      "version": "3.0.2"
-    },
-    {
       "bom-ref": "PySocks==1.7.1",
       "description": "A Python SOCKS client module. See https://github.com/Anorov/PySocks for more information.",
       "externalReferences": [
@@ -195,7 +16,7 @@
       "version": "1.7.1"
     },
     {
-      "bom-ref": "PyYAML==6.0.2",
+      "bom-ref": "PyYAML==6.0.3",
       "description": "YAML parser and emitter for Python",
       "externalReferences": [
         {
@@ -243,9 +64,9 @@
         }
       ],
       "name": "PyYAML",
-      "purl": "pkg:pypi/pyyaml@6.0.2",
+      "purl": "pkg:pypi/pyyaml@6.0.3",
       "type": "library",
-      "version": "6.0.2"
+      "version": "6.0.3"
     },
     {
       "bom-ref": "Pygments==2.19.2",
@@ -297,77 +118,6 @@
       "version": "2.19.2"
     },
     {
-      "bom-ref": "annotated-types==0.7.0",
-      "description": "Reusable constraint types to use with typing.Annotated",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/annotated-types/annotated-types"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/annotated-types/annotated-types/releases"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/annotated-types/annotated-types"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "annotated-types",
-      "purl": "pkg:pypi/annotated-types@0.7.0",
-      "type": "library",
-      "version": "0.7.0"
-    },
-    {
-      "bom-ref": "anyio==4.10.0",
-      "description": "High-level concurrency and networking framework on top of asyncio or Trio",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://anyio.readthedocs.io/en/latest/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/agronholm/anyio/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source code",
-          "type": "other",
-          "url": "https://github.com/agronholm/anyio"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://anyio.readthedocs.io/en/stable/versionhistory.html"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "anyio",
-      "purl": "pkg:pypi/anyio@4.10.0",
-      "type": "library",
-      "version": "4.10.0"
-    },
-    {
       "bom-ref": "arrow==1.3.0",
       "description": "Better dates & times for Python",
       "externalReferences": [
@@ -401,7 +151,7 @@
       "version": "1.3.0"
     },
     {
-      "bom-ref": "attrs==25.3.0",
+      "bom-ref": "attrs==25.4.0",
       "description": "Classes Without Boilerplate",
       "externalReferences": [
         {
@@ -439,62 +189,9 @@
         }
       ],
       "name": "attrs",
-      "purl": "pkg:pypi/attrs@25.3.0",
+      "purl": "pkg:pypi/attrs@25.4.0",
       "type": "library",
-      "version": "25.3.0"
-    },
-    {
-      "bom-ref": "bandit==1.8.6",
-      "description": "Security oriented static analyser for python code.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://bandit.readthedocs.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/PyCQA/bandit/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Discord",
-          "type": "other",
-          "url": "https://discord.gg/qYxpadCgkx"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source Code",
-          "type": "other",
-          "url": "https://github.com/PyCQA/bandit"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Release Notes",
-          "type": "other",
-          "url": "https://github.com/PyCQA/bandit/releases"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Sponsor",
-          "type": "other",
-          "url": "https://psfmember.org/civicrm/contribute/transact/?reset=1&id=42"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://bandit.readthedocs.io/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "name": "bandit",
-      "purl": "pkg:pypi/bandit@1.8.6",
-      "type": "library",
-      "version": "1.8.6"
+      "version": "25.4.0"
     },
     {
       "bom-ref": "beautifulsoup4==4.13.4",
@@ -523,44 +220,6 @@
       "purl": "pkg:pypi/beautifulsoup4@4.13.4",
       "type": "library",
       "version": "4.13.4"
-    },
-    {
-      "bom-ref": "black==25.1.0",
-      "description": "The uncompromising code formatter.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://black.readthedocs.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/psf/black/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/psf/black/blob/main/CHANGES.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/psf/black"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "black",
-      "purl": "pkg:pypi/black@25.1.0",
-      "type": "library",
-      "version": "25.1.0"
     },
     {
       "bom-ref": "boolean.py==5.0",
@@ -618,54 +277,6 @@
       "purl": "pkg:pypi/certifi@2025.7.14",
       "type": "library",
       "version": "2025.7.14"
-    },
-    {
-      "bom-ref": "cffi==2.0.0",
-      "description": "Foreign Function Interface for Python calling C code.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://cffi.readthedocs.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/python-cffi/cffi/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source Code",
-          "type": "other",
-          "url": "https://github.com/python-cffi/cffi"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Downloads",
-          "type": "other",
-          "url": "https://github.com/python-cffi/cffi/releases"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Contact",
-          "type": "other",
-          "url": "https://groups.google.com/forum/#!forum/python-cffi"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://cffi.readthedocs.io/en/latest/whatsnew.html"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "cffi",
-      "purl": "pkg:pypi/cffi@2.0.0",
-      "type": "library",
-      "version": "2.0.0"
     },
     {
       "bom-ref": "cfgv==3.4.0",
@@ -767,49 +378,6 @@
       "version": "3.4.2"
     },
     {
-      "bom-ref": "click==8.2.1",
-      "description": "Composable command line interface toolkit",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://discord.gg/pallets"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://click.palletsprojects.com/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pallets/click/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Donate",
-          "type": "other",
-          "url": "https://palletsprojects.com/donate"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://click.palletsprojects.com/page/changes/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
-      "name": "click",
-      "purl": "pkg:pypi/click@8.2.1",
-      "type": "library",
-      "version": "8.2.1"
-    },
-    {
       "bom-ref": "colorama==0.4.6",
       "description": "Cross-platform colored terminal text.",
       "externalReferences": [
@@ -871,13 +439,13 @@
       "version": "1.3.3"
     },
     {
-      "bom-ref": "coverage==7.10.6",
+      "bom-ref": "coverage==7.10.7",
       "description": "Code coverage measurement for Python",
       "externalReferences": [
         {
           "comment": "from packaging metadata Project-URL: Documentation",
           "type": "documentation",
-          "url": "https://coverage.readthedocs.io/en/7.10.6"
+          "url": "https://coverage.readthedocs.io/en/7.10.7"
         },
         {
           "comment": "from packaging metadata Project-URL: Issues",
@@ -920,50 +488,9 @@
           "value": "toml"
         }
       ],
-      "purl": "pkg:pypi/coverage@7.10.6",
+      "purl": "pkg:pypi/coverage@7.10.7",
       "type": "library",
-      "version": "7.10.6"
-    },
-    {
-      "bom-ref": "cryptography==45.0.7",
-      "description": "cryptography is a package which provides cryptographic recipes and primitives to Python developers.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: documentation",
-          "type": "documentation",
-          "url": "https://cryptography.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/pyca/cryptography/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: source",
-          "type": "other",
-          "url": "https://github.com/pyca/cryptography/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: changelog",
-          "type": "release-notes",
-          "url": "https://cryptography.io/en/latest/changelog/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: homepage",
-          "type": "website",
-          "url": "https://github.com/pyca/cryptography"
-        }
-      ],
-      "licenses": [
-        {
-          "acknowledgement": "declared",
-          "expression": "Apache-2.0 OR BSD-3-Clause"
-        }
-      ],
-      "name": "cryptography",
-      "purl": "pkg:pypi/cryptography@45.0.7",
-      "type": "library",
-      "version": "45.0.7"
+      "version": "7.10.7"
     },
     {
       "bom-ref": "cycler==0.12.1",
@@ -1043,7 +570,7 @@
       "version": "7.1.0"
     },
     {
-      "bom-ref": "cyclonedx-python-lib==9.1.0",
+      "bom-ref": "cyclonedx-python-lib==11.1.0",
       "description": "Python library for CycloneDX",
       "externalReferences": [
         {
@@ -1093,9 +620,9 @@
           "value": "validation"
         }
       ],
-      "purl": "pkg:pypi/cyclonedx-python-lib@9.1.0",
+      "purl": "pkg:pypi/cyclonedx-python-lib@11.1.0",
       "type": "library",
-      "version": "9.1.0"
+      "version": "11.1.0"
     },
     {
       "bom-ref": "defusedxml==0.7.1",
@@ -1198,29 +725,6 @@
       "version": "0.4.0"
     },
     {
-      "bom-ref": "dparse==0.6.4",
-      "description": "A parser for Python dependency files",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/pyupio/dparse"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "dparse",
-      "purl": "pkg:pypi/dparse@0.6.4",
-      "type": "library",
-      "version": "0.6.4"
-    },
-    {
       "bom-ref": "filelock==3.18.0",
       "description": "A platform independent file lock.",
       "externalReferences": [
@@ -1259,7 +763,7 @@
       "version": "3.18.0"
     },
     {
-      "bom-ref": "fonttools==4.59.2",
+      "bom-ref": "fonttools==4.60.1",
       "description": "Tools to manipulate font files",
       "externalReferences": [
         {
@@ -1277,9 +781,9 @@
         }
       ],
       "name": "fonttools",
-      "purl": "pkg:pypi/fonttools@4.59.2",
+      "purl": "pkg:pypi/fonttools@4.60.1",
       "type": "library",
-      "version": "4.59.2"
+      "version": "4.60.1"
     },
     {
       "bom-ref": "fqdn==1.5.1",
@@ -1305,140 +809,7 @@
       "version": "1.5.1"
     },
     {
-      "bom-ref": "git-filter-repo==2.47.0",
-      "description": "Quickly rewrite git repository history",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/newren/git-filter-repo/issues/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/newren/git-filter-repo"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/newren/git-filter-repo"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "git-filter-repo",
-      "purl": "pkg:pypi/git-filter-repo@2.47.0",
-      "type": "library",
-      "version": "2.47.0"
-    },
-    {
-      "bom-ref": "h11==0.16.0",
-      "description": "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/python-hyper/h11"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "h11",
-      "purl": "pkg:pypi/h11@0.16.0",
-      "type": "library",
-      "version": "0.16.0"
-    },
-    {
-      "bom-ref": "httpcore==1.0.9",
-      "description": "A minimal low-level HTTP client.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://www.encode.io/httpcore"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/encode/httpcore"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://www.encode.io/httpcore/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
-      "name": "httpcore",
-      "purl": "pkg:pypi/httpcore@1.0.9",
-      "type": "library",
-      "version": "1.0.9"
-    },
-    {
-      "bom-ref": "httpx==0.28.1",
-      "description": "The next generation HTTP client.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://www.python-httpx.org"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/encode/httpx"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/encode/httpx/blob/master/CHANGELOG.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/encode/httpx"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "httpx",
-      "purl": "pkg:pypi/httpx@0.28.1",
-      "type": "library",
-      "version": "0.28.1"
-    },
-    {
-      "bom-ref": "identify==2.6.14",
+      "bom-ref": "identify==2.6.15",
       "description": "File identification library for Python",
       "externalReferences": [
         {
@@ -1456,9 +827,9 @@
         }
       ],
       "name": "identify",
-      "purl": "pkg:pypi/identify@2.6.14",
+      "purl": "pkg:pypi/identify@2.6.15",
       "type": "library",
-      "version": "2.6.14"
+      "version": "2.6.15"
     },
     {
       "bom-ref": "idna==3.10",
@@ -1555,34 +926,6 @@
       "version": "20.11.0"
     },
     {
-      "bom-ref": "joblib==1.5.2",
-      "description": "Lightweight pipelining with Python functions",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/joblib/joblib"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://joblib.readthedocs.io"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "joblib",
-      "purl": "pkg:pypi/joblib@1.5.2",
-      "type": "library",
-      "version": "1.5.2"
-    },
-    {
       "bom-ref": "jsonpointer==3.0.0",
       "description": "Identify specific nodes in a JSON document (RFC 6901) ",
       "externalReferences": [
@@ -1657,7 +1000,7 @@
       "properties": [
         {
           "name": "cdx:python:package:required-extra",
-          "value": "format"
+          "value": "format-nongpl"
         }
       ],
       "purl": "pkg:pypi/jsonschema@4.25.1",
@@ -1751,6 +1094,34 @@
       "version": "1.4.9"
     },
     {
+      "bom-ref": "lark==1.3.0",
+      "description": "a modern parsing library",
+      "externalReferences": [
+        {
+          "comment": "from packaging metadata Project-URL: Download",
+          "type": "distribution",
+          "url": "https://github.com/lark-parser/lark/tarball/master"
+        },
+        {
+          "comment": "from packaging metadata Project-URL: Homepage",
+          "type": "website",
+          "url": "https://github.com/lark-parser/lark"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "acknowledgement": "declared",
+            "id": "MIT"
+          }
+        }
+      ],
+      "name": "lark",
+      "purl": "pkg:pypi/lark@1.3.0",
+      "type": "library",
+      "version": "1.3.0"
+    },
+    {
       "bom-ref": "license-expression==30.4.4",
       "description": "license-expression is a comprehensive utility library to parse, compare, simplify and normalize license expressions (such as SPDX license expressions) using boolean logic.",
       "externalReferences": [
@@ -1774,9 +1145,14 @@
       "version": "30.4.4"
     },
     {
-      "bom-ref": "lxml==5.3.0",
+      "bom-ref": "lxml==6.0.0",
       "description": "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.",
       "externalReferences": [
+        {
+          "comment": "from packaging metadata Project-URL: Bug Tracker",
+          "type": "issue-tracker",
+          "url": "https://bugs.launchpad.net/lxml"
+        },
         {
           "comment": "from packaging metadata Project-URL: Source",
           "type": "other",
@@ -1803,9 +1179,9 @@
         }
       ],
       "name": "lxml",
-      "purl": "pkg:pypi/lxml@5.3.0",
+      "purl": "pkg:pypi/lxml@6.0.0",
       "type": "library",
-      "version": "5.3.0"
+      "version": "6.0.0"
     },
     {
       "bom-ref": "markdown-it-py==4.0.0",
@@ -1836,50 +1212,7 @@
       "version": "4.0.0"
     },
     {
-      "bom-ref": "marshmallow==4.0.1",
-      "description": "A lightweight library for converting complex datatypes to and from native Python datatypes.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/marshmallow-code/marshmallow/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/marshmallow-code/marshmallow"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Funding",
-          "type": "other",
-          "url": "https://opencollective.com/marshmallow"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Tidelift",
-          "type": "other",
-          "url": "https://tidelift.com/subscription/pkg/pypi-marshmallow?utm_source=pypi-marshmallow&utm_medium=pypi"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://marshmallow.readthedocs.io/en/latest/changelog.html"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "marshmallow",
-      "purl": "pkg:pypi/marshmallow@4.0.1",
-      "type": "library",
-      "version": "4.0.1"
-    },
-    {
-      "bom-ref": "matplotlib==3.10.6",
+      "bom-ref": "matplotlib==3.10.7",
       "description": "Python plotting package",
       "externalReferences": [
         {
@@ -1927,9 +1260,9 @@
         }
       ],
       "name": "matplotlib",
-      "purl": "pkg:pypi/matplotlib@3.10.6",
+      "purl": "pkg:pypi/matplotlib@3.10.7",
       "type": "library",
-      "version": "3.10.6"
+      "version": "3.10.7"
     },
     {
       "bom-ref": "mdurl==0.1.2",
@@ -1955,145 +1288,6 @@
       "version": "0.1.2"
     },
     {
-      "bom-ref": "msgpack==1.1.1",
-      "description": "MessagePack serializer",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://msgpack-python.readthedocs.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/msgpack/msgpack-python/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/msgpack/msgpack-python/blob/main/ChangeLog.rst"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/msgpack/msgpack-python/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://msgpack.org/"
-        }
-      ],
-      "name": "msgpack",
-      "purl": "pkg:pypi/msgpack@1.1.1",
-      "type": "library",
-      "version": "1.1.1"
-    },
-    {
-      "bom-ref": "mypy==1.17.1",
-      "description": "Optional static typing for Python",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://mypy.readthedocs.io/en/stable/index.html"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/python/mypy/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/python/mypy/blob/master/CHANGELOG.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/python/mypy"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://www.mypy-lang.org/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "mypy",
-      "purl": "pkg:pypi/mypy@1.17.1",
-      "type": "library",
-      "version": "1.17.1"
-    },
-    {
-      "bom-ref": "mypy_extensions==1.1.0",
-      "description": "Type system extensions for programs checked with the mypy type checker.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/python/mypy_extensions"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "mypy_extensions",
-      "purl": "pkg:pypi/mypy-extensions@1.1.0",
-      "type": "library",
-      "version": "1.1.0"
-    },
-    {
-      "bom-ref": "nltk==3.9.1",
-      "description": "Natural Language Toolkit",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://www.nltk.org/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/nltk/nltk/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source Code",
-          "type": "other",
-          "url": "https://github.com/nltk/nltk"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://www.nltk.org/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "nltk",
-      "purl": "pkg:pypi/nltk@3.9.1",
-      "type": "library",
-      "version": "3.9.1"
-    },
-    {
       "bom-ref": "nodeenv==1.9.1",
       "description": "Node.js virtual environment builder",
       "externalReferences": [
@@ -2115,29 +1309,6 @@
       "purl": "pkg:pypi/nodeenv@1.9.1",
       "type": "library",
       "version": "1.9.1"
-    },
-    {
-      "bom-ref": "notion-client==2.5.0",
-      "description": "Python client for the official Notion API",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/ramnes/notion-sdk-py"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "notion-client",
-      "purl": "pkg:pypi/notion-client@2.5.0",
-      "type": "library",
-      "version": "2.5.0"
     },
     {
       "bom-ref": "numpy==2.3.3",
@@ -2245,7 +1416,7 @@
       "version": "25.0"
     },
     {
-      "bom-ref": "pandas==2.3.2",
+      "bom-ref": "pandas==2.3.3",
       "description": "Powerful data structures for data analysis, time series, and statistics",
       "externalReferences": [
         {
@@ -2273,86 +1444,9 @@
         }
       ],
       "name": "pandas",
-      "purl": "pkg:pypi/pandas@2.3.2",
+      "purl": "pkg:pypi/pandas@2.3.3",
       "type": "library",
-      "version": "2.3.2"
-    },
-    {
-      "bom-ref": "pandas-stubs==2.3.2.250827",
-      "description": "Type annotations for pandas",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://pandas.pydata.org/pandas-docs/stable"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Bug Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/pandas-dev/pandas-stubs/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/pandas-dev/pandas-stubs"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://pandas.pydata.org"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "pandas-stubs",
-      "purl": "pkg:pypi/pandas-stubs@2.3.2.250827",
-      "type": "library",
-      "version": "2.3.2.250827"
-    },
-    {
-      "bom-ref": "pathspec==0.12.1",
-      "description": "Utility library for gitignore style pattern matching of file paths.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://python-path-specification.readthedocs.io/en/latest/index.html"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue Tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/cpburnz/python-pathspec/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source Code",
-          "type": "other",
-          "url": "https://github.com/cpburnz/python-pathspec"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
-          }
-        }
-      ],
-      "name": "pathspec",
-      "purl": "pkg:pypi/pathspec@0.12.1",
-      "type": "library",
-      "version": "0.12.1"
+      "version": "2.3.3"
     },
     {
       "bom-ref": "pillow==11.3.0",
@@ -2446,29 +1540,6 @@
       "version": "25.2"
     },
     {
-      "bom-ref": "pip-api==0.0.34",
-      "description": "An unofficial, importable pip API",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "http://github.com/di/pip-api"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "pip-api",
-      "purl": "pkg:pypi/pip-api@0.0.34",
-      "type": "library",
-      "version": "0.0.34"
-    },
-    {
       "bom-ref": "pip-requirements-parser==32.0.1",
       "description": "pip requirements parser - a mostly correct pip requirements parsing library because it uses pip's own code.",
       "externalReferences": [
@@ -2492,40 +1563,7 @@
       "version": "32.0.1"
     },
     {
-      "bom-ref": "pip_audit==2.9.0",
-      "description": "A tool for scanning Python environments for known vulnerabilities",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/pypa/pip-audit/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pypa/pip-audit"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://pypi.org/project/pip-audit/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "pip_audit",
-      "purl": "pkg:pypi/pip-audit@2.9.0",
-      "type": "library",
-      "version": "2.9.0"
-    },
-    {
-      "bom-ref": "platformdirs==4.4.0",
+      "bom-ref": "platformdirs==4.5.0",
       "description": "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`.",
       "externalReferences": [
         {
@@ -2563,47 +1601,9 @@
         }
       ],
       "name": "platformdirs",
-      "purl": "pkg:pypi/platformdirs@4.4.0",
+      "purl": "pkg:pypi/platformdirs@4.5.0",
       "type": "library",
-      "version": "4.4.0"
-    },
-    {
-      "bom-ref": "plotly==5.23.0",
-      "description": "An open-source, interactive data visualization library for Python",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://plotly.com/python/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/plotly/plotly.py/blob/master/CHANGELOG.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Github",
-          "type": "vcs",
-          "url": "https://github.com/plotly/plotly.py"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://plotly.com/python/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "plotly",
-      "purl": "pkg:pypi/plotly@5.23.0",
-      "type": "library",
-      "version": "5.23.0"
+      "version": "4.5.0"
     },
     {
       "bom-ref": "pluggy==1.6.0",
@@ -2643,35 +1643,6 @@
       "purl": "pkg:pypi/pre-commit@4.3.0",
       "type": "library",
       "version": "4.3.0"
-    },
-    {
-      "bom-ref": "psutil==7.0.0",
-      "description": "Cross-platform lib for process and system monitoring in Python.  NOTE: the syntax of this script MUST be kept compatible with Python 2.7.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/giampaolo/psutil"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "psutil",
-      "purl": "pkg:pypi/psutil@7.0.0",
-      "type": "library",
-      "version": "7.0.0"
     },
     {
       "bom-ref": "py-serializable==2.1.0",
@@ -2718,117 +1689,7 @@
       "version": "2.1.0"
     },
     {
-      "bom-ref": "pycparser==2.23",
-      "description": "C parser in Python",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/eliben/pycparser"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "pycparser",
-      "purl": "pkg:pypi/pycparser@2.23",
-      "type": "library",
-      "version": "2.23"
-    },
-    {
-      "bom-ref": "pydantic==2.9.2",
-      "description": "Data validation using Python type hints",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://docs.pydantic.dev"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pydantic/pydantic"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Funding",
-          "type": "other",
-          "url": "https://github.com/sponsors/samuelcolvin"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://docs.pydantic.dev/latest/changelog/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/pydantic/pydantic"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "pydantic",
-      "purl": "pkg:pypi/pydantic@2.9.2",
-      "type": "library",
-      "version": "2.9.2"
-    },
-    {
-      "bom-ref": "pydantic_core==2.23.4",
-      "description": "Core functionality for Pydantic validation and serialization",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/pydantic/pydantic-core"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Funding",
-          "type": "other",
-          "url": "https://github.com/sponsors/samuelcolvin"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/pydantic/pydantic-core"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/pydantic/pydantic-core"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "pydantic_core",
-      "purl": "pkg:pypi/pydantic-core@2.23.4",
-      "type": "library",
-      "version": "2.23.4"
-    },
-    {
-      "bom-ref": "pyparsing==3.2.3",
+      "bom-ref": "pyparsing==3.1.2",
       "description": "pyparsing module - Classes and methods to define and execute parsing grammars",
       "externalReferences": [
         {
@@ -2846,9 +1707,9 @@
         }
       ],
       "name": "pyparsing",
-      "purl": "pkg:pypi/pyparsing@3.2.3",
+      "purl": "pkg:pypi/pyparsing@3.1.2",
       "type": "library",
-      "version": "3.2.3"
+      "version": "3.1.2"
     },
     {
       "bom-ref": "pytest==8.4.2",
@@ -2976,58 +1837,6 @@
       "version": "2.9.0.post0"
     },
     {
-      "bom-ref": "python-dotenv==1.1.1",
-      "description": "Read key-value pairs from a .env file and set them as environment variables",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/theskumar/python-dotenv"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "BSD-3-Clause"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: BSD License"
-          }
-        }
-      ],
-      "name": "python-dotenv",
-      "purl": "pkg:pypi/python-dotenv@1.1.1",
-      "type": "library",
-      "version": "1.1.1"
-    },
-    {
-      "bom-ref": "pytrends==4.9.2",
-      "description": "Pseudo API for Google Trends",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: homepage",
-          "type": "website",
-          "url": "https://github.com/dreyco676/pytrends"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "pytrends",
-      "purl": "pkg:pypi/pytrends@4.9.2",
-      "type": "library",
-      "version": "4.9.2"
-    },
-    {
       "bom-ref": "pytz==2025.2",
       "description": "World timezone definitions, modern and historical",
       "externalReferences": [
@@ -3056,7 +1865,7 @@
       "version": "2025.2"
     },
     {
-      "bom-ref": "referencing==0.36.2",
+      "bom-ref": "referencing==0.37.0",
       "description": "JSON Referencing + Python",
       "externalReferences": [
         {
@@ -3104,30 +1913,9 @@
         }
       ],
       "name": "referencing",
-      "purl": "pkg:pypi/referencing@0.36.2",
+      "purl": "pkg:pypi/referencing@0.37.0",
       "type": "library",
-      "version": "0.36.2"
-    },
-    {
-      "bom-ref": "regex==2025.9.1",
-      "description": "Alternative regular expression module, to replace re.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/mrabarnett/mrab-regex"
-        }
-      ],
-      "licenses": [
-        {
-          "acknowledgement": "declared",
-          "expression": "Apache-2.0 AND CNRI-Python"
-        }
-      ],
-      "name": "regex",
-      "purl": "pkg:pypi/regex@2025.9.1",
-      "type": "library",
-      "version": "2025.9.1"
+      "version": "0.37.0"
     },
     {
       "bom-ref": "requests==2.32.4",
@@ -3198,35 +1986,68 @@
       "version": "0.1.4"
     },
     {
-      "bom-ref": "rfc3987==1.3.8",
-      "description": "Parsing and validation of URIs (RFC 3986) and IRIs (RFC 3987)",
+      "bom-ref": "rfc3986-validator==0.1.1",
+      "description": "Pure python rfc3986 validator",
       "externalReferences": [
-        {
-          "comment": "from packaging metadata: Download-URL",
-          "type": "distribution",
-          "url": "https://github.com/dgerber/rfc3987"
-        },
         {
           "comment": "from packaging metadata: Home-page",
           "type": "website",
-          "url": "http://pypi.python.org/pypi/rfc3987"
+          "url": "https://github.com/naimetti/rfc3986-validator"
         }
       ],
       "licenses": [
         {
           "license": {
             "acknowledgement": "declared",
-            "id": "GPL-3.0-or-later"
+            "id": "MIT"
           }
         }
       ],
-      "name": "rfc3987",
-      "purl": "pkg:pypi/rfc3987@1.3.8",
+      "name": "rfc3986-validator",
+      "purl": "pkg:pypi/rfc3986-validator@0.1.1",
       "type": "library",
-      "version": "1.3.8"
+      "version": "0.1.1"
     },
     {
-      "bom-ref": "rich==14.1.0",
+      "bom-ref": "rfc3987-syntax==1.1.0",
+      "description": "Helper functions to syntactically validate strings according to RFC 3987.",
+      "externalReferences": [
+        {
+          "comment": "from packaging metadata Project-URL: Documentation",
+          "type": "documentation",
+          "url": "https://github.com/willynilly/rfc3987-syntax#readme"
+        },
+        {
+          "comment": "from packaging metadata Project-URL: Issues",
+          "type": "issue-tracker",
+          "url": "https://github.com/willynilly/rfc3987-syntax/issues"
+        },
+        {
+          "comment": "from packaging metadata Project-URL: Source",
+          "type": "other",
+          "url": "https://github.com/willynilly/rfc3987-syntax"
+        },
+        {
+          "comment": "from packaging metadata Project-URL: Homepage",
+          "type": "website",
+          "url": "https://github.com/willynilly/rfc3987-syntax"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "acknowledgement": "declared",
+            "id": "MIT"
+          }
+        }
+      ],
+      "name": "rfc3987-syntax",
+      "purl": "pkg:pypi/rfc3987-syntax@1.1.0",
+      "type": "library",
+      "version": "1.1.0"
+    },
+    {
+      "bom-ref": "rich==14.2.0",
       "description": "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal",
       "externalReferences": [
         {
@@ -3235,7 +2056,7 @@
           "url": "https://rich.readthedocs.io/en/latest/"
         },
         {
-          "comment": "from packaging metadata: Home-page",
+          "comment": "from packaging metadata Project-URL: Homepage",
           "type": "website",
           "url": "https://github.com/Textualize/rich"
         }
@@ -3249,9 +2070,9 @@
         }
       ],
       "name": "rich",
-      "purl": "pkg:pypi/rich@14.1.0",
+      "purl": "pkg:pypi/rich@14.2.0",
       "type": "library",
-      "version": "14.1.0"
+      "version": "14.2.0"
     },
     {
       "bom-ref": "rpds-py==0.27.1",
@@ -3307,181 +2128,6 @@
       "version": "0.27.1"
     },
     {
-      "bom-ref": "ruamel.yaml==0.18.15",
-      "description": "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://yaml.dev/doc/ruamel-yaml"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Tracker",
-          "type": "issue-tracker",
-          "url": "https://sourceforge.net/p/ruamel-yaml/tickets/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Home",
-          "type": "website",
-          "url": "https://sourceforge.net/p/ruamel-yaml/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "ruamel.yaml",
-      "purl": "pkg:pypi/ruamel.yaml@0.18.15",
-      "type": "library",
-      "version": "0.18.15"
-    },
-    {
-      "bom-ref": "ruamel.yaml.clib==0.2.12",
-      "description": "C version of reader, parser and emitter for ruamel.yaml derived from libyaml",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Tracker",
-          "type": "issue-tracker",
-          "url": "https://sourceforge.net/p/ruamel-yaml-clib/tickets/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://sourceforge.net/p/ruamel-yaml-clib/code/ci/default/tree/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Home",
-          "type": "website",
-          "url": "https://sourceforge.net/p/ruamel-yaml-clib/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "ruamel.yaml.clib",
-      "purl": "pkg:pypi/ruamel.yaml.clib@0.2.12",
-      "type": "library",
-      "version": "0.2.12"
-    },
-    {
-      "bom-ref": "ruff==0.12.12",
-      "description": "An extremely fast Python linter and code formatter, written in Rust.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://docs.astral.sh/ruff/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/astral-sh/ruff/blob/main/CHANGELOG.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/astral-sh/ruff"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://docs.astral.sh/ruff"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "ruff",
-      "purl": "pkg:pypi/ruff@0.12.12",
-      "type": "library",
-      "version": "0.12.12"
-    },
-    {
-      "bom-ref": "safety==3.6.1",
-      "description": "Scan dependencies for known vulnerabilities and licenses.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: documentation",
-          "type": "documentation",
-          "url": "https://docs.safetycli.com/safety-docs"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/pyupio/safety/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: source",
-          "type": "other",
-          "url": "https://github.com/pyupio/safety"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: changelog",
-          "type": "release-notes",
-          "url": "https://github.com/pyupio/safety/blob/main/CHANGELOG.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: homepage",
-          "type": "website",
-          "url": "https://safetycli.com"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "safety",
-      "purl": "pkg:pypi/safety@3.6.1",
-      "type": "library",
-      "version": "3.6.1"
-    },
-    {
-      "bom-ref": "safety-schemas==0.0.14",
-      "description": "Schemas for Safety tools",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/pyupio/safety_schemas"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "safety-schemas",
-      "purl": "pkg:pypi/safety-schemas@0.0.14",
-      "type": "library",
-      "version": "0.0.14"
-    },
-    {
       "bom-ref": "setuptools==80.9.0",
       "description": "Easily download, build, install, upgrade, and uninstall Python packages",
       "externalReferences": [
@@ -3515,29 +2161,6 @@
       "version": "80.9.0"
     },
     {
-      "bom-ref": "shellingham==1.5.4",
-      "description": "Tool to Detect Surrounding Shell",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/sarugaku/shellingham"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "ISC"
-          }
-        }
-      ],
-      "name": "shellingham",
-      "purl": "pkg:pypi/shellingham@1.5.4",
-      "type": "library",
-      "version": "1.5.4"
-    },
-    {
       "bom-ref": "six==1.17.0",
       "description": "Python 2 and 3 compatibility utilities",
       "externalReferences": [
@@ -3559,53 +2182,6 @@
       "purl": "pkg:pypi/six@1.17.0",
       "type": "library",
       "version": "1.17.0"
-    },
-    {
-      "bom-ref": "sniffio==1.3.1",
-      "description": "Sniff out which async library your code is running under",
-      "evidence": {
-        "licenses": [
-          {
-            "license": {
-              "acknowledgement": "declared",
-              "id": "MIT"
-            }
-          },
-          {
-            "license": {
-              "acknowledgement": "declared",
-              "name": "License :: OSI Approved :: Apache Software License"
-            }
-          }
-        ]
-      },
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://sniffio.readthedocs.io/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://sniffio.readthedocs.io/en/latest/history.html"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/python-trio/sniffio"
-        }
-      ],
-      "licenses": [
-        {
-          "acknowledgement": "declared",
-          "expression": "MIT OR Apache-2.0"
-        }
-      ],
-      "name": "sniffio",
-      "purl": "pkg:pypi/sniffio@1.3.1",
-      "type": "library",
-      "version": "1.3.1"
     },
     {
       "bom-ref": "snscrape==0.7.0.20230622",
@@ -3677,242 +2253,7 @@
       "version": "2.7"
     },
     {
-      "bom-ref": "stevedore==5.5.0",
-      "description": "Manage dynamic plugins for Python applications",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://docs.openstack.org/stevedore/latest/"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "stevedore",
-      "purl": "pkg:pypi/stevedore@5.5.0",
-      "type": "library",
-      "version": "5.5.0"
-    },
-    {
-      "bom-ref": "tenacity==9.1.2",
-      "description": "Retry code until it succeeds",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/jd/tenacity"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "tenacity",
-      "purl": "pkg:pypi/tenacity@9.1.2",
-      "type": "library",
-      "version": "9.1.2"
-    },
-    {
-      "bom-ref": "toml==0.10.2",
-      "description": "Python Library for Tom's Obvious, Minimal Language",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/uiri/toml"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "toml",
-      "purl": "pkg:pypi/toml@0.10.2",
-      "type": "library",
-      "version": "0.10.2"
-    },
-    {
-      "bom-ref": "tomlkit==0.13.3",
-      "description": "Style preserving TOML library",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/sdispater/tomlkit"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/sdispater/tomlkit"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "tomlkit",
-      "purl": "pkg:pypi/tomlkit@0.13.3",
-      "type": "library",
-      "version": "0.13.3"
-    },
-    {
-      "bom-ref": "tqdm==4.67.1",
-      "description": "Fast, Extensible Progress Meter",
-      "evidence": {
-        "licenses": [
-          {
-            "license": {
-              "acknowledgement": "declared",
-              "id": "MIT"
-            }
-          },
-          {
-            "license": {
-              "acknowledgement": "declared",
-              "name": "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
-            }
-          }
-        ]
-      },
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: wiki",
-          "type": "other",
-          "url": "https://github.com/tqdm/tqdm/wiki"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: changelog",
-          "type": "release-notes",
-          "url": "https://tqdm.github.io/releases"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: repository",
-          "type": "vcs",
-          "url": "https://github.com/tqdm/tqdm"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: homepage",
-          "type": "website",
-          "url": "https://tqdm.github.io"
-        }
-      ],
-      "licenses": [
-        {
-          "acknowledgement": "declared",
-          "expression": "MPL-2.0 AND MIT"
-        }
-      ],
-      "name": "tqdm",
-      "purl": "pkg:pypi/tqdm@4.67.1",
-      "type": "library",
-      "version": "4.67.1"
-    },
-    {
-      "bom-ref": "typer==0.17.4",
-      "description": "Typer, build great CLIs. Easy to code. Based on Python type hints.",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://typer.tiangolo.com"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/fastapi/typer/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://typer.tiangolo.com/release-notes/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Repository",
-          "type": "vcs",
-          "url": "https://github.com/fastapi/typer"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/fastapi/typer"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "MIT"
-          }
-        }
-      ],
-      "name": "typer",
-      "purl": "pkg:pypi/typer@0.17.4",
-      "type": "library",
-      "version": "0.17.4"
-    },
-    {
-      "bom-ref": "types-PyYAML==6.0.12.20250822",
-      "description": "Typing stubs for PyYAML",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://gitter.im/python/typing"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/python/typeshed/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/PyYAML.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: GitHub",
-          "type": "vcs",
-          "url": "https://github.com/python/typeshed"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/python/typeshed"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "name": "types-PyYAML",
-      "purl": "pkg:pypi/types-pyyaml@6.0.12.20250822",
-      "type": "library",
-      "version": "6.0.12.20250822"
-    },
-    {
-      "bom-ref": "types-python-dateutil==2.9.0.20250822",
+      "bom-ref": "types-python-dateutil==2.9.0.20251008",
       "description": "Typing stubs for python-dateutil",
       "externalReferences": [
         {
@@ -3950,95 +2291,9 @@
         }
       ],
       "name": "types-python-dateutil",
-      "purl": "pkg:pypi/types-python-dateutil@2.9.0.20250822",
+      "purl": "pkg:pypi/types-python-dateutil@2.9.0.20251008",
       "type": "library",
-      "version": "2.9.0.20250822"
-    },
-    {
-      "bom-ref": "types-pytz==2025.2.0.20250809",
-      "description": "Typing stubs for pytz",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://gitter.im/python/typing"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/python/typeshed/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/pytz.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: GitHub",
-          "type": "vcs",
-          "url": "https://github.com/python/typeshed"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/python/typeshed"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "name": "types-pytz",
-      "purl": "pkg:pypi/types-pytz@2025.2.0.20250809",
-      "type": "library",
-      "version": "2025.2.0.20250809"
-    },
-    {
-      "bom-ref": "types-requests==2.32.4.20250809",
-      "description": "Typing stubs for requests",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Chat",
-          "type": "chat",
-          "url": "https://gitter.im/python/typing"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issue tracker",
-          "type": "issue-tracker",
-          "url": "https://github.com/python/typeshed/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changes",
-          "type": "release-notes",
-          "url": "https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/requests.md"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: GitHub",
-          "type": "vcs",
-          "url": "https://github.com/python/typeshed"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Homepage",
-          "type": "website",
-          "url": "https://github.com/python/typeshed"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "name": "types-requests",
-      "purl": "pkg:pypi/types-requests@2.32.4.20250809",
-      "type": "library",
-      "version": "2.32.4.20250809"
+      "version": "2.9.0.20251008"
     },
     {
       "bom-ref": "typing_extensions==4.14.1",
@@ -4194,7 +2449,7 @@
       "version": "2.5.0"
     },
     {
-      "bom-ref": "virtualenv==20.34.0",
+      "bom-ref": "virtualenv==20.35.1",
       "description": "Virtual Python Environment builder",
       "externalReferences": [
         {
@@ -4227,58 +2482,9 @@
         }
       ],
       "name": "virtualenv",
-      "purl": "pkg:pypi/virtualenv@20.34.0",
+      "purl": "pkg:pypi/virtualenv@20.35.1",
       "type": "library",
-      "version": "20.34.0"
-    },
-    {
-      "bom-ref": "watchdog==6.0.0",
-      "description": "Filesystem events monitoring",
-      "externalReferences": [
-        {
-          "comment": "from packaging metadata Project-URL: Documentation",
-          "type": "documentation",
-          "url": "https://python-watchdog.readthedocs.io/en/stable/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Issues",
-          "type": "issue-tracker",
-          "url": "https://github.com/gorakhargosh/watchdog/issues"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Source",
-          "type": "other",
-          "url": "https://github.com/gorakhargosh/watchdog/"
-        },
-        {
-          "comment": "from packaging metadata Project-URL: Changelog",
-          "type": "release-notes",
-          "url": "https://github.com/gorakhargosh/watchdog/blob/master/changelog.rst"
-        },
-        {
-          "comment": "from packaging metadata: Home-page",
-          "type": "website",
-          "url": "https://github.com/gorakhargosh/watchdog"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "id": "Apache-2.0"
-          }
-        },
-        {
-          "license": {
-            "acknowledgement": "declared",
-            "name": "License :: OSI Approved :: Apache Software License"
-          }
-        }
-      ],
-      "name": "watchdog",
-      "purl": "pkg:pypi/watchdog@6.0.0",
-      "type": "library",
-      "version": "6.0.0"
+      "version": "20.35.1"
     },
     {
       "bom-ref": "webcolors==24.11.1",
@@ -4355,38 +2561,10 @@
   ],
   "dependencies": [
     {
-      "dependsOn": [
-        "cryptography==45.0.7"
-      ],
-      "ref": "Authlib==1.6.4"
-    },
-    {
-      "dependsOn": [
-        "filelock==3.18.0",
-        "msgpack==1.1.1",
-        "mypy==1.17.1",
-        "pytest-cov==7.0.0",
-        "pytest==8.4.2",
-        "requests==2.32.4",
-        "ruff==0.12.12",
-        "types-requests==2.32.4.20250809"
-      ],
-      "ref": "CacheControl==0.14.3"
-    },
-    {
-      "dependsOn": [
-        "MarkupSafe==3.0.2"
-      ],
-      "ref": "Jinja2==3.1.6"
-    },
-    {
-      "ref": "MarkupSafe==3.0.2"
-    },
-    {
       "ref": "PySocks==1.7.1"
     },
     {
-      "ref": "PyYAML==6.0.2"
+      "ref": "PyYAML==6.0.3"
     },
     {
       "dependsOn": [
@@ -4396,53 +2574,23 @@
     },
     {
       "dependsOn": [
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "annotated-types==0.7.0"
-    },
-    {
-      "dependsOn": [
-        "idna==3.10",
-        "sniffio==1.3.1",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "anyio==4.10.0"
-    },
-    {
-      "dependsOn": [
         "pre_commit==4.3.0",
         "pytest-cov==7.0.0",
         "pytest==8.4.2",
         "python-dateutil==2.9.0.post0",
         "pytz==2025.2",
-        "types-python-dateutil==2.9.0.20250822"
+        "types-python-dateutil==2.9.0.20251008"
       ],
       "ref": "arrow==1.3.0"
     },
     {
-      "dependsOn": [
-        "coverage==7.10.6",
-        "mypy==1.17.1",
-        "pytest==8.4.2"
-      ],
-      "ref": "attrs==25.3.0"
-    },
-    {
-      "dependsOn": [
-        "PyYAML==6.0.2",
-        "beautifulsoup4==4.13.4",
-        "colorama==0.4.6",
-        "coverage==7.10.6",
-        "rich==14.1.0",
-        "stevedore==5.5.0"
-      ],
-      "ref": "bandit==1.8.6"
+      "ref": "attrs==25.4.0"
     },
     {
       "dependsOn": [
         "chardet==5.2.0",
         "charset-normalizer==3.4.2",
-        "lxml==5.3.0",
+        "lxml==6.0.0",
         "soupsieve==2.7",
         "typing_extensions==4.14.1"
       ],
@@ -4450,31 +2598,12 @@
     },
     {
       "dependsOn": [
-        "click==8.2.1",
-        "colorama==0.4.6",
-        "mypy_extensions==1.1.0",
-        "packaging==25.0",
-        "pathspec==0.12.1",
-        "platformdirs==4.4.0",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "black==25.1.0"
-    },
-    {
-      "dependsOn": [
-        "black==25.1.0",
         "pytest==8.4.2"
       ],
       "ref": "boolean.py==5.0"
     },
     {
       "ref": "certifi==2025.7.14"
-    },
-    {
-      "dependsOn": [
-        "pycparser==2.23"
-      ],
-      "ref": "cffi==2.0.0"
     },
     {
       "ref": "cfgv==3.4.0"
@@ -4486,18 +2615,11 @@
       "ref": "charset-normalizer==3.4.2"
     },
     {
-      "dependsOn": [
-        "colorama==0.4.6"
-      ],
-      "ref": "click==8.2.1"
-    },
-    {
       "ref": "colorama==0.4.6"
     },
     {
       "dependsOn": [
-        "matplotlib==3.10.6",
-        "mypy==1.17.1",
+        "matplotlib==3.10.7",
         "numpy==2.3.3",
         "pillow==11.3.0",
         "pytest-cov==7.0.0",
@@ -4506,23 +2628,11 @@
       "ref": "contourpy==1.3.3"
     },
     {
-      "ref": "coverage==7.10.6"
+      "ref": "coverage==7.10.7"
     },
     {
       "dependsOn": [
-        "certifi==2025.7.14",
-        "cffi==2.0.0",
-        "click==8.2.1",
-        "mypy==1.17.1",
-        "pytest-cov==7.0.0",
-        "pytest==8.4.2",
-        "ruff==0.12.12"
-      ],
-      "ref": "cryptography==45.0.7"
-    },
-    {
-      "dependsOn": [
-        "matplotlib==3.10.6",
+        "matplotlib==3.10.7",
         "pytest-cov==7.0.0",
         "pytest==8.4.2"
       ],
@@ -4531,7 +2641,7 @@
     {
       "dependsOn": [
         "chardet==5.2.0",
-        "cyclonedx-python-lib==9.1.0",
+        "cyclonedx-python-lib==11.1.0",
         "packageurl-python==0.17.5",
         "packaging==25.0",
         "pip-requirements-parser==32.0.1"
@@ -4542,19 +2652,21 @@
       "dependsOn": [
         "jsonschema==4.25.1",
         "license-expression==30.4.4",
-        "lxml==5.3.0",
+        "lxml==6.0.0",
         "packageurl-python==0.17.5",
         "py-serializable==2.1.0",
-        "sortedcontainers==2.4.0"
+        "referencing==0.37.0",
+        "sortedcontainers==2.4.0",
+        "typing_extensions==4.14.1"
       ],
-      "ref": "cyclonedx-python-lib==9.1.0"
+      "ref": "cyclonedx-python-lib==11.1.0"
     },
     {
       "ref": "defusedxml==0.7.1"
     },
     {
       "dependsOn": [
-        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
         "requests==2.32.4"
       ],
       "ref": "detect-secrets==1.5.0"
@@ -4564,65 +2676,30 @@
     },
     {
       "dependsOn": [
-        "PyYAML==6.0.2",
-        "packaging==25.0"
-      ],
-      "ref": "dparse==0.6.4"
-    },
-    {
-      "dependsOn": [
-        "coverage==7.10.6",
+        "coverage==7.10.7",
         "pytest-cov==7.0.0",
         "pytest==8.4.2",
         "typing_extensions==4.14.1",
-        "virtualenv==20.34.0"
+        "virtualenv==20.35.1"
       ],
       "ref": "filelock==3.18.0"
     },
     {
       "dependsOn": [
-        "lxml==5.3.0",
-        "matplotlib==3.10.6"
+        "lxml==6.0.0",
+        "matplotlib==3.10.7"
       ],
-      "ref": "fonttools==4.59.2"
+      "ref": "fonttools==4.60.1"
     },
     {
       "ref": "fqdn==1.5.1"
     },
     {
-      "ref": "git-filter-repo==2.47.0"
-    },
-    {
-      "ref": "h11==0.16.0"
+      "ref": "identify==2.6.15"
     },
     {
       "dependsOn": [
-        "anyio==4.10.0",
-        "certifi==2025.7.14",
-        "h11==0.16.0"
-      ],
-      "ref": "httpcore==1.0.9"
-    },
-    {
-      "dependsOn": [
-        "Pygments==2.19.2",
-        "anyio==4.10.0",
-        "certifi==2025.7.14",
-        "click==8.2.1",
-        "httpcore==1.0.9",
-        "idna==3.10",
-        "rich==14.1.0"
-      ],
-      "ref": "httpx==0.28.1"
-    },
-    {
-      "ref": "identify==2.6.14"
-    },
-    {
-      "dependsOn": [
-        "mypy==1.17.1",
-        "pytest==8.4.2",
-        "ruff==0.12.12"
+        "pytest==8.4.2"
       ],
       "ref": "idna==3.10"
     },
@@ -4636,28 +2713,26 @@
       "ref": "isoduration==20.11.0"
     },
     {
-      "ref": "joblib==1.5.2"
-    },
-    {
       "ref": "jsonpointer==3.0.0"
     },
     {
       "dependsOn": [
-        "referencing==0.36.2"
+        "referencing==0.37.0"
       ],
       "ref": "jsonschema-specifications==2025.9.1"
     },
     {
       "dependsOn": [
-        "attrs==25.3.0",
+        "attrs==25.4.0",
         "fqdn==1.5.1",
         "idna==3.10",
         "isoduration==20.11.0",
         "jsonpointer==3.0.0",
         "jsonschema-specifications==2025.9.1",
-        "referencing==0.36.2",
+        "referencing==0.37.0",
         "rfc3339-validator==0.1.4",
-        "rfc3987==1.3.8",
+        "rfc3986-validator==0.1.1",
+        "rfc3987-syntax==1.1.0",
         "rpds-py==0.27.1",
         "uri-template==1.3.0",
         "webcolors==24.11.1"
@@ -4668,10 +2743,12 @@
       "ref": "kiwisolver==1.4.9"
     },
     {
+      "ref": "lark==1.3.0"
+    },
+    {
       "dependsOn": [
         "boolean.py==5.0",
-        "pytest==8.4.2",
-        "ruff==0.12.12"
+        "pytest==8.4.2"
       ],
       "ref": "license-expression==30.4.4"
     },
@@ -4679,14 +2756,13 @@
       "dependsOn": [
         "beautifulsoup4==4.13.4"
       ],
-      "ref": "lxml==5.3.0"
+      "ref": "lxml==6.0.0"
     },
     {
       "dependsOn": [
-        "PyYAML==6.0.2",
-        "coverage==7.10.6",
+        "PyYAML==6.0.3",
+        "coverage==7.10.7",
         "mdurl==0.1.2",
-        "psutil==7.0.0",
         "pytest-cov==7.0.0",
         "pytest==8.4.2",
         "requests==2.32.4"
@@ -4695,77 +2771,30 @@
     },
     {
       "dependsOn": [
-        "pre_commit==4.3.0",
-        "pytest==8.4.2",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "marshmallow==4.0.1"
-    },
-    {
-      "dependsOn": [
         "contourpy==1.3.3",
         "cycler==0.12.1",
-        "fonttools==4.59.2",
+        "fonttools==4.60.1",
         "kiwisolver==1.4.9",
         "numpy==2.3.3",
         "packaging==25.0",
         "pillow==11.3.0",
-        "pyparsing==3.2.3",
+        "pyparsing==3.1.2",
         "python-dateutil==2.9.0.post0",
         "setuptools==80.9.0"
       ],
-      "ref": "matplotlib==3.10.6"
+      "ref": "matplotlib==3.10.7"
     },
     {
       "ref": "mdurl==0.1.2"
     },
     {
-      "ref": "msgpack==1.1.1"
-    },
-    {
-      "dependsOn": [
-        "lxml==5.3.0",
-        "mypy_extensions==1.1.0",
-        "pathspec==0.12.1",
-        "pip==25.2",
-        "psutil==7.0.0",
-        "setuptools==80.9.0",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "mypy==1.17.1"
-    },
-    {
-      "ref": "mypy_extensions==1.1.0"
-    },
-    {
-      "dependsOn": [
-        "click==8.2.1",
-        "joblib==1.5.2",
-        "matplotlib==3.10.6",
-        "numpy==2.3.3",
-        "pyparsing==3.2.3",
-        "regex==2025.9.1",
-        "requests==2.32.4",
-        "tqdm==4.67.1"
-      ],
-      "ref": "nltk==3.9.1"
-    },
-    {
       "ref": "nodeenv==1.9.1"
-    },
-    {
-      "dependsOn": [
-        "httpx==0.28.1"
-      ],
-      "ref": "notion-client==2.5.0"
     },
     {
       "ref": "numpy==2.3.3"
     },
     {
       "dependsOn": [
-        "black==25.1.0",
-        "mypy==1.17.1",
         "pytest==8.4.2",
         "setuptools==80.9.0",
         "wheel==0.45.1"
@@ -4777,31 +2806,20 @@
     },
     {
       "dependsOn": [
-        "numpy==2.3.3",
-        "types-pytz==2025.2.0.20250809"
-      ],
-      "ref": "pandas-stubs==2.3.2.250827"
-    },
-    {
-      "dependsOn": [
-        "Jinja2==3.1.6",
         "beautifulsoup4==4.13.4",
-        "lxml==5.3.0",
-        "matplotlib==3.10.6",
+        "lxml==6.0.0",
+        "matplotlib==3.10.7",
         "numpy==2.3.3",
         "pytest==8.4.2",
         "python-dateutil==2.9.0.post0",
         "pytz==2025.2",
         "tzdata==2025.2"
       ],
-      "ref": "pandas==2.3.2"
-    },
-    {
-      "ref": "pathspec==0.12.1"
+      "ref": "pandas==2.3.3"
     },
     {
       "dependsOn": [
-        "coverage==7.10.6",
+        "coverage==7.10.7",
         "defusedxml==0.7.1",
         "packaging==25.0",
         "pytest-cov==7.0.0",
@@ -4812,15 +2830,8 @@
     },
     {
       "dependsOn": [
-        "pip==25.2"
-      ],
-      "ref": "pip-api==0.0.34"
-    },
-    {
-      "dependsOn": [
-        "black==25.1.0",
         "packaging==25.0",
-        "pyparsing==3.2.3",
+        "pyparsing==3.1.2",
         "pytest==8.4.2"
       ],
       "ref": "pip-requirements-parser==32.0.1"
@@ -4830,42 +2841,14 @@
     },
     {
       "dependsOn": [
-        "CacheControl==0.14.3",
-        "coverage==7.10.6",
-        "cyclonedx-python-lib==9.1.0",
-        "mypy==1.17.1",
-        "packaging==25.0",
-        "pip-api==0.0.34",
-        "pip-requirements-parser==32.0.1",
-        "platformdirs==4.4.0",
-        "pytest-cov==7.0.0",
-        "pytest==8.4.2",
-        "requests==2.32.4",
-        "rich==14.1.0",
-        "ruff==0.12.12",
-        "toml==0.10.2",
-        "types-requests==2.32.4.20250809"
-      ],
-      "ref": "pip_audit==2.9.0"
-    },
-    {
-      "dependsOn": [
-        "mypy==1.17.1",
         "pytest-cov==7.0.0",
         "pytest==8.4.2"
       ],
-      "ref": "platformdirs==4.4.0"
+      "ref": "platformdirs==4.5.0"
     },
     {
       "dependsOn": [
-        "packaging==25.0",
-        "tenacity==9.1.2"
-      ],
-      "ref": "plotly==5.23.0"
-    },
-    {
-      "dependsOn": [
-        "coverage==7.10.6",
+        "coverage==7.10.7",
         "pre_commit==4.3.0",
         "pytest==8.4.2"
       ],
@@ -4873,28 +2856,13 @@
     },
     {
       "dependsOn": [
-        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
         "cfgv==3.4.0",
-        "identify==2.6.14",
+        "identify==2.6.15",
         "nodeenv==1.9.1",
-        "virtualenv==20.34.0"
+        "virtualenv==20.35.1"
       ],
       "ref": "pre_commit==4.3.0"
-    },
-    {
-      "dependsOn": [
-        "black==25.1.0",
-        "coverage==7.10.6",
-        "packaging==25.0",
-        "pytest-cov==7.0.0",
-        "pytest==8.4.2",
-        "requests==2.32.4",
-        "ruff==0.12.12",
-        "setuptools==80.9.0",
-        "virtualenv==20.34.0",
-        "wheel==0.45.1"
-      ],
-      "ref": "psutil==7.0.0"
     },
     {
       "dependsOn": [
@@ -4903,42 +2871,21 @@
       "ref": "py-serializable==2.1.0"
     },
     {
-      "ref": "pycparser==2.23"
+      "ref": "pyparsing==3.1.2"
     },
     {
       "dependsOn": [
-        "annotated-types==0.7.0",
-        "pydantic_core==2.23.4",
-        "typing_extensions==4.14.1",
-        "tzdata==2025.2"
-      ],
-      "ref": "pydantic==2.9.2"
-    },
-    {
-      "dependsOn": [
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "pydantic_core==2.23.4"
-    },
-    {
-      "dependsOn": [
-        "Jinja2==3.1.6"
-      ],
-      "ref": "pyparsing==3.2.3"
-    },
-    {
-      "dependsOn": [
-        "coverage==7.10.6",
+        "coverage==7.10.7",
         "pluggy==1.6.0",
         "pytest==8.4.2",
-        "virtualenv==20.34.0"
+        "virtualenv==20.35.1"
       ],
       "ref": "pytest-cov==7.0.0"
     },
     {
       "dependsOn": [
         "Pygments==2.19.2",
-        "attrs==25.3.0",
+        "attrs==25.4.0",
         "colorama==0.4.6",
         "iniconfig==2.1.0",
         "packaging==25.0",
@@ -4955,32 +2902,15 @@
       "ref": "python-dateutil==2.9.0.post0"
     },
     {
-      "dependsOn": [
-        "click==8.2.1"
-      ],
-      "ref": "python-dotenv==1.1.1"
-    },
-    {
-      "dependsOn": [
-        "lxml==5.3.0",
-        "pandas==2.3.2",
-        "requests==2.32.4"
-      ],
-      "ref": "pytrends==4.9.2"
-    },
-    {
       "ref": "pytz==2025.2"
     },
     {
       "dependsOn": [
-        "attrs==25.3.0",
+        "attrs==25.4.0",
         "rpds-py==0.27.1",
         "typing_extensions==4.14.1"
       ],
-      "ref": "referencing==0.36.2"
-    },
-    {
-      "ref": "regex==2025.9.1"
+      "ref": "referencing==0.37.0"
     },
     {
       "dependsOn": [
@@ -5000,93 +2930,46 @@
       "ref": "rfc3339-validator==0.1.4"
     },
     {
-      "ref": "rfc3987==1.3.8"
+      "ref": "rfc3986-validator==0.1.1"
+    },
+    {
+      "dependsOn": [
+        "lark==1.3.0",
+        "pytest==8.4.2"
+      ],
+      "ref": "rfc3987-syntax==1.1.0"
     },
     {
       "dependsOn": [
         "Pygments==2.19.2",
         "markdown-it-py==4.0.0"
       ],
-      "ref": "rich==14.1.0"
+      "ref": "rich==14.2.0"
     },
     {
       "ref": "rpds-py==0.27.1"
     },
     {
-      "ref": "ruamel.yaml.clib==0.2.12"
-    },
-    {
-      "dependsOn": [
-        "ruamel.yaml.clib==0.2.12"
-      ],
-      "ref": "ruamel.yaml==0.18.15"
-    },
-    {
-      "ref": "ruff==0.12.12"
-    },
-    {
-      "dependsOn": [
-        "dparse==0.6.4",
-        "packaging==25.0",
-        "pydantic==2.9.2",
-        "ruamel.yaml==0.18.15",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "safety-schemas==0.0.14"
-    },
-    {
-      "dependsOn": [
-        "Authlib==1.6.4",
-        "Jinja2==3.1.6",
-        "click==8.2.1",
-        "dparse==0.6.4",
-        "filelock==3.18.0",
-        "httpx==0.28.1",
-        "marshmallow==4.0.1",
-        "nltk==3.9.1",
-        "packaging==25.0",
-        "psutil==7.0.0",
-        "pydantic==2.9.2",
-        "requests==2.32.4",
-        "ruamel.yaml==0.18.15",
-        "safety-schemas==0.0.14",
-        "setuptools==80.9.0",
-        "tenacity==9.1.2",
-        "tomlkit==0.13.3",
-        "typer==0.17.4",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "safety==3.6.1"
-    },
-    {
       "dependsOn": [
         "filelock==3.18.0",
-        "mypy==1.17.1",
         "packaging==25.0",
         "pip==25.2",
-        "platformdirs==4.4.0",
+        "platformdirs==4.5.0",
         "pytest-cov==7.0.0",
         "pytest==8.4.2",
-        "ruff==0.12.12",
-        "virtualenv==20.34.0",
+        "virtualenv==20.35.1",
         "wheel==0.45.1"
       ],
       "ref": "setuptools==80.9.0"
     },
     {
-      "ref": "shellingham==1.5.4"
-    },
-    {
       "ref": "six==1.17.0"
-    },
-    {
-      "ref": "sniffio==1.3.1"
     },
     {
       "dependsOn": [
         "beautifulsoup4==4.13.4",
         "filelock==3.18.0",
-        "lxml==5.3.0",
+        "lxml==6.0.0",
         "pytz==2025.2",
         "requests==2.32.4"
       ],
@@ -5099,52 +2982,7 @@
       "ref": "soupsieve==2.7"
     },
     {
-      "ref": "stevedore==5.5.0"
-    },
-    {
-      "dependsOn": [
-        "pytest==8.4.2"
-      ],
-      "ref": "tenacity==9.1.2"
-    },
-    {
-      "ref": "toml==0.10.2"
-    },
-    {
-      "ref": "tomlkit==0.13.3"
-    },
-    {
-      "dependsOn": [
-        "colorama==0.4.6",
-        "pytest-cov==7.0.0",
-        "pytest==8.4.2",
-        "requests==2.32.4"
-      ],
-      "ref": "tqdm==4.67.1"
-    },
-    {
-      "dependsOn": [
-        "click==8.2.1",
-        "rich==14.1.0",
-        "shellingham==1.5.4",
-        "typing_extensions==4.14.1"
-      ],
-      "ref": "typer==0.17.4"
-    },
-    {
-      "ref": "types-PyYAML==6.0.12.20250822"
-    },
-    {
-      "ref": "types-python-dateutil==2.9.0.20250822"
-    },
-    {
-      "ref": "types-pytz==2025.2.0.20250809"
-    },
-    {
-      "dependsOn": [
-        "urllib3==2.5.0"
-      ],
-      "ref": "types-requests==2.32.4.20250809"
+      "ref": "types-python-dateutil==2.9.0.20251008"
     },
     {
       "ref": "typing_extensions==4.14.1"
@@ -5153,10 +2991,6 @@
       "ref": "tzdata==2025.2"
     },
     {
-      "dependsOn": [
-        "mypy==1.17.1",
-        "types-PyYAML==6.0.12.20250822"
-      ],
       "ref": "uri-template==1.3.0"
     },
     {
@@ -5167,22 +3001,16 @@
     },
     {
       "dependsOn": [
-        "coverage==7.10.6",
+        "coverage==7.10.7",
         "distlib==0.4.0",
         "filelock==3.18.0",
         "packaging==25.0",
-        "platformdirs==4.4.0",
+        "platformdirs==4.5.0",
         "pytest==8.4.2",
         "setuptools==80.9.0",
         "typing_extensions==4.14.1"
       ],
-      "ref": "virtualenv==20.34.0"
-    },
-    {
-      "dependsOn": [
-        "PyYAML==6.0.2"
-      ],
-      "ref": "watchdog==6.0.0"
+      "ref": "virtualenv==20.35.1"
     },
     {
       "ref": "webcolors==24.11.1"
@@ -5196,7 +3024,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2025-09-24T13:07:35.312347+00:00",
+    "timestamp": "2025-10-14T11:06:04.176365+00:00",
     "tools": {
       "components": [
         {
@@ -5295,12 +3123,12 @@
           ],
           "name": "cyclonedx-python-lib",
           "type": "library",
-          "version": "9.1.0"
+          "version": "11.1.0"
         }
       ]
     }
   },
-  "serialNumber": "urn:uuid:df3f68e2-7b3d-4453-85a5-461dfb5bfccc",
+  "serialNumber": "urn:uuid:2de0199d-8bd3-4567-abfc-f22cae5d3ef0",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
