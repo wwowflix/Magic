@@ -47,3 +47,6 @@ htmlcov/
 # local-only, not for git
 configs/local/
 
+
+# hook backups
+/tools/hooks/block_ignored_paths.bak_*.ps1
