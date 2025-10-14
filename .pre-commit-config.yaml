@@ -1,50 +1,21 @@
-﻿repos:
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: v4.6.0
     hooks:
-      # Only validate the pre-commit config itself for now
       - id: check-yaml
-        files: ^\.pre-commit-config\.ya?ml$
-      # JSON: exclude your local vault and INBOX noise for now
       - id: check-json
-        exclude: ^(configs/local/|outputs/|backups/|scripts/phase00/INBOX(|_.+)?/).*
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.0
+    rev: v0.4.10
     hooks:
-      # Lint ONLY real code under scripts/, exclude backups/outputs/etc.
       - id: ruff
-        args: [--fix]
-        files: ^scripts/.+\.py$
-        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/).*  # belt + suspenders
       - id: ruff-format
-        files: ^scripts/.+\.py$
-        exclude: ^(outputs/|backups/|scripts/phase00/INBOX(|_.+)?/).*
 
   - repo: local
     hooks:
-      - id: verify-precommit-yaml
-        name: Verify .pre-commit-config.yaml indentation & schema
-        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/verify_precommit_yaml.ps1
-        language: system
-        pass_filenames: false
-        stages: [pre-commit]  # updated from deprecated 'commit'
-  - repo: local
-    hooks:
-      `- id: block-ignored-secrets-and-artifacts
-        name: Block .env / .coverage / .artifacts from being committed
-        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_ignored_paths.ps1
+      - id: block-ignored-secrets-and-artifacts
+        name: Block .env / .coverage / .artifacts/*
+        entry: pwsh -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_ignored_paths.ps1
         language: system
         pass_filenames: true
-        stages: [pre-commit`]
-  - repo: local
-    hooks:
-      `- id: block-ignored-secrets-and-artifacts
-        name: Block .env / .coverage / .artifacts from being committed
-        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_ignored_paths.ps1
-        language: system
-        pass_filenames: false
         stages: [pre-commit]
-        stages: [pre-commit`]
-
