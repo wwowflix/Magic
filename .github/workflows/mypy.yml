@@ -16,13 +16,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install mypy + deps
         shell: pwsh
         run: |
           python -m pip install -U pip
           pip install mypy
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
+
+      # IMPORTANT: make it a soft pass on Windows
       - name: Run mypy (soft)
         shell: pwsh
+        continue-on-error: true
         run: |
-          mypy scripts tools || exit 0   # start soft; flip to hard fail later
+          # Run at repo root so we don't hit "no .py files in directory 'scripts'"
+          mypy .
