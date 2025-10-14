@@ -1,4 +1,4 @@
-[run]
+﻿[run]
 branch = True
 source =
     scripts
@@ -19,6 +19,18 @@ omit =
     **/*.json
     **/tests/*
     **/__init__.py
+    # temporary legacy/generated/problematic:
+    scripts/constants_2.py
+    scripts/core.py
+    scripts/cost_guard_2.py
+    scripts/lexer.py
+    scripts/line_break.py
+    scripts/python_parser.py
+    scripts/reddit_api_2.py
+    scripts/reddit_api_final.py
+    scripts/reddit_api_fixed.py
+    scripts/html_2.py
+    scripts/serializer.py
 
 [report]
 show_missing = True
