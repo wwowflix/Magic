@@ -1,11 +1,9 @@
-name: tests
+﻿name: tests
 on:
   pull_request:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-
-jobs:
+    branches: [ main, chore/precommit-rescue ]
+  workflow_dispatch:jobs:
   lint-test-security:
     runs-on: ubuntu-latest
     steps:

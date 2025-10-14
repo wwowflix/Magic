@@ -1,8 +1,9 @@
-name: guard-proof
+﻿name: guard-proof
 on:
   pull_request:
   workflow_dispatch:
-
+  push:
+    branches: [ chore/precommit-rescue ]
 jobs:
   guard:
     name: Guard - block forbidden files
