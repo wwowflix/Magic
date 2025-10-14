@@ -129,3 +129,7 @@ outputs/reports/status_now.*
 outputs/reports/status_now.*
 
 pr-up.sh
+outputs/reports/**/*.json
+outputs/reports/**/*.tsv
+outputs/reports/**/*.txt
+outputs/reports/**/*.md
