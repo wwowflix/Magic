@@ -1,12 +1,31 @@
-[run]
+﻿[run]
 branch = True
+# Only measure real code folders (adjust if you add more)
+source =
+    scripts
+    tools
+relative_files = True
 
+# Ignore non-source stuff
 omit =
-    **/venv/**
-    **/.venv/**
-    **/Lib/site-packages/**
-    **/site-packages/**
-    **/tests/**
+    venv/*
+    .git/*
+    outputs/*
+    logs/*
+    **/*.ps1
+    **/*.psm1
+    **/*.cmd
+    **/*.bat
+    **/*.md
+    **/*.tsv
+    **/*.csv
+    **/*.json
+    **/tests/*
+    **/__init__.py
 
 [report]
 show_missing = True
+skip_empty = True
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
