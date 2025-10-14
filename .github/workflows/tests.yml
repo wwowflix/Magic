@@ -41,3 +41,4 @@ on:
       - name: Static security (bandit)
         run: |
           bandit -q -r . || true
+
