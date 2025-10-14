@@ -1,12 +1,9 @@
-﻿[run]
+[run]
 branch = True
-# Only measure real code folders (adjust if you add more)
 source =
     scripts
     tools
 relative_files = True
-
-# Ignore non-source stuff
 omit =
     venv/*
     .git/*
