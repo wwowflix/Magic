@@ -1,11 +1,11 @@
-﻿on:
+﻿name: tests
+
+on:
   workflow_dispatch:
   push:
-    branches: [ main, chore/precommit-rescue ]
+    branches: [ main, chore/**, feat/**, chore/ci-coverage-scope ]
   pull_request:
     branches: [ main ]
-
-name: tests
 
 jobs:
   test:
@@ -15,27 +15,32 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.11"
+
       - name: Install deps
         shell: pwsh
         run: |
           python -m pip install -U pip
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
-          pip install -U pytest --cov=scripts --cov=tools --cov-report=term-missing --cov-config=.coveragerc --cov-fail-under=25 -q --cov-report=term --cov-report=xml:coverage.xml | tee pytest.log
-    - name: 
-    - name: Upload test log
-      uses: actions/upload-artifact@v4
-      with:
-        name: pytest-log
-        path: pytest.log- name: Run pytest
+          pip install pytest pytest-cov
+
+      - name: Run pytest (coverage xml)
         shell: pwsh
         run: |
-          if (Get-Command pytest --cov=scripts --cov=tools --cov-report=term-missing --cov-config=.coveragerc --cov-fail-under=25 -q --cov-report=term --cov-report=xml:coverage.xml | tee pytest.log
-    - name: 
-    - name: Upload test log
-      uses: actions/upload-artifact@v4
-      with:
-        name: pytest-log
-        path: pytest.log
+          pytest --maxfail=1 --disable-warnings `
+            --cov=scripts --cov=tools `
+            --cov-report=term --cov-report=xml `
+            --cov-fail-under=25
 
+      - name: Upload coverage.xml
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
 
+      - name: Upload pytest cache (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-log
+          path: ./.pytest_cache
