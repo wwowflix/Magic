@@ -98,6 +98,21 @@ PY
           if-no-files-found: warn
           retention-days: 7
 
+
+      - name: Bundle proofs (zip)
+        if: always()
+        run: |
+          rm -f proof-bundle.zip || true
+          zip -q -r proof-bundle.zip coverage-boot.xml coverage-full.xml collect.txt ws.txt || true
+
+      - name: Upload proof-bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof-bundle.zip
+          if-no-files-found: warn
+          retention-days: 7
       - name: Enforce bootstrap gate (>=25% temporarily)
         run: |
           python - << 'PY'
@@ -107,3 +122,4 @@ pct = round(float(r.attrib.get("line-rate","0"))*100, 2)
 print(f"Bootstrap Coverage: {pct}%")
 sys.exit(0 if pct >= 25 else 1)
 PY
+
