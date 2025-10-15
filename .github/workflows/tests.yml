@@ -30,7 +30,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
           pip install pytest pytest-cov coverage || true
 
-      - name: Pytest full (scripts+tools) ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ coverage-full.xml
+      - name: Pytest full (scripts+tools) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ coverage-full.xml
         run: |
           pytest --maxfail=1 --disable-warnings \
                  --cov=scripts --cov=tools \
@@ -53,7 +53,7 @@ assert m.add(2,3)==5
 print("anchor import OK")
 PY
 
-      - name: Pytest bootstrap (anchor only) ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ coverage-boot.xml
+      - name: Pytest bootstrap (anchor only) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ coverage-boot.xml
         run: |
           coverage erase || true
           coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
@@ -143,8 +143,21 @@ PY
           test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
           rm -rf proof && mkdir -p proof
           cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
-
-
+    steps:
+      - run: |
+          echo "creating placeholder proof files"
+          echo "no collection" > collect.txt
+          ls -la > ws.txt || echo "no workspace listing" > ws.txt
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          rm -rf proof && mkdir -p proof
+          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof
+          if-no-files-found: warn
+          retention-days: 7
   proof:
     if: ${{ always() }}
     runs-on: ubuntu-latest
