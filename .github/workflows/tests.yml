@@ -1,4 +1,4 @@
-﻿name: tests
+name: tests
 
 on:
   push:
@@ -68,7 +68,29 @@ PY
           ls -la
           (ls -la) > ws.txt || true
           test -f ws.txt || echo "no workspace listing" > ws.txt
+      - name: Build proof bundle (always)
+        if: always()
+        run: |
+          echo "::group::workspace"
+          pwd || true
+          ls -la || true
+          echo "::endgroup::workspace"
+          # ensure the four files exist
+          test -f collect.txt || echo "no collection" > collect.txt
+          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
+          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
+          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          rm -rf proof && mkdir -p proof
+          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
 
+      - name: Upload proof-bundle (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof
+          if-no-files-found: warn
+          retention-days: 7
       - name: Upload pytest collect (proof)
         if: always()
         uses: actions/upload-artifact@v4
@@ -104,15 +126,6 @@ PY
         run: |
           rm -f proof-bundle.zip || true
           zip -q -r proof-bundle.zip coverage-boot.xml coverage-full.xml collect.txt ws.txt || true
-
-      - name: Upload proof-bundle
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: proof-bundle
-          path: proof-bundle.zip
-          if-no-files-found: warn
-          retention-days: 7
       - name: Enforce bootstrap gate (>=25% temporarily)
         run: |
           python - << 'PY'
