@@ -25,7 +25,6 @@ jobs:
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
           pip install pytest pytest-cov
 
-      # Always emit coverage.xml
       - name: Run pytest (emit coverage even on failure)
         shell: pwsh
         continue-on-error: true
@@ -35,9 +34,7 @@ jobs:
             --cov-report=term --cov-report=xml 
             --cov-fail-under=0
           if (-not (Test-Path coverage.xml)) {
-            ""<?xml version=""1.0"" ?>"
-"<coverage line-rate=""0"" branch-rate=""0"" version=""1.0""><packages/></coverage>"" |
-              Set-Content -Encoding utf8 coverage.xml
+            Set-Content -Encoding utf8 coverage.xml '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>'
           }
 
       - name: Upload coverage.xml
@@ -48,7 +45,6 @@ jobs:
           path: coverage.xml
           retention-days: 7
 
-      # Separate, strict gate; keeps artifact even if gate fails
       - name: Enforce coverage gate (>=25%)
         shell: pwsh
         run: |
