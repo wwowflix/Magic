@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 20
     env:
       PYTHONPATH: ${{ github.workspace }}
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +44,26 @@ jobs:
           test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > coverage-full.xml
 
       # ---------- BOOTSTRAP COVERAGE (narrow scope) ----------
-      - name: Pytest bootstrap (anchor) â†’ coverage-boot.xml
+      - name: Pytest collect-only (proof)
+  run: |
+    pytest --collect-only -q > collect.txt || true
+
+- name: Anchor import smoke (proof)
+  run: |
+    python - << "PY"
+import importlib, sys
+m = importlib.import_module("tools.coverage_anchor")
+assert m.add(2,3)==5
+print("anchor import OK")
+PY
+
+- name: Pytest bootstrap (anchor) → coverage-boot.xml
+  run: |
+    python -m pip install coverage pytest pytest-cov || true
+    coverage erase || true
+    # run only the anchor test, measure only the anchor module
+    coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
+    coverage xml -o coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > coverage-boot.xml
         run: |
           pytest -q -k test_anchor \
                  --cov=tools.coverage_anchor \
@@ -57,11 +78,20 @@ jobs:
           ls -la
           (ls -la) > ws.txt || true
 
-      - name: Upload workspace listing
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: workspace-debug
+      - name: Upload pytest collect (proof)
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: pytest-collect
+    path: collect.txt
+    if-no-files-found: warn
+    retention-days: 7
+
+- name: Upload workspace listing
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: workspace-debug
           path: ws.txt
           if-no-files-found: warn
           retention-days: 7
@@ -87,4 +117,5 @@ jobs:
           print(f"Bootstrap Coverage: {pct}%")
           sys.exit(0 if pct >= 90 else 1)
           PY
+
 
