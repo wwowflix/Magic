@@ -1,40 +1,8 @@
 ﻿[run]
+source = tools
 branch = True
-source =
-    scripts
-    tools
-relative_files = True
 omit =
-    venv/*
-    .git/*
-    outputs/*
-    logs/*
-    **/*.ps1
-    **/*.psm1
-    **/*.cmd
-    **/*.bat
-    **/*.md
-    **/*.tsv
-    **/*.csv
-    **/*.json
-    **/tests/*
-    **/__init__.py
-    # temporary legacy/generated/problematic:
-    scripts/constants_2.py
-    scripts/core.py
-    scripts/cost_guard_2.py
-    scripts/lexer.py
-    scripts/line_break.py
-    scripts/python_parser.py
-    scripts/reddit_api_2.py
-    scripts/reddit_api_final.py
-    scripts/reddit_api_fixed.py
-    scripts/html_2.py
-    scripts/serializer.py
+    tests/*
 
 [report]
 show_missing = True
-skip_empty = True
-exclude_lines =
-    pragma: no cover
-    if __name__ == .__main__.:
