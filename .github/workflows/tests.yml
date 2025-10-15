@@ -32,6 +32,10 @@ jobs:
             --cov=scripts --cov=tools 
             --cov-report=term --cov-report=xml 
             --cov-fail-under=0
+
+      - name: Ensure coverage.xml exists (stub if missing)
+        shell: pwsh
+        run: |
           if (-not (Test-Path coverage.xml)) {
             ""<?xml version=""1.0"" ?>"
 "<coverage line-rate=""0"" branch-rate=""0"" version=""1.0""><packages/></coverage>"" |
@@ -52,3 +56,4 @@ jobs:
         with:
           name: coverage-xml
           path: coverage.xml
+          retention-days: 7
