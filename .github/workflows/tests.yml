@@ -77,37 +77,14 @@ PY
           pwd
           ls -la
           (ls -la) > ws.txt || true
-
       - name: Upload pytest collect (proof)
-  if: always()
-  uses: actions/upload-artifact@v4
-  with:
-    name: pytest-collect
-    path: collect.txt
-    if-no-files-found: warn
-    retention-days: 7
-
-- name: Upload workspace listing
-  if: always()
-  uses: actions/upload-artifact@v4
-  with:
-    name: workspace-debug
-          path: ws.txt
-          if-no-files-found: warn
-          retention-days: 7
-
-      - name: Upload coverages
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-xmls
-          path: |
-            coverage-full.xml
-            coverage-boot.xml
+          name: pytest-collect
+          path: collect.txt
           if-no-files-found: warn
           retention-days: 7
-
-      # ---------- Gate on the BOOTSTRAP report only ----------
       - name: Enforce bootstrap gate (>=90% on anchor)
         run: |
           python - << 'PY'
@@ -117,5 +94,6 @@ PY
           print(f"Bootstrap Coverage: {pct}%")
           sys.exit(0 if pct >= 90 else 1)
           PY
+
 
 
