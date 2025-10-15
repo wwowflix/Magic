@@ -1,4 +1,4 @@
-﻿name: tests
+name: tests
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -18,25 +18,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Non-blocking deps so we can still publish coverage stub if this fails
       - name: Install deps
-        shell: pwsh
-        continue-on-error: true
-        run: python -m pip install -U pip; if (Test-Path requirements.txt) { pip install -r requirements.txt }; pip install pytest pytest-cov
+        run: |
+          python -m pip install -U pip || true
+          if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
+          pip install pytest pytest-cov || true
 
-      # Non-blocking tests; try to emit coverage.xml
       - name: Run pytest (emit coverage even on failure)
-        shell: pwsh
-        continue-on-error: true
-        run: pytest --maxfail=1 --disable-warnings --cov=scripts --cov=tools --cov-report=term --cov-report=xml --cov-fail-under=0
+        run: |
+          pytest --maxfail=1 --disable-warnings \
+                 --cov=scripts --cov=tools \
+                 --cov-report=term --cov-report=xml \
+                 --cov-fail-under=0 || true
 
-      # ALWAYS ensure a coverage.xml exists before upload
       - name: Ensure coverage.xml exists
-        if: always()
-        shell: pwsh
-        run: if (-not (Test-Path coverage.xml)) { Set-Content -Encoding utf8 coverage.xml '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' }
+        run: |
+          test -f coverage.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > coverage.xml
 
-      # Upload even if previous steps failed; don't error if file handling is odd
       - name: Upload coverage.xml
         if: always()
         uses: actions/upload-artifact@v4
@@ -46,7 +44,13 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-      # Strict gate AFTER uploading the artifact
       - name: Enforce coverage gate (>=25%)
-        shell: pwsh
-        run:  = [xml](Get-Content coverage.xml -Raw); 0 = [math]::Round([double].coverage.'line-rate'*100,2); "Coverage: 0%"; if (0 -lt 25) { throw "Coverage 0% < 25% gate" }
+        run: |
+          python - << 'PY'
+import xml.etree.ElementTree as ET, sys
+root = ET.parse("coverage.xml").getroot()
+rate = float(root.attrib.get("line-rate", "0"))
+pct  = round(rate*100, 2)
+print(f"Coverage: {pct}%")
+sys.exit(0 if pct >= 25 else 1)
+PY
