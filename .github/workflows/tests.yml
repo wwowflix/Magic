@@ -23,6 +23,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
       - name: Install deps (non-blocking)
         run: |
@@ -30,7 +32,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
           pip install pytest pytest-cov coverage || true
 
-      - name: Pytest full (scripts+tools) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ coverage-full.xml
+      - name: Pytest full → coverage-full.xml
         run: |
           pytest --maxfail=1 --disable-warnings \
                  --cov=scripts --cov=tools \
@@ -53,7 +55,7 @@ assert m.add(2,3)==5
 print("anchor import OK")
 PY
 
-      - name: Pytest bootstrap (anchor only) ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ coverage-boot.xml
+      - name: Pytest bootstrap (anchor only) → coverage-boot.xml
         run: |
           coverage erase || true
           coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
@@ -62,32 +64,33 @@ PY
       - name: Debug workspace listing
         if: always()
         run: |
-          pwd
-          ls -la
-          (ls -la) > ws.txt || true
-          test -f ws.txt || echo "no workspace listing" > ws.txt
-      - name: Build proof bundle (always)
-        if: ${{ always() }}
-        run: |
-          echo "::group::workspace"
           pwd || true
           ls -la || true
-          echo "::endgroup::workspace"
-          test -f collect.txt || echo "no collection" > collect.txt
-          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
-          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          (ls -la) > ws.txt || true
+          test -f ws.txt || echo "no workspace listing" > ws.txt
+
+      # === Always package artifacts so you can fetch them even on failure ===
+      - name: Build proof bundle (always)
+        if: always()
+        run: |
           rm -rf proof && mkdir -p proof
           cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
+          # ensure files exist even if previous steps failed
+          test -f proof/collect.txt || echo "no collection" > proof/collect.txt
+          test -f proof/ws.txt || echo "no workspace listing" > proof/ws.txt
+          test -f proof/coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-full.xml
+          test -f proof/coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-boot.xml
 
       - name: Upload proof-bundle (always)
-        if: ${{ always() }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: proof-bundle
           path: proof
           if-no-files-found: warn
-          retention-days: 7      - name: Upload pytest collect (proof)
+          retention-days: 7
+
+      - name: Upload pytest collect (proof)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -116,12 +119,6 @@ PY
           if-no-files-found: warn
           retention-days: 7
 
-
-      - name: Bundle proofs (zip)
-        if: always()
-        run: |
-          rm -f proof-bundle.zip || true
-          zip -q -r proof-bundle.zip coverage-boot.xml coverage-full.xml collect.txt ws.txt || true
       - name: Enforce bootstrap gate (>=25% temporarily)
         run: |
           python - << 'PY'
@@ -131,45 +128,18 @@ pct = round(float(r.attrib.get("line-rate","0"))*100, 2)
 print(f"Bootstrap Coverage: {pct}%")
 sys.exit(0 if pct >= 25 else 1)
 PY
-    needs: test
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Recreate minimal files (safe defaults)
-        run: |
-          test -f collect.txt || echo "no collection" > collect.txt
-          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
-          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
-          rm -rf proof && mkdir -p proof
-          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
-    steps:
-      - run: |
-          echo "creating placeholder proof files"
-          echo "no collection" > collect.txt
-          ls -la > ws.txt || echo "no workspace listing" > ws.txt
-          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
-          rm -rf proof && mkdir -p proof
-          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: proof-bundle
-          path: proof
-          if-no-files-found: warn
-          retention-days: 7
+  # Independent job that also uploads proof-bundle (safety net)
   proof:
-    if: ${{ always() }}
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "creating placeholder proof files"
-          echo "no collection" > collect.txt
-          ls -la > ws.txt || echo "no workspace listing" > ws.txt
-          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
           rm -rf proof && mkdir -p proof
-          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/
+          echo "hello from standalone proof job" > proof/collect.txt
+          ls -la > proof/ws.txt || echo "no workspace listing" > proof/ws.txt
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-full.xml
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-boot.xml
       - uses: actions/upload-artifact@v4
         with:
           name: proof-bundle
