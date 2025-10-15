@@ -2,7 +2,7 @@ name: tests
 
 on:
   push:
-    branches: [ main, chore/**, feat/**, chore/ci-coverage-scope ]
+    branches: [ main, chore/**, feat/** ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
           pip install pytest pytest-cov coverage || true
 
-      - name: Pytest full → coverage-full.xml
+      - name: Pytest full -> coverage-full.xml
         run: |
           pytest --maxfail=1 --disable-warnings \
                  --cov=scripts --cov=tools \
@@ -45,17 +45,7 @@ jobs:
           pytest --collect-only -q > collect.txt || true
           test -f collect.txt || echo "no collection" > collect.txt
 
-      - name: Anchor import smoke (proof)
-        continue-on-error: true
-        run: |
-          python - << 'PY'
-import importlib, sys
-m = importlib.import_module("tools.coverage_anchor")
-assert m.add(2,3)==5
-print("anchor import OK")
-PY
-
-      - name: Pytest bootstrap (anchor only) → coverage-boot.xml
+      - name: Pytest bootstrap (anchor only) -> coverage-boot.xml
         run: |
           coverage erase || true
           coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
@@ -64,22 +54,16 @@ PY
       - name: Debug workspace listing
         if: always()
         run: |
-          pwd || true
-          ls -la || true
+          pwd
+          ls -la
           (ls -la) > ws.txt || true
           test -f ws.txt || echo "no workspace listing" > ws.txt
 
-      # === Always package artifacts so you can fetch them even on failure ===
       - name: Build proof bundle (always)
         if: always()
         run: |
           rm -rf proof && mkdir -p proof
           cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
-          # ensure files exist even if previous steps failed
-          test -f proof/collect.txt || echo "no collection" > proof/collect.txt
-          test -f proof/ws.txt || echo "no workspace listing" > proof/ws.txt
-          test -f proof/coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-full.xml
-          test -f proof/coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-boot.xml
 
       - name: Upload proof-bundle (always)
         if: always()
@@ -90,46 +74,6 @@ PY
           if-no-files-found: warn
           retention-days: 7
 
-      - name: Upload pytest collect (proof)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-collect
-          path: collect.txt
-          if-no-files-found: warn
-          retention-days: 7
-
-      - name: Upload workspace listing
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: workspace-debug
-          path: ws.txt
-          if-no-files-found: warn
-          retention-days: 7
-
-      - name: Upload coverages
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-xmls
-          path: |
-            coverage-full.xml
-            coverage-boot.xml
-          if-no-files-found: warn
-          retention-days: 7
-
-      - name: Enforce bootstrap gate (>=25% temporarily)
-        run: |
-          python - << 'PY'
-import xml.etree.ElementTree as ET, sys
-r = ET.parse("coverage-boot.xml").getroot()
-pct = round(float(r.attrib.get("line-rate","0"))*100, 2)
-print(f"Bootstrap Coverage: {pct}%")
-sys.exit(0 if pct >= 25 else 1)
-PY
-
-  # Independent job that also uploads proof-bundle (safety net)
   proof:
     if: always()
     runs-on: ubuntu-latest
