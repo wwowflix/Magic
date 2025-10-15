@@ -1,0 +1,20 @@
+name: artifact-smoke
+on:
+  workflow_dispatch:
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          rm -rf proof && mkdir -p proof
+          echo "hello from smoke workflow" > proof/collect.txt
+          ls -la > proof/ws.txt || echo "no workspace listing" > proof/ws.txt
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-full.xml
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > proof/coverage-boot.xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof
+          if-no-files-found: warn
+          retention-days: 7
