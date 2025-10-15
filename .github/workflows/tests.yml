@@ -1,4 +1,4 @@
-﻿name: tests
+name: tests
 
 on:
   push:
@@ -8,8 +8,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "smoke ok"
+
   test:
     runs-on: ubuntu-latest
+    needs: smoke
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +24,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install deps (non-blocking)
         run: |
           python -m pip install -U pip || true
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
@@ -34,6 +40,7 @@ jobs:
       - name: Ensure coverage.xml exists
         run: |
           test -f coverage.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' > coverage.xml
+
       - name: Debug workspace listing
         if: always()
         run: |
@@ -48,7 +55,9 @@ jobs:
           name: workspace-debug
           path: ws.txt
           if-no-files-found: warn
-          retention-days: 7      - name: Upload coverage.xml
+          retention-days: 7
+
+      - name: Upload coverage.xml
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -60,10 +69,9 @@ jobs:
       - name: Enforce coverage gate (>=25%)
         run: |
           python - << 'PY'
-import xml.etree.ElementTree as ET, sys
-root = ET.parse("coverage.xml").getroot()
-rate = float(root.attrib.get("line-rate", "0"))
-pct  = round(rate*100, 2)
-print(f"Coverage: {pct}%")
-sys.exit(0 if pct >= 25 else 1)
-PY
+          import xml.etree.ElementTree as ET, sys
+          r = ET.parse("coverage.xml").getroot()
+          pct = round(float(r.attrib.get("line-rate","0"))*100, 2)
+          print(f"Coverage: {pct}%")
+          sys.exit(0 if pct >= 25 else 1)
+          PY
