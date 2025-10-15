@@ -23,30 +23,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
-      - name: Build proof bundle (always)
-        if: ${{ always() }}
-        run: |
-          echo "::group::workspace"
-          pwd || true
-          ls -la || true
-          echo "::endgroup::workspace"
-          test -f collect.txt || echo "no collection" > collect.txt
-          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
-          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
-          rm -rf proof && mkdir -p proof
-          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
-
-      - name: Upload proof-bundle (always)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: proof-bundle
-          path: proof
-          if-no-files-found: warn
-          retention-days: 7
-        with:
-          python-version: "3.11"
 
       - name: Install deps (non-blocking)
         run: |
@@ -54,7 +30,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
           pip install pytest pytest-cov coverage || true
 
-      - name: Pytest full (scripts+tools) ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ coverage-full.xml
+      - name: Pytest full (scripts+tools) ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ coverage-full.xml
         run: |
           pytest --maxfail=1 --disable-warnings \
                  --cov=scripts --cov=tools \
@@ -77,7 +53,7 @@ assert m.add(2,3)==5
 print("anchor import OK")
 PY
 
-      - name: Pytest bootstrap (anchor only) ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ coverage-boot.xml
+      - name: Pytest bootstrap (anchor only) ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ coverage-boot.xml
         run: |
           coverage erase || true
           coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
@@ -90,7 +66,28 @@ PY
           ls -la
           (ls -la) > ws.txt || true
           test -f ws.txt || echo "no workspace listing" > ws.txt
-      - name: Upload pytest collect (proof)
+      - name: Build proof bundle (always)
+        if: ${{ always() }}
+        run: |
+          echo "::group::workspace"
+          pwd || true
+          ls -la || true
+          echo "::endgroup::workspace"
+          test -f collect.txt || echo "no collection" > collect.txt
+          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
+          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
+          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          rm -rf proof && mkdir -p proof
+          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
+
+      - name: Upload proof-bundle (always)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof
+          if-no-files-found: warn
+          retention-days: 7      - name: Upload pytest collect (proof)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -134,10 +131,6 @@ pct = round(float(r.attrib.get("line-rate","0"))*100, 2)
 print(f"Bootstrap Coverage: {pct}%")
 sys.exit(0 if pct >= 25 else 1)
 PY
-
-  proof:
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
     needs: test
     steps:
       - uses: actions/checkout@v4
@@ -151,8 +144,20 @@ PY
           rm -rf proof && mkdir -p proof
           cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
 
-      - name: Upload proof-bundle (always)
-        uses: actions/upload-artifact@v4
+
+  proof:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "creating placeholder proof files"
+          echo "no collection" > collect.txt
+          ls -la > ws.txt || echo "no workspace listing" > ws.txt
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
+          echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          rm -rf proof && mkdir -p proof
+          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/
+      - uses: actions/upload-artifact@v4
         with:
           name: proof-bundle
           path: proof
