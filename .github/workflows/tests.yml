@@ -20,22 +20,13 @@ jobs:
 
       - name: Install deps
         shell: pwsh
-        run: |
-          python -m pip install -U pip
-          if (Test-Path requirements.txt) { pip install -r requirements.txt }
-          pip install pytest pytest-cov
+        run: python -m pip install -U pip; if (Test-Path requirements.txt) { pip install -r requirements.txt }; pip install pytest pytest-cov
 
+      # Always emit coverage.xml (continue even if pytest fails)
       - name: Run pytest (emit coverage even on failure)
         shell: pwsh
         continue-on-error: true
-        run: |
-          pytest --maxfail=1 --disable-warnings 
-            --cov=scripts --cov=tools 
-            --cov-report=term --cov-report=xml 
-            --cov-fail-under=0
-          if (-not (Test-Path coverage.xml)) {
-            Set-Content -Encoding utf8 coverage.xml '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>'
-          }
+        run: pytest --maxfail=1 --disable-warnings --cov=scripts --cov=tools --cov-report=term --cov-report=xml --cov-fail-under=0; if (-not (Test-Path coverage.xml)) { Set-Content -Encoding utf8 coverage.xml '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/></coverage>' }
 
       - name: Upload coverage.xml
         if: always()
@@ -45,10 +36,7 @@ jobs:
           path: coverage.xml
           retention-days: 7
 
+      # Separate strict gate AFTER upload, so artifact always exists
       - name: Enforce coverage gate (>=25%)
         shell: pwsh
-        run: |
-          [xml] = Get-Content coverage.xml -Raw
-          0 = [math]::Round([double].coverage.'line-rate'*100,2)
-          "Coverage: 0%"
-          if (0 -lt 25) { throw "Coverage 0% < 25% gate" }
+        run:  = [xml](Get-Content coverage.xml -Raw); 0 = [math]::Round([double].coverage.'line-rate'*100,2); "Coverage: 0%"; if (0 -lt 25) { throw "Coverage 0% < 25% gate" }
