@@ -23,6 +23,28 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
+      - name: Build proof bundle (always)
+        if: ${{ always() }}
+        run: |
+          echo "::group::workspace"
+          pwd || true
+          ls -la || true
+          echo "::endgroup::workspace"
+          test -f collect.txt || echo "no collection" > collect.txt
+          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
+          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
+          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
+          rm -rf proof && mkdir -p proof
+          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
+
+      - name: Upload proof-bundle (always)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-bundle
+          path: proof
+          if-no-files-found: warn
+          retention-days: 7
         with:
           python-version: "3.11"
 
@@ -32,7 +54,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
           pip install pytest pytest-cov coverage || true
 
-      - name: Pytest full (scripts+tools) â†’ coverage-full.xml
+      - name: Pytest full (scripts+tools) Ã¢â€ â€™ coverage-full.xml
         run: |
           pytest --maxfail=1 --disable-warnings \
                  --cov=scripts --cov=tools \
@@ -55,7 +77,7 @@ assert m.add(2,3)==5
 print("anchor import OK")
 PY
 
-      - name: Pytest bootstrap (anchor only) â†’ coverage-boot.xml
+      - name: Pytest bootstrap (anchor only) Ã¢â€ â€™ coverage-boot.xml
         run: |
           coverage erase || true
           coverage run -m pytest -q tests/test_anchor.py -k test_add_anchor || true
@@ -68,29 +90,6 @@ PY
           ls -la
           (ls -la) > ws.txt || true
           test -f ws.txt || echo "no workspace listing" > ws.txt
-      - name: Build proof bundle (always)
-        if: always()
-        run: |
-          echo "::group::workspace"
-          pwd || true
-          ls -la || true
-          echo "::endgroup::workspace"
-          # ensure the four files exist
-          test -f collect.txt || echo "no collection" > collect.txt
-          test -f ws.txt || (ls -la > ws.txt || echo "no workspace listing" > ws.txt)
-          test -f coverage-full.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-full.xml
-          test -f coverage-boot.xml || echo '<coverage line-rate="0" branch-rate="0" version="1.0"><packages/>' > coverage-boot.xml
-          rm -rf proof && mkdir -p proof
-          cp -f collect.txt ws.txt coverage-full.xml coverage-boot.xml proof/ 2>/dev/null || true
-
-      - name: Upload proof-bundle (always)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: proof-bundle
-          path: proof
-          if-no-files-found: warn
-          retention-days: 7
       - name: Upload pytest collect (proof)
         if: always()
         uses: actions/upload-artifact@v4
