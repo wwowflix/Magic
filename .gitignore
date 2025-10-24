@@ -129,3 +129,10 @@ outputs/reports/status_now.*
 outputs/reports/status_now.*
 
 pr-up.sh
+# Ignore other runtime reports
+outputs/reports/readiness/**
+outputs/reports/status/**
+outputs/reports/tests/**
+outputs/reports/ci/**
+outputs/reports/env/**
+outputs/reports/coverage/**
