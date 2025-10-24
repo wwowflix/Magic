@@ -1,6 +1,0 @@
-﻿Step	Check	Status	Notes
-0	In repo root	PASS	.git present
-1	Git reachable	PASS	git ok
-2	On branch prod-release	PASS	prod-release
-3	venv folder exists	PASS	venv
-4	requirements.txt present	PASS	requirements.txt
