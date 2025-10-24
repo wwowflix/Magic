@@ -1,0 +1,88 @@
+﻿{
+    "summary":  {
+                    "total_scripts_all":  8036,
+                    "total_scripts_ready":  1447,
+                    "impl_percent":  18,
+                    "coverage_percent":  63.7,
+                    "readiness47_source":  "verify_47_latest.json",
+                    "readiness47_total":  47,
+                    "readiness47_passed":  47,
+                    "readiness47_failed":  0,
+                    "readiness47_percent":  100,
+                    "phase_count":  39,
+                    "phase11_modules":  29,
+                    "notion_sync_ok":  false,
+                    "notion_push_count":  null,
+                    "disk_free_gb":  1759.31,
+                    "disk_used_percent":  5.6
+                },
+    "rows":  [
+                 {
+                     "Category":  "Scripts Implementation",
+                     "Metric":  "Total",
+                     "Value":  8036
+                 },
+                 {
+                     "Category":  "Scripts Implementation",
+                     "Metric":  "READY",
+                     "Value":  1447
+                 },
+                 {
+                     "Category":  "Scripts Implementation",
+                     "Metric":  "%",
+                     "Value":  "18"
+                 },
+                 {
+                     "Category":  "Coverage",
+                     "Metric":  "%",
+                     "Value":  "n/a"
+                 },
+                 {
+                     "Category":  "Readiness-47",
+                     "Metric":  "Total",
+                     "Value":  47
+                 },
+                 {
+                     "Category":  "Readiness-47",
+                     "Metric":  "Passed",
+                     "Value":  47
+                 },
+                 {
+                     "Category":  "Readiness-47",
+                     "Metric":  "Failed",
+                     "Value":  0
+                 },
+                 {
+                     "Category":  "Readiness-47",
+                     "Metric":  "%",
+                     "Value":  100
+                 },
+                 {
+                     "Category":  "Readiness-47",
+                     "Metric":  "Source",
+                     "Value":  "verify_47_latest.json"
+                 },
+                 {
+                     "Category":  "Disk",
+                     "Metric":  "FreeGB",
+                     "Value":  1759.31
+                 },
+                 {
+                     "Category":  "Disk",
+                     "Metric":  "Used%",
+                     "Value":  "n/a"
+                 }
+             ],
+    "phase11_detail":  [
+
+                       ],
+    "phases":  [
+
+               ],
+    "meta":  {
+                 "root":  "E:\\MAGIC",
+                 "scanned_at_iso":  "2025-10-24T16:56:36",
+                 "hostname":  "LAPTOP-OQMBU0B0",
+                 "user":  "HP"
+             }
+}
