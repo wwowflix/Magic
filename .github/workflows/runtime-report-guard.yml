@@ -1,0 +1,43 @@
+name: Runtime Report Guard
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail if tracked runtime reports are in the tree
+        run: |
+          set -e
+          echo "Scanning repo for forbidden tracked paths..."
+          forbidden=0
+
+          # List of forbidden globs (adjust as needed)
+          pats=(
+            "outputs/reports/readiness/**"
+            "outputs/reports/status/**"
+            "outputs/reports/tests/**"
+            "outputs/reports/ci/**"
+            "outputs/reports/env/**"
+            "outputs/reports/coverage/**"
+            "outputs/reports/status_now.*"
+          )
+
+          # Build a list of tracked files and check
+          for pat in "${pats[@]}"; do
+            for f in $(git ls-files "$pat"); do
+              echo "::error ::Forbidden tracked artifact: $f"
+              forbidden=1
+            done
+          done
+
+          if [ $forbidden -ne 0 ]; then
+            echo "❌ Found tracked runtime artifacts. Remove them and update .gitignore/hook."
+            exit 1
+          fi
+
+          echo "✅ No forbidden tracked artifacts."
