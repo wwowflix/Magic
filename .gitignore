@@ -136,3 +136,7 @@ outputs/reports/tests/**
 outputs/reports/ci/**
 outputs/reports/env/**
 outputs/reports/coverage/**
+# Local backups
+*.bak
+*/*.bak
+.pre-commit-config.yaml*.bak
