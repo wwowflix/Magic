@@ -5,6 +5,3 @@ on:
   workflow_dispatch: {}
   push:
     branches: [ main, prod-release ]workflow_dispatch:
-
-
-
