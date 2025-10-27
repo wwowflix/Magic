@@ -12,7 +12,7 @@ import posixpath
 import shutil
 import stat
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import urllib.parse
 from io import StringIO
 from itertools import filterfalse, tee, zip_longest

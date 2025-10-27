@@ -1458,8 +1458,8 @@ class AnySubstBuilder(LookupBuilder):
                 self._add_to_ligature_subst(builder, key, value)
             ret = [builder]
         elif is_named_lookup:
-            # This is a named lookup with mixed substitutions that can’t be promoted,
-            # since we can’t split it into multiple lookups, we return None here to
+            # This is a named lookup with mixed substitutions that can't be promoted,
+            # since we can't split it into multiple lookups, we return None here to
             # signal that to the caller
             return None
         else:

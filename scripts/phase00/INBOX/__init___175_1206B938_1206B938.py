@@ -4,7 +4,7 @@ from fontTools.misc.textTools import byteord, tostr
 
 import re
 from bisect import bisect_right
-from typing import Literal, TypeVar, overload
+from magic_typing import Literal, TypeVar, overload
 
 
 try:

@@ -1,4 +1,4 @@
-﻿import os
+import os
 from datetime import datetime
 
 # === Auto Recover Agent for MAGIC Project ===

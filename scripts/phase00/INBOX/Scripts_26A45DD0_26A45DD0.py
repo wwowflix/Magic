@@ -13,7 +13,7 @@ import sys
 import time
 from zipfile import ZipInfo
 
-from .compat import sysconfig, detect_encoding, ZipFile
+from .compat import magic_sysconfig as sysconfig, detect_encoding, ZipFile
 from .resources import finder
 from .util import (
     FileOperator,

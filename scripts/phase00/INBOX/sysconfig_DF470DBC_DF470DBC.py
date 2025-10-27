@@ -12,7 +12,7 @@ Email:        <fdrake@acm.org>
 import os
 import re
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import pathlib
 
 from .errors import DistutilsPlatformError

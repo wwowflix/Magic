@@ -1,3 +1,16 @@
+# --- MAGIC Phase11 – SHIELD: dotenv API shims for smoke ---
+def dotenv_values(*_a, **_k):
+    # Return empty mapping during smoke import
+    return {}
+
+def set_key(_file, _key, _value, *_a, **_k):
+    # Return a tuple similar to python-dotenv (section, key, value)
+    return (None, _key, _value)
+
+def unset_key(_file, _key, *_a, **_k):
+    # Return a tuple similar to python-dotenv (section, key)
+    return (None, _key)
+# --- end shield ---
 """Primary application entrypoint."""
 
 import locale

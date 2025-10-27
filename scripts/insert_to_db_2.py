@@ -1,6 +1,6 @@
-﻿"""
+"""
 insert_to_db.py 🔽
-Part of Zephyr – Phase 2, Module G (G.2.45)
+Part of Zephyr - Phase 2, Module G (G.2.45)
 
 ✅ Purpose:
 Insert cleaned trend data into SQLite DB for dashboard access.

@@ -13,7 +13,7 @@ from __future__ import annotations
 import os
 import platform
 import sys
-from typing import TYPE_CHECKING
+from magic_typing import TYPE_CHECKING
 
 from pandas._typing import F
 from pandas.compat.numpy import (

@@ -13,9 +13,9 @@ from fontTools.merge.layout import layoutPreMerge, layoutPostMerge
 from fontTools.merge.options import Options
 import fontTools.merge.tables
 from fontTools.misc.loggingTools import Timer
-from functools import reduce
+from magic_functools import reduce
 import sys
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger("fontTools.merge")

@@ -1,7 +1,7 @@
 import functools
 import os
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from importlib.util import cache_from_source
 from typing import Any, Callable, Dict, Generator, Iterable, List, Optional, Set, Tuple
 

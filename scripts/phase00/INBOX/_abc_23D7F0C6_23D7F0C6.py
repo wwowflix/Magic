@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import socket
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Generic, TypeVar
+from magic_typing import TYPE_CHECKING, Generic, TypeVar
 
 import trio
 
 if TYPE_CHECKING:
-    from types import TracebackType
+    from magic_types import TracebackType
 
     from typing_extensions import Self
 
@@ -594,7 +594,7 @@ class Listener(AsyncResource, Generic[T_resource]):
         because for listeners there is no general condition of "the
         network/remote peer broke the connection" that can be handled in a
         generic way, like there is for streams. Other errors *can* occur and
-        be raised from :meth:`accept` – for example, if you run out of file
+        be raised from :meth:`accept` - for example, if you run out of file
         descriptors then you might get an :class:`OSError` with its errno set
         to ``EMFILE``.
 

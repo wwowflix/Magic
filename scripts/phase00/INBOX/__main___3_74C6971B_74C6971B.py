@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-import typing
+import magic_typing as typing
 from json import dumps
 from os.path import abspath, basename, dirname, join, realpath
 from platform import python_version

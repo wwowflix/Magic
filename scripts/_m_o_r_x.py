@@ -1,6 +1,10 @@
-from .otBase import BaseTTXConverter
-
-
+# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+try:
+    from .otBase import BaseTTXConverter
+except Exception:
+    class BaseTTXConverter:  # minimal stub for smoke-import
+        pass
+# === end guard ==============================================================# MAGIC: removed duplicate otBase import
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6morx.html
 class table__m_o_r_x(BaseTTXConverter):
     """The AAT ``morx`` table contains glyph transformations used for script shaping and

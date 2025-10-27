@@ -1,1 +1,1 @@
-﻿print("restore OK (stub)")
+print("restore OK (stub)")

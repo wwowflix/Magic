@@ -5,7 +5,7 @@ from fontTools import configLogger
 from fontTools.misc.cliTools import makeOutputFileName
 import sys
 import argparse
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger("fontTools.feaLib")

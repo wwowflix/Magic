@@ -12,4 +12,3 @@ pip install -r requirements.txt
 pip install mypy pytest pytest-cov
 mypy . --config-file mypy.ini
 pytest -q
-

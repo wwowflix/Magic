@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from magic_typing import Any, Optional
 
 from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
 

@@ -199,12 +199,12 @@ class TestFormatters(SoupTest):
         # encounter the first </pre> tag, because we know it's not
         # the one that put us into string literal mode.
         markup = """<div><pre><code>some
-<script><pre>code</pre></script> for you 
+<script><pre>code</pre></script> for you
 </code></pre></div>"""
 
         expect = """<div>
  <pre><code>some
-<script><pre>code</pre></script> for you 
+<script><pre>code</pre></script> for you
 </code></pre>
 </div>
 """
@@ -320,7 +320,7 @@ class TestPersistence(SoupTest):
         soup = BeautifulSoup(b"<p>&nbsp;</p>", "html.parser")
         encoding = soup.original_encoding
         copy = soup.__copy__()
-        assert "<p> </p>" == str(copy)
+        assert "<p></p>" == str(copy)
         assert encoding == copy.original_encoding
 
     def test_copy_preserves_builder_information(self):

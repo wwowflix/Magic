@@ -1,6 +1,6 @@
 import collections.abc
 import re
-from typing import (
+from magic_typing import (
     Any,
     Callable,
     Dict,
@@ -18,8 +18,8 @@ from io import BytesIO
 from datetime import datetime
 from base64 import b64encode, b64decode
 from numbers import Integral
-from types import SimpleNamespace
-from functools import singledispatch
+from magic_types import SimpleNamespace
+from magic_functools import singledispatch
 
 from fontTools.misc import etree
 

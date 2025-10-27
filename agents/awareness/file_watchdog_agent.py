@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MAGIC Project – File Watchdog Agent
+MAGIC Project - File Watchdog Agent
 -----------------------------------
 Purpose:
 - Monitor key MAGIC directories for any file changes
@@ -10,7 +10,7 @@ Purpose:
 Author: ChatGPT Assistant
 """
 
-import time
+import magic_time as time
 import os
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler

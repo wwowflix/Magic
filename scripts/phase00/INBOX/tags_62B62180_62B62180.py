@@ -5,7 +5,7 @@
 import logging
 import platform
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from importlib.machinery import EXTENSION_SUFFIXES
 from typing import (
     Dict,

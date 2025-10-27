@@ -1,4 +1,4 @@
-import logging
+import magic_logging as logging
 from fontTools.misc.loggingTools import configLogger
 
 log = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ import requests
 import csv
 from datetime import datetime
 
-# TikTok’s unofficial trending API endpoint
+# TikTokï¿½s unofficial trending API endpoint
 API_URL = "https://www.tiktok.com/api/discover/item/list?aid=1988&app_language=en&count=20&cursor=0&type=5"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",

@@ -81,5 +81,3 @@ Generated: 2025-09-03 15:22
 | Step | Goal | Result | Why |
 |---|---|---|---|
 | 12.2 | Post-mortem exists | True |  |
-
-

@@ -22,8 +22,8 @@ function Apply-Remediation {
     switch -Regex ($err) {
       'FileNotFoundError'    { 'placeholder' | Out-File (Join-Path (Split-Path $scriptPath) 'dummy_input.txt') -Encoding UTF8; return $true }
       'UnicodeEncodeError'   { (Get-Content $scriptPath) -replace '[^\x00-\x7F]', '' | Set-Content $scriptPath; return $true }
-      'ImportError|ModuleNotFoundError' { 
-          if (Test-Path 'requirements.txt') { pip install -r requirements.txt; return $true } 
+      'ImportError|ModuleNotFoundError' {
+          if (Test-Path 'requirements.txt') { pip install -r requirements.txt; return $true }
       }
       default { return $false }
     }

@@ -1,4 +1,4 @@
-﻿import pandas as pd
+import pandas as pd
 
 files = [
     "outputs/google_trends.csv",

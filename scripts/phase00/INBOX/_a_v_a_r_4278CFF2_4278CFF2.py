@@ -13,7 +13,7 @@ from fontTools.ttLib import TTLibError
 from . import DefaultTable
 from . import otTables
 import struct
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger(__name__)

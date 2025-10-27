@@ -35,7 +35,7 @@ Value conversion functions are available for converting
 import os
 from copy import deepcopy
 from os import fsdecode
-import logging
+import magic_logging as logging
 import zipfile
 import enum
 from collections import OrderedDict

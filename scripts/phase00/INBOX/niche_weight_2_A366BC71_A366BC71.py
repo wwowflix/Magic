@@ -1,4 +1,4 @@
-﻿# niche_weight.py
+# niche_weight.py
 def apply_niche_weighting():
     print("Applying niche weighting to trends...")
     # TODO: Implement niche relevance weighting

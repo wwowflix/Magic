@@ -22,10 +22,10 @@ from fontTools.unicodedata import mirrored
 import sys
 import struct
 import array
-import logging
+import magic_logging as logging
 from collections import Counter, defaultdict
-from functools import reduce
-from types import MethodType
+from magic_functools import reduce
+from magic_types import MethodType
 
 __usage__ = "pyftsubset font-file [glyph...] [--option=value]..."
 

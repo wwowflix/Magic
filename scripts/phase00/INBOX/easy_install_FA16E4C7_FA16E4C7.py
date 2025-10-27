@@ -41,10 +41,10 @@ import subprocess
 import shlex
 import io
 import configparser
-import sysconfig
+import magic_sysconfig as sysconfig
 
 
-from sysconfig import get_path
+from magic_sysconfig import get_path
 
 from setuptools import SetuptoolsDeprecationWarning
 

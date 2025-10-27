@@ -1,4 +1,4 @@
-﻿from collections import Counter
+from collections import Counter
 #!/usr/bin/env python3
 import csv
 import json
@@ -59,8 +59,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
-
-
-

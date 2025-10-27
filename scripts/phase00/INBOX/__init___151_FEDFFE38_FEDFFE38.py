@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import sys
 import warnings
-from typing import TYPE_CHECKING
+from magic_typing import TYPE_CHECKING
 
 from ._api import AcquireReturnProxy, BaseFileLock
 from ._error import Timeout

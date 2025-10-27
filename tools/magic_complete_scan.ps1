@@ -4,8 +4,8 @@ function J($p){ Join-Path $Root $p }
 if(!(Test-Path (J "outputs\reports"))){ New-Item -ItemType Directory -Force -Path (J "outputs\reports") | Out-Null }
 
 $rows = New-Object System.Collections.Generic.List[object]
-function Row($cat,$name,$val,$status,$notes=""){ 
-  $rows.Add([pscustomobject]@{category=$cat;name=$name;value="$val";status=$status;notes=$notes}) 
+function Row($cat,$name,$val,$status,$notes=""){
+  $rows.Add([pscustomobject]@{category=$cat;name=$name;value="$val";status=$status;notes=$notes})
 }
 
 # Basics
@@ -32,7 +32,7 @@ foreach($k in $checks.Keys){
 
 # Write outputs
 $tsv = (J "outputs\reports\magic_complete_scan.tsv")
-$rows | ForEach-Object { '{0}`t{1}`t{2}`t{3}`t{4}' -f $_.category,$_.name,$_.value,$_.status,$_.notes } | 
+$rows | ForEach-Object { '{0}`t{1}`t{2}`t{3}`t{4}' -f $_.category,$_.name,$_.value,$_.status,$_.notes } |
   Set-Content -Encoding UTF8 $tsv
 $json = (J "outputs\reports\magic_complete_scan.json")
 $rows | ConvertTo-Json -Depth 5 | Set-Content -Encoding UTF8 $json

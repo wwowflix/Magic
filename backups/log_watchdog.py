@@ -1,5 +1,5 @@
 import os
-import time
+import magic_time as time
 
 LOGS_DIR = os.path.join("outputs", "logs")
 ALERTS_DIR = os.path.join("outputs", "alerts")

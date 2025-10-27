@@ -14,7 +14,7 @@ from pathlib import Path
 
 from distutils.core import Command
 from distutils import log
-from setuptools.extern import packaging
+from setuptools.extern import magic_packaging as packaging
 from setuptools._deprecation_warning import SetuptoolsDeprecationWarning
 
 

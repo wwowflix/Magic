@@ -1,6 +1,6 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
-Self-Healing Runner v5 â€“ Parallel Execution
+Self-Healing Runner v5 â€" Parallel Execution
 """
 import argparse
 import subprocess
@@ -96,7 +96,7 @@ def main():
         futures = {executor.submit(run_script, s): s for s in scripts}
         for future in as_completed(futures):
             script, status, _, _ = future.result()
-            print(f"{status} â€” {script}")
+            print(f"{status} â€" {script}")
             results.append(status)
     passed = results.count("PASS")
     failed = results.count("FAIL")

@@ -397,7 +397,7 @@ async def create_udp_socket(
     If ``port`` has been given, the socket will be bound to this port on the local
     machine, making this socket suitable for providing UDP based services.
 
-    :param family: address family (``AF_INET`` or ``AF_INET6``) – automatically
+    :param family: address family (``AF_INET`` or ``AF_INET6``) - automatically
         determined from ``local_host`` if omitted
     :param local_host: IP address or host name of the local interface to bind to
     :param local_port: local port to bind to
@@ -447,7 +447,7 @@ async def create_connected_udp_socket(
 
     :param remote_host: remote host to set as the default target
     :param remote_port: port on the remote host to set as the default target
-    :param family: address family (``AF_INET`` or ``AF_INET6``) – automatically
+    :param family: address family (``AF_INET`` or ``AF_INET6``) - automatically
         determined from ``local_host`` or ``remote_host`` if omitted
     :param local_host: IP address or host name of the local interface to bind to
     :param local_port: local port to bind to

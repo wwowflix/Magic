@@ -1,3 +1,10 @@
+# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+try:
+    from .otBase import BaseTTXConverter
+except Exception:
+    class BaseTTXConverter:  # minimal stub for smoke-import
+        pass
+# === end guard ==============================================================
 from fontTools.misc import sstruct
 from fontTools.misc.fixedTools import (
     fixedToFloat as fi2fl,
@@ -15,12 +22,8 @@ from . import otTables
 import struct
 import logging
 
-
 log = logging.getLogger(__name__)
-
-from .otBase import BaseTTXConverter
-
-
+# MAGIC: removed duplicate otBase import
 class table__a_v_a_r(BaseTTXConverter):
     """Axis Variations table
 

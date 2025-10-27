@@ -316,12 +316,12 @@ add_newdoc_for_scalar_type(
     [],
     r"""
     Either an opaque sequence of bytes, or a structure.
-    
+
     >>> np.void(b'abcd')
     void(b'\x61\x62\x63\x64')
-    
+
     Structured `void` scalars can only be constructed via extraction from :ref:`structured_arrays`:
-    
+
     >>> arr = np.array((1, 2), dtype=[('x', np.int8), ('y', np.int8)])
     >>> arr[()]
     (1, 2)  # looks like a tuple, but is `np.void`
@@ -340,10 +340,10 @@ add_newdoc_for_scalar_type(
     >>> np.datetime64(10, 'Y')
     numpy.datetime64('1980')
     >>> np.datetime64('1980', 'Y')
-    numpy.datetime64('1980')   
+    numpy.datetime64('1980')
     >>> np.datetime64(10, 'D')
     numpy.datetime64('1970-01-11')
-    
+
     See :ref:`arrays.datetime` for more information.
     """,
 )
@@ -353,7 +353,7 @@ add_newdoc_for_scalar_type(
     [],
     """
     A timedelta stored as a 64-bit integer.
-    
+
     See :ref:`arrays.datetime` for more information.
     """,
 )

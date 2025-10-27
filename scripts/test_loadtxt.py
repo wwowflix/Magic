@@ -487,7 +487,7 @@ def test_object_cleanup_on_read_error():
 )
 def test_character_not_bytes_compatible():
     """Test exception when a character cannot be encoded as 'S'."""
-    data = StringIO("–")  # == \-
+    data = StringIO("-")  # == \-
     with pytest.raises(ValueError):
         np.loadtxt(data, dtype="S5")
 
