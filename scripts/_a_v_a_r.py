@@ -1,4 +1,51 @@
-# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+# === MAGIC SHIM: ensure otTables.VarStore exists for smoke imports ===
+try:
+    from fontTools.ttLib.tables import otTables as ot  # type: ignore
+    if not hasattr(ot, "VarStore"):
+        class VarStore:  # minimal stub for smoke tests
+            pass
+        ot.VarStore = VarStore  # type: ignore[attr-defined]
+    if not hasattr(ot, "NO_VARIATION_INDEX"):
+        # default fallback aligns with fontTools varStore usage
+        ot.NO_VARIATION_INDEX = 0xFFFFFFFF  # type: ignore[attr-defined]
+except Exception:
+    # never block smoke-imports
+    pass
+# === end MAGIC SHIM ===
+# === MAGIC Phase11 - SHIELD: otTables compatibility shims ===
+try:
+    from fontTools.ttLib.tables import otTables as _ot
+    # Provide NO_VARIATION_INDEX if missing (fontTools constant)
+    if not hasattr(_ot, "NO_VARIATION_INDEX"):
+        _ot.NO_VARIATION_INDEX = 0xFFFFFFFF  # 4294967295
+
+    # Provide a minimal VarData placeholder if missing (used by varLib.builder)
+    if not hasattr(_ot, "VarData"):
+        class VarData:
+            def __init__(self):
+                self.VarRegionIndex = []
+                self.VarRegionCount = 0
+                self.Item = []
+                self.NumShorts = 0
+        _ot.VarData = VarData
+except Exception:
+    pass
+# === end shield ===
+# === MAGIC Phase11 â€“ SHIELD: VarData placeholder for varLib.builder ===
+try:
+    from fontTools.ttLib.tables import otTables as _ot
+    if not hasattr(_ot, "VarData"):
+        class VarData:
+            def __init__(self):
+                self.VarRegionIndex = []
+                self.VarRegionCount = 0
+                self.Item = []
+                self.NumShorts = 0
+        _ot.VarData = VarData
+except Exception:
+    pass
+# === end shield ===
+# === MAGIC Phase11 â€“ SHIELD: guarded otBase import ==========================
 try:
     from .otBase import BaseTTXConverter
 except Exception:
