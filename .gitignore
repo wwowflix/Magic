@@ -164,3 +164,15 @@ tools/hooks/*.bak_*
 *.coverage
 coverage.xml
 outputs/reports/
+# === MAGIC ignores ===
+outputs/
+**/*.log
+**/*.tmp
+**/*.cache
+**/.pytest_cache/
+**/__pycache__/
+largest_files.csv
+twitter_output.json
+scripts/New Text Document.txt
+# local helpers
+.ci-touch
