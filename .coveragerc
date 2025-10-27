@@ -1,7 +1,11 @@
-﻿[run]
+[run]
 source = scripts
 omit =
-    tests/*
-    tools/*
+    */tests/*
+    */venv/*
+    */.venv/*
+    */site-packages/*
+
 [report]
-skip_covered = True
+skip_empty = True
+show_missing = True
