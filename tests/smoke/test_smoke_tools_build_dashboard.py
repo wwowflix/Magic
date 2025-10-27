@@ -1,0 +1,10 @@
+import importlib, types
+
+def test_import_tools_build_dashboard():
+    mod = importlib.import_module("tools.build_dashboard")
+    assert isinstance(mod, types.ModuleType)
+    if hasattr(mod, "main") and callable(mod.main):
+        try:
+            mod.main()  # best-effort, ignore return
+        except TypeError:
+            pass
