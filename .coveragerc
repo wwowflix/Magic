@@ -1,12 +1,7 @@
-[run]
-branch = True
-
+﻿[run]
+source = scripts
 omit =
-    **/venv/**
-    **/.venv/**
-    **/Lib/site-packages/**
-    **/site-packages/**
-    **/tests/**
-
+    tests/*
+    tools/*
 [report]
-show_missing = True
+skip_covered = True
