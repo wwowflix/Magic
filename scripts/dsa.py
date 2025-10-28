@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 import typing
 
 from cryptography.hazmat.bindings._rust import openssl as rust_openssl
@@ -161,3 +160,4 @@ def generate_parameters(key_size: int, backend: typing.Any = None) -> DSAParamet
 def generate_private_key(key_size: int, backend: typing.Any = None) -> DSAPrivateKey:
     parameters = generate_parameters(key_size)
     return parameters.generate_private_key()
+

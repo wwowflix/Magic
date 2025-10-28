@@ -1,8 +1,7 @@
-"""
+﻿"""
 Interface adapters for low-level readers.
 """
-
-import abc
+import importlib.abc as abc
 import io
 import itertools
 
@@ -113,3 +112,4 @@ class TraversableReader(TraversableResources, SimpleReader):
 
     def files(self):
         return ResourceContainer(self)
+

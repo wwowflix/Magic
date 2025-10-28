@@ -5105,7 +5105,7 @@ otData = [
                 "Version",
                 None,
                 None,
-                "Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the 'attaches on right' bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.",
+                'Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the \'attaches on right\' bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.',
             ),
             ("struct", "GlyphProperties", None, None, "Glyph properties."),
         ],

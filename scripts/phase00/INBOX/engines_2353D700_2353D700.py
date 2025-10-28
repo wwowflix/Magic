@@ -1,10 +1,9 @@
-"""
+﻿"""
 Engine classes for :func:`~pandas.eval`
 """
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 from typing import TYPE_CHECKING
 
 from pandas.errors import NumExprClobberingError
@@ -143,3 +142,4 @@ ENGINES: dict[str, type[AbstractEngine]] = {
     "numexpr": NumExprEngine,
     "python": PythonEngine,
 }
+

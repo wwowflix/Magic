@@ -1,4 +1,4 @@
-"""
+﻿"""
 Abstract base class for the various polynomial Classes.
 
 The ABCPolyBase class provides the methods needed to implement the common API
@@ -8,7 +8,7 @@ abc module from the stdlib, hence it is only available for Python >= 2.6.
 """
 
 import os
-import abc
+import importlib.abc as abc
 import numbers
 
 import numpy as np
@@ -73,30 +73,30 @@ class ABCPolyBase(abc.ABC):
     # Unicode character mappings for improved __str__
     _superscript_mapping = str.maketrans(
         {
-            "0": "⁰",
-            "1": "¹",
-            "2": "²",
-            "3": "³",
-            "4": "⁴",
-            "5": "⁵",
-            "6": "⁶",
-            "7": "⁷",
-            "8": "⁸",
-            "9": "⁹",
+            "0": "â°",
+            "1": "Â¹",
+            "2": "Â²",
+            "3": "Â³",
+            "4": "â´",
+            "5": "âµ",
+            "6": "â¶",
+            "7": "â·",
+            "8": "â¸",
+            "9": "â¹",
         }
     )
     _subscript_mapping = str.maketrans(
         {
-            "0": "₀",
-            "1": "₁",
-            "2": "₂",
-            "3": "₃",
-            "4": "₄",
-            "5": "₅",
-            "6": "₆",
-            "7": "₇",
-            "8": "₈",
-            "9": "₉",
+            "0": "â‚€",
+            "1": "â‚",
+            "2": "â‚‚",
+            "3": "â‚ƒ",
+            "4": "â‚„",
+            "5": "â‚…",
+            "6": "â‚†",
+            "7": "â‚‡",
+            "8": "â‚ˆ",
+            "9": "â‚‰",
         }
     )
     # Some fonts don't support full unicode character ranges necessary for
@@ -383,7 +383,7 @@ class ABCPolyBase(abc.ABC):
                 "Subclasses must define either a basis_name, or override "
                 "_str_term_unicode(cls, i, arg_str)"
             )
-        return f"·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
+        return f"Â·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
 
     @classmethod
     def _str_term_ascii(cls, i, arg_str):
@@ -1144,3 +1144,4 @@ class ABCPolyBase(abc.ABC):
         if window is None:
             window = cls.window
         return series.convert(domain, cls, window)
+

@@ -1,8 +1,8 @@
-# --- MAGIC Phase11 – SHIELD: DistlibException shim ---
+﻿# --- MAGIC Phase11 â€“ SHIELD: DistlibException shim ---
 class DistlibException(Exception):
     """Minimal shim so resources and Scripts can import it during smoke."""
     pass
-# --- end shim ---# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+# --- end shim ---# === MAGIC Phase11 â€“ SHIELD: guarded otBase import ==========================
 try:
     from .otBase import BaseTTXConverter
 except Exception:
@@ -19,3 +19,4 @@ class table_V_V_A_R_(BaseTTXConverter):
     """
 
     pass
+

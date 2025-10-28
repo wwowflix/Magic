@@ -9,7 +9,7 @@ import logging
 from functools import lru_cache
 from typing import Iterator, NamedTuple, Optional, Tuple
 
-# --- MAGIC Phase11 – SHIELD: safe USE_HARFBUZZ_REPACKER read ---
+# --- MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: safe USE_HARFBUZZ_REPACKER read ---
 try:
     from fontTools.misc.configTools import OPTIONS
 except Exception:
@@ -142,8 +142,8 @@ class BaseTTXConverter(DefaultTable):
         try:
                 # fontTools >= option introduction
                 use_hb_repack = font.cfg[USE_HARFBUZZ_REPACKER]
-            except Exception:
-                # Older fontTools: treat as â€œautoâ€ (None)
+        except Exception:
+                # Older fontTools: treat as ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œautoÃƒÂ¢Ã¢â€šÂ¬Ã‚Â (None)
                 use_hb_repack = None
         if self.tableTag in ("GSUB", "GPOS"):
             if use_hb_repack is False:

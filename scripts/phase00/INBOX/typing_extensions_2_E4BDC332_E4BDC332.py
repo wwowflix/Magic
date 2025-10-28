@@ -1,4 +1,5 @@
-import abc
+﻿
+import importlib.abc as abc
 import builtins
 import collections
 import collections.abc
@@ -4459,3 +4460,4 @@ globals().update(
 Generic = typing.Generic
 ForwardRef = typing.ForwardRef
 Annotated = typing.Annotated
+

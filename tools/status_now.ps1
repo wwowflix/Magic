@@ -1,106 +1,132 @@
-﻿[CmdletBinding()]
-param(
+﻿Param(
   [string]$Root = ".",
-  [int]$SprintTargetPct = 75,
-  [int]$CurrentOverallPct = 70
+  [string]$OutDir = "outputs/reports",
+  [switch]$Quiet
 )
 
 $ErrorActionPreference = "Stop"
+
+function Add-Row {
+  param([string]$Check, [string]$Status, [string]$Notes)
+  $script:ROWS += [PSCustomObject]@{
+    Check  = $Check
+    Status = $Status
+    Notes  = $Notes
+  }
+}
+
+# --- Setup ---
 Set-Location $Root
+$ts = Get-Date -Format "yyyyMMdd_HHmmss"
+$OutDir = Join-Path $Root $OutDir
+New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+$Tsv = Join-Path $OutDir "magic_quick_status_$ts.tsv"
+$Json = Join-Path $OutDir "magic_full_status_$ts.json"
 
-function Try-ReadJson($path){
-  if(Test-Path $path){ try { return Get-Content $path -Raw -Encoding UTF8 | ConvertFrom-Json } catch { } }
-  return $null
-}
-function Try-ReadTsv($path){
-  if(Test-Path $path){
-    $rows = @()
-    Get-Content $path -Encoding UTF8 | Select-Object -Skip 1 | ForEach-Object {
-      if($_.Trim()){ $rows += ,($_ -split "`t") }
-    }
-    return $rows
+$ROWS = @()
+
+# --- Checks (Phase 1 high-signal) ---
+
+# 1) pre-commit present
+try {
+  $preCommitVersion = (pre-commit --version) 2>$null
+  if ($LASTEXITCODE -eq 0) {
+    Add-Row "pre-commit installed" "PASS" $preCommitVersion
+  } else {
+    Add-Row "pre-commit installed" "FAIL" "pre-commit not found"
   }
-  return @()
+} catch {
+  Add-Row "pre-commit installed" "FAIL" "pre-commit not found"
 }
-function Latest-Coverage(){
-  $hist = "outputs/reports/coverage/coverage_history.tsv"
-  if(Test-Path $hist){
-    $lines = Get-Content $hist -Encoding UTF8 | Where-Object {$_ -and -not $_.StartsWith("#")}
-    if($lines.Count -gt 1){
-      $cols = $lines[-1] -split "`t"
-      if($cols.Count -ge 2){ return ($cols[1] -replace '%','') }
-    }
+
+# 2) Hook file and config present with correct id
+$hookFile = ".githooks/forbid_shadowing_fonttools.py"
+$config   = ".pre-commit-config.yaml"
+
+if ((Test-Path $hookFile) -and (Test-Path $config)) {
+  $cfg = Get-Content $config -Raw
+  if ($cfg -match "forbid-shadowing-fonttools") {
+    Add-Row "fonttools shadowing guard" "PASS" "Hook + config OK"
+  } else {
+    Add-Row "fonttools shadowing guard" "FAIL" "Config missing hook id"
   }
-  return $null
+} else {
+  Add-Row "fonttools shadowing guard" "FAIL" "Hook file or config missing"
 }
 
-# read signals
-$proofPath  = "outputs/reports/ci/proof_bundle_receipt.json"
-$proof      = Try-ReadJson $proofPath
-$proofOk    = [bool]$proof
-$proofSizes = if($proof){ ($proof.sizes | ConvertTo-Json -Compress) } else { "{}" }
+# 3) No shadowing files exist
+if ((-not (Test-Path "scripts/otTables.py")) -and (-not (Test-Path "scripts/otConverters.py"))) {
+  Add-Row "no scripts/otTables.py or otConverters.py" "PASS" "Clean"
+} else {
+  Add-Row "no scripts/otTables.py or otConverters.py" "FAIL" "Shadowing files present"
+}
 
-$bootPct = Latest-Coverage
-if(-not $bootPct){ $bootPct = "0" }
+# 4) fontTools + FeatureParamsSize present
+$probe = & python -c "import sys; from fontTools.ttLib.tables import otTables as ot; import fontTools; import json; print(json.dumps({'py':sys.version,'ft':fontTools.__version__,'feat':hasattr(ot,'FeatureParamsSize')}))" 2>$null
+if ($LASTEXITCODE -eq 0) {
+  try {
+    $obj = $probe | ConvertFrom-Json
+    if ($obj.feat -eq $true) {
+      Add-Row "fontTools FeatureParamsSize" "PASS" ("py="+$obj.py+"; ft="+$obj.ft)
+    } else {
+      Add-Row "fontTools FeatureParamsSize" "FAIL" ("py="+$obj.py+"; ft="+$obj.ft)
+    }
+  } catch {
+    Add-Row "fontTools FeatureParamsSize" "ERROR" "JSON parse failed"
+  }
+} else {
+  Add-Row "fontTools FeatureParamsSize" "FAIL" "Python probe failed"
+}
 
-$microPath     = "outputs/reports/tests/microtest_matrix.tsv"
-$micro         = Try-ReadTsv $microPath
-$microAdded    = ($micro | Where-Object { $_.Count -ge 3 -and $_[2] -match '^(1|true|yes)$' }).Count
-$microPassing  = ($micro | Where-Object { $_.Count -ge 4 -and $_[3] -match '^(1|true|yes)$' }).Count
+# 5) coverage gate visibility (optional)
+if (Test-Path "coverage.xml") {
+  $line = (Select-String -Path "coverage.xml" -Pattern 'line-rate="([0-9.]+)"' -SimpleMatch:$false | Select-Object -First 1).Matches.Value
+  if ($line) {
+    $rate = [regex]::Match($line, 'line-rate="([0-9.]+)"').Groups[1].Value
+    $pct = [math]::Round([double]$rate * 100, 2)
+    $status = if ($pct -ge 75) { "PASS" } else { "FAIL" }
+    Add-Row "coverage ≥ 75%" $status "$pct%"
+  } else {
+    Add-Row "coverage ≥ 75%" "ERROR" "Could not parse coverage.xml"
+  }
+} else {
+  Add-Row "coverage ≥ 75%" "WARN" "coverage.xml missing"
+}
 
-# Heuristic bump for Week 11
-[int]$overall = $CurrentOverallPct
-if([double]$bootPct -ge 5){ $overall += 3 }
-if($proofOk){ $overall += 2 }
-if($microAdded -ge 10 -and [double]$bootPct -ge 10){ $overall += 3 }
-if($overall -gt 100){ $overall = 100 }
+# --- Progress % ---
+$total = $ROWS.Count
+$pass  = ($ROWS | Where-Object { $_.Status -eq "PASS" }).Count
+$progress = if ($total -gt 0) { [math]::Round(($pass / $total) * 100, 1) } else { 0 }
 
-# console dashboard
-Write-Host ""
-Write-Host "MAGIC Completion Dashboard — LOCAL (Week 11)" -ForegroundColor Cyan
-Write-Host "Now (est): $overall%     Target: $SprintTargetPct%" -ForegroundColor Yellow
-Write-Host ""
+# --- Save TSV ---
+$header = "Check`tStatus`tNotes"
+$lines = @($header) + ($ROWS | ForEach-Object { "$($_.Check)`t$($_.Status)`t$($_.Notes)" })
+$lines -join "`r`n" | Set-Content -Encoding UTF8 $Tsv
 
-$proofText = $( if($proofOk) { "bundle:+ sizes=$proofSizes" } else { "bundle:–" } )
-
-$rows = @()
-$rows += [pscustomobject]@{ Area="CI & Coverage Bootstrap"; Now="$bootPct% boot";             Goal="≥10%"; Proof=$proofText }
-$rows += [pscustomobject]@{ Area="Minimal Test Baseline";  Now="$microPassing passing / $microAdded added"; Goal="10–15"; Proof="tests/microtest_matrix.tsv" }
-$rows += [pscustomobject]@{ Area="Week 11 B status";       Now=("proof:{0}; cov={1}%" -f ($(if($proofOk){"ok"}else{"pending"}), $bootPct)); Goal="≥10%"; Proof=$proofPath }
-
-$rows | Format-Table -AutoSize | Out-String -Width 200 | Write-Host
-
-# outputs
-$outDir = "outputs/reports/status"
-New-Item -ItemType Directory -Force $outDir | Out-Null
-$tsv  = Join-Path $outDir "status_now.tsv"
-$json = Join-Path $outDir "status_now.json"
-
-"key`tvalue" | Out-File -Encoding UTF8 $tsv
-@(
-  "week`t11",
-  "overall_pct`t$overall",
-  "target_pct`t$SprintTargetPct",
-  "coverage_boot_pct`t$bootPct",
-  "proof_bundle`t" + ($(if($proofOk){"present"}else{"absent"})),
-  "microtests_added`t$microAdded",
-  "microtests_passing`t$microPassing",
-  "proof_sizes_json`t$proofSizes"
-) | Add-Content -Encoding UTF8 $tsv
-
-$payload = [pscustomobject]@{
-  week = 11
-  overall_pct = $overall
-  target_pct  = $SprintTargetPct
-  coverage_boot_pct = [double]$bootPct
-  proof_bundle = $proofOk
-  proof_sizes  = $proof.sizes
-  microtests = @{ added = $microAdded; passing = $microPassing }
+# --- Save JSON ---
+$payload = [PSCustomObject]@{
   generated_at = (Get-Date).ToString("s")
+  root         = (Resolve-Path $Root).Path
+  summary      = [PSCustomObject]@{
+    total    = $total
+    pass     = $pass
+    progress = $progress
+  }
+  checks       = $ROWS
 }
-$payload | ConvertTo-Json -Depth 5 | Out-File -Encoding UTF8 $json
+$payload | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 $Json
 
-Write-Host ""
-Write-Host "Wrote:" -ForegroundColor Green
-Write-Host "  $tsv"
-Write-Host "  $json"
+# --- Keep stable filenames (latest) for dashboards ---
+Copy-Item $Tsv  (Join-Path $OutDir "magic_quick_status_latest.tsv")  -Force
+Copy-Item $Json (Join-Path $OutDir "magic_full_status_latest.json")  -Force
+
+if (-not $Quiet) {
+  Write-Host "Wrote:"
+  Write-Host "  $Tsv"
+  Write-Host "  $Json"
+  Write-Host "  $($OutDir)\magic_quick_status_latest.tsv"
+  Write-Host "  $($OutDir)\magic_full_status_latest.json"
+  Write-Host ""
+  Write-Host ("Progress: {0}% ({1}/{2} PASS)" -f $progress, $pass, $total)
+}
+

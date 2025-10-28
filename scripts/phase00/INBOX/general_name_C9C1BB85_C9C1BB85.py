@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 import ipaddress
 import typing
 from email.utils import parseaddr
@@ -275,3 +274,4 @@ class OtherName(GeneralName):
 
     def __hash__(self) -> int:
         return hash((self.type_id, self.value))
+

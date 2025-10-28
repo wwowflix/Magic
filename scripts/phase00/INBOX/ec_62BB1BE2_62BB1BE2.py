@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 import typing
 
 from cryptography import utils
@@ -435,3 +434,4 @@ def get_curve_for_oid(oid: ObjectIdentifier) -> type[EllipticCurve]:
         raise LookupError(
             "The provided object identifier has no matching elliptic " "curve class"
         )
+

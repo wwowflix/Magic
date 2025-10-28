@@ -1,4 +1,4 @@
-# Copyright 2016-2021 Julien Danjou
+﻿# Copyright 2016-2021 Julien Danjou
 # Copyright 2016 Joshua Harlow
 # Copyright 2013-2014 Ray Holder
 #
@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import abc
+import importlib.abc as abc
 import typing
 
 if typing.TYPE_CHECKING:
@@ -94,3 +94,4 @@ class stop_after_delay(stop_base):
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
         return retry_state.seconds_since_start >= self.max_delay
+

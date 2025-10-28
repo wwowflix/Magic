@@ -1,6 +1,5 @@
-from __future__ import annotations
-
-import abc
+﻿from __future__ import annotations
+import importlib.abc as abc
 import hashlib
 
 from fsspec.implementations.local import make_path_posix
@@ -73,3 +72,4 @@ def create_cache_mapper(same_names: bool) -> AbstractCacheMapper:
         return BasenameCacheMapper()
     else:
         return HashCacheMapper()
+

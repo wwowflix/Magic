@@ -1,5 +1,30 @@
 from __future__ import annotations
-
+# MAGIC_ASYNCGENS_GUARD_BLOCK
+try:
+    from . import _core  # preferred relative
+except Exception:
+    import importlib
+    _core = importlib.import_module("scripts._core")
+try:
+    from ._util import name_asyncgen  # preferred relative
+except Exception:
+    import importlib
+    name_asyncgen = importlib.import_module("scripts._util").name_asyncgen
+# END MAGIC_ASYNCGENS_GUARD_BLOCK
+try:
+    # correct relative import under top-level "scripts" package
+    from . import _core
+except Exception:
+    # absolute fallback if needed
+    import scripts._core as _core
+# MAGIC_ASYNCGENS_IMPORT_SHIM_END
+# --- MAGIC asyncgens import compat ---
+try:
+    from . import _core  # preferred
+except Exception:
+    import importlib
+    _core = importlib.import_module("scripts._core")
+# --- end MAGIC asyncgens import compat ---
 import logging
 import sys
 import warnings
@@ -8,10 +33,8 @@ from typing import TYPE_CHECKING, NoReturn, TypeVar
 
 import attrs
 
-from .. import _core
-from .._util import name_asyncgen
-from . import _run
-
+from . import _core
+from ._util import name_asyncgen
 # Used to log exceptions in async generator finalizers
 ASYNCGEN_LOGGER = logging.getLogger("trio.async_generator_errors")
 

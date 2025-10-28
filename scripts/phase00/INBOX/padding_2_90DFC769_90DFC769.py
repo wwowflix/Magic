@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives._asymmetric import (
@@ -108,3 +107,4 @@ def calculate_max_pss_salt_length(
     salt_length = emlen - hash_algorithm.digest_size - 2
     assert salt_length >= 0
     return salt_length
+

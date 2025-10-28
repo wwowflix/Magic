@@ -5,4 +5,8 @@ if __name__ != "__main__":
 else:
     # When executed as a script, behave like the original:
     import runpy
-    runpy.run_module("pip", run_name="__main__", alter_sys=True)
+if __name__ == "__main__":
+        runpy.run_module("pip", run_name="__main__", alter_sys=True)
+
+else:
+    def main(*_a, **_k): return 0

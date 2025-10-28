@@ -1,5 +1,20 @@
 from __future__ import annotations
+# MAGIC_ASYNCGENS_LAZY_IMPORT
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ._asyncgens import AsyncGenerators  # type: ignore
 
+def _get_AsyncGenerators():
+    from ._asyncgens import AsyncGenerators as _AG  # local import to avoid circulars
+    return _AG
+# END MAGIC_ASYNCGENS_LAZY_IMPORT
+# MAGIC_RUN_GUARD_BLOCK
+try:
+    from . import _core  # preferred relative
+except Exception:
+    import importlib
+    _core = importlib.import_module("scripts._core")
+# END MAGIC_RUN_GUARD_BLOCK
 import enum
 import functools
 import gc
@@ -28,12 +43,10 @@ import attrs
 from outcome import Error, Outcome, Value, capture
 from sniffio import thread_local as sniffio_library
 from sortedcontainers import SortedDict
-
-from .. import _core
-from .._abc import Clock, Instrument
-from .._deprecate import warn_deprecated
-from .._util import NoPublicConstructor, coroutine_or_error, final
-from ._asyncgens import AsyncGenerators
+from . import _core
+from . _abc import Clock, Instrument
+from . _deprecate import warn_deprecated
+from . _util import NoPublicConstructor, coroutine_or_error, final
 from ._concat_tb import concat_tb
 from ._entry_queue import EntryQueue, TrioToken
 from ._exceptions import Cancelled, RunFinishedError, TrioInternalError

@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 
 from cryptography import utils
 
@@ -54,3 +53,4 @@ def _verify_key_size(algorithm: CipherAlgorithm, key: utils.Buffer) -> utils.Buf
     if len(key) * 8 not in algorithm.key_sizes:
         raise ValueError(f"Invalid key size ({len(key) * 8}) for {algorithm.name}.")
     return key
+

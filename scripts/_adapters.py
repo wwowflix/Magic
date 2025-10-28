@@ -1,7 +1,6 @@
 from contextlib import suppress
 from io import TextIOWrapper
-
-from . import abc
+import importlib.abc as abc
 
 
 class SpecLoaderAdapter:
@@ -168,3 +167,5 @@ def wrap_spec(package):
     on the spec/loader/reader.
     """
     return SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)
+
+

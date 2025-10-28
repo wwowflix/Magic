@@ -1,6 +1,5 @@
-from __future__ import annotations
-
-import abc
+﻿from __future__ import annotations
+import importlib.abc as abc
 import datetime
 from functools import partial
 from io import BytesIO
@@ -1768,3 +1767,4 @@ class ExcelFile:
             self.close()
         except AttributeError:
             pass
+

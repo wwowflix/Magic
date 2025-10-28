@@ -1,4 +1,5 @@
-import abc
+﻿
+import importlib.abc as abc
 import collections
 import collections.abc
 import operator
@@ -2536,3 +2537,4 @@ else:
 
     Required = _Required(_root=True)
     NotRequired = _NotRequired(_root=True)
+
