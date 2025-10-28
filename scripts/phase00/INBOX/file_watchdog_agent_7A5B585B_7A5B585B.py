@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MAGIC Project – File Watchdog Agent
+MAGIC Project - File Watchdog Agent
 -----------------------------------
 Purpose:
 - Monitor key MAGIC directories for any file changes

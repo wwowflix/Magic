@@ -35,11 +35,11 @@ def scrape_google(keywords):
     return pd.DataFrame(rows)
 
 def scrape_youtube():
-    # stub – your existing YouTube code goes here
+    # stub ï¿½ your existing YouTube code goes here
     return pd.DataFrame([])
 
 def scrape_tiktok():
-    # stub – your existing TikTok code goes here
+    # stub ï¿½ your existing TikTok code goes here
     return pd.DataFrame([])
 
 def scrape_reddit(subreddits, limit=25):

@@ -140,3 +140,39 @@ outputs/reports/coverage/**
 *.bak
 */*.bak
 .pre-commit-config.yaml*.bak
+!reports/
+!reports/status_latest.json
+!reports/status_latest.tsv
+*.env
+outputs/secrets/
+tools/secrets/
+# build/venv/artifacts
+venv/
+venv_*/
+venv_broken_*/
+outputs/
+magic_folder_tree.txt
+
+# backups and temp
+*.bak
+*.bak_*
+scripts/*.bak*
+scripts/**/*.bak*
+tools/hooks/*.bak_*
+
+# reports and CI artifacts
+*.coverage
+coverage.xml
+outputs/reports/
+# === MAGIC ignores ===
+outputs/
+**/*.log
+**/*.tmp
+**/*.cache
+**/.pytest_cache/
+**/__pycache__/
+largest_files.csv
+twitter_output.json
+scripts/New Text Document.txt
+# local helpers
+.ci-touch

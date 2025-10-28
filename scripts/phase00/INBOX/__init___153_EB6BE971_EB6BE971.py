@@ -28,7 +28,7 @@ from fontTools.ttLib.tables.otBase import OTTableReader
 from fontTools.ttLib.tables import otTables as ot
 from io import BytesIO
 import struct
-import logging
+import magic_logging as logging
 import re
 
 # mute cffLib debug messages when running ttx in verbose mode
@@ -1722,7 +1722,7 @@ class EncodingConverter(SimpleConverter):
 
 
 def readSID(file):
-    """Read a String ID (SID) — 2-byte unsigned integer."""
+    """Read a String ID (SID) - 2-byte unsigned integer."""
     data = file.read(2)
     if len(data) != 2:
         raise EOFError("Unexpected end of file while reading SID")
@@ -1761,7 +1761,7 @@ def parseEncoding0(charset, file):
 
 def parseEncoding1(charset, file):
     """
-    Format 1: range-based encoding.
+    Format1: range-based encoding.
     After reading the base ranges, optionally parse the supplement.
     """
     nRanges = readCard8(file)

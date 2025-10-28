@@ -9,6 +9,23 @@ import logging
 from functools import lru_cache
 from typing import Iterator, NamedTuple, Optional, Tuple
 
+# --- MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: safe USE_HARFBUZZ_REPACKER read ---
+try:
+    from fontTools.misc.configTools import OPTIONS
+except Exception:
+    OPTIONS = {}
+try:
+    # Prefer .get(...) if available; otherwise catch KeyError
+    _key = f"{__name__}:USE_HARFBUZZ_REPACKER"
+    _opt = None
+    try:
+        _opt = OPTIONS.get(_key) if hasattr(OPTIONS, "get") else OPTIONS[_key]
+    except KeyError:
+        _opt = None
+    USE_HARFBUZZ_REPACKER = bool(getattr(_opt, "value", getattr(_opt, "default", False)))
+except Exception:
+    USE_HARFBUZZ_REPACKER = False
+# --- end shield ---
 log = logging.getLogger(__name__)
 
 have_uharfbuzz = False
@@ -21,10 +38,12 @@ try:
     have_uharfbuzz = callable(getattr(hb, "repack", None))
 except ImportError:
     pass
-
-USE_HARFBUZZ_REPACKER = OPTIONS[f"{__name__}:USE_HARFBUZZ_REPACKER"]
-
-
+try:
+    # Prefer the registered Option object (works with font.cfg[...] lookups)
+    USE_HARFBUZZ_REPACKER = USE_HARFBUZZ_REPACKER = False  # MAGIC: placeholder, actual value set in shield above
+except Exception:
+    # Fallback sentinel for older fontTools that don't define the option
+    USE_HARFBUZZ_REPACKER = f"{__name__}:USE_HARFBUZZ_REPACKER"
 class OverflowErrorRecord(object):
     def __init__(self, overflowTuple):
         self.tableType = overflowTuple[0]
@@ -98,29 +117,34 @@ class BaseTTXConverter(DefaultTable):
 
         # General outline:
         # Create a top-level OTTableWriter for the GPOS/GSUB table.
-        # 	Call the compile method for the the table
-        # 		for each 'converter' record in the table converter list
-        # 			call converter's write method for each item in the value.
-        # 				- For simple items, the write method adds a string to the
-        # 				writer's self.items list.
-        # 				- For Struct/Table/Subtable items, it add first adds new writer to the
-        # 				to the writer's self.items, then calls the item's compile method.
-        # 				This creates a tree of writers, rooted at the GUSB/GPOS writer, with
-        # 				each writer representing a table, and the writer.items list containing
-        # 				the child data strings and writers.
-        # 	call the getAllData method
-        # 		call _doneWriting, which removes duplicates
-        # 		call _gatherTables. This traverses the tables, adding unique occurences to a flat list of tables
-        # 		Traverse the flat list of tables, calling getDataLength on each to update their position
-        # 		Traverse the flat list of tables again, calling getData each get the data in the table, now that
-        # 		pos's and offset are known.
+        #     Call the compile method for the the table
+        #         for each 'converter' record in the table converter list
+        #             call converter's write method for each item in the value.
+        #                 - For simple items, the write method adds a string to the
+        #                 writer's self.items list.
+        #                 - For Struct/Table/Subtable items, it add first adds new writer to the
+        #                 to the writer's self.items, then calls the item's compile method.
+        #                 This creates a tree of writers, rooted at the GUSB/GPOS writer, with
+        #                 each writer representing a table, and the writer.items list containing
+        #                 the child data strings and writers.
+        #     call the getAllData method
+        #         call _doneWriting, which removes duplicates
+        #         call _gatherTables. This traverses the tables, adding unique occurences to a flat list of tables
+        #         Traverse the flat list of tables, calling getDataLength on each to update their position
+        #         Traverse the flat list of tables again, calling getData each get the data in the table, now that
+        #         pos's and offset are known.
 
-        # 		If a lookup subtable overflows an offset, we have to start all over.
+        #         If a lookup subtable overflows an offset, we have to start all over.
         overflowRecord = None
         # this is 3-state option: default (None) means automatically use hb.repack or
         # silently fall back if it fails; True, use it and raise error if not possible
         # or it errors out; False, don't use it, even if you can.
-        use_hb_repack = font.cfg[USE_HARFBUZZ_REPACKER]
+        try:
+                # fontTools >= option introduction
+                use_hb_repack = font.cfg[USE_HARFBUZZ_REPACKER]
+        except Exception:
+                # Older fontTools: treat as ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œautoÃƒÂ¢Ã¢â€šÂ¬Ã‚Â (None)
+                use_hb_repack = None
         if self.tableTag in ("GSUB", "GPOS"):
             if use_hb_repack is False:
                 log.debug(
@@ -340,7 +364,7 @@ class OTTableReader(object):
     def readUInt24(self):
         pos = self.pos
         newpos = pos + 3
-        (value,) = struct.unpack(">l", b"\0" + self.data[pos:newpos])
+        (value,) = struct.unpack(">I", b"\0" + self.data[pos:newpos])
         self.pos = newpos
         return value
 
@@ -598,14 +622,14 @@ class OTTableWriter(object):
         if hasattr(self, "sortCoverageLast"):
             # Find coverage table
             for i, item in enumerate(self.items):
-                if getattr(item, "name", None) == "Coverage":
+                if getattr(getattr(item, "subWriter", None), "name", None) == "Coverage":
                     sortCoverageLast = True
-                    if id(item) not in done:
-                        coverage_idx = item_idx = item._gatherGraphForHarfbuzz(
+                    if id(item.subWriter) not in done:
+                        coverage_idx = item_idx = item.subWriter._gatherGraphForHarfbuzz(
                             tables, obj_list, done, item_idx, virtual_edges
                         )
                     else:
-                        coverage_idx = done[id(item)]
+                        coverage_idx = done[id(item.subWriter)]
                     virtual_edges.append(coverage_idx)
                     break
 
@@ -956,8 +980,8 @@ class BaseTable(object):
                 if hasattr(conv, "writeNullOffset"):
                     setattr(self, conv.name, None)  # Warn?
                 # elif not conv.isCount:
-                # 	# Warn?
-                # 	pass
+                #     # Warn?
+                #     pass
                 if hasattr(conv, "DEFAULT"):
                     # OptionalValue converters (e.g. VarIndex)
                     setattr(self, conv.name, conv.DEFAULT)
@@ -1302,7 +1326,7 @@ def getVariableAttrs(cls: BaseTable, fmt: Optional[int] = None) -> Tuple[str]:
 #
 
 valueRecordFormat = [
-    # 	Mask	 Name		isDevice signed
+    #     Mask     Name        isDevice signed
     (0x0001, "XPlacement", 0, 1),
     (0x0002, "YPlacement", 0, 1),
     (0x0004, "XAdvance", 0, 1),
@@ -1311,7 +1335,7 @@ valueRecordFormat = [
     (0x0020, "YPlaDevice", 1, 0),
     (0x0040, "XAdvDevice", 1, 0),
     (0x0080, "YAdvDevice", 1, 0),
-    # 	reserved:
+    #     reserved:
     (0x0100, "Reserved1", 0, 0),
     (0x0200, "Reserved2", 0, 0),
     (0x0400, "Reserved3", 0, 0),

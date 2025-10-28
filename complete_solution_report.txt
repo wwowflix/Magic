@@ -33,4 +33,3 @@ If you get rate limited:
 - Increase delays in advanced_twitter_scraper.py
 - Use the Scraper class's max_retries parameter
 - Try again later
-

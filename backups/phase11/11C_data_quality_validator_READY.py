@@ -18,7 +18,7 @@ for root, _, files in os.walk(TARGET_FOLDER):
                     null_rows = df[df.isnull().any(axis=1)]
                     issues.append(f"🧪 {file}: {len(null_rows)} rows with nulls")
             except Exception as e:
-                issues.append(f"⚠️ {file}: Failed to load – {e}")
+                issues.append(f"⚠️ {file}: Failed to load - {e}")
 
 # Write report
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

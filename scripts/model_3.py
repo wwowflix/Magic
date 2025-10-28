@@ -1687,7 +1687,7 @@ class CmdStanModel:
 
         Zhang, L., Carpenter, B., Gelman, A., & Vehtari, A. (2022). Pathfinder:
         Parallel quasi-Newton variational inference. Journal of Machine Learning
-        Research, 23(306), 1–49. Retrieved from
+        Research, 23(306), 1-49. Retrieved from
         http://jmlr.org/papers/v23/21-0889.html
         """
 

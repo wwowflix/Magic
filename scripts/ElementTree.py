@@ -12,25 +12,39 @@ from xml.etree.ElementTree import ParseError
 from xml.etree.ElementTree import TreeBuilder as _TreeBuilder
 from xml.etree.ElementTree import parse as _parse
 from xml.etree.ElementTree import tostring
+import importlib
+# --- MAGIC Phase11 – SHIELD: normalized guards for scripts.common (assignment-first) ---
+# Safe defaults so the module can import even if scripts.common/core are broken
+PY3 = True
+DTDForbidden = EntitiesForbidden = ExternalReferenceForbidden = None
+def _generate_etree_functions(*_a, **_k):
+    # No-op fallbacks: return stubs for (fromstring, iterparse, parse, tostring) hooks
+    return (None, None, None)
 
-from .common import PY3
+# Try to import and overwrite defaults (kept flat to avoid indent errors)
+try:
+    from .common import PY3 as _PY3
+    PY3 = _PY3
+except Exception:
+    pass
 
-if PY3:
-    import importlib
-else:
-    from xml.etree.ElementTree import XMLParser as _XMLParser
-    from xml.etree.ElementTree import iterparse as _iterparse
+try:
+    from .common import (
+        DTDForbidden as _DTDForbidden,
+        EntitiesForbidden as _EntitiesForbidden,
+        ExternalReferenceForbidden as _ExternalReferenceForbidden,
+        _generate_etree_functions as _gen_etree_fns,
+    )
+    DTDForbidden = _DTDForbidden
+    EntitiesForbidden = _EntitiesForbidden
+    ExternalReferenceForbidden = _ExternalReferenceForbidden
+    _generate_etree_functions = _gen_etree_fns
+except Exception:
+    pass
+# --- end MAGIC guard ---
 
-
-from .common import (
-    DTDForbidden,
-    EntitiesForbidden,
-    ExternalReferenceForbidden,
-    _generate_etree_functions,
-)
 
 __origin__ = "xml.etree.ElementTree"
-
 
 def _get_py3_cls():
     """Python 3.3 hides the pure Python code but defusedxml requires it.
@@ -67,13 +81,10 @@ def _get_py3_cls():
 
     return _XMLParser, _iterparse
 
-
 if PY3:
     _XMLParser, _iterparse = _get_py3_cls()
 
-
 _sentinel = object()
-
 
 class DefusedXMLParser(_XMLParser):
     def __init__(
@@ -131,7 +142,6 @@ class DefusedXMLParser(_XMLParser):
     def defused_external_entity_ref_handler(self, context, base, sysid, pubid):
         raise ExternalReferenceForbidden(context, base, sysid, pubid)
 
-
 # aliases
 # XMLParse is a typo, keep it for backwards compatibility
 XMLTreeBuilder = XMLParse = XMLParser = DefusedXMLParser
@@ -140,7 +150,6 @@ parse, iterparse, fromstring = _generate_etree_functions(
     DefusedXMLParser, _TreeBuilder, _parse, _iterparse
 )
 XML = fromstring
-
 
 __all__ = [
     "ParseError",

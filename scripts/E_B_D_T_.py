@@ -19,7 +19,7 @@ from . import DefaultTable
 import itertools
 import os
 import struct
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger(__name__)

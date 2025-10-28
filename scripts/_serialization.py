@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 
 from cryptography import utils
 from cryptography.hazmat.primitives.hashes import HashAlgorithm
@@ -160,3 +159,4 @@ class _KeySerializationEncryption(KeySerializationEncryption):
         self._kdf_rounds = kdf_rounds
         self._hmac_hash = hmac_hash
         self._key_cert_algorithm = key_cert_algorithm
+

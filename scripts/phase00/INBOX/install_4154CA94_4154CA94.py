@@ -5,7 +5,7 @@ Implements the Distutils 'install' command."""
 import sys
 import os
 import contextlib
-import sysconfig
+import magic_sysconfig as sysconfig
 import itertools
 
 from distutils import log
@@ -106,7 +106,7 @@ def _load_sysconfig_schemes():
 
 def _load_schemes():
     """
-    Extend default schemes with schemes from sysconfig.
+    Extend default schemes with schemes from magic_sysconfig.
     """
 
     sysconfig_schemes = _load_sysconfig_schemes() or {}

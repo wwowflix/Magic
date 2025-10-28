@@ -124,7 +124,7 @@ def platform_tags(arch: str) -> Iterator[str]:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    import sysconfig
+    import magic_sysconfig as sysconfig
 
     plat = sysconfig.get_platform()
     assert plat.startswith("linux-"), "not linux"

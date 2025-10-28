@@ -186,7 +186,7 @@ class table__g_l_y_f(DefaultTable.DefaultTable):
             ttFont["maxp"].numGlyphs = len(self.glyphs)
         if not data:
             # As a special case when all glyph in the font are empty, add a zero byte
-            # to the table, so that OTS doesn’t reject it, and to make the table work
+            # to the table, so that OTS doesn't reject it, and to make the table work
             # on Windows as well.
             # See https://github.com/khaledhosny/ots/issues/52
             data = b"\0"

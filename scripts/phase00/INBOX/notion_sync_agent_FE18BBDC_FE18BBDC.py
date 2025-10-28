@@ -1,5 +1,5 @@
 """
-Notion Sync Agent – Updates the MAGIC Automation Tracker with latest file metadata
+Notion Sync Agent - Updates the MAGIC Automation Tracker with latest file metadata
 """
 
 import os

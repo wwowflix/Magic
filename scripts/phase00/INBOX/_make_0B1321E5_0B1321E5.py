@@ -1,8 +1,7 @@
-# SPDX-License-Identifier: MIT
+﻿# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 import contextlib
 import copy
 import enum
@@ -3059,3 +3058,4 @@ def pipe(*converters):
     if return_instance:
         return Converter(pipe_converter, takes_self=True, takes_field=True)
     return pipe_converter
+

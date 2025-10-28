@@ -1,5 +1,5 @@
-﻿# -*- coding: utf-8 -*-
-# setup_folders.py – Phase 1
+# -*- coding: utf-8 -*-
+# setup_folders.py - Phase 1
 
 import os
 

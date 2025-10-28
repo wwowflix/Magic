@@ -1,6 +1,5 @@
-# flake8: noqa
-
-import abc
+﻿# flake8: noqa
+import importlib.abc as abc
 import sys
 import pathlib
 from contextlib import suppress
@@ -96,3 +95,4 @@ def wrap_spec(package):
     from . import _adapters
 
     return _adapters.SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)
+

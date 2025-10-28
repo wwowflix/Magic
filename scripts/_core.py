@@ -1,3 +1,13 @@
+from __future__ import annotations
+# MAGIC_CORE_SHIMS
+# Provide no-op decorators if Trio-like symbols are missing.
+def _noop_decorator(*_a, **_k):
+    def _wrap(f): return f
+    return _wrap
+
+globals().setdefault("disable_ki_protection", _noop_decorator)
+globals().setdefault("enable_ki_protection", _noop_decorator)
+# END MAGIC_CORE_SHIMS
 import socket
 import struct
 import threading

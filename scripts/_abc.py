@@ -1,11 +1,16 @@
 from __future__ import annotations
-
 import socket
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
-
-import trio
-
+try:
+    import trio  # type: ignore
+    TRIO_AVAILABLE = True
+except Exception:
+    TRIO_AVAILABLE = False
+    class _TrioStub:
+        def __getattr__(self, _name):
+            raise RuntimeError("trio is required for async features in scripts._abc. Install with: pip install trio")
+    trio = _TrioStub()  # type: ignore
 if TYPE_CHECKING:
     from types import TracebackType
 
@@ -191,7 +196,7 @@ class HostnameResolver(ABC):
 
         Any required IDNA encoding is handled before calling this function;
         your implementation can assume that it will never see U-labels like
-        ``"café.com"``, and only needs to handle A-labels like
+        ``"cafÃƒÂ©.com"``, and only needs to handle A-labels like
         ``b"xn--caf-dma.com"``."""  # spellchecker:disable-line
 
     @abstractmethod
@@ -519,7 +524,7 @@ class HalfCloseableStream(Stream):
           "channels" on top of a single encrypted connection. A Trio
           implementation of SSH could expose these channels as
           :class:`HalfCloseableStream` objects, and calling :meth:`send_eof`
-          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 §5.3
+          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 Ã‚Â§5.3
           <https://tools.ietf.org/html/rfc4254#section-5.3>`__).
 
         * On an SSL/TLS-encrypted connection, the protocol doesn't provide any
@@ -594,7 +599,7 @@ class Listener(AsyncResource, Generic[T_resource]):
         because for listeners there is no general condition of "the
         network/remote peer broke the connection" that can be handled in a
         generic way, like there is for streams. Other errors *can* occur and
-        be raised from :meth:`accept` – for example, if you run out of file
+        be raised from :meth:`accept` - for example, if you run out of file
         descriptors then you might get an :class:`OSError` with its errno set
         to ``EMFILE``.
 
@@ -712,3 +717,5 @@ class Channel(SendChannel[T], ReceiveChannel[T]):
 
 # see above
 Channel.__module__ = Channel.__module__.replace("_abc", "abc")
+
+

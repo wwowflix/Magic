@@ -1,6 +1,5 @@
-from __future__ import annotations
-
-import abc
+﻿from __future__ import annotations
+import importlib.abc as abc
 from collections import defaultdict
 from functools import partial
 import inspect
@@ -1603,3 +1602,4 @@ def validate_func_kwargs(
         no_arg_message = "Must provide 'func' or named aggregation **kwargs."
         raise TypeError(no_arg_message)
     return columns, func
+

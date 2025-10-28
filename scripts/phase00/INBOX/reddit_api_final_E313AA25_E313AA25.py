@@ -1,4 +1,4 @@
-﻿import praw
+import praw
 
 CLIENT_ID = 'E5gkpBqsI6_szr6Cv9KqeQ'
 CLIENT_SECRET = 'YWiL0a28T2KIWCoxfOltNeUL5a4IXw'

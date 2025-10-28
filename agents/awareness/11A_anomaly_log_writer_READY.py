@@ -9,7 +9,7 @@ Role:
 """
 
 import os
-import time
+import magic_time as time
 from collections import Counter
 
 LOG_DIR = r"D:\MAGIC\logs"

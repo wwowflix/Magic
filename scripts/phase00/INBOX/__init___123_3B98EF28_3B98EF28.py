@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from magic_typing import Any
 
 
 def default_backend() -> Any:

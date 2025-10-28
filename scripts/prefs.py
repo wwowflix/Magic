@@ -28,40 +28,40 @@ class ViewerPreferences:
         self.hide_toolbar = hide_toolbar
         """
         (`bool`)
-        A flag specifying whether to hide the conforming reader’s tool bars when the document is active
+        A flag specifying whether to hide the conforming reader's tool bars when the document is active
         """
         self.hide_menubar = hide_menubar
         """
         (`bool`)
-        A flag specifying whether to hide the conforming reader’s menu bar when the document is active
+        A flag specifying whether to hide the conforming reader's menu bar when the document is active
         """
         self.hide_window_u_i = hide_window_u_i
         """
         (`bool`)
-        A flag specifying whether to hide user interface elements in the document’s window
-        (such as scroll bars and navigation controls), leaving only the document’s contents displayed
+        A flag specifying whether to hide user interface elements in the document's window
+        (such as scroll bars and navigation controls), leaving only the document's contents displayed
         """
         self.fit_window = fit_window
         """
         (`bool`)
-        A flag specifying whether to resize the document’s window to fit the size of the first displayed page
+        A flag specifying whether to resize the document's window to fit the size of the first displayed page
         """
         self.center_window = center_window
         """
         (`bool`)
-        A flag specifying whether to position the document’s window in the center of the screen
+        A flag specifying whether to position the document's window in the center of the screen
         """
         self.display_doc_title = display_doc_title
         """
         (`bool`)
-        A flag specifying whether the window’s title bar should display the document title
+        A flag specifying whether the window's title bar should display the document title
         taken from the Title entry of the document information dictionary.
         If false, the title bar should instead display the name of the PDF file containing the document.
         """
         self.non_full_screen_page_mode = non_full_screen_page_mode
         """
         (`fpdf.enums.PageMode`)
-        The document’s page mode, specifying how to display the document on exiting full-screen mode
+        The document's page mode, specifying how to display the document on exiting full-screen mode
         """
         self.num_copies = num_copies
         """
@@ -117,7 +117,7 @@ class ViewerPreferences:
         Valid values are:
 
         * `"None"`, which indicates no page scaling
-        * `"AppDefault"`, which indicates the interactive PDF processor’s default print scaling
+        * `"AppDefault"`, which indicates the interactive PDF processor's default print scaling
 
         If this entry is not specified or has an unrecognised value, `AppDefault` shall be used.
         """

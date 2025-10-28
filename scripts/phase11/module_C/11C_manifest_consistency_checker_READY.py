@@ -1,4 +1,4 @@
-﻿# 11C_manifest_consistency_checker_READY.py
+# 11C_manifest_consistency_checker_READY.py
 import json
 import os
 import sys

@@ -31,7 +31,7 @@ from bs4._typing import _IncomingMarkup
 from bs4.builder import TreeBuilder
 from bs4.builder._htmlparser import HTMLParserTreeBuilder
 
-from typing import (
+from magic_typing import (
     Any,
     Iterable,
     Optional,
@@ -763,7 +763,7 @@ Hello, world!
         # characters.
         markup = "<p>&#147;Hello&#148; &#45;&#9731;</p>"
         soup = self.soup(markup)
-        assert "“Hello” -☃" == soup.p.string
+        assert ""Hello" -☃" == soup.p.string
 
     def test_entities_in_attributes_converted_to_unicode(self):
         expect = '<p id="pi\N{LATIN SMALL LETTER N WITH TILDE}ata"></p>'

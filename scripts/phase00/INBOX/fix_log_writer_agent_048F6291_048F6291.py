@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 r"""
-MAGIC Project â€“ Log Writer Auto-Fix Script
+MAGIC Project â€" Log Writer Auto-Fix Script
 Author: ChatGPT Assistant
 Purpose:
     - Check if target script exists
@@ -48,5 +48,5 @@ log_entry = f"[{timestamp}] âœ… Checked & ensured script exists: {TARGET_SCR
 with open(MASTER_LOG, "a", encoding="utf-8") as log:
     log.write(log_entry)
 
-print(f"ðŸ“ Log updated: {MASTER_LOG}")
+print(f"ðŸ" Log updated: {MASTER_LOG}")
 print("âœ… Fix Log Writer Agent process completed.")

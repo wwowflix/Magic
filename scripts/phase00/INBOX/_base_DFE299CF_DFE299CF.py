@@ -1,6 +1,5 @@
-from __future__ import annotations
-
-import abc
+﻿from __future__ import annotations
+import importlib.abc as abc
 import datetime
 from functools import partial
 from io import BytesIO
@@ -1352,14 +1351,14 @@ class ExcelWriter(metaclass=abc.ABCMeta):
     @property
     def date_format(self) -> str:
         """
-        Format string for dates written into Excel files (e.g. ‘YYYY-MM-DD’).
+        Format string for dates written into Excel files (e.g. 'YYYY-MM-DD').
         """
         return self._date_format
 
     @property
     def datetime_format(self) -> str:
         """
-        Format string for dates written into Excel files (e.g. ‘YYYY-MM-DD’).
+        Format string for dates written into Excel files (e.g. 'YYYY-MM-DD').
         """
         return self._datetime_format
 
@@ -1768,3 +1767,4 @@ class ExcelFile:
             self.close()
         except AttributeError:
             pass
+

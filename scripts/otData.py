@@ -4401,7 +4401,7 @@ otData = [
                 "Delta",
                 32,
                 0,
-                "These are the FUnit distance deltas from the font’s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
+                "These are the FUnit distance deltas from the font's natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
             ),
         ],
     ),
@@ -4421,7 +4421,7 @@ otData = [
                 "Delta",
                 32,
                 0,
-                "These are the FUnit distance deltas from the font’s natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
+                "These are the FUnit distance deltas from the font's natural baseline to the other baselines used in the font. A total of 32 deltas must be assigned.",
             ),
             (
                 "AATLookup(uint16)",
@@ -4953,8 +4953,8 @@ otData = [
             ),
         ],
     ),
-    # Apple TrueType Reference Manual, chapter “The ‘morx’ table”,
-    # section “Metamorphosis Subtables”.
+    # Apple TrueType Reference Manual, chapter "The 'morx' table",
+    # section "Metamorphosis Subtables".
     # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6morx.html
     (
         "MorxSubtable",
@@ -5105,7 +5105,7 @@ otData = [
                 "Version",
                 None,
                 None,
-                "Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the “attaches on right” bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.",
+                'Version number of the AAT glyphs property table. Version 1.0 is the initial table version. Version 2.0, which is recognized by macOS 8.5 and later, adds support for the \'attaches on right\' bit. Version 3.0, which gets recognized by macOS X and iOS, adds support for the additional directional properties defined in Unicode 3.0.',
             ),
             ("struct", "GlyphProperties", None, None, "Glyph properties."),
         ],
@@ -6385,7 +6385,7 @@ otData = [
                 "AxisSegmentMap",
                 "AxisCount",
                 0,
-                'The segment maps array — one segment map for each axis, in the order of axes specified in the "fvar" table',
+                'The segment maps array - one segment map for each axis, in the order of axes specified in the "fvar" table',
             ),
             (
                 "LOffsetTo(DeltaSetIndexMap)",

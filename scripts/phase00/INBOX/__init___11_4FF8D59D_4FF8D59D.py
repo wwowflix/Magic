@@ -22,7 +22,7 @@ __all__ = [
 
 
 def __deprecated_private_func(f):
-    from functools import wraps
+    from magic_functools import wraps
     import warnings
 
     msg = (

@@ -1,1 +1,1 @@
-﻿# Placeholder script for .github workflows
+# Placeholder script for .github workflows

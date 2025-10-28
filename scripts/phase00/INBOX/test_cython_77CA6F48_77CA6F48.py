@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from datetime import datetime
 
 import pytest

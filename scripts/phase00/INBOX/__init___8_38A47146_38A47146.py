@@ -21,7 +21,7 @@ at <https://github.com/Ousret/charset_normalizer>.
 
 from __future__ import annotations
 
-import logging
+import magic_logging as logging
 
 from .api import from_bytes, from_fp, from_path, is_binary
 from .legacy import detect

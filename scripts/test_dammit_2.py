@@ -217,11 +217,11 @@ class TestEncodingDetector(object):
             doc.decode("utf8")
 
         # Unicode, Dammit thinks the whole document is Windows-1252,
-        # and decodes it into "â˜ƒâ˜ƒâ˜ƒ“Hi, I like Windows!”â˜ƒâ˜ƒâ˜ƒ"
+        # and decodes it into "â˜ƒâ˜ƒâ˜ƒ"Hi, I like Windows!"â˜ƒâ˜ƒâ˜ƒ"
 
         # But if we run it through fix_embedded_windows_1252, it's fixed:
         fixed = UnicodeDammit.detwingle(doc)
-        assert "☃☃☃“Hi, I like Windows!”☃☃☃" == fixed.decode("utf8")
+        assert "☃☃☃"Hi, I like Windows!"☃☃☃" == fixed.decode("utf8")
 
     def test_detwingle_ignores_multibyte_characters(self):
         # Each of these characters has a UTF-8 representation ending
@@ -294,7 +294,7 @@ class TestEntitySubstitution(object):
             ("foo\u2200\N{SNOWMAN}\u00f5bar", "foo&forall;\N{SNOWMAN}&otilde;bar"),
             # MS smart quotes are a common source of frustration, so we
             # give them a special test.
-            ("‘’foo“”", "&lsquo;&rsquo;foo&ldquo;&rdquo;"),
+            ("''foo""", "&lsquo;&rsquo;foo&ldquo;&rdquo;"),
         ],
     )
     def test_substitute_html(self, original, substituted):

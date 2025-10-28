@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 
 
 def ensure_placeholder(path_str: str) -> None:

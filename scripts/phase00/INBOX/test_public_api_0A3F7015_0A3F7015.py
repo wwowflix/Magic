@@ -4,7 +4,7 @@ import inspect
 import pkgutil
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import types
 import warnings
 

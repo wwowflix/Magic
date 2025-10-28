@@ -1,6 +1,6 @@
-﻿"""
+"""
 save_trends.py 🔽
-Part of Zephyr – Phase 2, Module G (G.2.44)
+Part of Zephyr - Phase 2, Module G (G.2.44)
 
 ✅ Purpose:
 Save cleaned or raw trend data to CSV format with a timestamped filename.

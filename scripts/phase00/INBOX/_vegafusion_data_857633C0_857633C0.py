@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Callable, Final, TypedDict, Union, overlo
 from weakref import WeakValueDictionary
 
 from narwhals.stable.v1.dependencies import is_into_dataframe
-from packaging.version import Version
+from magic_packaging.version import Version
 
 from altair.utils._importers import import_vegafusion
 from altair.utils.core import DataFrameLike

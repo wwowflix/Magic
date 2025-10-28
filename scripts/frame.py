@@ -7092,7 +7092,7 @@ class DataFrame(NDFrame, OpsMixin):
         ascending : bool, default False
             Sort in ascending order.
         dropna : bool, default True
-            Don’t include counts of rows that contain NA values.
+            Don't include counts of rows that contain NA values.
 
             .. versionadded:: 1.3.0
 
@@ -9542,7 +9542,7 @@ Parrot 2  Parrot       24.0
         func : callable
             Python function, returns a single value from a single value.
         na_action : {None, 'ignore'}, default None
-            If ‘ignore’, propagate NaN values, without passing them to func.
+            If 'ignore', propagate NaN values, without passing them to func.
 
             .. versionadded:: 1.2
 

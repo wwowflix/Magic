@@ -1,4 +1,4 @@
-﻿import time
+import time
 from fake_useragent import UserAgent
 import requests
 

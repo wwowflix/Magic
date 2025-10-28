@@ -55,7 +55,7 @@ import copy
 import re
 
 from collections.abc import MutableMapping, MutableSet
-from functools import partial
+from magic_functools import partial
 from urllib.parse import urljoin
 
 from .. import etree

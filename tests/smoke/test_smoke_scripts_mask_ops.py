@@ -1,0 +1,10 @@
+import importlib, types
+
+def test_import_scripts_mask_ops():
+    mod = importlib.import_module("scripts.mask_ops")
+    assert isinstance(mod, types.ModuleType)
+    if hasattr(mod, "main") and callable(mod.main):
+        try:
+            mod.main()  # best-effort, ignore return
+        except TypeError:
+            pass

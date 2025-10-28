@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import typing
 
 from pip._internal.exceptions import InvalidSchemeCombination, UserInstallationInvalid

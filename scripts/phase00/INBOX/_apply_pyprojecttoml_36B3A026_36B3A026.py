@@ -8,15 +8,15 @@ need to be processed before being applied.
 **PRIVATE MODULE**: API reserved for setuptools internal usage only.
 """
 
-import logging
+import magic_logging as logging
 import os
 import warnings
 from collections.abc import Mapping
 from email.headerregistry import Address
-from functools import partial, reduce
+from magic_functools import partial, reduce
 from itertools import chain
-from types import MappingProxyType
-from typing import (
+from magic_types import MappingProxyType
+from magic_typing import (
     TYPE_CHECKING,
     Any,
     Callable,
@@ -286,7 +286,7 @@ def _normalise_cmd_options(desc: List[Tuple[str, Optional[str], str]]) -> Set[st
 def _attrgetter(attr):
     """
     Similar to ``operator.attrgetter`` but returns None if ``attr`` is not found
-    >>> from types import SimpleNamespace
+    >>> from magic_types import SimpleNamespace
     >>> obj = SimpleNamespace(a=42, b=SimpleNamespace(c=13))
     >>> _attrgetter("a")(obj)
     42
@@ -301,7 +301,7 @@ def _attrgetter(attr):
 def _some_attrgetter(*items):
     """
     Return the first "truth-y" attribute or None
-    >>> from types import SimpleNamespace
+    >>> from magic_types import SimpleNamespace
     >>> obj = SimpleNamespace(a=42, b=SimpleNamespace(c=13))
     >>> _some_attrgetter("d", "a", "b.c")(obj)
     42
@@ -391,6 +391,6 @@ class _WouldIgnoreField(UserWarning):
 
     @classmethod
     def message(cls, field, value):
-        from inspect import cleandoc
+        from magic_inspect import cleandoc
 
         return cleandoc(cls.MESSAGE.format(field=field, value=value))

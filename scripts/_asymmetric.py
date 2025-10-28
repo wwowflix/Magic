@@ -3,7 +3,6 @@
 # for complete details.
 
 from __future__ import annotations
-
 import abc
 
 # This exists to break an import cycle. It is normally accessible from the
@@ -17,3 +16,4 @@ class AsymmetricPadding(metaclass=abc.ABCMeta):
         """
         A string naming this padding (e.g. "PSS", "PKCS1").
         """
+

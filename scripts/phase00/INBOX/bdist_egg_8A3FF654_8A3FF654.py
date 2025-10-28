@@ -16,7 +16,7 @@ from setuptools.extension import Library
 from setuptools import Command
 from .._path import ensure_directory
 
-from sysconfig import get_path, get_python_version
+from magic_sysconfig import get_path, get_python_version
 
 
 def _get_purelib():

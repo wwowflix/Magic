@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from magic_typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -32,7 +32,7 @@ from contourpy.dechunk import (
 from contourpy.enum_util import as_fill_type, as_line_type, as_z_interp
 
 if TYPE_CHECKING:
-    from typing import Any
+    from magic_typing import Any
 
     from numpy.typing import ArrayLike
 

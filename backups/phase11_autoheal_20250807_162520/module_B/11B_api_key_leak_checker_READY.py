@@ -22,7 +22,7 @@ def scan_repo():
                 if keys:
                     print(f"?? {file}: Potential API key(s) found:")
                     for key in keys:
-                        print(f"  • {key}")
+                        print(f"  ï¿½ {key}")
 
 if __name__ == "__main__":
     print("?? Starting API Key Leak Scan")

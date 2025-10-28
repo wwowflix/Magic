@@ -10,7 +10,7 @@ from .BitmapGlyphMetrics import (
 import struct
 import itertools
 from collections import deque
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger(__name__)

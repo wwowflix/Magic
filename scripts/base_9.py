@@ -1,10 +1,9 @@
-# This file is dual licensed under the terms of the Apache License, Version
+﻿# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
 
 from __future__ import annotations
-
-import abc
+import importlib.abc as abc
 import typing
 
 from cryptography.hazmat.bindings._rust import openssl as rust_openssl
@@ -136,3 +135,4 @@ _CIPHER_TYPE = Cipher[
 CipherContext.register(rust_openssl.ciphers.CipherContext)
 AEADEncryptionContext.register(rust_openssl.ciphers.AEADEncryptionContext)
 AEADDecryptionContext.register(rust_openssl.ciphers.AEADDecryptionContext)
+

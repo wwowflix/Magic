@@ -32,7 +32,7 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
-from packaging.version import Version
+from magic_packaging.version import Version
 
 # This leads to circular imports with the vegalite module. Currently, this works
 # but be aware that when you access it in this script, the vegalite module might

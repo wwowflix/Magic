@@ -1,4 +1,4 @@
-﻿\"\"\" Placeholder for 11V_output_drift_detector_READY.py \"\"\"
+\"\"\" Placeholder for 11V_output_drift_detector_READY.py \"\"\"
 
 def main():
     print("✅ 11V_output_drift_detector_READY.py placeholder executed successfully.")

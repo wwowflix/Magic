@@ -1,1 +1,1 @@
-﻿print("spend OK (stub)")
+print("spend OK (stub)")

@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 
 
 def scrape_google(keywords):

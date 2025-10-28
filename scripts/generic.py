@@ -5370,7 +5370,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
             Keep labels from axis for which "like in label == True".
         regex : str (regular expression)
             Keep labels from axis for which re.search(regex, label) == True.
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default None
+        axis : {0 or 'index', 1 or 'columns', None}, default None
             The axis to filter on, expressed either as an index (int)
             or axis name (str). By default this is the info axis, 'columns' for
             DataFrame. For `Series` this parameter is unused and defaults to `None`.
@@ -5655,7 +5655,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
 
                 np.random.Generator objects now accepted
 
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default None
+        axis : {0 or 'index', 1 or 'columns', None}, default None
             Axis to sample. Accepts axis number or name. Default is stat axis
             for given data type. For `Series` this parameter is unused and defaults to `None`.
         ignore_index : bool, default False
@@ -10234,7 +10234,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         freq : DateOffset, timedelta, or str, default None
             Increment to use from the tseries module
             or time rule expressed as a string (e.g. 'EOM').
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default 0
+        axis : {0 or 'index', 1 or 'columns', None}, default 0
             Corresponds to the axis that contains the Index.
             For `Series` this parameter is unused and defaults to 0.
 

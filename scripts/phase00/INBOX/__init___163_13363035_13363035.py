@@ -14,7 +14,7 @@ from fontTools.ttLib import newTable
 from fontTools.feaLib.lookupDebugInfo import LOOKUP_DEBUG_ENV_VAR, LOOKUP_DEBUG_INFO_KEY
 from operator import setitem
 import os
-import logging
+import magic_logging as logging
 
 
 class MtiLibError(Exception):
