@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pyclasslookup():
     mod = importlib.import_module("scripts.pyclasslookup")
     assert isinstance(mod, types.ModuleType)

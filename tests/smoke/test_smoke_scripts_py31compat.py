@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_py31compat():
     mod = importlib.import_module("scripts.py31compat")
     assert isinstance(mod, types.ModuleType)

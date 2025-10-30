@@ -379,7 +379,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         self._record_text_quad_points = False
         self._resource_catalog = ResourceCatalog()
 
-        # page number -> array of 8 × n numbers:
+        # page number -> array of 8 Ã— n numbers:
         self._text_quad_points = defaultdict(list)
 
         # final buffer holding the PDF document in-memory - defined only after calling output():
@@ -2019,7 +2019,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 
     def bezier(self, point_list, closed=False, style=None):
         """
-        Outputs a quadratic or cubic Bézier curve, defined by three or four coordinates.
+        Outputs a quadratic or cubic BÃ©zier curve, defined by three or four coordinates.
 
         Args:
             point_list (list of tuples): List of Abscissa and Ordinate of
@@ -2684,7 +2684,7 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
         Args:
             type (fpdf.enums.TextMarkupType, str): "Highlight", "Underline", "Squiggly" or "StrikeOut"
             text (str): text of the annotation
-            quad_points (tuple): array of 8 × n numbers specifying the coordinates of n quadrilaterals
+            quad_points (tuple): array of 8 Ã— n numbers specifying the coordinates of n quadrilaterals
                 in default user space that comprise the region in which the link should be activated.
                 The coordinates for each quadrilateral are given in the order: x1 y1 x2 y2 x3 y3 x4 y4
                 specifying the four vertices of the quadrilateral in counterclockwise order
@@ -5667,7 +5667,6 @@ class FPDF(GraphicsStateMixin, TextRegionMixin):
 # > a module can define a class with the desired functionality, and then at
 # > the end, replace itself in sys.modules with an instance of that class
 sys.modules[__name__].__class__ = WarnOnDeprecatedModuleAttributes
-
 
 __pdoc__ = {"FPDF.add_highlight": False}  # Replaced by FPDF.highlight
 

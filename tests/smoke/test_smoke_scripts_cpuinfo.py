@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cpuinfo():
     mod = importlib.import_module("scripts.cpuinfo")
     assert isinstance(mod, types.ModuleType)

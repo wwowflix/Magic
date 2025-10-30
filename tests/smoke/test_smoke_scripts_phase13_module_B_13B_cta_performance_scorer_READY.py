@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_B_13B_cta_performance_scorer_READY():
-    mod = importlib.import_module("scripts.phase13.module_B.13B_cta_performance_scorer_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_B.13B_cta_performance_scorer_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

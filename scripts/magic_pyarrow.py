@@ -1,7 +1,6 @@
-"""support pyarrow compatibility across versions"""
-
 from __future__ import annotations
 
+"""support pyarrow compatibility across versions"""
 from pandas.util.version import Version
 
 try:

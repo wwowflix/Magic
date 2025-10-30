@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_formfill():
     mod = importlib.import_module("scripts.formfill")
     assert isinstance(mod, types.ModuleType)

@@ -370,7 +370,6 @@ class RaisesGroup(AbstractMatcher[BaseExceptionGroup[BaseExcT_co]]):
     """Contextmanager for checking for an expected `ExceptionGroup`.
     This works similar to ``pytest.raises``, and a version of it will hopefully be added upstream, after which this can be deprecated and removed. See https://github.com/pytest-dev/pytest/issues/11538
 
-
     The catching behaviour differs from :ref:`except* <except_star>` in multiple different ways, being much stricter by default. By using ``allow_unwrapped=True`` and ``flatten_subgroups=True`` you can match ``except*`` fully when expecting a single exception.
 
     #. All specified exceptions must be present, *and no others*.
@@ -406,9 +405,7 @@ class RaisesGroup(AbstractMatcher[BaseExceptionGroup[BaseExcT_co]]):
         with RaisesGroups(ValueError, allow_unwrapped=True):
             raise ValueError
 
-
     `RaisesGroup.matches` can also be used directly to check a standalone exception group.
-
 
     The matching algorithm is greedy, which means cases such as this may fail::
 

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_spss():
     mod = importlib.import_module("scripts.spss")
     assert isinstance(mod, types.ModuleType)

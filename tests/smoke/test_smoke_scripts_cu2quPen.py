@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cu2quPen():
     mod = importlib.import_module("scripts.cu2quPen")
     assert isinstance(mod, types.ModuleType)

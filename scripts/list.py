@@ -32,7 +32,6 @@ if TYPE_CHECKING:
 
     _ProcessedDists = Sequence[_DistWithLatestInfo]
 
-
 logger = logging.getLogger(__name__)
 
 

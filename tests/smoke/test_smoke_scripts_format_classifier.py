@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_format_classifier():
     mod = importlib.import_module("scripts.format_classifier")
     assert isinstance(mod, types.ModuleType)

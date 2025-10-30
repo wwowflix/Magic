@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_traceback():
     mod = importlib.import_module("scripts.traceback")
     assert isinstance(mod, types.ModuleType)

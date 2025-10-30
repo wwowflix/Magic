@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_putmask():
     mod = importlib.import_module("scripts.putmask")
     assert isinstance(mod, types.ModuleType)

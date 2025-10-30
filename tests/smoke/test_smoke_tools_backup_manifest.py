@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_backup_manifest():
     mod = importlib.import_module("tools.backup_manifest")
     assert isinstance(mod, types.ModuleType)

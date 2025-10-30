@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_ensure_placeholders_39AAF280_39AAF280():
-    mod = importlib.import_module("scripts.phase00.INBOX.ensure_placeholders_39AAF280_39AAF280")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX.ensure_placeholders_39AAF280_39AAF280"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

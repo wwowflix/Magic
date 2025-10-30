@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_A_13A_bitly_roi_exporter_READY():
-    mod = importlib.import_module("scripts.phase13.module_A.13A_bitly_roi_exporter_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_A.13A_bitly_roi_exporter_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

@@ -1,10 +1,12 @@
-# --- MAGIC Phase11 – SHIELD: tolerate broken scripts.otBase during smoke ---
+# --- MAGIC Phase11 â€“ SHIELD: tolerate broken scripts.otBase during smoke ---
 try:
     from .otBase import BaseTTXConverter  # normal path
 except Exception:
     # Import-time parse/indentation issues in otBase.py should not block smoke imports
     class BaseTTXConverter:  # minimal stub for smoke
         pass
+
+
 # --- end MAGIC guard ---from .otBase import BaseTTXConverter
 
 

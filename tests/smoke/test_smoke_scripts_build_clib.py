@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_build_clib():
     mod = importlib.import_module("scripts.build_clib")
     assert isinstance(mod, types.ModuleType)

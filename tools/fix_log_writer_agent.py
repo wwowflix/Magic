@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 r"""
-MAGIC Project â€" Log Writer Auto-Fix Script
+MAGIC Project ”" Log Writer Auto-Fix Script
 Author: ChatGPT Assistant
 Purpose:
     - Check if target script exists

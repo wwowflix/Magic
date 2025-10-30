@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_ttGlyphSet_71406130_71406130():
     mod = importlib.import_module("scripts.phase00.INBOX.ttGlyphSet_71406130_71406130")
     assert isinstance(mod, types.ModuleType)

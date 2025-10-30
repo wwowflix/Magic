@@ -23,7 +23,6 @@ if TYPE_CHECKING:
     else:  # pragma: no cover (<py311)
         from typing_extensions import Self
 
-
 _LOGGER = logging.getLogger("filelock")
 
 

@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase15_module_A_15A_ai_trend_signal_amplifier_READY():
-    mod = importlib.import_module("scripts.phase15.module_A.15A_ai_trend_signal_amplifier_READY")
+    mod = importlib.import_module(
+        "scripts.phase15.module_A.15A_ai_trend_signal_amplifier_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_clarity_ranker():
     mod = importlib.import_module("scripts.clarity_ranker")
     assert isinstance(mod, types.ModuleType)

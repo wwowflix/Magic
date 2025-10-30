@@ -120,7 +120,6 @@ class FulldatetimeDict(YearMonthDayDict, total=False):
 DictConvertible = Union[FulldatetimeDict, "DataFrame"]
 start_caching_at = 50
 
-
 # ---------------------------------------------------------------------
 
 

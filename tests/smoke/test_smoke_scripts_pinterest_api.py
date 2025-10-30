@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pinterest_api():
     mod = importlib.import_module("scripts.pinterest_api")
     assert isinstance(mod, types.ModuleType)

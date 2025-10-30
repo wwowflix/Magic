@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lahey():
     mod = importlib.import_module("scripts.lahey")
     assert isinstance(mod, types.ModuleType)

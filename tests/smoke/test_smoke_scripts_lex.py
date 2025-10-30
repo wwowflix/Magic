@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lex():
     mod = importlib.import_module("scripts.lex")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_datetimelike():
     mod = importlib.import_module("scripts.datetimelike")
     assert isinstance(mod, types.ModuleType)

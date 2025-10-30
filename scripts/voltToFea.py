@@ -6,7 +6,6 @@ Usage
 
 To convert a VTP project file:
 
-
 .. code-block:: sh
 
     $ fonttools voltLib.voltToFea input.vtp output.fea
@@ -23,7 +22,6 @@ The ``--quiet`` option can be used to suppress warnings.
 
 The ``--traceback`` can be used to get Python traceback in case of exceptions,
 instead of suppressing the traceback.
-
 
 Limitations
 -----------

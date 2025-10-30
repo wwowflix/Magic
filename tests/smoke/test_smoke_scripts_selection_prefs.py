@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_selection_prefs():
     mod = importlib.import_module("scripts.selection_prefs")
     assert isinstance(mod, types.ModuleType)

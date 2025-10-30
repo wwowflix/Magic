@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_xmlReader_8A0BADE3_8A0BADE3():
     mod = importlib.import_module("scripts.phase00.INBOX.xmlReader_8A0BADE3_8A0BADE3")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_groupby():
     mod = importlib.import_module("scripts.groupby")
     assert isinstance(mod, types.ModuleType)

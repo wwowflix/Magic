@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pkcs12():
     mod = importlib.import_module("scripts.pkcs12")
     assert isinstance(mod, types.ModuleType)

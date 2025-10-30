@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_backend_ctypes():
     mod = importlib.import_module("scripts.backend_ctypes")
     assert isinstance(mod, types.ModuleType)

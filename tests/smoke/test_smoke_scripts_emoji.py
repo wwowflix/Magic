@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_emoji():
     mod = importlib.import_module("scripts.emoji")
     assert isinstance(mod, types.ModuleType)

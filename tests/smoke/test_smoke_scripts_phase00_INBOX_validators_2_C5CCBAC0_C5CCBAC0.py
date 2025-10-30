@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_validators_2_C5CCBAC0_C5CCBAC0():
-    mod = importlib.import_module("scripts.phase00.INBOX.validators_2_C5CCBAC0_C5CCBAC0")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX.validators_2_C5CCBAC0_C5CCBAC0"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

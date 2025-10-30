@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_svg():
     mod = importlib.import_module("scripts.svg")
     assert isinstance(mod, types.ModuleType)

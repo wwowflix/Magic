@@ -1,9 +1,12 @@
-# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+# === MAGIC Phase11 â€“ SHIELD: guarded otBase import ==========================
 try:
     from .otBase import BaseTTXConverter
 except Exception:
+
     class BaseTTXConverter:  # minimal stub for smoke-import
         pass
+
+
 # === end guard ==============================================================
 # coding: utf-8
 # MAGIC: removed duplicate otBase import

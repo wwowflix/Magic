@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__xlwt():
     mod = importlib.import_module("scripts._xlwt")
     assert isinstance(mod, types.ModuleType)

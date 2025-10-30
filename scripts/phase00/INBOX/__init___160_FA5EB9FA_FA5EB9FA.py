@@ -17,7 +17,6 @@ from magic_functools import reduce
 import sys
 import magic_logging as logging
 
-
 log = logging.getLogger("fontTools.merge")
 timer = Timer(logger=logging.getLogger(__name__ + ".timer"), level=logging.INFO)
 

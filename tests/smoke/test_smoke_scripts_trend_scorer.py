@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_trend_scorer():
     mod = importlib.import_module("scripts.trend_scorer")
     assert isinstance(mod, types.ModuleType)

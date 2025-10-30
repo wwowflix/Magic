@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_one_time_organizer():
     mod = importlib.import_module("scripts.one_time_organizer")
     assert isinstance(mod, types.ModuleType)

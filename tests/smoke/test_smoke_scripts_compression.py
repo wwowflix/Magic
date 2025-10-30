@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_compression():
     mod = importlib.import_module("scripts.compression")
     assert isinstance(mod, types.ModuleType)

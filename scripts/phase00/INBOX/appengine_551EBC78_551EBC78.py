@@ -44,7 +44,7 @@ import io
 import logging
 import warnings
 
-from ..exceptions import (
+from scripts.exceptions import (
     HTTPError,
     HTTPWarning,
     MaxRetryError,
@@ -52,18 +52,17 @@ from ..exceptions import (
     SSLError,
     TimeoutError,
 )
-from ..packages.six.moves.urllib.parse import urljoin
-from ..request import RequestMethods
-from ..response import HTTPResponse
-from ..util.retry import Retry
-from ..util.timeout import Timeout
+from scripts.packages.six.moves.urllib.parse import urljoin
+from scripts.request import RequestMethods
+from scripts.response import HTTPResponse
+from scripts.util.retry import Retry
+from scripts.util.timeout import Timeout
 from . import _appengine_environ
 
 try:
     from google.appengine.api import urlfetch
 except ImportError:
     urlfetch = None
-
 
 log = logging.getLogger(__name__)
 

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_heuristics():
     mod = importlib.import_module("scripts.heuristics")
     assert isinstance(mod, types.ModuleType)

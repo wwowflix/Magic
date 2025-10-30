@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_macRes():
     mod = importlib.import_module("scripts.macRes")
     assert isinstance(mod, types.ModuleType)

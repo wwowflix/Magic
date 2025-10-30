@@ -755,7 +755,6 @@ def histogram(a, bins=10, range=None, normed=None, weights=None, density=None):
     bin_edges : array of dtype float
         Return the bin edges ``(length(hist)+1)``.
 
-
     See Also
     --------
     histogramdd, bincount, searchsorted, digitize, histogram_bin_edges
@@ -770,7 +769,6 @@ def histogram(a, bins=10, range=None, normed=None, weights=None, density=None):
     then the first bin is ``[1, 2)`` (including 1, but excluding 2) and
     the second ``[2, 3)``.  The last bin, however, is ``[3, 4]``, which
     *includes* 4.
-
 
     Examples
     --------

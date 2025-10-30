@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__formatting():
     mod = importlib.import_module("scripts._formatting")
     assert isinstance(mod, types.ModuleType)

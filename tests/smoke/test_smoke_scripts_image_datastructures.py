@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_image_datastructures():
     mod = importlib.import_module("scripts.image_datastructures")
     assert isinstance(mod, types.ModuleType)

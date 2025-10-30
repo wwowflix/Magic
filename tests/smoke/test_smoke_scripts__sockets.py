@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__sockets():
     mod = importlib.import_module("scripts._sockets")
     assert isinstance(mod, types.ModuleType)

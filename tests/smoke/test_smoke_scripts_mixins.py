@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mixins():
     mod = importlib.import_module("scripts.mixins")
     assert isinstance(mod, types.ModuleType)

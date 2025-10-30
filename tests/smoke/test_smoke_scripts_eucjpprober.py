@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_eucjpprober():
     mod = importlib.import_module("scripts.eucjpprober")
     assert isinstance(mod, types.ModuleType)

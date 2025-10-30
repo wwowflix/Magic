@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_highlighter():
     mod = importlib.import_module("scripts.highlighter")
     assert isinstance(mod, types.ModuleType)

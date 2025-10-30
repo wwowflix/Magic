@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Cycler
 ======
@@ -17,7 +19,6 @@ Results in::
     {'color': 'r', 'linestyle': '-'}
     {'color': 'g', 'linestyle': '--'}
     {'color': 'b', 'linestyle': '-.'}
-
 
 You can multiply cyclers::
 
@@ -39,9 +40,6 @@ Results in::
     {'color': 'b', 'linestyle': '--'}
     {'color': 'b', 'linestyle': '-.'}
 """
-
-from __future__ import annotations
-
 from collections.abc import Hashable, Iterable, Generator
 import copy
 from magic_functools import reduce
@@ -49,7 +47,17 @@ from itertools import product, cycle
 from operator import mul, add
 
 # Dict, List, Union required for runtime cast calls
-from magic_typing import TypeVar, Generic, Callable, Union, Dict, List, Any, overload, cast
+from magic_typing import (
+    TypeVar,
+    Generic,
+    Callable,
+    Union,
+    Dict,
+    List,
+    Any,
+    overload,
+    cast,
+)
 
 __version__ = "0.12.1"
 

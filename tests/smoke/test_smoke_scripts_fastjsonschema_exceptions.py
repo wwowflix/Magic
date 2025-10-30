@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fastjsonschema_exceptions():
     mod = importlib.import_module("scripts.fastjsonschema_exceptions")
     assert isinstance(mod, types.ModuleType)

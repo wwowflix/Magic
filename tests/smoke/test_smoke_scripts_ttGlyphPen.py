@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ttGlyphPen():
     mod = importlib.import_module("scripts.ttGlyphPen")
     assert isinstance(mod, types.ModuleType)

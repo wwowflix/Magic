@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_extended_precision():
     mod = importlib.import_module("scripts.extended_precision")
     assert isinstance(mod, types.ModuleType)

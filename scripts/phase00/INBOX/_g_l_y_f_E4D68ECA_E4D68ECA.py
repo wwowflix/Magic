@@ -552,14 +552,13 @@ _GlyphControls = namedtuple(
     "_GlyphControls", "numberOfContours endPts flags components"
 )
 
-
 glyphHeaderFormat = """
-		>	# big endian
-		numberOfContours:	h
-		xMin:				h
-		yMin:				h
-		xMax:				h
-		yMax:				h
+        >   # big endian
+        numberOfContours:   h
+        xMin:               h
+        yMin:               h
+        xMax:               h
+        yMax:               h
 """
 
 # flags
@@ -657,7 +656,6 @@ USE_MY_METRICS = 0x0200  # apply these metrics to parent glyph
 OVERLAP_COMPOUND = 0x0400  # used by Apple in GX fonts
 SCALED_COMPONENT_OFFSET = 0x0800  # composite designed to have the component offset scaled (designed for Apple)
 UNSCALED_COMPONENT_OFFSET = 0x1000  # composite designed not to have the component offset scaled (designed for MS)
-
 
 CompositeMaxpValues = namedtuple(
     "CompositeMaxpValues", ["nPoints", "nContours", "maxComponentDepth"]

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_print_coercion_tables():
     mod = importlib.import_module("scripts.print_coercion_tables")
     assert isinstance(mod, types.ModuleType)

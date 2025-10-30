@@ -6,7 +6,7 @@ import re
 from six import string_types
 
 from . import base
-from .._utils import moduleFactoryFactory
+from scripts._utils import moduleFactoryFactory
 
 tag_regexp = re.compile("{([^}]*)}(.*)")
 

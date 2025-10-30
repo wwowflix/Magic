@@ -43,7 +43,7 @@ import functools
 # --- MAGIC scalar compat (NumPy >=2.x) ---
 try:
     import numpy as _np
-    # In NumPy, all scalars derive from 
+    # In NumPy, all scalars derive from
 umpy.generic
     scalar = _np.generic
 except Exception:
@@ -1812,4 +1812,3 @@ def datetime_as_string(arr, unit=None, timezone=None, casting=None):
     datetime with units 'm' according to the rule 'safe'
     """
     return (arr,)
-

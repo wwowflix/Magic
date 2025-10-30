@@ -16,10 +16,9 @@ from xml.sax.saxutils import escape, unescape
 from six.moves import urllib_parse as urlparse
 
 from . import base
-from ..constants import namespaces, prefixes
+from scripts.constants import namespaces, prefixes
 
 __all__ = ["Filter"]
-
 
 _deprecation_msg = (
     "html5lib's sanitizer is deprecated; see "
@@ -726,7 +725,6 @@ allowed_content_types = frozenset(
         "text/plain",
     )
 )
-
 
 data_content_type = re.compile(
     r"""

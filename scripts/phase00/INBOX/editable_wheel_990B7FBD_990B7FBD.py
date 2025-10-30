@@ -757,7 +757,6 @@ MAPPING = {mapping!r}
 NAMESPACES = {namespaces!r}
 PATH_PLACEHOLDER = {name!r} + ".__path_hook__"
 
-
 class _EditableFinder:  # MetaPathFinder
     @classmethod
     def find_spec(cls, fullname, path=None, target=None):
@@ -775,7 +774,6 @@ class _EditableFinder:  # MetaPathFinder
         for candidate in chain([init], candidates):
             if candidate.exists():
                 return spec_from_file_location(fullname, candidate)
-
 
 class _EditableNamespaceFinder:  # PathEntryFinder
     @classmethod
@@ -800,7 +798,6 @@ class _EditableNamespaceFinder:  # PathEntryFinder
     @classmethod
     def find_module(cls, fullname):
         return None
-
 
 def install():
     if not any(finder == _EditableFinder for finder in sys.meta_path):

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_arraylike_B4CC255F_B4CC255F():
     mod = importlib.import_module("scripts.phase00.INBOX.arraylike_B4CC255F_B4CC255F")
     assert isinstance(mod, types.ModuleType)

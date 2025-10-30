@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_einsumfunc():
     mod = importlib.import_module("scripts.einsumfunc")
     assert isinstance(mod, types.ModuleType)

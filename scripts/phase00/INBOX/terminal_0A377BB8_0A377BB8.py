@@ -24,9 +24,7 @@ from pip._vendor.pygments.token import (
 from pip._vendor.pygments.console import ansiformat
 from pip._vendor.pygments.util import get_choice_opt
 
-
 __all__ = ["TerminalFormatter"]
-
 
 #: Map token types to a tuple of color values for light and dark
 #: backgrounds.

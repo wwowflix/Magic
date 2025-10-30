@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_webhdfs():
     mod = importlib.import_module("scripts.webhdfs")
     assert isinstance(mod, types.ModuleType)

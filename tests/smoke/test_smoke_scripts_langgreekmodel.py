@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_langgreekmodel():
     mod = importlib.import_module("scripts.langgreekmodel")
     assert isinstance(mod, types.ModuleType)

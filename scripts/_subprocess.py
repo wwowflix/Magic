@@ -38,10 +38,8 @@ if TYPE_CHECKING:
 
     from ._abc import ReceiveStream, SendStream
 
-
 # Sphinx cannot parse the stringified version
 StrOrBytesPath: TypeAlias = Union[str, bytes, os.PathLike[str], os.PathLike[bytes]]
-
 
 # Linux-specific, but has complex lifetime management stuff so we hard-code it
 # here instead of hiding it behind the _subprocess_platform abstraction

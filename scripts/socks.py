@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 This module contains provisional support for SOCKS proxies from within
 urllib3. This module supports SOCKS4, SOCKS4A (an extension of SOCKS4), and
@@ -37,15 +39,12 @@ with the proxy:
     proxy_url="socks5h://<username>:<password>@proxy-host"
 
 """
-
-from __future__ import annotations
-
 try:
     import socks  # type: ignore[import-not-found]
 except ImportError:
     import warnings
 
-    from ..exceptions import DependencyWarning
+    from scripts.exceptions import DependencyWarning
 
     warnings.warn(
         (
@@ -60,11 +59,11 @@ except ImportError:
 import typing
 from socket import timeout as SocketTimeout
 
-from ..connection import HTTPConnection, HTTPSConnection
-from ..connectionpool import HTTPConnectionPool, HTTPSConnectionPool
-from ..exceptions import ConnectTimeoutError, NewConnectionError
-from ..poolmanager import PoolManager
-from ..util.url import parse_url
+from scripts.connection import HTTPConnection, HTTPSConnection
+from scripts.connectionpool import HTTPConnectionPool, HTTPSConnectionPool
+from scripts.exceptions import ConnectTimeoutError, NewConnectionError
+from scripts.poolmanager import PoolManager
+from scripts.util.url import parse_url
 
 try:
     import ssl

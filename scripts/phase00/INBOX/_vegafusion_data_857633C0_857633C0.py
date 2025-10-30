@@ -42,12 +42,10 @@ extracted_inline_tables: MutableMapping[str, DataFrameLike] = WeakValueDictionar
 # kwarg of vf.runtime.pre_transform_spec().
 VEGAFUSION_PREFIX: Final = "vegafusion+dataset://"
 
-
 try:
     VEGAFUSION_VERSION: Version | None = Version(importlib_version("vegafusion"))
 except ImportError:
     VEGAFUSION_VERSION = None
-
 
 if VEGAFUSION_VERSION and Version("2.0.0a0") <= VEGAFUSION_VERSION:
 

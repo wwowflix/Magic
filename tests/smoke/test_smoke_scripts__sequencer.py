@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__sequencer():
     mod = importlib.import_module("scripts._sequencer")
     assert isinstance(mod, types.ModuleType)

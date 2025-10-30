@@ -36,7 +36,6 @@ from .util import (
     CSVWriter,
 )
 
-
 __all__ = [
     "Distribution",
     "BaseInstalledDistribution",
@@ -44,7 +43,6 @@ __all__ = [
     "EggInfoDistribution",
     "DistributionPath",
 ]
-
 
 logger = logging.getLogger(__name__)
 

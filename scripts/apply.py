@@ -1,5 +1,6 @@
-﻿from __future__ import annotations
-import importlib.abc as abc
+from __future__ import annotations
+
+import abc
 from collections import defaultdict
 from functools import partial
 import inspect
@@ -73,7 +74,6 @@ if TYPE_CHECKING:
     from pandas.core.groupby import GroupBy
     from pandas.core.resample import Resampler
     from pandas.core.window.rolling import BaseWindow
-
 
 ResType = Dict[int, Any]
 
@@ -1602,4 +1602,3 @@ def validate_func_kwargs(
         no_arg_message = "Must provide 'func' or named aggregation **kwargs."
         raise TypeError(no_arg_message)
     return columns, func
-

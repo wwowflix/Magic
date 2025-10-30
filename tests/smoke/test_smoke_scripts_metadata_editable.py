@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_metadata_editable():
     mod = importlib.import_module("scripts.metadata_editable")
     assert isinstance(mod, types.ModuleType)

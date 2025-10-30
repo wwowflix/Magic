@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_auto_fix_broken():
     mod = importlib.import_module("tools.auto_fix_broken")
     assert isinstance(mod, types.ModuleType)

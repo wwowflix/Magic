@@ -26,7 +26,6 @@ else:
 
 pytestmark = pytest.mark.skipif(cython is None, reason="requires cython")
 
-
 if IS_EDITABLE:
     pytest.skip(
         "Editable install doesn't support tests with a compile step",

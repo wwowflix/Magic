@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pytables():
     mod = importlib.import_module("scripts.pytables")
     assert isinstance(mod, types.ModuleType)

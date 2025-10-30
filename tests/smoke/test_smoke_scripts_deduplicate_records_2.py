@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_deduplicate_records_2():
     mod = importlib.import_module("scripts.deduplicate_records_2")
     assert isinstance(mod, types.ModuleType)

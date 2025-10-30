@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_weekly_consolidator():
     mod = importlib.import_module("scripts.weekly_consolidator")
     assert isinstance(mod, types.ModuleType)

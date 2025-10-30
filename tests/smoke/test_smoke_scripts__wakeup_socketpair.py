@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__wakeup_socketpair():
     mod = importlib.import_module("scripts._wakeup_socketpair")
     assert isinstance(mod, types.ModuleType)

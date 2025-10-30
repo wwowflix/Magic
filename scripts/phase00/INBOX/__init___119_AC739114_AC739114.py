@@ -60,7 +60,6 @@ __all__ = [
     "ZInterp",
 ]
 
-
 # Simple mapping of algorithm name to class name.
 _class_lookup: dict[str, type[ContourGenerator]] = {
     "mpl2005": Mpl2005ContourGenerator,

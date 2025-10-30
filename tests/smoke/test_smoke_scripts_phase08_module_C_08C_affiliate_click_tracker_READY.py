@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase08_module_C_08C_affiliate_click_tracker_READY():
-    mod = importlib.import_module("scripts.phase08.module_C.08C_affiliate_click_tracker_READY")
+    mod = importlib.import_module(
+        "scripts.phase08.module_C.08C_affiliate_click_tracker_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

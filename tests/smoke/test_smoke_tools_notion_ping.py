@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_notion_ping():
     mod = importlib.import_module("tools.notion_ping")
     assert isinstance(mod, types.ModuleType)

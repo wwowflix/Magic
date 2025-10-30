@@ -129,4 +129,3 @@ if (-not $Quiet) {
   Write-Host ""
   Write-Host ("Progress: {0}% ({1}/{2} PASS)" -f $progress, $pass, $total)
 }
-

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_filterPen():
     mod = importlib.import_module("scripts.filterPen")
     assert isinstance(mod, types.ModuleType)

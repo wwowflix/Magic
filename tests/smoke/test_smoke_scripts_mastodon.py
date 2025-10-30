@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mastodon():
     mod = importlib.import_module("scripts.mastodon")
     assert isinstance(mod, types.ModuleType)

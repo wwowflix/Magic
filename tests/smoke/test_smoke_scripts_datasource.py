@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_datasource():
     mod = importlib.import_module("scripts.datasource")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_jupyter_chart():
     mod = importlib.import_module("scripts.jupyter_chart")
     assert isinstance(mod, types.ModuleType)

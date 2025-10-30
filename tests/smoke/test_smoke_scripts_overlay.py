@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_overlay():
     mod = importlib.import_module("scripts.overlay")
     assert isinstance(mod, types.ModuleType)

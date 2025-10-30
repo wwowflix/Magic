@@ -1,5 +1,4 @@
-﻿
-import importlib.abc as abc
+import abc
 import collections
 import collections.abc
 import operator
@@ -218,7 +217,6 @@ else:
 
     Final = _Final(_root=True)
 
-
 # 3.8+
 if hasattr(typing, "final"):
     final = typing.final
@@ -332,10 +330,8 @@ else:
 
     Literal = _Literal(_root=True)
 
-
 _overload_dummy = typing._overload_dummy  # noqa
 overload = typing.overload
-
 
 # This is not a real generic class.  Don't use outside annotations.
 Type = typing.Type
@@ -1120,7 +1116,6 @@ else:
 # Exists for backwards compatibility.
 runtime = runtime_checkable
 
-
 # 3.8+
 if hasattr(typing, "SupportsIndex"):
     SupportsIndex = typing.SupportsIndex
@@ -1303,7 +1298,6 @@ else:
         The class syntax is only supported in Python 3.6+, while two other
         syntax forms work for Python 2.7 and 3.2+
         """
-
 
 # Python 3.9+ has PEP 593 (Annotated and modified get_type_hints)
 if hasattr(typing, "Annotated"):
@@ -1757,7 +1751,6 @@ else:
             return "typing_extensions.TypeAlias"
 
     TypeAlias = _TypeAliasBase(_root=True)
-
 
 # Python 3.10+ has PEP 612
 if hasattr(typing, "ParamSpecArgs"):
@@ -2371,7 +2364,6 @@ else:
 
     Self = _Self(_root=True)
 
-
 if hasattr(typing, "Required"):
     Required = typing.Required
     NotRequired = typing.NotRequired
@@ -2537,4 +2529,3 @@ else:
 
     Required = _Required(_root=True)
     NotRequired = _NotRequired(_root=True)
-

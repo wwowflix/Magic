@@ -4,23 +4,27 @@ import pandas as pd
 
 # Import the collector module under test
 import importlib
+
 gtf = importlib.import_module("scripts.collect.google_trends_fetcher")
+
 
 class _StubTrendReq:
     def __init__(self, *a, **kw):
         pass
+
     def build_payload(self, kws, timeframe="now 7-d", geo=""):
         # remember the single-key list passed in
         self._kw = kws[0]
         self._geo = geo
-        self._tf  = timeframe
+        self._tf = timeframe
+
     def interest_over_time(self):
         # Minimal shape that pytrends would return:
         # a column for the keyword + 'isPartial'
-        return pd.DataFrame({
-            self._kw: [10, 20],     # pretend interest values
-            "isPartial": [False, False]
-        })
+        return pd.DataFrame(
+            {self._kw: [10, 20], "isPartial": [False, False]}  # pretend interest values
+        )
+
 
 def test_upsert_trends_inserts_rows(monkeypatch, tmp_db_path):
     # Redirect DB to a temp file, and mock TrendReq → no network

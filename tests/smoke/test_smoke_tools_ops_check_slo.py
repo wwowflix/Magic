@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_ops_check_slo():
     mod = importlib.import_module("tools.ops.check_slo")
     assert isinstance(mod, types.ModuleType)

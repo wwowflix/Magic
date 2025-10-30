@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase18_module_O_18O_affiliate_journey_map_generator_READY():
-    mod = importlib.import_module("scripts.phase18.module_O.18O_affiliate_journey_map_generator_READY")
+    mod = importlib.import_module(
+        "scripts.phase18.module_O.18O_affiliate_journey_map_generator_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

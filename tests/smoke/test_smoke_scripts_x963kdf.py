@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_x963kdf():
     mod = importlib.import_module("scripts.x963kdf")
     assert isinstance(mod, types.ModuleType)

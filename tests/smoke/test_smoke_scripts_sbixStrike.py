@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sbixStrike():
     mod = importlib.import_module("scripts.sbixStrike")
     assert isinstance(mod, types.ModuleType)

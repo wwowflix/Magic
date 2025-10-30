@@ -74,8 +74,8 @@ async def test_non_latin1():
             browser=os.getenv("TIKTOK_BROWSER", "chromium"),
             headless=headless,
         )
-        tag = api.hashtag(name="селфи")
+        tag = api.hashtag(name="ÑÐµÐ»Ñ„Ð¸")
         await tag.info()
 
-        assert tag.name == "селфи"
+        assert tag.name == "ÑÐµÐ»Ñ„Ð¸"
         assert tag.id == "4385126"

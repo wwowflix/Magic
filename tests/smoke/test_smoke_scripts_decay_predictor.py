@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_decay_predictor():
     mod = importlib.import_module("scripts.decay_predictor")
     assert isinstance(mod, types.ModuleType)

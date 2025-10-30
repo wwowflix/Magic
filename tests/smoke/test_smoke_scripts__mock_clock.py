@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__mock_clock():
     mod = importlib.import_module("scripts._mock_clock")
     assert isinstance(mod, types.ModuleType)

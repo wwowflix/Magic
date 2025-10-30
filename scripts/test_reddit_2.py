@@ -1,7 +1,7 @@
 from praw import Reddit
 from secrets import *
 
-print("🔐 Logging in to Reddit...")
+print("ðŸ” Logging in to Reddit...")
 
 reddit = Reddit(
     client_id=REDDIT_CLIENT_ID,
@@ -13,6 +13,6 @@ reddit = Reddit(
 
 try:
     me = reddit.user.me()
-    print(f"✅ Logged in as: u/{me}")
+    print(f"âœ… Logged in as: u/{me}")
 except Exception as e:
-    print(f"❌ Login failed: {e}")
+    print(f"âŒ Login failed: {e}")

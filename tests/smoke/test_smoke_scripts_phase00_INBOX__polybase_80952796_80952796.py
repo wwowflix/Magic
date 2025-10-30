@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX__polybase_80952796_80952796():
     mod = importlib.import_module("scripts.phase00.INBOX._polybase_80952796_80952796")
     assert isinstance(mod, types.ModuleType)

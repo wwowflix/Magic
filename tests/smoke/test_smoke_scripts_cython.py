@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cython():
     mod = importlib.import_module("scripts.cython")
     assert isinstance(mod, types.ModuleType)

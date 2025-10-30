@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_locator_converter():
     mod = importlib.import_module("scripts.locator_converter")
     assert isinstance(mod, types.ModuleType)

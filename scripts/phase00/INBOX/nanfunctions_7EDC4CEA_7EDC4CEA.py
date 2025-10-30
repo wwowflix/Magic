@@ -27,11 +27,9 @@ import numpy as np
 from numpy.lib import function_base
 from numpy.core import overrides
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 __all__ = [
     "nansum",
@@ -520,7 +518,6 @@ def nanargmax(a, axis=None):
     NaNs. For all-NaN slices ``ValueError`` is raised. Warning: the
     results cannot be trusted if a slice contains only NaNs and -Infs.
 
-
     Parameters
     ----------
     a : array_like
@@ -601,7 +598,6 @@ def nansum(a, axis=None, dtype=None, out=None, keepdims=np._NoValue):
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
         the result will broadcast correctly against the original `a`.
-
 
         If the value is anything but the default, then
         `keepdims` will be passed through to the `mean` or `sum` methods
@@ -1502,7 +1498,6 @@ def nanvar(a, axis=None, dtype=None, out=None, ddof=0, keepdims=np._NoValue):
         If this is set to True, the axes which are reduced are left
         in the result as dimensions with size one. With this option,
         the result will broadcast correctly against the original `a`.
-
 
     Returns
     -------

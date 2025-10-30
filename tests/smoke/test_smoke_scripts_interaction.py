@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_interaction():
     mod = importlib.import_module("scripts.interaction")
     assert isinstance(mod, types.ModuleType)

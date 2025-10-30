@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Callable, NoReturn
 
 import pytest
 
-from .._concat_tb import concat_tb
+from scripts._concat_tb import concat_tb
 
 if TYPE_CHECKING:
     from types import TracebackType

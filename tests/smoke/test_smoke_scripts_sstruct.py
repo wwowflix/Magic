@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sstruct():
     mod = importlib.import_module("scripts.sstruct")
     assert isinstance(mod, types.ModuleType)

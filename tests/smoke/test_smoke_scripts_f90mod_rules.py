@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_f90mod_rules():
     mod = importlib.import_module("scripts.f90mod_rules")
     assert isinstance(mod, types.ModuleType)

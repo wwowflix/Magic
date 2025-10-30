@@ -23,14 +23,13 @@ except ImportError:
     from collections import MutableMapping
 
 from . import base
-from ..constants import DataLossWarning
+from scripts.constants import DataLossWarning
 from .. import constants
 from . import etree as etree_builders
 from .. import _ihatexml
 
 import lxml.etree as etree
 from six import PY3, binary_type
-
 
 fullTree = True
 tag_regexp = re.compile("{([^}]*)}(.*)")

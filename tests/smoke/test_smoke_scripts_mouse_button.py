@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mouse_button():
     mod = importlib.import_module("scripts.mouse_button")
     assert isinstance(mod, types.ModuleType)

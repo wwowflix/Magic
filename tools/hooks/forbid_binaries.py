@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-import sys, re, os
+import sys  # noqa: I001
+import re
+import os
 
 # pre-commit passes only staged files by default
 BLOCK_EXT = re.compile(r"\.(exe|msi|whl|zip|7z|iso|dll)$", re.IGNORECASE)

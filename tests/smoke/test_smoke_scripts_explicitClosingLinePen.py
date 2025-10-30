@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_explicitClosingLinePen():
     mod = importlib.import_module("scripts.explicitClosingLinePen")
     assert isinstance(mod, types.ModuleType)

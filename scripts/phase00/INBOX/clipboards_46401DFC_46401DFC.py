@@ -1,7 +1,6 @@
-"""io on the clipboard"""
-
 from __future__ import annotations
 
+"""io on the clipboard"""
 from io import StringIO
 import warnings
 

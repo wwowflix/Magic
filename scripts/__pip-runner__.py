@@ -6,7 +6,9 @@ else:
     # When executed as a script, behave like the original:
     import runpy
 if __name__ == "__main__":
-        runpy.run_module("pip", run_name="__main__", alter_sys=True)
+    runpy.run_module("pip", run_name="__main__", alter_sys=True)
 
 else:
-    def main(*_a, **_k): return 0
+
+    def main(*_a, **_k):
+        return 0

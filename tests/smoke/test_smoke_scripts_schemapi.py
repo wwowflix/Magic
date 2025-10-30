@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_schemapi():
     mod = importlib.import_module("scripts.schemapi")
     assert isinstance(mod, types.ModuleType)

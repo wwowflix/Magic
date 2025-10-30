@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sphinxext():
     mod = importlib.import_module("scripts.sphinxext")
     assert isinstance(mod, types.ModuleType)

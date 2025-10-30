@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_self_outdated_check():
     mod = importlib.import_module("scripts.self_outdated_check")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ocsp():
     mod = importlib.import_module("scripts.ocsp")
     assert isinstance(mod, types.ModuleType)

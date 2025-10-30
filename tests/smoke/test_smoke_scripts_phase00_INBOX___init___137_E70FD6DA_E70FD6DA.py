@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX___init___137_E70FD6DA_E70FD6DA():
-    mod = importlib.import_module("scripts.phase00.INBOX.__init___137_E70FD6DA_E70FD6DA")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX.__init___137_E70FD6DA_E70FD6DA"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

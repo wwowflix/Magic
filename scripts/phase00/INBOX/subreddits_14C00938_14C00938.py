@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Provide the Subreddits class."""
-
 from __future__ import annotations
 
+"""Provide the Subreddits class."""
 from typing import TYPE_CHECKING, Any, Iterator
 from warnings import warn
 
-from ..const import API_PATH
-from ..util import _deprecate_args
+from scripts.const import API_PATH
+from scripts.util import _deprecate_args
 from . import Subreddit
 from .base import PRAWBase
 from .listing.generator import ListingGenerator

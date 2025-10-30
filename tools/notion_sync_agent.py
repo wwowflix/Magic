@@ -2,7 +2,7 @@
 Notion Sync Agent - Updates the MAGIC Automation Tracker with latest file metadata
 """
 
-import os
+import os  # noqa: I001
 import csv
 import requests
 from dotenv import load_dotenv

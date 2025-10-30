@@ -37,7 +37,6 @@ class Alert:
         name_prompt.send_keys("Willian Shakesphere")
         name_prompt.accept()
 
-
     Reading a the text of a prompt for verification::
 
         alert_text = Alert(driver).text

@@ -1,25 +1,32 @@
-import argparse, os, sys, re, io
+import argparse
 from pathlib import Path
 
 SMART = {
-    "\u2018":"'", "\u2019":"'", "\u201C":'"', "\u201D":'"', "\u2013":"-", "\u2014":"-",
+    "\u2018": "'",
+    "\u2019": "'",
+    "\u201c": '"',
+    "\u201d": '"',
+    "\u2013": "-",
+    "\u2014": "-",
 }
-INVIS = [
-    "\u200B", "\u200C", "\u200D", "\ufeff", "\u2060", "\u00A0"
-]
+INVIS = ["\u200b", "\u200c", "\u200d", "\ufeff", "\u2060", "\u00a0"]
 TRANS = str.maketrans(SMART)
+
 
 def looks_binary(data: bytes) -> bool:
     # simple heuristic
     return b"\x00" in data[:4096]
+
 
 def normalize_text(txt: str) -> str:
     for ch in INVIS:
         txt = txt.replace(ch, "")
     txt = txt.translate(TRANS)
     txt = txt.replace("\r\n", "\n").replace("\r", "\n")
-    if not txt.endswith("\n"): txt += "\n"
+    if not txt.endswith("\n"):
+        txt += "\n"
     return txt
+
 
 def process_file(path: Path, apply: bool) -> tuple[bool, str]:
     try:
@@ -40,7 +47,7 @@ def process_file(path: Path, apply: bool) -> tuple[bool, str]:
                     return False, "decode-failed"
 
         fixed = normalize_text(txt)
-        changed = (fixed != txt)
+        changed = fixed != txt
 
         if apply and changed:
             bak = path.with_suffix(path.suffix + ".bak")
@@ -50,12 +57,17 @@ def process_file(path: Path, apply: bool) -> tuple[bool, str]:
     except Exception as e:
         return False, f"error:{e}"
 
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("root", nargs="?", default=".")
-    p.add_argument("--apply", action="store_true", help="Write changes (creates .bak backups)")
+    p.add_argument(
+        "--apply", action="store_true", help="Write changes (creates .bak backups)"
+    )
     p.add_argument("--ext", default=".py", help="File extension to scan (default: .py)")
-    p.add_argument("--max-bytes", type=int, default=2_000_000, help="Skip files larger than this")
+    p.add_argument(
+        "--max-bytes", type=int, default=2_000_000, help="Skip files larger than this"
+    )
     args = p.parse_args()
 
     root = Path(args.root).resolve()
@@ -78,6 +90,7 @@ def main():
 
     mode = "APPLY" if args.apply else "DRY-RUN"
     print(f"\nMode: {mode} | changed={changed} ok={ok} skipped={skipped}")
+
 
 if __name__ == "__main__":
     main()

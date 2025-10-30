@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_jisfreq():
     mod = importlib.import_module("scripts.jisfreq")
     assert isinstance(mod, types.ModuleType)

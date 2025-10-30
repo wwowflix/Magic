@@ -1,6 +1,6 @@
-# Generic stream tests
 from __future__ import annotations
 
+# Generic stream tests
 import random
 import sys
 from collections.abc import Awaitable, Callable, Generator
@@ -12,8 +12,14 @@ from typing import (
 )
 
 from .. import CancelScope, _core
-from .._abc import AsyncResource, HalfCloseableStream, ReceiveStream, SendStream, Stream
-from .._highlevel_generic import aclose_forcefully
+from scripts._abc import (
+    AsyncResource,
+    HalfCloseableStream,
+    ReceiveStream,
+    SendStream,
+    Stream,
+)
+from scripts._highlevel_generic import aclose_forcefully
 from ._checkpoints import assert_checkpoints
 
 if TYPE_CHECKING:

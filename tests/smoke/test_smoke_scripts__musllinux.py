@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__musllinux():
     mod = importlib.import_module("scripts._musllinux")
     assert isinstance(mod, types.ModuleType)

@@ -35,7 +35,6 @@ else:
     KW_ONLY = {"kw_only": True}
     SLOTS = {"slots": True}
 
-
 __all__ = (
     "BaseMetadata",
     "GroupedMetadata",
@@ -66,9 +65,7 @@ __all__ = (
 
 __version__ = "0.7.0"
 
-
 T = TypeVar("T")
-
 
 # arguments that start with __ are considered
 # positional only

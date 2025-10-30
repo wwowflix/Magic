@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__io_kqueue():
     mod = importlib.import_module("scripts._io_kqueue")
     assert isinstance(mod, types.ModuleType)

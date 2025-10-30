@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__diffcommand():
     mod = importlib.import_module("scripts._diffcommand")
     assert isinstance(mod, types.ModuleType)

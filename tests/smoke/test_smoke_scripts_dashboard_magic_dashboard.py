@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dashboard_magic_dashboard():
     mod = importlib.import_module("scripts.dashboard.magic_dashboard")
     assert isinstance(mod, types.ModuleType)

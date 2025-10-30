@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase06_module_H_06H_last_successful_upload_marker_READY():
-    mod = importlib.import_module("scripts.phase06.module_H.06H_last_successful_upload_marker_READY")
+    mod = importlib.import_module(
+        "scripts.phase06.module_H.06H_last_successful_upload_marker_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__add_docstring():
     mod = importlib.import_module("scripts._add_docstring")
     assert isinstance(mod, types.ModuleType)

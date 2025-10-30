@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_weibo():
     mod = importlib.import_module("scripts.weibo")
     assert isinstance(mod, types.ModuleType)

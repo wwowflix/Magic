@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_google_trends_scraper():
     mod = importlib.import_module("scripts.google_trends_scraper")
     assert isinstance(mod, types.ModuleType)

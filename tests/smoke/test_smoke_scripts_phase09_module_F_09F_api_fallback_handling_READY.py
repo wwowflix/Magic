@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase09_module_F_09F_api_fallback_handling_READY():
-    mod = importlib.import_module("scripts.phase09.module_F.09F_api_fallback_handling_READY")
+    mod = importlib.import_module(
+        "scripts.phase09.module_F.09F_api_fallback_handling_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

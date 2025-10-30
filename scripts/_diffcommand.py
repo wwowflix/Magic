@@ -88,3 +88,7 @@ def split_body(html):
 def annotate(options, args):
     print("Not yet implemented")
     sys.exit(1)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

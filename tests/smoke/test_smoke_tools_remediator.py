@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_remediator():
     mod = importlib.import_module("tools.remediator")
     assert isinstance(mod, types.ModuleType)

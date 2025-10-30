@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lookupDebugInfo():
     mod = importlib.import_module("scripts.lookupDebugInfo")
     assert isinstance(mod, types.ModuleType)

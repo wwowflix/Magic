@@ -210,7 +210,7 @@ def main_inner(parser, argns):
 
     if argns.V:
         print(
-            "Pygments version %s, (c) 2006-2022 by Georg Brandl, Matthäus "
+            "Pygments version %s, (c) 2006-2022 by Georg Brandl, MatthÃƒÂ¤us "
             "Chajdas and contributors." % __version__
         )
         return 0
@@ -747,3 +747,7 @@ def main(args=sys.argv):
             file=sys.stderr,
         )
         return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ntlmpool():
     mod = importlib.import_module("scripts.ntlmpool")
     assert isinstance(mod, types.ModuleType)

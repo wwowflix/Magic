@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_smb():
     mod = importlib.import_module("scripts.smb")
     assert isinstance(mod, types.ModuleType)

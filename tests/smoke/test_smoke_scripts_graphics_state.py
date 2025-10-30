@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_graphics_state():
     mod = importlib.import_module("scripts.graphics_state")
     assert isinstance(mod, types.ModuleType)

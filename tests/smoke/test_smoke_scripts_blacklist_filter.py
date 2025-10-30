@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_blacklist_filter():
     mod = importlib.import_module("scripts.blacklist_filter")
     assert isinstance(mod, types.ModuleType)

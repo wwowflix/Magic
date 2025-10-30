@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_build_tracker():
     mod = importlib.import_module("scripts.build_tracker")
     assert isinstance(mod, types.ModuleType)

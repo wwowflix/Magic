@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fpdf():
     mod = importlib.import_module("scripts.fpdf")
     assert isinstance(mod, types.ModuleType)

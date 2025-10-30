@@ -1,0 +1,41 @@
+﻿[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+# Exclude junk/legacy buckets
+exclude = [
+  "scripts/phase00/QUARANTINE",
+  "scripts/phase00/INBOX",
+  "scripts/tests/assets",
+  "scripts/examples",
+  "scripts/demo",
+  "scripts/bench",
+]
+
+# Start with a minimal, blocking set
+select = ["E","F","W","I"]  # errors/flake, warnings, isort
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["scripts","tools"]
+force-sort-within-sections = true
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+# Don’t lint legacy/throwaway dirs
+exclude = [
+  "scripts/phase00/QUARANTINE",
+  "scripts/phase00/INBOX",
+  "scripts/examples",
+  "scripts/demo",
+  "scripts/bench",
+  "scripts/tests/assets",
+]
+
+# Start strict but small (errors/imports/warnings)
+select = ["E","F","W","I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["scripts","tools"]
+force-sort-within-sections = true

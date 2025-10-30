@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_charts_2():
     mod = importlib.import_module("scripts.charts_2")
     assert isinstance(mod, types.ModuleType)

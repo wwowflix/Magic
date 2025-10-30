@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase09_module_B_09B_api_quota_guard_READY():
     mod = importlib.import_module("scripts.phase09.module_B.09B_api_quota_guard_READY")
     assert isinstance(mod, types.ModuleType)

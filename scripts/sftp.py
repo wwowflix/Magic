@@ -8,7 +8,7 @@ from stat import S_ISDIR, S_ISLNK
 import paramiko
 
 from .. import AbstractFileSystem
-from ..utils import infer_storage_options
+from scripts.utils import infer_storage_options
 
 logger = logging.getLogger("fsspec.sftp")
 

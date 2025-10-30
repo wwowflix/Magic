@@ -56,7 +56,6 @@ __all__ = [
     "array",
 ]
 
-
 ndarray = sb.ndarray
 
 _byteorderconv = {
@@ -840,7 +839,6 @@ def fromstring(
         If `dtype` is ``None``, these arguments are passed to
         `numpy.format_parser` to construct a dtype. See that function for
         detailed documentation.
-
 
     Returns
     -------

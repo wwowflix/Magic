@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_roperator():
     mod = importlib.import_module("scripts.roperator")
     assert isinstance(mod, types.ModuleType)

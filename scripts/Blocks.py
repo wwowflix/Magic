@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-# === MAGIC Phase11 â€“ SHIELD: pandas NDArrayBackedBlock compat ===============
+# === MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: pandas NDArrayBackedBlock compat ===============
 # Guarantee `_NDArrayBackedBlockBase` exists across pandas versions.
 try:
     _NDArrayBackedBlockBase  # already defined somewhere above?
@@ -11,9 +11,13 @@ except NameError:
         try:
             from pandas.core.internals.blocks import Block as _NDArrayBackedBlockBase  # type: ignore[attr-defined]
         except Exception:
+
             class _NDArrayBackedBlockBase:  # type: ignore[no-redef]
                 """Fallback base for smoke-import compatibility."""
+
                 pass
+
+
 # ============================================================================
 from magic_functools import wraps
 import re
@@ -34,6 +38,7 @@ from pandas._libs.internals import BlockPlacement
 try:
     # pandas <=1.x C-extension exported NumpyBlock here
     from pandas._libs import internals as _libinternals  # type: ignore
+
     _NumpyBlockBase = getattr(_libinternals, "NumpyBlock", None)
 except Exception:
     _NumpyBlockBase = None
@@ -41,6 +46,8 @@ if _NumpyBlockBase is None:
     # Minimal fallback base so we can subclass for smoke-imports
     class _NumpyBlockBase:  # type: ignore
         pass
+
+
 # --- end compat alias ---
 from pandas._libs.tslibs import IncompatibleFrequency
 from pandas._typing import (
@@ -69,28 +76,43 @@ from pandas.core.dtypes.cast import (
 try:
     from pandas.core.dtypes.cast import soft_convert_objects  # type: ignore
 except Exception:
-    def soft_convert_objects(values, datetime: bool=True, numeric: bool=True,
-                             timedelta: bool=True, coerce: bool=False, copy: bool=True):
+
+    def soft_convert_objects(
+        values,
+        datetime: bool = True,
+        numeric: bool = True,
+        timedelta: bool = True,
+        coerce: bool = False,
+        copy: bool = True,
+    ):
         # No-op fallback sufficient for smoke-import tests.
         return values
+
+
 # --- end shim ---
+
 
 # --- minimal compat helpers used by this module ---
 def _ensure_ndarray(values):
     # If pandas ExtensionArray with backing numpy, unwrap; otherwise return as-is
     try:
         import pandas as pd  # local import to avoid hard dep at import time
+
         if hasattr(values, "_data") and getattr(values, "dtype", None) is not None:
             return values._data
     except Exception:
         pass
     return values
+
+
 # pandas algorithm imports (guarded for version differences)
 try:
     from pandas.core.array_algos.quantile import quantile_compat  # type: ignore
 except Exception:
+
     def quantile_compat(*args, **kwargs):  # fallback, unused in smoke imports
         raise NotImplementedError
+
 
 try:
     from pandas.core.array_algos.replace import (  # type: ignore
@@ -99,15 +121,24 @@ try:
         should_use_regex,
     )
 except Exception:
-    def compare_or_regex_search(*args, **kwargs): raise NotImplementedError
-    def replace_regex(*args, **kwargs): raise NotImplementedError
-    def should_use_regex(*args, **kwargs): return False
+
+    def compare_or_regex_search(*args, **kwargs):
+        raise NotImplementedError
+
+    def replace_regex(*args, **kwargs):
+        raise NotImplementedError
+
+    def should_use_regex(*args, **kwargs):
+        return False
+
 
 try:
     from pandas.core.array_algos.transforms import shift  # type: ignore
 except Exception:
+
     def shift(values, periods: int = 1, axis: int = 0):  # minimal harmless fallback
         return values
+
 
 # Pandas arrays (version-safe)
 from pandas.core.arrays import (
@@ -118,6 +149,7 @@ from pandas.core.arrays import (
     PeriodArray,
     TimedeltaArray,
 )
+
 try:
     # Older pandas exported here
     from pandas.core.arrays import PandasArray  # type: ignore
@@ -128,6 +160,7 @@ except Exception:
     except Exception:
         # Smoke-test fallback: treat as numpy ndarray
         import numpy as _np
+
         PandasArray = _np.ndarray  # type: ignore
 # SparseDtype (version-safe)
 try:
@@ -143,8 +176,11 @@ except Exception:
             def __init__(self, dtype=None, fill_value=None):
                 self.subtype = dtype
                 self.fill_value = fill_value
+
             def __repr__(self):
                 return f"SparseDtype({self.subtype!r}, {self.fill_value!r})"
+
+
 from pandas.core.base import PandasObject
 import pandas.core.common as com
 import pandas.core.computation.expressions as expressions

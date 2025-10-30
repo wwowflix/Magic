@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ssh():
     mod = importlib.import_module("scripts.ssh")
     assert isinstance(mod, types.ModuleType)

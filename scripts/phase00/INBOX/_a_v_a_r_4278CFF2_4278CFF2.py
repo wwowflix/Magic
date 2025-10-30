@@ -15,7 +15,6 @@ from . import otTables
 import struct
 import magic_logging as logging
 
-
 log = logging.getLogger(__name__)
 
 from .otBase import BaseTTXConverter

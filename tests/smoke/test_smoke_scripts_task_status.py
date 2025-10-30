@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_task_status():
     mod = importlib.import_module("scripts.task_status")
     assert isinstance(mod, types.ModuleType)

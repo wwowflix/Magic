@@ -180,7 +180,6 @@ try:
 except ImportError:  # pragma: no cover
     trove_classifier = _TroveClassifier()
 
-
 # -------------------------------------------------------------------------------------
 # Non-PEP related
 

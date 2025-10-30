@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cdp():
     mod = importlib.import_module("scripts.cdp")
     assert isinstance(mod, types.ModuleType)

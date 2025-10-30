@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_pytables_9855B64D_9855B64D():
     mod = importlib.import_module("scripts.phase00.INBOX.pytables_9855B64D_9855B64D")
     assert isinstance(mod, types.ModuleType)

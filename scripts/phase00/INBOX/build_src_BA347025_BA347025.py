@@ -11,7 +11,6 @@ from distutils.dep_util import newer_group, newer
 from distutils.util import get_platform
 from distutils.errors import DistutilsError, DistutilsSetupError
 
-
 # this import can't be done here, as it uses numpy stuff only available
 # after it's installed
 # import numpy.f2py

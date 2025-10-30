@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ndarray_conversion():
     mod = importlib.import_module("scripts.ndarray_conversion")
     assert isinstance(mod, types.ModuleType)

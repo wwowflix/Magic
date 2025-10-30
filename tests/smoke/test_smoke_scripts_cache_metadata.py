@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cache_metadata():
     mod = importlib.import_module("scripts.cache_metadata")
     assert isinstance(mod, types.ModuleType)

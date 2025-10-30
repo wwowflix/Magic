@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pathf95():
     mod = importlib.import_module("scripts.pathf95")
     assert isinstance(mod, types.ModuleType)

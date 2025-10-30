@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_hpux():
     mod = importlib.import_module("scripts.hpux")
     assert isinstance(mod, types.ModuleType)

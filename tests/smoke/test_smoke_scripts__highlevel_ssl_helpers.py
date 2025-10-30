@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__highlevel_ssl_helpers():
     mod = importlib.import_module("scripts._highlevel_ssl_helpers")
     assert isinstance(mod, types.ModuleType)

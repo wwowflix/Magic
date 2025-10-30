@@ -3349,8 +3349,7 @@ class White(Token):
         "\u2008": "<PUNCTUATION_SPACE>",
         "\ ": "<THIN_SPACE>",
         "\ ": "<HAIR_SPACE>",
-        "\": "<ZERO_WIDTH_SPACE>",
-        "\ ": "<NNBSP>",
+        '": ' < ZERO_WIDTH_SPACE > "," "\ ": "<NNBSP>",
         "\u205f": "<MMSP>",
         "\u3000": "<IDEOGRAPHIC_SPACE>",
     }

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_tag_icon_mapper():
     mod = importlib.import_module("scripts.tag_icon_mapper")
     assert isinstance(mod, types.ModuleType)

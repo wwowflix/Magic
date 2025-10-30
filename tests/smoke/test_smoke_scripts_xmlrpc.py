@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_xmlrpc():
     mod = importlib.import_module("scripts.xmlrpc")
     assert isinstance(mod, types.ModuleType)

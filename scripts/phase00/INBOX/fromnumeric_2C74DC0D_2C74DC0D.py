@@ -3346,7 +3346,6 @@ def around(a, decimals=0, out=None):
 
     ceil, fix, floor, rint, trunc
 
-
     Notes
     -----
     For values exactly halfway between rounded decimal values, NumPy
@@ -3381,7 +3380,6 @@ def around(a, decimals=0, out=None):
         56294995342131.5
         >>> np.round(16.055, 2), round(16.055, 2)  # equals 16.0549999999999997
         (16.06, 16.05)
-
 
     References
     ----------

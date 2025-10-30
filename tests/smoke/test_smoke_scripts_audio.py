@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_audio():
     mod = importlib.import_module("scripts.audio")
     assert isinstance(mod, types.ModuleType)

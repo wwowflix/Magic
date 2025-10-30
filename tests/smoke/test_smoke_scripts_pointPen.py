@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pointPen():
     mod = importlib.import_module("scripts.pointPen")
     assert isinstance(mod, types.ModuleType)

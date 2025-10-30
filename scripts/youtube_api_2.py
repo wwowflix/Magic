@@ -59,7 +59,7 @@ def save_youtube_trends_to_csv(response):
                 }
             )
 
-    print(f"✅ Saved {len(videos)} YouTube trending videos to CSV")
+    print(f"âœ… Saved {len(videos)} YouTube trending videos to CSV")
 
 
 if __name__ == "__main__":

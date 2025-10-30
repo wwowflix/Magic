@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase10_module_J_10J_reddit_twitter_hashtag_inserter_READY():
-    mod = importlib.import_module("scripts.phase10.module_J.10J_reddit_twitter_hashtag_inserter_READY")
+    mod = importlib.import_module(
+        "scripts.phase10.module_J.10J_reddit_twitter_hashtag_inserter_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

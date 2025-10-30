@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_install_cxx_toolchain():
     mod = importlib.import_module("scripts.install_cxx_toolchain")
     assert isinstance(mod, types.ModuleType)

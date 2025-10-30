@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_floating():
     mod = importlib.import_module("scripts.floating")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ec():
     mod = importlib.import_module("scripts.ec")
     assert isinstance(mod, types.ModuleType)

@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase12_module_I_12I_giveaway_trigger_from_ugc_READY():
-    mod = importlib.import_module("scripts.phase12.module_I.12I_giveaway_trigger_from_ugc_READY")
+    mod = importlib.import_module(
+        "scripts.phase12.module_I.12I_giveaway_trigger_from_ugc_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

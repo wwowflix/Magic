@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: MIT
 
-
 from functools import total_ordering
 
 from ._funcs import astuple

@@ -1,4 +1,6 @@
-﻿import sys, os
+﻿import sys
+import os
+
 bad = []
 for name in ("scripts/otTables.py", "scripts/otConverters.py"):
     if os.path.exists(name):

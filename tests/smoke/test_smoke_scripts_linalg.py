@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_linalg():
     mod = importlib.import_module("scripts.linalg")
     assert isinstance(mod, types.ModuleType)

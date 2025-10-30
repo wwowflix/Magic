@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__xlsxwriter():
     mod = importlib.import_module("scripts._xlsxwriter")
     assert isinstance(mod, types.ModuleType)

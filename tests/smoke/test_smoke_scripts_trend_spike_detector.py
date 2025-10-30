@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_trend_spike_detector():
     mod = importlib.import_module("scripts.trend_spike_detector")
     assert isinstance(mod, types.ModuleType)

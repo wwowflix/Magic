@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dbfs():
     mod = importlib.import_module("scripts.dbfs")
     assert isinstance(mod, types.ModuleType)

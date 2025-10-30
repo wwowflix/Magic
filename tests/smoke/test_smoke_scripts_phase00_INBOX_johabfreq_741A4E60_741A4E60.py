@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_johabfreq_741A4E60_741A4E60():
     mod = importlib.import_module("scripts.phase00.INBOX.johabfreq_741A4E60_741A4E60")
     assert isinstance(mod, types.ModuleType)

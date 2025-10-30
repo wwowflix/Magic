@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_nanops():
     mod = importlib.import_module("scripts.nanops")
     assert isinstance(mod, types.ModuleType)

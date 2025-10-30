@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__suppress():
     mod = importlib.import_module("scripts._suppress")
     assert isinstance(mod, types.ModuleType)

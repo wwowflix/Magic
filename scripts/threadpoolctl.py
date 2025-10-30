@@ -33,7 +33,6 @@ __all__ = [
     "register",
 ]
 
-
 # One can get runtime errors or even segfaults due to multiple OpenMP libraries
 # loaded simultaneously which can happen easily in Python when importing and
 # using compiled extensions built with different compilers and therefore

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_arraysetops():
     mod = importlib.import_module("scripts.arraysetops")
     assert isinstance(mod, types.ModuleType)

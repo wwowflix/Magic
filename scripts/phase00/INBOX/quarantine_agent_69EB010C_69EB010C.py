@@ -50,14 +50,14 @@ def quarantine_script(script_path):
     os.makedirs(QUARANTINE_DIR, exist_ok=True)
     dest_path = os.path.join(QUARANTINE_DIR, os.path.basename(script_path))
     shutil.move(script_path, dest_path)
-    print(f"🛑 Quarantined script: {script_path} → {dest_path}")
+    print(f"ðŸ›‘ Quarantined script: {script_path} â†’ {dest_path}")
 
 
 def main():
     with open(SCRIPT_MAP_PATH, "r", encoding="utf-8") as f:
         script_map = json.load(f)
 
-    print(f"🔍 Loaded {len(script_map)} scripts in map.")
+    print(f"ðŸ” Loaded {len(script_map)} scripts in map.")
 
     for root, _, files in os.walk(LOGS_DIR):
         for file in files:
@@ -76,7 +76,9 @@ def main():
                 if script_path and os.path.exists(script_path):
                     quarantine_script(script_path)
                 else:
-                    print(f"⚠️ Script not found or missing in map: {normalized_name}")
+                    print(
+                        f"âš ï¸ Script not found or missing in map: {normalized_name}"
+                    )
 
 
 if __name__ == "__main__":

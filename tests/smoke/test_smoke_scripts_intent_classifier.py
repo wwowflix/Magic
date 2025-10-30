@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_intent_classifier():
     mod = importlib.import_module("scripts.intent_classifier")
     assert isinstance(mod, types.ModuleType)

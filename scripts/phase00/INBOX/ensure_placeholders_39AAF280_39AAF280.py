@@ -27,12 +27,12 @@ for phase in args.phases.split(","):
 print("Phase {phase} Module {module} placeholder executed")
 
 def main():
-    print("✅ [{phase}{module}] placeholder logic stub")
+    print("âœ… [{phase}{module}] placeholder logic stub")
 
 if __name__ == "__main__":
     main()
 """
                 )
-            print(f"✅ Created: {placeholder_path}")
+            print(f"âœ… Created: {placeholder_path}")
         else:
-            print(f"⚠️ Already exists: {placeholder_path}")
+            print(f"âš ï¸ Already exists: {placeholder_path}")

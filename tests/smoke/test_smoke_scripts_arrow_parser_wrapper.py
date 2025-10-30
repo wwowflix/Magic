@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_arrow_parser_wrapper():
     mod = importlib.import_module("scripts.arrow_parser_wrapper")
     assert isinstance(mod, types.ModuleType)

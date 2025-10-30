@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_geometry():
     mod = importlib.import_module("scripts.geometry")
     assert isinstance(mod, types.ModuleType)

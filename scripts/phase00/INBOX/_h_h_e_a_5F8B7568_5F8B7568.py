@@ -7,26 +7,25 @@ from fontTools.misc.fixedTools import (
 from . import DefaultTable
 import math
 
-
 hheaFormat = """
-		>  # big endian
-		tableVersion:           L
-		ascent:                 h
-		descent:                h
-		lineGap:                h
-		advanceWidthMax:        H
-		minLeftSideBearing:     h
-		minRightSideBearing:    h
-		xMaxExtent:             h
-		caretSlopeRise:         h
-		caretSlopeRun:          h
-		caretOffset:            h
-		reserved0:              h
-		reserved1:              h
-		reserved2:              h
-		reserved3:              h
-		metricDataFormat:       h
-		numberOfHMetrics:       H
+        >  # big endian
+        tableVersion:           L
+        ascent:                 h
+        descent:                h
+        lineGap:                h
+        advanceWidthMax:        H
+        minLeftSideBearing:     h
+        minRightSideBearing:    h
+        xMaxExtent:             h
+        caretSlopeRise:         h
+        caretSlopeRun:          h
+        caretOffset:            h
+        reserved0:              h
+        reserved1:              h
+        reserved2:              h
+        reserved3:              h
+        metricDataFormat:       h
+        numberOfHMetrics:       H
 """
 
 

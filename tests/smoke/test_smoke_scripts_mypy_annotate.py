@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mypy_annotate():
     mod = importlib.import_module("scripts.mypy_annotate")
     assert isinstance(mod, types.ModuleType)

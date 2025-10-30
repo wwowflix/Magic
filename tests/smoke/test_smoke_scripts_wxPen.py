@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_wxPen():
     mod = importlib.import_module("scripts.wxPen")
     assert isinstance(mod, types.ModuleType)

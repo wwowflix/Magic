@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dashboard_pusher():
     mod = importlib.import_module("scripts.dashboard_pusher")
     assert isinstance(mod, types.ModuleType)

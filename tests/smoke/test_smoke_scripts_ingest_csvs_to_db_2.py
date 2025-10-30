@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ingest_csvs_to_db_2():
     mod = importlib.import_module("scripts.ingest_csvs_to_db_2")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_idnadata():
     mod = importlib.import_module("scripts.idnadata")
     assert isinstance(mod, types.ModuleType)

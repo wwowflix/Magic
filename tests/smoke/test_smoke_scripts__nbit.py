@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__nbit():
     mod = importlib.import_module("scripts._nbit")
     assert isinstance(mod, types.ModuleType)

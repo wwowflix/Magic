@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dialog():
     mod = importlib.import_module("scripts.dialog")
     assert isinstance(mod, types.ModuleType)

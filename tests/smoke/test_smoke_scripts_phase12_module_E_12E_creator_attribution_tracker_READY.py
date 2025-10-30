@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase12_module_E_12E_creator_attribution_tracker_READY():
-    mod = importlib.import_module("scripts.phase12.module_E.12E_creator_attribution_tracker_READY")
+    mod = importlib.import_module(
+        "scripts.phase12.module_E.12E_creator_attribution_tracker_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__windows_cffi():
     mod = importlib.import_module("scripts._windows_cffi")
     assert isinstance(mod, types.ModuleType)

@@ -1,4 +1,4 @@
-﻿from logging import *
+from logging import *
 import logging as _pylogging
 
 # give tests sane defaults if no handlers were configured

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_threadpoolctl():
     mod = importlib.import_module("scripts.threadpoolctl")
     assert isinstance(mod, types.ModuleType)

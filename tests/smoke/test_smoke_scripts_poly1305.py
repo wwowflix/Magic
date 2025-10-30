@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_poly1305():
     mod = importlib.import_module("scripts.poly1305")
     assert isinstance(mod, types.ModuleType)

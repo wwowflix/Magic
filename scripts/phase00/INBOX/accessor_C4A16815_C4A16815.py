@@ -3115,7 +3115,7 @@ class StringMethods(NoNewAttributesMixin):
     There are several different but overlapping sets of numeric characters that
     can be checked for.
 
-    >>> s3 = pd.Series(['23', '³', '⅕', ''])
+    >>> s3 = pd.Series(['23', 'Â³', 'â…•', ''])
 
     The ``s3.str.isdecimal`` method checks for characters used to form numbers
     in base 10.

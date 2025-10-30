@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_glifLib():
     mod = importlib.import_module("scripts.glifLib")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cmap():
     mod = importlib.import_module("scripts.cmap")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,7 @@
 # MAGIC_SHIM_BEGIN
 import importlib
+
+
 def add_newdoc(place, obj, doc):
     # Import target module; if missing, just skip
     try:
@@ -22,17 +24,24 @@ def add_newdoc(place, obj, doc):
     except Exception:
         # Never break imports over doc wiring
         pass
+
+
 # MAGIC_SHIM_END
 # --- MAGIC: NumPy-safe add_newdoc shim (do not edit) ---
 import importlib
+
 try:
     try:
-        from numpy._core.function_base import add_newdoc as _np_add_newdoc  # NumPy >= 1.24
+        from numpy._core.function_base import (
+            add_newdoc as _np_add_newdoc,
+        )  # NumPy >= 1.24
     except Exception:
-        from numpy.lib.function_base import add_newdoc as _np_add_newdoc      # Older NumPy
+        from numpy.lib.function_base import add_newdoc as _np_add_newdoc  # Older NumPy
 except Exception:
+
     def _np_add_newdoc(*args, **kwargs):  # no-op fallback if NumPy is absent/broken
         return
+
 
 def add_newdoc(place: str, obj: str, doc: str) -> None:
     """Safely add docs only if the attribute actually exists on the target module."""
@@ -46,6 +55,8 @@ def add_newdoc(place: str, obj: str, doc: str) -> None:
         _np_add_newdoc(place, obj, doc)
     except Exception:
         pass
+
+
 # --- end MAGIC shim ---
 """
 This is only meant to add docs to objects defined in C-extension modules.
@@ -131,7 +142,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core",
     "flatiter",
@@ -153,7 +163,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core",
@@ -190,7 +199,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core",
     "flatiter",
@@ -213,7 +221,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 ###############################################################################
 #
@@ -698,7 +705,6 @@ add_newdoc(
     ),
 )
 
-
 ###############################################################################
 #
 # broadcast
@@ -976,7 +982,6 @@ add_newdoc(
         'C'   C order   C order
         'F'   F order   F order
 
-
         When ``copy=False`` and a copy is made for other reasons, the result is
         the same as if ``copy=True``, with some exceptions for 'A', see the
         Notes section. The default order is 'K'.
@@ -1004,7 +1009,6 @@ add_newdoc(
     ones : Return a new array setting values to one.
     zeros : Return a new array setting values to zero.
     full : Return a new array of given shape filled with value.
-
 
     Notes
     When order is 'A' and `object` is an array in neither 'C' nor 'F' order,
@@ -1322,7 +1326,6 @@ add_newdoc(
     ones : Return a new array setting values to one.
     zeros : Return a new array setting values to zero.
     full : Return a new array of given shape filled with value.
-
 
     Notes
     `empty`, unlike `zeros`, does not set the array values to zero,
@@ -1802,7 +1805,6 @@ add_newdoc(
     """,
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "set_string_function",
@@ -2223,20 +2225,17 @@ add_newdoc(
     """,
 )
 
-
 ##############################################################################
 #
 # Documentation for ndarray attributes and methods
 #
 ##############################################################################
 
-
 ##############################################################################
 #
 # ndarray object
 #
 ##############################################################################
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2359,13 +2358,11 @@ add_newdoc(
     """,
 )
 
-
 ##############################################################################
 #
 # ndarray attributes
 #
 ##############################################################################
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2373,21 +2370,17 @@ add_newdoc(
     ("__array_interface__", """Array protocol: Python side."""),
 )
 
-
 add_newdoc("numpy.core.multiarray", "ndarray", ("__array_finalize__", """None."""))
-
 
 add_newdoc(
     "numpy.core.multiarray", "ndarray", ("__array_priority__", """Array priority.""")
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
     ("__array_struct__", """Array protocol: C-struct side."""),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2413,7 +2406,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2492,13 +2484,11 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
     ("data", """Python buffer object pointing to the start of the array's data."""),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2530,7 +2520,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2549,7 +2538,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2570,7 +2558,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2652,7 +2639,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2698,7 +2684,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2722,7 +2707,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2742,7 +2726,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2765,7 +2748,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2812,7 +2794,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2841,7 +2822,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2907,7 +2887,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2939,13 +2918,11 @@ add_newdoc(
     ),
 )
 
-
 ##############################################################################
 #
 # ndarray methods
 #
 ##############################################################################
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -2962,7 +2939,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2974,7 +2950,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -2985,7 +2960,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3002,7 +2976,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3016,7 +2989,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3029,7 +3001,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3056,7 +3027,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3075,7 +3045,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3096,7 +3065,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3115,7 +3083,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3136,7 +3103,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3155,7 +3121,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3177,7 +3142,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3253,7 +3217,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3310,7 +3273,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3329,7 +3291,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3351,7 +3312,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3370,7 +3330,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3391,7 +3350,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3410,7 +3368,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3462,7 +3419,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3482,7 +3438,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3501,7 +3456,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3523,7 +3477,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3557,7 +3510,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3579,7 +3531,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3597,7 +3548,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3626,7 +3576,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3666,7 +3615,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3712,7 +3660,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3774,7 +3721,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3824,7 +3770,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3843,7 +3788,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3864,7 +3808,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3884,7 +3827,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3902,8 +3844,6 @@ add_newdoc(
     Changes are also made in all fields and sub-arrays of the array data
     type.
 
-
-
     Parameters
     new_order : string, optional
         Byte order to force; a value from the byte order specifications
@@ -3918,7 +3858,6 @@ add_newdoc(
         The default value ('S') results in swapping the current
         byte order.
 
-
     Returns
     new_arr : array
         New array object with the dtype reflecting given change to the
@@ -3927,7 +3866,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3948,7 +3886,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -3967,7 +3904,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -3988,7 +3924,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4007,7 +3942,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4030,7 +3964,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4049,7 +3982,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4075,7 +4007,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4168,7 +4099,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4188,7 +4118,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4207,7 +4136,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4260,7 +4188,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4344,7 +4271,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4409,7 +4335,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4467,7 +4392,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4486,7 +4410,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4507,7 +4430,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4526,7 +4448,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4547,7 +4468,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4566,7 +4486,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4614,7 +4533,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4681,7 +4599,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4721,7 +4638,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4738,7 +4654,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4758,7 +4673,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4819,7 +4733,6 @@ add_newdoc(
     ),
 )
 
-
 add_newdoc(
     "numpy.core.multiarray",
     "ndarray",
@@ -4838,7 +4751,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 add_newdoc(
     "numpy.core.multiarray",
@@ -4886,7 +4798,6 @@ add_newdoc(
     memory. Therefore if ``a`` is C-ordered versus fortran-ordered, versus
     defined as a slice or transpose, etc., the view may give different
     results.
-
 
     Examples
     >>> x = np.array([(1, 2)], dtype=[('a', np.int8), ('b', np.int8)])
@@ -4946,7 +4857,6 @@ add_newdoc(
     """,
     ),
 )
-
 
 ##############################################################################
 #
@@ -5123,7 +5033,6 @@ add_newdoc(
     """,
 )
 
-
 ##############################################################################
 #
 # compiled_base functions
@@ -5213,13 +5122,11 @@ add_newdoc(
     """,
 )
 
-
 ##############################################################################
 #
 # Documentation for ufunc attributes and methods
 #
 ##############################################################################
-
 
 ##############################################################################
 #
@@ -5278,7 +5185,6 @@ add_newdoc(
 
     """,
 )
-
 
 ##############################################################################
 #
@@ -6096,7 +6002,6 @@ add_newdoc(
     '>'  big-endian
     '|'  not applicable
 
-
     All built-in data-type objects have byteorder either '=' or '|'.
 
     Examples
@@ -6681,7 +6586,6 @@ add_newdoc(
     ),
 )
 
-
 ##############################################################################
 #
 # Datetime-related Methods
@@ -6848,7 +6752,6 @@ add_newdoc(
     numpy.datetime64('2010-01-01T00:00:00','25s')
     """,
 )
-
 
 ##############################################################################
 #
@@ -7030,7 +6933,6 @@ add_newdoc(
         above.  The default value ('S') results in swapping the current
         byte order.
 
-
     Returns
     new_dtype : dtype
         New `dtype` object with the given change to the byte order.
@@ -7091,13 +6993,11 @@ add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("var")
 
 add_newdoc("numpy.core.numerictypes", "generic", refer_to_array_attribute("view"))
 
-
 ##############################################################################
 #
 # Documentation for scalar type abstract base classes in type hierarchy
 #
 ##############################################################################
-
 
 add_newdoc(
     "numpy.core.numerictypes",
@@ -7184,4 +7084,3 @@ add_newdoc(
 
     """,
 )
-

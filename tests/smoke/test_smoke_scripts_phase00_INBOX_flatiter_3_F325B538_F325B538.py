@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_flatiter_3_F325B538_F325B538():
     mod = importlib.import_module("scripts.phase00.INBOX.flatiter_3_F325B538_F325B538")
     assert isinstance(mod, types.ModuleType)

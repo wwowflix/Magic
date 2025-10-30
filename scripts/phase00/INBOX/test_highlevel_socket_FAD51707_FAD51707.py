@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .. import _core, socket as tsocket
-from .._highlevel_socket import *
-from ..testing import (
+from scripts._highlevel_socket import *
+from scripts.testing import (
     assert_checkpoints,
     check_half_closeable_stream,
     wait_all_tasks_blocked,

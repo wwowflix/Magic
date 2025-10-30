@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_trends_scraper_with_reddit():
     mod = importlib.import_module("scripts.trends_scraper_with_reddit")
     assert isinstance(mod, types.ModuleType)

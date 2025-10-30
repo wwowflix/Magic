@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__json():
     mod = importlib.import_module("scripts._json")
     assert isinstance(mod, types.ModuleType)

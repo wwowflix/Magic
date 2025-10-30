@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ygen():
     mod = importlib.import_module("scripts.ygen")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ssltransport():
     mod = importlib.import_module("scripts.ssltransport")
     assert isinstance(mod, types.ModuleType)

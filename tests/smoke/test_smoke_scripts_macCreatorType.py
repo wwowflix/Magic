@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_macCreatorType():
     mod = importlib.import_module("scripts.macCreatorType")
     assert isinstance(mod, types.ModuleType)

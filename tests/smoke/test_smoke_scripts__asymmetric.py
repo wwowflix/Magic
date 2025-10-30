@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__asymmetric():
     mod = importlib.import_module("scripts._asymmetric")
     assert isinstance(mod, types.ModuleType)

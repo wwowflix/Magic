@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_advanced_twitter_scraper_2():
     mod = importlib.import_module("scripts.advanced_twitter_scraper_2")
     assert isinstance(mod, types.ModuleType)

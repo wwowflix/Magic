@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 _T = TypeVar("_T", bound="TempDirectory")
 
-
 # Kinds of temporary directories. Only needed for ones that are
 # globally-managed.
 tempdir_kinds = enum(
@@ -20,7 +19,6 @@ tempdir_kinds = enum(
     EPHEM_WHEEL_CACHE="ephem-wheel-cache",
     REQ_BUILD="req-build",
 )
-
 
 _tempdir_manager: Optional[ExitStack] = None
 

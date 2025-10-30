@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__checkpoints():
     mod = importlib.import_module("scripts._checkpoints")
     assert isinstance(mod, types.ModuleType)

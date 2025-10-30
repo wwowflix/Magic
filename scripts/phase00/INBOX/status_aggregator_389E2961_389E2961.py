@@ -15,14 +15,14 @@ def aggregate_status():
 
         if "_module_" not in phase_module:
             print(
-                f"⚠️ Skipping summary file with unexpected name format: {summary_file}"
+                f"âš ï¸ Skipping summary file with unexpected name format: {summary_file}"
             )
             continue
 
         try:
             phase, module = phase_module.split("_module_")
         except ValueError:
-            print(f"⚠️ Could not unpack phase/module from: {phase_module}")
+            print(f"âš ï¸ Could not unpack phase/module from: {phase_module}")
             continue
 
         summary_path = os.path.join(SUMMARY_DIR, summary_file)
@@ -59,7 +59,7 @@ def aggregate_status():
         for record in daily_records:
             writer.writerow(record)
 
-    print(f"✅ Daily status aggregation complete. Output file: {DAILY_STATUS_FILE}")
+    print(f"âœ… Daily status aggregation complete. Output file: {DAILY_STATUS_FILE}")
 
 
 if __name__ == "__main__":

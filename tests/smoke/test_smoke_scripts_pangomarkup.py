@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pangomarkup():
     mod = importlib.import_module("scripts.pangomarkup")
     assert isinstance(mod, types.ModuleType)

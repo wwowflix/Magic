@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_proxy():
     mod = importlib.import_module("scripts.proxy")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_genshi():
     mod = importlib.import_module("scripts.genshi")
     assert isinstance(mod, types.ModuleType)

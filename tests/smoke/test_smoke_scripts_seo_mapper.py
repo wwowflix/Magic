@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_seo_mapper():
     mod = importlib.import_module("scripts.seo_mapper")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_chaos_inject_failures():
     mod = importlib.import_module("tools.chaos.inject_failures")
     assert isinstance(mod, types.ModuleType)

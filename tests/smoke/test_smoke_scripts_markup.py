@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_markup():
     mod = importlib.import_module("scripts.markup")
     assert isinstance(mod, types.ModuleType)

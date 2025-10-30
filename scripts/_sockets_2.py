@@ -13,7 +13,7 @@ from socket import AddressFamily, SocketKind
 from typing import TYPE_CHECKING, Any, Literal, cast, overload
 
 from .. import to_thread
-from ..abc import (
+from scripts.abc import (
     ConnectedUDPSocket,
     ConnectedUNIXDatagramSocket,
     IPAddressType,
@@ -24,8 +24,8 @@ from ..abc import (
     UNIXDatagramSocket,
     UNIXSocketStream,
 )
-from ..streams.stapled import MultiListener
-from ..streams.tls import TLSStream
+from scripts.streams.stapled import MultiListener
+from scripts.streams.tls import TLSStream
 from ._eventloop import get_async_backend
 from ._resources import aclose_forcefully
 from ._synchronization import Event

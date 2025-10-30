@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_hermite_e():
     mod = importlib.import_module("scripts.hermite_e")
     assert isinstance(mod, types.ModuleType)

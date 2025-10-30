@@ -41,7 +41,6 @@ __all__ = [
     "common_sign2map",
 ]
 
-
 # Numarray and Numeric users should set this False
 using_newcore = True
 

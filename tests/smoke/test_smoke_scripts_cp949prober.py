@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cp949prober():
     mod = importlib.import_module("scripts.cp949prober")
     assert isinstance(mod, types.ModuleType)

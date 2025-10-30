@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_virtual_authenticator():
     mod = importlib.import_module("scripts.virtual_authenticator")
     assert isinstance(mod, types.ModuleType)

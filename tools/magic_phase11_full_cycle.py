@@ -1,4 +1,4 @@
-import subprocess
+import subprocess  # noqa: I001
 import datetime
 import os
 import sys

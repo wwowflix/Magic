@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_interpolate_layout():
     mod = importlib.import_module("scripts.interpolate_layout")
     assert isinstance(mod, types.ModuleType)

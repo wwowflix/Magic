@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase02_module_D_02D_trend_score_threshold_filter_READY():
-    mod = importlib.import_module("scripts.phase02.module_D.02D_trend_score_threshold_filter_READY")
+    mod = importlib.import_module(
+        "scripts.phase02.module_D.02D_trend_score_threshold_filter_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_scimath():
     mod = importlib.import_module("scripts.scimath")
     assert isinstance(mod, types.ModuleType)

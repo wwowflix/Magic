@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_extending_distributions():
     mod = importlib.import_module("scripts.extending_distributions")
     assert isinstance(mod, types.ModuleType)

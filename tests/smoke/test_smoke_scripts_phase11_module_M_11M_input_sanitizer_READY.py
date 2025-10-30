@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase11_module_M_11M_input_sanitizer_READY():
     mod = importlib.import_module("scripts.phase11.module_M.11M_input_sanitizer_READY")
     assert isinstance(mod, types.ModuleType)

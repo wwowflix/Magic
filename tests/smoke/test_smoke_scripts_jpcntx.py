@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_jpcntx():
     mod = importlib.import_module("scripts.jpcntx")
     assert isinstance(mod, types.ModuleType)

@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase15_module_G_15G_real_time_engagement_delta_tracker_READY():
-    mod = importlib.import_module("scripts.phase15.module_G.15G_real_time_engagement_delta_tracker_READY")
+    mod = importlib.import_module(
+        "scripts.phase15.module_G.15G_real_time_engagement_delta_tracker_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

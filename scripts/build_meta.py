@@ -46,7 +46,6 @@ from ._reqs import parse_strings
 from ._deprecation_warning import SetuptoolsDeprecationWarning
 from distutils.util import strtobool
 
-
 __all__ = [
     "get_requires_for_build_sdist",
     "get_requires_for_build_wheel",
@@ -513,7 +512,6 @@ if not LEGACY_EDITABLE:
     get_requires_for_build_editable = _BACKEND.get_requires_for_build_editable
     prepare_metadata_for_build_editable = _BACKEND.prepare_metadata_for_build_editable
     build_editable = _BACKEND.build_editable
-
 
 # The legacy backend
 __legacy__ = _BuildMetaLegacyBackend()

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_wheel_editable():
     mod = importlib.import_module("scripts.wheel_editable")
     assert isinstance(mod, types.ModuleType)

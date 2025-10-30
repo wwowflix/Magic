@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_saturation_calc_2():
     mod = importlib.import_module("scripts.saturation_calc_2")
     assert isinstance(mod, types.ModuleType)

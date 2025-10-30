@@ -80,7 +80,6 @@ __all__ = [
     "asarray",
 ]
 
-
 _globalvar = 0
 
 array_function_dispatch = functools.partial(
@@ -1118,7 +1117,6 @@ def lstrip(a, chars=None):
 
     >>> np.char.lstrip(c, 'a')
     array(['AaAaA', '  aA  ', 'bBABba'], dtype='<U7')
-
 
     >>> np.char.lstrip(c, 'A') # leaves c unchanged
     array(['aAaAaA', '  aA  ', 'abBABba'], dtype='<U7')

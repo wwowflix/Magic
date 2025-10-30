@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_E_13E_intent_signal_analyzer_READY():
-    mod = importlib.import_module("scripts.phase13.module_E.13E_intent_signal_analyzer_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_E.13E_intent_signal_analyzer_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

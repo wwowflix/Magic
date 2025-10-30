@@ -28,7 +28,6 @@ if TYPE_CHECKING:
 
     Result = RLResult[Requirement, Candidate, str]
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -42,7 +42,6 @@ class memmap(ndarray):
     resource is actually closed, since it may be shared between different
     memmap instances.
 
-
     Parameters
     ----------
     filename : str, file-like object, or pathlib.Path instance
@@ -101,7 +100,6 @@ class memmap(ndarray):
         Flush any changes in memory to file on disk.
         When you delete a memmap object, flush is called first to write
         changes to disk.
-
 
     See also
     --------

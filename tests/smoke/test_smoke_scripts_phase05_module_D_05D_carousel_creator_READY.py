@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase05_module_D_05D_carousel_creator_READY():
     mod = importlib.import_module("scripts.phase05.module_D.05D_carousel_creator_READY")
     assert isinstance(mod, types.ModuleType)

@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Provide the SubredditListingMixin class."""
-
 from __future__ import annotations
 
+"""Provide the SubredditListingMixin class."""
 from typing import TYPE_CHECKING, Any, Iterator
 from urllib.parse import urljoin
 
 from ....util.cache import cachedproperty
 from ...base import PRAWBase
-from ..generator import ListingGenerator
+from scripts.generator import ListingGenerator
 from .base import BaseListingMixin
 from .gilded import GildedListingMixin
 from .rising import RisingListingMixin

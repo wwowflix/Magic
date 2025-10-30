@@ -43,7 +43,6 @@ import io
 import configparser
 import sysconfig
 
-
 from sysconfig import get_path
 
 from setuptools import SetuptoolsDeprecationWarning
@@ -75,9 +74,8 @@ from pkg_resources import (
     DEVELOP_DIST,
 )
 import pkg_resources
-from .._path import ensure_directory
-from ..extern.jaraco.text import yield_lines
-
+from scripts._path import ensure_directory
+from scripts.extern.jaraco.text import yield_lines
 
 # Turn on PEP440Warnings
 warnings.filterwarnings("default", category=pkg_resources.PEP440Warning)
@@ -1361,7 +1359,6 @@ class easy_install(Command):
 
           https://setuptools.pypa.io/en/latest/deprecated/easy_install.html#custom-installation-locations
 
-
         Please make the appropriate changes for your system and try again.
         """
     ).strip()
@@ -2123,7 +2120,6 @@ class ScriptWriter:
             except ImportError:
                 from pkg_resources import load_entry_point
 
-
         def importlib_load_entry_point(spec, group, name):
             dist_name, _, _ = spec.partition('==')
             matches = (
@@ -2133,9 +2129,7 @@ class ScriptWriter:
             )
             return next(matches).load()
 
-
         globals().setdefault('load_entry_point', importlib_load_entry_point)
-
 
         if __name__ == '__main__':
             sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])

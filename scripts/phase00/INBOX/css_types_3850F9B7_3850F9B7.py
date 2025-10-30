@@ -1,6 +1,6 @@
-"""CSS selector structure items."""
-
 from __future__ import annotations
+
+"""CSS selector structure items."""
 import copyreg
 from .pretty import pretty
 from typing import Any, Iterator, Hashable, Pattern, Iterable, Mapping
@@ -17,7 +17,6 @@ __all__ = (
     "Namespaces",
     "CustomSelectors",
 )
-
 
 SEL_EMPTY = 0x1
 SEL_ROOT = 0x2

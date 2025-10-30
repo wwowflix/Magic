@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_align():
     mod = importlib.import_module("scripts.align")
     assert isinstance(mod, types.ModuleType)

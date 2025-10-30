@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_defmatrix():
     mod = importlib.import_module("scripts.defmatrix")
     assert isinstance(mod, types.ModuleType)

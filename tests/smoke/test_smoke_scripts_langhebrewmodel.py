@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_langhebrewmodel():
     mod = importlib.import_module("scripts.langhebrewmodel")
     assert isinstance(mod, types.ModuleType)

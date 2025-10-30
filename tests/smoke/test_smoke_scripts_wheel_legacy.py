@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_wheel_legacy():
     mod = importlib.import_module("scripts.wheel_legacy")
     assert isinstance(mod, types.ModuleType)

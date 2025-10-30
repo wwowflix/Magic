@@ -22,10 +22,8 @@ from numpy.core._string_helpers import english_lower
 from numpy.core.multiarray import typeinfo, dtype
 from numpy.core._dtype import _kind_name
 
-
 sctypeDict = {}  # Contains all leaf-node scalar types with aliases
 allTypes = {}  # Collect the types we will add to the module
-
 
 # separate the actual type info from the abstract base classes
 _abstract_types = {}
@@ -215,7 +213,6 @@ def _set_up_aliases():
 
 _set_up_aliases()
 
-
 sctypes = {
     "int": [],
     "uint": [],
@@ -257,7 +254,6 @@ def _set_array_types():
 
 
 _set_array_types()
-
 
 # Add additional strings to the sctypeDict
 _toadd = ["int", "float", "complex", "bool", "object", "str", "bytes", ("a", "bytes_")]

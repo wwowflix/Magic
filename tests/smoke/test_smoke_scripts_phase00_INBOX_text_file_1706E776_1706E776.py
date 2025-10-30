@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_text_file_1706E776_1706E776():
     mod = importlib.import_module("scripts.phase00.INBOX.text_file_1706E776_1706E776")
     assert isinstance(mod, types.ModuleType)

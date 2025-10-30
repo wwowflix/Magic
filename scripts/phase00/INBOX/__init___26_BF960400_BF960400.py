@@ -30,7 +30,6 @@
 
 """The ``lxml.html`` tool set for HTML handling."""
 
-
 __all__ = [
     "document_fromstring",
     "fragment_fromstring",
@@ -49,7 +48,6 @@ __all__ = [
     "rewrite_links",
     "parse",
 ]
-
 
 import copy
 import re
@@ -1780,7 +1778,6 @@ class LabelElement(HtmlElement):
 
 
 HtmlElementClassLookup._default_element_classes["label"] = LabelElement
-
 
 ############################################################
 ## Serialization

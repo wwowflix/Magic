@@ -85,7 +85,6 @@ def _python_build():
 
 python_build = _python_build()
 
-
 # Calculate the build qualifier flags if they are defined.  Adding the flags
 # to the include and lib directories only makes sense for an installation, not
 # an in-source build.

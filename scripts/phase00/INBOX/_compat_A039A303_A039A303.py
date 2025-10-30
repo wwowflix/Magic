@@ -1,5 +1,5 @@
-﻿# flake8: noqa
-import importlib.abc as abc
+# flake8: noqa
+import abc
 import sys
 import pathlib
 from contextlib import suppress
@@ -7,8 +7,7 @@ from contextlib import suppress
 if sys.version_info >= (3, 10):
     from zipfile import Path as ZipPath  # type: ignore
 else:
-    from ..zipp import Path as ZipPath  # type: ignore
-
+    from scripts.zipp import Path as ZipPath  # type: ignore
 
 try:
     from typing import runtime_checkable  # type: ignore
@@ -95,4 +94,3 @@ def wrap_spec(package):
     from . import _adapters
 
     return _adapters.SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)
-

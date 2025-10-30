@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_dag_smoke():
     mod = importlib.import_module("tools.dag_smoke")
     assert isinstance(mod, types.ModuleType)

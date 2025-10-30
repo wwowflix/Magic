@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__network():
     mod = importlib.import_module("scripts._network")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_notion_sync_agent():
     mod = importlib.import_module("tools.notion_sync_agent")
     assert isinstance(mod, types.ModuleType)

@@ -1680,13 +1680,13 @@ class AbstractFileSystem(metaclass=_Cached):
                 )
 
                 branch = (
-                    "└" + ("─" * (indent_size - 2))
+                    "â””" + ("â”€" * (indent_size - 2))
                     if is_last_item
-                    else "├" + ("─" * (indent_size - 2))
+                    else "â”œ" + ("â”€" * (indent_size - 2))
                 )
                 branch += " "
                 new_prefix = prefix + (
-                    indent if is_last_item else "│" + " " * (indent_size - 1)
+                    indent if is_last_item else "â”‚" + " " * (indent_size - 1)
                 )
 
                 name = os.path.basename(item.get("name", ""))
@@ -1734,7 +1734,7 @@ class AbstractFileSystem(metaclass=_Cached):
             if remaining_count > 0:
                 more_message = f"{remaining_count} more item(s) not displayed."
                 result.append(
-                    f"{prefix}{'└' + ('─' * (indent_size - 2))} {more_message}"
+                    f"{prefix}{'â””' + ('â”€' * (indent_size - 2))} {more_message}"
                 )
 
         return "\n".join(_ for _ in result if _)

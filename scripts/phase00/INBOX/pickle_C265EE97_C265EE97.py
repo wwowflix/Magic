@@ -1,7 +1,6 @@
-"""pickle compat"""
-
 from __future__ import annotations
 
+"""pickle compat"""
 import pickle
 from typing import Any
 import warnings

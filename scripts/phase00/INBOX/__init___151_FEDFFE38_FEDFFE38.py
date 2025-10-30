@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 A platform independent file lock that supports the with-statement.
 
@@ -5,9 +7,6 @@ A platform independent file lock that supports the with-statement.
    :no-value:
 
 """
-
-from __future__ import annotations
-
 import sys
 import warnings
 from magic_typing import TYPE_CHECKING
@@ -29,7 +28,6 @@ from .version import version
 #: version of the project as a string
 __version__: str = version
 
-
 if sys.platform == "win32":  # pragma: win32 cover
     _FileLock: type[BaseFileLock] = WindowsFileLock
     _AsyncFileLock: type[BaseAsyncFileLock] = AsyncWindowsFileLock
@@ -50,7 +48,6 @@ else:
     #: Alias for the lock, which should be used for the current platform.
     FileLock = _FileLock
     AsyncFileLock = _AsyncFileLock
-
 
 __all__ = [
     "AcquireReturnProxy",

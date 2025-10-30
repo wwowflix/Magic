@@ -45,14 +45,12 @@ def force_document(item):
 Number = Union[int, float, decimal.Decimal]
 NumberClass = (int, float, decimal.Decimal)
 
-
 WHITESPACE = frozenset("\0\t\n\f\r ")
 """Characters PDF considers to be whitespace."""
 EOL_CHARS = frozenset("\n\r")
 """Characters PDF considers to mark the end of a line."""
 DELIMITERS = frozenset("()<>[]{}/%")
 """Special delimiter characters"""
-
 
 STR_ESC = re.compile(r"[\n\r\t\b\f()\\]")
 STR_ESC_MAP = {
@@ -2048,9 +2046,9 @@ class RelativeVerticalLine(NamedTuple):
 
 class BezierCurve(NamedTuple):
     """
-    A cubic Bézier curve path element.
+    A cubic BÃ©zier curve path element.
 
-    This draws a Bézier curve parameterized by the end point of the previous path
+    This draws a BÃ©zier curve parameterized by the end point of the previous path
     element, two off-curve control points, and an end point.
 
     See: `PaintedPath.curve_to`
@@ -2120,7 +2118,7 @@ class BezierCurve(NamedTuple):
 
 class RelativeBezierCurve(NamedTuple):
     """
-    A cubic Bézier curve path element whose points are specified relative to the end
+    A cubic BÃ©zier curve path element whose points are specified relative to the end
     point of the previous path element.
 
     See: `PaintedPath.curve_relative`
@@ -2200,9 +2198,9 @@ class RelativeBezierCurve(NamedTuple):
 
 class QuadraticBezierCurve(NamedTuple):
     """
-    A quadratic Bézier curve path element.
+    A quadratic BÃ©zier curve path element.
 
-    This draws a Bézier curve parameterized by the end point of the previous path
+    This draws a BÃ©zier curve parameterized by the end point of the previous path
     element, one off-curve control point, and an end point.
 
     See: `PaintedPath.quadratic_curve_to`
@@ -2292,7 +2290,7 @@ class QuadraticBezierCurve(NamedTuple):
 
 class RelativeQuadraticBezierCurve(NamedTuple):
     """
-    A quadratic Bézier curve path element whose points are specified relative to the end
+    A quadratic BÃ©zier curve path element whose points are specified relative to the end
     point of the previous path element.
 
     See: `PaintedPath.quadratic_curve_relative`
@@ -2396,8 +2394,8 @@ class Arc(NamedTuple):
         sized segments as necessary to prevent any individual segment from being larger
         than a quarter turn.
 
-        This is used for approximating a circular curve segment using cubic Bézier
-        curves. This computes the parameters used for the Bézier approximation up
+        This is used for approximating a circular curve segment using cubic BÃ©zier
+        curves. This computes the parameters used for the BÃ©zier approximation up
         front, as well as the transform necessary to place the segment in the correct
         position.
 
@@ -2406,7 +2404,7 @@ class Arc(NamedTuple):
 
         Yields:
             A tuple of (ctrl1, ctrl2, end) representing the control and end points of
-            the cubic Bézier curve approximating the segment as a unit circle centered
+            the cubic BÃ©zier curve approximating the segment as a unit circle centered
             at the origin.
         """
         sweep_angle = abs(sweep_angle)
@@ -2562,14 +2560,14 @@ class Arc(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not curves:
-            debug_stream.write(pfx + " └─ nothing\n")
+            debug_stream.write(pfx + " â””â”€ nothing\n")
             return "", last_item
 
         previous = [last_item]
         for curve in curves[:-1]:
             previous.append(curve)
-            debug_stream.write(pfx + f" ├─ {curve}\n")
-        debug_stream.write(pfx + f" └─ {curves[-1]}\n")
+            debug_stream.write(pfx + f" â”œâ”€ {curve}\n")
+        debug_stream.write(pfx + f" â””â”€ {curves[-1]}\n")
 
         return (
             " ".join(
@@ -2839,7 +2837,7 @@ class RoundedRectangle(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not components:
-            debug_stream.write(pfx + " └─ nothing\n")
+            debug_stream.write(pfx + " â””â”€ nothing\n")
             return "", last_item
 
         render_list = []
@@ -2847,13 +2845,13 @@ class RoundedRectangle(NamedTuple):
             rendered, last_item, initial_point = item.render(
                 gsd_registry, style, last_item, initial_point
             )
-            debug_stream.write(pfx + f" ├─ {item}\n")
+            debug_stream.write(pfx + f" â”œâ”€ {item}\n")
             render_list.append(rendered)
 
         rendered, last_item, initial_point = components[-1].render(
             gsd_registry, style, last_item, initial_point
         )
-        debug_stream.write(pfx + f" └─ {components[-1]}\n")
+        debug_stream.write(pfx + f" â””â”€ {components[-1]}\n")
         render_list.append(rendered)
 
         return " ".join(render_list), Line(self.org), initial_point
@@ -2949,7 +2947,7 @@ class Ellipse(NamedTuple):
 
         debug_stream.write(f"{self} resolved to:\n")
         if not components:
-            debug_stream.write(pfx + " └─ nothing\n")
+            debug_stream.write(pfx + " â””â”€ nothing\n")
             return "", last_item
 
         render_list = []
@@ -2957,13 +2955,13 @@ class Ellipse(NamedTuple):
             rendered, last_item, initial_point = item.render(
                 gsd_registry, style, last_item, initial_point
             )
-            debug_stream.write(pfx + f" ├─ {item}\n")
+            debug_stream.write(pfx + f" â”œâ”€ {item}\n")
             render_list.append(rendered)
 
         rendered, last_item, initial_point = components[-1].render(
             gsd_registry, style, last_item, initial_point
         )
-        debug_stream.write(pfx + f" └─ {components[-1]}\n")
+        debug_stream.write(pfx + f" â””â”€ {components[-1]}\n")
         render_list.append(rendered)
 
         return " ".join(render_list), Move(self.center), initial_point
@@ -3226,15 +3224,15 @@ class DrawingContext:
 
         debug_stream.write("ROOT\n")
         for child in self._subitems[:-1]:
-            debug_stream.write(" ├─ ")
+            debug_stream.write(" â”œâ”€ ")
             rendered, last_item = child.render_debug(
-                gsd_registry, style, last_item, debug_stream, " │  "
+                gsd_registry, style, last_item, debug_stream, " â”‚  "
             )
             if rendered:
                 render_list.append(rendered)
 
         if self._subitems:
-            debug_stream.write(" └─ ")
+            debug_stream.write(" â””â”€ ")
             rendered, last_item, first_point = self._subitems[-1].render_debug(
                 gsd_registry, style, last_item, first_point, debug_stream, "    "
             )
@@ -3582,7 +3580,7 @@ class PaintedPath:
 
     def curve_to(self, x1, y1, x2, y2, x3, y3):
         """
-        Append a cubic Bézier curve to this path.
+        Append a cubic BÃ©zier curve to this path.
 
         Args:
             x1 (Number): abscissa of the first control point
@@ -3604,7 +3602,7 @@ class PaintedPath:
 
     def curve_relative(self, dx1, dy1, dx2, dy2, dx3, dy3):
         """
-        Append a cubic Bézier curve whose points are expressed relative to the
+        Append a cubic BÃ©zier curve whose points are expressed relative to the
         end point of the previous path element.
 
         E.g. with a start point of (0, 0), given (1, 1), (2, 2), (3, 3), the output
@@ -3638,7 +3636,7 @@ class PaintedPath:
 
     def quadratic_curve_to(self, x1, y1, x2, y2):
         """
-        Append a cubic Bézier curve mimicking the specified quadratic Bézier curve.
+        Append a cubic BÃ©zier curve mimicking the specified quadratic BÃ©zier curve.
 
         Args:
             x1 (Number): abscissa of the control point
@@ -3656,7 +3654,7 @@ class PaintedPath:
 
     def quadratic_curve_relative(self, dx1, dy1, dx2, dy2):
         """
-        Append a cubic Bézier curve mimicking the specified quadratic Bézier curve.
+        Append a cubic BÃ©zier curve mimicking the specified quadratic BÃ©zier curve.
 
         Args:
             dx1 (Number): abscissa of the control point relative to the end point of
@@ -3681,9 +3679,9 @@ class PaintedPath:
         Append an elliptical arc from the end of the previous path point to the
         specified end point.
 
-        The arc is approximated using Bézier curves, so it is not perfectly accurate.
+        The arc is approximated using BÃ©zier curves, so it is not perfectly accurate.
         However, the error is small enough to not be noticeable at any reasonable
-        (and even most unreasonable) scales, with a worst-case deviation of around 3‱.
+        (and even most unreasonable) scales, with a worst-case deviation of around 3â€±.
 
         Notes:
             - The signs of the radii arguments (`rx` and `ry`) are ignored (i.e. their
@@ -3729,9 +3727,9 @@ class PaintedPath:
         Append an elliptical arc from the end of the previous path point to an offset
         point.
 
-        The arc is approximated using Bézier curves, so it is not perfectly accurate.
+        The arc is approximated using BÃ©zier curves, so it is not perfectly accurate.
         However, the error is small enough to not be noticeable at any reasonable
-        (and even most unreasonable) scales, with a worst-case deviation of around 3‱.
+        (and even most unreasonable) scales, with a worst-case deviation of around 3â€±.
 
         Notes:
             - The signs of the radii arguments (`rx` and `ry`) are ignored (i.e. their
@@ -4060,7 +4058,7 @@ class GraphicsContext:
                         debug_stream.write(style_dbg_line)
                         debug_stream.write("\n")
 
-                    debug_stream.write(pfx + "}┐\n")
+                    debug_stream.write(pfx + "}â”\n")
                 else:
                     debug_stream.write("\n")
 
@@ -4113,33 +4111,33 @@ class GraphicsContext:
 
             if debug_stream:
                 if self.clipping_path is not None:
-                    debug_stream.write(pfx + " ├─ ")
+                    debug_stream.write(pfx + " â”œâ”€ ")
                     rendered_cpath, _, __ = self.clipping_path.render_debug(
                         gsd_registry,
                         merged_style,
                         last_item,
                         initial_point,
                         debug_stream,
-                        pfx + " │  ",
+                        pfx + " â”‚  ",
                     )
                     if rendered_cpath:
                         render_list.append(rendered_cpath)
 
                 for item in self.path_items[:-1]:
-                    debug_stream.write(pfx + " ├─ ")
+                    debug_stream.write(pfx + " â”œâ”€ ")
                     rendered, last_item, initial_point = item.render_debug(
                         gsd_registry,
                         merged_style,
                         last_item,
                         initial_point,
                         debug_stream,
-                        pfx + " │  ",
+                        pfx + " â”‚  ",
                     )
 
                     if rendered:
                         render_list.append(rendered)
 
-                debug_stream.write(pfx + " └─ ")
+                debug_stream.write(pfx + " â””â”€ ")
                 rendered, last_item, initial_point = self.path_items[-1].render_debug(
                     gsd_registry,
                     merged_style,

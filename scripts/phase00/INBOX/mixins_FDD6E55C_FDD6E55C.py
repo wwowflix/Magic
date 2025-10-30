@@ -2,7 +2,6 @@
 
 from numpy.core import umath as um
 
-
 __all__ = ["NDArrayOperatorsMixin"]
 
 

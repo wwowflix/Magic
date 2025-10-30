@@ -1,4 +1,4 @@
-# --- MAGIC Phase11 – SHIELD: compat extras (detect_encoding, ZipFile) ---
+# --- MAGIC Phase11 â€“ SHIELD: compat extras (detect_encoding, ZipFile) ---
 # ZipFile passthrough so consumers can rom .compat import ZipFile
 try:
     from zipfile import ZipFile as _ZipFile
@@ -6,19 +6,23 @@ except Exception:
     _ZipFile = None
 ZipFile = _ZipFile
 
+
 # Robust-but-safe detect_encoding:
 # - Prefer stdlib tokenize.detect_encoding if available
-# - Accept a file-like (with .readline) or anything else → default 'utf-8'
+# - Accept a file-like (with .readline) or anything else â†’ default 'utf-8'
 def detect_encoding(stream):
     try:
         import tokenize
+
         if hasattr(stream, "readline"):
             return tokenize.detect_encoding(stream.readline)[0]
     except Exception:
         pass
     return "utf-8"
+
+
 # --- end compat extras ---
-# --- MAGIC Phase11 – SHIELD: compat sysconfig export ---
+# --- MAGIC Phase11 â€“ SHIELD: compat sysconfig export ---
 try:
     import sysconfig as _sysconfig
 except Exception:

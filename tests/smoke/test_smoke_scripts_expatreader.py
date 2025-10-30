@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_expatreader():
     mod = importlib.import_module("scripts.expatreader")
     assert isinstance(mod, types.ModuleType)

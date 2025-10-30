@@ -1,6 +1,18 @@
 from contextlib import suppress
+
+# --- MAGIC_ADAPTERS_TRAVERSABLE_SHIM: begin ---
+try:
+    # PY3.9+ stdlib location
+    from importlib.resources.abc import Traversable
+except Exception:
+    # ultra-minimal fallback to satisfy isinstance checks
+    class Traversable:  # type: ignore
+        pass
+
+
+# --- MAGIC_ADAPTERS_TRAVERSABLE_SHIM: end ---
 from io import TextIOWrapper
-import importlib.abc as abc
+import abc
 
 
 class SpecLoaderAdapter:
@@ -44,7 +56,7 @@ class CompatibilityFiles:
     to provide a compatibility .files().
     """
 
-    class SpecPath(abc.Traversable):
+    class SpecPath(Traversable):
         """
         Path tied to a module spec.
         Can be read and exposes the resource reader children.
@@ -79,7 +91,7 @@ class CompatibilityFiles:
         def open(self, mode="r", *args, **kwargs):
             return _io_wrapper(self._reader.open_resource(None), mode, *args, **kwargs)
 
-    class ChildPath(abc.Traversable):
+    class ChildPath(Traversable):
         """
         Path tied to a resource reader child.
         Can be read but doesn't expose any meaningful children.
@@ -110,7 +122,7 @@ class CompatibilityFiles:
                 self._reader.open_resource(self.name), mode, *args, **kwargs
             )
 
-    class OrphanPath(abc.Traversable):
+    class OrphanPath(Traversable):
         """
         Orphan path, not tied to a module spec or resource reader.
         Can't be read and doesn't expose any meaningful children.
@@ -167,5 +179,3 @@ def wrap_spec(package):
     on the spec/loader/reader.
     """
     return SpecLoaderAdapter(package.__spec__, TraversableResourcesLoader)
-
-

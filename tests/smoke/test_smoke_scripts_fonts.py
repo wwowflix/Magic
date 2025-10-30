@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fonts():
     mod = importlib.import_module("scripts.fonts")
     assert isinstance(mod, types.ModuleType)

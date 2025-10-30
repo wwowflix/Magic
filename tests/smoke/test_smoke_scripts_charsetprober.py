@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_charsetprober():
     mod = importlib.import_module("scripts.charsetprober")
     assert isinstance(mod, types.ModuleType)

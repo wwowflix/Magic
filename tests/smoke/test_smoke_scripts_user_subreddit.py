@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_user_subreddit():
     mod = importlib.import_module("scripts.user_subreddit")
     assert isinstance(mod, types.ModuleType)

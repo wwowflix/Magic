@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_trend_unifier():
     mod = importlib.import_module("scripts.trend_unifier")
     assert isinstance(mod, types.ModuleType)

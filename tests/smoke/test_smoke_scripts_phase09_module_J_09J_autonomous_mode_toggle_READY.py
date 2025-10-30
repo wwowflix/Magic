@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase09_module_J_09J_autonomous_mode_toggle_READY():
-    mod = importlib.import_module("scripts.phase09.module_J.09J_autonomous_mode_toggle_READY")
+    mod = importlib.import_module(
+        "scripts.phase09.module_J.09J_autonomous_mode_toggle_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

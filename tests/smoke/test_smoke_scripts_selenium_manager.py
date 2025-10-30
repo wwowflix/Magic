@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_selenium_manager():
     mod = importlib.import_module("scripts.selenium_manager")
     assert isinstance(mod, types.ModuleType)

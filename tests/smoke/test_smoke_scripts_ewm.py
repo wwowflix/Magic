@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ewm():
     mod = importlib.import_module("scripts.ewm")
     assert isinstance(mod, types.ModuleType)

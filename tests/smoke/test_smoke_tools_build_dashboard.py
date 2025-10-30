@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_build_dashboard():
     mod = importlib.import_module("tools.build_dashboard")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_longevity_predictor_2():
     mod = importlib.import_module("scripts.longevity_predictor_2")
     assert isinstance(mod, types.ModuleType)

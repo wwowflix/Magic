@@ -1,7 +1,7 @@
 import requests
 
-from ..spec import AbstractFileSystem
-from ..utils import infer_storage_options
+from scripts.spec import AbstractFileSystem
+from scripts.utils import infer_storage_options
 from .memory import MemoryFile
 
 

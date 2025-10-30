@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_memmap():
     mod = importlib.import_module("scripts.memmap")
     assert isinstance(mod, types.ModuleType)

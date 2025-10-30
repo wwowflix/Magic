@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_pangomarkup_ECEDD5CD_ECEDD5CD():
     mod = importlib.import_module("scripts.phase00.INBOX.pangomarkup_ECEDD5CD_ECEDD5CD")
     assert isinstance(mod, types.ModuleType)

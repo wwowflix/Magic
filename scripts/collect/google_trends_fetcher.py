@@ -7,10 +7,12 @@ from pytrends.request import TrendReq
 
 DB_PATH = r"E:\MAGIC\outputs\mydata.db"
 
+
 def ensure_db():
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     with sqlite3.connect(DB_PATH) as con:
-        con.executescript("""
+        con.executescript(
+            """
         PRAGMA journal_mode=WAL;
         CREATE TABLE IF NOT EXISTS google_trends(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,10 +24,12 @@ def ensure_db():
         );
         CREATE INDEX IF NOT EXISTS idx_gt_keyword ON google_trends(keyword);
         CREATE INDEX IF NOT EXISTS idx_gt_fetched ON google_trends(fetched_at);
-        """)
+        """
+        )
+
 
 def upsert_trends(keywords, regions, timeframe):
-    pytrends = TrendReq(hl='en-US', tz=0)
+    pytrends = TrendReq(hl="en-US", tz=0)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     rows = []
     for kw in keywords:
@@ -41,9 +45,10 @@ def upsert_trends(keywords, regions, timeframe):
     with sqlite3.connect(DB_PATH, check_same_thread=False) as con:
         con.executemany(
             "INSERT INTO google_trends(keyword, region, timeframe, score, fetched_at) VALUES(?,?,?,?,?)",
-            rows
+            rows,
         )
     return len(rows)
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -54,6 +59,7 @@ def main():
     ensure_db()
     n = upsert_trends(args.keywords, args.regions, args.timeframe)
     print(f"[google_trends] wrote {n} rows")
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_web_authn():
     mod = importlib.import_module("scripts.web_authn")
     assert isinstance(mod, types.ModuleType)

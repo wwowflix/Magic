@@ -157,7 +157,6 @@ complex(td)
 complex(U)
 complex(AR)
 
-
 # Misc
 c16.dtype
 c16.real

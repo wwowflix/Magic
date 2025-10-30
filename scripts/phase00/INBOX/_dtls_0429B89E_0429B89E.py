@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Implementation of DTLS 1.2, using pyopenssl
 # https://datatracker.ietf.org/doc/html/rfc6347
 #
@@ -5,9 +7,6 @@
 # through a *lot* of hoops and implement important chunks of the protocol ourselves.
 # Hopefully they fix this before implementing DTLS 1.3, because it's a very different
 # protocol, and it's probably impossible to pull tricks like we do here.
-
-from __future__ import annotations
-
 import contextlib
 import enum
 import errno

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_facebook():
     mod = importlib.import_module("scripts.facebook")
     assert isinstance(mod, types.ModuleType)

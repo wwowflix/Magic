@@ -229,7 +229,6 @@ class CmdStanMLE:
             ``save_iterations=True``, then intermediate estimates are included.
             Default value is ``False``.
 
-
         See Also
         --------
         CmdStanMLE.stan_variable

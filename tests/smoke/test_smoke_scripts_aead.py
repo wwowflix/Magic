@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_aead():
     mod = importlib.import_module("scripts.aead")
     assert isinstance(mod, types.ModuleType)

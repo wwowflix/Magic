@@ -20,7 +20,6 @@ if typing.TYPE_CHECKING:
 
 __all__ = ["RecentlyUsedContainer", "HTTPHeaderDict"]
 
-
 # Key type
 _KT = typing.TypeVar("_KT")
 # Value type

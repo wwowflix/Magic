@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mercurial():
     mod = importlib.import_module("scripts.mercurial")
     assert isinstance(mod, types.ModuleType)

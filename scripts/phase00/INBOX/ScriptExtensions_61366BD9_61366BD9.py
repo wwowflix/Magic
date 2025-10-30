@@ -6,7 +6,7 @@
 #
 # ScriptExtensions-16.0.0.txt
 # Date: 2024-07-30, 19:38:00 GMT
-# © 2024 Unicode®, Inc.
+# Â© 2024 UnicodeÂ®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use and license, see https://www.unicode.org/terms_of_use.html
 #

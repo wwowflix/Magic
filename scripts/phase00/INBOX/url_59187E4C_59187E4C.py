@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 import typing
 
-from ..exceptions import LocationParseError
+from scripts.exceptions import LocationParseError
 from .util import to_str
 
 # We only want to normalize urls with an HTTP(S) scheme.

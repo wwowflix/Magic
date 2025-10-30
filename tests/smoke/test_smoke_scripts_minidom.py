@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_minidom():
     mod = importlib.import_module("scripts.minidom")
     assert isinstance(mod, types.ModuleType)

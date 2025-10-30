@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from pathlib import Path
 import csv
 import argparse
@@ -18,7 +18,7 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
 
     for p in sorted(in_dir.rglob("*.tsv")):
         try:
-            # utf-8-sig removes UTF-8 BOM and will also read many UTF-16-with-BOM files as text via 'errors="replace"'
+            # utf-8-sig removes UTF-8 BOM and will also read many UTF-16-with-BOM files as text via 'errors="replace"'  # noqa: E501
             with p.open("r", encoding="utf-8-sig", errors="replace", newline="") as f:
                 reader = csv.reader(f, delimiter="\t")
                 local_header = next(reader, None)

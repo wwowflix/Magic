@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_generate_patch_csv():
     mod = importlib.import_module("tools.generate_patch_csv")
     assert isinstance(mod, types.ModuleType)

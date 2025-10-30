@@ -9,7 +9,7 @@ import typing
 from itertools import takewhile
 from types import TracebackType
 
-from ..exceptions import (
+from scripts.exceptions import (
     ConnectTimeoutError,
     InvalidHeader,
     MaxRetryError,
@@ -23,8 +23,8 @@ from .util import reraise
 if typing.TYPE_CHECKING:
     from typing_extensions import Self
 
-    from ..connectionpool import ConnectionPool
-    from ..response import BaseHTTPResponse
+    from scripts.connectionpool import ConnectionPool
+    from scripts.response import BaseHTTPResponse
 
 log = logging.getLogger(__name__)
 

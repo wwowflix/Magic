@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_H_13H_bulk_link_health_checker_READY():
-    mod = importlib.import_module("scripts.phase13.module_H.13H_bulk_link_health_checker_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_H.13H_bulk_link_health_checker_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

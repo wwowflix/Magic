@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_maxContextCalc():
     mod = importlib.import_module("scripts.maxContextCalc")
     assert isinstance(mod, types.ModuleType)

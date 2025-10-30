@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__tokenizer():
     mod = importlib.import_module("scripts._tokenizer")
     assert isinstance(mod, types.ModuleType)

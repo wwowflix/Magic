@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase01_module_F_01F_sqlite_db_bootstrap_READY():
-    mod = importlib.import_module("scripts.phase01.module_F.01F_sqlite_db_bootstrap_READY")
+    mod = importlib.import_module(
+        "scripts.phase01.module_F.01F_sqlite_db_bootstrap_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

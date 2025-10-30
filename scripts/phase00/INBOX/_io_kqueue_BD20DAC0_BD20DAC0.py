@@ -18,8 +18,8 @@ if TYPE_CHECKING:
 
     from typing_extensions import TypeAlias
 
-    from .._core import Abort, RaiseCancelT, Task, UnboundedQueue
-    from .._file_io import _HasFileNo
+    from scripts._core import Abort, RaiseCancelT, Task, UnboundedQueue
+    from scripts._file_io import _HasFileNo
 
 assert not TYPE_CHECKING or (sys.platform != "linux" and sys.platform != "win32")
 

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_trend_lifecycle():
     mod = importlib.import_module("scripts.trend_lifecycle")
     assert isinstance(mod, types.ModuleType)

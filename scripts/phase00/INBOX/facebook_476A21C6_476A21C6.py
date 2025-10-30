@@ -6,7 +6,6 @@ __all__ = [
     "FacebookGroupScraper",
 ]
 
-
 import bs4
 import dataclasses
 import datetime
@@ -17,7 +16,6 @@ import snscrape.base
 import snscrape.utils
 import typing
 import urllib.parse
-
 
 _logger = logging.getLogger(__name__)
 
@@ -411,7 +409,7 @@ class FacebookUserScraper(_FacebookUserAndCommunityScraper):
                     == "https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/LwDWwC1d0Rx.png"
                 ):  # Keywords
                     kwargs["keywords"] = div.find("div", class_="_4bl9").text.split(
-                        " · "
+                        " Â· "
                     )
 
         androidUrlMeta = soup.find("meta", property="al:android:url")

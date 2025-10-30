@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_laplace():
     mod = importlib.import_module("scripts.laplace")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_c_lexer():
     mod = importlib.import_module("scripts.c_lexer")
     assert isinstance(mod, types.ModuleType)

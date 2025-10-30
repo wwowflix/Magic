@@ -1,6 +1,5 @@
 import sys
 
-
 from greenlet import greenlet
 from . import TestCase
 

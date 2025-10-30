@@ -12,7 +12,6 @@ from numpy.core._multiarray_umath import (
 )
 from numpy.compat._inspect import getargspec
 
-
 ARRAY_FUNCTION_ENABLED = bool(
     int(os.environ.get("NUMPY_EXPERIMENTAL_ARRAY_FUNCTION", 1))
 )
@@ -68,7 +67,6 @@ add_docstring(
     """,
 )
 
-
 # exposed for testing purposes; used internally by implement_array_function
 add_docstring(
     _get_implementing_args,
@@ -87,7 +85,6 @@ add_docstring(
     which they should be called.
     """,
 )
-
 
 ArgSpec = collections.namedtuple("ArgSpec", "args varargs keywords defaults")
 

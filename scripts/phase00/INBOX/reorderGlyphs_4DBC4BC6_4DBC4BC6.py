@@ -5,7 +5,6 @@ __author__ = "Rod Sheeter"
 # See https://docs.google.com/document/d/1h9O-C_ndods87uY0QeIIcgAMiX2gDTpvO_IhMJsKAqs/
 # for details.
 
-
 from fontTools import ttLib
 from fontTools.ttLib.tables import otBase
 from fontTools.ttLib.tables import otTables as ot
@@ -21,7 +20,6 @@ from typing import (
     List,
     Tuple,
 )
-
 
 _COVERAGE_ATTR = "Coverage"  # tables that have one coverage use this name
 
@@ -201,7 +199,6 @@ _REORDER_RULES = {
         ),
     ],
 }
-
 
 # TODO Port to otTraverse
 

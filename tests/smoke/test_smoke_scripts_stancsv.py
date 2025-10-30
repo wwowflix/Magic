@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_stancsv():
     mod = importlib.import_module("scripts.stancsv")
     assert isinstance(mod, types.ModuleType)

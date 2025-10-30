@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_burnout_signals():
     mod = importlib.import_module("scripts.burnout_signals")
     assert isinstance(mod, types.ModuleType)

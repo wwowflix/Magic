@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Internal module for formatting output data in csv, html, xml,
 and latex files. This module also applies to display formatting.
 """
-
-from __future__ import annotations
-
 from contextlib import contextmanager
 from csv import (
     QUOTE_NONE,
@@ -118,7 +117,6 @@ if TYPE_CHECKING:
         DataFrame,
         Series,
     )
-
 
 common_docstring: Final = """
         Parameters

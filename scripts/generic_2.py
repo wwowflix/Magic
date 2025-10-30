@@ -1,7 +1,6 @@
-"""define generic base classes for pandas objects"""
-
 from __future__ import annotations
 
+"""define generic base classes for pandas objects"""
 from typing import (
     TYPE_CHECKING,
     Type,
@@ -122,7 +121,6 @@ ABCIndex = cast(
         },
     ),
 )
-
 
 ABCNDFrame = cast(
     "Type[NDFrame]",

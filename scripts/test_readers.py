@@ -859,7 +859,7 @@ class TestReaders:
         match = "|".join(
             [
                 "(No such file or directory",
-                "没有那个文件或目录",
+                "æ²¡æœ‰é‚£ä¸ªæ–‡ä»¶æˆ–ç›®å½•",
                 "File o directory non esistente)",
             ]
         )

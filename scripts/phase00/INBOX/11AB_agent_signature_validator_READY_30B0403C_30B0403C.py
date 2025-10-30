@@ -2,7 +2,7 @@
 
 
 def main():
-    print("✅ Agent Signature Validator running...")
+    print("âœ… Agent Signature Validator running...")
 
 
 if __name__ == "__main__":

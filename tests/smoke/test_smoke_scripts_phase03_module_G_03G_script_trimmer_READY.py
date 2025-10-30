@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase03_module_G_03G_script_trimmer_READY():
     mod = importlib.import_module("scripts.phase03.module_G.03G_script_trimmer_READY")
     assert isinstance(mod, types.ModuleType)

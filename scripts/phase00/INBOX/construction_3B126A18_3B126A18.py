@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Functions for preparing various inputs passed to the DataFrame or Series
 constructors before passing them to a BlockManager.
 """
-
-from __future__ import annotations
-
 from collections import abc
 from typing import (
     TYPE_CHECKING,
@@ -92,7 +91,6 @@ from pandas.core.internals.managers import (
 
 if TYPE_CHECKING:
     from numpy.ma.mrecords import MaskedRecords
-
 
 # ---------------------------------------------------------------------
 # BlockManager Interface

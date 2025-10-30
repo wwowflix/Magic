@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_freeze():
     mod = importlib.import_module("scripts.freeze")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_arrayterator():
     mod = importlib.import_module("scripts.arrayterator")
     assert isinstance(mod, types.ModuleType)

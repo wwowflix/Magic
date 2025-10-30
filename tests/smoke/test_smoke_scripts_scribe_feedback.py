@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_scribe_feedback():
     mod = importlib.import_module("scripts.scribe_feedback")
     assert isinstance(mod, types.ModuleType)

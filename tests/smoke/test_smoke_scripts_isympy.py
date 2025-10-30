@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_isympy():
     mod = importlib.import_module("scripts.isympy")
     assert isinstance(mod, types.ModuleType)

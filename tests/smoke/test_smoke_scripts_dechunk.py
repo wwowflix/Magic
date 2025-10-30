@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dechunk():
     mod = importlib.import_module("scripts.dechunk")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_webhdfs_1BDC06CB_1BDC06CB():
     mod = importlib.import_module("scripts.phase00.INBOX.webhdfs_1BDC06CB_1BDC06CB")
     assert isinstance(mod, types.ModuleType)

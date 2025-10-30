@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__asyncgens():
     mod = importlib.import_module("scripts._asyncgens")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_msvccompiler():
     mod = importlib.import_module("scripts.msvccompiler")
     assert isinstance(mod, types.ModuleType)

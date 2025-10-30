@@ -1,4 +1,42 @@
-﻿# === MAGIC SHIM (smoke-safe v4): ensure otTables has required classes/constants ===
+# --- MAGIC guard: real fontTools/ttLib must be loaded before varLib ---
+import sys, os, importlib, importlib.util
+
+_site = os.path.join(sys.prefix, "Lib", "site-packages")
+if _site not in sys.path:
+    sys.path.insert(0, _site)
+
+m = sys.modules.get("fontTools")
+if m is not None and not hasattr(m, "__path__"):
+    del sys.modules["fontTools"]
+
+m = sys.modules.get("fontTools.ttLib")
+if m is not None and not getattr(m, "__file__", None):
+    del sys.modules["fontTools.ttLib"]
+
+_ttlib_init = os.path.join(_site, "fontTools", "ttLib", "__init__.py")
+if os.path.exists(_ttlib_init):
+    spec = importlib.util.spec_from_file_location("fontTools.ttLib", _ttlib_init)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["fontTools.ttLib"] = mod
+    spec.loader.exec_module(mod)
+
+from fontTools.ttLib import TTFont, newTable  # noqa: F401
+
+# --- end MAGIC guard ---
+# --- MAGIC guard: ensure real fontTools package is used (smoke-safe) ---
+import sys, os, importlib
+
+_site = os.path.join(sys.prefix, "Lib", "site-packages")
+if _site not in sys.path:
+    sys.path.insert(0, _site)
+m = sys.modules.get("fontTools")
+if m is not None and not hasattr(m, "__path__"):  # a non-package stub slipped in
+    del sys.modules["fontTools"]
+importlib.invalidate_caches()
+import fontTools  # now guaranteed to be the package
+
+# -----------------------------------------------------------------------
+# === MAGIC SHIM (smoke-safe v4): ensure otTables has required classes/constants ===
 try:
     from fontTools.ttLib.tables import otTables as ot  # type: ignore
 
@@ -10,18 +48,27 @@ try:
     def _ensure(names):
         for _name in names:
             if not hasattr(ot, _name):
+
                 class _Stub:  # pragma: no cover
                     pass
+
                 setattr(ot, _name, _Stub)
 
     # Needed across varLib.* attach points
-    _ensure((
-        "VarStore", "VarRegion", "SparseVarRegion",
-        "VarRegionList", "SparseVarRegionList",
-        "GDEF", "GSUB", "GPOS",  # tables varStore/feature code may extend
-        "Device",                # referenced in varidx traversal
-        "ValueRecord",           # referenced by _visit traversal
-    ))
+    _ensure(
+        (
+            "VarStore",
+            "VarRegion",
+            "SparseVarRegion",
+            "VarRegionList",
+            "SparseVarRegionList",
+            "GDEF",
+            "GSUB",
+            "GPOS",  # tables varStore/feature code may extend
+            "Device",  # referenced in varidx traversal
+            "ValueRecord",  # referenced by _visit traversal
+        )
+    )
 except Exception:
     # Never block smoke-imports
     pass
@@ -30,10 +77,19 @@ except Exception:
 try:
     # Ensure varStore gets the classes it expects even if our otTables lacks them
     from fontTools.ttLib.tables import otTables as ot  # type: ignore
+
     def _mk_stub(name):
         # tiny dynamic class: type(name, bases, dict)
         return type(name, (), {})
-    for _n in ("VarRegion", "SparseVarRegion", "VarRegionList", "SparseVarRegionList", "VarStore", "VarData"):
+
+    for _n in (
+        "VarRegion",
+        "SparseVarRegion",
+        "VarRegionList",
+        "SparseVarRegionList",
+        "VarStore",
+        "VarData",
+    ):
         if not hasattr(ot, _n):
             setattr(ot, _n, _mk_stub(_n))
 except Exception:
@@ -46,17 +102,26 @@ try:
 
     # VarStore + NO_VARIATION_INDEX (you added earlier; keep here too for safety)
     if not hasattr(ot, "VarStore"):
+
         class VarStore:  # minimal stub
             pass
+
         ot.VarStore = VarStore  # type: ignore[attr-defined]
     if not hasattr(ot, "NO_VARIATION_INDEX"):
         ot.NO_VARIATION_INDEX = 0xFFFFFFFF  # type: ignore[attr-defined]
 
     # VarRegion family used by varLib.varStore
-    for _name in ("VarRegion", "SparseVarRegion", "VarRegionList", "SparseVarRegionList"):
+    for _name in (
+        "VarRegion",
+        "SparseVarRegion",
+        "VarRegionList",
+        "SparseVarRegionList",
+    ):
         if not hasattr(ot, _name):
+
             class _Stub:  # minimal placeholder
                 pass
+
             setattr(ot, _name, _Stub)
 except Exception:
     # Never block smoke-imports
@@ -65,9 +130,12 @@ except Exception:
 # === MAGIC SHIM: ensure otTables.VarStore exists for smoke imports ===
 try:
     from fontTools.ttLib.tables import otTables as ot  # type: ignore
+
     if not hasattr(ot, "VarStore"):
+
         class VarStore:  # minimal stub for smoke tests
             pass
+
         ot.VarStore = VarStore  # type: ignore[attr-defined]
     if not hasattr(ot, "NO_VARIATION_INDEX"):
         # default fallback aligns with fontTools varStore usage
@@ -79,18 +147,21 @@ except Exception:
 # === MAGIC Phase11 - SHIELD: otTables compatibility shims ===
 try:
     from fontTools.ttLib.tables import otTables as _ot
+
     # Provide NO_VARIATION_INDEX if missing (fontTools constant)
     if not hasattr(_ot, "NO_VARIATION_INDEX"):
         _ot.NO_VARIATION_INDEX = 0xFFFFFFFF  # 4294967295
 
     # Provide a minimal VarData placeholder if missing (used by varLib.builder)
     if not hasattr(_ot, "VarData"):
+
         class VarData:
             def __init__(self):
                 self.VarRegionIndex = []
                 self.VarRegionCount = 0
                 self.Item = []
                 self.NumShorts = 0
+
         _ot.VarData = VarData
 except Exception:
     pass
@@ -98,13 +169,16 @@ except Exception:
 # === MAGIC Phase11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ SHIELD: VarData placeholder for varLib.builder ===
 try:
     from fontTools.ttLib.tables import otTables as _ot
+
     if not hasattr(_ot, "VarData"):
+
         class VarData:
             def __init__(self):
                 self.VarRegionIndex = []
                 self.VarRegionCount = 0
                 self.Item = []
                 self.NumShorts = 0
+
         _ot.VarData = VarData
 except Exception:
     pass
@@ -113,8 +187,11 @@ except Exception:
 try:
     from .otBase import BaseTTXConverter
 except Exception:
+
     class BaseTTXConverter:  # minimal stub for smoke-import
         pass
+
+
 # === end guard ==============================================================
 from fontTools.misc import sstruct
 from fontTools.misc.fixedTools import (
@@ -134,6 +211,8 @@ import struct
 import logging
 
 log = logging.getLogger(__name__)
+
+
 # MAGIC: removed duplicate otBase import
 class table__a_v_a_r(BaseTTXConverter):
     """Axis Variations table
@@ -303,5 +382,3 @@ class table__a_v_a_r(BaseTTXConverter):
         }
 
         return mappedLocation
-
-

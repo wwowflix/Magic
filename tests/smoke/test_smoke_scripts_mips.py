@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mips():
     mod = importlib.import_module("scripts.mips")
     assert isinstance(mod, types.ModuleType)

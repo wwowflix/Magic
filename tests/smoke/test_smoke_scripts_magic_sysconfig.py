@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_magic_sysconfig():
     mod = importlib.import_module("scripts.magic_sysconfig")
     assert isinstance(mod, types.ModuleType)

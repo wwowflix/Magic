@@ -14,7 +14,6 @@ useful to have in the main name-space.
 
 import math
 
-
 # Public submodules
 # Note: recfunctions and (maybe) format are public too, but not imported
 from . import scimath as emath

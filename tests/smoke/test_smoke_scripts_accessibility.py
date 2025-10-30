@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_accessibility():
     mod = importlib.import_module("scripts.accessibility")
     assert isinstance(mod, types.ModuleType)

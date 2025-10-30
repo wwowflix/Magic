@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__wait_for_object():
     mod = importlib.import_module("scripts._wait_for_object")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_hebrewprober():
     mod = importlib.import_module("scripts.hebrewprober")
     assert isinstance(mod, types.ModuleType)

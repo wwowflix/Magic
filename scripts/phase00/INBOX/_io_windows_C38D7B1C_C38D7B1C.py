@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 
     from typing_extensions import Buffer, TypeAlias
 
-    from .._file_io import _HasFileNo
+    from scripts._file_io import _HasFileNo
     from ._traps import Abort, RaiseCancelT
     from ._unbounded_queue import UnboundedQueue
 

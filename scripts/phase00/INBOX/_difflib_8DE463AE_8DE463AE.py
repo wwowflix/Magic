@@ -47,7 +47,6 @@ except ImportError:
 
     cython = fake_cython()
 
-
 __all__ = [
     "get_close_matches",
     "ndiff",

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fallback():
     mod = importlib.import_module("scripts.fallback")
     assert isinstance(mod, types.ModuleType)

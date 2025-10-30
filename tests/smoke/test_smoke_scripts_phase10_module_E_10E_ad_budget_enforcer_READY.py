@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase10_module_E_10E_ad_budget_enforcer_READY():
-    mod = importlib.import_module("scripts.phase10.module_E.10E_ad_budget_enforcer_READY")
+    mod = importlib.import_module(
+        "scripts.phase10.module_E.10E_ad_budget_enforcer_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

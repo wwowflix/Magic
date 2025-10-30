@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mapping():
     mod = importlib.import_module("scripts.mapping")
     assert isinstance(mod, types.ModuleType)

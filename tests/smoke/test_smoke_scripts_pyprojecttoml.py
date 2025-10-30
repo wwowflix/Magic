@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pyprojecttoml():
     mod = importlib.import_module("scripts.pyprojecttoml")
     assert isinstance(mod, types.ModuleType)

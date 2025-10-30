@@ -20,7 +20,6 @@ pytestmark = pytest.mark.skipif(
     not RUN_MYPY, reason="`NPY_RUN_MYPY_IN_TESTSUITE` not set"
 )
 
-
 try:
     from mypy import api
 except ImportError:

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__deprecate():
     mod = importlib.import_module("scripts._deprecate")
     assert isinstance(mod, types.ModuleType)

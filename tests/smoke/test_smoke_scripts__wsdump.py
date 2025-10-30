@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__wsdump():
     mod = importlib.import_module("scripts._wsdump")
     assert isinstance(mod, types.ModuleType)

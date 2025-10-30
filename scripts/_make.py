@@ -1,7 +1,7 @@
-﻿# SPDX-License-Identifier: MIT
-
 from __future__ import annotations
-import importlib.abc as abc
+
+# SPDX-License-Identifier: MIT
+import abc
 import contextlib
 import copy
 import enum
@@ -33,7 +33,6 @@ from .exceptions import (
     NotAnAttrsClassError,
     UnannotatedAttributeError,
 )
-
 
 # This is used at least twice, so cache it here.
 _OBJ_SETATTR = object.__setattr__
@@ -130,7 +129,6 @@ def attrib(
 
         Does **nothing** unless the class is also decorated with
         `attr.s` (or similar)!
-
 
     .. versionadded:: 15.2.0 *convert*
     .. versionadded:: 16.3.0 *metadata*
@@ -2343,7 +2341,6 @@ class Attribute:
     - The ``alias`` property exposes the __init__ parameter name of the field,
       with any overrides and default private-attribute handling applied.
 
-
     .. versionadded:: 20.1.0 *inherited*
     .. versionadded:: 20.1.0 *on_setattr*
     .. versionchanged:: 20.2.0 *inherited* is not taken into account for
@@ -3058,4 +3055,3 @@ def pipe(*converters):
     if return_instance:
         return Converter(pipe_converter, takes_self=True, takes_field=True)
     return pipe_converter
-

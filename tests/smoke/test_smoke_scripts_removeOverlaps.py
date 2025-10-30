@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_removeOverlaps():
     mod = importlib.import_module("scripts.removeOverlaps")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mbcssm():
     mod = importlib.import_module("scripts.mbcssm")
     assert isinstance(mod, types.ModuleType)

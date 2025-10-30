@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_npy_pkg_config():
     mod = importlib.import_module("scripts.npy_pkg_config")
     assert isinstance(mod, types.ModuleType)

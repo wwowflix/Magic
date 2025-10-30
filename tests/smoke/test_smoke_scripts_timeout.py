@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_timeout():
     mod = importlib.import_module("scripts.timeout")
     assert isinstance(mod, types.ModuleType)

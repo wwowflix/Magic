@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_redditors():
     mod = importlib.import_module("scripts.redditors")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_rsa():
     mod = importlib.import_module("scripts.rsa")
     assert isinstance(mod, types.ModuleType)

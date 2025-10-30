@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_engagement_velocity_2():
     mod = importlib.import_module("scripts.engagement_velocity_2")
     assert isinstance(mod, types.ModuleType)

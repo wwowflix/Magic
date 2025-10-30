@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__xlrd():
     mod = importlib.import_module("scripts._xlrd")
     assert isinstance(mod, types.ModuleType)

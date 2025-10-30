@@ -123,7 +123,6 @@ __all__ = [
 _reconstruct.__module__ = "numpy.core.multiarray"
 scalar.__module__ = "numpy.core.multiarray"
 
-
 arange.__module__ = "numpy"
 array.__module__ = "numpy"
 asarray.__module__ = "numpy"
@@ -144,7 +143,6 @@ promote_types.__module__ = "numpy"
 set_numeric_ops.__module__ = "numpy"
 seterrobj.__module__ = "numpy"
 zeros.__module__ = "numpy"
-
 
 # We can't verify dispatcher signatures because NumPy's C functions don't
 # support introspection.

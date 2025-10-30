@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_autodist():
     mod = importlib.import_module("scripts.autodist")
     assert isinstance(mod, types.ModuleType)

@@ -1,4 +1,5 @@
-import argparse, os, sys, importlib, pkgutil, pathlib, textwrap
+import argparse
+import pathlib
 
 TEMPLATE = """\
 import importlib, types
@@ -13,14 +14,21 @@ def test_import_{name_sanitized}():
             pass
 """
 
+
 def sanitize(name: str) -> str:
-    return "".join(ch if ch.isalnum() or ch=="_" else "_" for ch in name)
+    return "".join(ch if ch.isalnum() or ch == "_" else "_" for ch in name)
+
 
 def write_test(dst_dir: pathlib.Path, module: str):
     name = sanitize(module)
     path = dst_dir / f"test_smoke_{name}.py"
-    path.write_text(TEMPLATE.format(name_sanitized=name, module=module), encoding="utf-8", newline="\n")
+    path.write_text(
+        TEMPLATE.format(name_sanitized=name, module=module),
+        encoding="utf-8",
+        newline="\n",
+    )
     return path
+
 
 def guess_module(root: pathlib.Path, file: pathlib.Path) -> str | None:
     try:
@@ -29,12 +37,13 @@ def guess_module(root: pathlib.Path, file: pathlib.Path) -> str | None:
         # drop non-package segments before real python roots if needed
         # heuristic: stop at first 'scripts' or 'tools'
         if "scripts" in parts:
-            parts = parts[parts.index("scripts"):]
+            parts = parts[parts.index("scripts") :]
         elif "tools" in parts:
-            parts = parts[parts.index("tools"):]
+            parts = parts[parts.index("tools") :]
         return ".".join(parts)
     except Exception:
         return None
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -44,7 +53,8 @@ def main():
     args = p.parse_args()
 
     root = pathlib.Path(args.root)
-    out = pathlib.Path(args.out); out.mkdir(parents=True, exist_ok=True)
+    out = pathlib.Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
 
     globs = [g.strip() for g in args.glob.split(";") if g.strip()]
     created = 0
@@ -59,6 +69,7 @@ def main():
             created += 1
             print(f"[+] {path}")
     print(f"\nCreated {created} smoke tests in {out}")
+
 
 if __name__ == "__main__":
     main()

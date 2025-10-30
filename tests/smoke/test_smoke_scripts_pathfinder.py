@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pathfinder():
     mod = importlib.import_module("scripts.pathfinder")
     assert isinstance(mod, types.ModuleType)

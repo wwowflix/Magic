@@ -34,7 +34,6 @@ from .errors import ColorLibError
 from .geometry import round_start_circle_stable_containment
 from .table_builder import BuildCallback, TableBuilder
 
-
 # TODO move type aliases to colorLib.types?
 T = TypeVar("T")
 _Kwargs = Mapping[str, Any]
@@ -47,7 +46,6 @@ _ClipBoxInput = Union[
     Tuple[int, int, int, int],  # format 0, non-variable
     ot.ClipBox,
 ]
-
 
 MAX_PAINT_COLR_LAYER_COUNT = 255
 _DEFAULT_ALPHA = 1.0

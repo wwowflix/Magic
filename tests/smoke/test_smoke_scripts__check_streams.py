@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__check_streams():
     mod = importlib.import_module("scripts._check_streams")
     assert isinstance(mod, types.ModuleType)

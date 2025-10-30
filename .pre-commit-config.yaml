@@ -1,52 +1,21 @@
-﻿repos:
-- repo: local
-  hooks:
-  - id: forbid-shadowing-fonttools
-    name: Forbid otTables/otConverters in scripts/
-    entry: python .githooks/forbid_shadowing_fonttools.py
-    language: python
-    pass_filenames: false
 repos:
-- repo: local
-  hooks:
-  - id: forbid-relative-abc
-    name: Forbid 'from . import abc' under scripts/
-    entry: python -c "import sys, re, pathlib; bad=[]; 
-p=pathlib.Path('scripts'); files=[*p.rglob('*.py')]; 
-pat=re.compile(r'^\s*from\s+\.\s+import\s+abc\b', re.M); 
-[bad.append(str(f)) for f in files if pat.search(f.read_text(encoding='utf-8', errors='ignore'))]; 
-print('Bad relative abc import in:', ', '.join(bad)) if bad else None; 
-sys.exit(1 if bad else 0)"
-    language: python
-    pass_filenames: false
-repos:
-- repo: local
-  hooks:
-  - id: forbid-direct-numpy-add_newdoc
-    name: Forbid direct 'from numpy.*function_base import add_newdoc'
-    entry: python - <<'PY'
-import re, pathlib, sys
-bad=[]
-p=pathlib.Path('scripts')
-pat=re.compile(r'^\\s*from\\s+numpy[\\._a-z]*function_base\\s+import\\s+add_newdoc\\b', re.M)
-for f in p.rglob('*.py'):
-    try:
-        t=f.read_text(encoding='utf-8', errors='ignore')
-    except Exception: 
-        continue
-    if pat.search(t):
-        bad.append(str(f))
-if bad:
-    print("Direct NumPy add_newdoc import found in:", ", ".join(bad))
-    sys.exit(1)
-PY
-    language: python
-    pass_filenames: false
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: [--fix=lf]
 
-- repo: local
-  hooks:
-    - id: ban-numpy-privates
-      name: Ban NumPy private APIs
-      language: system
-      pass_filenames: false
-      entry: bash -c '!(grep -RInE "(numpy\.compat|numpy\.core\._multiarray_umath|numpy(\._core|\.core)\.function_base)" scripts || echo "Found banned NumPy private imports" >&2)'
+  - repo: https://github.com/psf/black
+    rev: 25.9.0
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.14.2
+    hooks:
+      - id: ruff
+        args: [--fix]

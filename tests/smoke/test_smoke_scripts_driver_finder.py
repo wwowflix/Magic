@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_driver_finder():
     mod = importlib.import_module("scripts.driver_finder")
     assert isinstance(mod, types.ModuleType)

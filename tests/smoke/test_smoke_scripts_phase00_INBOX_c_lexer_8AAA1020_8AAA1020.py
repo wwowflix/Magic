@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_c_lexer_8AAA1020_8AAA1020():
     mod = importlib.import_module("scripts.phase00.INBOX.c_lexer_8AAA1020_8AAA1020")
     assert isinstance(mod, types.ModuleType)

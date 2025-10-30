@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_conv_template():
     mod = importlib.import_module("scripts.conv_template")
     assert isinstance(mod, types.ModuleType)

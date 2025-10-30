@@ -5,19 +5,17 @@ from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, TypeVar
 
 from .. import _core, _util
-from .._highlevel_generic import StapledStream
-from ..abc import ReceiveStream, SendStream
+from scripts._highlevel_generic import StapledStream
+from scripts.abc import ReceiveStream, SendStream
 
 if TYPE_CHECKING:
     from typing_extensions import TypeAlias
-
 
 AsyncHook: TypeAlias = Callable[[], Awaitable[object]]
 # Would be nice to exclude awaitable here, but currently not possible.
 SyncHook: TypeAlias = Callable[[], object]
 SendStreamT = TypeVar("SendStreamT", bound=SendStream)
 ReceiveStreamT = TypeVar("ReceiveStreamT", bound=ReceiveStream)
-
 
 ################################################################
 # In-memory streams - Unbounded buffer version

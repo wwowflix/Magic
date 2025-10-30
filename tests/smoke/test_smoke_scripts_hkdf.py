@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_hkdf():
     mod = importlib.import_module("scripts.hkdf")
     assert isinstance(mod, types.ModuleType)

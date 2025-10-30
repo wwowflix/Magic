@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__generated_instrumentation():
     mod = importlib.import_module("scripts._generated_instrumentation")
     assert isinstance(mod, types.ModuleType)

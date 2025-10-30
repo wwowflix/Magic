@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX__concat_tb_3E69C500_3E69C500():
     mod = importlib.import_module("scripts.phase00.INBOX._concat_tb_3E69C500_3E69C500")
     assert isinstance(mod, types.ModuleType)

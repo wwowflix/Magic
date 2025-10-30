@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_capi_maps():
     mod = importlib.import_module("scripts.capi_maps")
     assert isinstance(mod, types.ModuleType)

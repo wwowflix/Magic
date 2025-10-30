@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__handshake():
     mod = importlib.import_module("scripts._handshake")
     assert isinstance(mod, types.ModuleType)

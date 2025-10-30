@@ -27,7 +27,7 @@ from ...testing import (
     assert_checkpoints,
     wait_all_tasks_blocked,
 )
-from .._run import DEADLINE_HEAP_MIN_PRUNE_THRESHOLD, _count_context_run_tb_frames
+from scripts._run import DEADLINE_HEAP_MIN_PRUNE_THRESHOLD, _count_context_run_tb_frames
 from .tutil import (
     check_sequence_matches,
     create_asyncio_future_in_new_loop,
@@ -48,7 +48,6 @@ if TYPE_CHECKING:
 
 if sys.version_info < (3, 11):
     from exceptiongroup import BaseExceptionGroup, ExceptionGroup
-
 
 T = TypeVar("T")
 

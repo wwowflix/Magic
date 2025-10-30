@@ -1,7 +1,7 @@
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
 from __future__ import annotations
 
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
 import contextlib
 import copy
 import datetime as dt
@@ -79,7 +79,6 @@ _VEGA_LITE_ROOT_URI: Final = "urn:vega-lite-schema"
 # change often so it's ok to keep this. There is also a test which validates
 # that this value is always the same as in the Vega-Lite schema.
 _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#"
-
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
 # validated at creation time. This slows things down, particularly for

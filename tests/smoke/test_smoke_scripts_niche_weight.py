@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_niche_weight():
     mod = importlib.import_module("scripts.niche_weight")
     assert isinstance(mod, types.ModuleType)

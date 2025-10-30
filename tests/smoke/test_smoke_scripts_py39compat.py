@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_py39compat():
     mod = importlib.import_module("scripts.py39compat")
     assert isinstance(mod, types.ModuleType)

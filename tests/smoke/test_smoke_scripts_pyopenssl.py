@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pyopenssl():
     mod = importlib.import_module("scripts.pyopenssl")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ordered_set():
     mod = importlib.import_module("scripts.ordered_set")
     assert isinstance(mod, types.ModuleType)

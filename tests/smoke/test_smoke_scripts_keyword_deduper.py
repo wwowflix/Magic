@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_keyword_deduper():
     mod = importlib.import_module("scripts.keyword_deduper")
     assert isinstance(mod, types.ModuleType)

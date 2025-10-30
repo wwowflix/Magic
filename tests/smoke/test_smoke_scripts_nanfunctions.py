@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_nanfunctions():
     mod = importlib.import_module("scripts.nanfunctions")
     assert isinstance(mod, types.ModuleType)

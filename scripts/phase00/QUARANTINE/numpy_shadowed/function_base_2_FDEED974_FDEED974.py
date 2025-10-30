@@ -63,11 +63,9 @@ import builtins
 
 # needed in this module for compatibility
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 __all__ = [
     "select",
@@ -318,7 +316,6 @@ def iterable(y):
     b : bool
       Return ``True`` if the object has an iterator method or is a
       sequence and ``False`` otherwise.
-
 
     Examples
     --------
@@ -605,7 +602,6 @@ def piecewise(x, condlist, funclist, *args, **kw):
         calling the functions in `funclist` on the appropriate portions of `x`,
         as defined by the boolean arrays in `condlist`.  Portions not covered
         by any condition have a default value of 0.
-
 
     See Also
     --------
@@ -1811,7 +1807,6 @@ def extract(condition, arr):
            [False,  True, False, False]])
     >>> np.extract(condition, arr)
     array([0, 3, 6, 9])
-
 
     If `condition` is boolean:
 
@@ -3449,7 +3444,6 @@ def kaiser(M, beta):
             9.45674898e-01, 5.99885316e-01, 2.29737120e-01,
             4.65200189e-02, 3.46009194e-03, 7.72686684e-06])
 
-
     Plot the window and the frequency response:
 
     >>> from numpy.fft import fft, fftshift
@@ -4311,7 +4305,6 @@ def trapz(y, x=None, dx=1.0, axis=-1):
     points will be 1.0, alternatively they can be provided with `x` array
     or with `dx` scalar.  Return value will be equal to combined area under
     the red lines.
-
 
     References
     ----------

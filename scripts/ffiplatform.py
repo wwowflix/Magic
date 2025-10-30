@@ -2,7 +2,6 @@ import sys
 import os
 from .error import VerificationError
 
-
 LIST_OF_FILE_NAMES = [
     "sources",
     "include_dirs",

@@ -171,7 +171,6 @@ if TYPE_CHECKING:
 # docs will need to make very clear that this is different from all the other
 # cancellations in core Trio
 
-
 T = TypeVar("T")
 
 ################################################################

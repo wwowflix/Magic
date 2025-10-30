@@ -43,7 +43,6 @@ if sys.flags.optimize > 1:
     # cffi cannot succeed
     MISSING_CFFI = True
 
-
 pwd = os.path.dirname(os.path.abspath(__file__))
 
 

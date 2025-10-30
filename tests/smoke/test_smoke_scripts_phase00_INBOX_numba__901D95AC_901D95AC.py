@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_numba__901D95AC_901D95AC():
     mod = importlib.import_module("scripts.phase00.INBOX.numba__901D95AC_901D95AC")
     assert isinstance(mod, types.ModuleType)

@@ -13,6 +13,6 @@ timestamp = datetime.datetime.utcnow().isoformat()
 signal_file = "D:/MAGIC/outputs/trends/dashboard_signal.log"
 
 with open(signal_file, "a", encoding="utf-8") as f:
-    f.write(f"[{timestamp}] ✅ Dashboard updated with new trends\n")
+    f.write(f"[{timestamp}] âœ… Dashboard updated with new trends\n")
 
-print(f"✅ Dashboard notified at {timestamp}")
+print(f"âœ… Dashboard notified at {timestamp}")

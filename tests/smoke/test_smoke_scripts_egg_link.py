@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_egg_link():
     mod = importlib.import_module("scripts.egg_link")
     assert isinstance(mod, types.ModuleType)

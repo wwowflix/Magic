@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Low-dependency indexing utilities.
 """
-
-from __future__ import annotations
-
 from typing import (
     TYPE_CHECKING,
     Any,

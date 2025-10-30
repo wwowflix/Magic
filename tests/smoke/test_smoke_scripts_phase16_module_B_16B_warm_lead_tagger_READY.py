@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase16_module_B_16B_warm_lead_tagger_READY():
     mod = importlib.import_module("scripts.phase16.module_B.16B_warm_lead_tagger_READY")
     assert isinstance(mod, types.ModuleType)

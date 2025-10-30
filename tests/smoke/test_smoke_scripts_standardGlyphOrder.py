@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_standardGlyphOrder():
     mod = importlib.import_module("scripts.standardGlyphOrder")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_input_device():
     mod = importlib.import_module("scripts.input_device")
     assert isinstance(mod, types.ModuleType)

@@ -16,7 +16,6 @@ from pip._vendor.requests.structures import CaseInsensitiveDict
 from .cache import DictCache, SeparateBodyBaseCache
 from .serialize import Serializer
 
-
 logger = logging.getLogger(__name__)
 
 URI = re.compile(r"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?")

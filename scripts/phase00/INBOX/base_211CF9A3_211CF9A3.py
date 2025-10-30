@@ -1,4 +1,4 @@
-﻿__all__ = [
+__all__ = [
     "DeprecatedFeatureWarning",
     "Item",
     "IntWithGranularity",
@@ -6,7 +6,7 @@
     "EntityUnavailable",
     "Scraper",
 ]
-import importlib.abc as abc
+import abc
 import copy
 import dataclasses
 import datetime
@@ -22,7 +22,6 @@ import snscrape.version
 import urllib3.connection
 import time
 import warnings
-
 
 _logger = logging.getLogger(__name__)
 
@@ -360,4 +359,3 @@ class Scraper:
 
 
 __getattr__, __dir__ = snscrape.utils.module_deprecation_helper(__all__, Entity=Item)
-

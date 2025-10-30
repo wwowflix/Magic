@@ -1,15 +1,15 @@
 """
-insert_to_db.py 🔽
+insert_to_db.py ðŸ”½
 Part of Zephyr - Phase 2, Module G (G.2.45)
 
-✅ Purpose:
+âœ… Purpose:
 Insert cleaned trend data into SQLite DB for dashboard access.
 
-🧠 Inputs:
+ðŸ§  Inputs:
 - List[Dict] or pandas.DataFrame of trend items
 - Table name (e.g., "reddit_scrape", "google_trends")
 
-📤 Output:
+ðŸ“¤ Output:
 - SQLite DB updated at outputs/mydata.db
 """
 
@@ -33,6 +33,8 @@ def insert_to_db(data, table_name="trend_data"):
         conn = sqlite3.connect(DB_PATH)
         data.to_sql(table_name, conn, if_exists="append", index=False)
         conn.close()
-        print(f"✅ Inserted {len(data)} records into table '{table_name}' in {DB_PATH}")
+        print(
+            f"âœ… Inserted {len(data)} records into table '{table_name}' in {DB_PATH}"
+        )
     except Exception as e:
-        print(f"❌ Failed to insert data into DB: {e}")
+        print(f"âŒ Failed to insert data into DB: {e}")

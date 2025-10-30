@@ -1,9 +1,9 @@
-﻿# This file is dual licensed under the terms of the Apache License, Version
+from __future__ import annotations
+
+# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-import importlib.abc as abc
+import abc
 import datetime
 import os
 import typing
@@ -215,7 +215,7 @@ class _RawRevokedCertificate(RevokedCertificate):
     @property
     def revocation_date(self) -> datetime.datetime:
         warnings.warn(
-            "Properties that return a naÃ¯ve datetime object have been "
+            "Properties that return a naÃƒÂ¯ve datetime object have been "
             "deprecated. Please switch to revocation_date_utc.",
             utils.DeprecatedIn42,
             stacklevel=2,
@@ -233,7 +233,6 @@ class _RawRevokedCertificate(RevokedCertificate):
 
 CertificateRevocationList = rust_x509.CertificateRevocationList
 CertificateSigningRequest = rust_x509.CertificateSigningRequest
-
 
 load_pem_x509_certificate = rust_x509.load_pem_x509_certificate
 load_der_x509_certificate = rust_x509.load_der_x509_certificate
@@ -813,4 +812,3 @@ class RevokedCertificateBuilder:
 
 def random_serial_number() -> int:
     return int.from_bytes(os.urandom(20), "big") >> 1
-

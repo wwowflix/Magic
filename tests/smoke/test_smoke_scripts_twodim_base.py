@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_twodim_base():
     mod = importlib.import_module("scripts.twodim_base")
     assert isinstance(mod, types.ModuleType)

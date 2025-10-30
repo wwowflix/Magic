@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_t2CharStringPen():
     mod = importlib.import_module("scripts.t2CharStringPen")
     assert isinstance(mod, types.ModuleType)

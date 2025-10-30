@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_check_type_completeness():
     mod = importlib.import_module("scripts.check_type_completeness")
     assert isinstance(mod, types.ModuleType)

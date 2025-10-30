@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_bidi():
     mod = importlib.import_module("scripts.bidi")
     assert isinstance(mod, types.ModuleType)

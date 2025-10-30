@@ -1,14 +1,17 @@
 from __future__ import annotations
+
 # MAGIC_ASYNCGENS_GUARD_BLOCK
 try:
     from . import _core  # preferred relative
 except Exception:
     import importlib
+
     _core = importlib.import_module("scripts._core")
 try:
     from ._util import name_asyncgen  # preferred relative
 except Exception:
     import importlib
+
     name_asyncgen = importlib.import_module("scripts._util").name_asyncgen
 # END MAGIC_ASYNCGENS_GUARD_BLOCK
 try:
@@ -23,6 +26,7 @@ try:
     from . import _core  # preferred
 except Exception:
     import importlib
+
     _core = importlib.import_module("scripts._core")
 # --- end MAGIC asyncgens import compat ---
 import logging
@@ -35,6 +39,7 @@ import attrs
 
 from . import _core
 from ._util import name_asyncgen
+
 # Used to log exceptions in async generator finalizers
 ASYNCGEN_LOGGER = logging.getLogger("trio.async_generator_errors")
 

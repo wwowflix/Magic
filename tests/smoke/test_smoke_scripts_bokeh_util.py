@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_bokeh_util():
     mod = importlib.import_module("scripts.bokeh_util")
     assert isinstance(mod, types.ModuleType)

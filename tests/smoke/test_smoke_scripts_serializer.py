@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_serializer():
     mod = importlib.import_module("scripts.serializer")
     assert isinstance(mod, types.ModuleType)

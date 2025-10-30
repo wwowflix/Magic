@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts___pip_runner__():
     mod = importlib.import_module("scripts.__pip-runner__")
     assert isinstance(mod, types.ModuleType)

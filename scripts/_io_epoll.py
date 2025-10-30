@@ -16,8 +16,8 @@ from ._wakeup_socketpair import WakeupSocketpair
 if TYPE_CHECKING:
     from typing_extensions import TypeAlias
 
-    from .._core import Abort, RaiseCancelT
-    from .._file_io import _HasFileNo
+    from scripts._core import Abort, RaiseCancelT
+    from scripts._file_io import _HasFileNo
 
 
 @attrs.define(eq=False)
@@ -28,7 +28,6 @@ class EpollWaiters:
 
 
 assert not TYPE_CHECKING or sys.platform == "linux"
-
 
 EventResult: TypeAlias = "list[tuple[int, int]]"
 

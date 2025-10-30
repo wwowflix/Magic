@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_frame_protocol():
     mod = importlib.import_module("scripts.frame_protocol")
     assert isinstance(mod, types.ModuleType)

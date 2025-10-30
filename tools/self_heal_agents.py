@@ -1,5 +1,5 @@
 # tools/self_heal_agents.py
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import os
 import shutil
 import time

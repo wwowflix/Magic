@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_dashboard_notifier():
     mod = importlib.import_module("scripts.dashboard_notifier")
     assert isinstance(mod, types.ModuleType)

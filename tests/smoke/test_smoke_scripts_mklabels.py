@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mklabels():
     mod = importlib.import_module("scripts.mklabels")
     assert isinstance(mod, types.ModuleType)

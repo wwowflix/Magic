@@ -9,7 +9,6 @@ __all__ = [
     "LXMLTreeBuilder",
 ]
 
-
 from typing import (
     Any,
     Dict,

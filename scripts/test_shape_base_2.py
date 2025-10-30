@@ -27,7 +27,6 @@ from numpy.testing import (
     assert_warns,
 )
 
-
 IS_64BIT = sys.maxsize > 2**32
 
 

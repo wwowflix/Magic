@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_background_service():
     mod = importlib.import_module("scripts.background_service")
     assert isinstance(mod, types.ModuleType)

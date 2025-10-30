@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_websocket_connection():
     mod = importlib.import_module("scripts.websocket_connection")
     assert isinstance(mod, types.ModuleType)

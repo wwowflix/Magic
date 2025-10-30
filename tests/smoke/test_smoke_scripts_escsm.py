@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_escsm():
     mod = importlib.import_module("scripts.escsm")
     assert isinstance(mod, types.ModuleType)

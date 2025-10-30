@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_scipy_sparse():
     mod = importlib.import_module("scripts.scipy_sparse")
     assert isinstance(mod, types.ModuleType)

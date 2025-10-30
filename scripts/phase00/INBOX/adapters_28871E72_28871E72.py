@@ -67,12 +67,10 @@ except ImportError:
 if typing.TYPE_CHECKING:
     from .models import PreparedRequest
 
-
 DEFAULT_POOLBLOCK = False
 DEFAULT_POOLSIZE = 10
 DEFAULT_RETRIES = 0
 DEFAULT_POOL_TIMEOUT = None
-
 
 try:
     import ssl  # noqa: F401

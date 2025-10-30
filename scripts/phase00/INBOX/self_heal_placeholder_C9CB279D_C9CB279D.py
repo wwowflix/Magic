@@ -27,7 +27,7 @@ def main() -> None:
 
         ensure_placeholder(normalized_path)
 
-    print("✅ Placeholder recovery complete.")
+    print("âœ… Placeholder recovery complete.")
 
 
 if __name__ == "__main__":

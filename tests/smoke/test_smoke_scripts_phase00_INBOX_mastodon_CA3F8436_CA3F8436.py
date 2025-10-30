@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_mastodon_CA3F8436_CA3F8436():
     mod = importlib.import_module("scripts.phase00.INBOX.mastodon_CA3F8436_CA3F8436")
     assert isinstance(mod, types.ModuleType)

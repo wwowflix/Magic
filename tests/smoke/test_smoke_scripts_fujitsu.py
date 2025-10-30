@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fujitsu():
     mod = importlib.import_module("scripts.fujitsu")
     assert isinstance(mod, types.ModuleType)

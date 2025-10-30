@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_johabprober():
     mod = importlib.import_module("scripts.johabprober")
     assert isinstance(mod, types.ModuleType)

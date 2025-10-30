@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, unicode_literals
 
 from xml.dom import Node
-from ..constants import namespaces, voidElements, spaceCharacters
+from scripts.constants import namespaces, voidElements, spaceCharacters
 
 __all__ = [
     "DOCUMENT",

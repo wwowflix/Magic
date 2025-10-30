@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase16_module_C_16C_giveaway_trigger_READY():
     mod = importlib.import_module("scripts.phase16.module_C.16C_giveaway_trigger_READY")
     assert isinstance(mod, types.ModuleType)

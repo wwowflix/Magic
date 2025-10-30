@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_CFF2ToCFF():
     mod = importlib.import_module("scripts.CFF2ToCFF")
     assert isinstance(mod, types.ModuleType)

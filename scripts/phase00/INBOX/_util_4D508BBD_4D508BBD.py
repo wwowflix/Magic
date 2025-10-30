@@ -1,6 +1,6 @@
-# Little utilities we use internally
 from __future__ import annotations
 
+# Little utilities we use internally
 import collections.abc
 import inspect
 import signal

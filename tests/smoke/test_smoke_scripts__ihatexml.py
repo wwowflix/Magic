@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__ihatexml():
     mod = importlib.import_module("scripts._ihatexml")
     assert isinstance(mod, types.ModuleType)

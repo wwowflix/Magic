@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 SQL-style merge routines
 """
-
-from __future__ import annotations
-
 import copy
 import datetime
 from functools import partial

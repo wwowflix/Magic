@@ -266,7 +266,6 @@ class _fromnxfunction:
     """
     Defines a wrapper to adapt NumPy functions to masked arrays.
 
-
     An instance of `_fromnxfunction` can be called with the same parameters
     as the wrapped NumPy function. The docstring of `newfunc` is adapted from
     the wrapped function as well, see `getdoc`.

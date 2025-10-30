@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_gen_smoke_tests():
     mod = importlib.import_module("tools.gen_smoke_tests")
     assert isinstance(mod, types.ModuleType)

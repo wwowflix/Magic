@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pwa():
     mod = importlib.import_module("scripts.pwa")
     assert isinstance(mod, types.ModuleType)

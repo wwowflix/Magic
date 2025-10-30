@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ttCollection():
     mod = importlib.import_module("scripts.ttCollection")
     assert isinstance(mod, types.ModuleType)

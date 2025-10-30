@@ -5,9 +5,7 @@ import collections
 import types
 import itertools
 
-
 from typing import Callable, TypeVar
-
 
 CallableT = TypeVar("CallableT", bound=Callable[..., object])
 

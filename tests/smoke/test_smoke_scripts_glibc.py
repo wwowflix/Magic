@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_glibc():
     mod = importlib.import_module("scripts.glibc")
     assert isinstance(mod, types.ModuleType)

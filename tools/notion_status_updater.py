@@ -1,4 +1,4 @@
-import os
+import os  # noqa: I001
 import csv
 import requests
 from dotenv import load_dotenv

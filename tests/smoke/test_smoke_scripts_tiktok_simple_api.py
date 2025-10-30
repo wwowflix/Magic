@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_tiktok_simple_api():
     mod = importlib.import_module("scripts.tiktok_simple_api")
     assert isinstance(mod, types.ModuleType)

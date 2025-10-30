@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_browsing_context():
     mod = importlib.import_module("scripts.browsing_context")
     assert isinstance(mod, types.ModuleType)

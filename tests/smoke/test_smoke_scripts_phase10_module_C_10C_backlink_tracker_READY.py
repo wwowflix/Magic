@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase10_module_C_10C_backlink_tracker_READY():
     mod = importlib.import_module("scripts.phase10.module_C.10C_backlink_tracker_READY")
     assert isinstance(mod, types.ModuleType)

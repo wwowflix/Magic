@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_magic_full_status_scan():
     mod = importlib.import_module("tools.magic_full_status_scan")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_otConverters():
     mod = importlib.import_module("scripts.otConverters")
     assert isinstance(mod, types.ModuleType)

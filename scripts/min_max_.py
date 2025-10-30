@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Numba 1D min/max kernels that can be shared by
 * Dataframe / Series
@@ -6,9 +8,6 @@ Numba 1D min/max kernels that can be shared by
 
 Mirrors pandas/_libs/window/aggregation.pyx
 """
-
-from __future__ import annotations
-
 import numba
 import numpy as np
 

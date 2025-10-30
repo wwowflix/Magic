@@ -119,7 +119,6 @@ _import_array(void)
 #endif
 """
 
-
 c_template = r"""
 /* These pointers will be stored in the C-object for use in other
     extension modules

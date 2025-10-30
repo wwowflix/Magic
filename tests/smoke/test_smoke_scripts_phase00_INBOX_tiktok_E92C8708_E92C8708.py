@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_tiktok_E92C8708_E92C8708():
     mod = importlib.import_module("scripts.phase00.INBOX.tiktok_E92C8708_E92C8708")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_patch_manifest_c():
     mod = importlib.import_module("tools.patch_manifest_c")
     assert isinstance(mod, types.ModuleType)

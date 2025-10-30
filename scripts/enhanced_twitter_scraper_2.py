@@ -19,4 +19,4 @@ try:
     for tweet in tweets:
         print(f"{tweet.date}: {tweet.content}")
 except Exception as e:
-    print(f"⚠️ Error: {str(e)}")
+    print(f"âš ï¸ Error: {str(e)}")

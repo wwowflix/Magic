@@ -24,7 +24,6 @@ __docformat__ = "restructuredtext"
 # and by Perry Greenfield 2000-4-1 for numarray
 # and by Travis Oliphant  2005-8-22 for numpy
 
-
 # Note: Both scalartypes.c.src and arrayprint.py implement strs for numpy
 # scalars but for different purposes. scalartypes.c.src has str/reprs for when
 # the scalar is printed on its own, while arrayprint.py has strs for when

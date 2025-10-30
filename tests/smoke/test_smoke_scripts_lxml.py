@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lxml():
     mod = importlib.import_module("scripts.lxml")
     assert isinstance(mod, types.ModuleType)

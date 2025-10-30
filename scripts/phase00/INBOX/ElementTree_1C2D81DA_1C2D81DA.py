@@ -21,7 +21,6 @@ else:
     from xml.etree.ElementTree import XMLParser as _XMLParser
     from xml.etree.ElementTree import iterparse as _iterparse
 
-
 from .common import (
     DTDForbidden,
     EntitiesForbidden,
@@ -70,7 +69,6 @@ def _get_py3_cls():
 
 if PY3:
     _XMLParser, _iterparse = _get_py3_cls()
-
 
 _sentinel = object()
 
@@ -140,7 +138,6 @@ parse, iterparse, fromstring = _generate_etree_functions(
     DefusedXMLParser, _TreeBuilder, _parse, _iterparse
 )
 XML = fromstring
-
 
 __all__ = [
     "ParseError",

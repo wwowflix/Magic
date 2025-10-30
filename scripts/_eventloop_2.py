@@ -16,7 +16,7 @@ else:
     from typing_extensions import TypeVarTuple, Unpack
 
 if TYPE_CHECKING:
-    from ..abc import AsyncBackend
+    from scripts.abc import AsyncBackend
 
 # This must be updated when new backends are introduced
 BACKENDS = "asyncio", "trio"

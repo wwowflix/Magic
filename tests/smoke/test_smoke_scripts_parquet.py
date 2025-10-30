@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_parquet():
     mod = importlib.import_module("scripts.parquet")
     assert isinstance(mod, types.ModuleType)

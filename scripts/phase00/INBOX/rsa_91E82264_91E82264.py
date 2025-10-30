@@ -1,9 +1,9 @@
-﻿# This file is dual licensed under the terms of the Apache License, Version
+from __future__ import annotations
+
+# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-import importlib.abc as abc
+import abc
 import random
 import typing
 from math import gcd
@@ -274,4 +274,3 @@ def rsa_recover_prime_factors(n: int, e: int, d: int) -> tuple[int, int]:
     assert r == 0
     p, q = sorted((p, q), reverse=True)
     return (p, q)
-

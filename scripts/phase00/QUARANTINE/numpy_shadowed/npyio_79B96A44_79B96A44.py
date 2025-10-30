@@ -61,7 +61,6 @@ __all__ = [
     "DataSource",
 ]
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
@@ -538,7 +537,6 @@ def save(file, arr, allow_pickle=True, fix_imports=True):
     >>> np.load(outfile)
     array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
-
     >>> with open('test.npy', 'wb') as f:
     ...     np.save(f, np.array([1, 2]))
     ...     np.save(f, np.array([1, 3]))
@@ -703,7 +701,6 @@ def savez_compressed(file, *args, **kwds):
     ``zipfile.ZIP_DEFLATED`` and each file in the archive contains one variable
     in ``.npy`` format. For a description of the ``.npy`` format, see
     :py:mod:`numpy.lib.format`.
-
 
     When opening the saved ``.npz`` file with `load` a `NpzFile` object is
     returned. This is a dictionary-like object which can be queried for
@@ -1334,7 +1331,6 @@ def savetxt(
         is 'latin1'.
 
         .. versionadded:: 1.14.0
-
 
     See Also
     --------

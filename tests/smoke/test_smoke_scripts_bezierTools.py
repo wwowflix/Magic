@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_bezierTools():
     mod = importlib.import_module("scripts.bezierTools")
     assert isinstance(mod, types.ModuleType)

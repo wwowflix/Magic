@@ -13,5 +13,5 @@ for table, path in files.items():
     if os.path.exists(path):
         df = pd.read_csv(path)
         df.to_sql(table, conn, if_exists="replace", index=False)
-        print(f"✅ Loaded: {table}")
+        print(f"âœ… Loaded: {table}")
 conn.close()

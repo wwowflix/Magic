@@ -6,10 +6,14 @@ except Exception:
     # Recreate getargspec using inspect.getfullargspec
     from inspect import getfullargspec as _getfullargspec
     from collections import namedtuple
+
     ArgSpec = namedtuple("ArgSpec", "args varargs keywords defaults")
+
     def getargspec(func):
         fs = _getfullargspec(func)
         return ArgSpec(fs.args, fs.varargs, fs.varkw, fs.defaults)
+
+
 # MAGIC_SHIM_END
 # MAGIC_SHIM_BEGIN (NumPy overrides compat)
 # Provide the minimal symbols this module expects, regardless of NumPy version.
@@ -24,11 +28,17 @@ except Exception:
     # Safe fallbacks for newer NumPy where these private helpers moved/vanished.
     def _add_docstring(obj, doc):
         return obj
+
     def _implement_array_function(*_dargs, **_dkwargs):
-        def _decorator(f): return f
+        def _decorator(f):
+            return f
+
         return _decorator
+
     def _get_implementing_args_impl(args):
         return ()
+
+
 # Re-export the names the rest of this file expects to see
 add_docstring = _add_docstring
 implement_array_function = _implement_array_function
@@ -96,7 +106,6 @@ add_docstring(
     """,
 )
 
-
 # exposed for testing purposes; used internally by implement_array_function
 add_docstring(
     _get_implementing_args,
@@ -115,7 +124,6 @@ add_docstring(
     which they should be called.
     """,
 )
-
 
 ArgSpec = collections.namedtuple("ArgSpec", "args varargs keywords defaults")
 

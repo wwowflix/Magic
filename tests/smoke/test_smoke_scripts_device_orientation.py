@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_device_orientation():
     mod = importlib.import_module("scripts.device_orientation")
     assert isinstance(mod, types.ModuleType)

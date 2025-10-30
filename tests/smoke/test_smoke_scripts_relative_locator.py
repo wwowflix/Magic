@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_relative_locator():
     mod = importlib.import_module("scripts.relative_locator")
     assert isinstance(mod, types.ModuleType)

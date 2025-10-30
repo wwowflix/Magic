@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_excel():
     mod = importlib.import_module("scripts.excel")
     assert isinstance(mod, types.ModuleType)

@@ -16,7 +16,7 @@ from numpy.testing import IS_PYPY, assert_array_equal
 
 @pytest.fixture
 def string_list():
-    return ["abc", "def", "ghi" * 10, "A¢☃€ 😊" * 100, "Abc" * 1000, "DEF"]
+    return ["abc", "def", "ghi" * 10, "AÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 100, "Abc" * 1000, "DEF"]
 
 
 # second copy for cast tests to do a cartesian product over dtypes
@@ -135,9 +135,9 @@ def test_string_too_large_error():
     "data",
     [
         ["abc", "def", "ghi"],
-        ["🤣", "📵", "😰"],
-        ["🚜", "🙃", "😾"],
-        ["😹", "🚠", "🚌"],
+        ["ðŸ¤£", "ðŸ“µ", "ðŸ˜°"],
+        ["ðŸšœ", "ðŸ™ƒ", "ðŸ˜¾"],
+        ["ðŸ˜¹", "ðŸš ", "ðŸšŒ"],
     ],
 )
 def test_array_creation_utf8(dtype, data):
@@ -173,8 +173,8 @@ def test_scalars_string_conversion(data, dtype):
     ("strings"),
     [
         ["this", "is", "an", "array"],
-        ["€", "", "😊"],
-        ["A¢☃€ 😊", " A☃€¢😊", "☃€😊 A¢", "😊☃A¢ €"],
+        ["â‚¬", "", "ðŸ˜Š"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", " Aâ˜ƒâ‚¬Â¢ðŸ˜Š", "â˜ƒâ‚¬ðŸ˜Š AÂ¢", "ðŸ˜Šâ˜ƒAÂ¢ â‚¬"],
     ],
 )
 def test_self_casts(dtype, dtype2, strings):
@@ -223,8 +223,8 @@ def test_self_casts(dtype, dtype2, strings):
     ("strings"),
     [
         ["this", "is", "an", "array"],
-        ["€", "", "😊"],
-        ["A¢☃€ 😊", " A☃€¢😊", "☃€😊 A¢", "😊☃A¢ €"],
+        ["â‚¬", "", "ðŸ˜Š"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", " Aâ˜ƒâ‚¬Â¢ðŸ˜Š", "â˜ƒâ‚¬ðŸ˜Š AÂ¢", "ðŸ˜Šâ˜ƒAÂ¢ â‚¬"],
     ],
 )
 class TestStringLikeCasts:
@@ -394,10 +394,10 @@ def test_stdlib_copy(dtype, string_list):
             "righty" * 10,
             "up" * 10,
         ],
-        ["🤣🤣", "🤣", "📵", "😰"],
-        ["🚜", "🙃", "😾"],
-        ["😹", "🚠", "🚌"],
-        ["A¢☃€ 😊", " A☃€¢😊", "☃€😊 A¢", "😊☃A¢ €"],
+        ["ðŸ¤£ðŸ¤£", "ðŸ¤£", "ðŸ“µ", "ðŸ˜°"],
+        ["ðŸšœ", "ðŸ™ƒ", "ðŸ˜¾"],
+        ["ðŸ˜¹", "ðŸš ", "ðŸšŒ"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", " Aâ˜ƒâ‚¬Â¢ðŸ˜Š", "â˜ƒâ‚¬ðŸ˜Š AÂ¢", "ðŸ˜Šâ˜ƒAÂ¢ â‚¬"],
     ],
 )
 def test_sort(dtype, strings):
@@ -458,9 +458,9 @@ def test_sort(dtype, strings):
 @pytest.mark.parametrize(
     "strings",
     [
-        ["A¢☃€ 😊", " A☃€¢😊", "☃€😊 A¢", "😊☃A¢ €"],
-        ["A¢☃€ 😊", "", " ", " "],
-        ["", "a", "😸", "ááðfáíóåéë"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", " Aâ˜ƒâ‚¬Â¢ðŸ˜Š", "â˜ƒâ‚¬ðŸ˜Š AÂ¢", "ðŸ˜Šâ˜ƒAÂ¢ â‚¬"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", "", " ", "ï€ "],
+        ["", "a", "ðŸ˜¸", "Ã¡Ã¡Ã°fÃ¡Ã­Ã³Ã¥Ã©Ã«"],
     ],
 )
 def test_nonzero(strings, na_object):
@@ -584,10 +584,10 @@ def test_astype_copy_false():
     "strings",
     [
         ["left", "right", "leftovers", "righty", "up", "down"],
-        ["🤣🤣", "🤣", "📵", "😰"],
-        ["🚜", "🙃", "😾"],
-        ["😹", "🚠", "🚌"],
-        ["A¢☃€ 😊", " A☃€¢😊", "☃€😊 A¢", "😊☃A¢ €"],
+        ["ðŸ¤£ðŸ¤£", "ðŸ¤£", "ðŸ“µ", "ðŸ˜°"],
+        ["ðŸšœ", "ðŸ™ƒ", "ðŸ˜¾"],
+        ["ðŸ˜¹", "ðŸš ", "ðŸšŒ"],
+        ["AÂ¢â˜ƒâ‚¬ ðŸ˜Š", " Aâ˜ƒâ‚¬Â¢ðŸ˜Š", "â˜ƒâ‚¬ðŸ˜Š AÂ¢", "ðŸ˜Šâ˜ƒAÂ¢ â‚¬"],
     ],
 )
 def test_argmax(strings):
@@ -816,9 +816,9 @@ def test_max_regression():
 @pytest.mark.parametrize(
     "other_strings",
     [
-        ["abc", "def" * 500, "ghi" * 16, "🤣" * 100, "📵", "😰"],
-        ["🚜", "🙃", "😾", "😹", "🚠", "🚌"],
-        ["🥦", "¨", "⨯", "∰ ", "⨌ ", "⎶ "],
+        ["abc", "def" * 500, "ghi" * 16, "ðŸ¤£" * 100, "ðŸ“µ", "ðŸ˜°"],
+        ["ðŸšœ", "ðŸ™ƒ", "ðŸ˜¾", "ðŸ˜¹", "ðŸš ", "ðŸšŒ"],
+        ["ðŸ¥¦", "Â¨", "â¨¯", "âˆ° ", "â¨Œ ", "âŽ¶ "],
     ],
 )
 def test_ufunc_add(dtype, string_list, other_strings, use_out):
@@ -921,7 +921,7 @@ def test_multiply_reduce():
     # ridiculous anyway).  But it works and actually makes some sense...
     # (NumPy does not allow non-scalar initial values)
     repeats = np.array([2, 3, 4])
-    val = "school-🚌"
+    val = "school-ðŸšŒ"
     res = np.multiply.reduce(repeats, initial=val, dtype=np.dtypes.StringDType)
     assert res == val * np.prod(repeats)
 
@@ -1095,7 +1095,6 @@ DATETIME_INPUT = [
     np.datetime64("2041-12-03T14:05:03"),
 ]
 
-
 TIMEDELTA_INPUT = [
     np.timedelta64(12358, "s"),
     np.timedelta64(23, "s"),
@@ -1196,7 +1195,7 @@ def test_growing_strings(dtype):
 
 UFUNC_TEST_DATA = [
     "hello" * 10,
-    "Ae¢☃€ 😊" * 20,
+    "AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 20,
     "entry\nwith\nnewlines",
     "entry\twith\ttabs",
 ]
@@ -1469,16 +1468,16 @@ def test_binary(string_array, unicode_array, function_name, args):
     ],
 )
 def test_non_default_start_stop(function, start, stop, expected):
-    a = np.array([["--🐍--", "--🦜--"], ["-🐍---", "-🦜---"]], "T")
-    indx = function(a, "🐍", start, stop)
+    a = np.array([["--ðŸ--", "--ðŸ¦œ--"], ["-ðŸ---", "-ðŸ¦œ---"]], "T")
+    indx = function(a, "ðŸ", start, stop)
     assert_array_equal(indx, expected)
 
 
 @pytest.mark.parametrize("count", [2, np.int8(2), np.array([2, 2], "u2")])
 def test_replace_non_default_repeat(count):
-    a = np.array(["🐍--", "🦜-🦜-"], "T")
-    result = np.strings.replace(a, "🦜-", "🦜†", count)
-    assert_array_equal(result, np.array(["🐍--", "🦜†🦜†"], "T"))
+    a = np.array(["ðŸ--", "ðŸ¦œ-ðŸ¦œ-"], "T")
+    result = np.strings.replace(a, "ðŸ¦œ-", "ðŸ¦œâ€ ", count)
+    assert_array_equal(result, np.array(["ðŸ--", "ðŸ¦œâ€ ðŸ¦œâ€ "], "T"))
 
 
 def test_strip_ljust_rjust_consistency(string_array, unicode_array):
@@ -1754,8 +1753,8 @@ class TestImplementation:
         c = self.a.copy()
         # A slightly longer string will not fit in the arena for
         # the medium string, but will fit for the longer one.
-        c[:] = self.s_medium + "±"
-        assert_array_equal(c, self.s_medium + "±")
+        c[:] = self.s_medium + "Â±"
+        assert_array_equal(c, self.s_medium + "Â±")
         in_arena_exp = np.strings.str_len(self.a) >= len(self.s_medium) + 1
         # first entry started uninitialized and empty, so filling it leaves
         # it in the arena

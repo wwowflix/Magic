@@ -28,9 +28,9 @@ from .. import (
     sleep,
     sleep_forever,
 )
-from .._core._tests.test_ki import ki_self
-from .._core._tests.tutil import slow
-from .._threads import (
+from scripts._core._tests.test_ki import ki_self
+from scripts._core._tests.tutil import slow
+from scripts._threads import (
     active_thread_count,
     current_default_thread_limiter,
     from_thread_check_cancelled,
@@ -39,14 +39,14 @@ from .._threads import (
     to_thread_run_sync,
     wait_all_threads_completed,
 )
-from ..testing import wait_all_tasks_blocked
+from scripts.testing import wait_all_tasks_blocked
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator, Awaitable, Callable
 
     from outcome import Outcome
 
-    from ..lowlevel import Task
+    from scripts.lowlevel import Task
 
 RecordType = list[tuple[str, Union[threading.Thread, type[BaseException]]]]
 T = TypeVar("T")
@@ -225,7 +225,7 @@ async def test_named_thread() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙")
+    await test_thread_name("Ã°Å¸â€™â„¢")
 
 
 def _get_thread_name(ident: int | None = None) -> str | None:
@@ -306,7 +306,7 @@ async def test_named_thread_os() -> None:
     await test_thread_name("fobiedoo")
     await test_thread_name("name_longer_than_15_characters")
 
-    await test_thread_name("💙", expected="?")
+    await test_thread_name("Ã°Å¸â€™â„¢", expected="?")
 
 
 def test_has_pthread_setname_np() -> None:

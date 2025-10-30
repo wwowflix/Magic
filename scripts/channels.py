@@ -1,8 +1,7 @@
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
-
 from __future__ import annotations
 
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
 # These errors need to be ignored as they come from the overload methods
 # which trigger two kind of errors in mypy:
 # * all of them do not have an implementation in this file
@@ -48,7 +47,6 @@ if TYPE_CHECKING:
         from typing import Self
     else:
         from typing_extensions import Self
-
 
 __all__ = [
     "X2",

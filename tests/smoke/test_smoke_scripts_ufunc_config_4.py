@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ufunc_config_4():
     mod = importlib.import_module("scripts.ufunc_config_4")
     assert isinstance(mod, types.ModuleType)

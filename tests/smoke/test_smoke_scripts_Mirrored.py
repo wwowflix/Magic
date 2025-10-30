@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_Mirrored():
     mod = importlib.import_module("scripts.Mirrored")
     assert isinstance(mod, types.ModuleType)

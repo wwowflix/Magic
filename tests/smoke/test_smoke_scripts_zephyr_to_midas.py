@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_zephyr_to_midas():
     mod = importlib.import_module("scripts.zephyr_to_midas")
     assert isinstance(mod, types.ModuleType)

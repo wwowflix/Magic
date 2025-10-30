@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pkgconfig():
     mod = importlib.import_module("scripts.pkgconfig")
     assert isinstance(mod, types.ModuleType)

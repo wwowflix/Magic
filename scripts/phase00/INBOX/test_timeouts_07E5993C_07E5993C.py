@@ -9,8 +9,8 @@ import pytest
 import trio
 
 from .. import _core
-from .._core._tests.tutil import slow
-from .._timeouts import (
+from scripts._core._tests.tutil import slow
+from scripts._timeouts import (
     TooSlowError,
     fail_after,
     fail_at,
@@ -20,7 +20,7 @@ from .._timeouts import (
     sleep_forever,
     sleep_until,
 )
-from ..testing import assert_checkpoints
+from scripts.testing import assert_checkpoints
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable

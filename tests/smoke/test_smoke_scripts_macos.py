@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_macos():
     mod = importlib.import_module("scripts.macos")
     assert isinstance(mod, types.ModuleType)

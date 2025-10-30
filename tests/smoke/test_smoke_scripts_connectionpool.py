@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_connectionpool():
     mod = importlib.import_module("scripts.connectionpool")
     assert isinstance(mod, types.ModuleType)

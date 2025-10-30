@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__pocketfft():
     mod = importlib.import_module("scripts._pocketfft")
     assert isinstance(mod, types.ModuleType)

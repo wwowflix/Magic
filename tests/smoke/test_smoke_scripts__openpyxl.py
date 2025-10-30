@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__openpyxl():
     mod = importlib.import_module("scripts._openpyxl")
     assert isinstance(mod, types.ModuleType)

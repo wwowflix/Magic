@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_kerning():
     mod = importlib.import_module("scripts.kerning")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__add_newdocs_scalars():
     mod = importlib.import_module("scripts._add_newdocs_scalars")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_bdist_egg():
     mod = importlib.import_module("scripts.bdist_egg")
     assert isinstance(mod, types.ModuleType)

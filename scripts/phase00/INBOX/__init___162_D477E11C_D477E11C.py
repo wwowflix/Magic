@@ -25,7 +25,6 @@ from fontTools.misc import etree
 
 from fontTools.misc.textTools import tostr
 
-
 # By default, we
 #  - deserialize <data> elements as bytes and
 #  - serialize bytes as <data> elements.
@@ -46,7 +45,6 @@ PLIST_DOCTYPE = (
     b'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" '
     b'"http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
 )
-
 
 # Date should conform to a subset of ISO 8601:
 # YYYY '-' MM '-' DD 'T' HH ':' MM ':' SS 'Z'
@@ -323,7 +321,6 @@ _TARGET_END_HANDLERS: Dict[str, Callable[[PlistTarget], None]] = {
     "date": end_date,
 }
 
-
 # functions to build element tree from plist data
 
 
@@ -437,7 +434,6 @@ _make_element.register(datetime)(_date_element)
 _make_element.register(bytes)(_string_or_data_element)
 _make_element.register(bytearray)(_data_element)
 _make_element.register(Data)(lambda v, ctx: _data_element(v.data, ctx))
-
 
 # Public functions to create element tree from plist-compatible python
 # data structures and viceversa, for use when (de)serializing GLIF xml.

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase03_module_E_03E_prompt_improver_READY():
     mod = importlib.import_module("scripts.phase03.module_E.03E_prompt_improver_READY")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_auto_patcher():
     mod = importlib.import_module("tools.auto_patcher")
     assert isinstance(mod, types.ModuleType)

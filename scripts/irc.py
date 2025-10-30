@@ -23,9 +23,7 @@ from pip._vendor.pygments.token import (
 )
 from pip._vendor.pygments.util import get_choice_opt
 
-
 __all__ = ["IRCFormatter"]
-
 
 #: Map token types to a tuple of color values for light and dark
 #: backgrounds.
@@ -56,7 +54,6 @@ IRC_COLORS = {
     Generic.Error: ("brightred", "brightred"),
     Error: ("_brightred_", "_brightred_"),
 }
-
 
 IRC_COLOR_MAP = {
     "white": 0,

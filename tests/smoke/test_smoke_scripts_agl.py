@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_agl():
     mod = importlib.import_module("scripts.agl")
     assert isinstance(mod, types.ModuleType)

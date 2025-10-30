@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__generated_io_epoll():
     mod = importlib.import_module("scripts._generated_io_epoll")
     assert isinstance(mod, types.ModuleType)

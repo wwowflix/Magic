@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_momentum_tracker():
     mod = importlib.import_module("scripts.momentum_tracker")
     assert isinstance(mod, types.ModuleType)

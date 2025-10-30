@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_db_connector_2():
     mod = importlib.import_module("scripts.db_connector_2")
     assert isinstance(mod, types.ModuleType)

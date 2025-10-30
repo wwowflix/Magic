@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_orchestrator():
     mod = importlib.import_module("scripts.orchestrator")
     assert isinstance(mod, types.ModuleType)

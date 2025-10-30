@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_otTraverse():
     mod = importlib.import_module("scripts.otTraverse")
     assert isinstance(mod, types.ModuleType)

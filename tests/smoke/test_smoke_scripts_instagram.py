@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_instagram():
     mod = importlib.import_module("scripts.instagram")
     assert isinstance(mod, types.ModuleType)

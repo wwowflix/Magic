@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_structure_tree():
     mod = importlib.import_module("scripts.structure_tree")
     assert isinstance(mod, types.ModuleType)

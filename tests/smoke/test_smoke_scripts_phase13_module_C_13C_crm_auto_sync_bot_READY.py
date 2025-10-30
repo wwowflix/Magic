@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_C_13C_crm_auto_sync_bot_READY():
-    mod = importlib.import_module("scripts.phase13.module_C.13C_crm_auto_sync_bot_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_C.13C_crm_auto_sync_bot_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

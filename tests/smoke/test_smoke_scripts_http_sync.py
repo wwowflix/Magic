@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_http_sync():
     mod = importlib.import_module("scripts.http_sync")
     assert isinstance(mod, types.ModuleType)

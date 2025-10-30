@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_isoparser():
     mod = importlib.import_module("scripts.isoparser")
     assert isinstance(mod, types.ModuleType)

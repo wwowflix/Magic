@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__textwrap():
     mod = importlib.import_module("scripts._textwrap")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_bdist_rpm():
     mod = importlib.import_module("scripts.bdist_rpm")
     assert isinstance(mod, types.ModuleType)

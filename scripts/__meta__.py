@@ -1,6 +1,6 @@
-"""Meta related things."""
-
 from __future__ import annotations
+
+"""Meta related things."""
 from collections import namedtuple
 import re
 

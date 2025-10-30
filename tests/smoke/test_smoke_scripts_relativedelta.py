@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_relativedelta():
     mod = importlib.import_module("scripts.relativedelta")
     assert isinstance(mod, types.ModuleType)

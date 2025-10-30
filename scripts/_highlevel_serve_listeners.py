@@ -23,7 +23,6 @@ SLEEP_TIME = 0.100
 # The logger we use to complain when this happens
 LOGGER = logging.getLogger("trio.serve_listeners")
 
-
 StreamT = TypeVar("StreamT", bound=trio.abc.AsyncResource)
 ListenerT = TypeVar("ListenerT", bound=trio.abc.Listener[Any])  # type: ignore[explicit-any]
 Handler = Callable[[StreamT], Awaitable[object]]

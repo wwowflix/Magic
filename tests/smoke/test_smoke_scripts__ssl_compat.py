@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__ssl_compat():
     mod = importlib.import_module("scripts._ssl_compat")
     assert isinstance(mod, types.ModuleType)

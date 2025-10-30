@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__pyxlsb():
     mod = importlib.import_module("scripts._pyxlsb")
     assert isinstance(mod, types.ModuleType)

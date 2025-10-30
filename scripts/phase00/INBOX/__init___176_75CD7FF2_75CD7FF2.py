@@ -308,7 +308,7 @@ def _add_stat(font):
     if "STAT" in font:
         return
 
-    from ..otlLib.builder import buildStatTable
+    from scripts.otlLib.builder import buildStatTable
 
     fvarTable = font["fvar"]
     axes = [dict(tag=a.axisTag, name=a.axisNameID) for a in fvarTable.axes]
@@ -733,7 +733,7 @@ def _add_MVAR(font, masterModel, master_ttfs, axisTags):
 
         if varIdx is None:
             continue
-        log.info("	%s: %s.%s	%s", tag, tableTag, itemName, master_values)
+        log.info("  %s: %s.%s   %s", tag, tableTag, itemName, master_values)
         rec = ot.MetricsValueRecord()
         rec.ValueTag = tag
         rec.VarIdx = varIdx

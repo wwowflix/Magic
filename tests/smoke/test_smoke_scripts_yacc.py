@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_yacc():
     mod = importlib.import_module("scripts.yacc")
     assert isinstance(mod, types.ModuleType)

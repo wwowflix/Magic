@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_OTTags():
     mod = importlib.import_module("scripts.OTTags")
     assert isinstance(mod, types.ModuleType)

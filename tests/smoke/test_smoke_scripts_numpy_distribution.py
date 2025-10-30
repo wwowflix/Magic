@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_numpy_distribution():
     mod = importlib.import_module("scripts.numpy_distribution")
     assert isinstance(mod, types.ModuleType)

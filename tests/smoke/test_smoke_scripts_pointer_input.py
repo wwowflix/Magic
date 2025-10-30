@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pointer_input():
     mod = importlib.import_module("scripts.pointer_input")
     assert isinstance(mod, types.ModuleType)

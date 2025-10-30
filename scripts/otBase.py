@@ -9,7 +9,7 @@ import logging
 from functools import lru_cache
 from typing import Iterator, NamedTuple, Optional, Tuple
 
-# --- MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: safe USE_HARFBUZZ_REPACKER read ---
+# --- MAGIC Phase11 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ SHIELD: safe USE_HARFBUZZ_REPACKER read ---
 try:
     from fontTools.misc.configTools import OPTIONS
 except Exception:
@@ -22,7 +22,9 @@ try:
         _opt = OPTIONS.get(_key) if hasattr(OPTIONS, "get") else OPTIONS[_key]
     except KeyError:
         _opt = None
-    USE_HARFBUZZ_REPACKER = bool(getattr(_opt, "value", getattr(_opt, "default", False)))
+    USE_HARFBUZZ_REPACKER = bool(
+        getattr(_opt, "value", getattr(_opt, "default", False))
+    )
 except Exception:
     USE_HARFBUZZ_REPACKER = False
 # --- end shield ---
@@ -40,10 +42,14 @@ except ImportError:
     pass
 try:
     # Prefer the registered Option object (works with font.cfg[...] lookups)
-    USE_HARFBUZZ_REPACKER = USE_HARFBUZZ_REPACKER = False  # MAGIC: placeholder, actual value set in shield above
+    USE_HARFBUZZ_REPACKER = USE_HARFBUZZ_REPACKER = (
+        False  # MAGIC: placeholder, actual value set in shield above
+    )
 except Exception:
     # Fallback sentinel for older fontTools that don't define the option
     USE_HARFBUZZ_REPACKER = f"{__name__}:USE_HARFBUZZ_REPACKER"
+
+
 class OverflowErrorRecord(object):
     def __init__(self, overflowTuple):
         self.tableType = overflowTuple[0]
@@ -140,11 +146,11 @@ class BaseTTXConverter(DefaultTable):
         # silently fall back if it fails; True, use it and raise error if not possible
         # or it errors out; False, don't use it, even if you can.
         try:
-                # fontTools >= option introduction
-                use_hb_repack = font.cfg[USE_HARFBUZZ_REPACKER]
+            # fontTools >= option introduction
+            use_hb_repack = font.cfg[USE_HARFBUZZ_REPACKER]
         except Exception:
-                # Older fontTools: treat as ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œautoÃƒÂ¢Ã¢â€šÂ¬Ã‚Â (None)
-                use_hb_repack = None
+            # Older fontTools: treat as ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“autoÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â (None)
+            use_hb_repack = None
         if self.tableTag in ("GSUB", "GPOS"):
             if use_hb_repack is False:
                 log.debug(
@@ -622,11 +628,16 @@ class OTTableWriter(object):
         if hasattr(self, "sortCoverageLast"):
             # Find coverage table
             for i, item in enumerate(self.items):
-                if getattr(getattr(item, "subWriter", None), "name", None) == "Coverage":
+                if (
+                    getattr(getattr(item, "subWriter", None), "name", None)
+                    == "Coverage"
+                ):
                     sortCoverageLast = True
                     if id(item.subWriter) not in done:
-                        coverage_idx = item_idx = item.subWriter._gatherGraphForHarfbuzz(
-                            tables, obj_list, done, item_idx, virtual_edges
+                        coverage_idx = item_idx = (
+                            item.subWriter._gatherGraphForHarfbuzz(
+                                tables, obj_list, done, item_idx, virtual_edges
+                            )
                         )
                     else:
                         coverage_idx = done[id(item.subWriter)]

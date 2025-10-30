@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_scaleUpem():
     mod = importlib.import_module("scripts.scaleUpem")
     assert isinstance(mod, types.ModuleType)

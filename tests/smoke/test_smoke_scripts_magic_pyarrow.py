@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_magic_pyarrow():
     mod = importlib.import_module("scripts.magic_pyarrow")
     assert isinstance(mod, types.ModuleType)

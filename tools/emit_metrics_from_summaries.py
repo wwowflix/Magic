@@ -1,9 +1,10 @@
-from collections import Counter
+from collections import Counter  # noqa: I001
+
 #!/usr/bin/env python3
 import csv
 import json
 from pathlib import Path
-from collections import defaultdict, Counter
+from collections import defaultdict
 from typing import DefaultDict
 
 __all__ = ["emit_metrics", "main"]
@@ -14,7 +15,7 @@ def emit_metrics(summaries_dir: str, out_dir: str) -> str:
     Read all *.tsv files in `summaries_dir` (tab-delimited with 'Status' and 'Phase' columns,
     but we will also work if only 'Status' is present), aggregate counts, and write JSON to
     `out_dir/agent_metrics.json`. Returns the output file path as a string.
-    """
+    """  # noqa: E501
     sdir = Path(summaries_dir)
     odir = Path(out_dir)
     odir.mkdir(parents=True, exist_ok=True)

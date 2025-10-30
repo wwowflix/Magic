@@ -328,7 +328,6 @@ class CmdStanModel:
         Run stanc's auto-formatter on the model code. Either saves directly
         back to the file or prints for inspection
 
-
         :param overwrite_file: If True, save the updated code to disk, rather
             than printing it. By default False
         :param canonicalize: Whether or not the compiler should 'canonicalize'

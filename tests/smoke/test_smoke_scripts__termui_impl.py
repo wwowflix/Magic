@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__termui_impl():
     mod = importlib.import_module("scripts._termui_impl")
     assert isinstance(mod, types.ModuleType)

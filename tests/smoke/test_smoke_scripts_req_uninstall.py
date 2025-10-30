@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_req_uninstall():
     mod = importlib.import_module("scripts.req_uninstall")
     assert isinstance(mod, types.ModuleType)

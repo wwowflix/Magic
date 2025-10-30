@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__asyncio():
     mod = importlib.import_module("scripts._asyncio")
     assert isinstance(mod, types.ModuleType)

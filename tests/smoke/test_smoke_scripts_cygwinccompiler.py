@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cygwinccompiler():
     mod = importlib.import_module("scripts.cygwinccompiler")
     assert isinstance(mod, types.ModuleType)

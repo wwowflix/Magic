@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_yacctab_456A5BFF_456A5BFF():
     mod = importlib.import_module("scripts.phase00.INBOX.yacctab_456A5BFF_456A5BFF")
     assert isinstance(mod, types.ModuleType)

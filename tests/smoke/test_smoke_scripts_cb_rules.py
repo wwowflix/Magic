@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cb_rules():
     mod = importlib.import_module("scripts.cb_rules")
     assert isinstance(mod, types.ModuleType)

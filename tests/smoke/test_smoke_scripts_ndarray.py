@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ndarray():
     mod = importlib.import_module("scripts.ndarray")
     assert isinstance(mod, types.ModuleType)

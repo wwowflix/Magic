@@ -14,10 +14,10 @@ REQUIRED_FOLDERS = [
     "dashboards",
 ]
 
-print("🧱 Ensuring folder structure...")
+print("ðŸ§± Ensuring folder structure...")
 for folder in REQUIRED_FOLDERS:
     if not os.path.exists(folder):
         os.makedirs(folder)
-        print(f"📁 Created: {folder}")
+        print(f"ðŸ“ Created: {folder}")
     else:
-        print(f"✅ Exists: {folder}")
+        print(f"âœ… Exists: {folder}")

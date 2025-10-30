@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_utf8prober():
     mod = importlib.import_module("scripts.utf8prober")
     assert isinstance(mod, types.ModuleType)

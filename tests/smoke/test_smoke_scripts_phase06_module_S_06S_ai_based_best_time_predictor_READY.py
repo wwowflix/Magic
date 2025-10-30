@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase06_module_S_06S_ai_based_best_time_predictor_READY():
-    mod = importlib.import_module("scripts.phase06.module_S.06S_ai_based_best_time_predictor_READY")
+    mod = importlib.import_module(
+        "scripts.phase06.module_S.06S_ai_based_best_time_predictor_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

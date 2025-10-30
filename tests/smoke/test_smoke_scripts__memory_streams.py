@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__memory_streams():
     mod = importlib.import_module("scripts._memory_streams")
     assert isinstance(mod, types.ModuleType)

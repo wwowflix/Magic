@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_interpolatableTestStartingPoint():
     mod = importlib.import_module("scripts.interpolatableTestStartingPoint")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_linearization():
     mod = importlib.import_module("scripts.linearization")
     assert isinstance(mod, types.ModuleType)

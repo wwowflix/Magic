@@ -17,7 +17,7 @@ import warnings
 import time
 import collections
 
-from .._importlib import metadata
+from scripts._importlib import metadata
 from .. import _entry_points
 
 from setuptools import Command

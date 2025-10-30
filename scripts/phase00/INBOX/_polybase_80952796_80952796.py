@@ -1,4 +1,4 @@
-﻿"""
+"""
 Abstract base class for the various polynomial Classes.
 
 The ABCPolyBase class provides the methods needed to implement the common API
@@ -8,7 +8,7 @@ abc module from the stdlib, hence it is only available for Python >= 2.6.
 """
 
 import os
-import importlib.abc as abc
+import abc
 import numbers
 
 import numpy as np
@@ -73,30 +73,30 @@ class ABCPolyBase(abc.ABC):
     # Unicode character mappings for improved __str__
     _superscript_mapping = str.maketrans(
         {
-            "0": "â°",
-            "1": "Â¹",
-            "2": "Â²",
-            "3": "Â³",
-            "4": "â´",
-            "5": "âµ",
-            "6": "â¶",
-            "7": "â·",
-            "8": "â¸",
-            "9": "â¹",
+            "0": "Ã¢ÂÂ°",
+            "1": "Ã‚Â¹",
+            "2": "Ã‚Â²",
+            "3": "Ã‚Â³",
+            "4": "Ã¢ÂÂ´",
+            "5": "Ã¢ÂÂµ",
+            "6": "Ã¢ÂÂ¶",
+            "7": "Ã¢ÂÂ·",
+            "8": "Ã¢ÂÂ¸",
+            "9": "Ã¢ÂÂ¹",
         }
     )
     _subscript_mapping = str.maketrans(
         {
-            "0": "â‚€",
-            "1": "â‚",
-            "2": "â‚‚",
-            "3": "â‚ƒ",
-            "4": "â‚„",
-            "5": "â‚…",
-            "6": "â‚†",
-            "7": "â‚‡",
-            "8": "â‚ˆ",
-            "9": "â‚‰",
+            "0": "Ã¢â€šâ‚¬",
+            "1": "Ã¢â€šÂ",
+            "2": "Ã¢â€šâ€š",
+            "3": "Ã¢â€šÆ’",
+            "4": "Ã¢â€šâ€ž",
+            "5": "Ã¢â€šâ€¦",
+            "6": "Ã¢â€šâ€ ",
+            "7": "Ã¢â€šâ€¡",
+            "8": "Ã¢â€šË†",
+            "9": "Ã¢â€šâ€°",
         }
     )
     # Some fonts don't support full unicode character ranges necessary for
@@ -383,7 +383,9 @@ class ABCPolyBase(abc.ABC):
                 "Subclasses must define either a basis_name, or override "
                 "_str_term_unicode(cls, i, arg_str)"
             )
-        return f"Â·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
+        return (
+            f"Ã‚Â·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
+        )
 
     @classmethod
     def _str_term_ascii(cls, i, arg_str):
@@ -1144,4 +1146,3 @@ class ABCPolyBase(abc.ABC):
         if window is None:
             window = cls.window
         return series.convert(domain, cls, window)
-

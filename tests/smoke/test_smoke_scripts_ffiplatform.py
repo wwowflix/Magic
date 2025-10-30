@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ffiplatform():
     mod = importlib.import_module("scripts.ffiplatform")
     assert isinstance(mod, types.ModuleType)

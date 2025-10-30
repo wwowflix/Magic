@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX__termui_impl_0125E12E_0125E12E():
-    mod = importlib.import_module("scripts.phase00.INBOX._termui_impl_0125E12E_0125E12E")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX._termui_impl_0125E12E_0125E12E"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

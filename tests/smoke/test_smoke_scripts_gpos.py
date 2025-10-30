@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_gpos():
     mod = importlib.import_module("scripts.gpos")
     assert isinstance(mod, types.ModuleType)

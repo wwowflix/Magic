@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_subscribe_convertkit_2():
     mod = importlib.import_module("scripts.subscribe_convertkit_2")
     assert isinstance(mod, types.ModuleType)

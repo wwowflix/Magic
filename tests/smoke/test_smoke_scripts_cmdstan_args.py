@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cmdstan_args():
     mod = importlib.import_module("scripts.cmdstan_args")
     assert isinstance(mod, types.ModuleType)

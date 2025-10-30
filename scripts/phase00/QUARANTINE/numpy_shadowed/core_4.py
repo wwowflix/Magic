@@ -7,7 +7,6 @@ In 2006, the package was completely rewritten by Pierre Gerard-Marchant
 (University of Georgia) to make the MaskedArray class a subclass of ndarray,
 and to improve support of structured arrays.
 
-
 Copyright 1999, 2000, 2001 Regents of the University of California.
 Released for unlimited redistribution.
 
@@ -39,7 +38,6 @@ from numpy.compat import getargspec, formatargspec
 from numpy import expand_dims
 from numpy.core.numeric import normalize_axis_tuple
 from numpy.core._internal import recursive
-
 
 __all__ = [
     "MAError",
@@ -312,7 +310,6 @@ class MaskError(MAError):
 ###############################################################################
 #                           Filling options                                   #
 ###############################################################################
-
 
 # b: boolean - c: complex - f: floats - i: integer - O: object - S: string
 default_filler = {
@@ -943,7 +940,6 @@ def is_string_or_list_of_strings(val):
 #                                  Ufuncs                                     #
 ###############################################################################
 
-
 ufunc_domain = {}
 ufunc_fills = {}
 
@@ -1415,7 +1411,6 @@ floor_divide = _DomainedBinaryOperation(umath.floor_divide, _DomainSafeDivide(),
 remainder = _DomainedBinaryOperation(umath.remainder, _DomainSafeDivide(), 0, 1)
 fmod = _DomainedBinaryOperation(umath.fmod, _DomainSafeDivide(), 0, 1)
 mod = _DomainedBinaryOperation(umath.mod, _DomainSafeDivide(), 0, 1)
-
 
 ###############################################################################
 #                        Mask creation functions                              #
@@ -6978,7 +6973,6 @@ def ptp(obj, axis=None, out=None, fill_value=None, keepdims=np._NoValue):
 
 ptp.__doc__ = MaskedArray.ptp.__doc__
 
-
 ##############################################################################
 #           Definition of functions from the corresponding methods           #
 ##############################################################################
@@ -7503,7 +7497,6 @@ def size(obj, axis=None):
 
 size.__doc__ = np.size.__doc__
 
-
 ##############################################################################
 #                            Extra functions                                 #
 ##############################################################################
@@ -7820,7 +7813,6 @@ def dot(a, b, strict=False, out=None):
 
     .. note::
       Works only with 2-D arrays at the moment.
-
 
     Parameters
     ----------

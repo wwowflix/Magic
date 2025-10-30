@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_interpolatableTestContourOrder():
     mod = importlib.import_module("scripts.interpolatableTestContourOrder")
     assert isinstance(mod, types.ModuleType)

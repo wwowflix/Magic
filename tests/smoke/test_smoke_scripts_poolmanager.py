@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_poolmanager():
     mod = importlib.import_module("scripts.poolmanager")
     assert isinstance(mod, types.ModuleType)

@@ -22,9 +22,7 @@ from pip._internal.vcs.versioncontrol import (
 urlsplit = urllib.parse.urlsplit
 urlunsplit = urllib.parse.urlunsplit
 
-
 logger = logging.getLogger(__name__)
-
 
 GIT_VERSION_REGEX = re.compile(
     r"^git version "  # Prefix.

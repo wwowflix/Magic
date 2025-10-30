@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase03_module_I_03I_prompt_caching_system_READY():
-    mod = importlib.import_module("scripts.phase03.module_I.03I_prompt_caching_system_READY")
+    mod = importlib.import_module(
+        "scripts.phase03.module_I.03I_prompt_caching_system_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

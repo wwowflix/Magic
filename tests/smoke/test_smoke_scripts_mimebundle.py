@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mimebundle():
     mod = importlib.import_module("scripts.mimebundle")
     assert isinstance(mod, types.ModuleType)

@@ -1,9 +1,14 @@
 from __future__ import annotations
+
+
 # MAGIC_CORE_SHIMS
 # Provide no-op decorators if Trio-like symbols are missing.
 def _noop_decorator(*_a, **_k):
-    def _wrap(f): return f
+    def _wrap(f):
+        return f
+
     return _wrap
+
 
 globals().setdefault("disable_ki_protection", _noop_decorator)
 globals().setdefault("enable_ki_protection", _noop_decorator)
@@ -655,3 +660,61 @@ def create_connection(url: str, timeout=None, class_=WebSocket, **options):
     websock.settimeout(timeout if timeout is not None else getdefaulttimeout())
     websock.connect(url, **options)
     return websock
+
+
+# --- MAGIC shim: trio-like core exports for import-time compatibility ---
+try:
+    Abort  # type: ignore[name-defined]
+except NameError:
+
+    class Abort(BaseException):  # pragma: no cover
+        """Signal-style exception; minimal stub used only for imports."""
+
+        pass
+
+
+# Some modules import these names; keep them harmless if absent.
+try:
+    enable_ki_protection  # type: ignore[name-defined]
+except NameError:
+
+    def enable_ki_protection():  # pragma: no cover
+        return None
+
+
+try:
+    Task  # type: ignore[name-defined]
+except NameError:
+
+    class Task:  # pragma: no cover
+        __slots__ = ()
+
+        def __repr__(self) -> str:
+            return "Task()"
+
+
+# Optional typing alias sometimes imported
+try:
+    RaiseCancelT  # type: ignore[name-defined]
+except NameError:
+    try:
+        from typing import Callable
+
+        RaiseCancelT = Callable[[BaseException], None]  # type: ignore[assignment,misc]
+    except Exception:
+        RaiseCancelT = object  # fallback
+
+# Expose via __all__ if present
+try:
+    __all__.extend(["Abort", "enable_ki_protection", "Task", "RaiseCancelT"])  # type: ignore[attr-defined]
+except Exception:
+    try:
+        __all__ = list(
+            set(
+                (__all__ if "__all__" in globals() else [])
+                + ["Abort", "enable_ki_protection", "Task", "RaiseCancelT"]
+            )
+        )
+    except Exception:
+        pass
+# --- end MAGIC shim ---

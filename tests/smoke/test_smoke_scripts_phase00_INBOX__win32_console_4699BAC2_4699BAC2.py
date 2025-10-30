@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX__win32_console_4699BAC2_4699BAC2():
-    mod = importlib.import_module("scripts.phase00.INBOX._win32_console_4699BAC2_4699BAC2")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX._win32_console_4699BAC2_4699BAC2"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

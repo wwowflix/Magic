@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ftp():
     mod = importlib.import_module("scripts.ftp")
     assert isinstance(mod, types.ModuleType)

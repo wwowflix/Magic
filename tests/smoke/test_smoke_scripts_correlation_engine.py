@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_correlation_engine():
     mod = importlib.import_module("scripts.correlation_engine")
     assert isinstance(mod, types.ModuleType)

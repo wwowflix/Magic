@@ -68,7 +68,7 @@ class FreeTypePen(BasePen):
             from fontTools.pens.transformPen import TransformPen
             from fontTools.misc.transform import Offset
 
-            en1, en2, ar, ja = 'Typesetting', 'Jeff', 'صف الحروف', 'たいぷせっと'
+            en1, en2, ar, ja = 'Typesetting', 'Jeff', 'ØµÙ Ø§Ù„Ø­Ø±ÙˆÙ', 'ãŸã„ã·ã›ã£ã¨'
             for text, font_path, direction, typo_ascender, typo_descender, vhea_ascender, vhea_descender, contain, features in (
                 (en1, 'NotoSans-Regular.ttf',       'ltr', 2189, -600, None, None, False, {"kern": True, "liga": True}),
                 (en2, 'NotoSans-Regular.ttf',       'ltr', 2189, -600, None, None, True,  {"kern": True, "liga": True}),

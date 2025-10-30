@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_crackfortran():
     mod = importlib.import_module("scripts.crackfortran")
     assert isinstance(mod, types.ModuleType)

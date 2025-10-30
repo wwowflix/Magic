@@ -66,19 +66,68 @@ VALUES
  ('ai tools','wxyz9999','Automate your work with AI','BuildWithMe', 132000, date('now','-2 days'), ?);
 """
 
+
 def main():
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with sqlite3.connect(DB_PATH) as con:
         con.executescript(schema_sql)
-        con.executemany("INSERT INTO google_trends (keyword, region, timeframe, score, fetched_at) VALUES (?,?,?,?,?)",
-                        [('ai tools','US','now 7-d',78, ts), ('ai tools','IN','now 7-d',92, ts)])
-        con.executemany("INSERT INTO reddit_scrape (keyword, subreddit, title, url, score, comments, posted_utc, fetched_at) VALUES (?,?,?,?,?,?,?,?)",
-                        [('ai tools','MachineLearning','SOTA tool roundup','https://reddit.com/...',120,34,int(time.time())-172800, ts),
-                         ('ai tools','ChatGPT','Best prompts list','https://reddit.com/...',87,15,int(time.time())-86400,  ts)])
-        con.executemany("INSERT INTO youtube_scrape (keyword, video_id, title, channel, views, published, fetched_at) VALUES (?,?,?,?,?,?,?)",
-                        [('ai tools','abcd1234','Top 10 AI Tools','TechDaily', 245000, '2025-10-19', ts),
-                         ('ai tools','wxyz9999','Automate your work with AI','BuildWithMe', 132000, '2025-10-22', ts)])
+        con.executemany(
+            "INSERT INTO google_trends (keyword, region, timeframe, score, fetched_at) VALUES (?,?,?,?,?)",
+            [
+                ("ai tools", "US", "now 7-d", 78, ts),
+                ("ai tools", "IN", "now 7-d", 92, ts),
+            ],
+        )
+        con.executemany(
+            "INSERT INTO reddit_scrape (keyword, subreddit, title, url, score, comments, posted_utc, fetched_at) VALUES (?,?,?,?,?,?,?,?)",
+            [
+                (
+                    "ai tools",
+                    "MachineLearning",
+                    "SOTA tool roundup",
+                    "https://reddit.com/...",
+                    120,
+                    34,
+                    int(time.time()) - 172800,
+                    ts,
+                ),
+                (
+                    "ai tools",
+                    "ChatGPT",
+                    "Best prompts list",
+                    "https://reddit.com/...",
+                    87,
+                    15,
+                    int(time.time()) - 86400,
+                    ts,
+                ),
+            ],
+        )
+        con.executemany(
+            "INSERT INTO youtube_scrape (keyword, video_id, title, channel, views, published, fetched_at) VALUES (?,?,?,?,?,?,?)",
+            [
+                (
+                    "ai tools",
+                    "abcd1234",
+                    "Top 10 AI Tools",
+                    "TechDaily",
+                    245000,
+                    "2025-10-19",
+                    ts,
+                ),
+                (
+                    "ai tools",
+                    "wxyz9999",
+                    "Automate your work with AI",
+                    "BuildWithMe",
+                    132000,
+                    "2025-10-22",
+                    ts,
+                ),
+            ],
+        )
     print("DB ready at:", DB_PATH)
+
 
 if __name__ == "__main__":
     main()

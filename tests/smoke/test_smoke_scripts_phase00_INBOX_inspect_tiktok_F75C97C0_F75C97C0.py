@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_inspect_tiktok_F75C97C0_F75C97C0():
-    mod = importlib.import_module("scripts.phase00.INBOX.inspect_tiktok_F75C97C0_F75C97C0")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX.inspect_tiktok_F75C97C0_F75C97C0"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

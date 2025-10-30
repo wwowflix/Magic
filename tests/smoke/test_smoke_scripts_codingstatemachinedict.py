@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_codingstatemachinedict():
     mod = importlib.import_module("scripts.codingstatemachinedict")
     assert isinstance(mod, types.ModuleType)

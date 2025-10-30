@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sax():
     mod = importlib.import_module("scripts.sax")
     assert isinstance(mod, types.ModuleType)

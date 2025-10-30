@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_csvs_5A7235DB_5A7235DB():
     mod = importlib.import_module("scripts.phase00.INBOX.csvs_5A7235DB_5A7235DB")
     assert isinstance(mod, types.ModuleType)

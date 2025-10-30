@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_TupleVariation():
     mod = importlib.import_module("scripts.TupleVariation")
     assert isinstance(mod, types.ModuleType)

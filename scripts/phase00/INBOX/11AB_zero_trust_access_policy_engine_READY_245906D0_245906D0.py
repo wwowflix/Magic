@@ -2,7 +2,7 @@
 
 
 def main():
-    print("✅ Zero-Trust Access Policy Engine running...")
+    print("âœ… Zero-Trust Access Policy Engine running...")
 
 
 if __name__ == "__main__":

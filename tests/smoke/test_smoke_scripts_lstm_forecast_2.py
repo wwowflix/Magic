@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lstm_forecast_2():
     mod = importlib.import_module("scripts.lstm_forecast_2")
     assert isinstance(mod, types.ModuleType)

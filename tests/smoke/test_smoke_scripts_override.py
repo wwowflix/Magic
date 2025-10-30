@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_override():
     mod = importlib.import_module("scripts.override")
     assert isinstance(mod, types.ModuleType)

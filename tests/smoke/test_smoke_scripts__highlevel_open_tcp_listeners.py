@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__highlevel_open_tcp_listeners():
     mod = importlib.import_module("scripts._highlevel_open_tcp_listeners")
     assert isinstance(mod, types.ModuleType)

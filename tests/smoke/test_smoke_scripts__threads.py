@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__threads():
     mod = importlib.import_module("scripts._threads")
     assert isinstance(mod, types.ModuleType)

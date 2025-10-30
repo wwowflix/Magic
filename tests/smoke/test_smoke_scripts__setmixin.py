@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__setmixin():
     mod = importlib.import_module("scripts._setmixin")
     assert isinstance(mod, types.ModuleType)

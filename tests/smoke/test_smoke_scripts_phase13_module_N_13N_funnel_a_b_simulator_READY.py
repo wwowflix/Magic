@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase13_module_N_13N_funnel_a_b_simulator_READY():
-    mod = importlib.import_module("scripts.phase13.module_N.13N_funnel_a_b_simulator_READY")
+    mod = importlib.import_module(
+        "scripts.phase13.module_N.13N_funnel_a_b_simulator_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

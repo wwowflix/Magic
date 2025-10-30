@@ -1,7 +1,6 @@
-"""This module is designed for community supported date conversion functions"""
-
 from __future__ import annotations
 
+"""This module is designed for community supported date conversion functions"""
 import warnings
 
 import numpy as np

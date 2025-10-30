@@ -28,7 +28,6 @@ Getting entropy to initialize a BitGenerator
 SeedSequence
 ============================================= ===
 
-
 Legacy
 ------
 
@@ -120,7 +119,6 @@ Internal functions
 get_state            Get tuple representing internal state of generator.
 set_state            Set state of generator.
 ==================== =========================================================
-
 
 """
 

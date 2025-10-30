@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase02_module_C_02C_trend_longevity_predictor_READY():
-    mod = importlib.import_module("scripts.phase02.module_C.02C_trend_longevity_predictor_READY")
+    mod = importlib.import_module(
+        "scripts.phase02.module_C.02C_trend_longevity_predictor_READY"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

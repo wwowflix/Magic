@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__pickle():
     mod = importlib.import_module("scripts._pickle")
     assert isinstance(mod, types.ModuleType)

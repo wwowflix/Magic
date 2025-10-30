@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_performance_timeline():
     mod = importlib.import_module("scripts.performance_timeline")
     assert isinstance(mod, types.ModuleType)

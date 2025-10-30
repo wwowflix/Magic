@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_x448():
     mod = importlib.import_module("scripts.x448")
     assert isinstance(mod, types.ModuleType)

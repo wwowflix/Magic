@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_line_break():
     mod = importlib.import_module("scripts.line_break")
     assert isinstance(mod, types.ModuleType)

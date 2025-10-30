@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_recordingPen():
     mod = importlib.import_module("scripts.recordingPen")
     assert isinstance(mod, types.ModuleType)

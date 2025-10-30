@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_enum_util():
     mod = importlib.import_module("scripts.enum_util")
     assert isinstance(mod, types.ModuleType)

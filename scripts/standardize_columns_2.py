@@ -12,4 +12,4 @@ for path in paths:
     df = pd.read_csv(path)
     df.rename(columns={"Topic": "keyword"}, inplace=True)
     df.to_csv(path, index=False)
-    print(f"✅ Standardized: {path}")
+    print(f"âœ… Standardized: {path}")

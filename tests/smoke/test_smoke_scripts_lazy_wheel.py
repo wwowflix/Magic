@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_lazy_wheel():
     mod = importlib.import_module("scripts.lazy_wheel")
     assert isinstance(mod, types.ModuleType)

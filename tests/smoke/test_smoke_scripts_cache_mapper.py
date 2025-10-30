@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cache_mapper():
     mod = importlib.import_module("scripts.cache_mapper")
     assert isinstance(mod, types.ModuleType)

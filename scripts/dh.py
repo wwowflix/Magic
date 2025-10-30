@@ -1,15 +1,13 @@
-﻿# This file is dual licensed under the terms of the Apache License, Version
+from __future__ import annotations
+
+# This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-import importlib.abc as abc
-
+import abc
 from cryptography.hazmat.bindings._rust import openssl as rust_openssl
 from cryptography.hazmat.primitives import _serialization
 
 generate_parameters = rust_openssl.dh.generate_parameters
-
 
 DHPrivateNumbers = rust_openssl.dh.DHPrivateNumbers
 DHPublicNumbers = rust_openssl.dh.DHPublicNumbers
@@ -144,4 +142,3 @@ class DHPrivateKey(metaclass=abc.ABCMeta):
 
 DHPrivateKeyWithSerialization = DHPrivateKey
 DHPrivateKey.register(rust_openssl.dh.DHPrivateKey)
-

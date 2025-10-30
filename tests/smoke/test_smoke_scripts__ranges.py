@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__ranges():
     mod = importlib.import_module("scripts._ranges")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_heap_profiler():
     mod = importlib.import_module("scripts.heap_profiler")
     assert isinstance(mod, types.ModuleType)

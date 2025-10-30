@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_teePen():
     mod = importlib.import_module("scripts.teePen")
     assert isinstance(mod, types.ModuleType)

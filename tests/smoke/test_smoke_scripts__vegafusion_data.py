@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__vegafusion_data():
     mod = importlib.import_module("scripts._vegafusion_data")
     assert isinstance(mod, types.ModuleType)

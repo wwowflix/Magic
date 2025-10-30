@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_redis_cache():
     mod = importlib.import_module("scripts.redis_cache")
     assert isinstance(mod, types.ModuleType)

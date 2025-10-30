@@ -10,7 +10,7 @@ from socket import AddressFamily
 from types import TracebackType
 from typing import Any, TypeVar, Union
 
-from .._core._typedattr import (
+from scripts._core._typedattr import (
     TypedAttributeProvider,
     TypedAttributeSet,
     typed_attribute,
@@ -57,7 +57,7 @@ class SocketAttribute(TypedAttributeSet):
 class _SocketProvider(TypedAttributeProvider):
     @property
     def extra_attributes(self) -> Mapping[Any, Callable[[], Any]]:
-        from .._core._sockets import convert_ipv6_sockaddr as convert
+        from scripts._core._sockets import convert_ipv6_sockaddr as convert
 
         attributes: dict[Any, Callable[[], Any]] = {
             SocketAttribute.family: lambda: self._raw_socket.family,

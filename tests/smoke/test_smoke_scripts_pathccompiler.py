@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pathccompiler():
     mod = importlib.import_module("scripts.pathccompiler")
     assert isinstance(mod, types.ModuleType)

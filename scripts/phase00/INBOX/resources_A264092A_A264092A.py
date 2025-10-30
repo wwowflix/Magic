@@ -20,7 +20,6 @@ from .util import cached_property, get_cache_base, Cache
 
 logger = logging.getLogger(__name__)
 
-
 cache = None  # created when needed
 
 

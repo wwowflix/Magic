@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sbcsgroupprober():
     mod = importlib.import_module("scripts.sbcsgroupprober")
     assert isinstance(mod, types.ModuleType)

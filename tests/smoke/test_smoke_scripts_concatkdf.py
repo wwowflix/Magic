@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_concatkdf():
     mod = importlib.import_module("scripts.concatkdf")
     assert isinstance(mod, types.ModuleType)

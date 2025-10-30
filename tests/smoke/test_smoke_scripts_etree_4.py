@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_etree_4():
     mod = importlib.import_module("scripts.etree_4")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_open_memory_channel():
     mod = importlib.import_module("scripts.open_memory_channel")
     assert isinstance(mod, types.ModuleType)

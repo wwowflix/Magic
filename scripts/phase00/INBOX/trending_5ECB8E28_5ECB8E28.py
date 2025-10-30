@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
-from ..exceptions import InvalidResponseException
+
+from scripts.exceptions import InvalidResponseException
 from .video import Video
 
 from typing import TYPE_CHECKING, AsyncIterator
 
 if TYPE_CHECKING:
-    from ..tiktok import TikTokApi
+    from scripts.tiktok import TikTokApi
 
 
 class Trending:

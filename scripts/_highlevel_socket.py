@@ -1,6 +1,6 @@
-# "High-level" networking interface
 from __future__ import annotations
 
+# "High-level" networking interface
 import errno
 from contextlib import contextmanager, suppress
 from typing import TYPE_CHECKING, overload

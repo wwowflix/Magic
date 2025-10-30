@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__cipheralgorithm():
     mod = importlib.import_module("scripts._cipheralgorithm")
     assert isinstance(mod, types.ModuleType)

@@ -1,7 +1,10 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX_self_healing_runner_82EC932A_82EC932A():
-    mod = importlib.import_module("scripts.phase00.INBOX.self_healing_runner_82EC932A_82EC932A")
+    mod = importlib.import_module(
+        "scripts.phase00.INBOX.self_healing_runner_82EC932A_82EC932A"
+    )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):
         try:

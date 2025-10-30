@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__win32_console():
     mod = importlib.import_module("scripts._win32_console")
     assert isinstance(mod, types.ModuleType)

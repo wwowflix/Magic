@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_data_munging():
     mod = importlib.import_module("scripts.data_munging")
     assert isinstance(mod, types.ModuleType)

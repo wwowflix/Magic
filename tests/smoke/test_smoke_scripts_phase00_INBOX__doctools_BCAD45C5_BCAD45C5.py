@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase00_INBOX__doctools_BCAD45C5_BCAD45C5():
     mod = importlib.import_module("scripts.phase00.INBOX._doctools_BCAD45C5_BCAD45C5")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_shadowroot():
     mod = importlib.import_module("scripts.shadowroot")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mpl_renderer():
     mod = importlib.import_module("scripts.mpl_renderer")
     assert isinstance(mod, types.ModuleType)

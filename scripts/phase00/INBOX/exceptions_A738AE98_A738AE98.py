@@ -77,7 +77,6 @@ class ProtocolError(HTTPError):
 #: Renamed to ProtocolError but aliased for backwards compatibility.
 ConnectionError = ProtocolError
 
-
 # Leaf Exceptions
 
 

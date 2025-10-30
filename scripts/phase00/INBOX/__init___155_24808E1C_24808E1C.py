@@ -18,7 +18,6 @@ class Config(AbstractConfig):
 
 OPTIONS = Config.options
 
-
 Config.register_option(
     name="fontTools.otlLib.optimize.gpos:COMPRESSION_LEVEL",
     help=dedent(

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_boxplot():
     mod = importlib.import_module("scripts.boxplot")
     assert isinstance(mod, types.ModuleType)

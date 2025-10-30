@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_phase03_module_D_03D_emotion_booster_READY():
     mod = importlib.import_module("scripts.phase03.module_D.03D_emotion_booster_READY")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_clipboards():
     mod = importlib.import_module("scripts.clipboards")
     assert isinstance(mod, types.ModuleType)

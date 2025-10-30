@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_echo_server():
     mod = importlib.import_module("scripts.echo-server")
     assert isinstance(mod, types.ModuleType)

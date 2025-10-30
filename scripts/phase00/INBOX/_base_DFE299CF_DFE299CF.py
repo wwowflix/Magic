@@ -1,5 +1,6 @@
-﻿from __future__ import annotations
-import importlib.abc as abc
+from __future__ import annotations
+
+import abc
 import datetime
 from functools import partial
 from io import BytesIO
@@ -628,7 +629,6 @@ class BaseExcelReader(metaclass=abc.ABCMeta):
         """
         If nrows specified, find the number of rows needed from the
         file, otherwise return None.
-
 
         Parameters
         ----------
@@ -1767,4 +1767,3 @@ class ExcelFile:
             self.close()
         except AttributeError:
             pass
-

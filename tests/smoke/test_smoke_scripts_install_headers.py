@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_install_headers():
     mod = importlib.import_module("scripts.install_headers")
     assert isinstance(mod, types.ModuleType)

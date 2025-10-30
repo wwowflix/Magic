@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_momentum_scaler():
     mod = importlib.import_module("scripts.momentum_scaler")
     assert isinstance(mod, types.ModuleType)

@@ -445,7 +445,6 @@ def _can_dot(inputs, result, idx_removed):
     idx_removed : set
         Indices that are removed in the summation
 
-
     Returns
     -------
     type : bool
@@ -456,7 +455,6 @@ def _can_dot(inputs, result, idx_removed):
     If the operations is BLAS level 1 or 2 and is not already aligned
     we default back to einsum as the memory movement to copy is more
     costly than the operation itself.
-
 
     Examples
     --------
@@ -811,7 +809,6 @@ def einsum_path(*operands, optimize="greedy", einsum_call=False):
     -------------------------------------------------------------------------
        3                   kl,jk->jl                                ij,jl->il
        3                   jl,ij->il                                   il->il
-
 
     A more complex index transformation example.
 

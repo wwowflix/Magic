@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_vault_manager():
     mod = importlib.import_module("scripts.vault_manager")
     assert isinstance(mod, types.ModuleType)

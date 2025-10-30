@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts__odfreader():
     mod = importlib.import_module("scripts._odfreader")
     assert isinstance(mod, types.ModuleType)

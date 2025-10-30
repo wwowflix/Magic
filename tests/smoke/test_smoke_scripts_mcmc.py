@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_mcmc():
     mod = importlib.import_module("scripts.mcmc")
     assert isinstance(mod, types.ModuleType)

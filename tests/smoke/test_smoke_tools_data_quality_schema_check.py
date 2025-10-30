@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_data_quality_schema_check():
     mod = importlib.import_module("tools.data_quality.schema_check")
     assert isinstance(mod, types.ModuleType)

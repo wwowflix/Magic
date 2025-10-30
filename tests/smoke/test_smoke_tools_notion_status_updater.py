@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_tools_notion_status_updater():
     mod = importlib.import_module("tools.notion_status_updater")
     assert isinstance(mod, types.ModuleType)

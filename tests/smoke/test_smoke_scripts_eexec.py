@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_eexec():
     mod = importlib.import_module("scripts.eexec")
     assert isinstance(mod, types.ModuleType)

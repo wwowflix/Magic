@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cached():
     mod = importlib.import_module("scripts.cached")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_fernet():
     mod = importlib.import_module("scripts.fernet")
     assert isinstance(mod, types.ModuleType)

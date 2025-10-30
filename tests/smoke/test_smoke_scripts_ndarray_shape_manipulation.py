@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_ndarray_shape_manipulation():
     mod = importlib.import_module("scripts.ndarray_shape_manipulation")
     assert isinstance(mod, types.ModuleType)

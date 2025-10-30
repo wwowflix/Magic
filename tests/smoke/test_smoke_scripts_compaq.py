@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_compaq():
     mod = importlib.import_module("scripts.compaq")
     assert isinstance(mod, types.ModuleType)

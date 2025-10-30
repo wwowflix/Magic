@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_reorderGlyphs():
     mod = importlib.import_module("scripts.reorderGlyphs")
     assert isinstance(mod, types.ModuleType)

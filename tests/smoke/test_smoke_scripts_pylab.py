@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_pylab():
     mod = importlib.import_module("scripts.pylab")
     assert isinstance(mod, types.ModuleType)

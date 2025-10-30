@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_numerictypes():
     mod = importlib.import_module("scripts.numerictypes")
     assert isinstance(mod, types.ModuleType)

@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_sas7bdat():
     mod = importlib.import_module("scripts.sas7bdat")
     assert isinstance(mod, types.ModuleType)

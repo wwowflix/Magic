@@ -1,5 +1,6 @@
 import importlib, types
 
+
 def test_import_scripts_cookies():
     mod = importlib.import_module("scripts.cookies")
     assert isinstance(mod, types.ModuleType)

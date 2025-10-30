@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Translates Mypy's output into GitHub's error/warning annotation syntax.
 
 See: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
@@ -6,9 +8,6 @@ This first is run with Mypy's output piped in, to collect messages in
 mypy_annotate.dat. After all platforms run, we run this again, which prints the
 messages in GitHub's format but with cross-platform failures deduplicated.
 """
-
-from __future__ import annotations
-
 import argparse
 import pickle
 import re
