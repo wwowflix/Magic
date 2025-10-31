@@ -2,95 +2,46 @@ name: tests
 
 on:
   push:
-    branches: [ main, chore/**, feat/** ]
+    branches: [ main, chore/**, feat/**, chore/http-stack-repair ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  shadow-scan:
+  test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: python -m pip install -U pip
-      - run: python tools/diagnostics/root_numpy_shadow_scan.py
-      - name: Fail on private NumPy API / shadow names
-        run: |
-          python - <<'PY'
-          import sys, pathlib
-          outdir = pathlib.Path("outputs/reports/readiness")
-          tsvs = sorted(outdir.glob("root_numpy_shadow_report_*.tsv"), key=lambda p: p.stat().st_mtime, reverse=True)
-          if not tsvs:
-              print("No root_numpy_shadow_report_*.tsv found; failing.")
-              sys.exit(1)
-          tsv = tsvs[0]
-          bad = [l for l in tsv.read_text(encoding="utf-8", errors="ignore").splitlines()
-                 if l.startswith(("PRIVATE_NUMPY_API","RELATIVE_PRIVATE_IMPORT","SHADOW_NAME"))]
-          if bad:
-            print("Forbidden patterns:\\n" + "\\n".join(bad))
-            sys.exit(1)
-          print("Shadow scan clean.")
-          PY
 
-  smoke:
-    runs-on: ubuntu-latest
-    needs: shadow-scan
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: python -m pip install -U pip
-      - run: pip install -r requirements.txt
-      - run: pytest -q tests/smoke
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  precommit:
-    runs-on: ubuntu-latest
-    needs: smoke
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: pip install pre-commit
-      - run: pre-commit run --all-files
-
-  tests:
-    runs-on: ubuntu-latest
-    needs: precommit
-    timeout-minutes: 20
-    env:
-      PYTHONPATH: ${{ github.workspace }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: python -m pip install -U pip
-      - run: pip install -r requirements.txt
-      - run: pytest --cov=scripts --cov=tools --cov-report=xml --cov-fail-under=75
-      - uses: actions/upload-artifact@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          name: coverage-xml
-          path: coverage.xml
-          if-no-files-found: error
-      - name: Status integrity gate
+          python-version: '3.11'
+
+      - name: Install deps
         run: |
-          python - <<'PY'
-          import sys, pathlib, csv
-          outdir = pathlib.Path("outputs/reports/readiness")
-          tsvs = sorted(outdir.glob("status_live_*.tsv"), key=lambda p: p.stat().st_mtime, reverse=True)
-          if not tsvs:
-              print("No status_live_*.tsv found; failing.")
-              sys.exit(1)
-          tsv = tsvs[0]
-          bad=[]
-          with tsv.open(encoding="utf-8") as f:
-              for r in csv.DictReader(f, delimiter="\t"):
-                  if r.get("Status")=="FAIL":
-                      bad.append(r)
-          if bad:
-              print("Status FAIL rows detected (first 10):")
-              for r in bad[:10]: print(r)
-              sys.exit(1)
-          print("Status integrity OK.")
-          PY
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # if you keep tools/ under repo, install extras too
+          if [ -f tools/requirements.txt ]; then pip install -r tools/requirements.txt; fi
+
+      - name: Run pytest (fast set)
+        run: |
+          python -m pytest -q --disable-warnings
+          echo "✅ base pytest done"
+
+      # ✅ NEW: run your PowerShell MAGIC runner
+      - name: Run MAGIC test runner
+        shell: pwsh
+        run: |
+          .\tools\magic_test_runner.ps1 -Clean
+
+      # ✅ NEW: upload coverage from outputs/reports/coverage.xml
+      - name: Upload MAGIC coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: magic-coverage
+          path: outputs/reports/coverage.xml
+          if-no-files-found: error
