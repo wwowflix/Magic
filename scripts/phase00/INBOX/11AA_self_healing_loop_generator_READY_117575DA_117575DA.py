@@ -2,7 +2,7 @@
 
 
 def main():
-    print("âœ… Self-Healing Loop Generator running...")
+    print("✅ Self-Healing Loop Generator running...")
 
 
 if __name__ == "__main__":

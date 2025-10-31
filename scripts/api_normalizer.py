@@ -5,7 +5,7 @@ import argparse
 def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
     print(f"ðŸ“¥ Loading: {api_csv}")
     api_df = pd.read_csv(api_csv)
-    print("âœ… API CSV loaded")
+    print("✅ API CSV loaded")
 
     api_df = api_df.rename(
         columns={"title": "keyword", "channelTitle": "author", "viewCount": "metric"}
@@ -21,24 +21,24 @@ def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
         return
 
     api_df = api_df[["date", "keyword", "platform", "metric", "author"]]
-    print("âœ… API data cleaned")
+    print("✅ API data cleaned")
 
     print(f"ðŸ“¥ Loading: {autocomplete_csv}")
     auto_df = pd.read_csv(autocomplete_csv)
-    print("âœ… Autocomplete CSV loaded")
+    print("✅ Autocomplete CSV loaded")
 
     auto_df["author"] = auto_df.get("author", "")
     auto_df["date"] = pd.to_datetime(auto_df["date"], errors="coerce").dt.tz_localize(
         None
     )
     auto_df = auto_df[["date", "keyword", "platform", "metric", "author"]]
-    print("âœ… Autocomplete data cleaned")
+    print("✅ Autocomplete data cleaned")
 
     combined = pd.concat([api_df, auto_df], ignore_index=True)
     combined = combined.sort_values(by="date", ascending=False)
 
     combined.to_csv(output_csv, index=False, date_format="%Y-%m-%dT%H:%M:%SZ")
-    print(f"âœ… Normalized trends saved to {output_csv}")
+    print(f"✅ Normalized trends saved to {output_csv}")
 
 
 if __name__ == "__main__":

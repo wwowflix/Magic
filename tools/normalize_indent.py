@@ -1,4 +1,4 @@
-﻿import pathlib
+import pathlib
 
 changed = 0
 for p in pathlib.Path(".").rglob("*.py"):

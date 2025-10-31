@@ -34,7 +34,7 @@ for script_path in manifest:
 
         if result.returncode == 0:
             summary_lines.append(f"{script_name}\tPASS\t-")
-            print(f"âœ… Success: {script_name}")
+            print(f"✅ Success: {script_name}")
         else:
             error_type = "UnknownError"
             if "FileNotFoundError" in result.stderr:

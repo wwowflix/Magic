@@ -1,5 +1,5 @@
 def main():
-    print("âœ… [11I_ai_decision_watchdog_READY.py] executed successfully (stub mode).")
+    print("✅ [11I_ai_decision_watchdog_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

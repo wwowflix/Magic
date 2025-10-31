@@ -1200,29 +1200,29 @@ class UnicodeDammit:
     #: :meta hide-value:
     WINDOWS_1252_TO_UTF8: Dict[int, bytes] = {
         0x80: b"\xe2\x82\xac",  # â‚¬
-        0x82: b"\xe2\x80\x9a",  # â€š
+        0x82: b"\xe2\x80\x9a",  # "š
         0x83: b"\xc6\x92",  # Æ’
-        0x84: b"\xe2\x80\x9e",  # â€ž
-        0x85: b"\xe2\x80\xa6",  # â€¦
-        0x86: b"\xe2\x80\xa0",  # â€
-        0x87: b"\xe2\x80\xa1",  # â€¡
+        0x84: b"\xe2\x80\x9e",  # "ž
+        0x85: b"\xe2\x80\xa6",  # "¦
+        0x86: b"\xe2\x80\xa0",  # "
+        0x87: b"\xe2\x80\xa1",  # "¡
         0x88: b"\xcb\x86",  # Ë†
-        0x89: b"\xe2\x80\xb0",  # â€°
+        0x89: b"\xe2\x80\xb0",  # "°
         0x8A: b"\xc5\xa0",  # Å
-        0x8B: b"\xe2\x80\xb9",  # â€¹
+        0x8B: b"\xe2\x80\xb9",  # "¹
         0x8C: b"\xc5\x92",  # Å’
         0x8E: b"\xc5\xbd",  # Å½
         0x91: b"\xe2\x80\x98",  # '
         0x92: b"\xe2\x80\x99",  # '
         0x93: b"\xe2\x80\x9c",  # "
         0x94: b"\xe2\x80\x9d",  # "
-        0x95: b"\xe2\x80\xa2",  # â€¢
+        0x95: b"\xe2\x80\xa2",  # "¢
         0x96: b"\xe2\x80\x93",  # -
         0x97: b"\xe2\x80\x94",  # -
         0x98: b"\xcb\x9c",  # Ëœ
         0x99: b"\xe2\x84\xa2",  # â„¢
         0x9A: b"\xc5\xa1",  # Å¡
-        0x9B: b"\xe2\x80\xba",  # â€º
+        0x9B: b"\xe2\x80\xba",  # "º
         0x9C: b"\xc5\x93",  # Å“
         0x9E: b"\xc5\xbe",  # Å¾
         0x9F: b"\xc5\xb8",  # Å¸

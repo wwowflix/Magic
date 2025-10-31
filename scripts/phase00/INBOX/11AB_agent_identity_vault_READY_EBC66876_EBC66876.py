@@ -2,7 +2,7 @@
 
 
 def main():
-    print("âœ… Agent Identity Vault running...")
+    print("✅ Agent Identity Vault running...")
 
 
 if __name__ == "__main__":

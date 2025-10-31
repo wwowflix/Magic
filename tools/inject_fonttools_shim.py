@@ -1,19 +1,32 @@
-# --- MAGIC shim: add missing FeatureParamsCharacterVariants if absent ---
-import sys
+﻿from __future__ import annotations
+import sys, types
 
-try:
-    import fontTools.ttLib.tables.otTables as ot
+def s(msg: str) -> None:
+    """Safe print for Windows cp1252 consoles."""
+    try:
+        print(msg)
+    except UnicodeEncodeError:
+        print(msg.encode("ascii", "replace").decode("ascii"))
 
-    if not hasattr(ot, "FeatureParamsCharacterVariants"):
+def main() -> None:
+    try:
+        import fontTools.ttLib.tables.otTables as otTables  # type: ignore
+    except Exception as e:
+        s(f"[warn] fontTools not importable: {e}")
+        sys.exit(0)
 
-        class FeatureParamsCharacterVariants:
-            def __init__(self, *a, **kw):
+    try:
+        if not hasattr(otTables, "FeatureParamsCharacterVariants"):
+            class FeatureParamsCharacterVariants:  # noqa: N801
                 pass
+            otTables.FeatureParamsCharacterVariants = FeatureParamsCharacterVariants
+            s("[ok] injected FeatureParamsCharacterVariants")
+        else:
+            s("[info] FeatureParamsCharacterVariants already present")
+    except Exception as e:
+        s(f"[warn] failed to inject shim: {e}")
 
-        ot.FeatureParamsCharacterVariants = FeatureParamsCharacterVariants
-        sys.modules["fontTools.ttLib.tables.otTables"] = ot
-        print("✅ Injected missing FeatureParamsCharacterVariants into otTables")
-    else:
-        print("ℹ️  otTables.FeatureParamsCharacterVariants already present")
-except Exception as e:
-    print("⚠️  Failed to apply otTables shim:", e)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

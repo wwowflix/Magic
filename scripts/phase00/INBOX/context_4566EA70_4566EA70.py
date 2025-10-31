@@ -210,4 +210,3 @@ class suppress(contextlib.suppress, contextlib.ContextDecorator):
     ... def key_error():
     ...     {}['']
     >>> key_error()
-    """

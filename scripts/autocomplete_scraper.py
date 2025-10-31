@@ -11,10 +11,10 @@ import pandas as pd
 from datetime import datetime
 import os
 
-# âœ… Define keywords to search for autocomplete suggestions
+# ✅ Define keywords to search for autocomplete suggestions
 keywords = ["ai", "chatgpt", "elon", "future", "python", "machine learning"]
 
-# âœ… Store results in a list of dicts
+# ✅ Store results in a list of dicts
 results = []
 print("ðŸ” Fetching YouTube autocomplete suggestions...")
 
@@ -36,12 +36,12 @@ for base_keyword in keywords:
     except Exception as e:
         print(f"âŒ Failed to fetch suggestions for '{base_keyword}': {e}")
 
-# âœ… Convert to DataFrame
+# ✅ Convert to DataFrame
 if results:
     df = pd.DataFrame(results)
     output_path = "D:/MAGIC/outputs/youtube_autocomplete.csv"
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
-    print(f"âœ… Saved {len(results)} autocomplete suggestions to {output_path}")
+    print(f"✅ Saved {len(results)} autocomplete suggestions to {output_path}")
 else:
     print("âš ï¸ No suggestions fetched.")

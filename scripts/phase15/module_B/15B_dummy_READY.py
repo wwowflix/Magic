@@ -1,2 +1,2 @@
 # Auto-recovered script placeholder
-print("âœ… Auto-recovered script running successfully")
+print("✅ Auto-recovered script running successfully")

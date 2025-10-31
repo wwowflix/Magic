@@ -203,7 +203,7 @@ def sync_to_notion():
                 except Exception as e:
                     print(f"âš ï¸ Error syncing {script_name}: {e}")
 
-    print("âœ… Notion sync complete.")
+    print("✅ Notion sync complete.")
 
 
 # ================================

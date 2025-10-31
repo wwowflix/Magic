@@ -52,7 +52,7 @@ def delete_duplicates(rows):
     duplicates = {k: v for k, v in filename_map.items() if len(v) > 1}
 
     if not duplicates:
-        print("âœ… No duplicates found!")
+        print("✅ No duplicates found!")
         return
 
     print(f"âš ï¸ Found {len(duplicates)} duplicate filenames. Deleting extras...")

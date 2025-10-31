@@ -1,5 +1,5 @@
 """
-MAGIC Streamlit Dashboard â€" Upgrade v1
+MAGIC Streamlit Dashboard "" Upgrade v1
 Location suggestion: scripts/dashboard/magic_dashboard.py
 
 Features delivered in this single file:
@@ -426,10 +426,10 @@ if "export_clicked" in globals() and export_clicked:
 
 # Friendly footer
 st.caption(
-    "MAGIC Dashboard v1 â€¢ Live filters, acceleration insights, scheduler status, and export. ✨"
+    "MAGIC Dashboard v1 "¢ Live filters, acceleration insights, scheduler status, and export. ✨"
 )
 
-# Basic timer to refresh â€" Streamlit's built-in autorefresh helper
+# Basic timer to refresh "" Streamlit's built-in autorefresh helper
 # (We use a placeholder increment pattern to trigger rerun)
 placeholder = st.empty()
 for i in range(int(refresh_interval_sec), 0, -1):

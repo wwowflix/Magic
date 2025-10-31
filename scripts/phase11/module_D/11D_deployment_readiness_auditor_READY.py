@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11D_deployment_readiness_auditor_READY.py] executed successfully (stub mode)."
+        "✅ [11D_deployment_readiness_auditor_READY.py] executed successfully (stub mode)."
     )
 
 

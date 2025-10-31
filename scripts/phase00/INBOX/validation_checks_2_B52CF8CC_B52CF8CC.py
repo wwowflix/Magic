@@ -23,6 +23,6 @@ for file in files:
         elif missing_cols:
             print(f"âŒ Missing columns in {file}: {missing_cols}")
         else:
-            print(f"âœ… All required columns present in {file}")
+            print(f"✅ All required columns present in {file}")
     except Exception as e:
         print(f"âŒ Failed to read {file}: {e}")

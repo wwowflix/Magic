@@ -1,4 +1,4 @@
-# --- MAGIC Phase11 â€“ SHIELD: compat extras (detect_encoding, ZipFile) ---
+# --- MAGIC Phase11 – SHIELD: compat extras (detect_encoding, ZipFile) ---
 # ZipFile passthrough so consumers can rom .compat import ZipFile
 try:
     from zipfile import ZipFile as _ZipFile
@@ -22,7 +22,7 @@ def detect_encoding(stream):
 
 
 # --- end compat extras ---
-# --- MAGIC Phase11 â€“ SHIELD: compat sysconfig export ---
+# --- MAGIC Phase11 – SHIELD: compat sysconfig export ---
 try:
     import sysconfig as _sysconfig
 except Exception:

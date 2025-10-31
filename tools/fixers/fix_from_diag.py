@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # Fix from diag: closes unterminated quotes at the reported line,
 # and inserts an indented "pass" for empty `if:` blocks at the reported line.
 

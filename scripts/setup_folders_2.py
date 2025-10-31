@@ -20,4 +20,4 @@ for folder in REQUIRED_FOLDERS:
         os.makedirs(folder)
         print(f"ðŸ“ Created: {folder}")
     else:
-        print(f"âœ… Exists: {folder}")
+        print(f"✅ Exists: {folder}")

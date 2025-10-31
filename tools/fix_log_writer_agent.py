@@ -37,16 +37,16 @@ if not os.path.exists(TARGET_SCRIPT):
         f.write("print('11L_rate_limit_guard_READY is running...')\n")
     print(f"ðŸ†• Created missing script: {TARGET_SCRIPT}")
 else:
-    print(f"âœ… Script found: {TARGET_SCRIPT}")
+    print(f"✅ Script found: {TARGET_SCRIPT}")
 
 # ------------------------------
 # 3ï¸âƒ£ Write to log
 # ------------------------------
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-log_entry = f"[{timestamp}] âœ… Checked & ensured script exists: {TARGET_SCRIPT}\n"
+log_entry = f"[{timestamp}] ✅ Checked & ensured script exists: {TARGET_SCRIPT}\n"
 
 with open(MASTER_LOG, "a", encoding="utf-8") as log:
     log.write(log_entry)
 
 print(f"ðŸ" Log updated: {MASTER_LOG}")
-print("âœ… Fix Log Writer Agent process completed.")
+print("✅ Fix Log Writer Agent process completed.")

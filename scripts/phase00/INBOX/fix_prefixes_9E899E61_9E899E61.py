@@ -18,4 +18,4 @@ df.loc[missing_prefixes, "Prefix"] = df.loc[missing_prefixes, "Filename"].apply(
 )
 
 df.to_csv(csv_path, index=False)
-print(f"âœ… Fixed {missing_prefixes.sum()} missing Prefix entries in {csv_path}")
+print(f"✅ Fixed {missing_prefixes.sum()} missing Prefix entries in {csv_path}")

@@ -52,7 +52,7 @@ for script_path in manifest:
             log.write(stderr)
 
         if process.returncode == 0:
-            print(f"âœ… {script_name} completed successfully on attempt {attempt}.")
+            print(f"✅ {script_name} completed successfully on attempt {attempt}.")
             success = True
             break
         else:
@@ -91,4 +91,4 @@ for script_path in manifest:
 with open(summary_path, "w", encoding="utf-8") as summary:
     summary.write("\n".join(summary_lines))
 
-print(f"\nâœ… Completed {len(manifest)} scripts. Summary saved to {summary_path}")
+print(f"\n✅ Completed {len(manifest)} scripts. Summary saved to {summary_path}")

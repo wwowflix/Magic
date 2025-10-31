@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11N_approval_gate_for_high_risk_ops_READY.py] executed successfully (stub mode)."
+        "✅ [11N_approval_gate_for_high_risk_ops_READY.py] executed successfully (stub mode)."
     )
 
 

@@ -13,6 +13,6 @@ reddit = Reddit(
 
 try:
     me = reddit.user.me()
-    print(f"âœ… Logged in as: u/{me}")
+    print(f"✅ Logged in as: u/{me}")
 except Exception as e:
     print(f"âŒ Login failed: {e}")

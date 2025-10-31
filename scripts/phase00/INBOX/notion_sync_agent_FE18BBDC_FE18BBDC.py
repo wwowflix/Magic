@@ -49,7 +49,7 @@ def main():
             if row.get("NotionPageID") and row.get("Status"):
                 try:
                     update_notion_row(row)
-                    print(f"âœ… Synced: {row['Filename']}")
+                    print(f"✅ Synced: {row['Filename']}")
                 except Exception as e:
                     print(f"âŒ Failed: {row['Filename']} â†’ {e}")
 

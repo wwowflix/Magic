@@ -65,7 +65,7 @@ def main():
             for script in changed:
                 print(f" - {script}")
         else:
-            print(f"âœ… No script changes detected at {datetime.now()}")
+            print(f"✅ No script changes detected at {datetime.now()}")
         state = current_state
         save_state(state)
         time.sleep(CHECK_INTERVAL)

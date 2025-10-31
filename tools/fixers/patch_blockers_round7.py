@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import pathlib
 import re
 
@@ -35,7 +35,7 @@ def patch_magic_dashboard(p: pathlib.Path) -> bool:
     # normalize mojibake and remove the extra trailing quote
     s2 = s
     s2 = s2.replace(
-        'st.title("ðŸ§ MAGIC â€" Trends Intelligence HQ")"',
+        'st.title("ðŸ§ MAGIC "" Trends Intelligence HQ")"',
         'st.title("🧠 MAGIC — Trends Intelligence HQ")',
     )
     if s2 == s:

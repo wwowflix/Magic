@@ -1206,9 +1206,9 @@ class AxisLabelDescriptor(SimpleDescriptor):
         ===========  =========  ===========  ===========  ===============
         STAT Format  userValue  userMinimum  userMaximum  linkedUserValue
         ===========  =========  ===========  ===========  ===============
-        1            âœ…          âŒ            âŒ            âŒ
-        2            âœ…          âœ…            âœ…            âŒ
-        3            âœ…          âŒ            âŒ            âœ…
+        1            ✅          âŒ            âŒ            âŒ
+        2            ✅          ✅            ✅            âŒ
+        3            ✅          âŒ            âŒ            ✅
         ===========  =========  ===========  ===========  ===============
         """
         if self.linkedUserValue is not None:

@@ -40,4 +40,4 @@ class BaseReporter(object):
         """Called when rejecting a candidate during backtracking."""
 
     def pinning(self, candidate):
-        """Called when adding a candidate to the potential solution."""
+        """Called when adding a candidate to the potential solution.

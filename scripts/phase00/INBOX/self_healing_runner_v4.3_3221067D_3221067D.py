@@ -57,4 +57,4 @@ with open(summary_file, "w", encoding="utf-8") as s:
     for script, status, error in results:
         s.write(f"{script}\t{status}\t{error}\n")
 
-print(f"âœ… Completed {len(results)} scripts. Summary saved to {summary_file}")
+print(f"✅ Completed {len(results)} scripts. Summary saved to {summary_file}")

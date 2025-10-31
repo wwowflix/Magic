@@ -28,9 +28,9 @@ def restore_missing_scripts():
                     print(f"â™»ï¸ Restored: {target_path}")
                     restored += 1
     if restored == 0:
-        print("âœ… All scripts intact!")
+        print("✅ All scripts intact!")
     else:
-        print(f"âœ… {restored} scripts restored.")
+        print(f"✅ {restored} scripts restored.")
 
 
 def clean_logs():
@@ -43,11 +43,11 @@ def clean_logs():
         if os.path.isfile(path) and file.endswith(".log"):
             os.remove(path)
             print(f"ðŸ—‘ Deleted: {file}")
-    print("âœ… Logs cleaned.")
+    print("✅ Logs cleaned.")
 
 
 def notion_sync():
-    print("ðŸ” (Placeholder) Sync to Notion... âœ…")
+    print("ðŸ” (Placeholder) Sync to Notion... ✅")
 
 
 def run_all():
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     if args.test:
         print("ðŸ§ª Running TEST mode (no actions)...")
-        print("âœ… Notion Token loaded" if NOTION_TOKEN else "âŒ Notion Token missing!")
+        print("✅ Notion Token loaded" if NOTION_TOKEN else "âŒ Notion Token missing!")
         print(f"ðŸ“ Backups present: {os.path.exists(BACKUP_DIR)}")
         print(f"ðŸ“„ Patch CSV: {os.path.exists(PATCH_CSV)}")
     elif args.restore:

@@ -22,7 +22,7 @@ for table, columns in tables_columns.items():
         )
         """
         )
-        print(f"âœ… Deduplicated: {table}")
+        print(f"✅ Deduplicated: {table}")
     except Exception as e:
         print(f"âš ï¸ Error deduplicating {table}: {e}")
 

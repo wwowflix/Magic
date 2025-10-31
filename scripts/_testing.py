@@ -62,4 +62,3 @@ class TestRunner(metaclass=ABCMeta):
 
         :param test_func: the test function
         :param kwargs: keyword arguments to call the test function with
-        """

@@ -1,4 +1,4 @@
-# === MAGIC Phase11 â€“ SHIELD: guarded otBase import ==========================
+# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
 try:
     from .otBase import BaseTTXConverter
 except Exception:

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import ast  # noqa: I001
 import pathlib
 import csv

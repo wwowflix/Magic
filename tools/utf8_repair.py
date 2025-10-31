@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 import os
 import re
 import sys
@@ -7,16 +7,16 @@ from typing import Dict
 # Common Windows-1252/UTF-8 mojibake sequences -> proper Unicode
 MOJIBAKE_MAP: Dict[str, str] = {
     # punctuation / quotes / dashes
-    "â€”": "—",
-    "â€“": "–",
-    "â€˜": "‘",
-    "â€™": "’",
-    "â€œ": "“",
-    "â€�": "”",
-    "â€¦": "…",
-    "â€¢": "•",
-    "â€¡": "‡",
-    "â€": "”",  # sometimes appears as a stray “double-quote”
+    "—": "—",
+    "–": "–",
+    "'": "‘",
+    "'": "’",
+    """: "“",
+    ""�": "”",
+    ""¦": "…",
+    ""¢": "•",
+    ""¡": "‡",
+    """: "”",  # sometimes appears as a stray “double-quote”
     # mis-encoded Latin letters noise
     "Ã—": "×",
     "ÃŸ": "ß",
@@ -47,8 +47,8 @@ MOJIBAKE_MAP: Dict[str, str] = {
     # rare leftovers
     "â„¢": "™",
     "â‚¬": "€",
-    "â€º": "›",
-    "â€¹": "‹",
+    ""º": "›",
+    ""¹": "‹",
 }
 
 
@@ -63,8 +63,8 @@ def demojibake(text: str) -> str:
     for bad, good in MOJIBAKE_MAP.items():
         if bad in text:
             text = text.replace(bad, good)
-    # Fix accidental double-encoding like "â€\"" around quotes if any remain
-    text = re.sub(r"â€\s*", '"', text)
+    # Fix accidental double-encoding like ""\"" around quotes if any remain
+    text = re.sub(r""\s*", '"', text)
     # Collapse repeated accidental bytes
     text = text.replace("Ã‚", "").replace("Ã", "")
     return text

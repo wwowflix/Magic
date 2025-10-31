@@ -38,7 +38,7 @@ def main():
                     )
                 else:
                     log.write(
-                        f"âœ… Module {module} looks okay ({len(files)} scripts).\n"
+                        f"✅ Module {module} looks okay ({len(files)} scripts).\n"
                     )
 
         print("PASS")

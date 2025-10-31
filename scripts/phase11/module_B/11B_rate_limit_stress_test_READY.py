@@ -28,4 +28,4 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
         print(log_line)
         f.write(log_line + "\n")
 
-print(f"âœ… Stress test complete. See: {LOG_FILE}")
+print(f"✅ Stress test complete. See: {LOG_FILE}")

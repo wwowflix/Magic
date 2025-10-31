@@ -200,4 +200,3 @@ class Listener(Generic[T_co], AsyncResource, TypedAttributeProvider):
         :param handler: a callable that will be used to handle each accepted connection
         :param task_group: the task group that will be used to start tasks for handling
             each accepted connection (if omitted, an ad-hoc task group will be created)
-        """

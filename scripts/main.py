@@ -1,4 +1,4 @@
-# --- MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: dotenv API shims for smoke ---
+# --- MAGIC Phase11 Ã¢â‚¬" SHIELD: dotenv API shims for smoke ---
 def dotenv_values(*_a, **_k):
     # Return empty mapping during smoke import
     return {}
@@ -15,7 +15,7 @@ def unset_key(_file, _key, *_a, **_k):
 
 
 # --- end shield ---
-# --- MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: dotenv API shims for smoke ---
+# --- MAGIC Phase11 Ã¢â‚¬" SHIELD: dotenv API shims for smoke ---
 def dotenv_values(*_a, **_k):
     # Return empty mapping during smoke import
     return {}

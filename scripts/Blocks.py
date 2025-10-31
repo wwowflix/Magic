@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-# === MAGIC Phase11 Ã¢â‚¬â€œ SHIELD: pandas NDArrayBackedBlock compat ===============
+# === MAGIC Phase11 Ã¢â‚¬" SHIELD: pandas NDArrayBackedBlock compat ===============
 # Guarantee `_NDArrayBackedBlockBase` exists across pandas versions.
 try:
     _NDArrayBackedBlockBase  # already defined somewhere above?

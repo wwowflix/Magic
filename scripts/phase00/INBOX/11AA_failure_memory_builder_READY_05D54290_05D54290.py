@@ -2,7 +2,7 @@
 
 
 def main():
-    print("âœ… Failure Memory Builder running...")
+    print("✅ Failure Memory Builder running...")
 
 
 if __name__ == "__main__":

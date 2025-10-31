@@ -14,7 +14,7 @@ class StorageManager:
         path = os.path.join(self.base_path, folder_name)
         if not os.path.exists(path):
             os.makedirs(path)
-            print(f"âœ… Created folder: {path}")
+            print(f"✅ Created folder: {path}")
             logging.info(f"Created folder: {path}")
         else:
             print(f"â„¹ï¸ Folder already exists: {path}")
@@ -38,4 +38,4 @@ if __name__ == "__main__":
         for f in missing:
             sm.ensure_folder(f)
     else:
-        print("âœ… All folders exist.")
+        print("✅ All folders exist.")

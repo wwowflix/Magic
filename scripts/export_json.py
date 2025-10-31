@@ -25,4 +25,4 @@ export_data = df[["keyword", "score"]].to_dict(orient="records")
 with open(output_json, "w", encoding="utf-8") as f:
     json.dump(export_data, f, ensure_ascii=False, indent=2)
 
-print(f"âœ… Correlated trends exported to {output_json}")
+print(f"✅ Correlated trends exported to {output_json}")

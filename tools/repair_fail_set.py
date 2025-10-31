@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import sys  # noqa: I001
 import ast
 import re
@@ -30,16 +30,16 @@ def write_utf8(path, text):
 
 
 MOJIBAKE = {
-    "â€”": "—",
-    "â€“": "–",
-    "â€˜": "‘",
-    "â€™": "’",
-    "â€œ": "“",
-    "â€�": "”",
-    "â€¦": "…",
-    "â€¢": "•",
-    "â€¡": "‡",
-    "â€": "”",
+    "—": "—",
+    "–": "–",
+    "'": "‘",
+    "'": "’",
+    """: "“",
+    ""�": "”",
+    ""¦": "…",
+    ""¢": "•",
+    ""¡": "‡",
+    """: "”",
     "Ã—": "×",
     "ÃŸ": "ß",
     "Ã†": "Æ",
@@ -67,8 +67,8 @@ MOJIBAKE = {
     "Â": "",
     "â„¢": "™",
     "â‚¬": "€",
-    "â€º": "›",
-    "â€¹": "‹",
+    ""º": "›",
+    ""¹": "‹",
 }
 
 
@@ -76,7 +76,7 @@ def demojibake(t):
     for bad, good in MOJIBAKE.items():
         if bad in t:
             t = t.replace(bad, good)
-    t = re.sub(r"â€\s*", '"', t)
+    t = re.sub(r""\s*", '"', t)
     return t.replace("Ã‚", "").replace("Ã", "")
 
 

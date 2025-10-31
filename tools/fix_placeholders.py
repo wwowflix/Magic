@@ -1,41 +1,58 @@
-ï»¿import pathlib, re
+import pathlib
 
-roots = [
-    "backups\\phase11", "backups\\phase11_cleanup",
-    "backups\\phase11_final", "backups\\phase11_full_backup",
-    "backups\\phase11_pre_rebuild",
+# Root folders to clean
+ROOTS = [
+    pathlib.Path("scripts"),
+    pathlib.Path("tools"),
 ]
 
-def fix_file(p: pathlib.Path) -> bool:
-    txt = p.read_text(errors="ignore")
-    orig = txt
+# Common mojibake → real characters
+MOJIBAKE_MAP = {
+    "✅": "✅",
+    "—": "—",
+    "–": "–",
+    "'": "'",
+    "'": "'",
+    """: '"',
+    """: '"',
+}
 
-    # unescape triple quotes
-    txt = txt.replace('\\"""', '"""').replace('\"\"\"', '"""')
 
-    # normalize any docstring lines like: """ Placeholder for X """
-    txt = re.sub(r'"""\\s*Placeholder\\s+for\\s+([^"]*?)\\s*"""',
-                 lambda m: f'""" Placeholder for {m.group(1).strip()} """',
-                 txt, flags=re.IGNORECASE)
+def normalize_text(text: str) -> str:
+    """Normalize text: drop BOMs, fix encoding, newlines, and trailing junk."""
+    # normalize newlines
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
 
-    # normalize newlines to LF
-    txt = txt.replace("\r\n", "\n")
-    if txt != orig:
-        p.write_text(txt, encoding="utf-8")
-        return True
-    return False
+    # drop trailing lone triple-quote
+    if text.rstrip().endswith('"""') and not text.rstrip().endswith('""""'):
+        text = text.rstrip()[:-3].rstrip() + "\n"
 
-changed = 0
-for root in roots:
-    r = pathlib.Path(root)
-    if not r.exists():
-        continue
-    for py in r.rglob("*.py"):
-        try:
-            if fix_file(py):
+    # apply mojibake fixes
+    for bad, good in MOJIBAKE_MAP.items():
+        if bad in text:
+            text = text.replace(bad, good)
+
+    # ensure trailing newline
+    if not text.endswith("\n"):
+        text += "\n"
+
+    return text
+
+
+def main() -> None:
+    """Scan and fix all .py files under target roots."""
+    changed = 0
+    for root in ROOTS:
+        if not root.exists():
+            continue
+        for p in root.rglob("*.py"):
+            raw = p.read_text(encoding="utf-8", errors="replace")
+            fixed = normalize_text(raw.lstrip("\ufeff"))
+            if fixed != raw:
+                p.write_text(fixed, encoding="utf-8")
                 changed += 1
-        except Exception:
-            pass
+    print(f"✅ Placeholder/docstring fixes applied to {changed} files.")
 
-print(f"âœ… Placeholder/docstring fixes applied to {changed} files.")
-"""
+
+if __name__ == "__main__":
+    main()

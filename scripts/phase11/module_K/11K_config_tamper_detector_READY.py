@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11K_config_tamper_detector_READY.py] executed successfully (stub mode)."
+        "✅ [11K_config_tamper_detector_READY.py] executed successfully (stub mode)."
     )
 
 

@@ -271,7 +271,7 @@ class FileSelector(SigSlot):
         self.go = pn.widgets.Button(name="â‡¨", align="end", width=45)
         self.main = SingleSelect(size=10)
         self.home = pn.widgets.Button(name="ðŸ ", width=40, height=30, align="end")
-        self.up = pn.widgets.Button(name="â€¹", width=30, height=30, align="end")
+        self.up = pn.widgets.Button(name=""¹", width=30, height=30, align="end")
 
         self._register(self.protocol, "protocol_changed", auto=True)
         self._register(self.go, "go_clicked", "clicks", auto=True)

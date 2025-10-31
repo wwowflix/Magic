@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # Heuristic + conservative:
 # - Close single-line unterminated ' or " (skips triple quotes).
 # - Insert "pass" for empty `if ...:` blocks.

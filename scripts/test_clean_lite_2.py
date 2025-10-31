@@ -1,8 +1,8 @@
 import pandas as pd
 import snscrape.modules.twitter as sntwitter
 
-print("âœ… Pandas version:", pd.__version__)
-print("âœ… snscrape test:")
+print("✅ Pandas version:", pd.__version__)
+print("✅ snscrape test:")
 
 query = "AI lang:en"
 tweets = []
@@ -11,4 +11,4 @@ for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
     if i > 2:
         break
 
-print("âœ… Sample tweet:", tweets[0][:80])
+print("✅ Sample tweet:", tweets[0][:80])

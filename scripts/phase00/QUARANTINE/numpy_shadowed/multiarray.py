@@ -2,7 +2,7 @@
 try:
     import importlib
     _np_core = importlib.import_module("numpy.core")
-    # if NumPyâ€™s internal module exists, alias it for relative imports
+    # if NumPy's internal module exists, alias it for relative imports
     if not globals().get("_multiarray_umath"):
         try:
             _multiarray_umath = importlib.import_module("numpy.core._multiarray_umath")
@@ -26,7 +26,7 @@ try:
     asanyarray = _np_asanyarray
     _multiarray_umath = _np_mau
 except Exception:
-    # Extremely defensive fallback Ã¢â‚¬â€ keep names defined
+    # Extremely defensive fallback Ã¢â‚¬" keep names defined
     def array(x, *a, **k): return x
     def asanyarray(x, *a, **k): return x
     _multiarray_umath = None

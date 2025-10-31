@@ -833,4 +833,4 @@ class InformationOnly(UserWarning):
 
 
 class LinksNotSupported(errors.FileError):
-    """File system does not seem to support either symlinks or hard links."""
+    """File system does not seem to support either symlinks or hard links.

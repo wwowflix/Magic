@@ -1,4 +1,4 @@
-﻿import sys  # noqa: I001
+import sys  # noqa: I001
 import os
 import re
 import importlib

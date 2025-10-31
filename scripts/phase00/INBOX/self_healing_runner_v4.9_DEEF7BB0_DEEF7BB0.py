@@ -107,7 +107,7 @@ def main():
             code, out, err = run_script(script_path, log_file)
             if code == 0:
                 print(
-                    f"âœ… {os.path.basename(script_path)} completed successfully on attempt {attempt}."
+                    f"✅ {os.path.basename(script_path)} completed successfully on attempt {attempt}."
                 )
                 success = True
                 break
@@ -127,7 +127,7 @@ def main():
     with open(summary_path, "w", encoding="utf-8") as summary:
         summary.write("\n".join(summary_lines))
 
-    print(f"\nâœ… Completed {len(scripts)} scripts. Summary saved to {summary_path}")
+    print(f"\n✅ Completed {len(scripts)} scripts. Summary saved to {summary_path}")
 
 
 if __name__ == "__main__":

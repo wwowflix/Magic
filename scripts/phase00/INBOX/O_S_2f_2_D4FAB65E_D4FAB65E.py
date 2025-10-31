@@ -738,7 +738,7 @@ def calcCodePageRanges(unicodes):
             elif uni == ord("Ãµ"):
                 bits.add(55)  # MS-DOS Portuguese
 
-    if hasAscii and ord("â€°") in unicodes and ord("âˆ‘") in unicodes:
+    if hasAscii and ord(""°") in unicodes and ord("âˆ‘") in unicodes:
         bits.add(29)  # Macintosh Character Set (US Roman)
 
     return bits

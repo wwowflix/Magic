@@ -2,7 +2,7 @@
 insert_to_db.py ðŸ”½
 Part of Zephyr - Phase 2, Module G (G.2.45)
 
-âœ… Purpose:
+✅ Purpose:
 Insert cleaned trend data into SQLite DB for dashboard access.
 
 ðŸ§  Inputs:
@@ -34,7 +34,7 @@ def insert_to_db(data, table_name="trend_data"):
         data.to_sql(table_name, conn, if_exists="append", index=False)
         conn.close()
         print(
-            f"âœ… Inserted {len(data)} records into table '{table_name}' in {DB_PATH}"
+            f"✅ Inserted {len(data)} records into table '{table_name}' in {DB_PATH}"
         )
     except Exception as e:
         print(f"âŒ Failed to insert data into DB: {e}")

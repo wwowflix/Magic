@@ -29,15 +29,15 @@ def auto_recover():
                     with open(ready_path, "w", encoding="utf-8") as f:
                         f.write("# Auto-recovered script placeholder\n")
                         f.write(
-                            "print('âœ… Auto-recovered script running successfully')\n"
+                            "print('✅ Auto-recovered script running successfully')\n"
                         )
                     log(f"ðŸ”„ Recovered missing script: {ready_path}")
                     recovered += 1
     if recovered == 0:
-        log("âœ… No missing scripts found to recover.")
+        log("✅ No missing scripts found to recover.")
 
 
 if __name__ == "__main__":
     log("ðŸš€ Auto Recover Agent started...")
     auto_recover()
-    log("âœ… Auto Recover Agent finished successfully.")
+    log("✅ Auto Recover Agent finished successfully.")

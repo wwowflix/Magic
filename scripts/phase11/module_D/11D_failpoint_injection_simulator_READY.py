@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11D_failpoint_injection_simulator_READY.py] executed successfully (stub mode)."
+        "✅ [11D_failpoint_injection_simulator_READY.py] executed successfully (stub mode)."
     )
 
 

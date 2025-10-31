@@ -683,7 +683,7 @@ class AreaConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -2554,7 +2554,7 @@ class BarConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -10480,7 +10480,7 @@ class LineConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -11211,7 +11211,7 @@ class MarkConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -11787,7 +11787,7 @@ class MarkDef(AnyMark):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     fill : str, dict, :class:`Color`, :class:`ExprRef`, :class:`Gradient`, :class:`HexColor`, :class:`ColorName`, :class:`LinearGradient`, :class:`RadialGradient`, Literal['black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue', 'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'], None
         Default fill color. This property has higher precedence than ``config.color``. Set
         to ``null`` to remove fill.
@@ -14177,7 +14177,7 @@ class OverlayMarkDef(VegaLiteSchema):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -16549,7 +16549,7 @@ class Projection(VegaLiteSchema):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``âˆš0.5 â‰… 0.70710â€¦``.
+        which defaults to ``âˆš0.5 â‰… 0.70710"¦``.
     radius : dict, float, :class:`ExprRef`
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -16726,7 +16726,7 @@ class ProjectionConfig(VegaLiteSchema):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``âˆš0.5 â‰… 0.70710â€¦``.
+        which defaults to ``âˆš0.5 â‰… 0.70710"¦``.
     radius : dict, float, :class:`ExprRef`
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -17152,7 +17152,7 @@ class RectConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -18139,7 +18139,7 @@ class Scale(VegaLiteSchema):
         Extending the domain so that it starts and ends on nice round values. This method
         typically modifies the scale's domain, and may only extend the bounds to the nearest
         round value. Nicing is useful if the domain is computed from data and may be
-        irregular. For example, for a domain of *[0.201479â€¦, 0.996679â€¦]*, a nice domain
+        irregular. For example, for a domain of *[0.201479"¦, 0.996679"¦]*, a nice domain
         might be *[0.2, 1.0]*.
 
         For quantitative scales such as linear, ``nice`` can be either a boolean flag or a
@@ -23151,7 +23151,7 @@ class TickConfig(AnyMarkConfig):
     ellipsis : str, dict, :class:`ExprRef`
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle : dict, float, :class:`ExprRef`
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.

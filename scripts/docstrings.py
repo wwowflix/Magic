@@ -763,4 +763,3 @@ Q1 A   True     True
 Q2 A  False     True
    B   True    False
    C   True    False
-"""

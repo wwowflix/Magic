@@ -686,7 +686,7 @@ class TestCasting:
             assert not data1.flags.aligned
             assert not data2.flags.aligned
 
-        element = "this is a Ã¼nicode stringâ€½"
+        element = "this is a Ã¼nicode string"½"
         data1[()] = element
         # Test both `data1` and `data1.copy()`  (which should be aligned)
         for data in [data1, data1.copy()]:

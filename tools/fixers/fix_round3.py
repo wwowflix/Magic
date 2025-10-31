@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # Targeted round-3 fixer for 6 remaining files based on your diag.
 
 import csv  # noqa: I001

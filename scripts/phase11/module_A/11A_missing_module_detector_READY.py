@@ -45,7 +45,7 @@ def main():
                 for mf in missing_files:
                     log.write(f"- {mf}\n")
             else:
-                log.write("âœ… No missing files. All expected scripts are present.\n")
+                log.write("✅ No missing files. All expected scripts are present.\n")
 
         print("PASS")
     except Exception as e:

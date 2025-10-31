@@ -42,14 +42,14 @@ def check_storage():
         for f in missing:
             sm.ensure_folder(f)
     else:
-        print("âœ… All folders exist.")
+        print("✅ All folders exist.")
 
 
 def budget_check(current_cost, max_budget):
     if current_cost > max_budget:
         raise Exception(f"Budget exceeded! Cost: {current_cost}, Limit: {max_budget}")
     else:
-        print("âœ… Budget within limits.")
+        print("✅ Budget within limits.")
 
 
 if __name__ == "__main__":

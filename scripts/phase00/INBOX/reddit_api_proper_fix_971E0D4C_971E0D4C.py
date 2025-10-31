@@ -14,4 +14,4 @@ fixed_content = content.replace(
 fixed_path = Path(".\reddit_api_proper_fix.py")
 fixed_path.write_text(fixed_content, encoding="utf-8")
 
-print("âœ… Reddit script fixed and saved as reddit_api_proper_fix.py")
+print("✅ Reddit script fixed and saved as reddit_api_proper_fix.py")

@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11P_api_terms_compliance_checker_READY.py] executed successfully (stub mode)."
+        "✅ [11P_api_terms_compliance_checker_READY.py] executed successfully (stub mode)."
     )
 
 

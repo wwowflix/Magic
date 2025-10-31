@@ -47,4 +47,3 @@ class JsonSchemaValueException(JsonSchemaException):
 class JsonSchemaDefinitionException(JsonSchemaException):
     """
     Exception raised by generator of validation function.
-    """

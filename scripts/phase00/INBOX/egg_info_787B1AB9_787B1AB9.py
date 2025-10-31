@@ -761,4 +761,4 @@ def get_pkg_info_revision():
 
 
 class EggInfoDeprecationWarning(SetuptoolsDeprecationWarning):
-    """Deprecated behavior warning for EggInfo, bypassing suppression."""
+    """Deprecated behavior warning for EggInfo, bypassing suppression.

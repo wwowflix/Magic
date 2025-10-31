@@ -17,7 +17,7 @@ def main():
 
     try:
         response = notion.databases.retrieve(database_id=database_id)
-        print("âœ… Connection successful!")
+        print("✅ Connection successful!")
         print(f"Database title: {response['title'][0]['plain_text']}")
     except Exception as e:
         print(f"âŒ Connection failed: {e}")

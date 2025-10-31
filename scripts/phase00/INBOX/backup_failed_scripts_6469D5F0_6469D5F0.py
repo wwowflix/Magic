@@ -47,7 +47,7 @@ def main():
     failed_entries = read_failures(SUMMARY_PATH)
 
     if not failed_entries:
-        print("âœ… No failed scripts found to back up.")
+        print("✅ No failed scripts found to back up.")
         return
 
     for phase, module, script in failed_entries:

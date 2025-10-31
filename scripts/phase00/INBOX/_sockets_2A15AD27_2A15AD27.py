@@ -191,4 +191,3 @@ class ConnectedUNIXDatagramSocket(UnreliableObjectStream[bytes], _SocketProvider
     Represents a connected Unix datagram socket.
 
     Supports all relevant extra attributes from :class:`~SocketAttribute`.
-    """

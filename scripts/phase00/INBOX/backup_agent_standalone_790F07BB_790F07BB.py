@@ -35,7 +35,7 @@ def backup_file(file_path):
 
     # Copy file
     shutil.copy2(file_path, backup_path)
-    print(f"âœ… Backed up {file_path} to {backup_path}")
+    print(f"✅ Backed up {file_path} to {backup_path}")
     return True
 
 

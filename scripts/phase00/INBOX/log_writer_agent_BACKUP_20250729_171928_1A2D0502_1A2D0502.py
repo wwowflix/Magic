@@ -53,7 +53,7 @@ def run_and_log(script_path):
             ["python", abs_path], capture_output=True, text=True, check=False
         )
         if result.stdout:
-            write_log(f"âœ… OUTPUT:\n{result.stdout.strip()}")
+            write_log(f"✅ OUTPUT:\n{result.stdout.strip()}")
         if result.stderr:
             write_log(f"âš ï¸ ERRORS:\n{result.stderr.strip()}")
     except Exception as e:

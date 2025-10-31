@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # AST diag: produce a TSV with columns: path, status, diag_type, diag_msg
 import os  # noqa: I001
 import sys

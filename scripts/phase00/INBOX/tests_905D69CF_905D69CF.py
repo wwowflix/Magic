@@ -146,7 +146,7 @@ def test_iter_decode():
         == "é"
     )
     assert iter_decode_to_string([b"\xef\xbb\xbf"], "latin1") == ""
-    assert iter_decode_to_string([b"\xef\xbb"], "latin1") == "ï""
+    assert iter_decode_to_string([b"\xef\xbb"], "latin1") == "ï"""
     assert iter_decode_to_string([b"\xfe\xff\x00\xe9"], "latin1") == "é"
     assert iter_decode_to_string([b"\xff\xfe\xe9\x00"], "latin1") == "é"
     assert (

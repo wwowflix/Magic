@@ -13,4 +13,4 @@ reddit = praw.Reddit(
 print("ðŸ”Ž Reddit read_only:", reddit.read_only)
 
 for submission in reddit.subreddit("python").hot(limit=3):
-    print(f"âœ… {submission.title} | Score: {submission.score}")
+    print(f"✅ {submission.title} | Score: {submission.score}")

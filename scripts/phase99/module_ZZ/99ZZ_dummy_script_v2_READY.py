@@ -1,1 +1,1 @@
-print("Hello from Dummy Script âœ…")
+print("Hello from Dummy Script ✅")

@@ -15,4 +15,3 @@ class AsymmetricPadding(metaclass=abc.ABCMeta):
     def name(self) -> str:
         """
         A string naming this padding (e.g. "PSS", "PKCS1").
-        """

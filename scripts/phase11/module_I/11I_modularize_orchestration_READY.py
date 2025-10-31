@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11I_modularize_orchestration_READY.py] executed successfully (stub mode)."
+        "✅ [11I_modularize_orchestration_READY.py] executed successfully (stub mode)."
     )
 
 

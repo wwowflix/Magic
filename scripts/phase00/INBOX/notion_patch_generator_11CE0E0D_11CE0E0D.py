@@ -54,7 +54,7 @@ def create_notion_entry(row):
                 ),
             },
         )
-        print(f"âœ… Added: {filename}")
+        print(f"✅ Added: {filename}")
 
     except Exception as e:
         print(f"âŒ Failed to add: {filename} â†’ {e}")

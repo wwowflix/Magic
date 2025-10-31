@@ -34,7 +34,7 @@ def run_command(command, step_name):
                 stderr=subprocess.STDOUT,
             )
             log.write(result.stdout.decode("utf-8", errors="ignore"))
-            print(f"âœ… {step_name} completed.")
+            print(f"✅ {step_name} completed.")
         except subprocess.CalledProcessError as e:
             log.write(e.stdout.decode("utf-8", errors="ignore"))
             print(f"âŒ {step_name} failed. Check log for details.")
@@ -69,7 +69,7 @@ def main():
     )
 
     print("\n=============================")
-    print(" âœ… PHASE 11 FULL CYCLE COMPLETED")
+    print(" ✅ PHASE 11 FULL CYCLE COMPLETED")
     print(f" ðŸ“œ Log saved to: {CYCLE_LOG}")
     print("=============================\n")
 

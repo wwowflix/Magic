@@ -6577,7 +6577,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace : bool, default False
             Whether to modify the DataFrame rather than creating a new one.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, â€¦, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -6995,7 +6995,7 @@ class DataFrame(NDFrame, OpsMixin):
             If True and sorting by level and index is multilevel, sort by other
             levels too (in order) after sorting by specified level.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, â€¦, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -8901,7 +8901,7 @@ Parrot 2  Parrot       24.0
                 Multi-column explode
 
         ignore_index : bool, default False
-            If True, the resulting index will be labeled 0, 1, â€¦, n - 1.
+            If True, the resulting index will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.1.0
 
@@ -9635,7 +9635,7 @@ Parrot 2  Parrot       24.0
         other : DataFrame or Series/dict-like object, or list of these
             The data to append.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, â€¦, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
         verify_integrity : bool, default False
             If True, raise ValueError on creating index with duplicates.
         sort : bool, default False

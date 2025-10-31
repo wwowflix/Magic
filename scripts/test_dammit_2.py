@@ -215,7 +215,7 @@ class TestEncodingDetector(object):
             doc.decode("utf8")
 
         # Unicode, Dammit thinks the whole document is Windows-1252,
-        # and decodes it into "Ã¢Ã‹Å“Ã†â€™Ã¢Ã‹Å“Ã†â€™Ã¢Ã‹Å“Ã†â€™"Hi, I like Windows!"Ã¢Ã‹Å“Ã†â€™Ã¢Ã‹Å“Ã†â€™Ã¢Ã‹Å“Ã†â€™"
+        # and decodes it into "Ã¢Ã‹Å“Ã†'Ã¢Ã‹Å“Ã†'Ã¢Ã‹Å“Ã†'"Hi, I like Windows!"Ã¢Ã‹Å“Ã†'Ã¢Ã‹Å“Ã†'Ã¢Ã‹Å“Ã†'"
 
         # But if we run it through fix_embedded_windows_1252, it's fixed:
         fixed = UnicodeDammit.detwingle(doc)
@@ -428,5 +428,3 @@ class TestEntitySubstitution(object):
     def test_ambiguous_ampersands_escaped(self, markup, expect):
         assert self.sub.substitute_html(markup) == expect
         assert self.sub.substitute_html5_raw(markup) == expect
-
-"""

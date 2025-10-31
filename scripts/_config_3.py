@@ -194,7 +194,7 @@ class AreaConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -1190,7 +1190,7 @@ class BarConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -3511,7 +3511,7 @@ class LineConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -4049,7 +4049,7 @@ class MarkConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -4627,7 +4627,7 @@ class OverlayMarkDefKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -5327,7 +5327,7 @@ class ProjectionKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``âˆš0.5 â‰… 0.70710â€¦``.
+        which defaults to ``âˆš0.5 â‰… 0.70710"¦``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5470,7 +5470,7 @@ class ProjectionConfigKwds(TypedDict, total=False):
         value corresponds to the `Douglas-Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
         If precision is not specified, returns the projection's current resampling precision
-        which defaults to ``âˆš0.5 â‰… 0.70710â€¦``.
+        which defaults to ``âˆš0.5 â‰… 0.70710"¦``.
     radius
         The radius parameter for the ``airy`` or ``gingery`` projection. The default value
         varies based on the projection type.
@@ -5774,7 +5774,7 @@ class RectConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.
@@ -6686,7 +6686,7 @@ class TickConfigKwds(TypedDict, total=False):
     ellipsis
         The ellipsis string for text truncated in response to the limit parameter.
 
-        **Default value:** ``"â€¦"``
+        **Default value:** ``""¦"``
     endAngle
         The end angle in radians for arc marks. A value of ``0`` indicates up (north),
         increasing values proceed clockwise.

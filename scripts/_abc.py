@@ -531,7 +531,7 @@ class HalfCloseableStream(Stream):
           "channels" on top of a single encrypted connection. A Trio
           implementation of SSH could expose these channels as
           :class:`HalfCloseableStream` objects, and calling :meth:`send_eof`
-          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 Ãƒâ€šÃ‚Â§5.3
+          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 Ãƒ"šÃ‚Â§5.3
           <https://tools.ietf.org/html/rfc4254#section-5.3>`__).
 
         * On an SSL/TLS-encrypted connection, the protocol doesn't provide any

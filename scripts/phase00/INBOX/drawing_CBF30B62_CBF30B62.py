@@ -3681,7 +3681,7 @@ class PaintedPath:
 
         The arc is approximated using BÃ©zier curves, so it is not perfectly accurate.
         However, the error is small enough to not be noticeable at any reasonable
-        (and even most unreasonable) scales, with a worst-case deviation of around 3â€±.
+        (and even most unreasonable) scales, with a worst-case deviation of around 3"±.
 
         Notes:
             - The signs of the radii arguments (`rx` and `ry`) are ignored (i.e. their
@@ -3729,7 +3729,7 @@ class PaintedPath:
 
         The arc is approximated using BÃ©zier curves, so it is not perfectly accurate.
         However, the error is small enough to not be noticeable at any reasonable
-        (and even most unreasonable) scales, with a worst-case deviation of around 3â€±.
+        (and even most unreasonable) scales, with a worst-case deviation of around 3"±.
 
         Notes:
             - The signs of the radii arguments (`rx` and `ry`) are ignored (i.e. their

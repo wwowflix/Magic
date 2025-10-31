@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11AB_agent_signature_validator_READY.py] executed successfully (stub mode)."
+        "✅ [11AB_agent_signature_validator_READY.py] executed successfully (stub mode)."
     )
 
 

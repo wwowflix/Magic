@@ -7,8 +7,8 @@ DB = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "outputs", "mydata.db")
 )
 
-st.set_page_config(page_title="MAGIC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Trends", layout="wide")
-st.title("ÃƒÂ°Ã…Â¸Ã‚Â§Ã‚ MAGIC ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Trends Mini Dashboard")
+st.set_page_config(page_title="MAGIC ÃƒÂ¢Ã¢"šÂ¬Ã¢â‚¬Å“ Trends", layout="wide")
+st.title("ÃƒÂ°Ã…Â¸Ã‚Â§Ã‚ MAGIC ÃƒÂ¢Ã¢"šÂ¬Ã¢â‚¬Å“ Trends Mini Dashboard")
 
 if not os.path.exists(DB):
     st.error(f"DB not found: {DB}")

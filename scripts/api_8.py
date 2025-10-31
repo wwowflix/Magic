@@ -2495,7 +2495,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
              If precision is not specified, returns the projection's current resampling
-            precision which defaults to `âˆš0.5 â‰… 0.70710â€¦`.
+            precision which defaults to `âˆš0.5 â‰… 0.70710"¦`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
             varies based on the projection type.

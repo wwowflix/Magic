@@ -696,7 +696,7 @@ async def serve_websocket(
     Serve a WebSocket over TCP.
 
     This function supports the Trio nursery start protocol: ``server = await
-    nursery.start(serve_websocket, â€¦)``. It will block until the server
+    nursery.start(serve_websocket, "¦)``. It will block until the server
     is accepting connections and then return a :class:`WebSocketServer` object.
 
     Note that if ``host`` is ``None`` and ``port`` is zero, then you may get
@@ -1850,7 +1850,7 @@ class WebSocketServer:
         Start serving incoming connections requests.
 
         This method supports the Trio nursery start protocol: ``server = await
-        nursery.start(server.run, â€¦)``. It will block until the server is
+        nursery.start(server.run, "¦)``. It will block until the server is
         accepting connections and then return a :class:`WebSocketServer` object.
 
         :param task_status: Part of the Trio nursery start protocol.

@@ -69,7 +69,7 @@ def generate_patch_csv():
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"âœ… Patch CSV generated: {OUTPUT_CSV}")
+    print(f"✅ Patch CSV generated: {OUTPUT_CSV}")
 
 
 if __name__ == "__main__":

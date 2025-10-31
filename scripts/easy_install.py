@@ -2357,4 +2357,3 @@ def only_strs(values):
 class EasyInstallDeprecationWarning(SetuptoolsDeprecationWarning):
     """
     Warning for EasyInstall deprecations, bypassing suppression.
-    """

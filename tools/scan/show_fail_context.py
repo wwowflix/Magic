@@ -1,4 +1,4 @@
-﻿import pathlib
+import pathlib
 
 targets = [
     ("scripts/lexer.py", 194, 3),

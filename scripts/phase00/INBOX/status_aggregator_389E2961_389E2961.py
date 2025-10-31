@@ -59,7 +59,7 @@ def aggregate_status():
         for record in daily_records:
             writer.writerow(record)
 
-    print(f"âœ… Daily status aggregation complete. Output file: {DAILY_STATUS_FILE}")
+    print(f"✅ Daily status aggregation complete. Output file: {DAILY_STATUS_FILE}")
 
 
 if __name__ == "__main__":

@@ -32,4 +32,4 @@ with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
     writer.writeheader()
     writer.writerows(entries)
 
-print(f"âœ… Patch generated: {OUTPUT_CSV}")
+print(f"✅ Patch generated: {OUTPUT_CSV}")

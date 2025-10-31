@@ -35,7 +35,7 @@ while True:
     cursor = data["next_cursor"]
     time.sleep(0.3)  # gentle rate-limit
 
-print(f"Found {len(all_pages)} pages to archiveâ€¦")
+print(f"Found {len(all_pages)} pages to archive"¦")
 
 # 2) Archive each one
 for page in all_pages:
@@ -45,7 +45,7 @@ for page in all_pages:
         f"https://api.notion.com/v1/pages/{page_id}", headers=headers, json=patch
     )
     if r.status_code == 200:
-        print("âœ… Archived", page_id)
+        print("✅ Archived", page_id)
     else:
         print("âš ï¸ Skipped", page_id, r.status_code, r.text)
     time.sleep(0.2)

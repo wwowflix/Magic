@@ -4798,7 +4798,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
              Puts NaNs at the beginning if `first`; `last` puts NaNs at the
              end.
         ignore_index : bool, default False
-             If True, the resulting axis will be labeled 0, 1, â€¦, n - 1.
+             If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
              .. versionadded:: 1.0.0
 
@@ -5657,7 +5657,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
             Axis to sample. Accepts axis number or name. Default is stat axis
             for given data type. For `Series` this parameter is unused and defaults to `None`.
         ignore_index : bool, default False
-            If True, the resulting index will be labeled 0, 1, â€¦, n - 1.
+            If True, the resulting index will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.3.0
 

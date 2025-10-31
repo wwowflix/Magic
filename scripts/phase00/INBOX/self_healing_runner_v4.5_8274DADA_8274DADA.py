@@ -87,7 +87,7 @@ def main():
 
         total += 1
         if code == 0:
-            print(f"âœ… PASS: {os.path.basename(script_path)}")
+            print(f"✅ PASS: {os.path.basename(script_path)}")
             passed += 1
         else:
             failed += 1

@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11J_random_failure_injector_READY.py] executed successfully (stub mode)."
+        "✅ [11J_random_failure_injector_READY.py] executed successfully (stub mode)."
     )
 
 

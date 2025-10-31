@@ -44,7 +44,7 @@ try:
     if not hasattr(ot, "NO_VARIATION_INDEX"):
         ot.NO_VARIATION_INDEX = 0xFFFFFFFF  # type: ignore[attr-defined]
 
-    # 2) Minimal stubs (only if missing) â€” safe no-ops on real fontTools
+    # 2) Minimal stubs (only if missing) — safe no-ops on real fontTools
     def _ensure(names):
         for _name in names:
             if not hasattr(ot, _name):
@@ -166,7 +166,7 @@ try:
 except Exception:
     pass
 # === end shield ===
-# === MAGIC Phase11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ SHIELD: VarData placeholder for varLib.builder ===
+# === MAGIC Phase11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢"šÂ¬Ã…" SHIELD: VarData placeholder for varLib.builder ===
 try:
     from fontTools.ttLib.tables import otTables as _ot
 
@@ -183,7 +183,7 @@ try:
 except Exception:
     pass
 # === end shield ===
-# === MAGIC Phase11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ SHIELD: guarded otBase import ==========================
+# === MAGIC Phase11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢"šÂ¬Ã…" SHIELD: guarded otBase import ==========================
 try:
     from .otBase import BaseTTXConverter
 except Exception:

@@ -1,4 +1,4 @@
-﻿import pathlib
+import pathlib
 
 for rel in pathlib.Path("outputs/reports/_fail_paths.txt").read_text().splitlines():
     p = pathlib.Path(rel)

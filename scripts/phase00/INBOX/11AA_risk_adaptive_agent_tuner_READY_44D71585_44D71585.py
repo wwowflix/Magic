@@ -2,7 +2,7 @@
 
 
 def main():
-    print("âœ… Risk-Adaptive Agent Tuner running...")
+    print("✅ Risk-Adaptive Agent Tuner running...")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# scripts/compat/np.py â€” central NumPy shim (public-only)
+# scripts/compat/np.py — central NumPy shim (public-only)
 import importlib
 
 try:

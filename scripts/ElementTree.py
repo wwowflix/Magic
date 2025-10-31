@@ -14,7 +14,7 @@ from xml.etree.ElementTree import parse as _parse
 from xml.etree.ElementTree import tostring
 import importlib
 
-# --- MAGIC Phase11 â€“ SHIELD: normalized guards for scripts.common (assignment-first) ---
+# --- MAGIC Phase11 – SHIELD: normalized guards for scripts.common (assignment-first) ---
 # Safe defaults so the module can import even if scripts.common/core are broken
 PY3 = True
 DTDForbidden = EntitiesForbidden = ExternalReferenceForbidden = None

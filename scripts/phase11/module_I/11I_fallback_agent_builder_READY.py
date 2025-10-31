@@ -1,6 +1,6 @@
 def main():
     print(
-        "âœ… [11I_fallback_agent_builder_READY.py] executed successfully (stub mode)."
+        "✅ [11I_fallback_agent_builder_READY.py] executed successfully (stub mode)."
     )
 
 

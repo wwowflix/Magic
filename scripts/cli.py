@@ -1,4 +1,4 @@
-# --- MAGIC Phase11 â€“ SHIELD: CLI _main shim ---
+# --- MAGIC Phase11 – SHIELD: CLI _main shim ---
 def _main(argv=None):
     # Minimal no-op entrypoint so smoke import/call succeeds
     return 0

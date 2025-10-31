@@ -15,7 +15,7 @@ def fetch_reddit_trends(subreddits):
             read_only=True,
         )
 
-        print("âœ… Connected to Reddit API")
+        print("✅ Connected to Reddit API")
 
         posts = []
         for subreddit_name in subreddits:

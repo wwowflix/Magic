@@ -1,4 +1,4 @@
-﻿import pathlib
+import pathlib
 
 root = pathlib.Path(".")
 fixed = 0
