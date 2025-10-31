@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase99_module_ZZ_99ZZ_dummy_script_v2_READY():

@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_I_18I_geo_based_offer_redirector_READY():

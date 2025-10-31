@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_save_api_key_2():

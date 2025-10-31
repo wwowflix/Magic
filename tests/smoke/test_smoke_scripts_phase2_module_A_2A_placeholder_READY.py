@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase2_module_A_2A_placeholder_READY():

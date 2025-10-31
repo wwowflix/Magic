@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_Y_18Y_dynamic_platform_earnings_comparator_READY():

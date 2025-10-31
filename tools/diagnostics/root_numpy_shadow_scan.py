@@ -48,7 +48,7 @@ def env_snapshot():
     except Exception as e:
         info["numpy_error"] = repr(e)
 
-    info["python_version"] = sys.version.replace("\n", " ")
+    info["python_version"] = sys.version.replace("\n", ")
     info["sys_path_head"] = sys.path[:5]
     info["PYTHONPATH"] = os.environ.get("PYTHONPATH", "")
     return info

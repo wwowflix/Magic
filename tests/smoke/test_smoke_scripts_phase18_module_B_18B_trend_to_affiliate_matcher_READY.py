@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_B_18B_trend_to_affiliate_matcher_READY():

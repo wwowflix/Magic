@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_M_18M_zero_earnings_alert_system_READY():

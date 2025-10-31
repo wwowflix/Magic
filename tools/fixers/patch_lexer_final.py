@@ -18,8 +18,7 @@ pattern = re.compile(
 )
 
 replacement = (
-    "            else:\n"
-    "                text = text.decode(self.encoding)\n"
+    "            else:\n"                text = text.decode(self.encoding)\n"
     '                if text.startswith("\\\\"):\n'
     '                    text = text[len("\\\\"):]\n'
 )

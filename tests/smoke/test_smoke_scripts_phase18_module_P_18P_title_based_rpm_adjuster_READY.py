@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_P_18P_title_based_rpm_adjuster_READY():

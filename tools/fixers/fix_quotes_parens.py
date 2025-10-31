@@ -5,11 +5,7 @@ import pathlib
 fail_list = r".\outputs\reports\_fail_paths.txt"
 
 SMART = {
-    "“": '"',
-    "”": '"',
-    "„": '"',
-    "‟": '"',
-    "‘": "'",
+    "“"""”"""„"""‟"""‘": "'",
     "’": "'",
     "‚": "'",
     "‛": "'",

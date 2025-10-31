@@ -1,5 +1,4 @@
 import sqlite3
-import types
 import pandas as pd
 
 # Import the collector module under test

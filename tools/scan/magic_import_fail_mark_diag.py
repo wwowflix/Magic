@@ -51,7 +51,7 @@ with open(tsv_in, encoding="utf-8") as fh:
                 status = "FAIL"
                 r["diag_type"] = e.__class__.__name__
                 r["diag_msg"] = (
-                    str(e).replace("\t", " ").replace("\r", " ").replace("\n", " ")
+                    str(e).replace("\t", ").replace("\r", ").replace("\n", ")
                 )
         r["status"] = status
         rows.append(r)

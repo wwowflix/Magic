@@ -50,11 +50,11 @@ def norm_invisibles(s: str) -> str:
     for ln in s.split("\n"):
         head = ln[: len(ln) - len(ln.lstrip())]
         tail = ln[len(head) :]
-        head = head.replace("\u00a0", " ")  # NBSP
+        head = head.replace("\u00a0", ")  # NBSP
         head = head.expandtabs(4)
-        head = "".join((" " if (ch == " " or ch == "\t") else "") for ch in head)
+        head = "".join((" if (ch == " or ch == "\t") else "") for ch in head)
         # collapse weird invisibles in body too
-        tail = tail.replace("\u00a0", " ")
+        tail = tail.replace("\u00a0", ")
         out.append(head + tail)
     s = "\n".join(out)
     # smart quotes → ascii
@@ -132,18 +132,18 @@ def fix_unexpected_indent(full: str, idx: int) -> str | None:
     if k < 0:
         return None
     prev = lines[k]
-    prev_indent = len(prev) - len(prev.lstrip(" "))
+    prev_indent = len(prev) - len(prev.lstrip("))
     curr = lines[idx]
-    stripped = curr.lstrip(" ")
+    stripped = curr.lstrip(")
     want = prev_indent + (4 if prev.rstrip().endswith(":") else 0)
-    new = (" " * want) + stripped
+    new = (" * want) + stripped
     if new != curr:
         lines[idx] = new
         cand = "\n".join(lines)
         if ast_ok(cand):
             return cand
     # second chance: align exactly to prev indent if above failed
-    new = (" " * prev_indent) + stripped
+    new = (" * prev_indent) + stripped
     if new != curr:
         lines[idx] = new
         cand = "\n".join(lines)

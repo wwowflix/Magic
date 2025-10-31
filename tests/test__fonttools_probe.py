@@ -1,4 +1,5 @@
-﻿import importlib, sys, pathlib
+﻿import sys
+import pathlib
 
 
 def test_fonttools_probe():

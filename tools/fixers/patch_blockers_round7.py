@@ -63,11 +63,7 @@ def patch_reddit(p: pathlib.Path) -> bool:
         re.DOTALL,
     )
     repl = (
-        "if __name__ == '__main__':\n"
-        "    subreddits = ['technology', 'machinelearning', 'ArtificialIntelligence']\n"
-        "    trending_posts = fetch_reddit_trends(subreddits)\n"
-        "    for post in trending_posts:\n"
-        "        print(post)"
+        "if __name__ == '__main__':\n"    subreddits = ['technology', 'machinelearning', 'ArtificialIntelligence']\n"    trending_posts = fetch_reddit_trends(subreddits)\n"    for post in trending_posts:\n"        print(post)"
     )
     s2, n = pat.subn(repl, s)
     if n == 0:

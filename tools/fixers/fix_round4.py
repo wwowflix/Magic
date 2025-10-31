@@ -186,10 +186,10 @@ def fix_unexpected_indent(p: pathlib.Path, ln: int) -> bool:
     curr = lines[idx]
     stripped = curr.lstrip(" \t")
     # only reduce or align (avoid adding more indent)
-    new = (" " * min(desired, prev_indent + 4)) + stripped if stripped else stripped
+    new = (" * min(desired, prev_indent + 4)) + stripped if stripped else stripped
     # if prev doesn’t end with ':', force align to prev_indent (not deeper)
     if not prev.rstrip().endswith(":"):
-        new = (" " * prev_indent) + stripped
+        new = (" * prev_indent) + stripped
     if new != curr:
         lines[idx] = new
         cand = "\n".join(lines)

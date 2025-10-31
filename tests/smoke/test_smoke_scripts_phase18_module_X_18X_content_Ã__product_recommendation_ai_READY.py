@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_X_18X_content_Ã__product_recommendation_ai_READY():

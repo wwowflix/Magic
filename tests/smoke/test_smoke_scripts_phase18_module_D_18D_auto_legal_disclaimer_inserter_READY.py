@@ -1,4 +1,5 @@
-import importlib, types
+import importlib
+import types
 
 
 def test_import_scripts_phase18_module_D_18D_auto_legal_disclaimer_inserter_READY():

@@ -16,9 +16,7 @@ for p in sys.argv[1:]:
 
 if bad:
     sys.stderr.write(
-        "BLOCKED: binary installer/artifact detected.\n"
-        "Please use GitHub Releases or Git LFS for these files.\n"
-        "Files:\n  - " + "\n  - ".join(bad) + "\n"
+        "BLOCKED: binary installer/artifact detected.\n"Please use GitHub Releases or Git LFS for these files.\n"Files:\n  - " + "\n  - ".join(bad) + "\n"
     )
     sys.exit(1)
 sys.exit(0)

@@ -46,7 +46,7 @@ def insert_pass_after_if(lines, if_lineno):
     ln = lines[idx]
     # Determine indentation on the `if` line
     indent = len(ln) - len(ln.lstrip(" \t"))
-    pass_line = " " * (indent + 4) + "pass"
+    pass_line = " * (indent + 4) + "pass"
     # Insert immediately after, unless next line already more indented non-blank
     j = idx + 1
     # find first non-blank lookahead

@@ -1,1 +1,1 @@
-print("{" "availability" ": 1.0}")
+print("{"availability": 1.0}")

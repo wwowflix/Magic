@@ -20,7 +20,7 @@ for rel in pathlib.Path(fail_list).read_text().splitlines():
     except Exception as e:
         status = "FAIL"
         diag_type = type(e).__name__
-        diag_msg = str(e).replace("\t", " ").replace("\n", " ")
+        diag_msg = str(e).replace("\t", ").replace("\n", ")
     rows.append(
         {"path": rel, "status": status, "diag_type": diag_type, "diag_msg": diag_msg}
     )

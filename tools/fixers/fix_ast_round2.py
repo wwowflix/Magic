@@ -72,14 +72,14 @@ def fix_mixed_indent(txt: str) -> str:
     for ln in lines:
         # convert tabs in leading whitespace only
         lead = len(ln) - len(ln.lstrip("\t "))
-        head = ln[:lead].replace("\t", "    ")
+        head = ln[:lead].replace("\t", ")
         tail = ln[lead:]
         ln = head + tail
         # simple heuristic: if previous significant line does NOT open a block,
         # but this line starts with spaces, try remove up to 4
         prev_sig = prev.rstrip()
         opens = prev_sig.endswith((":", "\\", "(", "[", "{"))
-        if not opens and ln.startswith("    ") and ln.lstrip() and prev_sig:
+        if not opens and ln.startswith(") and ln.lstrip() and prev_sig:
             test = ln[4:]
             if ast_ok(prev + "\n" + test + "\n", "<line>"):
                 ln = test

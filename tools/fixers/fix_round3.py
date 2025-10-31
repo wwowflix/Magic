@@ -198,7 +198,7 @@ def fix_unexpected_indent_at(p: pathlib.Path, ln: int) -> bool:
     target_stripped = target.lstrip(" \t")
     # If previous line ends with ":", keep at prev_indent+4, else align to prev_indent
     desired = prev_indent + 4 if prev.rstrip().endswith(":") else prev_indent
-    new_line = (" " * desired) + target_stripped
+    new_line = (" * desired) + target_stripped
     if new_line != target:
         lines[idx] = new_line
         new_txt = "\n".join(lines)
