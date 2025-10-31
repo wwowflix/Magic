@@ -71,3 +71,9 @@ jobs:
           name: coverage-xml
           path: outputs/reports/coverage.xml
           if-no-files-found: error
+      - name: Upload dashboard artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-artifacts
+          path: outputs/reports/
+          if-no-files-found: warn
