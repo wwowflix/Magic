@@ -1,4 +1,4 @@
-name: tests
+﻿name: tests
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,26 +19,17 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          # if you keep tools/ under repo, install extras too
-          if [ -f tools/requirements.txt ]; then pip install -r tools/requirements.txt; fi
 
-      - name: Run pytest (fast set)
-        run: |
-          python -m pytest -q --disable-warnings
-          echo "✅ base pytest done"
-
-      # ✅ NEW: run your PowerShell MAGIC runner
       - name: Run MAGIC test runner
         shell: pwsh
         run: |
           .\tools\magic_test_runner.ps1 -Clean
 
-      # ✅ NEW: upload coverage from outputs/reports/coverage.xml
-      - name: Upload MAGIC coverage
+      - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: magic-coverage
