@@ -176,3 +176,4 @@ twitter_output.json
 scripts/New Text Document.txt
 # local helpers
 .ci-touch
+tools/self_healing_runner_forcepath.py
