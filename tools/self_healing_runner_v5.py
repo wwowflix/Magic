@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import datetime
@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-# project root â†’ E:\MAGIC
+# project root Ã¢â€ â€™ E:\MAGIC
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -18,7 +18,7 @@ def normalize_path(raw: str) -> Path:
     raw_clean = raw.replace("\\", "/")
     p = Path(raw)
 
-    # 1) absolute path â†’ just return
+    # 1) absolute path Ã¢â€ â€™ just return
     if p.is_absolute():
         return p
 
@@ -99,7 +99,7 @@ def main() -> None:
     summaries_dir = PROJECT_ROOT / "tools" / "outputs" / "summaries"
     summaries_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    summary_path = summaries_dir / f"phase11_module_E_summary_{ts}.tsv"
+    summary_path = summaries_dir / f"phase11_module_{module}_summary_{ts}.tsv"
     with summary_path.open("w", encoding="utf-8", newline="") as f:
         f.write("script\tstatus\n")
         for script, status in results:
