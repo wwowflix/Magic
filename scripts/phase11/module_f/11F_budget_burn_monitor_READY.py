@@ -1,4 +1,4 @@
-"""MAGIC – Phase 11 (SHIELD) / Module F — auto-generated stub"""
+\"\"\"MAGIC – Phase 11 (SHIELD) / Module F — auto-generated stub\"\"\"
 import sys
 from pathlib import Path
 def main()->None:
