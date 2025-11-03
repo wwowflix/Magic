@@ -1,26 +1,20 @@
-[
+﻿[
   {
     "Name": "phase11C",
-    "Phase": 11,
     "PhaseNumber": 11,
     "Module": "C",
-    "Script": "scripts/phase11/module_c/11C_compliance_checker_READY.py",
-    "FinalFilename": "11C_compliance_checker_READY.py"
+    "Script": "scripts/phase11/module_C/11C_compliance_checker_READY.py"
   },
   {
     "Name": "phase11D",
-    "Phase": 11,
     "PhaseNumber": 11,
     "Module": "D",
-    "Script": "scripts/phase11/module_d/11D_integrity_audit_READY.py",
-    "FinalFilename": "11D_integrity_audit_READY.py"
+    "Script": "scripts/phase11/module_D/11D_integrity_audit_READY.py"
   },
   {
     "Name": "phase11E",
-    "Phase": 11,
     "PhaseNumber": 11,
     "Module": "E",
-    "Script": "scripts/phase11/module_e/11E_protection_guard_READY.py",
-    "FinalFilename": "11E_protection_guard_READY.py"
+    "Script": "scripts/phase11/module_E/11E_protection_guard_READY.py"
   }
 ]
