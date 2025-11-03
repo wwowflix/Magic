@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-# project root → E:\MAGIC
+# project root â†’ E:\MAGIC
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -18,7 +18,7 @@ def normalize_path(raw: str) -> Path:
     raw_clean = raw.replace("\\", "/")
     p = Path(raw)
 
-    # 1) absolute path → just return
+    # 1) absolute path â†’ just return
     if p.is_absolute():
         return p
 
@@ -31,7 +31,7 @@ def normalize_path(raw: str) -> Path:
 
 
 def load_manifest(path: Path) -> list[dict]:
-    with path.open("r", encoding="utf-8") as f:
+    with path.open("r", encoding="utf-8-sig") as f:
         data = json.load(f)
 
     # your manifests are list-of-dicts, but we also support {"items": [...]} shape
