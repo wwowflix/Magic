@@ -4,25 +4,46 @@ on:
   pull_request:
   push:
     branches: [ main, chore/**, feat/** ]
+  schedule:
+    - cron: '15 2 * * *'
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      matrix:
+        module: [E, F, G, H]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - run: python -m pip install -U pip
-      - name: Runner (E)
-        run: python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_E_manifest.json
-      - name: Runner (F)
-        run: python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_F_manifest.json
+      - name: Runner (${{ matrix.module }})
+        run: |
+          python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_${{ matrix.module }}_manifest.json
       - name: Upload summaries
         uses: actions/upload-artifact@v4
         with:
-          name: phase11-runner-summaries
+          name: phase11-runner-summaries-${{ matrix.module }}
           path: tools/outputs/summaries/
           if-no-files-found: ignore
           retention-days: 21
+      - name: Assert no FAIL in summaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          root = Path(__file__).resolve().parents[2]
+          sumdir = root / "tools" / "outputs" / "summaries"
+          bad = 0
+          for p in sorted(sumdir.glob("phase11_module_*_summary_*.tsv")):
+              lines = p.read_text(encoding="utf-8").splitlines()
+              for ln in lines[1:]:
+                  parts = ln.split("\t")
+                  if len(parts) >= 2 and parts[1].strip() == "FAIL":
+                      print("FAIL:", p.name, "->", parts[0])
+                      bad = 1
+          sys.exit(bad)
+          PY
