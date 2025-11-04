@@ -13,3 +13,12 @@
         entry: python tools/inject_fonttools_shim.py
         language: system
         pass_filenames: false
+
+repos:
+  - repo: local
+    hooks:
+      - id: runner-sanity-guard
+        name: runner-sanity-guard
+        language: system
+        entry: pwsh ./.hooks/runner_sanity_guard.ps1
+        files: ^(tools/|scripts/).+\.py$
