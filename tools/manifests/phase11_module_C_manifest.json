@@ -1,13 +1,22 @@
-{
-  "Module": "11C",
-  "Description": "Behavioral verification - adaptive baseline",
-  "Items": [
-    {
-      "Name": "11C_behavioral_verifier",
-      "Path": "scripts/phase11/module_c/11C_behavioral_verifier_READY.py",
-      "Args": [],
-      "TimeoutSec": 60,
-      "FinalFilename": "11C_behavioral_verifier_READY.py"
-    }
-  ]
+﻿{
+    "Module":  "11C",
+    "Description":  "Behavioral verification - adaptive baseline",
+    "Items":  [
+                  {
+                      "Name":  "11C_behavioral_verifier",
+                      "Path":  "scripts/phase11/module_c/11C_behavioral_verifier_READY.py",
+                      "Args":  [
+
+                               ],
+                      "TimeoutSec":  60,
+                      "FinalFilename":  "11C_behavioral_verifier_READY.py",
+                      "Enabled":  true,
+                      "When":  "always",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "B",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
 }
