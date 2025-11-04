@@ -1,4 +1,4 @@
-﻿name: Runner Smoke
+name: Runner Smoke
 on:
   workflow_dispatch:
   schedule:
@@ -27,3 +27,27 @@ jobs:
           python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_${{ matrix.modules }}_manifest.json
       - name: Collect summaries
         run: python tools/ops/collect_phase11_summaries.py
+      - name: Render counts.md from TSV
+        shell: pwsh
+        run: |
+          $counts = "tools/outputs/summaries/phase11_latest_counts.tsv"
+          $mdOut  = "outputs/reports/phase11_latest_counts.md"
+          $lines  = Get-Content -LiteralPath $counts
+          $hdr    = $lines[0] -split "`t"
+          $body   = $lines | Select-Object -Skip 1 | Where-Object { $_ -match '\S' }
+          $rows   = $body | ConvertFrom-Csv -Delimiter "`t" -Header $hdr
+          $md = @()
+          $md += "| " + ($hdr -join " | ") + " |"
+          $md += "| " + ((@('---') * $hdr.Count) -join " | ") + " |"
+          foreach ($o in $rows) {
+            $row = foreach ($h in $hdr) { $o.$h }
+            $md += "| " + ($row -join " | ") + " |"
+          }
+          New-Item -ItemType Directory -Force (Split-Path -Parent $mdOut) | Out-Null
+          $md | Set-Content -Encoding UTF8 -LiteralPath $mdOut
+
+      - name: Upload counts.md
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-latest-counts
+          path: outputs/reports/phase11_latest_counts.md
