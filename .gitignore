@@ -181,3 +181,7 @@ tools/self_healing_runner_forcepath.py
 # Generated runner summaries
 /tools/outputs/summaries/*
 /outputs/reports/summaries/*
+
+# Generated runner summaries
+/tools/outputs/summaries/*
+/outputs/reports/summaries/*
