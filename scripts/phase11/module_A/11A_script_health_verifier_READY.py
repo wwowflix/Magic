@@ -1,3 +1,8 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 #!/usr/bin/env python3
 """
 Phase 11 - Module A
@@ -32,22 +37,22 @@ def main():
                         )
                         if result.returncode != 0:
                             bad_scripts.append(file)
-                            log.write(f"âŒ Syntax error: {file}\n")
+                            log.write(f"Ã¢ÂÅ’ Syntax error: {file}\n")
                         else:
                             # Check for main()
                             with open(filepath, encoding="utf-8") as f:
                                 content = f.read()
                                 if "def main" not in content:
                                     bad_scripts.append(file)
-                                    log.write(f"âš ï¸ Missing main(): {file}\n")
+                                    log.write(f"Ã¢Å¡Â Ã¯Â¸Â Missing main(): {file}\n")
 
             if not bad_scripts:
-                log.write("✅ All scripts passed health check.\n")
+                log.write("âœ… All scripts passed health check.\n")
 
         print("PASS")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"âŒ Error occurred: {str(e)}\n")
+            log.write(f"Ã¢ÂÅ’ Error occurred: {str(e)}\n")
         print("FAIL")
 
 

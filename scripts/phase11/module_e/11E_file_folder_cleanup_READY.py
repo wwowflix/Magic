@@ -1,5 +1,10 @@
-"""MAGIC – Phase 11 (SHIELD)
-Module E – Reliability / Protection / Cleanup
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+"""MAGIC â€“ Phase 11 (SHIELD)
+Module E â€“ Reliability / Protection / Cleanup
 Auto-generated stub so self_healing_runner_v5.py stops saying "file not found".
 Replace with real logic later.
 """

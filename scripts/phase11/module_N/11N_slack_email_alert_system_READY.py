@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11N_slack_email_alert_system_READY.py] executed successfully (stub mode)."
+        "âœ… [11N_slack_email_alert_system_READY.py] executed successfully (stub mode)."
     )
 
 

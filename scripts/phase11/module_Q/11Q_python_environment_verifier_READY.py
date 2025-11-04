@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11Q_python_environment_verifier_READY.py] executed successfully (stub mode)."
+        "âœ… [11Q_python_environment_verifier_READY.py] executed successfully (stub mode)."
     )
 
 

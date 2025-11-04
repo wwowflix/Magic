@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11M_prompt_injection_tester_READY.py] executed successfully (stub mode)."
+        "âœ… [11M_prompt_injection_tester_READY.py] executed successfully (stub mode)."
     )
 
 

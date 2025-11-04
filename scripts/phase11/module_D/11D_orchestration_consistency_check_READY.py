@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11D_orchestration_consistency_check_READY.py] executed successfully (stub mode)."
+        "âœ… [11D_orchestration_consistency_check_READY.py] executed successfully (stub mode)."
     )
 
 

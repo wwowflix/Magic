@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11I_modularize_orchestration_READY.py] executed successfully (stub mode)."
+        "âœ… [11I_modularize_orchestration_READY.py] executed successfully (stub mode)."
     )
 
 

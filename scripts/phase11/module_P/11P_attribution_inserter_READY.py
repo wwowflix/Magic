@@ -1,5 +1,10 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
-    print("✅ [11P_attribution_inserter_READY.py] executed successfully (stub mode).")
+    print("âœ… [11P_attribution_inserter_READY.py] executed successfully (stub mode).")
 
 
 if __name__ == "__main__":

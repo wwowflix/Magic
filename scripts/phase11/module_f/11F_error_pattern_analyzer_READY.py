@@ -1,4 +1,9 @@
-"""MAGIC – Phase 11 (SHIELD) / Module F — auto-generated stub"""
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+"""MAGIC â€“ Phase 11 (SHIELD) / Module F â€” auto-generated stub"""
 import sys
 from pathlib import Path
 

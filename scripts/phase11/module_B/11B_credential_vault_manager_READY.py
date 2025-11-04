@@ -1,3 +1,8 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 import os
 from dotenv import dotenv_values
 
@@ -35,19 +40,19 @@ for key in env_data.keys():
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
     if not missing and not empty:
-        f.write("✅ All required keys are present and non-empty.\n")
+        f.write("âœ… All required keys are present and non-empty.\n")
     else:
         if missing:
-            f.write("âŒ Missing keys:\n")
+            f.write("Ã¢ÂÅ’ Missing keys:\n")
             for key in missing:
                 f.write(f" - {key}\n")
         if empty:
-            f.write("âš ï¸ Empty keys:\n")
+            f.write("Ã¢Å¡Â Ã¯Â¸Â Empty keys:\n")
             for key in empty:
                 f.write(f" - {key}\n")
     if unknown:
-        f.write("\nðŸ§ª Extra (unknown) keys:\n")
+        f.write("\nÃ°Å¸Â§Âª Extra (unknown) keys:\n")
         for key in unknown:
             f.write(f" - {key}\n")
 
-print(f"ðŸ” Vault check complete. See: {LOG_FILE}")
+print(f"Ã°Å¸â€Â Vault check complete. See: {LOG_FILE}")

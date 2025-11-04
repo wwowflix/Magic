@@ -1,3 +1,8 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 #!/usr/bin/env python3
 """
 Phase 11 - Module A
@@ -45,12 +50,12 @@ def main():
                 for mf in missing_files:
                     log.write(f"- {mf}\n")
             else:
-                log.write("✅ No missing files. All expected scripts are present.\n")
+                log.write("âœ… No missing files. All expected scripts are present.\n")
 
         print("PASS")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"âŒ Error occurred: {str(e)}\n")
+            log.write(f"Ã¢ÂÅ’ Error occurred: {str(e)}\n")
         print("FAIL")
 
 

@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11O_real_time_log_streamer_READY.py] executed successfully (stub mode)."
+        "âœ… [11O_real_time_log_streamer_READY.py] executed successfully (stub mode)."
     )
 
 

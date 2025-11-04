@@ -1,3 +1,8 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 import os
 import time
 import random
@@ -20,7 +25,7 @@ def simulate_api_call(index):
 # Rate limiting logic
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 with open(LOG_FILE, "w", encoding="utf-8") as f:
-    f.write("ðŸš¦ Rate Limit Stress Test Log\n")
+    f.write("Ã°Å¸Å¡Â¦ Rate Limit Stress Test Log\n")
     for i in range(1, TOTAL_REQUESTS + 1):
         if i % MAX_PER_SECOND == 0:
             time.sleep(1)  # Pause to respect limit
@@ -28,4 +33,4 @@ with open(LOG_FILE, "w", encoding="utf-8") as f:
         print(log_line)
         f.write(log_line + "\n")
 
-print(f"✅ Stress test complete. See: {LOG_FILE}")
+print(f"âœ… Stress test complete. See: {LOG_FILE}")

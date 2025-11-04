@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11Z_auto_rollback_controller_READY.py] executed successfully (stub mode)."
+        "âœ… [11Z_auto_rollback_controller_READY.py] executed successfully (stub mode)."
     )
 
 

@@ -1,6 +1,11 @@
+import sys
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 def main():
     print(
-        "✅ [11Z_step_by_step_time_travel_debugger_READY.py] executed successfully (stub mode)."
+        "âœ… [11Z_step_by_step_time_travel_debugger_READY.py] executed successfully (stub mode)."
     )
 
 
