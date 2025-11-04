@@ -1,0 +1,28 @@
+name: runner-smoke
+
+on:
+  pull_request:
+  push:
+    branches: [ main, chore/**, feat/** ]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -U pip
+      - name: Runner (E)
+        run: python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_E_manifest.json
+      - name: Runner (F)
+        run: python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_F_manifest.json
+      - name: Upload summaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-runner-summaries
+          path: tools/outputs/summaries/
+          if-no-files-found: ignore
+          retention-days: 21
