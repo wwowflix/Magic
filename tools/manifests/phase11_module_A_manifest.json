@@ -1,4 +1,4 @@
-{
+﻿{
     "items":  [
                   {
                       "Path":  "E:/MAGIC/scripts/phase11/module_a/11A_anomaly_log_writer_READY.py",
@@ -79,7 +79,8 @@
                       "Module":  "A",
                       "FinalFilename":  "11A_script_health_verifier_READY.py",
                       "Status":  "READY",
-                      "Retries":  0
+                      "Retries":  0,
+                      "Enabled":  false
                   }
               ]
 }
