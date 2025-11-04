@@ -1,0 +1,8 @@
+Script	Status
+11E_placeholder_READY.py	FAIL
+11E_api_health_checker_READY.py	FAIL
+11E_bottleneck_profiler_READY.py	FAIL
+11E_broken_script_detector_READY.py	FAIL
+11E_budget_burn_monitor_READY.py	FAIL
+11E_file_folder_cleanup_READY.py	FAIL
+11E_protection_guard_READY.py	FAIL
