@@ -1,0 +1,79 @@
+[
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_placeholder_READY.py",
+        "FinalFilename":  "11E_placeholder_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_placeholder_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_api_health_checker_READY.py",
+        "FinalFilename":  "11E_api_health_checker_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_api_health_checker_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_bottleneck_profiler_READY.py",
+        "FinalFilename":  "11E_bottleneck_profiler_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_bottleneck_profiler_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_broken_script_detector_READY.py",
+        "FinalFilename":  "11E_broken_script_detector_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_broken_script_detector_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_budget_burn_monitor_READY.py",
+        "FinalFilename":  "11E_budget_burn_monitor_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_budget_burn_monitor_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_file_folder_cleanup_READY.py",
+        "FinalFilename":  "11E_file_folder_cleanup_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_file_folder_cleanup_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "E",
+        "ScriptName":  "11E_protection_guard_READY.py",
+        "FinalFilename":  "11E_protection_guard_READY.py",
+        "Path":  "../scripts/phase11/module_e/11E_protection_guard_READY.py",
+        "RunSignature":  "phase11E",
+        "Status":  "READY",
+        "Retries":  0
+    }
+]

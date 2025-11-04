@@ -1,0 +1,79 @@
+[
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_agent_performance_log_READY.py",
+        "FinalFilename":  "11F_agent_performance_log_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_agent_performance_log_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_error_pattern_analyzer_READY.py",
+        "FinalFilename":  "11F_error_pattern_analyzer_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_error_pattern_analyzer_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_redundancy_reducer_READY.py",
+        "FinalFilename":  "11F_redundancy_reducer_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_redundancy_reducer_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_retry_dead_job_scanner_READY.py",
+        "FinalFilename":  "11F_retry_dead_job_scanner_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_retry_dead_job_scanner_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_placeholder_READY.py",
+        "FinalFilename":  "11F_placeholder_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_placeholder_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_budget_burn_monitor_READY.py",
+        "FinalFilename":  "11F_budget_burn_monitor_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_budget_burn_monitor_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    },
+    {
+        "Phase":  11,
+        "PhaseNumber":  11,
+        "Module":  "F",
+        "ScriptName":  "11F_protection_guard_READY.py",
+        "FinalFilename":  "11F_protection_guard_READY.py",
+        "Path":  "../scripts\\phase11\\module_f/11F_protection_guard_READY.py",
+        "RunSignature":  "phase11F",
+        "Status":  "READY",
+        "Retries":  0
+    }
+]
