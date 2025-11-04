@@ -1,40 +1,13 @@
 {
-    "items":  [
-                  {
-                      "Path":  "E:/MAGIC/scripts/phase11/module_c/11C_manifest_consistency_checker_READY.py",
-                      "Phase":  11,
-                      "PhaseName":  "SHIELD",
-                      "Module":  "C",
-                      "FinalFilename":  "11C_manifest_consistency_checker_READY.py",
-                      "Status":  "READY",
-                      "Retries":  0
-                  },
-                  {
-                      "Path":  "E:/MAGIC/scripts/phase11/module_c/11C_script_integrity_checker_READY.py",
-                      "Phase":  11,
-                      "PhaseName":  "SHIELD",
-                      "Module":  "C",
-                      "FinalFilename":  "11C_script_integrity_checker_READY.py",
-                      "Status":  "READY",
-                      "Retries":  0
-                  },
-                  {
-                      "Path":  "E:/MAGIC/scripts/phase11/module_c/11C_compliance_checker_READY.py",
-                      "Phase":  11,
-                      "PhaseName":  "SHIELD",
-                      "Module":  "C",
-                      "FinalFilename":  "11C_compliance_checker_READY.py",
-                      "Status":  "READY",
-                      "Retries":  0
-                  },
-                  {
-                      "Path":  "E:/MAGIC/scripts/phase11/module_c/11C_placeholder_READY.py",
-                      "Phase":  11,
-                      "PhaseName":  "SHIELD",
-                      "Module":  "C",
-                      "FinalFilename":  "11C_placeholder_READY.py",
-                      "Status":  "READY",
-                      "Retries":  0
-                  }
-              ]
+  "Module": "C",
+  "Phase": 11,
+  "Entries": [
+    {
+      "Name": "Behavioral Verifier",
+      "Path": "scripts/phase11/module_c/11C_behavioral_verification_READY.py",
+      "FinalFilename": "11C_behavioral_verification_READY.py",
+      "TimeoutSec": 60,
+      "Args": []
+    }
+  ]
 }

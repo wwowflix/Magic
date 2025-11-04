@@ -1,0 +1,20 @@
+{
+  "forbidden_strings": [
+    "DROP TABLE",
+    "rm -rf /",
+    "BEGIN PGP PRIVATE KEY",
+    "sk-",
+    "AKIA"
+  ],
+  "scan_roots": [
+    "outputs\\logs",
+    "outputs\\reports"
+  ],
+  "max_stdout_kb": 256,
+  "max_file_mb": 25,
+  "warn_if_missing_any_scan_root": true,
+  "safe_mode_flag_file": "tools\\flags\\SAFE_MODE_ON",
+  "summary_dir": "outputs\\reports",
+  "module_name": "phase11_module_C",
+  "strict": false
+}
