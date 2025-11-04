@@ -1,0 +1,11 @@
+{
+  "endpoints": [
+    { "name": "GitHub API",   "method": "GET", "url": "https://api.github.com", "timeout_sec": 5, "expect_status_min": 200, "expect_status_max": 299 },
+    { "name": "HTTPBin GET",  "method": "GET", "url": "https://httpbin.org/get", "timeout_sec": 5, "expect_status_min": 200, "expect_status_max": 299 }
+  ],
+  "user_agent": "MAGIC-11D-Checker/1.0",
+  "max_total_sec": 30,
+  "soft_fail_on_network_errors": true,
+  "summary_dir": "outputs\\reports",
+  "strict": false
+}
