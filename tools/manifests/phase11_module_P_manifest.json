@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_p/11P_placeholder_READY.py", "Module": "P"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_p/11P_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "P",
+                      "FinalFilename":  "11P_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_p/11P_api_terms_compliance_checker_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "P",
+                      "FinalFilename":  "11P_api_terms_compliance_checker_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_p/11P_attribution_inserter_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "P",
+                      "FinalFilename":  "11P_attribution_inserter_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_p/11P_license_file_auditor_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "P",
+                      "FinalFilename":  "11P_license_file_auditor_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

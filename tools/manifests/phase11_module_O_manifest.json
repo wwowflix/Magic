@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_o/11O_placeholder_READY.py", "Module": "O"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_o/11O_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "O",
+                      "FinalFilename":  "11O_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_o/11O_real_time_log_streamer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "O",
+                      "FinalFilename":  "11O_real_time_log_streamer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_o/11O_telemetry_exporter_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "O",
+                      "FinalFilename":  "11O_telemetry_exporter_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_o/11O_unified_log_aggregator_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "O",
+                      "FinalFilename":  "11O_unified_log_aggregator_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

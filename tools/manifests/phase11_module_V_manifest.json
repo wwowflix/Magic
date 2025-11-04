@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_v/11V_placeholder_READY.py", "Module": "V"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_v/11V_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "V",
+                      "FinalFilename":  "11V_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_v/11V_maintece_nudger_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "V",
+                      "FinalFilename":  "11V_maintece_nudger_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_v/11V_output_drift_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "V",
+                      "FinalFilename":  "11V_output_drift_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_v/11V_unused_agent_scanner_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "V",
+                      "FinalFilename":  "11V_unused_agent_scanner_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

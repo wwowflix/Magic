@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_q/11Q_placeholder_READY.py", "Module": "Q"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_q/11Q_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Q",
+                      "FinalFilename":  "11Q_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_q/11Q_dependency_version_pin_checker_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Q",
+                      "FinalFilename":  "11Q_dependency_version_pin_checker_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_q/11Q_python_environment_verifier_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Q",
+                      "FinalFilename":  "11Q_python_environment_verifier_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_q/11Q_virtualenv_isolation_enforcer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Q",
+                      "FinalFilename":  "11Q_virtualenv_isolation_enforcer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_j/11J_placeholder_READY.py", "Module": "J"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_j/11J_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "J",
+                      "FinalFilename":  "11J_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_j/11J_load_spike_simulator_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "J",
+                      "FinalFilename":  "11J_load_spike_simulator_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_j/11J_memory_leak_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "J",
+                      "FinalFilename":  "11J_memory_leak_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_j/11J_random_failure_injector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "J",
+                      "FinalFilename":  "11J_random_failure_injector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

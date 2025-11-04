@@ -1,3 +1,49 @@
-﻿[
-  {"Path": "scripts/phase11/module_d/11D_placeholder_READY.py", "Module": "D"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_d/11D_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "D",
+                      "FinalFilename":  "11D_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_d/11D_deployment_readiness_auditor_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "D",
+                      "FinalFilename":  "11D_deployment_readiness_auditor_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_d/11D_failpoint_injection_simulator_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "D",
+                      "FinalFilename":  "11D_failpoint_injection_simulator_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_d/11D_orchestration_consistency_check_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "D",
+                      "FinalFilename":  "11D_orchestration_consistency_check_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_d/11D_integrity_audit_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "D",
+                      "FinalFilename":  "11D_integrity_audit_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

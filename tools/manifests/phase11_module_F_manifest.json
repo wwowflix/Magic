@@ -1,3 +1,67 @@
-﻿[
-  {"Path": "scripts/phase11/module_f/11F_placeholder_READY.py", "Module": "F"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_budget_burn_monitor_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_budget_burn_monitor_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_protection_guard_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_protection_guard_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_agent_performance_log_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_agent_performance_log_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_error_pattern_analyzer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_error_pattern_analyzer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_redundancy_reducer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_redundancy_reducer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_f/11F_retry_dead_job_scanner_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "F",
+                      "FinalFilename":  "11F_retry_dead_job_scanner_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

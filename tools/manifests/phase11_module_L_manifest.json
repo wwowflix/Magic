@@ -1,3 +1,49 @@
-﻿[
-  {"Path": "scripts/phase11/module_l/11L_placeholder_READY.py", "Module": "L"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_l/11L_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "L",
+                      "FinalFilename":  "11L_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_l/11L_rate_limit_guard_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "L",
+                      "FinalFilename":  "11L_rate_limit_guard_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_l/11L_output_change_diff_checker_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "L",
+                      "FinalFilename":  "11L_output_change_diff_checker_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_l/11L_time_stamped_run_archiver_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "L",
+                      "FinalFilename":  "11L_time_stamped_run_archiver_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_l/11L_version_drift_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "L",
+                      "FinalFilename":  "11L_version_drift_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_x/11X_placeholder_READY.py", "Module": "X"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_x/11X_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "X",
+                      "FinalFilename":  "11X_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_x/11X_agent_sabotage_replay_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "X",
+                      "FinalFilename":  "11X_agent_sabotage_replay_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_x/11X_llm_jailbreak_resistance_tester_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "X",
+                      "FinalFilename":  "11X_llm_jailbreak_resistance_tester_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_x/11X_red_team_threat_simulator_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "X",
+                      "FinalFilename":  "11X_red_team_threat_simulator_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

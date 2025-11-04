@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_m/11M_placeholder_READY.py", "Module": "M"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_m/11M_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "M",
+                      "FinalFilename":  "11M_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_m/11M_api_abuse_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "M",
+                      "FinalFilename":  "11M_api_abuse_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_m/11M_input_sanitizer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "M",
+                      "FinalFilename":  "11M_input_sanitizer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_m/11M_prompt_injection_tester_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "M",
+                      "FinalFilename":  "11M_prompt_injection_tester_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

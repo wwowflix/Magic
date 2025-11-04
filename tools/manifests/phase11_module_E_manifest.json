@@ -1,3 +1,67 @@
-﻿[
-  {"Path": "scripts/phase11/module_e/11E_placeholder_READY.py", "Module": "E"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_protection_guard_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_protection_guard_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_api_health_checker_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_api_health_checker_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_bottleneck_profiler_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_bottleneck_profiler_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_broken_script_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_broken_script_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_budget_burn_monitor_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_budget_burn_monitor_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_file_folder_cleanup_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_file_folder_cleanup_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_e/11E_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "E",
+                      "FinalFilename":  "11E_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

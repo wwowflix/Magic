@@ -1,3 +1,40 @@
-﻿[
-  {"Path": "scripts/phase11/module_w/11W_placeholder_READY.py", "Module": "W"}
-]
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_w/11W_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "W",
+                      "FinalFilename":  "11W_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_w/11W_ethical_decision_flagger_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "W",
+                      "FinalFilename":  "11W_ethical_decision_flagger_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_w/11W_hallucination_catcher_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "W",
+                      "FinalFilename":  "11W_hallucination_catcher_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_w/11W_toxicity_bias_filter_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "W",
+                      "FinalFilename":  "11W_toxicity_bias_filter_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}
