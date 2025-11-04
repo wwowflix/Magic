@@ -1,4 +1,15 @@
-from __future__ import annotations
+def _module_from_items(items):
+    """Pick module letter from manifest: prefer 'Module'; fallback parse from 'Path' like module_x."""
+    for it in items:
+        if isinstance(it, dict) and it.get("Module"):
+            return str(it["Module"]).strip().upper()
+    for it in items:
+        p = str(it.get("Path", "")) if isinstance(it, dict) else ""
+        m = re.search(r"module_([A-Za-z])", p)
+        if m:
+            return m.group(1).upper()
+    return "X"
+\nfrom __future__ import annotations
 
 import argparse
 import datetime
@@ -26,7 +37,7 @@ def normalize_path(raw: str) -> Path:
     """Normalize manifest paths like '../scripts/...' into project-rooted paths."""
     if not raw:
         return PROJECT_ROOT
-    raw_clean = raw.replace("\\", "/")
+    raw_clean = raw.replace("\", "/")
     p = Path(raw)
     if p.is_absolute():
         return p
