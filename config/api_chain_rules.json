@@ -1,0 +1,17 @@
+{
+  "scan_roots": [
+    "outputs\\logs",
+    "outputs\\reports"
+  ],
+  "max_chain_len": 12,
+  "warn_if_missing_roots": true,
+  "enforce_order_pairs": [
+    ["request_prepared", "request_sent"],
+    ["request_sent", "response_received"]
+  ],
+  "forbidden_apis": ["http://", "ftp://"],
+  "allowlist_domains": ["https://", "wss://"],
+  "strict": false,
+  "summary_dir": "outputs\\reports",
+  "module_name": "phase11_module_D"
+}
