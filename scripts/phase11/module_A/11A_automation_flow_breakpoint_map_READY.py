@@ -1,55 +1,50 @@
-import sys
-try:
-    sys.stdout.reconfigure(encoding="utf-8")
-except Exception:
-    pass
 #!/usr/bin/env python3
-"""
-Phase 11 - Module A
-Script: Automation Flow Breakpoint Map
-Purpose:
-- Scans Phase 11 modules.
-- Detects folders with zero scripts or incomplete sets.
-- Logs potential "breakpoints" in the automation flow.
-"""
-
+# MAGIC_DYNAMIC_ROOTS_V3
 import os
+from pathlib import Path
 
-PHASE_PATH = r"D:\MAGIC\scripts\phase11"
-LOG_FILE = r"D:\MAGIC\outputs\logs\automation_breakpoints_report.txt"
+# --- Root Discovery (Drive-Agnostic) ---
+_ROOT = Path(__file__).resolve()
+_tmp = _ROOT
+for _ in range(6):
+    if (_tmp / ".git").exists() or (_tmp / "outputs").exists():
+        _ROOT = _tmp
+        break
+    _tmp = _tmp.parent
+else:
+    _ROOT = Path(__file__).resolve().parents[4]
+
+LOG_DIR = _ROOT / "outputs" / "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
+PHASE_PATH = _ROOT / "scripts" / "phase11"
+LOG_FILE = LOG_DIR / "automation_breakpoints_report.txt"
 
 
 def main():
     try:
-        with open(LOG_FILE, "w", encoding="utf-8") as log:
-            modules = sorted(
-                [
-                    d
-                    for d in os.listdir(PHASE_PATH)
-                    if os.path.isdir(os.path.join(PHASE_PATH, d))
-                ]
-            )
-            for module in modules:
-                files = [
-                    f
-                    for f in os.listdir(os.path.join(PHASE_PATH, module))
-                    if f.endswith("_READY.py")
-                ]
-                if len(files) == 0:
-                    log.write(f"Ã¢ÂÅ’ Breakpoint: {module} has NO scripts.\n")
-                elif len(files) < 3:
-                    log.write(
-                        f"Ã¢Å¡Â Ã¯Â¸Â Potential issue: {module} has only {len(files)} scripts.\n"
-                    )
-                else:
-                    log.write(
-                        f"âœ… Module {module} looks okay ({len(files)} scripts).\n"
-                    )
+        os.makedirs(LOG_DIR, exist_ok=True)
 
-        print("PASS")
+        modules = [
+            d for d in PHASE_PATH.iterdir()
+            if d.is_dir()
+        ]
+
+        with open(LOG_FILE, "w", encoding="utf-8") as log:
+            for module in sorted(modules):
+                ready_files = list(module.glob("*_READY.py"))
+
+                if len(ready_files) == 0:
+                    log.write(f"[BREAKPOINT] Module '{module.name}' has **NO** scripts.\n")
+                elif len(ready_files) < 3:
+                    log.write(f"[WEAK] Module '{module.name}' has only {len(ready_files)} scripts.\n")
+                else:
+                    log.write(f"[OK] Module '{module.name}' is complete ({len(ready_files)} scripts).\n")
+
+        print("OK")
     except Exception as e:
         with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"Ã¢ÂÅ’ Error occurred: {str(e)}\n")
+            log.write(f"[ERROR] {str(e)}\n")
         print("FAIL")
 
 

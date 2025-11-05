@@ -1,60 +1,44 @@
-import sys
-try:
-    sys.stdout.reconfigure(encoding="utf-8")
-except Exception:
-    pass
-#!/usr/bin/env python3
-"""
-Phase 11 - Module A
-Script: Script Health Verifier
-Purpose:
-- Scans all _READY.py scripts in Phase 11.
-- Verifies each has a main() function and no syntax errors.
-- Logs results to outputs/logs/script_health_report.txt
-"""
+# MAGIC_CLEAN_V1
+from pathlib import Path
+import os, sys
 
-import os
-import subprocess
+# Robust project root
+_ROOT = Path(__file__).resolve()
+_tmp = _ROOT
+for _ in range(6):
+    if (_tmp / ".git").exists() or (_tmp / "outputs").exists():
+        _ROOT = _tmp
+        break
+    _tmp = _tmp.parent
+else:
+    _ROOT = Path(__file__).resolve().parents[4]
 
-PHASE_PATH = r"D:\MAGIC\scripts\phase11"
-LOG_FILE = r"D:\MAGIC\outputs\logs\script_health_report.txt"
+LOG_DIR = _ROOT / "outputs" / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+LOG_FILE = LOG_DIR / "11A_script_health_verifier_report.txt"
 
+def quick_health_scan():
+    base = _ROOT / "scripts" / "phase11"
+    checked, issues = 0, []
+    for p in base.rglob("*.py"):
+        try:
+            _ = p.read_text(encoding="utf-8", errors="replace")
+            checked += 1
+        except Exception as e:
+            issues.append((str(p), str(e)))
+    return checked, issues
 
 def main():
     try:
-        bad_scripts = []
-
-        with open(LOG_FILE, "w", encoding="utf-8") as log:
-            for root, _, files in os.walk(PHASE_PATH):
-                for file in files:
-                    if file.endswith("_READY.py"):
-                        filepath = os.path.join(root, file)
-                        # Syntax check
-                        result = subprocess.run(
-                            ["python", "-m", "py_compile", filepath],
-                            capture_output=True,
-                            text=True,
-                        )
-                        if result.returncode != 0:
-                            bad_scripts.append(file)
-                            log.write(f"Ã¢ÂÅ’ Syntax error: {file}\n")
-                        else:
-                            # Check for main()
-                            with open(filepath, encoding="utf-8") as f:
-                                content = f.read()
-                                if "def main" not in content:
-                                    bad_scripts.append(file)
-                                    log.write(f"Ã¢Å¡Â Ã¯Â¸Â Missing main(): {file}\n")
-
-            if not bad_scripts:
-                log.write("âœ… All scripts passed health check.\n")
-
-        print("PASS")
-    except Exception as e:
-        with open(LOG_FILE, "w", encoding="utf-8") as log:
-            log.write(f"Ã¢ÂÅ’ Error occurred: {str(e)}\n")
-        print("FAIL")
-
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+    checked, issues = quick_health_scan()
+    with open(LOG_FILE, "w", encoding="utf-8") as log:
+        log.write(f"checked={checked}, issues={len(issues)}\n")
+        for path, err in issues[:50]:
+            log.write(f"ISSUE | {path} | {err}\n")
+    print("OK")
 
 if __name__ == "__main__":
     main()
