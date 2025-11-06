@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - chore/phase11-matrix-guards
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -26,9 +29,23 @@ jobs:
       matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Run module guard
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+          # pip install -e .[tests]   # <- if your tests need project deps
+
+      - name: Show module
         shell: pwsh
         run: |
           Write-Host "Job: $env:GITHUB_JOB :: module = ${{ matrix.module }}"
-          # Replace/expand to your real per-module test:
+
+      - name: Run module guard
+        run: |
           pytest -q "tests/phase11/module_${{ matrix.module }}.py" -x
