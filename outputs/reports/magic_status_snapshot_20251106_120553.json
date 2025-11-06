@@ -1,0 +1,121 @@
+{
+    "timestamp":  "2025-11-06T12:05:53.4689471+05:30",
+    "root":  "E:\\MAGIC",
+    "state":  "PASS",
+    "strict":  false,
+    "failCount":  0,
+    "warnCount":  1,
+    "facts":  [
+
+              ],
+    "phase11":  [
+                    {
+                        "module":  "module_A",
+                        "ready":  9
+                    },
+                    {
+                        "module":  "module_AA",
+                        "ready":  3
+                    },
+                    {
+                        "module":  "module_AB",
+                        "ready":  3
+                    },
+                    {
+                        "module":  "module_B",
+                        "ready":  5
+                    },
+                    {
+                        "module":  "module_C",
+                        "ready":  6
+                    },
+                    {
+                        "module":  "module_e",
+                        "ready":  7
+                    },
+                    {
+                        "module":  "module_f",
+                        "ready":  7
+                    },
+                    {
+                        "module":  "module_G",
+                        "ready":  2
+                    },
+                    {
+                        "module":  "module_H",
+                        "ready":  7
+                    },
+                    {
+                        "module":  "module_I",
+                        "ready":  10
+                    },
+                    {
+                        "module":  "module_J",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_K",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_L",
+                        "ready":  5
+                    },
+                    {
+                        "module":  "module_M",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_N",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_O",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_P",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_Q",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_R",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_S",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_T",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_U",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_V",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_W",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_X",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_Y",
+                        "ready":  4
+                    },
+                    {
+                        "module":  "module_Z",
+                        "ready":  4
+                    }
+                ]
+}
