@@ -1,7 +1,7 @@
 import pathlib
 from ._smoke_utils import run_target
 
-MOD = pathlib.Path('scripts/phase11/module_E')
+MOD = pathlib.Path('scripts/phase11/module_AB')
 targets = sorted(MOD.rglob('*_READY.py'))
 
 def test_phase11_ok():

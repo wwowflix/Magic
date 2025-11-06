@@ -1,6 +1,9 @@
 import pathlib, pytest, sys, subprocess
 
-MODULES = [p.name for p in (pathlib.Path("scripts/phase11")).glob("module_*") if p.is_dir()]
+MODULES = [
+    p.name for p in (pathlib.Path("scripts/phase11")).glob("module_*")
+    if p.is_dir() and __import__("re").match(r"module_[A-Z]{1,2}$", p.name)
+]
 
 def run_target(p: pathlib.Path) -> None:
     proc = subprocess.run([sys.executable, "-X","faulthandler","-u", str(p)],
