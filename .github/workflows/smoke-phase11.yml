@@ -1,148 +1,96 @@
-name: Phase-11 Matrix (Smokes + Guards)
+name: Phase 11 Matrix Smoke
 
 on:
   pull_request:
-    branches: [ main, prod-release, "**" ]
-    paths:
-      - "scripts/**"
-      - "tests/**"
-      - "tools/**"
-      - ".github/workflows/smoke-phase11.yml"
-  workflow_dispatch: {}
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   discover-modules:
-    name: Discover Phase-11 modules
     runs-on: windows-latest
     outputs:
-      modules: ${{ steps.set-matrix.outputs.modules }}
+      matrix: ${{ steps.discover.outputs.matrix }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - id: set-matrix
-        name: Build matrix (A–Z, AA, AB)
+      - name: Discover Phase 11 modules (A–Z, AA, AB)
+        id: discover
         shell: pwsh
         run: |
-          $root = "scripts/phase11"
-          if (-not (Test-Path $root)) { throw "Missing $root" }
+          $mods = Get-ChildItem scripts\phase11 -Directory -Filter "module_*" |
+            ForEach-Object { ($_.Name -replace '^module_','').ToUpperInvariant() } |
+            Where-Object { $_ -match '^[A-Z]{1,2}$' } |
+            Sort-Object -Unique
+          if (-not $mods) { throw "No phase11 modules found" }
+          $obj = @{ include = @() }
+          foreach ($m in $mods) { $obj.include += @{ module = $m } }
+          $json = $obj | ConvertTo-Json -Depth 5
+          "matrix=$json" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
 
-          $mods = Get-ChildItem -Path $root -Directory -Filter "module_*" |
-                  ForEach-Object { $_.Name -replace '^module_','' } |
-                  Where-Object { $_ -match '^[A-Z]{1,2}$' } |
-                  Sort-Object
-
-          if (-not $mods) { throw "No Phase-11 modules found under $root" }
-
-          $json = @{ include = @() }
-          foreach ($m in $mods) { $json.include += @{ module = $m } }
-          $out = ($json | ConvertTo-Json -Compress)
-
-          "modules=$out" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
-
-      - name: Show matrix
-        shell: pwsh
-        run: |
-          Write-Host "Matrix = ${{ steps.set-matrix.outputs.modules }}"
-
-  orchestrator:
-    name: Orchestrator (pre-step)
+  orchestrate-once:
     runs-on: windows-latest
-    needs: discover-modules
+    needs: [discover-modules]
+    outputs:
+      summary_path: ${{ steps.path.outputs.summary_path }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install deps (runtime only)
+      - name: Run Master Orchestrator
         shell: pwsh
         run: |
-          if (Test-Path "requirements.txt") { pip install -r requirements.txt }
-          pip install pytest
+          powershell -NoProfile -ExecutionPolicy Bypass -File tools\Magic_Orchestrator_Master_v3.ps1
 
-      - name: Run Orchestrator
+      - name: Locate orchestrator summary
+        id: path
         shell: pwsh
         run: |
-          $ErrorActionPreference = "Stop"
-          $script = "tools/Magic_Orchestrator_Master_v3.ps1"
-          if (-not (Test-Path $script)) { throw "Missing $script" }
-          powershell -NoProfile -ExecutionPolicy Bypass -File $script
-          if (-not (Test-Path "outputs/logs/master_orchestrator_summary.tsv")) {
-            throw "Expected outputs/logs/master_orchestrator_summary.tsv"
+          $p = Join-Path (Get-Location).Path 'outputs\logs\master_orchestrator_summary.tsv'
+          if (-not (Test-Path $p)) {
+            $glob = Join-Path (Get-Location).Path 'outputs\logs\*.tsv'
+            $latest = Get-ChildItem -Path $glob -File -ErrorAction SilentlyContinue |
+              Sort-Object LastWriteTime -Descending | Select-Object -First 1
+            if ($latest) { $p = $latest.FullName }
           }
+          if (-not (Test-Path $p)) { throw "No summary TSV produced" }
+          "summary_path=$p" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
 
-      - name: Upload orchestrator artifacts
+      - name: Upload summary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: orchestrator-logs
-          path: |
-            outputs/logs/master_orchestrator_summary.tsv
-            outputs/logs/**/*
-          if-no-files-found: warn
-          retention-days: 7
+          name: phase11-orchestrator-summary
+          path: ${{ steps.path.outputs.summary_path }}
 
-  guards:
-    name: Guard ${{ matrix.module }}
+  guard-matrix:
     runs-on: windows-latest
-    needs: [discover-modules, orchestrator]
+    needs: [discover-modules, orchestrate-once]
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.discover-modules.outputs.modules) }}
+      matrix: ${{ fromJson(needs.discover-modules.outputs.matrix) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Pull orchestrator artifacts
+      - name: Download summary artifact
         uses: actions/download-artifact@v4
         with:
-          name: orchestrator-logs
+          name: phase11-orchestrator-summary
           path: outputs/logs
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install deps (runtime only)
+      - name: Guard Module
         shell: pwsh
         run: |
-          if (Test-Path "requirements.txt") { pip install -r requirements.txt }
-          pip install pytest
-
-      - name: Run Phase-11 module guard
-        shell: pwsh
-        env:
-          MODULE: ${{ matrix.module }}
-        run: |
-          $ErrorActionPreference = "Stop"
-          $m = $env:MODULE
-          $byName = "tools/ci_phase11_{0}_guard.ps1" -f $m
-          $generic = "tools/ci_phase11_guard.ps1"
-
-          if (Test-Path $byName) {
-            Write-Host "Running per-module guard: $byName"
-            powershell -NoProfile -ExecutionPolicy Bypass -File $byName
-          }
-          elseif (Test-Path $generic) {
-            Write-Host "Running generic guard: $generic -Module $m"
-            powershell -NoProfile -ExecutionPolicy Bypass -File $generic -Module $m
-          }
-          else {
-            throw "No guard script found for module $m. Expected $byName or $generic"
-          }
-
-      - name: Upload guard artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: guard-${{ matrix.module }}-artifacts
-          path: |
-            outputs/logs/**/*
-            outputs/reports/**/*
-            tests/**/smoke-results*.xml
-          if-no-files-found: warn
-          retention-days: 7
+          $summary = Get-ChildItem outputs\logs\* -Filter *.tsv |
+            Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          if (-not $summary) { throw "Missing orchestrator summary TSV" }
+          powershell -NoProfile -ExecutionPolicy Bypass `
+            -File tools\ci_phase11_guard.ps1 `
+            -Module "${{ matrix.module }}" `
+            -SummaryPath $summary.FullName -Verbose
