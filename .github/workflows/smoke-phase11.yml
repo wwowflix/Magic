@@ -1,0 +1,19 @@
+name: Smoke Phase11
+on:
+  pull_request:
+    paths:
+      - "scripts/phase11/**"
+      - "tests/smoke/**"
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -U pip
+      - run: pip install -r requirements.txt
+      - run: pytest -q tests/smoke/test_phase11B_ok.py -x
+      - run: pytest -q tests/smoke/test_phase11C_ok.py -x
