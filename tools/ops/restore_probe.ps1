@@ -1,8 +1,10 @@
-﻿param(
-  [string]$Root = "D:\MAGIC",
+param(
+  [string]$Root = $Root,
   [string]$RclonePath = $null
 )
 
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 # Basic helpers
 function Ensure-Dir([string]$p){
   if(-not (Test-Path $p)){ New-Item -ItemType Directory -Force -Path $p | Out-Null }
@@ -24,7 +26,7 @@ try{
       "$Env:USERPROFILE\scoop\shims\rclone.exe",
       "C:\Program Files\rclone\rclone.exe",
       "C:\Program Files (x86)\rclone\rclone.exe",
-      "D:\MAGIC\rclone-v1.70.3-windows-amd64\rclone.exe",
+      "E:\MAGIC\rclone-v1.70.3-windows-amd64\rclone.exe",
       "rclone.exe"
     )
     foreach($c in $candidates){

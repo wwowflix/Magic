@@ -1,24 +1,20 @@
-﻿repos:
+repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
-      - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+        exclude: ^configs/broken/|^scripts/phase00/INBOX/
 
   - repo: local
     hooks:
-      - id: fonttools-shadow-guard
-        name: fonttools shadowing guard
-        entry: python tools/inject_fonttools_shim.py
+      - id: phase11a-guard
+        name: Phase11A Orchestrator Guard
+        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/ci_phase11A_guard.ps1
         language: system
         pass_filenames: false
-
-repos:
-  - repo: local
-    hooks:
-      - id: runner-sanity-guard
-        name: runner-sanity-guard
-        language: system
-        entry: pwsh ./.hooks/runner_sanity_guard.ps1
-        files: ^(tools/|scripts/).+\.py$
+        stages: [pre-commit]

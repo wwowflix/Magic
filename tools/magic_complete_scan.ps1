@@ -1,4 +1,6 @@
-﻿param([string]$Root="D:\MAGIC")
+param([string]$Root=$Root)
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 $ErrorActionPreference = "Stop"
 function J($p){ Join-Path $Root $p }
 if(!(Test-Path (J "outputs\reports"))){ New-Item -ItemType Directory -Force -Path (J "outputs\reports") | Out-Null }

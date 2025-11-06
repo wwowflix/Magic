@@ -1,3 +1,5 @@
+# MAGIC_DYNAMIC_ROOT_GUARD
+if (-not (Get-Variable -Name Root -Scope Script -ErrorAction SilentlyContinue)) { \E:\MAGIC = (Get-Location).Path }
 # ============================
 # MAGIC MASTER ORCHESTRATOR v2
 # ============================
@@ -7,15 +9,15 @@
 # - Saves results to summary log
 # - Easy-to-read output in PowerShell
 
-$phasePath = "D:\MAGIC\scripts\phase11"
-$logFile   = "D:\MAGIC\outputs\logs\master_orchestrator_log.txt"
-$summary   = "D:\MAGIC\outputs\logs\master_orchestrator_summary.txt"
+$phasePath = "E:\MAGIC\scripts\phase11"
+$logFile   = "E:\MAGIC\outputs\logs\master_orchestrator_log.txt"
+$summary   = "E:\MAGIC\outputs\logs\master_orchestrator_summary.txt"
 
 # Clear previous logs
 "" | Out-File $logFile -Encoding UTF8
 "" | Out-File $summary -Encoding UTF8
 
-Write-Host "🚀 Starting MAGIC Phase 11 Orchestration..." -ForegroundColor Cyan
+Write-Host "ðŸš€ Starting MAGIC Phase 11 Orchestration..." -ForegroundColor Cyan
 
 # Collect results
 $results = @()
@@ -33,13 +35,13 @@ Get-ChildItem -Path $phasePath -Recurse -Filter "*_READY.py" | Sort-Object Name 
         $output = & python "$scriptPath" 2>&1
 
         if ($LASTEXITCODE -eq 0 -and $output -match "PASS") {
-            $status = "✅ PASS"
+            $status = "âœ… PASS"
         }
         elseif ($LASTEXITCODE -eq 0 -and $output -match "FAIL") {
-            $status = "❌ FAIL"
+            $status = "âŒ FAIL"
         }
         else {
-            $status = "⚠️ UNKNOWN"
+            $status = "âš ï¸ UNKNOWN"
         }
 
         # Append to log
@@ -52,7 +54,7 @@ Get-ChildItem -Path $phasePath -Recurse -Filter "*_READY.py" | Sort-Object Name 
     catch {
         $results += [PSCustomObject]@{
             Script = $scriptName
-            Status = "❌ ERROR"
+            Status = "âŒ ERROR"
         }
     }
 }
@@ -63,5 +65,5 @@ Get-ChildItem -Path $phasePath -Recurse -Filter "*_READY.py" | Sort-Object Name 
 "====================" | Out-File $summary -Append
 $results | Format-Table | Out-String | Out-File $summary -Append -Encoding UTF8
 
-Write-Host "`n✅ MASTER ORCHESTRATION COMPLETE."
+Write-Host "`nâœ… MASTER ORCHESTRATION COMPLETE."
 Write-Host "Summary saved to $summary" -ForegroundColor Green

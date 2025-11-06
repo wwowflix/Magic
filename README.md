@@ -5,4 +5,3 @@
 [![Coverage Status](https://codecov.io/gh/wwowflix/Magic/branch/chore/http-stack-repair/graph/badge.svg)](https://codecov.io/gh/wwowflix/Magic)
 
 MAGIC is a self-healing automation ecosystem that monitors, repairs, and scales AI-driven operations across phases 0-17.
-
