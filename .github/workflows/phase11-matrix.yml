@@ -1,0 +1,34 @@
+name: Phase 11 Matrix Guards
+
+on:
+  push:
+    branches:
+      - chore/phase11-matrix-guards
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build module matrix
+        id: build
+        shell: pwsh
+        run: tools/ci/build_phase_matrix.ps1
+
+  guard:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run module guard
+        shell: pwsh
+        run: |
+          Write-Host "Job: $env:GITHUB_JOB :: module = ${{ matrix.module }}"
+          # Replace/expand to your real per-module test:
+          pytest -q "tests/phase11/module_${{ matrix.module }}.py" -x
