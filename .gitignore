@@ -185,3 +185,6 @@ tools/self_healing_runner_forcepath.py
 # Generated runner summaries
 /tools/outputs/summaries/*
 /outputs/reports/summaries/*
+
+tools/msc_min.ps1
+tools/magic_status_check.ps1.quarantined_*
