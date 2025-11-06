@@ -1,37 +1,76 @@
-name: Phase 11 Matrix
+﻿name: Phase 11 Module Matrix
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ chore/phase11-matrix-guards, main ]
+    branches:
+      - chore/phase11-matrix-guards
+    paths:
+      - .github/workflows/phase11-matrix.yml
+      - tools/ci/build_phase_matrix.ps1
+      - scripts/phase11/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/phase11-matrix.yml
+      - tools/ci/build_phase_matrix.ps1
+      - scripts/phase11/**
+  workflow_dispatch:
 
 jobs:
   discover:
+    name: Discover Phase11 modules
     runs-on: windows-latest
     outputs:
       matrix: ${{ steps.build.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - name: Build Phase 11 matrix
+
+      - name: Build matrix JSON (Phase 11)
         id: build
         shell: pwsh
         run: |
-          pwsh -NoProfile -ExecutionPolicy Bypass `
-            -File tools/ci/build_phase_matrix.ps1
-          # Debug peek:
-          Get-Content $env:GITHUB_OUTPUT
+          $ErrorActionPreference = 'Stop'
+          $Root = (Get-Location).Path
+          $Phase = 11
 
-  phase11:
-    needs: discover
+          # Local fallback if Actions didn't set it for some reason (paranoia)
+          if (-not $env:GITHUB_OUTPUT -or [string]::IsNullOrWhiteSpace($env:GITHUB_OUTPUT)) {
+            $env:GITHUB_OUTPUT = Join-Path $Root '_gh_output.txt'
+          }
+
+          $phaseDir = Join-Path $Root ("scripts/phase{0}" -f $Phase)
+          if (-not (Test-Path $phaseDir)) { throw "Phase directory not found: $phaseDir" }
+
+          $mods = Get-ChildItem -LiteralPath $phaseDir -Directory -Filter 'module_*' -EA SilentlyContinue |
+            ForEach-Object { ($_.Name -replace '^module_','').ToUpper() } |
+            Where-Object { $_ -match '^[A-Z]{1,2}$' } |
+            Sort-Object -Unique
+
+          if (-not $mods) { throw "No modules discovered under $phaseDir" }
+
+          $obj = @{ include = @() }
+          foreach ($m in $mods) { $obj.include += @{ module = $m } }
+          $json = $obj | ConvertTo-Json -Depth 5 -Compress
+
+          "matrix=$json" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+          Write-Host ("Discovered modules: {0}" -f ($mods -join ', '))
+          Write-Host ("Matrix JSON (compressed): {0}" -f $json)
+
+  per_module:
+    name: Phase11 ${{ matrix.module }}
     runs-on: windows-latest
+    needs: discover
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Show module
         shell: pwsh
         run: |
           "Job: $env:GITHUB_JOB :: module = ${{ matrix.module }}"
-          # TODO: plug your per-module guard/test here, e.g.:
+          # TODO: plug your per-module guard/test here, for example:
           # pytest -q tests\phase11\module_${{ matrix.module }}.py -x
