@@ -195,3 +195,7 @@ _gh_output.txt
 /reports/latest_*/
 /reports/latest/
 /reports/latest_*/
+
+outputs/reports/*.json
+outputs/reports/*.tsv
+outputs/logs/
