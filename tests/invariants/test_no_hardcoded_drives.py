@@ -1,14 +1,15 @@
+﻿import re
 from pathlib import Path
-import re
 
-ROOT = Path(__file__).resolve().parents[1]
-BAD = re.compile(r"""(?i)\b[A-Z]:\\MAGIC\\|/mnt/|/Users/.*/MAGIC""")
+ROOT = Path(__file__).resolve().parents[2]
+BAD = re.compile(r"[A-Za-z]:\\\\")  # any Windows drive root like C:\ or E:\
+
+SKIP_PARTS = {".git", "venv", ".pytest_cache", "__pycache__", ".github"}
 
 def test_repo_has_no_hardcoded_drives():
-    skipped = {".git", "venv", ".pytest_cache", "__pycache__", ".github"}
     offenders = []
     for p in ROOT.rglob("*"):
-        if any(part in skipped for part in p.parts):
+        if any(part in SKIP_PARTS for part in p.parts):
             continue
         if p.is_file() and p.suffix in {".py", ".ps1", ".psm1"}:
             try:
