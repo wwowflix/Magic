@@ -191,3 +191,7 @@ tools/magic_status_check.ps1.quarantined_*
 
 # Local GH output
 _gh_output.txt
+/reports/latest/
+/reports/latest_*/
+/reports/latest/
+/reports/latest_*/
