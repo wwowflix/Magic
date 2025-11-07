@@ -74,7 +74,6 @@ _FILE_ASYNC_METHODS: set[str] = {
     "peek",
 }
 
-
 FileT = TypeVar("FileT")
 FileT_co = TypeVar("FileT_co", covariant=True)
 T = TypeVar("T")

@@ -16,8 +16,8 @@ from .. import (
     get_cancelled_exc_class,
     to_thread,
 )
-from .._core._typedattr import TypedAttributeSet, typed_attribute
-from ..abc import AnyByteStream, ByteStream, Listener, TaskGroup
+from scripts._core._typedattr import TypedAttributeSet, typed_attribute
+from scripts.abc import AnyByteStream, ByteStream, Listener, TaskGroup
 
 if sys.version_info >= (3, 11):
     from typing import TypeVarTuple, Unpack

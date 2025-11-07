@@ -55,7 +55,6 @@
 # you, if needed.
 ##
 
-
 import re
 
 xpath_tokenizer_re = re.compile(
@@ -273,7 +272,6 @@ ops = {
     "//": prepare_descendant,
     "[": prepare_predicate,
 }
-
 
 # --------------------------------------------------------------------
 

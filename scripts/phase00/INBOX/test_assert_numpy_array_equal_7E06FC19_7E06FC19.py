@@ -132,12 +132,12 @@ def test_numpy_array_equal_unicode():
     msg = """numpy array are different
 
 numpy array values are different \\(33\\.33333 %\\)
-\\[left\\]:  \\[á, à, ä\\]
-\\[right\\]: \\[á, à, å\\]"""
+\\[left\\]:  \\[Ã¡, Ã , Ã¤\\]
+\\[right\\]: \\[Ã¡, Ã , Ã¥\\]"""
 
     with pytest.raises(AssertionError, match=msg):
         tm.assert_numpy_array_equal(
-            np.array(["á", "à", "ä"]), np.array(["á", "à", "å"])
+            np.array(["Ã¡", "Ã ", "Ã¤"]), np.array(["Ã¡", "Ã ", "Ã¥"])
         )
 
 

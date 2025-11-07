@@ -1,5 +1,5 @@
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import weakref
 from pathlib import Path
 

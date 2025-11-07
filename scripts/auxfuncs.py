@@ -8,7 +8,6 @@ Pearu Peterson <pearu@ioc.ee>
 Permission to use, modify, and distribute this software is given under the
 terms of the NumPy (BSD style) LICENSE.
 
-
 NO WARRANTY IS EXPRESSED OR IMPLIED.  USE AT YOUR OWN RISK.
 $Date: 2005/07/24 19:01:55 $
 Pearu Peterson
@@ -107,9 +106,7 @@ __all__ = [
     "throw_error",
 ]
 
-
 f2py_version = __version__.version
-
 
 errmess = sys.stderr.write
 show = pprint.pprint

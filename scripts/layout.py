@@ -104,7 +104,7 @@ class RowSplitter(Splitter):
     name = "row"
 
     def get_tree_icon(self) -> str:
-        return "[layout.tree.row]⬌"
+        return "[layout.tree.row]â¬Œ"
 
     def divide(
         self, children: Sequence["Layout"], region: Region
@@ -124,7 +124,7 @@ class ColumnSplitter(Splitter):
     name = "column"
 
     def get_tree_icon(self) -> str:
-        return "[layout.tree.column]⬍"
+        return "[layout.tree.column]â¬"
 
     def divide(
         self, children: Sequence["Layout"], region: Region

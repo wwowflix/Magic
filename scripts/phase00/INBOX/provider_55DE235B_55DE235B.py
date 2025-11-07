@@ -45,7 +45,6 @@ else:
 # responsible for creating Requirement and Candidate objects, and provides
 # services to those objects (access to pip's finder and preparer).
 
-
 D = TypeVar("D")
 V = TypeVar("V")
 

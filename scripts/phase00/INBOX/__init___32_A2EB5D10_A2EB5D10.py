@@ -6,7 +6,6 @@ import sys
 import os.path
 from lxml import etree as _etree  # due to validator __init__ signature
 
-
 # some compat stuff, borrowed from lxml.html
 try:
     unicode
@@ -18,7 +17,6 @@ try:
 except NameError:
     # Python 3
     basestring = str
-
 
 __all__ = [
     "extract_xsd",
@@ -32,7 +30,6 @@ __all__ = [
     "Schematron",
 ]
 
-
 # some namespaces
 # FIXME: Maybe lxml should provide a dedicated place for common namespace
 # FIXME: definitions?
@@ -41,12 +38,10 @@ RELAXNG_NS = "http://relaxng.org/ns/structure/1.0"
 SCHEMATRON_NS = "http://purl.oclc.org/dsdl/schematron"
 SVRL_NS = "http://purl.oclc.org/dsdl/svrl"
 
-
 # some helpers
 _schematron_root = "{%s}schema" % SCHEMATRON_NS
 _xml_schema_root = "{%s}schema" % XML_SCHEMA_NS
 _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
-
 
 # the iso-schematron skeleton implementation steps aka xsl transformations
 extract_xsd = _etree.XSLT(
@@ -76,7 +71,6 @@ iso_svrl_for_xslt1 = _etree.XSLT(
         )
     )
 )
-
 
 # svrl result accessors
 svrl_validation_errors = _etree.XPath(

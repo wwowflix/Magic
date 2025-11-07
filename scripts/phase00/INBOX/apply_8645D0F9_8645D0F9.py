@@ -75,7 +75,6 @@ if TYPE_CHECKING:
     from pandas.core.resample import Resampler
     from pandas.core.window.rolling import BaseWindow
 
-
 ResType = Dict[int, Any]
 
 

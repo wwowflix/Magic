@@ -79,7 +79,7 @@ or explicitly type the array like object as `~typing.Any`:
 
 .. code-block:: python
 
-    >>> from typing import Any
+    >>> from magic_typing import Any
     >>> array_like: Any = (x**2 for x in range(10))
     >>> np.array(array_like)
     array(<generator object <genexpr> at ...>, dtype=object)
@@ -122,7 +122,7 @@ involving precision-based casting.
 
 .. code-block:: python
 
-    >>> from typing import TypeVar
+    >>> from magic_typing import TypeVar
     >>> import numpy as np
     >>> import numpy.typing as npt
 
@@ -163,13 +163,13 @@ API
 # further down in this file
 
 from numpy import ufunc
-from typing import TYPE_CHECKING, List
+from magic_typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     import sys
 
     if sys.version_info >= (3, 8):
-        from typing import final
+        from magic_typing import final
     else:
         from typing_extensions import final
 else:
@@ -210,7 +210,7 @@ class NBitBase:
     .. code-block:: python
 
         >>> from __future__ import annotations
-        >>> from typing import TypeVar, Union, TYPE_CHECKING
+        >>> from magic_typing import TypeVar, Union, TYPE_CHECKING
         >>> import numpy as np
         >>> import numpy.typing as npt
 

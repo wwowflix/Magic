@@ -1,7 +1,6 @@
-"""MAGIC meta patch utilities."""
-
 from __future__ import annotations
 
+"""MAGIC meta patch utilities."""
 from typing import Dict
 
 

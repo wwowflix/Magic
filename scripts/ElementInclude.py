@@ -69,7 +69,6 @@ XINCLUDE_ITER_TAG = XINCLUDE + "*"
 # For security reasons, the inclusion depth is limited to this read-only value by default.
 DEFAULT_MAX_INCLUSION_DEPTH = 6
 
-
 ##
 # Fatal include error.
 

@@ -35,7 +35,7 @@ Value conversion functions are available for converting
 import os
 from copy import deepcopy
 from os import fsdecode
-import logging
+import magic_logging as logging
 import zipfile
 import enum
 from collections import OrderedDict
@@ -74,9 +74,7 @@ __all__ = [
 
 __version__ = "3.0.0"
 
-
 logger = logging.getLogger(__name__)
-
 
 # ---------
 # Constants
@@ -1491,7 +1489,7 @@ class UFOWriter(UFOReader):
         ``expectContentsFile`` will raise a GlifLibError if a contents.plist file is
         not found on the glyph set file system. This should be set to ``True`` if you
         are reading an existing UFO and ``False`` if you use ``getGlyphSet`` to create
-        a fresh	glyph set.
+        a fresh glyph set.
         """
         if validateRead is None:
             validateRead = self._validate
@@ -1739,7 +1737,6 @@ class UFOWriter(UFOReader):
 # just an alias, makes it more explicit
 UFOReaderWriter = UFOWriter
 
-
 # ----------------
 # Helper Functions
 # ----------------
@@ -1769,10 +1766,10 @@ def makeUFOPath(path):
     Return a .ufo pathname.
 
     >>> makeUFOPath("directory/something.ext") == (
-    ... 	os.path.join('directory', 'something.ufo'))
+    ...     os.path.join('directory', 'something.ufo'))
     True
     >>> makeUFOPath("directory/something.another.thing.ext") == (
-    ... 	os.path.join('directory', 'something.another.thing.ufo'))
+    ...     os.path.join('directory', 'something.another.thing.ufo'))
     True
     """
     dir, name = os.path.split(path)

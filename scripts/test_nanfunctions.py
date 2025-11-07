@@ -28,7 +28,6 @@ _ndat = np.array(
     ]
 )
 
-
 # Rows of _ndat with nans removed
 _rdat = [
     np.array([0.6244, 0.2692, 0.0116, 0.1170]),

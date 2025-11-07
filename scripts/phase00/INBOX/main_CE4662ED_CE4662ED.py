@@ -14,7 +14,6 @@ from pip._internal.utils import deprecation
 
 logger = logging.getLogger(__name__)
 
-
 # Do not import and use main() directly! Using it directly is actively
 # discouraged by pip's maintainers. The name, location and behavior of
 # this function is subject to change, so calling it directly is not

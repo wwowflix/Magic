@@ -636,9 +636,9 @@ class FFI(object):
                     template += "_d"
             else:
                 try:
-                    import sysconfig
+                    import magic_sysconfig as sysconfig
                 except ImportError:  # 2.6
-                    from cffi._shimmed_dist_utils import sysconfig
+                    from cffi._shimmed_dist_utils import magic_sysconfig as sysconfig
                 template = "python%d.%d"
                 if sysconfig.get_config_var("DEBUG_EXT"):
                     template += sysconfig.get_config_var("DEBUG_EXT")

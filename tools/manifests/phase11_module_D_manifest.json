@@ -1,0 +1,13 @@
+{
+  "Module": "D",
+  "Phase": 11,
+  "Entries": [
+    {
+      "Name": "API Callchain Verifier",
+      "Path": "scripts/phase11/module_d/11D_api_callchain_verifier_READY.py",
+      "FinalFilename": "11D_api_callchain_verifier_READY.py",
+      "TimeoutSec": 60,
+      "Args": []
+    }
+  ]
+}

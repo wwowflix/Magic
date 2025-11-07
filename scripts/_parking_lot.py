@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # ParkingLot provides an abstraction for a fair waitqueue with cancellation
 # and requeuing support. Inspiration:
 #
@@ -69,8 +71,6 @@
 # unpark is called.
 #
 # See: https://github.com/python-trio/trio/issues/53
-from __future__ import annotations
-
 import inspect
 import math
 from collections import OrderedDict
@@ -80,13 +80,12 @@ import attrs
 import outcome
 
 from .. import _core
-from .._util import final
+from scripts._util import final
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from ._run import Task
-
 
 GLOBAL_PARKING_LOT_BREAKER: dict[Task, list[ParkingLot]] = {}
 

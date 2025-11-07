@@ -30,4 +30,4 @@ class AsyncResource(metaclass=ABCMeta):
 
     @abstractmethod
     async def aclose(self) -> None:
-        """Close the resource."""
+        """Close the resource.

@@ -50,7 +50,6 @@ from . import cfuncs
 
 f2py_version = __version__.version
 
-
 ################## Rules for callback function ##############
 
 cb_routine_rules = {

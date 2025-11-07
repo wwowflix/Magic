@@ -9,10 +9,10 @@ import pytest
 from trio.testing import Matcher, RaisesGroup
 
 from .. import _core
-from .._core._parking_lot import GLOBAL_PARKING_LOT_BREAKER
-from .._sync import *
-from .._timeouts import sleep_forever
-from ..testing import assert_checkpoints, wait_all_tasks_blocked
+from scripts._core._parking_lot import GLOBAL_PARKING_LOT_BREAKER
+from scripts._sync import *
+from scripts._timeouts import sleep_forever
+from scripts.testing import assert_checkpoints, wait_all_tasks_blocked
 
 if TYPE_CHECKING:
     from typing_extensions import TypeAlias
@@ -411,8 +411,8 @@ async def test_Condition() -> None:
                 assert c.locked()
 
 
-from .._channel import open_memory_channel
-from .._sync import AsyncContextManagerMixin
+from scripts._channel import open_memory_channel
+from scripts._sync import AsyncContextManagerMixin
 
 # Three ways of implementing a Lock in terms of a channel. Used to let us put
 # the channel through the generic lock tests.

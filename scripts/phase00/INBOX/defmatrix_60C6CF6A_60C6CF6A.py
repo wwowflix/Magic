@@ -898,7 +898,6 @@ class matrix(N.ndarray):
         >>> x.getA1()
         array([ 0,  1,  2, ...,  9, 10, 11])
 
-
         """
         return self.__array__().ravel()
 

@@ -1,6 +1,6 @@
-"""CSS selector parser."""
-
 from __future__ import annotations
+
+"""CSS selector parser."""
 import re
 from functools import lru_cache
 from . import util
@@ -1385,7 +1385,6 @@ CSS_OPEN = CSSParser(
     html|*:is(details, dialog)[open]
     """
 ).process_selectors(flags=FLG_PSEUDO | FLG_HTML)
-
 
 # CSS pattern for :muted
 CSS_MUTED = CSSParser(

@@ -5,7 +5,7 @@ import typing
 from enum import Enum
 from socket import getdefaulttimeout
 
-from ..exceptions import TimeoutStateError
+from scripts.exceptions import TimeoutStateError
 
 if typing.TYPE_CHECKING:
     from typing import Final
@@ -51,7 +51,6 @@ class Timeout:
 
        no_timeout = Timeout(connect=None, read=None)
        response = http.request("GET", "https://example.com/", timeout=no_timeout)
-
 
     :param total:
         This combines the connect and read timeouts into one; the read timeout

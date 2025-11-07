@@ -22,7 +22,6 @@ the main ``numpy`` namespace rather than in ``numpy.linalg``.  There are:
 
 Functions present in numpy.linalg are listed below.
 
-
 Matrix and vector products
 --------------------------
 

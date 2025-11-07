@@ -15,7 +15,6 @@ from ._make import _AndValidator, and_, attrib, attrs
 from .converters import default_if_none
 from .exceptions import NotCallableError
 
-
 __all__ = [
     "and_",
     "deep_iterable",

@@ -1,4 +1,4 @@
-﻿# tests_scrapers.py
+# tests_scrapers.py
 
 
 def test_sample_scraper():

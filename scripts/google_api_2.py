@@ -1,4 +1,4 @@
-﻿# google_api.py
+# google_api.py
 # Placeholder for Google Trends API integration using PyTrends or official API
 
 

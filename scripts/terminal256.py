@@ -27,7 +27,6 @@ from pip._vendor.pygments.formatter import Formatter
 from pip._vendor.pygments.console import codes
 from pip._vendor.pygments.style import ansicolors
 
-
 __all__ = ["Terminal256Formatter", "TerminalTrueColorFormatter"]
 
 
@@ -116,7 +115,6 @@ class Terminal256Formatter(Formatter):
        The ANSI color names have been updated with names that are easier to
        understand and align with colornames of other projects and terminals.
        See :ref:`this table <new-ansi-color-names>` for more information.
-
 
     Options accepted:
 

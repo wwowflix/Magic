@@ -81,7 +81,6 @@ if sys.implementation.name == "cpython":
             if_nameindex as if_nameindex,
         )
 
-
 # not always available so expose only if
 if sys.platform != "win32" or not _t.TYPE_CHECKING:
     with _suppress(ImportError):
@@ -99,7 +98,6 @@ else:
             IP_BIND_ADDRESS_NO_PORT = 24
 
 del sys
-
 
 # The socket module exports a bunch of platform-specific constants. We want to
 # re-export them. Since the exact set of constants varies depending on Python

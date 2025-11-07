@@ -10,7 +10,7 @@ reddit = praw.Reddit(
     client_id=client_id, client_secret=client_secret, user_agent=user_agent
 )
 
-print("🔎 Reddit read_only:", reddit.read_only)
+print("ðŸ”Ž Reddit read_only:", reddit.read_only)
 
 for submission in reddit.subreddit("python").hot(limit=3):
     print(f"✅ {submission.title} | Score: {submission.score}")

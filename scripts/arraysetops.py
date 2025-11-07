@@ -20,11 +20,9 @@ import functools
 import numpy as np
 from numpy.core import overrides
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 __all__ = [
     "ediff1d",
@@ -409,7 +407,6 @@ def intersect1d(ar1, ar2, assume_unique=False, return_indices=False):
     comm2 : ndarray
         The indices of the first occurrences of the common values in `ar2`.
         Only provided if `return_indices` is True.
-
 
     See Also
     --------

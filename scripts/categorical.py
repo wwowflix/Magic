@@ -124,7 +124,6 @@ if TYPE_CHECKING:
         Series,
     )
 
-
 CategoricalT = TypeVar("CategoricalT", bound="Categorical")
 
 
@@ -2618,7 +2617,6 @@ class Categorical(NDArrayBackedExtensionArray, PandasObject, ObjectStringArrayMi
         Returns
         -------
         None if inplace is True, otherwise the new Categorical after replacement
-
 
         Examples
         --------

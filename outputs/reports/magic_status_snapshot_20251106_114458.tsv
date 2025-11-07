@@ -1,0 +1,6 @@
+key	state	note
+root	PASS	E:\MAGIC
+python	PASS	Python 3.11.9
+ready_sample	PASS	samplePerModule=2
+orchestrator	PASS	no FAIL/ERROR
+ci_smoke	PASS	present

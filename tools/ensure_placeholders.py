@@ -1,4 +1,4 @@
-import os
+import os  # noqa: I001
 import argparse
 
 parser = argparse.ArgumentParser()

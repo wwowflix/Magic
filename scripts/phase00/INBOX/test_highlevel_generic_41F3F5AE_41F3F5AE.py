@@ -5,8 +5,8 @@ from typing import NoReturn
 import attrs
 import pytest
 
-from .._highlevel_generic import StapledStream
-from ..abc import ReceiveStream, SendStream
+from scripts._highlevel_generic import StapledStream
+from scripts.abc import ReceiveStream, SendStream
 
 
 @attrs.define(slots=False)

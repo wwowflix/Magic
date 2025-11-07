@@ -7,7 +7,7 @@ from os import PathLike
 from subprocess import PIPE, CalledProcessError, CompletedProcess
 from typing import IO, Any, Union, cast
 
-from ..abc import Process
+from scripts.abc import Process
 from ._eventloop import get_async_backend
 from ._tasks import create_task_group
 

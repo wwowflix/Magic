@@ -10,7 +10,6 @@ from bs4.dammit import (
     UnicodeDammit,
 )
 
-
 class TestUnicodeDammit(object):
     """Standalone tests of UnicodeDammit."""
 
@@ -58,19 +57,19 @@ class TestUnicodeDammit(object):
         assert dammit.unicode_markup.encode("utf-8") == utf_8
 
     def test_ignore_inappropriate_codecs(self):
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃƒÂ¤ksmÃƒÂ¶rgÃƒÂ¥s".encode("utf-8")
         dammit = UnicodeDammit(utf8_data, ["iso-8859-8"])
         assert dammit.original_encoding.lower() == "utf-8"
 
     def test_ignore_invalid_codecs(self):
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃƒÂ¤ksmÃƒÂ¶rgÃƒÂ¥s".encode("utf-8")
         for bad_encoding in [".utf8", "...", "utF---16.!"]:
             dammit = UnicodeDammit(utf8_data, [bad_encoding])
             assert dammit.original_encoding.lower() == "utf-8"
 
     def test_exclude_encodings(self):
         # This is UTF-8.
-        utf8_data = "Räksmörgås".encode("utf-8")
+        utf8_data = "RÃƒÂ¤ksmÃƒÂ¶rgÃƒÂ¥s".encode("utf-8")
 
         # But if we exclude UTF-8 from consideration, the guess is
         # Windows-1252.
@@ -80,7 +79,6 @@ class TestUnicodeDammit(object):
         # And if we exclude that, there is no valid guess at all.
         dammit = UnicodeDammit(utf8_data, exclude_encodings=["utf-8", "windows-1252"])
         assert dammit.original_encoding is None
-
 
 class TestEncodingDetector(object):
     def test_encoding_detector_replaces_junk_in_encoding_name_with_replacement_character(
@@ -141,7 +139,7 @@ class TestEncodingDetector(object):
         # A document written in UTF-16LE will have its byte order marker stripped.
         data = b"\xff\xfe<\x00a\x00>\x00\xe1\x00\xe9\x00<\x00/\x00a\x00>\x00"
         dammit = UnicodeDammit(data)
-        assert "<a>áé</a>" == dammit.unicode_markup
+        assert "<a>ÃƒÂ¡ÃƒÂ©</a>" == dammit.unicode_markup
         assert "utf-16le" == dammit.original_encoding
 
     def test_known_definite_versus_user_encodings(self):
@@ -217,11 +215,11 @@ class TestEncodingDetector(object):
             doc.decode("utf8")
 
         # Unicode, Dammit thinks the whole document is Windows-1252,
-        # and decodes it into "â˜ƒâ˜ƒâ˜ƒ"Hi, I like Windows!"â˜ƒâ˜ƒâ˜ƒ"
+        # and decodes it into "ÃƒÂ¢Ã‹Å“Ã†'ÃƒÂ¢Ã‹Å“Ã†'ÃƒÂ¢Ã‹Å“Ã†'"Hi, I like Windows!"ÃƒÂ¢Ã‹Å“Ã†'ÃƒÂ¢Ã‹Å“Ã†'ÃƒÂ¢Ã‹Å“Ã†'"
 
         # But if we run it through fix_embedded_windows_1252, it's fixed:
         fixed = UnicodeDammit.detwingle(doc)
-        assert "☃☃☃"Hi, I like Windows!"☃☃☃" == fixed.decode("utf8")
+        assert "Ã¢ËœÆ’Ã¢ËœÆ’Ã¢ËœÆ’"Hi, I like Windows!"Ã¢ËœÆ’Ã¢ËœÆ’Ã¢ËœÆ’" == fixed.decode("utf8")
 
     def test_detwingle_ignores_multibyte_characters(self):
         # Each of these characters has a UTF-8 representation ending
@@ -278,7 +276,6 @@ class TestEncodingDetector(object):
         assert m(xml_bytes, search_entire_document=True) == "iso-8859-1"
         assert m(b" " + xml_bytes, search_entire_document=True) == "iso-8859-1"
         assert m(b"a" + xml_bytes, search_entire_document=True) is None
-
 
 class TestEntitySubstitution(object):
     """Standalone tests of the EntitySubstitution class."""

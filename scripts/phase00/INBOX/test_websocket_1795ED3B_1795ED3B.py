@@ -104,7 +104,7 @@ class WebSocketTest(unittest.TestCase):
     def test_ws_key(self):
         key = _create_sec_websocket_key()
         self.assertTrue(key != 24)
-        self.assertTrue("¥n" not in key)
+        self.assertTrue("Â¥n" not in key)
 
     def test_nonce(self):
         """WebSocket key should be a random 16-byte nonce."""
@@ -179,7 +179,7 @@ class WebSocketTest(unittest.TestCase):
         sock.send("Hello")
         self.assertEqual(s.sent[0], b"\x81\x85abcd)\x07\x0f\x08\x0e")
 
-        sock.send("こんにちは")
+        sock.send("ã“ã‚“ã«ã¡ã¯")
         self.assertEqual(
             s.sent[1],
             b"\x81\x8fabcd\x82\xe3\xf0\x87\xe3\xf1\x80\xe5\xca\x81\xe2\xc5\x82\xe3\xcc",
@@ -199,7 +199,7 @@ class WebSocketTest(unittest.TestCase):
         )
         s.add_packet(something)
         data = sock.recv()
-        self.assertEqual(data, "こんにちは")
+        self.assertEqual(data, "ã“ã‚“ã«ã¡ã¯")
 
         s.add_packet(b"\x81\x85abcd)\x07\x0f\x08\x0e")
         data = sock.recv()
@@ -356,9 +356,9 @@ class WebSocketTest(unittest.TestCase):
         s.fileno()
         self.assertEqual(result, "Hello, World")
 
-        s.send("こにゃにゃちは、世界")
+        s.send("ã“ã«ã‚ƒã«ã‚ƒã¡ã¯ã€ä¸–ç•Œ")
         result = s.recv()
-        self.assertEqual(result, "こにゃにゃちは、世界")
+        self.assertEqual(result, "ã“ã«ã‚ƒã«ã‚ƒã¡ã¯ã€ä¸–ç•Œ")
         self.assertRaises(ValueError, s.send_close, -1, "")
         s.close()
 

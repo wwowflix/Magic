@@ -8,9 +8,7 @@ from functools import reduce
 import operator
 import logging
 
-
 log = logging.getLogger("fontTools.merge")
-
 
 # General utility functions for merging values from different fonts
 

@@ -11,7 +11,6 @@ NO WARRANTY IS EXPRESSED OR IMPLIED.  USE AT YOUR OWN RISK.
 $Date: 2005/09/27 07:13:49 $
 Pearu Peterson
 
-
 Usage of crackfortran:
 ======================
 Command line keys: -quiet,-verbose,-fix,-f77,-f90,-show,-h <pyffilename>
@@ -153,7 +152,6 @@ from . import __version__
 # As the needed functions cannot be determined by static inspection of the
 # code, it is safest to use import * pending a major refactoring of f2py.
 from .auxfuncs import *
-
 
 f2py_version = __version__.version
 

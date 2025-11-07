@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Generic module for reading and writing the .glif format.
 
@@ -9,9 +11,6 @@ The main class in this module is :class:`GlyphSet`. It manages a set of .glif fi
 in a folder. It offers two ways to read glyph data, and one way to write
 glyph data. See the class doc string for details.
 """
-
-from __future__ import annotations
-
 import logging
 import enum
 from warnings import warn
@@ -39,7 +38,6 @@ from fontTools.misc import etree
 from fontTools.ufoLib import _UFOBaseIO, UFOFormatVersion
 from fontTools.ufoLib.utils import numberTypes, _VersionTupleEnumMixin
 
-
 __all__ = [
     "GlyphSet",
     "GlifLibError",
@@ -49,7 +47,6 @@ __all__ = [
 ]
 
 logger = logging.getLogger(__name__)
-
 
 # ---------
 # Constants
@@ -90,7 +87,6 @@ class GLIFFormatVersion(tuple, _VersionTupleEnumMixin, enum.Enum):
 
 # workaround for py3.11, see https://github.com/fonttools/fonttools/pull/2655
 GLIFFormatVersion.__str__ = _VersionTupleEnumMixin.__str__
-
 
 # ------------
 # Simple Glyph
@@ -167,7 +163,7 @@ class GlyphSet(_UFOBaseIO):
         ``validateWrite`` will validate write operations. Its default is ``True``.
         ``expectContentsFile`` will raise a GlifLibError if a contents.plist file is
         not found on the glyph set file system. This should be set to ``True`` if you
-        are reading an existing UFO and ``False`` if you create a fresh	glyph set.
+        are reading an existing UFO and ``False`` if you create a fresh glyph set.
         """
         try:
             ufoFormatVersion = UFOFormatVersion(ufoFormatVersion)

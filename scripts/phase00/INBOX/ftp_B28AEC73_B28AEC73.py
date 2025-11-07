@@ -5,8 +5,8 @@ import warnings
 from ftplib import FTP, FTP_TLS, Error, error_perm
 from typing import Any
 
-from ..spec import AbstractBufferedFile, AbstractFileSystem
-from ..utils import infer_storage_options, isfilelike
+from scripts.spec import AbstractBufferedFile, AbstractFileSystem
+from scripts.utils import infer_storage_options, isfilelike
 
 
 class FTPFileSystem(AbstractFileSystem):

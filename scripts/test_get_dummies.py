@@ -451,20 +451,20 @@ class TestGetDummies:
         "get_dummies_kwargs,expected",
         [
             (
-                {"data": DataFrame({"ä": ["a"]})},
-                DataFrame({"ä_a": [True]}),
+                {"data": DataFrame({"Ã¤": ["a"]})},
+                DataFrame({"Ã¤_a": [True]}),
             ),
             (
-                {"data": DataFrame({"x": ["ä"]})},
-                DataFrame({"x_ä": [True]}),
+                {"data": DataFrame({"x": ["Ã¤"]})},
+                DataFrame({"x_Ã¤": [True]}),
             ),
             (
-                {"data": DataFrame({"x": ["a"]}), "prefix": "ä"},
-                DataFrame({"ä_a": [True]}),
+                {"data": DataFrame({"x": ["a"]}), "prefix": "Ã¤"},
+                DataFrame({"Ã¤_a": [True]}),
             ),
             (
-                {"data": DataFrame({"x": ["a"]}), "prefix_sep": "ä"},
-                DataFrame({"xäa": [True]}),
+                {"data": DataFrame({"x": ["a"]}), "prefix_sep": "Ã¤"},
+                DataFrame({"xÃ¤a": [True]}),
             ),
         ],
     )

@@ -1,7 +1,6 @@
-"""feather-format compat"""
-
 from __future__ import annotations
 
+"""feather-format compat"""
 from typing import (
     Hashable,
     Sequence,

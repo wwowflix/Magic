@@ -83,7 +83,7 @@ def main(argv=None) -> int:
     ap.add_argument("--summary", required=True, help="Path to phase_master_summary.tsv")
     ap.add_argument("--logs_root", required=True, help="Root of outputs/logs")
     ap.add_argument("--report", required=True, help="Where to write JSON report")
-    # 🔧 make --phase optional; aggregate if omitted
+    # ðŸ”§ make --phase optional; aggregate if omitted
     ap.add_argument(
         "--phase",
         type=int,

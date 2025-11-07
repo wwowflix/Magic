@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Compute name information for a given location in user-space coordinates
 using STAT data. This can be used to fill-in automatically the names of an
 instance:
@@ -8,9 +10,6 @@ instance:
     names = getStatNames(doc, instance.getFullUserLocation(doc))
     print(names.styleNames)
 """
-
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Dict, Literal, Optional, Tuple, Union
 import logging

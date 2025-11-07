@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from datetime import datetime
 
 import pytest
@@ -25,7 +25,6 @@ else:
         cython = None
 
 pytestmark = pytest.mark.skipif(cython is None, reason="requires cython")
-
 
 if IS_EDITABLE:
     pytest.skip(

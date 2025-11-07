@@ -8,7 +8,12 @@ import pytest
 import trio
 from trio import EndOfChannel, as_safe_channel, open_memory_channel
 
-from ..testing import Matcher, RaisesGroup, assert_checkpoints, wait_all_tasks_blocked
+from scripts.testing import (
+    Matcher,
+    RaisesGroup,
+    assert_checkpoints,
+    wait_all_tasks_blocked,
+)
 
 if sys.version_info < (3, 11):
     from exceptiongroup import ExceptionGroup

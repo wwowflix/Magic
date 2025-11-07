@@ -20,14 +20,14 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·x + 3.0·x²"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·x + 3.0·x² - 1.0·x³"),
+            ([1, 2, 3], "1.0 + 2.0Â·x + 3.0Â·xÂ²"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·x + 3.0Â·xÂ² - 1.0Â·xÂ³"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·x + 2.0·x² + 3.0·x³ + 4.0·x⁴ + 5.0·x⁵ + "
-                    "6.0·x⁶ + 7.0·x⁷ +\n8.0·x⁸ + 9.0·x⁹ + 10.0·x¹⁰ + "
-                    "11.0·x¹¹"
+                    "0.0 + 1.0Â·x + 2.0Â·xÂ² + 3.0Â·xÂ³ + 4.0Â·xâ´ + 5.0Â·xâµ + "
+                    "6.0Â·xâ¶ + 7.0Â·xâ· +\n8.0Â·xâ¸ + 9.0Â·xâ¹ + 10.0Â·xÂ¹â° + "
+                    "11.0Â·xÂ¹Â¹"
                 ),
             ),
         ),
@@ -40,14 +40,14 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·T₁(x) + 3.0·T₂(x)"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·T₁(x) + 3.0·T₂(x) - 1.0·T₃(x)"),
+            ([1, 2, 3], "1.0 + 2.0Â·Tâ‚(x) + 3.0Â·Tâ‚‚(x)"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·Tâ‚(x) + 3.0Â·Tâ‚‚(x) - 1.0Â·Tâ‚ƒ(x)"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·T₁(x) + 2.0·T₂(x) + 3.0·T₃(x) + 4.0·T₄(x) + "
-                    "5.0·T₅(x) +\n6.0·T₆(x) + 7.0·T₇(x) + 8.0·T₈(x) + "
-                    "9.0·T₉(x) + 10.0·T₁₀(x) + 11.0·T₁₁(x)"
+                    "0.0 + 1.0Â·Tâ‚(x) + 2.0Â·Tâ‚‚(x) + 3.0Â·Tâ‚ƒ(x) + 4.0Â·Tâ‚„(x) + "
+                    "5.0Â·Tâ‚…(x) +\n6.0Â·Tâ‚†(x) + 7.0Â·Tâ‚‡(x) + 8.0Â·Tâ‚ˆ(x) + "
+                    "9.0Â·Tâ‚‰(x) + 10.0Â·Tâ‚â‚€(x) + 11.0Â·Tâ‚â‚(x)"
                 ),
             ),
         ),
@@ -59,14 +59,14 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·P₁(x) + 3.0·P₂(x)"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·P₁(x) + 3.0·P₂(x) - 1.0·P₃(x)"),
+            ([1, 2, 3], "1.0 + 2.0Â·Pâ‚(x) + 3.0Â·Pâ‚‚(x)"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·Pâ‚(x) + 3.0Â·Pâ‚‚(x) - 1.0Â·Pâ‚ƒ(x)"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·P₁(x) + 2.0·P₂(x) + 3.0·P₃(x) + 4.0·P₄(x) + "
-                    "5.0·P₅(x) +\n6.0·P₆(x) + 7.0·P₇(x) + 8.0·P₈(x) + "
-                    "9.0·P₉(x) + 10.0·P₁₀(x) + 11.0·P₁₁(x)"
+                    "0.0 + 1.0Â·Pâ‚(x) + 2.0Â·Pâ‚‚(x) + 3.0Â·Pâ‚ƒ(x) + 4.0Â·Pâ‚„(x) + "
+                    "5.0Â·Pâ‚…(x) +\n6.0Â·Pâ‚†(x) + 7.0Â·Pâ‚‡(x) + 8.0Â·Pâ‚ˆ(x) + "
+                    "9.0Â·Pâ‚‰(x) + 10.0Â·Pâ‚â‚€(x) + 11.0Â·Pâ‚â‚(x)"
                 ),
             ),
         ),
@@ -78,14 +78,14 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·H₁(x) + 3.0·H₂(x)"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·H₁(x) + 3.0·H₂(x) - 1.0·H₃(x)"),
+            ([1, 2, 3], "1.0 + 2.0Â·Hâ‚(x) + 3.0Â·Hâ‚‚(x)"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·Hâ‚(x) + 3.0Â·Hâ‚‚(x) - 1.0Â·Hâ‚ƒ(x)"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·H₁(x) + 2.0·H₂(x) + 3.0·H₃(x) + 4.0·H₄(x) + "
-                    "5.0·H₅(x) +\n6.0·H₆(x) + 7.0·H₇(x) + 8.0·H₈(x) + "
-                    "9.0·H₉(x) + 10.0·H₁₀(x) + 11.0·H₁₁(x)"
+                    "0.0 + 1.0Â·Hâ‚(x) + 2.0Â·Hâ‚‚(x) + 3.0Â·Hâ‚ƒ(x) + 4.0Â·Hâ‚„(x) + "
+                    "5.0Â·Hâ‚…(x) +\n6.0Â·Hâ‚†(x) + 7.0Â·Hâ‚‡(x) + 8.0Â·Hâ‚ˆ(x) + "
+                    "9.0Â·Hâ‚‰(x) + 10.0Â·Hâ‚â‚€(x) + 11.0Â·Hâ‚â‚(x)"
                 ),
             ),
         ),
@@ -97,15 +97,15 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·He₁(x) + 3.0·He₂(x)"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·He₁(x) + 3.0·He₂(x) - 1.0·He₃(x)"),
+            ([1, 2, 3], "1.0 + 2.0Â·Heâ‚(x) + 3.0Â·Heâ‚‚(x)"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·Heâ‚(x) + 3.0Â·Heâ‚‚(x) - 1.0Â·Heâ‚ƒ(x)"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·He₁(x) + 2.0·He₂(x) + 3.0·He₃(x) + "
-                    "4.0·He₄(x) + 5.0·He₅(x) +\n6.0·He₆(x) + 7.0·He₇(x) + "
-                    "8.0·He₈(x) + 9.0·He₉(x) + 10.0·He₁₀(x) +\n"
-                    "11.0·He₁₁(x)"
+                    "0.0 + 1.0Â·Heâ‚(x) + 2.0Â·Heâ‚‚(x) + 3.0Â·Heâ‚ƒ(x) + "
+                    "4.0Â·Heâ‚„(x) + 5.0Â·Heâ‚…(x) +\n6.0Â·Heâ‚†(x) + 7.0Â·Heâ‚‡(x) + "
+                    "8.0Â·Heâ‚ˆ(x) + 9.0Â·Heâ‚‰(x) + 10.0Â·Heâ‚â‚€(x) +\n"
+                    "11.0Â·Heâ‚â‚(x)"
                 ),
             ),
         ),
@@ -117,14 +117,14 @@ class TestStrUnicodeSuperSubscripts:
     @pytest.mark.parametrize(
         ("inp", "tgt"),
         (
-            ([1, 2, 3], "1.0 + 2.0·L₁(x) + 3.0·L₂(x)"),
-            ([-1, 0, 3, -1], "-1.0 + 0.0·L₁(x) + 3.0·L₂(x) - 1.0·L₃(x)"),
+            ([1, 2, 3], "1.0 + 2.0Â·Lâ‚(x) + 3.0Â·Lâ‚‚(x)"),
+            ([-1, 0, 3, -1], "-1.0 + 0.0Â·Lâ‚(x) + 3.0Â·Lâ‚‚(x) - 1.0Â·Lâ‚ƒ(x)"),
             (
                 arange(12),
                 (
-                    "0.0 + 1.0·L₁(x) + 2.0·L₂(x) + 3.0·L₃(x) + 4.0·L₄(x) + "
-                    "5.0·L₅(x) +\n6.0·L₆(x) + 7.0·L₇(x) + 8.0·L₈(x) + "
-                    "9.0·L₉(x) + 10.0·L₁₀(x) + 11.0·L₁₁(x)"
+                    "0.0 + 1.0Â·Lâ‚(x) + 2.0Â·Lâ‚‚(x) + 3.0Â·Lâ‚ƒ(x) + 4.0Â·Lâ‚„(x) + "
+                    "5.0Â·Lâ‚…(x) +\n6.0Â·Lâ‚†(x) + 7.0Â·Lâ‚‡(x) + 8.0Â·Lâ‚ˆ(x) + "
+                    "9.0Â·Lâ‚‰(x) + 10.0Â·Lâ‚â‚€(x) + 11.0Â·Lâ‚â‚(x)"
                 ),
             ),
         ),
@@ -135,11 +135,11 @@ class TestStrUnicodeSuperSubscripts:
 
     def test_polynomial_str_domains(self):
         res = str(poly.Polynomial([0, 1]))
-        tgt = "0.0 + 1.0·x"
+        tgt = "0.0 + 1.0Â·x"
         assert_equal(res, tgt)
 
         res = str(poly.Polynomial([0, 1], domain=[1, 2]))
-        tgt = "0.0 + 1.0·(-3.0 + 2.0x)"
+        tgt = "0.0 + 1.0Â·(-3.0 + 2.0x)"
         assert_equal(res, tgt)
 
 
@@ -375,8 +375,8 @@ def test_set_default_printoptions():
     assert_equal(str(p), "1.0 + 2.0 x + 3.0 x**2")
     assert_equal(str(c), "1.0 + 2.0 T_1(x) + 3.0 T_2(x)")
     poly.set_default_printstyle("unicode")
-    assert_equal(str(p), "1.0 + 2.0·x + 3.0·x²")
-    assert_equal(str(c), "1.0 + 2.0·T₁(x) + 3.0·T₂(x)")
+    assert_equal(str(p), "1.0 + 2.0Â·x + 3.0Â·xÂ²")
+    assert_equal(str(c), "1.0 + 2.0Â·Tâ‚(x) + 3.0Â·Tâ‚‚(x)")
     with pytest.raises(ValueError):
         poly.set_default_printstyle("invalid_input")
 
@@ -389,8 +389,8 @@ def test_complex_coefficients():
     # Python complex
     p2 = poly.Polynomial(array(coefs, dtype=object))
     poly.set_default_printstyle("unicode")
-    assert_equal(str(p1), "1j + (1+1j)·x - (2-2j)·x² + (3+0j)·x³")
-    assert_equal(str(p2), "1j + (1+1j)·x + (-2+2j)·x² + (3+0j)·x³")
+    assert_equal(str(p1), "1j + (1+1j)Â·x - (2-2j)Â·xÂ² + (3+0j)Â·xÂ³")
+    assert_equal(str(p2), "1j + (1+1j)Â·x + (-2+2j)Â·xÂ² + (3+0j)Â·xÂ³")
     poly.set_default_printstyle("ascii")
     assert_equal(str(p1), "1j + (1+1j) x - (2-2j) x**2 + (3+0j) x**3")
     assert_equal(str(p2), "1j + (1+1j) x + (-2+2j) x**2 + (3+0j) x**3")
@@ -399,11 +399,11 @@ def test_complex_coefficients():
 @pytest.mark.parametrize(
     ("coefs", "tgt"),
     (
-        (array([Fraction(1, 2), Fraction(3, 4)], dtype=object), ("1/2 + 3/4·x")),
-        (array([1, 2, Fraction(5, 7)], dtype=object), ("1 + 2·x + 5/7·x²")),
+        (array([Fraction(1, 2), Fraction(3, 4)], dtype=object), ("1/2 + 3/4Â·x")),
+        (array([1, 2, Fraction(5, 7)], dtype=object), ("1 + 2Â·x + 5/7Â·xÂ²")),
         (
             array([Decimal("1.00"), Decimal("2.2"), 3], dtype=object),
-            ("1.00 + 2.2·x + 3·x²"),
+            ("1.00 + 2.2Â·x + 3Â·xÂ²"),
         ),
     ),
 )
@@ -416,8 +416,8 @@ def test_numeric_object_coefficients(coefs, tgt):
 @pytest.mark.parametrize(
     ("coefs", "tgt"),
     (
-        (array([1, 2, "f"], dtype=object), "1 + 2·x + f·x²"),
-        (array([1, 2, [3, 4]], dtype=object), "1 + 2·x + [3, 4]·x²"),
+        (array([1, 2, "f"], dtype=object), "1 + 2Â·x + fÂ·xÂ²"),
+        (array([1, 2, [3, 4]], dtype=object), "1 + 2Â·x + [3, 4]Â·xÂ²"),
     ),
 )
 def test_nonnumeric_object_coefficients(coefs, tgt):
@@ -433,7 +433,7 @@ class TestFormat:
     def test_format_unicode(self):
         poly.set_default_printstyle("ascii")
         p = poly.Polynomial([1, 2, 0, -1])
-        assert_equal(format(p, "unicode"), "1.0 + 2.0·x + 0.0·x² - 1.0·x³")
+        assert_equal(format(p, "unicode"), "1.0 + 2.0Â·x + 0.0Â·xÂ² - 1.0Â·xÂ³")
 
     def test_format_ascii(self):
         poly.set_default_printstyle("unicode")
@@ -455,12 +455,12 @@ class TestFormat:
 @pytest.mark.parametrize(
     ("poly", "tgt"),
     (
-        (poly.Polynomial, "1.0 + 2.0·z + 3.0·z²"),
-        (poly.Chebyshev, "1.0 + 2.0·T₁(z) + 3.0·T₂(z)"),
-        (poly.Hermite, "1.0 + 2.0·H₁(z) + 3.0·H₂(z)"),
-        (poly.HermiteE, "1.0 + 2.0·He₁(z) + 3.0·He₂(z)"),
-        (poly.Laguerre, "1.0 + 2.0·L₁(z) + 3.0·L₂(z)"),
-        (poly.Legendre, "1.0 + 2.0·P₁(z) + 3.0·P₂(z)"),
+        (poly.Polynomial, "1.0 + 2.0Â·z + 3.0Â·zÂ²"),
+        (poly.Chebyshev, "1.0 + 2.0Â·Tâ‚(z) + 3.0Â·Tâ‚‚(z)"),
+        (poly.Hermite, "1.0 + 2.0Â·Hâ‚(z) + 3.0Â·Hâ‚‚(z)"),
+        (poly.HermiteE, "1.0 + 2.0Â·Heâ‚(z) + 3.0Â·Heâ‚‚(z)"),
+        (poly.Laguerre, "1.0 + 2.0Â·Lâ‚(z) + 3.0Â·Lâ‚‚(z)"),
+        (poly.Legendre, "1.0 + 2.0Â·Pâ‚(z) + 3.0Â·Pâ‚‚(z)"),
     ),
 )
 def test_symbol(poly, tgt):

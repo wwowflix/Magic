@@ -56,7 +56,6 @@ ProgressType = TypeVar("ProgressType")
 
 GetTimeCallable = Callable[[], float]
 
-
 _I = typing.TypeVar("_I", TextIO, BinaryIO)
 
 
@@ -736,7 +735,7 @@ class TaskProgressColumn(TextColumn):
             return Text("", style="progress.percentage")
         unit, suffix = filesize.pick_unit_and_suffix(
             int(speed),
-            ["", "×10³", "×10⁶", "×10⁹", "×10¹²"],
+            ["", "Ã—10Â³", "Ã—10â¶", "Ã—10â¹", "Ã—10Â¹Â²"],
             1000,
         )
         data_speed = speed / unit

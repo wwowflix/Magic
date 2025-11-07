@@ -1,8 +1,7 @@
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
-
 from __future__ import annotations
 
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
 # These errors need to be ignored as they come from the overload methods
 # which trigger two kind of errors in mypy:
 # * all of them do not have an implementation in this file
@@ -48,7 +47,6 @@ if TYPE_CHECKING:
         from typing import Self
     else:
         from typing_extensions import Self
-
 
 __all__ = [
     "X2",
@@ -21722,12 +21720,12 @@ class _EncodingMixin:
             Text of the ``text`` mark.
         theta : str, :class:`Theta`, Dict, :class:`ThetaDatum`, :class:`ThetaValue`
             * For arc marks, the arc length in radians if theta2 is not specified,
-              otherwise the start arc angle. (A value of 0 indicates up or “north”,
+              otherwise the start arc angle. (A value of 0 indicates up or "north",
               increasing values proceed clockwise.)
 
             * For text marks, polar coordinate angle in radians.
         theta2 : str, :class:`Theta2`, Dict, :class:`Theta2Datum`, :class:`Theta2Value`
-            The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+            The end angle of arc marks in radians. A value of 0 indicates up or "north",
             increasing values proceed clockwise.
         tooltip : str, :class:`Tooltip`, Dict, List, :class:`TooltipValue`
             The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding
@@ -21984,12 +21982,12 @@ class EncodeKwds(TypedDict, total=False):
         Text of the ``text`` mark.
     theta
         * For arc marks, the arc length in radians if theta2 is not specified, otherwise the
-          start arc angle. (A value of 0 indicates up or “north”, increasing values proceed
+          start arc angle. (A value of 0 indicates up or "north", increasing values proceed
           clockwise.)
 
         * For text marks, polar coordinate angle in radians.
     theta2
-        The end angle of arc marks in radians. A value of 0 indicates up or “north”,
+        The end angle of arc marks in radians. A value of 0 indicates up or "north",
         increasing values proceed clockwise.
     tooltip
         The tooltip text to show upon mouse hover. Specifying ``tooltip`` encoding overrides

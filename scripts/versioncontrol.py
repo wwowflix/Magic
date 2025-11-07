@@ -45,9 +45,7 @@ if TYPE_CHECKING:
     # TODO: Remove `if TYPE_CHECKING` when dropping support for Python 3.7.
     from typing import Literal
 
-
 __all__ = ["vcs"]
-
 
 logger = logging.getLogger(__name__)
 

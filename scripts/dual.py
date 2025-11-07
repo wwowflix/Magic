@@ -19,7 +19,6 @@ NumPy.
 
 import warnings
 
-
 warnings.warn(
     "The module numpy.dual is deprecated.  Instead of using dual, "
     "use the functions directly from numpy or scipy.",
@@ -58,7 +57,6 @@ import numpy.linalg as linpkg
 import numpy.fft as fftpkg
 from numpy.lib import i0
 import sys
-
 
 fft = fftpkg.fft
 ifft = fftpkg.ifft

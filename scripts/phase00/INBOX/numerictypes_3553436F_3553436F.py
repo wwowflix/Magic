@@ -133,7 +133,6 @@ from ._dtype import _kind_name
 # as numerictypes.bool, etc.
 from builtins import bool, int, float, complex, str, bytes
 
-
 # We use this later
 generic = allTypes["generic"]
 
@@ -562,7 +561,6 @@ def _scalar_type_key(typ):
 ScalarType = [int, float, complex, int, bool, bytes, str, memoryview]
 ScalarType += sorted(_concrete_types, key=_scalar_type_key)
 ScalarType = tuple(ScalarType)
-
 
 # Now add the types we've determined to this module
 for key in allTypes:

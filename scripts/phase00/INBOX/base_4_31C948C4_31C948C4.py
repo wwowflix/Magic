@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Base and utility classes for pandas objects.
 """
-
-from __future__ import annotations
-
 import textwrap
 from typing import (
     TYPE_CHECKING,
@@ -86,7 +85,6 @@ if TYPE_CHECKING:
         Categorical,
         Series,
     )
-
 
 _shared_docs: dict[str, str] = {}
 _indexops_doc_kwargs = {

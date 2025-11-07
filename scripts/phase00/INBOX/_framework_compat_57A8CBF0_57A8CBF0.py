@@ -6,7 +6,7 @@ import sys
 import os
 import functools
 import subprocess
-import sysconfig
+import magic_sysconfig as sysconfig
 
 
 @functools.lru_cache()

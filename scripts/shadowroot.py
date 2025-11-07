@@ -17,7 +17,7 @@
 
 from hashlib import md5 as md5_hash
 
-from ..common.by import By
+from scripts.common.by import By
 from .command import Command
 
 

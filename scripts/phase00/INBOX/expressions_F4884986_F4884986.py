@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Expressions
 -----------
@@ -5,9 +7,6 @@ Expressions
 Offer fast expression evaluation through numexpr
 
 """
-
-from __future__ import annotations
-
 import operator
 import warnings
 

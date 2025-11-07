@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-# mypy: allow-untyped-defs
-"""Version info, help messages, tracing configuration."""
-
 from __future__ import annotations
 
+# mypy: allow-untyped-defs
+"""Version info, help messages, tracing configuration."""
 from argparse import Action
 from collections.abc import Generator
 import os

@@ -18,7 +18,6 @@ import logging
 
 __all__ = ["convertCFFToCFF2", "main"]
 
-
 log = logging.getLogger("fontTools.cffLib")
 
 

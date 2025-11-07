@@ -15,7 +15,6 @@ from . import PY313
 from . import PY314
 from .leakcheck import fails_leakcheck
 
-
 # We manually manage locks in many tests
 # pylint:disable=consider-using-with
 # pylint:disable=too-many-public-methods

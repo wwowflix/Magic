@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 # This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-
 import typing
 from collections.abc import Iterable
 
@@ -38,7 +37,6 @@ PKCS12PrivateKeyTypes = typing.Union[
     ed25519.Ed25519PrivateKey,
     ed448.Ed448PrivateKey,
 ]
-
 
 PKCS12Certificate = rust_pkcs12.PKCS12Certificate
 
@@ -108,7 +106,6 @@ class PKCS12KeyAndCertificates:
 
 load_key_and_certificates = rust_pkcs12.load_key_and_certificates
 load_pkcs12 = rust_pkcs12.load_pkcs12
-
 
 _PKCS12CATypes = typing.Union[
     x509.Certificate,

@@ -270,8 +270,8 @@ def test_empty_usecols():
     assert res.dtype == np.dtype([])
 
 
-@pytest.mark.parametrize("c1", ["a", "の", "🫕"])
-@pytest.mark.parametrize("c2", ["a", "の", "🫕"])
+@pytest.mark.parametrize("c1", ["a", "ã®", "ðŸ«•"])
+@pytest.mark.parametrize("c2", ["a", "ã®", "ðŸ«•"])
 def test_large_unicode_characters(c1, c2):
     # c1 and c2 span ascii, 16bit and 32bit range.
     txt = StringIO(f"a,{c1},c,1.0\ne,{c2},2.0,g")
@@ -283,12 +283,12 @@ def test_large_unicode_characters(c1, c2):
 
 
 def test_unicode_with_converter():
-    txt = StringIO("cat,dog\nαβγ,δεζ\nabc,def\n")
+    txt = StringIO("cat,dog\nÎ±Î²Î³,Î´ÎµÎ¶\nabc,def\n")
     conv = {0: lambda s: s.upper()}
     res = np.loadtxt(
         txt, dtype=np.dtype("U12"), converters=conv, delimiter=",", encoding=None
     )
-    expected = np.array([["CAT", "dog"], ["ΑΒΓ", "δεζ"], ["ABC", "def"]])
+    expected = np.array([["CAT", "dog"], ["Î‘Î’Î“", "Î´ÎµÎ¶"], ["ABC", "def"]])
     assert_equal(res, expected)
 
 
@@ -487,7 +487,7 @@ def test_object_cleanup_on_read_error():
 )
 def test_character_not_bytes_compatible():
     """Test exception when a character cannot be encoded as 'S'."""
-    data = StringIO("–")  # == \-
+    data = StringIO("-")  # == \-
     with pytest.raises(ValueError):
         np.loadtxt(data, dtype="S5")
 

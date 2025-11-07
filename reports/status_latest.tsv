@@ -1,0 +1,12 @@
+Category	Metric	Value
+Scripts Implementation	Total	8036
+Scripts Implementation	READY	1447
+Scripts Implementation	%	18
+Coverage	%	63.7
+Readiness-47	Total	47
+Readiness-47	Passed	47
+Readiness-47	Failed	0
+Readiness-47	%	100
+Readiness-47	Source	verify_47_latest.json
+Disk	FreeGB	1759.31
+Disk	Used%	5.6

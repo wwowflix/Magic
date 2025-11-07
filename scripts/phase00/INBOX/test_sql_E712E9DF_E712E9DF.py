@@ -58,7 +58,6 @@ from pandas.io.sql import (
 if TYPE_CHECKING:
     import sqlalchemy
 
-
 pytestmark = [
     pytest.mark.filterwarnings(
         "ignore:Passing a BlockManager to DataFrame:DeprecationWarning"
@@ -966,7 +965,6 @@ adbc_connectable_types = [
     pytest.param("postgresql_adbc_types", marks=pytest.mark.db),
     "sqlite_adbc_types",
 ]
-
 
 all_connectable = sqlalchemy_connectable + ["sqlite_buildin"] + adbc_connectable
 

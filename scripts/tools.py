@@ -1,6 +1,6 @@
-# being a bit too dynamic
 from __future__ import annotations
 
+# being a bit too dynamic
 from math import ceil
 from typing import (
     TYPE_CHECKING,

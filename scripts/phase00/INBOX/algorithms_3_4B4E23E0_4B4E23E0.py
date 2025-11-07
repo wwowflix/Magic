@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 # This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-
 from cryptography import utils
 from cryptography.hazmat.decrepit.ciphers.algorithms import (
     ARC4 as ARC4,
@@ -88,7 +87,6 @@ utils.deprecated(
     name="ARC4",
 )
 
-
 utils.deprecated(
     TripleDES,
     __name__,
@@ -111,7 +109,6 @@ utils.deprecated(
     name="Blowfish",
 )
 
-
 utils.deprecated(
     CAST5,
     __name__,
@@ -123,7 +120,6 @@ utils.deprecated(
     name="CAST5",
 )
 
-
 utils.deprecated(
     IDEA,
     __name__,
@@ -134,7 +130,6 @@ utils.deprecated(
     utils.DeprecatedIn37,
     name="IDEA",
 )
-
 
 utils.deprecated(
     SEED,

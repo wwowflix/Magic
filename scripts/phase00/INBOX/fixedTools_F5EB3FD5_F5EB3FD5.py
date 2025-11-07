@@ -35,7 +35,6 @@ __all__ = [
     "versionToFixed",
 ]
 
-
 MAX_F2DOT14 = 0x7FFF / (1 << 14)
 
 

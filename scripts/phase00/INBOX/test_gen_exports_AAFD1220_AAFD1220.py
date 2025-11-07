@@ -13,7 +13,6 @@ try:
 except ImportError as error:
     skip_if_optional_else_raise(error)
 
-
 from trio._tools.gen_exports import (
     File,
     create_passthrough_args,

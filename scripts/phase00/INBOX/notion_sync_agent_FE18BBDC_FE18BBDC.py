@@ -1,5 +1,5 @@
 """
-Notion Sync Agent – Updates the MAGIC Automation Tracker with latest file metadata
+Notion Sync Agent - Updates the MAGIC Automation Tracker with latest file metadata
 """
 
 import os
@@ -40,7 +40,7 @@ def update_notion_row(row):
 
 def main():
     if not os.path.exists(PATCH_FILE):
-        print(f"❌ Patch file not found: {PATCH_FILE}")
+        print(f"âŒ Patch file not found: {PATCH_FILE}")
         return
 
     with open(PATCH_FILE, newline="", encoding="utf-8") as csvfile:
@@ -51,7 +51,7 @@ def main():
                     update_notion_row(row)
                     print(f"✅ Synced: {row['Filename']}")
                 except Exception as e:
-                    print(f"❌ Failed: {row['Filename']} → {e}")
+                    print(f"âŒ Failed: {row['Filename']} â†’ {e}")
 
 
 if __name__ == "__main__":

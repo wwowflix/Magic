@@ -16,11 +16,9 @@ except ImportError:
         "See https://pypi.org/project/cssselect/"
     )
 
-
 SelectorSyntaxError = external_cssselect.SelectorSyntaxError
 ExpressionError = external_cssselect.ExpressionError
 SelectorError = external_cssselect.SelectorError
-
 
 __all__ = ["SelectorSyntaxError", "ExpressionError", "SelectorError", "CSSSelector"]
 

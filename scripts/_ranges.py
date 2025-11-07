@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Helper functions to generate range-like data for DatetimeArray
 (and possibly TimedeltaArray/PeriodArray)
 """
-
-from __future__ import annotations
-
 import numpy as np
 
 from pandas._libs.lib import i8max

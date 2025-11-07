@@ -1,4 +1,6 @@
-$modulePath = "D:\MAGIC\scripts\phase11\module_A"
+# MAGIC_DYNAMIC_ROOT_GUARD
+if (-not (Get-Variable -Name Root -Scope Script -ErrorAction SilentlyContinue)) { \E:\MAGIC = (Get-Location).Path }
+$modulePath = "E:\MAGIC\scripts\phase11\module_A"
 $scripts = @(
     "11A_watchdog_agent_READY.py",
     "11A_file_integrity_checker_READY.py",

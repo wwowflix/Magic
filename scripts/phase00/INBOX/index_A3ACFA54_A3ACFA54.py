@@ -491,7 +491,7 @@ class PackageIndex(object):
         :param files: The files to send as a list of (fieldname, filename,
                       file_bytes) tuple.
         """
-        # Adapted from packaging, which in turn was adapted from
+        # Adapted from magic_packaging, which in turn was adapted from
         # http://code.activestate.com/recipes/146306
 
         parts = []

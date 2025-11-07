@@ -4,7 +4,6 @@ import weakref
 
 import greenlet
 
-
 from . import TestCase
 from .leakcheck import fails_leakcheck
 

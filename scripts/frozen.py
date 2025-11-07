@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 frozen (immutable) data structures to support MultiIndexing
 
@@ -6,9 +8,6 @@ These are used for:
 - .names (FrozenList)
 
 """
-
-from __future__ import annotations
-
 from typing import (
     Any,
     NoReturn,

@@ -73,30 +73,30 @@ class ABCPolyBase(abc.ABC):
     # Unicode character mappings for improved __str__
     _superscript_mapping = str.maketrans(
         {
-            "0": "⁰",
-            "1": "¹",
-            "2": "²",
-            "3": "³",
-            "4": "⁴",
-            "5": "⁵",
-            "6": "⁶",
-            "7": "⁷",
-            "8": "⁸",
-            "9": "⁹",
+            "0": "Ã¢ÂÂ°",
+            "1": "Ã‚Â¹",
+            "2": "Ã‚Â²",
+            "3": "Ã‚Â³",
+            "4": "Ã¢ÂÂ´",
+            "5": "Ã¢ÂÂµ",
+            "6": "Ã¢ÂÂ¶",
+            "7": "Ã¢ÂÂ·",
+            "8": "Ã¢ÂÂ¸",
+            "9": "Ã¢ÂÂ¹",
         }
     )
     _subscript_mapping = str.maketrans(
         {
-            "0": "₀",
-            "1": "₁",
-            "2": "₂",
-            "3": "₃",
-            "4": "₄",
-            "5": "₅",
-            "6": "₆",
-            "7": "₇",
-            "8": "₈",
-            "9": "₉",
+            "0": "Ã¢"šâ‚¬",
+            "1": "Ã¢"šÂ",
+            "2": "Ã¢"š"š",
+            "3": "Ã¢"šÆ’",
+            "4": "Ã¢"š"ž",
+            "5": "Ã¢"š"¦",
+            "6": "Ã¢"š" ",
+            "7": "Ã¢"š"¡",
+            "8": "Ã¢"šË†",
+            "9": "Ã¢"š"°",
         }
     )
     # Some fonts don't support full unicode character ranges necessary for
@@ -383,7 +383,9 @@ class ABCPolyBase(abc.ABC):
                 "Subclasses must define either a basis_name, or override "
                 "_str_term_unicode(cls, i, arg_str)"
             )
-        return f"·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
+        return (
+            f"Ã‚Â·{cls.basis_name}{i.translate(cls._subscript_mapping)}" f"({arg_str})"
+        )
 
     @classmethod
     def _str_term_ascii(cls, i, arg_str):

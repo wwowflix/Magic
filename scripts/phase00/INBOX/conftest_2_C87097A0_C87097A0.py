@@ -432,7 +432,6 @@ def np_nat_fixture(request):
 # Generate cartesian product of np_nat_fixture:
 np_nat_fixture2 = np_nat_fixture
 
-
 # ----------------------------------------------------------------
 # Classes
 # ----------------------------------------------------------------
@@ -782,7 +781,6 @@ _narrow_series = {
     f"{dtype.__name__}-series": tm.make_rand_series(name="a", dtype=dtype)
     for dtype in tm.NARROW_NP_DTYPES
 }
-
 
 _index_or_series_objs = {**indices_dict, **_series, **_narrow_series}
 
@@ -1231,7 +1229,6 @@ def tz_aware_fixture(request):
 
 # Generate cartesian product of tz_aware_fixture:
 tz_aware_fixture2 = tz_aware_fixture
-
 
 _UTCS = ["utc", "dateutil/UTC", utc, tzutc(), timezone.utc]
 if zoneinfo is not None:

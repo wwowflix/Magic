@@ -17,7 +17,7 @@ import warnings
 import time
 import collections
 
-from .._importlib import metadata
+from scripts._importlib import metadata
 from .. import _entry_points
 
 from setuptools import Command
@@ -35,7 +35,7 @@ from pkg_resources import (
 import setuptools.unicode_utils as unicode_utils
 from setuptools.glob import glob
 
-from setuptools.extern import packaging
+from setuptools.extern import magic_packaging as packaging
 from setuptools.extern.jaraco.text import yield_lines
 from setuptools import SetuptoolsDeprecationWarning
 
@@ -761,4 +761,4 @@ def get_pkg_info_revision():
 
 
 class EggInfoDeprecationWarning(SetuptoolsDeprecationWarning):
-    """Deprecated behavior warning for EggInfo, bypassing suppression."""
+    """Deprecated behavior warning for EggInfo, bypassing suppression.

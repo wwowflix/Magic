@@ -25,7 +25,6 @@ from pandas.core.internals.blocks import NumpyBlock
 # Segregated collection of methods that require the BlockManager internal data
 # structure
 
-
 # TODO(ArrayManager) check which of those tests need to be rewritten to test the
 # equivalent for ArrayManager
 pytestmark = td.skip_array_manager_invalid_test

@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 A verbatim copy (vendored) of the spec from https://github.com/data-apis/dataframe-api
 """
-
-from __future__ import annotations
-
 from abc import (
     ABC,
     abstractmethod,

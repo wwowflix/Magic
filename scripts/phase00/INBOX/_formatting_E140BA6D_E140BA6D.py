@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 # traceback_exception_init() adapted from trio
 #
 # _ExceptionPrintContext and traceback_exception_format() copied from the standard
 # library
-from __future__ import annotations
-
 import collections.abc
 import sys
 import textwrap

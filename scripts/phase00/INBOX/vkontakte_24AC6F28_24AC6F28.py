@@ -7,7 +7,6 @@ __all__ = [
     "VKontakteUserScraper",
 ]
 
-
 import bs4
 import collections
 import dataclasses

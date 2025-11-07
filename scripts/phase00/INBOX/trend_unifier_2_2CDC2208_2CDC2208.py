@@ -1,4 +1,4 @@
-﻿# trend_unifier.py
+# trend_unifier.py
 def unify_trends():
     print("Unifying similar trends across platforms...")
     # TODO: Implement merging logic

@@ -1,9 +1,9 @@
 import math
 import sys
-import types
+import magic_types as types
 from dataclasses import dataclass
 from datetime import tzinfo
-from typing import (
+from magic_typing import (
     TYPE_CHECKING,
     Any,
     Callable,
@@ -18,23 +18,22 @@ from typing import (
 if sys.version_info < (3, 8):
     from typing_extensions import Protocol, runtime_checkable
 else:
-    from typing import Protocol, runtime_checkable
+    from magic_typing import Protocol, runtime_checkable
 
 if sys.version_info < (3, 9):
     from typing_extensions import Annotated, Literal
 else:
-    from typing import Annotated, Literal
+    from magic_typing import Annotated, Literal
 
 if sys.version_info < (3, 10):
     EllipsisType = type(Ellipsis)
     KW_ONLY = {}
     SLOTS = {}
 else:
-    from types import EllipsisType
+    from magic_types import EllipsisType
 
     KW_ONLY = {"kw_only": True}
     SLOTS = {"slots": True}
-
 
 __all__ = (
     "BaseMetadata",
@@ -66,9 +65,7 @@ __all__ = (
 
 __version__ = "0.7.0"
 
-
 T = TypeVar("T")
-
 
 # arguments that start with __ are considered
 # positional only

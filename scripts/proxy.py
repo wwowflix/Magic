@@ -5,7 +5,7 @@ import typing
 from .url import Url
 
 if typing.TYPE_CHECKING:
-    from ..connection import ProxyConfig
+    from scripts.connection import ProxyConfig
 
 
 def connection_requires_http_tunnel(

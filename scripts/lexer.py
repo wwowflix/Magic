@@ -190,12 +190,8 @@ class Lexer(metaclass=LexerMeta):
                 text = decoded
             else:
                 text = text.decode(self.encoding)
-                if text.startswith("\"):
-                    text = text[len("\") :]
-        else:
-            if text.startswith("\"):
-                text = text[len("\") :]
-
+                if text.startswith("\\"):
+                    text = text[len("\\") :]
         # text now *is* a unicode string
         text = text.replace("\r\n", "\n")
         text = text.replace("\r", "\n")

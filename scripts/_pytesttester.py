@@ -9,7 +9,6 @@ boiler plate for doing that is to put the following in the module
     test = PytestTester(__name__)
     del PytestTester
 
-
 Warnings filtering and other runtime settings should be dealt with in the
 ``pytest.ini`` file in the numpy repo root. The behavior of the test depends on
 whether or not that file is found as follows:

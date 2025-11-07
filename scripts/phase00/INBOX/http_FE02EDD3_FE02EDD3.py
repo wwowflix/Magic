@@ -21,7 +21,7 @@ from fsspec.utils import (
     tokenize,
 )
 
-from ..caching import AllBytes
+from scripts.caching import AllBytes
 
 # https://stackoverflow.com/a/15926317/3821154
 ex = re.compile(r"""<(a|A)\s+(?:[^>]*?\s+)?(href|HREF)=["'](?P<url>[^"']+)""")

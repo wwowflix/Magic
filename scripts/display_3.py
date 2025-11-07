@@ -17,16 +17,13 @@ from .schema import SCHEMA_VERSION
 if TYPE_CHECKING:
     from altair.vegalite.display import DefaultRendererReturnType
 
-
 VEGALITE_VERSION: Final = SCHEMA_VERSION.lstrip("v")
 VEGA_VERSION: Final = "5"
 VEGAEMBED_VERSION: Final = "6"
 
-
 # ==============================================================================
 # VegaLite v5 renderer logic
 # ==============================================================================
-
 
 # The MIME type for Vega-Lite 5.x releases.
 VEGALITE_MIME_TYPE: Final = "application/vnd.vegalite.v5+json"
@@ -137,7 +134,6 @@ html_renderer = HTMLRenderer(
     vegaembed_version=VEGAEMBED_VERSION,
     vegalite_version=VEGALITE_VERSION,
 )
-
 
 olli_renderer = HTMLRenderer(
     mode="vega-lite",

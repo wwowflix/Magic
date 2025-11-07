@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, Protocol, TypeVar
 
 import attrs
 
-from .._util import is_main_thread
+from scripts._util import is_main_thread
 from ._run_context import GLOBAL_RUN_CONTEXT
 
 if TYPE_CHECKING:

@@ -10,7 +10,6 @@ import sys
 from distutils.core import Command
 from distutils.errors import DistutilsOptionError
 
-
 # Extension for Python source files.
 PYTHON_SOURCE_EXTENSION = ".py"
 

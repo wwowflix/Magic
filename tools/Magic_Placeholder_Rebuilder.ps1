@@ -1,16 +1,18 @@
 param(
-    [string]$csvPath = "D:\Final_File_FOR_Automate.csv",
-    [string]$rootPath = "D:\MAGIC\scripts"
+    [string]$csvPath = "E:\Final_File_FOR_Automate.csv",
+    [string]$rootPath = "E:\MAGIC\scripts"
 )
 
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 Write-Host "Starting Placeholder Rebuilder..."
 
-# 1️⃣ Delete old placeholder files (_READY.py only)
+# 1ï¸âƒ£ Delete old placeholder files (_READY.py only)
 Write-Host "Cleaning old placeholders..."
 Get-ChildItem -Path $rootPath -Recurse -Filter "*_READY.py" -File |
     Remove-Item -Force
 
-# 2️⃣ Read CSV and loop through entries
+# 2ï¸âƒ£ Read CSV and loop through entries
 $csv = Import-Csv $csvPath
 $report = @()
 
@@ -40,8 +42,8 @@ foreach ($row in $csv) {
     }
 }
 
-# 3️⃣ Write final report
-$reportFile = "D:\MAGIC\outputs\placeholder_rebuild_report.txt"
+# 3ï¸âƒ£ Write final report
+$reportFile = "E:\MAGIC\outputs\placeholder_rebuild_report.txt"
 $report | Out-File -FilePath $reportFile -Encoding UTF8
 
 Write-Host "Placeholder rebuild complete! Report saved to $reportFile"

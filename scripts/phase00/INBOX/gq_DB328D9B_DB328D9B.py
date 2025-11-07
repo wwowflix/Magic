@@ -29,7 +29,6 @@ try:
 except ImportError:
     XARRAY_INSTALLED = False
 
-
 from cmdstanpy.cmdstan_args import Method
 from cmdstanpy.utils import build_xarray_data, flatten_chains, get_logger
 from cmdstanpy.utils.stancsv import scan_generic_csv

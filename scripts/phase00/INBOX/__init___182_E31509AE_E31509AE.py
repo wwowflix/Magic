@@ -143,19 +143,19 @@ class BaseAbstractFixtures:
         Scenario that is used for glob edge cases cp/get/put tests.
         Creates the following directory and file structure:
 
-        📁 source
-        ├── 📄 file1
-        ├── 📄 file2
-        ├── 📁 subdir0
-        │   ├── 📄 subfile1
-        │   ├── 📄 subfile2
-        │   └── 📁 nesteddir
-        │       └── 📄 nestedfile
-        └── 📁 subdir1
-            ├── 📄 subfile1
-            ├── 📄 subfile2
-            └── 📁 nesteddir
-                └── 📄 nestedfile
+        ðŸ“ source
+        â”œâ”€â”€ ðŸ“„ file1
+        â”œâ”€â”€ ðŸ“„ file2
+        â”œâ”€â”€ ðŸ“ subdir0
+        â”‚   â”œâ”€â”€ ðŸ“„ subfile1
+        â”‚   â”œâ”€â”€ ðŸ“„ subfile2
+        â”‚   â””â”€â”€ ðŸ“ nesteddir
+        â”‚       â””â”€â”€ ðŸ“„ nestedfile
+        â””â”€â”€ ðŸ“ subdir1
+            â”œâ”€â”€ ðŸ“„ subfile1
+            â”œâ”€â”€ ðŸ“„ subfile2
+            â””â”€â”€ ðŸ“ nesteddir
+                â””â”€â”€ ðŸ“„ nestedfile
         """
         source = some_join(some_path, "source")
         some_fs.touch(some_join(source, "file1"))
@@ -176,14 +176,14 @@ class BaseAbstractFixtures:
         Scenario that is used for many cp/get/put tests. Creates the following
         directory and file structure:
 
-        📁 source
-        ├── 📄 file1
-        ├── 📄 file2
-        └── 📁 subdir
-            ├── 📄 subfile1
-            ├── 📄 subfile2
-            └── 📁 nesteddir
-                └── 📄 nestedfile
+        ðŸ“ source
+        â”œâ”€â”€ ðŸ“„ file1
+        â”œâ”€â”€ ðŸ“„ file2
+        â””â”€â”€ ðŸ“ subdir
+            â”œâ”€â”€ ðŸ“„ subfile1
+            â”œâ”€â”€ ðŸ“„ subfile2
+            â””â”€â”€ ðŸ“ nesteddir
+                â””â”€â”€ ðŸ“„ nestedfile
         """
         source = some_join(some_path, "source")
         subdir = some_join(source, "subdir")
@@ -201,10 +201,10 @@ class BaseAbstractFixtures:
         Scenario that is used to check cp/get/put on directory and file with
         the same name prefixes. Creates the following directory and file structure:
 
-        📁 source
-        ├── 📄 subdir.txt
-        └── 📁 subdir
-            └── 📄 subfile.txt
+        ðŸ“ source
+        â”œâ”€â”€ ðŸ“„ subdir.txt
+        â””â”€â”€ ðŸ“ subdir
+            â””â”€â”€ ðŸ“„ subfile.txt
         """
         source = some_join(some_path, "source")
         subdir = some_join(source, "subdir")
@@ -220,8 +220,8 @@ class BaseAbstractFixtures:
         Scenario that is used to check cp/get/put files order when source and
         destination are lists. Creates the following directory and file structure:
 
-        📁 source
-        └── 📄 {hashed([0-9])}.txt
+        ðŸ“ source
+        â””â”€â”€ ðŸ“„ {hashed([0-9])}.txt
         """
         source = some_join(some_path, "source")
         for i in range(10):

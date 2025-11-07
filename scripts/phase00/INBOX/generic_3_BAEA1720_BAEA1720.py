@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Define the SeriesGroupBy and DataFrameGroupBy
 classes that hold the groupby interfaces (and some implementations).
@@ -5,9 +7,6 @@ classes that hold the groupby interfaces (and some implementations).
 These are user facing as the result of the ``df.groupby(...)`` operations,
 which here returns a DataFrameGroupBy object.
 """
-
-from __future__ import annotations
-
 from collections import abc
 from functools import partial
 from textwrap import dedent
@@ -831,10 +830,10 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
     User-defined function for aggregation
 
     >>> df.groupby('A').agg(lambda x: sum(x) + 2)
-        B	       C
+        B          C
     A
-    1	5	2.590715
-    2	9	2.704907
+    1   5   2.590715
+    2   9   2.704907
 
     Different aggregations per column
 
@@ -1713,7 +1712,7 @@ class DataFrameGroupBy(GroupBy[DataFrame]):
         ascending : bool, default False
             Sort in ascending order.
         dropna : bool, default True
-            Don’t include counts of rows that contain NA values.
+            Don't include counts of rows that contain NA values.
 
         Returns
         -------

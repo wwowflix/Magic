@@ -20,7 +20,7 @@ import os
 import platform
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from pathlib import Path
 from typing import Optional
 

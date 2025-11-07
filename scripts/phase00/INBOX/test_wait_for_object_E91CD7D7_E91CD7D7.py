@@ -9,11 +9,14 @@ pytestmark = pytest.mark.skipif(not on_windows, reason="windows only")
 import trio
 
 from .. import _core, _timeouts
-from .._core._tests.tutil import slow
+from scripts._core._tests.tutil import slow
 
 if on_windows:
-    from .._core._windows_cffi import Handle, ffi, kernel32
-    from .._wait_for_object import WaitForMultipleObjects_sync, WaitForSingleObject
+    from scripts._core._windows_cffi import Handle, ffi, kernel32
+    from scripts._wait_for_object import (
+        WaitForMultipleObjects_sync,
+        WaitForSingleObject,
+    )
 
 
 def test_WaitForMultipleObjects_sync() -> None:

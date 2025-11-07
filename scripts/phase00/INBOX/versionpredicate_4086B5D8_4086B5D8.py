@@ -4,7 +4,6 @@ import re
 import distutils.version
 import operator
 
-
 re_validPackage = re.compile(r"(?i)^\s*([a-z_]\w*(?:\.[a-z_]\w*)*)(.*)", re.ASCII)
 # (package) (rest)
 

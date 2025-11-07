@@ -694,7 +694,7 @@ class Syntax(JupyterMixin):
         _Segment = Segment
         new_line = _Segment("\n")
 
-        line_pointer = "> " if options.legacy_windows else "❱ "
+        line_pointer = "> " if options.legacy_windows else "â± "
 
         (
             background_style,

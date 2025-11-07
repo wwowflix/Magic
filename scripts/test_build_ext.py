@@ -65,7 +65,6 @@ def test_multi_fortran_libs_link(tmp_path):
                 config.add_extension("dummyext", sources=["_dummy.c"], libraries=["dummy1", "dummy2"])
                 return config
 
-
             if __name__ == "__main__":
                 import sys
                 sys.path.insert(0, r"{srctree}")

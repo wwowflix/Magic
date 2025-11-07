@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sys
-from typing import (
+from magic_typing import (
     Any,
     Sequence,
     TYPE_CHECKING,
@@ -17,7 +17,7 @@ from numpy import (
 )
 
 if sys.version_info >= (3, 8):
-    from typing import Protocol
+    from magic_typing import Protocol
 
     HAVE_PROTOCOL = True
 else:

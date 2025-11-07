@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from magic_typing import Dict
 
 
 def apply_patch(text: str, replacements: Dict[str, str]) -> str:

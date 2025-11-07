@@ -29,7 +29,6 @@ if TYPE_CHECKING:
 
     from fsspec.spec import AbstractFileSystem
 
-
 DEFAULT_BLOCK_SIZE = 5 * 2**20
 
 T = TypeVar("T")
@@ -198,7 +197,6 @@ def seek_delimiter(file: IO[bytes], delimiter: bytes, blocksize: int) -> bool:
     blocksize: int
         Number of bytes to read from the file at once.
 
-
     Returns
     -------
     Returns True if a delimiter was found, False if at file start or end.
@@ -252,7 +250,6 @@ def read_block(
         Ensure reading starts and stops at delimiter bytestring
     split_before: bool (optional)
         Start/stop read *before* delimiter bytestring.
-
 
     If using the ``delimiter=`` keyword argument we ensure that the read
     starts and stops at delimiter boundaries that follow the locations

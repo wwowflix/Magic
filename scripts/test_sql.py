@@ -58,7 +58,6 @@ from pandas.io.sql import (
 if TYPE_CHECKING:
     import sqlalchemy
 
-
 pytestmark = [
     pytest.mark.filterwarnings(
         "ignore:Passing a BlockManager to DataFrame:DeprecationWarning"
@@ -966,7 +965,6 @@ adbc_connectable_types = [
     pytest.param("postgresql_adbc_types", marks=pytest.mark.db),
     "sqlite_adbc_types",
 ]
-
 
 all_connectable = sqlalchemy_connectable + ["sqlite_buildin"] + adbc_connectable
 
@@ -4385,3 +4383,7 @@ def test_xsqlite_if_exists(sqlite_buildin):
         (5, "E"),
     ]
     drop_table(table_name, sqlite_buildin)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

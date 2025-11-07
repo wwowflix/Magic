@@ -33,16 +33,16 @@ from .. import (
     sleep,
     sleep_forever,
 )
-from .._core._tests.tutil import skip_if_fbsd_pipes_broken, slow
-from ..lowlevel import open_process
-from ..testing import MockClock, assert_no_checkpoints, wait_all_tasks_blocked
+from scripts._core._tests.tutil import skip_if_fbsd_pipes_broken, slow
+from scripts.lowlevel import open_process
+from scripts.testing import MockClock, assert_no_checkpoints, wait_all_tasks_blocked
 
 if TYPE_CHECKING:
     from types import FrameType
 
     from typing_extensions import TypeAlias
 
-    from .._abc import ReceiveStream
+    from scripts._abc import ReceiveStream
 
 if sys.platform == "win32":
     SignalType: TypeAlias = None
@@ -587,7 +587,7 @@ async def test_wait_reapable_fails_no_pidfd(
 def test_waitid_eintr() -> None:
     # This only matters on PyPy (where we're coding EINTR handling
     # ourselves) but the test works on all waitid platforms.
-    from .._subprocess_platform import wait_child_exiting
+    from scripts._subprocess_platform import wait_child_exiting
 
     if TYPE_CHECKING and (sys.platform == "win32" or sys.platform == "darwin"):
         return
@@ -598,7 +598,7 @@ def test_waitid_eintr() -> None:
     # despite the TYPE_CHECKING early return silencing warnings about signal.SIGALRM etc
     # this import is still checked on win32&darwin and raises [attr-defined].
     # Linux doesn't raise [attr-defined] though, so we need [unused-ignore]
-    from .._subprocess_platform.waitid import (  # type: ignore[attr-defined, unused-ignore]
+    from scripts._subprocess_platform.waitid import (  # type: ignore[attr-defined, unused-ignore]
         sync_wait_reapable,
     )
 

@@ -6,8 +6,8 @@ import hashlib
 import os
 from textwrap import dedent
 
-from ..cache import BaseCache, SeparateBodyBaseCache
-from ..controller import CacheController
+from scripts.cache import BaseCache, SeparateBodyBaseCache
+from scripts.controller import CacheController
 
 try:
     FileNotFoundError

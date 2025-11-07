@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Charset-Normalizer
 ~~~~~~~~~~~~~~
@@ -8,20 +10,17 @@ All IANA character set names for which the Python core library provides codecs a
 
 Basic usage:
    >>> from charset_normalizer import from_bytes
-   >>> results = from_bytes('Bсеки човек има право на образование. Oбразованието!'.encode('utf_8'))
+   >>> results = from_bytes('BÑÐµÐºÐ¸ Ñ‡Ð¾Ð²ÐµÐº Ð¸Ð¼Ð° Ð¿Ñ€Ð°Ð²Ð¾ Ð½Ð° Ð¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ. OÐ±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸ÐµÑ‚Ð¾!'.encode('utf_8'))
    >>> best_guess = results.best()
    >>> str(best_guess)
-   'Bсеки човек има право на образование. Oбразованието!'
+   'BÑÐµÐºÐ¸ Ñ‡Ð¾Ð²ÐµÐº Ð¸Ð¼Ð° Ð¿Ñ€Ð°Ð²Ð¾ Ð½Ð° Ð¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ. OÐ±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸ÐµÑ‚Ð¾!'
 
 Others methods and usages are available - see the full documentation
 at <https://github.com/Ousret/charset_normalizer>.
 :copyright: (c) 2021 by Ahmed TAHRI
 :license: MIT, see LICENSE for more details.
 """
-
-from __future__ import annotations
-
-import logging
+import magic_logging as logging
 
 from .api import from_bytes, from_fp, from_path, is_binary
 from .legacy import detect

@@ -11,8 +11,8 @@ from copy import copy
 from . import base
 from .. import _ihatexml
 from .. import constants
-from ..constants import namespaces
-from .._utils import moduleFactoryFactory
+from scripts.constants import namespaces
+from scripts._utils import moduleFactoryFactory
 
 tag_regexp = re.compile("{([^}]*)}(.*)")
 

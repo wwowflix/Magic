@@ -1,6 +1,6 @@
-﻿from secrets import *
+from secrets import *
 
-print("🔐 Testing secrets.py values...\n")
+print("ðŸ” Testing secrets.py values...\n")
 
 print(f"✅ REDDIT_CLIENT_ID: {REDDIT_CLIENT_ID}")
 print(f"✅ REDDIT_CLIENT_SECRET: {REDDIT_CLIENT_SECRET}")
@@ -19,4 +19,4 @@ if all(
 ):
     print("\n✅ All secrets loaded successfully!")
 else:
-    print("\n❌ One or more secrets are missing or empty.")
+    print("\nâŒ One or more secrets are missing or empty.")

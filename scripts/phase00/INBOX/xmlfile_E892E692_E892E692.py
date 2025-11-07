@@ -4,7 +4,6 @@ from __future__ import absolute_import
 
 """Implements the lxml.etree.xmlfile API using the standard library xml.etree"""
 
-
 from contextlib import contextmanager
 
 from xml.etree.ElementTree import (
