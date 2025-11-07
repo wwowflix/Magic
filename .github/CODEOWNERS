@@ -1,1 +1,36 @@
-* @wwowflix
+# Phase 11 ownership (A–Z, AA, AB)
+scripts/phase11/module_a/**     @your-org/phase11-owners
+scripts/phase11/module_b/**     @your-org/phase11-owners
+scripts/phase11/module_c/**     @your-org/phase11-owners
+scripts/phase11/module_d/**     @your-org/phase11-owners
+scripts/phase11/module_e/**     @your-org/phase11-owners
+scripts/phase11/module_f/**     @your-org/phase11-owners
+scripts/phase11/module_g/**     @your-org/phase11-owners
+scripts/phase11/module_h/**     @your-org/phase11-owners
+scripts/phase11/module_i/**     @your-org/phase11-owners
+scripts/phase11/module_j/**     @your-org/phase11-owners
+scripts/phase11/module_k/**     @your-org/phase11-owners
+scripts/phase11/module_l/**     @your-org/phase11-owners
+scripts/phase11/module_m/**     @your-org/phase11-owners
+scripts/phase11/module_n/**     @your-org/phase11-owners
+scripts/phase11/module_o/**     @your-org/phase11-owners
+scripts/phase11/module_p/**     @your-org/phase11-owners
+scripts/phase11/module_q/**     @your-org/phase11-owners
+scripts/phase11/module_r/**     @your-org/phase11-owners
+scripts/phase11/module_s/**     @your-org/phase11-owners
+scripts/phase11/module_t/**     @your-org/phase11-owners
+scripts/phase11/module_u/**     @your-org/phase11-owners
+scripts/phase11/module_v/**     @your-org/phase11-owners
+scripts/phase11/module_w/**     @your-org/phase11-owners
+scripts/phase11/module_x/**     @your-org/phase11-owners
+scripts/phase11/module_y/**     @your-org/phase11-owners
+scripts/phase11/module_z/**     @your-org/phase11-owners
+scripts/phase11/module_aa/**    @your-org/phase11-owners
+scripts/phase11/module_ab/**    @your-org/phase11-owners
+
+# Tests and CI
+tests/smoke/**                  @your-org/qa
+.github/workflows/**            @your-org/infra
+
+# Default fallback
+*                               @your-org/core
