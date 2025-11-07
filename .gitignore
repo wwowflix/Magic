@@ -199,3 +199,4 @@ _gh_output.txt
 outputs/reports/*.json
 outputs/reports/*.tsv
 outputs/logs/
+scripts/_compat_numpy.py
