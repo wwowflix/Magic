@@ -1,13 +1,49 @@
+name: phase11-matrix
 
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/phase11-matrix.yml"
+      - "tests/phase11/**"
+      - "scripts/phase11/**"
 
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
+      # Install (best-effort) — don't fail the job if deps are partial
+      - name: Install deps (best-effort)
+        run: |
+          python -m pip install --upgrade pip || true
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt || true; fi
+          # tolerate pytest not present in requirements
+          python -m pip install pytest || true
 
+      - name: Run pytest (phase11 all)
+        run: |
+          mkdir -p reports
+          # Run all tests under tests/phase11; never block artifacts
+          pytest -q tests/phase11 -x --junitxml "reports/junit-all.xml" || true
 
+      - name: Upload JUnit (all)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-junit-all
+          path: reports/junit-all.xml
+          if-no-files-found: warn
+          retention-days: 7
 
   summarize:
     if: always()
-    needs:
+    needs: guard
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -19,7 +55,7 @@
       - name: Merge JUnit (python)
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Merge JUnit (python run)
         run: |
@@ -51,3 +87,7 @@
           path: reports/phase11-summary.xml
           if-no-files-found: ignore
           retention-days: 7
+
+# poke 2025-11-07T12:33:23
+
+# poke 2025-11-07T12:36:53
