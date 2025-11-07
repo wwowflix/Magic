@@ -49,3 +49,20 @@ jobs:
       - name: Run module guard
         run: |
           pytest -q "tests/phase11/module_${{ matrix.module }}.py" -x
+  summarize:
+    if: always()
+    needs: guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: reports/
+      - name: Merge JUnit
+        run: |
+          pip install junitparser
+          python -m junitparser merge reports/**/*.xml reports/phase11-summary.xml
+      - name: Upload merged report
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-summary
+          path: reports/phase11-summary.xml
