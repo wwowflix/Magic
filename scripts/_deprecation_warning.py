@@ -1,6 +1,8 @@
-class SetuptoolsDeprecationWarning(Warning):
-    """
-    Base class for warning deprecations in ``setuptools``
+# -*- coding: utf-8 -*-
+"""Compatibility shim for setuptools-style deprecation warning used by tests."""
 
-    This class is not derived from ``DeprecationWarning``, and as such is
-    visible by default.
+__all__ = ["SetuptoolsDeprecationWarning"]
+
+class SetuptoolsDeprecationWarning(Warning):
+    """Base class for warning deprecations (visible by default)."""
+    pass
