@@ -46,8 +46,9 @@ jobs:
         run: |
           Write-Host "Job: $env:GITHUB_JOB :: module = ${{ matrix.module }}"
 
-      - name: Run module guard
-        run: |
+      - name: Prepare reports dir
+  run: mkdir -p reports
+
           pytest -q "tests/phase11/module_${{ matrix.module }}.py" -x
   summarize:
     if: always()
