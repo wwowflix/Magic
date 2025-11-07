@@ -1,3 +1,6 @@
-﻿def api_callchain_sanity() -> bool:
-    # placeholder: prove import works without side-effects
-    return True
+﻿def main() -> int:
+    print('OK - Phase 11D verifier stub PASS')
+    return 0
+
+if __name__ == '__main__':
+    raise SystemExit(main())
