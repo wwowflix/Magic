@@ -14,8 +14,7 @@ import pkgutil
 import sys
 import types
 import zipimport
-
-from . import DistlibException
+from .DistlibException import DistlibException
 from .util import cached_property, get_cache_base, Cache
 
 logger = logging.getLogger(__name__)
