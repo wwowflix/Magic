@@ -200,3 +200,5 @@ outputs/reports/*.json
 outputs/reports/*.tsv
 outputs/logs/
 scripts/_compat_numpy.py
+
+scripts/_compat_numpy.py
