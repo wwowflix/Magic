@@ -1,0 +1,8 @@
+6.3.1	python tools\cost_quota\check_spend.py	Under budget	PASS	spend OK (stub)
+6.3.2	python tools\cost_quota\check_quota.py	>= 15% remaining	PASS	quota OK (stub)
+6.3.3	python tools\chaos\inject_failures.py	Auto-recovery observed	✅ PASS	chaos injected (stub)
+6.3.4	pytest smokes + guards	Suite stays green	✅ PASS	See week6 logs
+6.3.3	chaos inject + log	Recovery observed	✅ PASS	outputs\logs\week6\chaos_20251108_015550.log
+6.3.4	phase11 guards matrix	All guards green	✅ PASS	outputs\logs\week6\phase11_guards_after_chaos.log
+6.3.3	chaos inject + log	Recovery observed	✅ PASS	outputs\logs\week6\chaos_20251108_020645.log
+6.3.4-S	phase11 smokes slice	Suite stays green	⛔ FAIL (1)	outputs\logs\week6\post_chaos_phase11_smokes.log
