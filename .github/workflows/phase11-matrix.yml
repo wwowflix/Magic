@@ -1,4 +1,4 @@
-name: Phase 11 — Matrix (Guards)
+name: Phase 11 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Matrix (Guards)
 
 on:
   pull_request:
@@ -23,10 +23,31 @@ jobs:
 
       - name: Install deps (minimal)
         shell: pwsh
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: '1'
+          PIP_NO_PYTHON_VERSION_WARNING: '1'
         run: |
-          python -m pip install -U pip
-          if (Test-Path requirements.txt) { pip install -r requirements.txt } else { pip install pytest }
-
+          $ErrorActionPreference = 'Stop'
+          $ProgressPreference    = 'SilentlyContinue'
+          $max = 3
+          for ($i=1; $i -le $max; $i++) {
+            try {
+              python -m pip install -U pip setuptools wheel
+              if (Test-Path requirements-orchestrator.txt) {
+                pip install -r requirements-orchestrator.txt
+              } elseif (Test-Path requirements-ci.txt) {
+                pip install -r requirements-ci.txt
+              } elseif (Test-Path requirements.txt) {
+                pip install -r requirements.txt
+              } else {
+                pip install pytest psutil
+              }
+              break
+            } catch {
+              if ($i -eq $max) { throw }
+              Start-Sleep -Seconds (15 * $i)
+            }
+          }
       - name: Run orchestrator
         shell: pwsh
         run: |
