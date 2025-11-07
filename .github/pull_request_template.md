@@ -1,4 +1,1 @@
-# Checklist
-- [ ] Tests pass
-- [ ] mypy passes
-- [ ] No secrets / audit clean
+## Summary\n- ...\n\n## Checks\n- [ ] Phase11 matrix green\n- [ ] Orchestrator TSV attached
