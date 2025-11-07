@@ -1,1 +1,122 @@
-﻿# (paste the YAML above)
+﻿name: Phase 11 — Smokes + Guards (Matrix)
+
+on:
+  pull_request:
+    paths:
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/smoke-phase11.yml"
+      - "tools/**"
+  workflow_dispatch:
+
+jobs:
+  discover:
+    name: Discover Phase11 modules
+    runs-on: windows-latest
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: discover
+        shell: pwsh
+        run: |
+          $root = "scripts/phase11"
+          if (-not (Test-Path $root)) { throw "Missing $root" }
+
+          $mods = Get-ChildItem $root -Directory -Filter "module_*" |
+            ForEach-Object { $_.Name -replace '^module_','' } |
+            Where-Object { $_ -match '^[a-z]{1,2}$' } |
+            Sort-Object -Unique
+
+          if (-not $mods) { throw "No module_* folders discovered." }
+
+          $json = ($mods | ConvertTo-Json -Compress)
+          "matrix=$json" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding UTF8
+          Write-Host "Matrix: $json"
+
+  orchestrator:
+    name: Run Orchestrator (pre-guards)
+    needs: discover
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Orchestrator
+        shell: pwsh
+        env:
+          MAGIC_LIGHT_MODE: "1"
+        run: |
+          if (Test-Path "tools/Magic_Orchestrator_Master_v3.ps1") {
+            pwsh -File tools/Magic_Orchestrator_Master_v3.ps1
+          } else {
+            Write-Host "No orchestrator script found; skipping."
+          }
+      - name: Upload orchestrator summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-orchestrator-summary
+          path: |
+            outputs/logs/master_orchestrator_summary.tsv
+            outputs/**/orchestrator*.tsv
+          if-no-files-found: ignore
+
+  guards:
+    name: Guard — ${{ matrix.module }}
+    needs: [discover, orchestrator]
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJson(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run module smoke (quick)
+        shell: pwsh
+        env:
+          MAGIC_LIGHT_MODE: "1"
+        run: |
+          pytest -q tests/phase11 -k "11" || exit $LASTEXITCODE
+      - name: Run Guard script for module
+        shell: pwsh
+        env:
+          MAGIC_LIGHT_MODE: "1"
+        run: |
+          $m = "${{ matrix.module }}".ToUpperInvariant()
+          $guard = "tools/ci_phase11{0}_guard.ps1" -f $m
+          if (-not (Test-Path $guard)) {
+            Write-Host "::warning::Guard script not found for module $m ($guard)."
+            exit 0
+          }
+          pwsh -File $guard
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Guard failed for module $m with exit $LASTEXITCODE"
+            exit $LASTEXITCODE
+          }
+      - name: Upload logs & reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-${{ matrix.module }}-artifacts
+          path: |
+            outputs/logs/**/*
+            reports/latest*/**/*
+            reports/latest/**/*
+          if-no-files-found: ignore
