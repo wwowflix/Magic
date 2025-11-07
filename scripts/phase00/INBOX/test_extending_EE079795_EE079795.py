@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import warnings
 from importlib.util import module_from_spec, spec_from_file_location
 

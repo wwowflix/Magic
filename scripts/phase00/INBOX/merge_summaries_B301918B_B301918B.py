@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from pathlib import Path
 import csv
 import argparse
@@ -34,7 +35,7 @@ def merge_summaries(input_dir: str, out_file: str) -> int:
                         continue
                     rows.append(row)
         except Exception:
-            # Never explode on import/tests—just skip bad files.
+            # Never explode on import/tests-just skip bad files.
             continue
 
     if header is None:

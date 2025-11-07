@@ -35,15 +35,15 @@ except ImportError as error:
 import trio
 
 from .. import _core, socket as tsocket
-from .._abc import Stream
-from .._core import BrokenResourceError, ClosedResourceError
-from .._core._tests.tutil import slow
-from .._highlevel_generic import aclose_forcefully
-from .._highlevel_open_tcp_stream import open_tcp_stream
-from .._highlevel_socket import SocketListener, SocketStream
-from .._ssl import NeedHandshakeError, SSLListener, SSLStream, _is_eof
-from .._util import ConflictDetector
-from ..testing import (
+from scripts._abc import Stream
+from scripts._core import BrokenResourceError, ClosedResourceError
+from scripts._core._tests.tutil import slow
+from scripts._highlevel_generic import aclose_forcefully
+from scripts._highlevel_open_tcp_stream import open_tcp_stream
+from scripts._highlevel_socket import SocketListener, SocketStream
+from scripts._ssl import NeedHandshakeError, SSLListener, SSLStream, _is_eof
+from scripts._util import ConflictDetector
+from scripts.testing import (
     Sequencer,
     assert_checkpoints,
     check_two_way_stream,
@@ -59,7 +59,7 @@ if TYPE_CHECKING:
     from trio._core import MockClock
     from trio._ssl import T_Stream
 
-    from .._core._run import CancelScope
+    from scripts._core._run import CancelScope
 
 # We have two different kinds of echo server fixtures we use for testing. The
 # first is a real server written using the stdlib ssl module and blocking

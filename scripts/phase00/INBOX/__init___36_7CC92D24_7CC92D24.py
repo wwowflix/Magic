@@ -102,7 +102,6 @@ from .einsumfunc import *
 
 del nt
 
-
 # do this after everything else, to minimize the chance of this misleadingly
 # appearing in an import-time traceback
 

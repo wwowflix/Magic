@@ -8,7 +8,6 @@ from . import DefaultTable
 from . import grUtils
 import struct
 
-
 Glat_format_0 = """
     >        # big endian
     version: 16.16F
@@ -17,7 +16,7 @@ Glat_format_0 = """
 Glat_format_3 = """
     >
     version: 16.16F
-    compression:L    # compression scheme or reserved 
+    compression:L    # compression scheme or reserved
 """
 
 Glat_format_1_entry = """

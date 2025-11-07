@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Methods used by Block.replace and related methods.
 """
-
-from __future__ import annotations
-
 import operator
 import re
 from typing import (

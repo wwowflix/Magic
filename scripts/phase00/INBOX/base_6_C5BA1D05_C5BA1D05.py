@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Extend pandas with custom array types.
 """
-
-from __future__ import annotations
-
 from typing import (
     TYPE_CHECKING,
     Any,

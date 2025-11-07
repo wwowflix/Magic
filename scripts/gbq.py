@@ -1,7 +1,6 @@
-"""Google BigQuery support"""
-
 from __future__ import annotations
 
+"""Google BigQuery support"""
 from typing import (
     TYPE_CHECKING,
     Any,

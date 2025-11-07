@@ -11,7 +11,7 @@ to their Unicode equivalents. Example usage:
 
         >>> from fontTools.agl import toUnicode
         >>> toUnicode("nahiragana")
-        'な'
+        'ãª'
 
 It also contains two dictionaries, ``UV2AGL`` and ``AGL2UV``, which map from
 Unicode codepoints to AGL names and vice versa:
@@ -28,7 +28,6 @@ doesn't include any (e.g. format 3.0 post tables).
 
 from fontTools.misc.textTools import tostr
 import re
-
 
 _aglText = """\
 # -----------------------------------------------------------
@@ -4358,7 +4357,6 @@ zukatakana;30BA
 # END
 """
 
-
 _aglfnText = """\
 # -----------------------------------------------------------
 # Copyright 2002-2019 Adobe (http://www.adobe.com/).
@@ -5108,7 +5106,7 @@ _builddicts()
 
 
 def toUnicode(glyph, isZapfDingbats=False):
-    """Convert glyph names to Unicode, such as ``'longs_t.oldstyle'`` --> ``u'ſt'``
+    """Convert glyph names to Unicode, such as ``'longs_t.oldstyle'`` --> ``u'Å¿t'``
 
     If ``isZapfDingbats`` is ``True``, the implementation recognizes additional
     glyph names (as required by the AGL specification).
@@ -5146,7 +5144,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "uni" (U+0075,
     # U+006E, and U+0069) followed by a sequence of uppercase
-    # hexadecimal digits (0–9 and A–F, meaning U+0030 through
+    # hexadecimal digits (0-9 and A-F, meaning U+0030 through
     # U+0039 and U+0041 through U+0046), if the length of that
     # sequence is a multiple of four, and if each group of four
     # digits represents a value in the ranges 0000 through D7FF
@@ -5161,7 +5159,7 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
     # Otherwise, if the component is of the form "u" (U+0075)
     # followed by a sequence of four to six uppercase hexadecimal
-    # digits (0–9 and A–F, meaning U+0030 through U+0039 and
+    # digits (0-9 and A-F, meaning U+0030 through U+0039 and
     # U+0041 through U+0046), and those digits represents a value
     # in the ranges 0000 through D7FF or E000 through 10FFFF, then
     # interpret it as a Unicode scalar value and map the component
@@ -5176,10 +5174,10 @@ def _glyphComponentToUnicode(component, isZapfDingbats):
 
 # https://github.com/adobe-type-tools/agl-aglfn/blob/master/zapfdingbats.txt
 _AGL_ZAPF_DINGBATS = (
-    " ✁✂✄☎✆✝✞✟✠✡☛☞✌✍✎✏✑✒✓✔✕✖✗✘✙✚✛✜✢✣✤✥✦✧★✩✪✫✬✭✮✯✰✱✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀"
-    "❁❂❃❄❅❆❇❈❉❊❋●❍■❏❑▲▼◆❖ ◗❘❙❚❯❱❲❳❨❩❬❭❪❫❴❵❛❜❝❞❡❢❣❤✐❥❦❧♠♥♦♣    ✉✈✇"
-    "①②③④⑤⑥⑦⑧⑨⑩❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔→➣↔"
-    "↕➙➛➜➝➞➟➠➡➢➤➥➦➧➨➩➫➭➯➲➳➵➸➺➻➼➽➾➚➪➶➹➘➴➷➬➮➱✃❐❒❮❰"
+    " âœâœ‚âœ„â˜Žâœ†âœâœžâœŸâœ âœ¡â˜›â˜žâœŒâœâœŽâœâœ‘âœ’âœ“âœ”âœ•âœ–âœ—âœ˜âœ™âœšâœ›âœœâœ¢âœ£âœ¤âœ¥âœ¦âœ§â˜…âœ©âœªâœ«âœ¬âœ­âœ®âœ¯âœ°âœ±âœ²âœ³âœ´âœµâœ¶âœ·âœ¸âœ¹âœºâœ»âœ¼âœ½âœ¾âœ¿â€"
+    "ââ‚âƒâ„â…â†â‡âˆâ‰âŠâ‹â—ââ– ââ‘â–²â–¼â—†â– â——â˜â™âšâ¯â±â²â³â¨â©â¬â­âªâ«â´âµâ›âœââžâ¡â¢â£â¤âœâ¥â¦â§â™ â™¥â™¦â™£    âœ‰âœˆâœ‡"
+    "â‘ â‘¡â‘¢â‘£â‘¤â‘¥â‘¦â‘§â‘¨â‘©â¶â·â¸â¹âºâ»â¼â½â¾â¿âž€âžâž‚âžƒâž„âž…âž†âž‡âžˆâž‰âžŠâž‹âžŒâžâžŽâžâžâž‘âž’âž“âž”â†’âž£â†”"
+    "â†•âž™âž›âžœâžâžžâžŸâž âž¡âž¢âž¤âž¥âž¦âž§âž¨âž©âž«âž­âž¯âž²âž³âžµâž¸âžºâž»âž¼âž½âž¾âžšâžªâž¶âž¹âž˜âž´âž·âž¬âž®âž±âœƒââ’â®â°"
 )
 
 

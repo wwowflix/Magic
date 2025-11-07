@@ -1,7 +1,7 @@
 import os
 import shutil
 import sys
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 BACKUP_BASE = "backups"
 

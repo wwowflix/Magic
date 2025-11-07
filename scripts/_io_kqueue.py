@@ -18,8 +18,8 @@ if TYPE_CHECKING:
 
     from typing_extensions import TypeAlias
 
-    from .._core import Abort, RaiseCancelT, Task, UnboundedQueue
-    from .._file_io import _HasFileNo
+    from scripts._core import Abort, RaiseCancelT, Task, UnboundedQueue
+    from scripts._file_io import _HasFileNo
 
 assert not TYPE_CHECKING or (sys.platform != "linux" and sys.platform != "win32")
 
@@ -253,7 +253,7 @@ class KqueueIOManager:
         calls on the given object to immediately wake up and raise
         `~trio.ClosedResourceError`.
 
-        This doesn't actually close the object – you still have to do that
+        This doesn't actually close the object - you still have to do that
         yourself afterwards. Also, you want to be careful to make sure no
         new tasks start waiting on the object in between when you call this
         and when it's actually closed. So to close something properly, you

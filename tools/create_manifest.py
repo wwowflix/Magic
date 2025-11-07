@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import argparse
 import json
 import sys
@@ -132,7 +132,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def discover(root: Path | str) -> list[Path]:
-    """Return *_READY.py paths under <root>/scripts if it exists, otherwise under <root>."""
+    """Return *_READY.py paths under <root>/scripts if it exists, otherwise under <root>."""  # noqa: E501
     base = Path(root)
     base = base / "scripts" if (base / "scripts").exists() else base
     return sorted(_iter_ready_files(base)) if base.exists() else []

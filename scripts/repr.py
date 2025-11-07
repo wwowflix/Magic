@@ -15,7 +15,6 @@ from typing import (
 
 T = TypeVar("T")
 
-
 Result = Iterable[Union[Any, Tuple[Any], Tuple[str, Any], Tuple[str, Any, Any]]]
 RichReprResult = Result
 

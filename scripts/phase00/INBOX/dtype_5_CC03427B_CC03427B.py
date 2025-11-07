@@ -1,7 +1,6 @@
-"""Sparse Dtype"""
-
 from __future__ import annotations
 
+"""Sparse Dtype"""
 import re
 from typing import (
     TYPE_CHECKING,
@@ -338,7 +337,6 @@ class SparseDtype(ExtensionDtype):
             When the current fill value cannot be converted to the
             new `dtype` (e.g. trying to convert ``np.nan`` to an
             integer dtype).
-
 
         Examples
         --------

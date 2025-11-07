@@ -1,7 +1,6 @@
 from fontTools.pens.basePen import BasePen
 from reportlab.graphics.shapes import Path
 
-
 __all__ = ["ReportLabPen"]
 
 

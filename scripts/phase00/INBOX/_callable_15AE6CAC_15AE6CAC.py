@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 A module with various ``typing.Protocol`` subclasses that implement
 the ``__call__`` magic method.
@@ -7,9 +9,6 @@ See the `Mypy documentation`_ on protocols for more details.
 .. _`Mypy documentation`: https://mypy.readthedocs.io/en/stable/protocols.html#callback-protocols
 
 """
-
-from __future__ import annotations
-
 import sys
 from typing import (
     Union,

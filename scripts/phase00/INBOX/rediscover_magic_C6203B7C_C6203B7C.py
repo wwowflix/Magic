@@ -334,7 +334,7 @@ def main():
         for i, r in enumerate(top, 1):
             f.write(f"## {i}. {r['Project']}  \n")
             f.write(
-                f"**Score:** {r['MagicScore']} â€" **Files:** {r['PyFiles']} â€" **LOC:** {r['LOC']} â€" **Updated:** {r['LastWrite']}\n\n"
+                f"**Score:** {r['MagicScore']} "" **Files:** {r['PyFiles']} "" **LOC:** {r['LOC']} "" **Updated:** {r['LastWrite']}\n\n"
             )
             if r["Notables"]:
                 f.write(f"- Notables: {r['Notables']}\n")

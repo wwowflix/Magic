@@ -1,7 +1,6 @@
-# TODO: Use the fact that axis can have units to simplify the process
-
 from __future__ import annotations
 
+# TODO: Use the fact that axis can have units to simplify the process
 from datetime import timedelta
 import functools
 from typing import (

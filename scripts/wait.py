@@ -6,7 +6,6 @@ from functools import partial
 
 __all__ = ["wait_for_read", "wait_for_write"]
 
-
 # How should we wait on sockets?
 #
 # There are two types of APIs you can use for waiting on sockets: the fancy

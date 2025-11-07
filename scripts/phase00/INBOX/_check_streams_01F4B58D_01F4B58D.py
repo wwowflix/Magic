@@ -1,6 +1,6 @@
-# Generic stream tests
 from __future__ import annotations
 
+# Generic stream tests
 import random
 import sys
 from collections.abc import Awaitable, Callable, Generator
@@ -12,8 +12,14 @@ from typing import (
 )
 
 from .. import CancelScope, _core
-from .._abc import AsyncResource, HalfCloseableStream, ReceiveStream, SendStream, Stream
-from .._highlevel_generic import aclose_forcefully
+from scripts._abc import (
+    AsyncResource,
+    HalfCloseableStream,
+    ReceiveStream,
+    SendStream,
+    Stream,
+)
+from scripts._highlevel_generic import aclose_forcefully
 from ._checkpoints import assert_checkpoints
 
 if TYPE_CHECKING:
@@ -433,7 +439,7 @@ async def check_two_way_stream(
     :class:`~trio.abc.Stream` interface.
 
     This function tests a *superset* of what :func:`check_one_way_stream`
-    checks – if you call this, then you don't need to also call
+    checks - if you call this, then you don't need to also call
     :func:`check_one_way_stream`.
 
     """
@@ -513,7 +519,7 @@ async def check_half_closeable_stream(
     :class:`~trio.abc.HalfCloseableStream` interface.
 
     This function tests a *superset* of what :func:`check_two_way_stream`
-    checks – if you call this, then you don't need to also call
+    checks - if you call this, then you don't need to also call
     :func:`check_two_way_stream`.
 
     """

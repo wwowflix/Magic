@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 For compatibility with numpy libraries, pandas functions or methods have to
 accept '*args' and '**kwargs' parameters to accommodate numpy arguments that
@@ -15,9 +17,6 @@ This module provides a set of commonly used default arguments for functions and
 methods that are spread throughout the codebase. This module will make it
 easier to adjust to future upstream changes in the analogous numpy signatures.
 """
-
-from __future__ import annotations
-
 from typing import (
     Any,
     TypeVar,
@@ -129,7 +128,6 @@ ARGSORT_DEFAULTS["axis"] = -1
 ARGSORT_DEFAULTS["kind"] = "quicksort"
 ARGSORT_DEFAULTS["order"] = None
 ARGSORT_DEFAULTS["kind"] = None
-
 
 validate_argsort = CompatValidator(
     ARGSORT_DEFAULTS, fname="argsort", max_fname_arg_count=0, method="both"

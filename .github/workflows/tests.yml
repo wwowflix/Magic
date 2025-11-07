@@ -1,28 +1,42 @@
+﻿name: tests
+
 on:
-  workflow_dispatch:
   push:
-    branches: [ main, chore/precommit-rescue ]
+    branches: [ main, chore/**, feat/** ]
   pull_request:
     branches: [ main ]
-
-name: tests
+  workflow_dispatch:
 
 jobs:
   test:
-    runs-on: windows-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.11"
+
       - name: Install deps
-        shell: pwsh
         run: |
-          python -m pip install -U pip
-          if (Test-Path requirements.txt) { pip install -r requirements.txt }
-          pip install -U pytest
-      - name: Run pytest
-        shell: pwsh
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run tests
         run: |
-          if (Get-Command pytest -ErrorAction SilentlyContinue) { pytest -q } else { echo "pytest not installed; skipping"; exit 0 }
+          pytest -q
+
+      - name: MAGIC 3-Phase Status Guard
+        run: |
+          echo "🔎 Running MAGIC 3-phase status guard..."
+          pytest -q tests/status/test_magic_phases_status.py -x
+
+      - name: Upload dashboard artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: magic-reports
+          path: outputs/reports/
+          if-no-files-found: warn

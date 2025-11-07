@@ -34,7 +34,6 @@ from h11._version import __version__
 
 PRODUCT_ID = "python-h11/" + __version__
 
-
 __all__ = (
     "Connection",
     "NEED_DATA",

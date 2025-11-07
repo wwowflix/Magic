@@ -30,9 +30,9 @@ from sniffio import thread_local as sniffio_library
 from sortedcontainers import SortedDict
 
 from .. import _core
-from .._abc import Clock, Instrument
-from .._deprecate import warn_deprecated
-from .._util import NoPublicConstructor, coroutine_or_error, final
+from scripts._abc import Clock, Instrument
+from scripts._deprecate import warn_deprecated
+from scripts._util import NoPublicConstructor, coroutine_or_error, final
 from ._asyncgens import AsyncGenerators
 from ._concat_tb import concat_tb
 from ._entry_queue import EntryQueue, TrioToken
@@ -53,7 +53,6 @@ from ._traps import (
 
 if sys.version_info < (3, 11):
     from exceptiongroup import BaseExceptionGroup
-
 
 if TYPE_CHECKING:
     import contextvars
@@ -83,7 +82,6 @@ else:
     StatusT_contra = TypeVar("StatusT_contra", contravariant=True)
 
 RetT = TypeVar("RetT")
-
 
 DEADLINE_HEAP_MIN_PRUNE_THRESHOLD: Final = 1000
 

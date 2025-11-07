@@ -1,7 +1,7 @@
-# ---------------------------------------------------------------------
-# JSON normalization routines
 from __future__ import annotations
 
+# ---------------------------------------------------------------------
+# JSON normalization routines
 from collections import (
     abc,
     defaultdict,

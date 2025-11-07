@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Functions for arithmetic and comparison operations on NumPy arrays and
 ExtensionArrays.
 """
-
-from __future__ import annotations
-
 import datetime
 from functools import partial
 import operator

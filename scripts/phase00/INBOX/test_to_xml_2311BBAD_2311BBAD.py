@@ -821,8 +821,8 @@ encoding_expected = """\
   <row>
     <index>0</index>
     <rank>1</rank>
-    <malename>José</malename>
-    <femalename>Sofía</femalename>
+    <malename>JosÃ©</malename>
+    <femalename>SofÃ­a</femalename>
   </row>
   <row>
     <index>1</index>
@@ -1277,7 +1277,6 @@ def test_style_to_json(geom_df):
 
 
 # COMPRESSION
-
 
 geom_xml = """\
 <?xml version='1.0' encoding='utf-8'?>

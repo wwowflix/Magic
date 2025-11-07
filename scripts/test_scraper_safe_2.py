@@ -1,4 +1,4 @@
-# ✅ test_scraper_safe.py — Pure snscrape + pandas, NO numpy
+# ✅ test_scraper_safe.py - Pure snscrape + pandas, NO numpy
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 

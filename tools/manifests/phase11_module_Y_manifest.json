@@ -1,0 +1,40 @@
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_y/11Y_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Y",
+                      "FinalFilename":  "11Y_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_y/11Y_agent_uptime_monitor_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Y",
+                      "FinalFilename":  "11Y_agent_uptime_monitor_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_y/11Y_multi_tier_auto_restarter_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Y",
+                      "FinalFilename":  "11Y_multi_tier_auto_restarter_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_y/11Y_sla_violation_logger_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "Y",
+                      "FinalFilename":  "11Y_sla_violation_logger_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

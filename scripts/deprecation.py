@@ -164,7 +164,6 @@ LegacyInstallReasonFailedBdistWheel = LegacyInstallReason(
     emit_after_success=True,
 )
 
-
 LegacyInstallReasonMissingWheelPackage = LegacyInstallReason(
     reason=(
         "{name} is being installed using the legacy "

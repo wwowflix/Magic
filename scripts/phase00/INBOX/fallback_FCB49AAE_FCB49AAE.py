@@ -4,7 +4,6 @@ from datetime import datetime as _DateTime
 import sys
 import struct
 
-
 PY2 = sys.version_info[0] == 2
 if PY2:
     int_types = (int, long)
@@ -73,11 +72,9 @@ else:
 
     newlist_hint = lambda size: []
 
-
 from .exceptions import BufferFull, OutOfData, ExtraData, FormatError, StackError
 
 from .ext import ExtType, Timestamp
-
 
 EX_SKIP = 0
 EX_CONSTRUCT = 1

@@ -41,7 +41,6 @@ from fnmatch import translate
 from setuptools.wheel import Wheel
 from setuptools.extern.more_itertools import unique_everseen
 
-
 EGG_FRAGMENT = re.compile(r"^egg=([-A-Za-z0-9_.+!]+)$")
 HREF = re.compile(r"""href\s*=\s*['"]?([^'"> ]+)""", re.I)
 PYPI_MD5 = re.compile(

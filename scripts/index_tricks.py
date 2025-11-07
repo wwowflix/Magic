@@ -22,11 +22,9 @@ from numpy.core.overrides import set_module
 from numpy.core import overrides, linspace
 from numpy.lib.stride_tricks import as_strided
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 __all__ = [
     "ravel_multi_index",
@@ -496,7 +494,6 @@ class RClass(AxisConcatenator):
     ----------
     Not a function, so takes no parameters
 
-
     Returns
     -------
     A concatenated ndarray or matrix.
@@ -787,7 +784,6 @@ index_exp = IndexExpression(maketuple=True)
 s_ = IndexExpression(maketuple=False)
 
 # End contribution from Konrad.
-
 
 # The following functions complement those in twodim_base, but are
 # applicable to N-dimensions.

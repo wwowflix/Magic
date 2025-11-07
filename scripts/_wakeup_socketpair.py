@@ -6,7 +6,7 @@ import socket
 import warnings
 
 from .. import _core
-from .._util import is_main_thread
+from scripts._util import is_main_thread
 
 
 class WakeupSocketpair:

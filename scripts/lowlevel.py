@@ -60,7 +60,6 @@ from ._subprocess import open_process as open_process
 
 # Uses `from x import y as y` for compatibility with `pyright --verifytypes` (#2625)
 
-
 if sys.platform == "win32":
     # Windows symbols
     from ._core import (

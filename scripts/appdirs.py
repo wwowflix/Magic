@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (c) 2005-2010 ActiveState Software Inc.
-# Copyright (c) 2013 Eddy Petrișor
+# Copyright (c) 2013 Eddy PetriÈ™or
 
 """Utilities for determining application-specific dirs.
 
@@ -15,7 +15,6 @@ See <http://github.com/ActiveState/appdirs> for details and usage.
 
 __version_info__ = (1, 4, 3)
 __version__ = ".".join(map(str, __version_info__))
-
 
 import sys
 import os
@@ -589,7 +588,6 @@ if system == "win32":
                 _get_win_folder = _get_win_folder_with_jna
             except ImportError:
                 _get_win_folder = _get_win_folder_from_registry
-
 
 # ---- self test code
 

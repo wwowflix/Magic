@@ -6,4 +6,3 @@ These should:
 - Assume that any list arguments have already been cast to ndarray/EA.
 - Not depend on Index, Series, or DataFrame, nor import any of these.
 - May dispatch to ExtensionArray methods, but should not import from core.arrays.
-"""

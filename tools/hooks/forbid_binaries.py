@@ -1,5 +1,7 @@
-﻿#!/usr/bin/env python
-import sys, re, os
+#!/usr/bin/env python
+import sys  # noqa: I001
+import re
+import os
 
 # pre-commit passes only staged files by default
 BLOCK_EXT = re.compile(r"\.(exe|msi|whl|zip|7z|iso|dll)$", re.IGNORECASE)
@@ -14,9 +16,7 @@ for p in sys.argv[1:]:
 
 if bad:
     sys.stderr.write(
-        "BLOCKED: binary installer/artifact detected.\n"
-        "Please use GitHub Releases or Git LFS for these files.\n"
-        "Files:\n  - " + "\n  - ".join(bad) + "\n"
+        "BLOCKED: binary installer/artifact detected.\n"Please use GitHub Releases or Git LFS for these files.\n"Files:\n  - " + "\n  - ".join(bad) + "\n"
     )
     sys.exit(1)
 sys.exit(0)

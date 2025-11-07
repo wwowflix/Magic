@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 An interface for extending pandas with custom arrays.
 
@@ -6,9 +8,6 @@ An interface for extending pandas with custom arrays.
    This is an experimental API and subject to breaking changes
    without warning.
 """
-
-from __future__ import annotations
-
 import inspect
 import operator
 from typing import (
@@ -103,7 +102,6 @@ if TYPE_CHECKING:
         NumpySorter,
         NumpyValueArrayLike,
     )
-
 
 _extension_array_shared_docs: dict[str, str] = {}
 

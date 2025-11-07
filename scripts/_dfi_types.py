@@ -1,11 +1,11 @@
+from __future__ import annotations
+
 # DataFrame Interchange Protocol Types
 # Copied from https://data-apis.org/dataframe-protocol/latest/API.html,
 # changed ABCs to Protocols, and subset the type hints to only those that are
 # relevant for Altair.
 #
 # These classes are only for use in type signatures
-from __future__ import annotations
-
 import enum
 from typing import TYPE_CHECKING, Any, Protocol
 

@@ -57,29 +57,29 @@ from .. import (
     WouldBlock,
     abc,
 )
-from .._core._eventloop import claim_worker_thread
-from .._core._exceptions import (
+from scripts._core._eventloop import claim_worker_thread
+from scripts._core._exceptions import (
     BrokenResourceError,
     BusyResourceError,
     ClosedResourceError,
     EndOfStream,
 )
-from .._core._sockets import convert_ipv6_sockaddr
-from .._core._streams import create_memory_object_stream
-from .._core._synchronization import (
+from scripts._core._sockets import convert_ipv6_sockaddr
+from scripts._core._streams import create_memory_object_stream
+from scripts._core._synchronization import (
     CapacityLimiter as BaseCapacityLimiter,
 )
-from .._core._synchronization import Event as BaseEvent
-from .._core._synchronization import Lock as BaseLock
-from .._core._synchronization import (
+from scripts._core._synchronization import Event as BaseEvent
+from scripts._core._synchronization import Lock as BaseLock
+from scripts._core._synchronization import (
     ResourceGuard,
     SemaphoreStatistics,
 )
-from .._core._synchronization import Semaphore as BaseSemaphore
-from .._core._tasks import CancelScope as BaseCancelScope
-from ..abc import IPSockAddrType, UDPPacketType, UNIXDatagramPacketType
-from ..abc._eventloop import AsyncBackend, StrOrBytesPath
-from ..streams.memory import MemoryObjectSendStream
+from scripts._core._synchronization import Semaphore as BaseSemaphore
+from scripts._core._tasks import CancelScope as BaseCancelScope
+from scripts.abc import IPSockAddrType, UDPPacketType, UNIXDatagramPacketType
+from scripts.abc._eventloop import AsyncBackend, StrOrBytesPath
+from scripts.streams.memory import MemoryObjectSendStream
 
 if TYPE_CHECKING:
     from _typeshed import HasFileno
@@ -101,13 +101,11 @@ T_SockAddr = TypeVar("T_SockAddr", str, IPSockAddrType)
 PosArgsT = TypeVarTuple("PosArgsT")
 P = ParamSpec("P")
 
-
 #
 # Event loop
 #
 
 RunVar = trio.lowlevel.RunVar
-
 
 #
 # Timeouts and cancellation
@@ -844,7 +842,6 @@ class CapacityLimiter(BaseCapacityLimiter):
 
 
 _capacity_limiter_wrapper: trio.lowlevel.RunVar = RunVar("_capacity_limiter_wrapper")
-
 
 #
 # Signal handling

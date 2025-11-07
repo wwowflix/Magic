@@ -1,4 +1,4 @@
-import time
+import magic_time as time
 import random
 
 for i in range(5):

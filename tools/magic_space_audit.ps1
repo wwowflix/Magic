@@ -1,14 +1,16 @@
-﻿<#
+<#
 .SYNOPSIS
   SPACE AUDIT for MAGIC — categories + totals (repeatable, safe).
 
 .USAGE
   powershell -NoProfile -ExecutionPolicy Bypass `
-    -File .\tools\magic_space_audit.ps1 -Root "D:\MAGIC" -TopN 20
+    -File .\tools\magic_space_audit.ps1 -Root $Root -TopN 20
 #>
 
 param(
-  [string]$Root = (Get-Location).Path,
+  [string]$Root = (Get-Location)
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
+.Path,
   [int]$TopN = 20
 )
 

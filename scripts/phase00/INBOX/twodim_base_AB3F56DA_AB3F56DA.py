@@ -27,7 +27,6 @@ from numpy.core import overrides
 from numpy.core import iinfo
 from numpy.lib.stride_tricks import broadcast_to
 
-
 __all__ = [
     "diag",
     "diagflat",
@@ -46,11 +45,9 @@ __all__ = [
     "triu_indices_from",
 ]
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 i1 = iinfo(int8)
 i2 = iinfo(int16)
@@ -867,7 +864,6 @@ def tril_indices(n, k=0, m=None):
         arrays will be valid.
         By default `m` is taken equal to `n`.
 
-
     Returns
     -------
     inds : tuple of arrays
@@ -985,7 +981,6 @@ def triu_indices(n, k=0, m=None):
         The column dimension of the arrays for which the returned
         arrays will be valid.
         By default `m` is taken equal to `n`.
-
 
     Returns
     -------

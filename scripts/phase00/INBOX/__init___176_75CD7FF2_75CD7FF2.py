@@ -23,7 +23,7 @@ Then you can make a variable-font this way:
 API *will* change in near future.
 """
 
-from typing import List
+from magic_typing import List
 from fontTools.misc.vector import Vector
 from fontTools.misc.roundTools import noRound, otRound
 from fontTools.misc.fixedTools import floatToFixed as fl2fi
@@ -45,10 +45,10 @@ from fontTools.designspaceLib.split import splitInterpolable, splitVariableFonts
 from fontTools.varLib.stat import buildVFStatTable
 from fontTools.colorLib.builder import buildColrV1
 from fontTools.colorLib.unbuilder import unbuildColrV1
-from functools import partial
+from magic_functools import partial
 from collections import OrderedDict, defaultdict, namedtuple
 import os.path
-import logging
+import magic_logging as logging
 from copy import deepcopy
 from pprint import pformat
 from re import fullmatch
@@ -308,7 +308,7 @@ def _add_stat(font):
     if "STAT" in font:
         return
 
-    from ..otlLib.builder import buildStatTable
+    from scripts.otlLib.builder import buildStatTable
 
     fvarTable = font["fvar"]
     axes = [dict(tag=a.axisTag, name=a.axisNameID) for a in fvarTable.axes]
@@ -733,7 +733,7 @@ def _add_MVAR(font, masterModel, master_ttfs, axisTags):
 
         if varIdx is None:
             continue
-        log.info("	%s: %s.%s	%s", tag, tableTag, itemName, master_values)
+        log.info("  %s: %s.%s   %s", tag, tableTag, itemName, master_values)
         rec = ot.MetricsValueRecord()
         rec.ValueTag = tag
         rec.VarIdx = varIdx

@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
   Verifies progress across the 48 release steps and produces a repeatable PASS/FAIL report.
 
 .USAGE
-  powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify_release_progress.ps1 -Root "D:\MAGIC"
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify_release_progress.ps1 -Root $Root
 
 .OUTPUTS
   - Console table with PASS/FAIL per step
@@ -12,7 +12,9 @@
 #>
 
 param(
-  [string]$Root = (Get-Location).Path,
+  [string]$Root = (Get-Location)
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
+.Path,
   [switch]$Quiet,
   [switch]$NoExitOnFail
 )
@@ -107,7 +109,7 @@ Add-Check 12 "Security tooling available" { $pipAuditOk -and $safetyOk -and $ban
 Add-Check 13 "Secret scan tooling available" { $gitleaksOk -or $detectSecretsOk }               "pip install detect-secrets; or install gitleaks"
 
 # 14 baseline scan receipt
-Add-Check 14 "Full scan receipts exist" { Test-File $Artifacts.OrphansTSV }                     'powershell -File .\tools\magic_full_scan.ps1 -Root "D:\MAGIC"'
+Add-Check 14 "Full scan receipts exist" { Test-File $Artifacts.OrphansTSV }                     'powershell -File .\tools\magic_full_scan.ps1 -Root $Root'
 
 # 15–17 API/DAG/DQ (presence)
 Add-Check 15 "API contracts script present" { Test-File ".\tools\contracts\mock_contract_tests.py" } "Add or fix contracts tests"
@@ -122,7 +124,7 @@ Add-Check 19 "scan_status tool present" { Test-File ".\tools\magic_scan_status.p
 Add-Check 20 "magic_scan_summary.json valid" { Test-JsonParse $Artifacts.ScanSummaryJSON }      "Re-run full scan; fix JSON schema"
 Add-Check 21 "todo audit tool present" { Test-File ".\tools\magic_todo_audit.ps1" }             "Add tools\magic_todo_audit.ps1"
 Add-Check 22 "verify_magic_complete present" { Test-File ".\tools\verify_magic_complete.ps1" }  "Add tools\verify_magic_complete.ps1"
-Add-Check 23 "self-test summary present" { Test-JsonParse $Artifacts.SelfTestJSON }             'powershell -File .\tools\magic_self_test.ps1 -Root "D:\MAGIC"'
+Add-Check 23 "self-test summary present" { Test-JsonParse $Artifacts.SelfTestJSON }             'powershell -File .\tools\magic_self_test.ps1 -Root $Root'
 
 # 24–27 budgets/chaos/recovery
 Add-Check 24 "check_spend.py present" { Test-File ".\tools\cost_quota\check_spend.py" }         "Add the tool or skip this gate"

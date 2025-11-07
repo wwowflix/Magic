@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: MIT
 
-
 import copy
 
 from ._compat import PY_3_9_PLUS, get_generic_base

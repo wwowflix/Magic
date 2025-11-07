@@ -77,7 +77,6 @@ class ProtocolError(HTTPError):
 #: Renamed to ProtocolError but aliased for backwards compatibility.
 ConnectionError = ProtocolError
 
-
 # Leaf Exceptions
 
 
@@ -332,4 +331,4 @@ class HeaderParsingError(HTTPError):
 
 
 class UnrewindableBodyError(HTTPError):
-    """urllib3 encountered an error when trying to rewind a body"""
+    """urllib3 encountered an error when trying to rewind a body

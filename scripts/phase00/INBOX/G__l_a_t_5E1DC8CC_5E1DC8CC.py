@@ -8,7 +8,6 @@ from . import DefaultTable
 from . import grUtils
 import struct
 
-
 Glat_format_0 = """
     >        # big endian
     version: 16.16F

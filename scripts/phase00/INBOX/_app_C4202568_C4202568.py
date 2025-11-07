@@ -1,9 +1,9 @@
-import inspect
+import magic_inspect as inspect
 import selectors
 import socket
 import threading
 import time
-from typing import Any, Callable, Optional, Union
+from magic_typing import Any, Callable, Optional, Union
 
 from . import _logging
 from ._abnf import ABNF

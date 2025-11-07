@@ -1,4 +1,4 @@
-﻿import tools.remediator as r
+import tools.remediator as r
 
 
 def test_fix_unicode_returns_clean_string():

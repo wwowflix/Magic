@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 import attrs
 
 from .. import _core
-from .._deprecate import deprecated
-from .._util import final
+from scripts._deprecate import deprecated
+from scripts._util import final
 
 T = TypeVar("T")
 

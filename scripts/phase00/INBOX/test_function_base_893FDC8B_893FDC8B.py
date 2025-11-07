@@ -3945,7 +3945,6 @@ quantile_methods = [
     "midpoint",
 ]
 
-
 methods_supporting_weights = ["inverted_cdf"]
 
 

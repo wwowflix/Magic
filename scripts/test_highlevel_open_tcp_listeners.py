@@ -20,7 +20,7 @@ from trio.abc import HostnameResolver, SendStream, SocketFactory
 from trio.testing import open_stream_to_socket_listener
 
 from .. import socket as tsocket
-from .._core._tests.tutil import binds_ipv6, slow
+from scripts._core._tests.tutil import binds_ipv6, slow
 
 if sys.version_info < (3, 11):
     from exceptiongroup import BaseExceptionGroup

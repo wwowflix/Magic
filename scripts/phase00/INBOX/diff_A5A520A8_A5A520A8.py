@@ -49,7 +49,6 @@ __all__ = ["html_annotate", "htmldiff"]
 
 group_by_first_item = functools.partial(itertools.groupby, key=operator.itemgetter(0))
 
-
 ############################################################
 ## Annotation
 ############################################################

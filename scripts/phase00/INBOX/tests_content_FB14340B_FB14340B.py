@@ -1,4 +1,4 @@
-﻿# tests_content.py
+# tests_content.py
 
 
 def test_generated_content_not_empty():

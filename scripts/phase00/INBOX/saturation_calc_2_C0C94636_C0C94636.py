@@ -1,4 +1,4 @@
-﻿# saturation_calc.py
+# saturation_calc.py
 def calculate_content_saturation():
     print("Calculating content saturation...")
     # TODO: Implement saturation estimator

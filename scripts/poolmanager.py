@@ -31,7 +31,6 @@ if typing.TYPE_CHECKING:
 
 __all__ = ["PoolManager", "ProxyManager", "proxy_from_url"]
 
-
 log = logging.getLogger(__name__)
 
 SSL_KEYWORDS = (

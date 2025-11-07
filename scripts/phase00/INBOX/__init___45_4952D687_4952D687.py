@@ -53,7 +53,6 @@ Helper routines
    fftshift  Shift zero-frequency component to center of spectrum.
    ifftshift Inverse of fftshift.
 
-
 Background information
 ----------------------
 

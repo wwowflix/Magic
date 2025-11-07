@@ -38,7 +38,6 @@ from numpy.core.numeric import asarray, any
 from numpy.core.overrides import array_function_dispatch
 from numpy.lib.type_check import isreal
 
-
 __all__ = [
     "sqrt",
     "log",
@@ -50,7 +49,6 @@ __all__ = [
     "arcsin",
     "arctanh",
 ]
-
 
 _ln2 = nx.log(2.0)
 
@@ -599,7 +597,6 @@ def arctanh(x):
     out : ndarray or scalar
        The inverse hyperbolic tangent(s) of the `x` value(s). If `x` was
        a scalar so is `out`, otherwise an array is returned.
-
 
     See Also
     --------

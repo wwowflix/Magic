@@ -2,20 +2,20 @@ import os
 import shutil
 from dotenv import load_dotenv
 
-# 🌱 Load .env for Notion Token
+# ðŸŒ± Load .env for Notion Token
 load_dotenv()
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 
-# 📁 Paths
+# ðŸ“ Paths
 SCRIPTS_DIR = "scripts"
 BACKUP_DIR = "backups"
 LOGS_DIR = "logs"
 PATCH_CSV = "outputs/notion_export/magic_patch.csv"
 
 
-# 🧠 Self-Healing Actions
+# ðŸ§  Self-Healing Actions
 def restore_missing_scripts():
-    print("🔍 Checking for missing scripts...")
+    print("ðŸ” Checking for missing scripts...")
     restored = 0
     for root, _, files in os.walk(BACKUP_DIR):
         for file in files:
@@ -25,7 +25,7 @@ def restore_missing_scripts():
                 if not os.path.exists(target_path):
                     os.makedirs(os.path.dirname(target_path), exist_ok=True)
                     shutil.copy2(os.path.join(root, file), target_path)
-                    print(f"♻️ Restored: {target_path}")
+                    print(f"â™»ï¸ Restored: {target_path}")
                     restored += 1
     if restored == 0:
         print("✅ All scripts intact!")
@@ -34,20 +34,20 @@ def restore_missing_scripts():
 
 
 def clean_logs():
-    print("🧹 Cleaning logs...")
+    print("ðŸ§¹ Cleaning logs...")
     if not os.path.exists(LOGS_DIR):
-        print("⚠️ Logs folder missing.")
+        print("âš ï¸ Logs folder missing.")
         return
     for file in os.listdir(LOGS_DIR):
         path = os.path.join(LOGS_DIR, file)
         if os.path.isfile(path) and file.endswith(".log"):
             os.remove(path)
-            print(f"🗑 Deleted: {file}")
+            print(f"ðŸ—‘ Deleted: {file}")
     print("✅ Logs cleaned.")
 
 
 def notion_sync():
-    print("🔁 (Placeholder) Sync to Notion... ✅")
+    print("ðŸ” (Placeholder) Sync to Notion... ✅")
 
 
 def run_all():
@@ -69,10 +69,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.test:
-        print("🧪 Running TEST mode (no actions)...")
-        print("✅ Notion Token loaded" if NOTION_TOKEN else "❌ Notion Token missing!")
-        print(f"📁 Backups present: {os.path.exists(BACKUP_DIR)}")
-        print(f"📄 Patch CSV: {os.path.exists(PATCH_CSV)}")
+        print("ðŸ§ª Running TEST mode (no actions)...")
+        print("✅ Notion Token loaded" if NOTION_TOKEN else "âŒ Notion Token missing!")
+        print(f"ðŸ“ Backups present: {os.path.exists(BACKUP_DIR)}")
+        print(f"ðŸ“„ Patch CSV: {os.path.exists(PATCH_CSV)}")
     elif args.restore:
         restore_missing_scripts()
     elif args.clean:

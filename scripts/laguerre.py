@@ -368,7 +368,6 @@ def lagadd(c1, c2):
     >>> lagadd([1, 2, 3], [1, 2, 3, 4])
     array([2.,  4.,  6.,  4.])
 
-
     """
     return pu._add(c1, c2)
 
@@ -418,7 +417,6 @@ def lagmulx(c):
 
     Multiply the Laguerre series `c` by x, where x is the independent
     variable.
-
 
     Parameters
     ----------
@@ -717,7 +715,6 @@ def lagint(c, m=1, k=[], lbnd=0, scl=1, axis=0):
     represents the series ``L_0 + 2*L_1 + 3*L_2`` while [[1,2],[1,2]]
     represents ``1*L_0(x)*L_0(y) + 1*L_1(x)*L_0(y) + 2*L_0(x)*L_1(y) +
     2*L_1(x)*L_1(y)`` if axis=0 is ``x`` and axis=1 is ``y``.
-
 
     Parameters
     ----------

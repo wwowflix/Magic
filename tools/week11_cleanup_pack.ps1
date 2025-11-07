@@ -1,4 +1,6 @@
-﻿param([string]$Root="D:\MAGIC")
+param([string]$Root=$Root)
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 $ErrorActionPreference = "Stop"
 function J($p){ Join-Path $Root $p }
 function Ensure-Dir([string]$p){ if(!(Test-Path $p)){ New-Item -ItemType Directory -Force -Path $p | Out-Null } }

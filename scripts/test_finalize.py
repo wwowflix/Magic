@@ -25,7 +25,6 @@ mi = pd.MultiIndex.from_product([["a", "b"], [0, 1]], names=["A", "B"])
 frame_data = ({"A": [1]},)
 frame_mi_data = ({"A": [1, 2, 3, 4]}, mi)
 
-
 # Tuple of
 # - Callable: Constructor (Series, DataFrame)
 # - Tuple: Constructor args

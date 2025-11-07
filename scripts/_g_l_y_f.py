@@ -186,7 +186,7 @@ class table__g_l_y_f(DefaultTable.DefaultTable):
             ttFont["maxp"].numGlyphs = len(self.glyphs)
         if not data:
             # As a special case when all glyph in the font are empty, add a zero byte
-            # to the table, so that OTS doesn’t reject it, and to make the table work
+            # to the table, so that OTS doesn't reject it, and to make the table work
             # on Windows as well.
             # See https://github.com/khaledhosny/ots/issues/52
             data = b"\0"
@@ -552,14 +552,13 @@ _GlyphControls = namedtuple(
     "_GlyphControls", "numberOfContours endPts flags components"
 )
 
-
 glyphHeaderFormat = """
-		>	# big endian
-		numberOfContours:	h
-		xMin:				h
-		yMin:				h
-		xMax:				h
-		yMax:				h
+        >   # big endian
+        numberOfContours:   h
+        xMin:               h
+        yMin:               h
+        xMax:               h
+        yMax:               h
 """
 
 # flags
@@ -657,7 +656,6 @@ USE_MY_METRICS = 0x0200  # apply these metrics to parent glyph
 OVERLAP_COMPOUND = 0x0400  # used by Apple in GX fonts
 SCALED_COMPONENT_OFFSET = 0x0800  # composite designed to have the component offset scaled (designed for Apple)
 UNSCALED_COMPONENT_OFFSET = 0x1000  # composite designed not to have the component offset scaled (designed for MS)
-
 
 CompositeMaxpValues = namedtuple(
     "CompositeMaxpValues", ["nPoints", "nContours", "maxComponentDepth"]

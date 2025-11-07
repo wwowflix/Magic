@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 missing types & inference
 """
-
-from __future__ import annotations
-
 from decimal import Decimal
 from functools import partial
 from typing import (
@@ -67,7 +66,6 @@ if TYPE_CHECKING:
     )
 
     from pandas.core.indexes.base import Index
-
 
 isposinf_scalar = libmissing.isposinf_scalar
 isneginf_scalar = libmissing.isneginf_scalar

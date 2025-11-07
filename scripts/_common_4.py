@@ -4,7 +4,6 @@ from functools import wraps
 
 from datetime import datetime, timedelta, tzinfo
 
-
 ZERO = timedelta(0)
 
 __all__ = ["tzname_in_python2", "enfold"]
@@ -168,7 +167,6 @@ class _tzinfo(tzinfo):
 
         :param dt:
             A :py:class:`datetime.datetime`, naive or time zone aware.
-
 
         :return:
             Returns ``True`` if ambiguous, ``False`` otherwise.
@@ -367,7 +365,6 @@ class tzrangebase(_tzinfo):
 
         :param dt:
             A :py:class:`datetime.datetime`, naive or time zone aware.
-
 
         :return:
             Returns ``True`` if ambiguous, ``False`` otherwise.

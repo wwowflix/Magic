@@ -22,7 +22,6 @@ _quoteAttributeLegacy = re.compile(
     "\u3000]"
 )
 
-
 _encode_entity_map = {}
 _is_ucs4 = len("\U0010ffff") == 1
 for k, v in list(entities.items()):

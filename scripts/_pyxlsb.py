@@ -1,6 +1,6 @@
-# pyright: reportMissingImports=false
 from __future__ import annotations
 
+# pyright: reportMissingImports=false
 from pandas._typing import (
     FilePath,
     ReadBuffer,

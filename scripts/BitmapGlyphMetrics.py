@@ -2,7 +2,7 @@
 # this class gets its own python file.
 from fontTools.misc import sstruct
 from fontTools.misc.textTools import safeEval
-import logging
+import magic_logging as logging
 
 
 log = logging.getLogger(__name__)

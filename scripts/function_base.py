@@ -10,7 +10,6 @@ from numpy.core import overrides
 
 __all__ = ["logspace", "linspace", "geomspace"]
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
@@ -82,7 +81,6 @@ def linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis
         Only returned if `retstep` is True
 
         Size of spacing between samples.
-
 
     See Also
     --------
@@ -223,7 +221,6 @@ def logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None, axis=0):
         new axis inserted at the beginning. Use -1 to get an axis at the end.
 
         .. versionadded:: 1.16.0
-
 
     Returns
     -------

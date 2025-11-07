@@ -1,9 +1,11 @@
-﻿param (
-    [string]$csvPath = "D:\Final_File_FOR_Automate.csv",
-    [string]$scriptsRoot = "D:\MAGIC\scripts",
-    [string]$reportPath = "D:\MAGIC\outputs\placeholder_rebuild_report.txt"
+param (
+    [string]$csvPath = "E:\Final_File_FOR_Automate.csv",
+    [string]$scriptsRoot = "E:\MAGIC\scripts",
+    [string]$reportPath = "E:\MAGIC\outputs\placeholder_rebuild_report.txt"
 )
 
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 Write-Host "`n🧹 Deleting old _READY.py placeholders from phase11..."
 Get-ChildItem "$scriptsRoot\phase11" -Recurse -Filter "*_READY.py" -File | Remove-Item -Force
 

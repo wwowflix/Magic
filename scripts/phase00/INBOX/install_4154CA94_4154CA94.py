@@ -5,7 +5,7 @@ Implements the Distutils 'install' command."""
 import sys
 import os
 import contextlib
-import sysconfig
+import magic_sysconfig as sysconfig
 import itertools
 
 from distutils import log
@@ -86,9 +86,7 @@ if HAS_USER_SITE:
         "data": "{userbase}",
     }
 
-
 INSTALL_SCHEMES.update(fw.schemes)
-
 
 # The keys to an installation scheme; if any new types of files are to be
 # installed, be sure to add an entry to every installation scheme above,
@@ -106,7 +104,7 @@ def _load_sysconfig_schemes():
 
 def _load_schemes():
     """
-    Extend default schemes with schemes from sysconfig.
+    Extend default schemes with schemes from magic_sysconfig.
     """
 
     sysconfig_schemes = _load_sysconfig_schemes() or {}

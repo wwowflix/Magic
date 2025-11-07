@@ -1,7 +1,7 @@
 import os
 import streamlit.components.v1 as components
 from dataclasses import dataclass
-from typing import List
+from magic_typing import List
 from extra_streamlit_components import IS_RELEASE
 
 if IS_RELEASE:

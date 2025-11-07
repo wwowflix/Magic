@@ -1,8 +1,7 @@
-# _build_config.py.in is converted into _build_config.py during the meson build process.
-
 from __future__ import annotations
 
 
+# _build_config.py.in is converted into _build_config.py during the meson build process.
 def build_config() -> dict[str, str]:
     """
     Return a dictionary containing build configuration settings.

@@ -17,7 +17,7 @@ import warnings
 import time
 import collections
 
-from .._importlib import metadata
+from scripts._importlib import metadata
 from .. import _entry_points
 
 from setuptools import Command
@@ -761,4 +761,4 @@ def get_pkg_info_revision():
 
 
 class EggInfoDeprecationWarning(SetuptoolsDeprecationWarning):
-    """Deprecated behavior warning for EggInfo, bypassing suppression."""
+    """Deprecated behavior warning for EggInfo, bypassing suppression.

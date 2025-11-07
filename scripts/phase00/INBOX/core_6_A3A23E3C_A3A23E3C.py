@@ -1,7 +1,6 @@
-"""Utility routines."""
-
 from __future__ import annotations
 
+"""Utility routines."""
 import itertools
 import json
 import re
@@ -29,7 +28,6 @@ if sys.version_info >= (3, 10):
     from typing import Concatenate, ParamSpec
 else:
     from typing_extensions import Concatenate, ParamSpec
-
 
 if TYPE_CHECKING:
     import typing as t
@@ -73,7 +71,6 @@ TYPECODE_MAP = {
 }
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
-
 
 # aggregates from vega-lite version 4.6.0
 AGGREGATES = [

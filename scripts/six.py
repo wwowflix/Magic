@@ -31,7 +31,6 @@ import types
 __author__ = "Benjamin Peterson <benjamin@python.org>"
 __version__ = "1.16.0"
 
-
 # Useful for very coarse version differentiation.
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
@@ -566,7 +565,6 @@ else:
     _func_defaults = "func_defaults"
     _func_globals = "func_globals"
 
-
 try:
     advance_iterator = next
 except NameError:
@@ -576,7 +574,6 @@ except NameError:
 
 
 next = advance_iterator
-
 
 try:
     callable = callable
@@ -617,14 +614,12 @@ _add_doc(
     get_unbound_function, """Get the function out of a possibly unbound function"""
 )
 
-
 get_method_function = operator.attrgetter(_meth_func)
 get_method_self = operator.attrgetter(_meth_self)
 get_function_closure = operator.attrgetter(_func_closure)
 get_function_code = operator.attrgetter(_func_code)
 get_function_defaults = operator.attrgetter(_func_defaults)
 get_function_globals = operator.attrgetter(_func_globals)
-
 
 if PY3:
 
@@ -671,7 +666,6 @@ _add_doc(iteritems, "Return an iterator over the (key, value) pairs of a diction
 _add_doc(
     iterlists, "Return an iterator over the (key, [values]) pairs of a dictionary."
 )
-
 
 if PY3:
 
@@ -786,7 +780,6 @@ else:
         tb = None
 """
     )
-
 
 if sys.version_info[:2] > (3,):
     exec_(

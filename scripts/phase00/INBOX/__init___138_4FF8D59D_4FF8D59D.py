@@ -2,7 +2,6 @@
 from ._parser import parse, parser, parserinfo, ParserError
 from ._parser import UnknownTimezoneWarning
 
-
 from .isoparser import isoparser, isoparse
 
 __all__ = [
@@ -15,14 +14,13 @@ __all__ = [
     "UnknownTimezoneWarning",
 ]
 
-
 ###
 # Deprecate portions of the private interface so that downstream code that
 # is improperly relying on it is given *some* notice.
 
 
 def __deprecated_private_func(f):
-    from functools import wraps
+    from magic_functools import wraps
     import warnings
 
     msg = (

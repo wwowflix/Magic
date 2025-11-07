@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Experimental manager based on storing a collection of 1D arrays
 """
-
-from __future__ import annotations
-
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -97,7 +96,6 @@ from pandas.core.internals.blocks import (
 
 if TYPE_CHECKING:
     from pandas import Float64Index
-
 
 T = TypeVar("T", bound="BaseArrayManager")
 
@@ -584,7 +582,6 @@ class BaseArrayManager(DataManager):
         fill_value : object, default None
         allow_dups : bool, default False
         copy : bool, default True
-
 
         pandas-indexer with -1's only.
         """

@@ -1,9 +1,13 @@
+﻿# Resolve repo root (prefer git, fallback to script folder's parent)
+$RepoRoot = (& git rev-parse --show-toplevel 2>$null).Trim()
+if (-not $RepoRoot) { $RepoRoot = Split-Path -Parent $PSScriptRoot }
+Set-Location -LiteralPath $RepoRoot
 # fix_and_test_zephyr.ps1
 
 # 1) Backup & patch JSON loads to use utf-8-sig
 $pyFiles = @(
-  "D:\MAGIC\scripts\trends_scraper.py",
-  "D:\MAGIC\scripts\tiktok_xhr_scraper.py"
+  "${RepoRoot}\scripts\trends_scraper.py",
+  "${RepoRoot}\scripts\tiktok_xhr_scraper.py"
 )
 
 foreach ($pyFile in $pyFiles) {
@@ -54,7 +58,7 @@ $tests = @(
 Write-Host ""
 Write-Host "Running all Zephyr tests..." -ForegroundColor Cyan
 
-Push-Location "D:\MAGIC\scripts"
+Push-Location "${RepoRoot}\scripts"
 
 foreach ($t in $tests) {
   Write-Host ""

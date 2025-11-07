@@ -30,7 +30,6 @@ from pip._internal.utils.misc import ensure_dir
 
 _DATE_FMT = "%Y-%m-%dT%H:%M:%SZ"
 
-
 logger = logging.getLogger(__name__)
 
 

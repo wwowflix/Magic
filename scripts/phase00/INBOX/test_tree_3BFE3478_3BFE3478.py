@@ -35,13 +35,13 @@ class TestFind(SoupTest):
         assert soup.find("b").string == "2"
 
     def test_unicode_text_find(self):
-        soup = self.soup("<h1>Räksmörgås</h1>")
-        assert soup.find(string="Räksmörgås") == "Räksmörgås"
+        soup = self.soup("<h1>RÃ¤ksmÃ¶rgÃ¥s</h1>")
+        assert soup.find(string="RÃ¤ksmÃ¶rgÃ¥s") == "RÃ¤ksmÃ¶rgÃ¥s"
 
     def test_unicode_attribute_find(self):
-        soup = self.soup('<h1 id="Räksmörgås">here it is</h1>')
+        soup = self.soup('<h1 id="RÃ¤ksmÃ¶rgÃ¥s">here it is</h1>')
         str(soup)
-        assert "here it is" == soup.find(id="Räksmörgås").text
+        assert "here it is" == soup.find(id="RÃ¤ksmÃ¶rgÃ¥s").text
 
     def test_find_everything(self):
         """Test an optimization that finds all tags."""
@@ -246,8 +246,8 @@ class TestFindAllByAttribute(SoupTest):
         self.assert_selects(tree.find_all(id="first"), ["Matching a.", "Matching b."])
 
     def test_find_all_by_utf8_attribute_value(self):
-        peace = "םולש".encode("utf8")
-        data = '<a title="םולש"></a>'.encode("utf8")
+        peace = "××•×œ×©".encode("utf8")
+        data = '<a title="××•×œ×©"></a>'.encode("utf8")
         soup = self.soup(data)
         assert [soup.a] == soup.find_all(title=peace)
         assert [soup.a] == soup.find_all(title=peace.decode("utf8"))

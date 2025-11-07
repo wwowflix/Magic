@@ -1,6 +1,6 @@
-﻿import os
+import os
 import shutil
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 BACKUP_DIR = "backups"
 

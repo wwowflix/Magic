@@ -5,7 +5,7 @@ from typing import Generic, TypeVar, cast
 # Runvar implementations
 import attrs
 
-from .._util import NoPublicConstructor, final
+from scripts._util import NoPublicConstructor, final
 from . import _run
 
 T = TypeVar("T")

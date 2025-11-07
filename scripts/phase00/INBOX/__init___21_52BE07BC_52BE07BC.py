@@ -31,7 +31,7 @@ implement several things:
 
 from __future__ import absolute_import, division, unicode_literals
 
-from .._utils import default_etree
+from scripts._utils import default_etree
 
 treeBuilderCache = {}
 

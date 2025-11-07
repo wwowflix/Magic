@@ -31,7 +31,7 @@ def update_status(page_id, new_status):
 
 def main():
     if not os.path.exists(SUMMARY_FILE):
-        print(f"❌ Summary file not found: {SUMMARY_FILE}")
+        print(f"âŒ Summary file not found: {SUMMARY_FILE}")
         return
 
     with open(SUMMARY_FILE, "r", encoding="utf-8") as f:
@@ -41,14 +41,14 @@ def main():
             status = row["Status"]
 
             if status == "FAIL":
-                print(f"🔄 Updating Notion for: {filename} → FAIL")
+                print(f"ðŸ”„ Updating Notion for: {filename} â†’ FAIL")
                 result = query_database_by_filename(filename)
                 results = result.get("results", [])
                 if results:
                     page_id = results[0]["id"]
-                    update_status(page_id, "❌ Failed")
+                    update_status(page_id, "âŒ Failed")
                 else:
-                    print(f"⚠️ Notion page not found for: {filename}")
+                    print(f"âš ï¸ Notion page not found for: {filename}")
 
 
 if __name__ == "__main__":

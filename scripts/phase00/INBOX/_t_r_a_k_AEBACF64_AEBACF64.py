@@ -11,41 +11,37 @@ from . import DefaultTable
 import struct
 from collections.abc import MutableMapping
 
-
 # Apple's documentation of 'trak':
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6trak.html
 
 TRAK_HEADER_FORMAT = """
-	> # big endian
-	version:     16.16F
-	format:      H
-	horizOffset: H
-	vertOffset:  H
-	reserved:    H
+    > # big endian
+    version:     16.16F
+    format:      H
+    horizOffset: H
+    vertOffset:  H
+    reserved:    H
 """
 
 TRAK_HEADER_FORMAT_SIZE = sstruct.calcsize(TRAK_HEADER_FORMAT)
 
-
 TRACK_DATA_FORMAT = """
-	> # big endian
-	nTracks:         H
-	nSizes:          H
-	sizeTableOffset: L
+    > # big endian
+    nTracks:         H
+    nSizes:          H
+    sizeTableOffset: L
 """
 
 TRACK_DATA_FORMAT_SIZE = sstruct.calcsize(TRACK_DATA_FORMAT)
 
-
 TRACK_TABLE_ENTRY_FORMAT = """
-	> # big endian
-	track:      16.16F
-	nameIndex:       H
-	offset:          H
+    > # big endian
+    track:      16.16F
+    nameIndex:       H
+    offset:          H
 """
 
 TRACK_TABLE_ENTRY_FORMAT_SIZE = sstruct.calcsize(TRACK_TABLE_ENTRY_FORMAT)
-
 
 # size values are actually '16.16F' fixed-point values, but here I do the
 # fixedToFloat conversion manually instead of relying on sstruct

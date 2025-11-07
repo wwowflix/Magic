@@ -20,7 +20,6 @@ def _cleanup_tmpdir() -> None:
 
 atexit.register(_cleanup_tmpdir)
 
-
 from ._version import __version__  # noqa
 from .compilation import compile_stan_file, format_stan_file
 from .install_cmdstan import rebuild_cmdstan

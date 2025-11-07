@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 :func:`~pandas.eval` parsers.
 """
-
-from __future__ import annotations
-
 import ast
 from functools import (
     partial,
@@ -177,7 +176,6 @@ def _is_type(t):
 _is_list = _is_type(list)
 _is_str = _is_type(str)
 
-
 # partition all AST nodes
 _all_nodes = frozenset(
     node
@@ -212,10 +210,8 @@ _alias_nodes = _filter_nodes(ast.alias)
 if not PY39:
     _slice_nodes = _filter_nodes(ast.slice)
 
-
 # nodes that we don't support directly but are needed for parsing
 _hacked_nodes = frozenset(["Assign", "Module", "Expr"])
-
 
 _unsupported_expr_nodes = frozenset(
     [

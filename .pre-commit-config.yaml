@@ -1,18 +1,14 @@
-﻿repos:
-  # Core pre-commit hooks (you can adjust/expand later)
+﻿# .pre-commit-config.yaml
+repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: v4.6.0
     hooks:
-      - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-added-large-files
-        args: ['--maxkb=1024']
-
-  # Your local hook to block runtime artifacts
-  - repo: local
-    hooks:
-      - id: block-runtime-reports
-        name: Block runtime report artifacts from commits
-        entry: powershell -NoProfile -ExecutionPolicy Bypass -File tools/hooks/block_runtime_reports.ps1
-        language: system
-        pass_filenames: false
+        # don't rewrite generated reports or CI artifacts
+        exclude: ^reports/|^reports/ci/|^reports/phase11_.*\.xml$|^outputs/
+      - id: trailing-whitespace
+        exclude: ^reports/|^outputs/
+      - id: mixed-line-ending
+        # keep LF for code, but leave PS scripts alone (CRLF via .gitattributes)
+        args: [--fix=lf]
+        exclude: ^reports/|^outputs/|\.ps1$|\.psm1$

@@ -115,11 +115,11 @@ class GnuFCompiler(FCompiler):
             # error checking.
             if not target:
                 # If MACOSX_DEPLOYMENT_TARGET is not set in the environment,
-                # we try to get it first from sysconfig and then
+                # we try to get it first from magic_sysconfig and then
                 # fall back to setting it to 10.9 This is a reasonable default
                 # even when using the official Python dist and those derived
                 # from it.
-                import sysconfig
+                import magic_sysconfig as sysconfig
 
                 target = sysconfig.get_config_var("MACOSX_DEPLOYMENT_TARGET")
                 if not target:
@@ -234,7 +234,7 @@ class GnuFCompiler(FCompiler):
 
     def _c_arch_flags(self):
         """Return detected arch flags from CFLAGS"""
-        import sysconfig
+        import magic_sysconfig as sysconfig
 
         try:
             cflags = sysconfig.get_config_vars()["CFLAGS"]

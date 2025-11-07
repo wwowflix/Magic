@@ -1,7 +1,6 @@
-# SPDX-License-Identifier: MIT
-
 from __future__ import annotations
 
+# SPDX-License-Identifier: MIT
 import abc
 import contextlib
 import copy
@@ -34,7 +33,6 @@ from .exceptions import (
     NotAnAttrsClassError,
     UnannotatedAttributeError,
 )
-
 
 # This is used at least twice, so cache it here.
 _OBJ_SETATTR = object.__setattr__
@@ -131,7 +129,6 @@ def attrib(
 
         Does **nothing** unless the class is also decorated with
         `attr.s` (or similar)!
-
 
     .. versionadded:: 15.2.0 *convert*
     .. versionadded:: 16.3.0 *metadata*
@@ -2343,7 +2340,6 @@ class Attribute:
       them.
     - The ``alias`` property exposes the __init__ parameter name of the field,
       with any overrides and default private-attribute handling applied.
-
 
     .. versionadded:: 20.1.0 *inherited*
     .. versionadded:: 20.1.0 *on_setattr*

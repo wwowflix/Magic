@@ -598,7 +598,6 @@ python_version: Callable[..., Option] = partial(
     ),
 )
 
-
 implementation: Callable[..., Option] = partial(
     Option,
     "--implementation",
@@ -613,7 +612,6 @@ implementation: Callable[..., Option] = partial(
         "implementation-agnostic wheels."
     ),
 )
-
 
 abis: Callable[..., Option] = partial(
     Option,
@@ -931,7 +929,6 @@ hash: Callable[..., Option] = partial(
     "hash before installing. Example: --hash=sha256:abcdef...",
 )
 
-
 require_hashes: Callable[..., Option] = partial(
     Option,
     "--require-hashes",
@@ -942,7 +939,6 @@ require_hashes: Callable[..., Option] = partial(
     "repeatable installs. This option is implied when any package in a "
     "requirements file has a --hash option.",
 )
-
 
 list_path: Callable[..., Option] = partial(
     PipOption,
@@ -970,7 +966,6 @@ list_exclude: Callable[..., Option] = partial(
     help="Exclude specified package from the output",
 )
 
-
 no_python_version_warning: Callable[..., Option] = partial(
     Option,
     "--no-python-version-warning",
@@ -979,7 +974,6 @@ no_python_version_warning: Callable[..., Option] = partial(
     default=False,
     help="Silence deprecation warnings for upcoming unsupported Pythons.",
 )
-
 
 use_new_feature: Callable[..., Option] = partial(
     Option,
@@ -1008,7 +1002,6 @@ use_deprecated_feature: Callable[..., Option] = partial(
     ],
     help=("Enable deprecated functionality, that will be removed in the future."),
 )
-
 
 ##########
 # groups #

@@ -3,7 +3,7 @@ import argparse
 
 
 def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
-    print(f"📥 Loading: {api_csv}")
+    print(f"ðŸ“¥ Loading: {api_csv}")
     api_df = pd.read_csv(api_csv)
     print("✅ API CSV loaded")
 
@@ -17,13 +17,13 @@ def normalize_youtube_trends(api_csv, autocomplete_csv, output_csv):
             None
         )
     else:
-        print("❌ 'date' column missing in API CSV")
+        print("âŒ 'date' column missing in API CSV")
         return
 
     api_df = api_df[["date", "keyword", "platform", "metric", "author"]]
     print("✅ API data cleaned")
 
-    print(f"📥 Loading: {autocomplete_csv}")
+    print(f"ðŸ“¥ Loading: {autocomplete_csv}")
     auto_df = pd.read_csv(autocomplete_csv)
     print("✅ Autocomplete CSV loaded")
 

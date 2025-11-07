@@ -1,6 +1,6 @@
 import os
 import csv
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 import pandas as pd
 from notion_client import Client
 from dotenv import load_dotenv

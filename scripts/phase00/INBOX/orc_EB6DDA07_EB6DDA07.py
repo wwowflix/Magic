@@ -1,7 +1,6 @@
-"""orc compat"""
-
 from __future__ import annotations
 
+"""orc compat"""
 import io
 from types import ModuleType
 from typing import (

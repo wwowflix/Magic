@@ -413,7 +413,6 @@ def collate(*iterables, **kwargs):
         >>> list(collate(['1', '10'], ['2', '11'], key=key))
         ['1', '2', '10', '11']
 
-
     If the *iterables* are sorted in descending order, set *reverse* to
     ``True``:
 
@@ -835,7 +834,6 @@ def substrings_indexes(seq, reverse=False):
     ('more', 0, 4)
 
     Set *reverse* to ``True`` to yield the same items in the opposite order.
-
 
     """
     r = range(1, len(seq) + 1)
@@ -3006,7 +3004,6 @@ def set_partitions(iterable, k=None):
     ['ab', 'c']
     ['b', 'ac']
 
-
     If *k* is not given, every set partition is generated.
 
     >>> iterable = 'abc'
@@ -3388,7 +3385,6 @@ class callback_iter:
     ...             callback(i, c)
     ...     return 4
 
-
     Use ``with callback_iter(func)`` to get an iterator over the parameters
     that are delivered to the callback.
 
@@ -3667,7 +3663,6 @@ def value_chain(*args):
 
         >>> list(value_chain('12', '34', ['56', '78']))
         ['12', '34', '56', '78']
-
 
     Multiple levels of nesting are not flattened.
 

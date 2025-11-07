@@ -61,7 +61,7 @@ def pep508_identifier(name: str) -> bool:
 
 try:
     try:
-        from packaging import requirements as _req
+        from magic_packaging import requirements as _req
     except ImportError:  # pragma: no cover
         # let's try setuptools vendored version
         from setuptools._vendor.packaging import requirements as _req  # type: ignore
@@ -179,7 +179,6 @@ try:
 
 except ImportError:  # pragma: no cover
     trove_classifier = _TroveClassifier()
-
 
 # -------------------------------------------------------------------------------------
 # Non-PEP related

@@ -9,7 +9,7 @@ TOKEN_LIMIT = 75000
 
 alerts = []
 
-# ✅ FIXED LINE — THIS IS CORRECT
+# ✅ FIXED LINE - THIS IS CORRECT
 cost_pattern = re.compile(r"Total Cost[:=]\s*\$?([0-9]+\.[0-9]+)", re.IGNORECASE)
 token_pattern = re.compile(r"Tokens Used[:=]\s*([0-9]+)", re.IGNORECASE)
 

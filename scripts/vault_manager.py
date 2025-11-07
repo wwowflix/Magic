@@ -1,4 +1,4 @@
-﻿# vault_manager.py
+# vault_manager.py
 
 from cryptography.fernet import Fernet
 import os

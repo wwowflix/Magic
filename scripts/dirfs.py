@@ -1,5 +1,5 @@
 from .. import filesystem
-from ..asyn import AsyncFileSystem
+from scripts.asyn import AsyncFileSystem
 
 
 class DirFileSystem(AsyncFileSystem):

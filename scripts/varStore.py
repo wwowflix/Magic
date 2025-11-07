@@ -12,7 +12,6 @@ from functools import partial
 from collections import defaultdict
 from heapq import heappush, heappop
 
-
 NO_VARIATION_INDEX = ot.NO_VARIATION_INDEX
 ot.VarStore.NO_VARIATION_INDEX = NO_VARIATION_INDEX
 

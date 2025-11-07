@@ -67,7 +67,6 @@ __all__ = [
     "TwitterUsersScraper",
 ]
 
-
 import base64
 import collections
 import copy
@@ -91,7 +90,6 @@ import typing
 import urllib.parse
 import urllib3.util.ssl_
 import warnings
-
 
 _logger = logging.getLogger(__name__)
 _API_AUTHORIZATION_HEADER = "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs=1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA"

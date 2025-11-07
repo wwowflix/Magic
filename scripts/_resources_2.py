@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ..abc import AsyncResource
+from scripts.abc import AsyncResource
 from ._tasks import CancelScope
 
 

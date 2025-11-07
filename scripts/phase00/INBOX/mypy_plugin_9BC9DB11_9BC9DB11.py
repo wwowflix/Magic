@@ -1,7 +1,6 @@
-"""A module containing `numpy`-specific plugins for mypy."""
-
 from __future__ import annotations
 
+"""A module containing `numpy`-specific plugins for mypy."""
 import typing as t
 
 import numpy as np

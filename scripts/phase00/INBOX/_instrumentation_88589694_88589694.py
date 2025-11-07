@@ -5,7 +5,7 @@ import types
 from collections import UserDict
 from typing import TYPE_CHECKING, TypeVar
 
-from .._abc import Instrument
+from scripts._abc import Instrument
 
 # Used to log exceptions in instruments
 INSTRUMENT_LOGGER = logging.getLogger("trio.abc.Instrument")

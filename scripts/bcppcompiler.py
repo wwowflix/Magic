@@ -11,7 +11,6 @@ for the Borland C++ compiler.
 # someone should sit down and factor out the common code as
 # WindowsCCompiler!  --GPW
 
-
 import os
 import warnings
 
@@ -26,7 +25,6 @@ from distutils.ccompiler import CCompiler, gen_preprocess_options
 from distutils.file_util import write_file
 from distutils.dep_util import newer
 from distutils import log
-
 
 warnings.warn(
     "bcppcompiler is deprecated and slated to be removed "

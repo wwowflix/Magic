@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Engine classes for :func:`~pandas.eval`
 """
-
-from __future__ import annotations
-
 import abc
 from typing import TYPE_CHECKING
 

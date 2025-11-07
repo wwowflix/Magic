@@ -1,4 +1,4 @@
-﻿# self_healing_runner_v5.py
+# self_healing_runner_v5.py
 from __future__ import annotations
 import argparse
 import json

@@ -1,7 +1,6 @@
-"""An asyncio-based implementation of the file lock."""
-
 from __future__ import annotations
 
+"""An asyncio-based implementation of the file lock."""
 import asyncio
 import contextlib
 import logging
@@ -26,7 +25,6 @@ if TYPE_CHECKING:
         from typing import Self
     else:  # pragma: no cover (<py311)
         from typing_extensions import Self
-
 
 _LOGGER = logging.getLogger("filelock")
 

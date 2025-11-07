@@ -21,7 +21,6 @@ from collections.abc import Callable
 from string import whitespace
 import logging
 
-
 log = logging.getLogger(__name__)
 
 ps_special = b"()<>[]{}%"  # / is one too, but we take care of that one differently
@@ -33,18 +32,18 @@ commentRE = re.compile(b"%[^\n\r]*")
 
 # XXX This not entirely correct as it doesn't allow *nested* embedded parens:
 stringPat = rb"""
-	\(
-		(
-			(
-				[^()]*   \   [()]
-			)
-			|
-			(
-				[^()]*  \(   [^()]*  \)
-			)
-		)*
-		[^()]*
-	\)
+    \(
+        (
+            (
+                [^()]*   \   [()]
+            )
+            |
+            (
+                [^()]*  \(   [^()]*  \)
+            )
+        )*
+        [^()]*
+    \)
 """
 stringPat = b"".join(stringPat.split())
 stringRE = re.compile(stringPat)

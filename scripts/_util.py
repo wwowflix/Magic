@@ -1,6 +1,28 @@
-# Little utilities we use internally
 from __future__ import annotations
 
+# --- MAGIC: Safe fallback protocol error types ---
+try:
+
+    class LocalProtocolError(Exception):
+        """Raised for protocol errors detected locally."""
+
+        pass
+
+except Exception:
+    pass
+
+try:
+
+    class RemoteProtocolError(Exception):
+        """Raised for protocol errors originating from remote peer."""
+
+        pass
+
+except Exception:
+    pass
+# --- End fallback block ---
+
+# Little utilities we use internally
 import collections.abc
 import inspect
 import signal
@@ -108,7 +130,7 @@ def coroutine_or_error(
         if _return_value_looks_like_wrong_library(async_fn):
             raise TypeError(
                 "Trio was expecting an async function, but instead it got "
-                f"{async_fn!r} – are you trying to use a library written for "
+                f"{async_fn!r} - are you trying to use a library written for "
                 "asyncio/twisted/tornado or similar? That won't work "
                 "without some sort of compatibility shim.",
             ) from None
@@ -128,7 +150,7 @@ def coroutine_or_error(
         # Give good error for: nursery.start_soon(func_returning_future)
         if _return_value_looks_like_wrong_library(coro):
             raise TypeError(
-                f"Trio got unexpected {coro!r} – are you trying to use a "
+                f"Trio got unexpected {coro!r} - are you trying to use a "
                 "library written for asyncio/twisted/tornado or similar? "
                 "That won't work without some sort of compatibility shim.",
             )
@@ -420,3 +442,74 @@ def raise_single_exception_from_group(
 
     assert cancelled_exception is not None, "group can't be empty"
     raise_saving_context(cancelled_exception)
+
+
+# --- MAGIC util shim (bytesify / LocalProtocolError / validate) ---
+class LocalProtocolError(ValueError):
+    """Raised for invalid protocol usage (HTTP header/line issues, etc.)."""
+
+
+def bytesify(obj, encoding="latin-1"):
+    """
+    Ensure bytes for header-ish values:
+    - bytes -> return as-is
+    - str   -> encode with latin-1 (HTTP header bytes are 0-255)
+    - other -> str() then encode
+    """
+    if isinstance(obj, (bytes, bytearray, memoryview)):
+        return bytes(obj)
+    if isinstance(obj, str):
+        return obj.encode(encoding, "strict")
+    return str(obj).encode(encoding, "strict")
+
+
+def validate(condition, message="invalid"):
+    """Raise LocalProtocolError if condition is false."""
+    if not condition:
+        raise LocalProtocolError(message)
+
+
+try:
+    __all__
+except NameError:
+    __all__ = []
+for _n in ("LocalProtocolError", "bytesify", "validate"):
+    if _n not in __all__:
+        __all__.append(_n)
+# --- end MAGIC util shim ---
+
+
+# --- MAGIC util shim: Sentinel ------------------------------------------------
+class Sentinel:
+    __slots__ = ("name",)
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__}:{self.name}>"
+
+    def __hash__(self) -> int:
+        return id(self)
+
+    def __reduce__(self):
+        # Keep it picklable in simplest possible way (identity not guaranteed across processes).
+        return (self.__class__, (self.name,))
+
+
+def sentinel(name: str) -> Sentinel:
+    return Sentinel(name)
+
+
+# Common sentinels some h11-like code expects
+_SWITCH_CONNECT = Sentinel("SWITCH_CONNECT")
+_SWITCH_UPGRADE = Sentinel("SWITCH_UPGRADE")
+
+try:
+    __all__
+except NameError:
+    __all__ = []
+for _n in ("Sentinel", "sentinel", "_SWITCH_CONNECT", "_SWITCH_UPGRADE"):
+    if _n not in __all__:
+        __all__.append(_n)
+# --- end MAGIC util shim ------------------------------------------------------

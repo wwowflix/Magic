@@ -15,7 +15,6 @@ import json
 import logging
 import re
 
-
 from . import DistlibException, __version__
 from .compat import StringIO, string_types, text_type
 from .markers import interpret

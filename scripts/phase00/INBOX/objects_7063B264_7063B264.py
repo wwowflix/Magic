@@ -1,7 +1,6 @@
-"""Indexer objects for computing start/end window bounds for rolling operations"""
-
 from __future__ import annotations
 
+"""Indexer objects for computing start/end window bounds for rolling operations"""
 from datetime import timedelta
 
 import numpy as np

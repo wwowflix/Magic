@@ -18,7 +18,6 @@ from numpy.testing import suppress_warnings
 
 _check_fill_value = np.ma.core._check_fill_value
 
-
 __all__ = [
     "append_fields",
     "apply_along_fields",

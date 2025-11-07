@@ -1,5 +1,6 @@
-# tools/self_heal_agents.py
 from __future__ import annotations
+
+# tools/self_heal_agents.py
 import os
 import shutil
 import time

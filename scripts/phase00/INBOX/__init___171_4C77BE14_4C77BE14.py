@@ -33,7 +33,6 @@ __author__ = "jvr"
 __version__ = "1.0b3"
 DEBUG = 0
 
-
 try:
     try:
         from Carbon import Res

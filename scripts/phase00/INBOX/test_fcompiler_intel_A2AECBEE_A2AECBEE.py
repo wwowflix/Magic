@@ -1,7 +1,6 @@
 import numpy.distutils.fcompiler
 from numpy.testing import assert_
 
-
 intel_32bit_version_strings = [
     (
         "Intel(R) Fortran Intel(R) 32-bit Compiler Professional for applications"

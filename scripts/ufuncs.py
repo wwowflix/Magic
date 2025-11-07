@@ -133,5 +133,3 @@ results in an error. There are two alternatives:
     likely incorrect. On the other hand, most usages of logical_and and
     logical_or are with boolean arrays. As long as one is careful, this is
     a convenient way to apply these operators.
-
-"""

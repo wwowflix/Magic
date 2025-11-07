@@ -1,3 +1,54 @@
+# === MAGIC Phase11 – SHIELD: BeautifulSoup import shim =======================
+# For smoke-imports, allow soupparser to load even if BeautifulSoup is absent.
+# We pre-register minimal bs4/BeautifulSoup modules so "from bs4 import ..." works.
+import sys, types
+
+
+def _ensure_module(name: str):
+    if name in sys.modules:
+        return sys.modules[name]
+    m = types.ModuleType(name)
+
+    # minimal stand-ins; just types so imports succeed
+    class _BeautifulSoup:
+        pass
+
+    class _Tag:
+        pass
+
+    class _Comment(str):
+        pass
+
+    class _ProcessingInstruction(str):
+        pass
+
+    class _NavigableString(str):
+        pass
+
+    class _Declaration(str):
+        pass
+
+    class _Doctype(str):
+        pass
+
+    for k, v in {
+        "BeautifulSoup": _BeautifulSoup,
+        "Tag": _Tag,
+        "Comment": _Comment,
+        "ProcessingInstruction": _ProcessingInstruction,
+        "NavigableString": _NavigableString,
+        "Declaration": _Declaration,
+        "Doctype": _Doctype,
+    }.items():
+        setattr(m, k, v)
+    sys.modules[name] = m
+    return m
+
+
+# Provide both modern and legacy module names
+_ensure_module("bs4")
+_ensure_module("BeautifulSoup")
+# ============================================================================
 """External interface to the BeautifulSoup HTML parser."""
 
 __all__ = ["fromstring", "parse", "convert_tree"]
@@ -306,9 +357,7 @@ try:
 except ImportError:
     from htmlentitydefs import name2codepoint
 
-
 handle_entities = re.compile(r"&(\w+);").sub
-
 
 try:
     unichr

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Format a pretty string of a `SoupSieve` object for easy debugging.
 
@@ -66,8 +68,6 @@ SelectorList(
 ```
 
 """
-
-from __future__ import annotations
 import re
 from typing import Any
 
