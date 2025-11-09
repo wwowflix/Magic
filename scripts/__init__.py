@@ -12,3 +12,9 @@ try:  # NBitBase re-export
 except Exception:  # fallback shim if symbol missing
     class NBitBase:  # type: ignore
         pass
+
+from ._compat import (
+    StreamError, StreamClosed, StreamConsumed,
+    WebSocketError, WebSocketException,
+    WebSocketProtocolException, WebSocketConnectionClosedException,
+)
