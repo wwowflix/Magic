@@ -1,17 +1,27 @@
+# Base Python image
 FROM python:3.11-slim
+
+# Avoid Python buffering / .pyc files
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# Work directory inside the container
 WORKDIR /app
 
-# If you have requirements.txt, this installs them; otherwise it no-ops
-COPY requirements.txt ./requirements.txt
-RUN python -m pip install --upgrade pip && \
-    (pip install --no-cache-dir -r requirements.txt || true)
+# Install basic build tools (in case some wheels need compiling)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+ && rm -rf /var/lib/apt/lists/*
 
-# Copy only what we need (keeps it simple for now)
+# Copy only the lockfile first (to maximize Docker layer cache)
+COPY requirements.lock.txt ./requirements.lock.txt
+
+# Install dependencies using the frozen lock
+RUN pip install --upgrade pip \
+ && pip install --no-cache-dir -r requirements.lock.txt
+
+# Now copy the rest of the repo
 COPY . .
 
-# Simple healthcheck: succeed = healthy
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD ["python","-c","import sys; sys.exit(0)"]
-
-# Keep container running (so HEALTHCHECK can run)
-CMD ["tail","-f","/dev/null"]
+# Default command: run Phase 11 smoke health tests
+CMD ["python", "-m", "pytest", "-q", "tests/smoke", "-k", "phase11 and _ok"]
