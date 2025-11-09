@@ -1,7 +1,9 @@
-## Summary\n- ...\n\n## Checks\n- [ ] Phase11 matrix green\n- [ ] Orchestrator TSV attached
+## Summary
 
-<!-- ci-nudge: 2025-11-08T02:09:03 -->
+-
 
-<!-- ci-nudge: 2025-11-08T02:12:06 -->
+## Checklist
 
-<!-- ci-nudge: 2025-11-08T02:26:01 -->
+- [ ] Tests: `pytest -q tests/smoke -k "phase11 and _ok"`
+- [ ] Docs updated if needed
+- [ ] No stray changes in sync/magic_patch.csv
