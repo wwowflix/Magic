@@ -26,11 +26,11 @@ Filename,Phase,Module,Status,Folder,Is Placeholder,Is Implemented
 11E_file_folder_cleanup_READY.py,11,SCRIPTS,READY,scripts/phase11\module_e,No,Yes
 11E_placeholder_READY.py,11,SCRIPTS,READY,scripts/phase11\module_e,No,Yes
 11E_protection_guard_READY.py,11,SCRIPTS,READY,scripts/phase11\module_e,No,Yes
-11F_agent_performance_log_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11F_budget_burn_monitor_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
-11F_error_pattern_analyzer_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11F_placeholder_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11F_protection_guard_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
+11F_agent_performance_log_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
+11F_error_pattern_analyzer_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11F_redundancy_reducer_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11F_retry_dead_job_scanner_READY.py,11,SCRIPTS,READY,scripts/phase11\module_f,No,Yes
 11G_placeholder_READY.py,11,SCRIPTS,READY,scripts/phase11\module_g,No,Yes

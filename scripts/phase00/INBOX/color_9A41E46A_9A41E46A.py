@@ -1,3 +1,9 @@
+try:
+    import selenium.webdriver as _selenium  # type: ignore
+except Exception:
+    class SeleniumOptionalStub:
+        def __getattr__(self, name): raise RuntimeError("Selenium not available")
+    _selenium = SeleniumOptionalStub()
 from __future__ import annotations
 
 # Licensed to the Software Freedom Conservancy (SFC) under one

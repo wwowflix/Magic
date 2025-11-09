@@ -18,8 +18,7 @@ from functools import partial
 from optparse import SUPPRESS_HELP, Option, OptionGroup, OptionParser, Values
 from textwrap import dedent
 from typing import Any, Callable, Dict, Optional, Tuple
-
-from pip._vendor.packaging.utils import canonicalize_name
+from packaging.utils import canonicalize_name
 
 from pip._internal.cli.parser import ConfigOptionParser
 from pip._internal.exceptions import CommandError
