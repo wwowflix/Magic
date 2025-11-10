@@ -442,15 +442,15 @@ class TestMethods:
                 id="15000*a+15000*b-15000*c-0-None--1",
             ),
             (["abcdefghiabc", "rrarrrrrrrrra"], ["def", "arr"], [0, 3], None, [3, -1]),
-            ("Ae¢☃€ 😊" * 2, "😊", 0, None, 6),
-            ("Ae¢☃€ 😊" * 2, "😊", 7, None, 13),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 0, None, 6),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 7, None, 13),
             pytest.param(
                 "A" * (2**17), r"[\w]+\Z", 0, None, -1, id=r"A*2**17-[\w]+\Z-0-None--1"
             ),
         ],
     )
     def test_find(self, a, sub, start, end, out, dt):
-        if "😊" in a and dt == "S":
+        if "ðŸ˜Š" in a and dt == "S":
             pytest.skip("Bytes dtype does not support non-ascii input")
         a = np.array(a, dtype=dt)
         sub = np.array(sub, dtype=dt)
@@ -470,12 +470,12 @@ class TestMethods:
             ("rrarrrrrrrrra", "a", 4, None, 12),
             ("rrarrrrrrrrra", "a", 4, 6, -1),
             (["abcdefghiabc", "rrarrrrrrrrra"], ["abc", "a"], [0, 0], None, [9, 12]),
-            ("Ae¢☃€ 😊" * 2, "😊", 0, None, 13),
-            ("Ae¢☃€ 😊" * 2, "😊", 0, 7, 6),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 0, None, 13),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 0, 7, 6),
         ],
     )
     def test_rfind(self, a, sub, start, end, out, dt):
-        if "😊" in a and dt == "S":
+        if "ðŸ˜Š" in a and dt == "S":
             pytest.skip("Bytes dtype does not support non-ascii input")
         a = np.array(a, dtype=dt)
         sub = np.array(sub, dtype=dt)
@@ -543,11 +543,11 @@ class TestMethods:
             ("", "xx", 1, 1, 0),
             ("", "xx", MAX, 0, 0),
             (["aaa", ""], ["a", ""], [0, 0], None, [3, 1]),
-            ("Ae¢☃€ 😊" * 100, "😊", 0, None, 100),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 100, "ðŸ˜Š", 0, None, 100),
         ],
     )
     def test_count(self, a, sub, start, end, out, dt):
-        if "😊" in a and dt == "S":
+        if "ðŸ˜Š" in a and dt == "S":
             pytest.skip("Bytes dtype does not support non-ascii input")
         a = np.array(a, dtype=dt)
         sub = np.array(sub, dtype=dt)
@@ -841,7 +841,7 @@ class TestMethods:
         ],
     )
     def test_replace(self, buf, old, new, count, res, dt):
-        if "😊" in buf and dt == "S":
+        if "ðŸ˜Š" in buf and dt == "S":
             pytest.skip("Bytes dtype does not support non-ascii input")
         buf = np.array(buf, dtype=dt)
         old = np.array(old, dtype=dt)
@@ -1236,8 +1236,8 @@ class TestMethodsWithUnicode:
         "buf,old,new,count,res",
         [
             ("...\u043c......<", "<", "&lt;", -1, "...\u043c......&lt;"),
-            ("Ae¢☃€ 😊" * 2, "A", "B", -1, "Be¢☃€ 😊Be¢☃€ 😊"),
-            ("Ae¢☃€ 😊" * 2, "😊", "B", -1, "Ae¢☃€ BAe¢☃€ B"),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "A", "B", -1, "BeÂ¢â˜ƒâ‚¬ ðŸ˜ŠBeÂ¢â˜ƒâ‚¬ ðŸ˜Š"),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", "B", -1, "AeÂ¢â˜ƒâ‚¬ BAeÂ¢â˜ƒâ‚¬ B"),
         ],
     )
     def test_replace_unicode(self, buf, old, new, count, res, dt):
@@ -1359,8 +1359,8 @@ class TestMethodsWithUnicode:
     @pytest.mark.parametrize(
         "buf,sub,start,end,res",
         [
-            ("Ae¢☃€ 😊" * 2, "😊", 0, None, 6),
-            ("Ae¢☃€ 😊" * 2, "😊", 7, None, 13),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 0, None, 6),
+            ("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š" * 2, "ðŸ˜Š", 7, None, 13),
         ],
     )
     def test_index_unicode(self, buf, sub, start, end, res, dt):
@@ -1370,12 +1370,12 @@ class TestMethodsWithUnicode:
 
     def test_index_raises_unicode(self, dt):
         with pytest.raises(ValueError, match="substring not found"):
-            np.strings.index("Ae¢☃€ 😊", "😀")
+            np.strings.index("AeÂ¢â˜ƒâ‚¬ ðŸ˜Š", "ðŸ˜€")
 
     @pytest.mark.parametrize(
         "buf,res",
         [
-            ("Ae¢☃€ \t 😊", "Ae¢☃€    😊"),
+            ("AeÂ¢â˜ƒâ‚¬ \t ðŸ˜Š", "AeÂ¢â˜ƒâ‚¬    ðŸ˜Š"),
             ("\t\U0001044e", "        \U0001044e"),
         ],
     )
@@ -1429,13 +1429,25 @@ class TestMethodsWithUnicode:
     @pytest.mark.parametrize(
         "buf,sep,res1,res2,res3",
         [
-            ("āāāāĀĀĀĀ", "Ă", "āāāāĀĀĀĀ", "", ""),
-            ("āāāāĂĀĀĀĀ", "Ă", "āāāā", "Ă", "ĀĀĀĀ"),
-            ("āāāāĂĂĀĀĀĀ", "ĂĂ", "āāāā", "ĂĂ", "ĀĀĀĀ"),
-            ("𐌁𐌁𐌁𐌁𐌀𐌀𐌀𐌀", "𐌂", "𐌁𐌁𐌁𐌁𐌀𐌀𐌀𐌀", "", ""),
-            ("𐌁𐌁𐌁𐌁𐌂𐌀𐌀𐌀𐌀", "𐌂", "𐌁𐌁𐌁𐌁", "𐌂", "𐌀𐌀𐌀𐌀"),
-            ("𐌁𐌁𐌁𐌁𐌂𐌂𐌀𐌀𐌀𐌀", "𐌂𐌂", "𐌁𐌁𐌁𐌁", "𐌂𐌂", "𐌀𐌀𐌀𐌀"),
-            ("𐌁𐌁𐌁𐌁𐌂𐌂𐌂𐌂𐌀𐌀𐌀𐌀", "𐌂𐌂𐌂𐌂", "𐌁𐌁𐌁𐌁", "𐌂𐌂𐌂𐌂", "𐌀𐌀𐌀𐌀"),
+            ("ÄÄÄÄÄ€Ä€Ä€Ä€", "Ä‚", "ÄÄÄÄÄ€Ä€Ä€Ä€", "", ""),
+            ("ÄÄÄÄÄ‚Ä€Ä€Ä€Ä€", "Ä‚", "ÄÄÄÄ", "Ä‚", "Ä€Ä€Ä€Ä€"),
+            ("ÄÄÄÄÄ‚Ä‚Ä€Ä€Ä€Ä€", "Ä‚Ä‚", "ÄÄÄÄ", "Ä‚Ä‚", "Ä€Ä€Ä€Ä€"),
+            ("ðŒðŒðŒðŒðŒ€ðŒ€ðŒ€ðŒ€", "ðŒ‚", "ðŒðŒðŒðŒðŒ€ðŒ€ðŒ€ðŒ€", "", ""),
+            ("ðŒðŒðŒðŒðŒ‚ðŒ€ðŒ€ðŒ€ðŒ€", "ðŒ‚", "ðŒðŒðŒðŒ", "ðŒ‚", "ðŒ€ðŒ€ðŒ€ðŒ€"),
+            (
+                "ðŒðŒðŒðŒðŒ‚ðŒ‚ðŒ€ðŒ€ðŒ€ðŒ€",
+                "ðŒ‚ðŒ‚",
+                "ðŒðŒðŒðŒ",
+                "ðŒ‚ðŒ‚",
+                "ðŒ€ðŒ€ðŒ€ðŒ€",
+            ),
+            (
+                "ðŒðŒðŒðŒðŒ‚ðŒ‚ðŒ‚ðŒ‚ðŒ€ðŒ€ðŒ€ðŒ€",
+                "ðŒ‚ðŒ‚ðŒ‚ðŒ‚",
+                "ðŒðŒðŒðŒ",
+                "ðŒ‚ðŒ‚ðŒ‚ðŒ‚",
+                "ðŒ€ðŒ€ðŒ€ðŒ€",
+            ),
         ],
     )
     def test_partition(self, buf, sep, res1, res2, res3, dt):
@@ -1453,12 +1465,18 @@ class TestMethodsWithUnicode:
     @pytest.mark.parametrize(
         "buf,sep,res1,res2,res3",
         [
-            ("āāāāĀĀĀĀ", "Ă", "", "", "āāāāĀĀĀĀ"),
-            ("āāāāĂĀĀĀĀ", "Ă", "āāāā", "Ă", "ĀĀĀĀ"),
-            ("āāāāĂĂĀĀĀĀ", "ĂĂ", "āāāā", "ĂĂ", "ĀĀĀĀ"),
-            ("𐌁𐌁𐌁𐌁𐌀𐌀𐌀𐌀", "𐌂", "", "", "𐌁𐌁𐌁𐌁𐌀𐌀𐌀𐌀"),
-            ("𐌁𐌁𐌁𐌁𐌂𐌀𐌀𐌀𐌀", "𐌂", "𐌁𐌁𐌁𐌁", "𐌂", "𐌀𐌀𐌀𐌀"),
-            ("𐌁𐌁𐌁𐌁𐌂𐌂𐌀𐌀𐌀𐌀", "𐌂𐌂", "𐌁𐌁𐌁𐌁", "𐌂𐌂", "𐌀𐌀𐌀𐌀"),
+            ("ÄÄÄÄÄ€Ä€Ä€Ä€", "Ä‚", "", "", "ÄÄÄÄÄ€Ä€Ä€Ä€"),
+            ("ÄÄÄÄÄ‚Ä€Ä€Ä€Ä€", "Ä‚", "ÄÄÄÄ", "Ä‚", "Ä€Ä€Ä€Ä€"),
+            ("ÄÄÄÄÄ‚Ä‚Ä€Ä€Ä€Ä€", "Ä‚Ä‚", "ÄÄÄÄ", "Ä‚Ä‚", "Ä€Ä€Ä€Ä€"),
+            ("ðŒðŒðŒðŒðŒ€ðŒ€ðŒ€ðŒ€", "ðŒ‚", "", "", "ðŒðŒðŒðŒðŒ€ðŒ€ðŒ€ðŒ€"),
+            ("ðŒðŒðŒðŒðŒ‚ðŒ€ðŒ€ðŒ€ðŒ€", "ðŒ‚", "ðŒðŒðŒðŒ", "ðŒ‚", "ðŒ€ðŒ€ðŒ€ðŒ€"),
+            (
+                "ðŒðŒðŒðŒðŒ‚ðŒ‚ðŒ€ðŒ€ðŒ€ðŒ€",
+                "ðŒ‚ðŒ‚",
+                "ðŒðŒðŒðŒ",
+                "ðŒ‚ðŒ‚",
+                "ðŒ€ðŒ€ðŒ€ðŒ€",
+            ),
         ],
     )
     def test_rpartition(self, buf, sep, res1, res2, res3, dt):
@@ -1477,13 +1495,13 @@ class TestMethodsWithUnicode:
     @pytest.mark.parametrize(
         "source,strip",
         [
-            ("λμ", "μ"),
-            ("λμ", "λ"),
-            ("λ" * 5 + "μ" * 2, "μ"),
-            ("λ" * 5 + "μ" * 2, "λ"),
-            ("λ" * 5 + "A" + "μ" * 2, "μλ"),
-            ("λμ" * 5, "μ"),
-            ("λμ" * 5, "λ"),
+            ("Î»Î¼", "Î¼"),
+            ("Î»Î¼", "Î»"),
+            ("Î»" * 5 + "Î¼" * 2, "Î¼"),
+            ("Î»" * 5 + "Î¼" * 2, "Î»"),
+            ("Î»" * 5 + "A" + "Î¼" * 2, "Î¼Î»"),
+            ("Î»Î¼" * 5, "Î¼"),
+            ("Î»Î¼" * 5, "Î»"),
         ],
     )
     def test_strip_functions_unicode(self, source, strip, method, dt):
@@ -1522,7 +1540,13 @@ class TestMethodsWithUnicode:
         ],
     )
     def test_slice(self, args, dt):
-        buf = np.array(["Приве́т नमस्ते שָׁלוֹם", "😀😃😄😁😆😅🤣😂🙂🙃"], dtype=dt)
+        buf = np.array(
+            [
+                "ÐŸÑ€Ð¸Ð²ÐµÌÑ‚ à¤¨à¤®à¤¸à¥à¤¤à¥‡ ×©Ö¸××œ×•Ö¹×",
+                "ðŸ˜€ðŸ˜ƒðŸ˜„ðŸ˜ðŸ˜†ðŸ˜…ðŸ¤£ðŸ˜‚ðŸ™‚ðŸ™ƒ",
+            ],
+            dtype=dt,
+        )
         act = np.strings.slice(buf, *args)
         bcast_args = tuple(np.broadcast_to(arg, buf.shape) for arg in args)
         res = np.array(
@@ -1533,9 +1557,9 @@ class TestMethodsWithUnicode:
 
 class TestMixedTypeMethods:
     def test_center(self):
-        buf = np.array("😊", dtype="U")
+        buf = np.array("ðŸ˜Š", dtype="U")
         fill = np.array("*", dtype="S")
-        res = np.array("*😊*", dtype="U")
+        res = np.array("*ðŸ˜Š*", dtype="U")
         assert_array_equal(np.strings.center(buf, 3, fill), res)
 
         buf = np.array("s", dtype="S")
@@ -1545,13 +1569,13 @@ class TestMixedTypeMethods:
 
         with pytest.raises(ValueError, match="'ascii' codec can't encode"):
             buf = np.array("s", dtype="S")
-            fill = np.array("😊", dtype="U")
+            fill = np.array("ðŸ˜Š", dtype="U")
             np.strings.center(buf, 3, fill)
 
     def test_ljust(self):
-        buf = np.array("😊", dtype="U")
+        buf = np.array("ðŸ˜Š", dtype="U")
         fill = np.array("*", dtype="S")
-        res = np.array("😊**", dtype="U")
+        res = np.array("ðŸ˜Š**", dtype="U")
         assert_array_equal(np.strings.ljust(buf, 3, fill), res)
 
         buf = np.array("s", dtype="S")
@@ -1561,13 +1585,13 @@ class TestMixedTypeMethods:
 
         with pytest.raises(ValueError, match="'ascii' codec can't encode"):
             buf = np.array("s", dtype="S")
-            fill = np.array("😊", dtype="U")
+            fill = np.array("ðŸ˜Š", dtype="U")
             np.strings.ljust(buf, 3, fill)
 
     def test_rjust(self):
-        buf = np.array("😊", dtype="U")
+        buf = np.array("ðŸ˜Š", dtype="U")
         fill = np.array("*", dtype="S")
-        res = np.array("**😊", dtype="U")
+        res = np.array("**ðŸ˜Š", dtype="U")
         assert_array_equal(np.strings.rjust(buf, 3, fill), res)
 
         buf = np.array("s", dtype="S")
@@ -1577,7 +1601,7 @@ class TestMixedTypeMethods:
 
         with pytest.raises(ValueError, match="'ascii' codec can't encode"):
             buf = np.array("s", dtype="S")
-            fill = np.array("😊", dtype="U")
+            fill = np.array("ðŸ˜Š", dtype="U")
             np.strings.rjust(buf, 3, fill)
 
 

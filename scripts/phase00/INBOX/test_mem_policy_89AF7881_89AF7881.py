@@ -2,7 +2,7 @@ import asyncio
 import gc
 import os
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import threading
 
 import pytest

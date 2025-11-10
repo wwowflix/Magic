@@ -1,4 +1,4 @@
-﻿import praw
+import praw
 
 CLIENT_ID = "E5gkpBqsI6_szr6Cv9KqeQ"
 CLIENT_SECRET = "YWiL0a28T2KIWCoxfOltNeUL5a4IXw"
@@ -19,7 +19,7 @@ def fetch_reddit_trends(subreddits):
 
         posts = []
         for subreddit_name in subreddits:
-            print(f"🔍 Fetching: {subreddit_name}")
+            print(f"ðŸ” Fetching: {subreddit_name}")
             subreddit = reddit.subreddit(subreddit_name)
             for post in subreddit.hot(limit=3):
                 posts.append(
@@ -32,7 +32,7 @@ def fetch_reddit_trends(subreddits):
                 )
         return posts
     except Exception as e:
-        print(f"❌ Error fetching Reddit data: {e}")
+        print(f"âŒ Error fetching Reddit data: {e}")
         return []
 
 
@@ -40,9 +40,9 @@ if __name__ == "__main__":
     subreddits = ["technology", "machinelearning", "AI"]
     for sub in subreddits:
         try:
-            print(f"\n🌐 Checking: {sub}")
+            print(f"\nðŸŒ Checking: {sub}")
             results = fetch_reddit_trends([sub])
             for post in results:
-                print(f"📌 {post['title']} ({post['score']} pts)")
+                print(f"ðŸ“Œ {post['title']} ({post['score']} pts)")
         except Exception as e:
-            print(f"❌ Failed for {sub}: {e}")
+            print(f"âŒ Failed for {sub}: {e}")

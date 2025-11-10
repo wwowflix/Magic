@@ -1,2 +1,3 @@
-﻿def test_smoke():
+def test_import():
+
     assert True

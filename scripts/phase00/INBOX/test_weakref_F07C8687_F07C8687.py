@@ -1,7 +1,6 @@
 import gc
 import weakref
 
-
 import greenlet
 from . import TestCase
 

@@ -540,7 +540,6 @@ else:
 ```
 """
 
-
 _FieldEqualType: TypeAlias = Union["IntoExpression", Parameter, SchemaBase]
 """
 Permitted types for equality checks on field values.
@@ -1465,7 +1464,6 @@ Point selections can be initialized with a single primitive value:
 
     alt.selection_point(fields=["year"], value=1980)
 
-
 You can also provide a sequence of mappings between ``encodings`` or ``fields`` to **values**:
 
     alt.selection_point(
@@ -1503,7 +1501,6 @@ The values specify the **start** and **end** of the interval selection.
 You can use a ``tuple`` for type-checking each sequence has **two** elements:
 
     alt.selection_interval(value={"x": (55, 160), "y": (13, 37)})
-
 
 .. note::
 
@@ -2484,7 +2481,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fraction : float
             The fraction parameter for the ``bottomley`` projection.
 
-            **Default value:** ``0.5``, corresponding to a sin(ψ) where ψ = π/6.
+            **Default value:** ``0.5``, corresponding to a sin(Ïˆ) where Ïˆ = Ï€/6.
         lobes : float
             The number of lobes in projections that support multi-lobe views: ``berghaus``,
             ``gingery``, or ``healpix``. The default value varies based on the projection type.
@@ -2498,7 +2495,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             This value corresponds to the [Douglas-Peucker
             distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
              If precision is not specified, returns the projection's current resampling
-            precision which defaults to `√0.5 ≅ 0.70710…`.
+            precision which defaults to `âˆš0.5 â‰… 0.70710"¦`.
         radius : float
             The radius parameter for the ``airy`` or ``gingery`` projection. The default value
             varies based on the projection type.
@@ -3616,7 +3613,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             **Default value:** ``false``
         sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
-            objects are considered equal by the comparator, they are considered “peer” values of
+            objects are considered equal by the comparator, they are considered "peer" values of
             equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).

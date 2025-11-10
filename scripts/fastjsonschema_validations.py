@@ -6,14 +6,11 @@
 # yapf: disable
 # pylama:skip=1
 
-
-# *** PLEASE DO NOT MODIFY DIRECTLY: Automatically generated code *** 
-
+# *** PLEASE DO NOT MODIFY DIRECTLY: Automatically generated code ***
 
 VERSION = "2.15.3"
 import re
 from .fastjsonschema_exceptions import JsonSchemaValueException
-
 
 REGEX_PATTERNS = {
     '^.*$': re.compile('^.*$'),

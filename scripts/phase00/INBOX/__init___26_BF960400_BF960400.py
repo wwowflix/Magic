@@ -30,7 +30,6 @@
 
 """The ``lxml.html`` tool set for HTML handling."""
 
-
 __all__ = [
     "document_fromstring",
     "fragment_fromstring",
@@ -50,12 +49,11 @@ __all__ = [
     "parse",
 ]
 
-
 import copy
 import re
 
 from collections.abc import MutableMapping, MutableSet
-from functools import partial
+from magic_functools import partial
 from urllib.parse import urljoin
 
 from .. import etree
@@ -1780,7 +1778,6 @@ class LabelElement(HtmlElement):
 
 
 HtmlElementClassLookup._default_element_classes["label"] = LabelElement
-
 
 ############################################################
 ## Serialization

@@ -1,6 +1,14 @@
-﻿import os
+import os
+# MAGIC_DYNAMIC_FORCE_LOG_DIR
+import os
+try:
+    _repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    LOG_DIR = os.path.join(_repo_root, 'outputs', 'logs')
+    os.makedirs(LOG_DIR, exist_ok=True)
+except Exception as _e:
+    print('LOG_DIR patch failed:', _e)
 
-log_path = r"D:\MAGIC\outputs\logs\master_orchestrator_log.txt"
+log_path = r"E:\MAGIC\outputs\logs\master_orchestrator_log.txt"
 
 passing_keywords = ["executed successfully", "PASS"]
 error_keywords = ["ERROR", "Exception", "Traceback"]
@@ -16,5 +24,5 @@ if os.path.exists(log_path):
             if any(k in line for k in error_keywords):
                 error_count += 1
 
-print(f"✅ Found {pass_count} passing scripts, {error_count} with errors.")
-print("🎯 Notion sync complete.")
+print(f"âœ… Found {pass_count} passing scripts, {error_count} with errors.")
+print("ðŸŽ¯ Notion sync complete.")

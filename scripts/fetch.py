@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Support for streaming http requests in emscripten.
 
@@ -33,9 +35,6 @@ control is returned to javascript. Call `await wait_for_streaming_ready()` to wa
 NB: in this code, there are a lot of JavaScript objects. They are named js_*
 to make it clear what type of object they are.
 """
-
-from __future__ import annotations
-
 import io
 import json
 from email.parser import Parser
@@ -439,7 +438,6 @@ if is_worker_available() and (
     _fetcher = _StreamingFetcher()
 else:
     _fetcher = None
-
 
 NODE_JSPI_ERROR = (
     "urllib3 only works in Node.js with pyodide.runPythonAsync"

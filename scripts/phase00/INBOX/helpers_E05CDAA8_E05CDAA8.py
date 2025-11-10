@@ -527,7 +527,6 @@ def nested_expr(
         for func in c_function.search_string(source_code):
             print("%(name)s (%(type)s) args: %(args)s" % func)
 
-
     prints::
 
         is_odd (int) args: [['int', 'x']]
@@ -934,7 +933,6 @@ def indentedBlock(blockStatementExpr, indentStack, indent=True, backup_stacks=[]
                  pass
         '''
 
-
         indentStack = [1]
         stmt = Forward()
 
@@ -1056,13 +1054,11 @@ java_style_comment = cpp_style_comment
 python_style_comment = Regex(r"#.*").set_name("Python style comment")
 "Comment of the form ``# ... (to end of line)``"
 
-
 # build list of built-in expressions, for future reference if a global default value
 # gets updated
 _builtin_exprs: List[ParserElement] = [
     v for v in vars().values() if isinstance(v, ParserElement)
 ]
-
 
 # pre-PEP8 compatible names
 delimitedList = delimited_list

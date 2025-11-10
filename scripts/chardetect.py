@@ -17,7 +17,7 @@ import sys
 from typing import Iterable, List, Optional
 
 from .. import __version__
-from ..universaldetector import UniversalDetector
+from scripts.universaldetector import UniversalDetector
 
 
 def description_of(

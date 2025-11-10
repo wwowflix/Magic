@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 This file contains a minimal set of tests for compliance with the extension
 array interface test suite, and should contain no other tests.
@@ -10,9 +12,6 @@ Additional tests should either be added to one of the BaseExtensionTests
 classes (if they are relevant for the extension interface for all dtypes), or
 be added to the array-specific tests in `pandas/tests/arrays/`.
 """
-
-from __future__ import annotations
-
 from datetime import (
     date,
     datetime,
@@ -2042,7 +2041,7 @@ def test_str_slice_replace(start, stop, repl, exp):
         ["!|,", "isalnum", False],
         ["aaa", "isalpha", True],
         ["!!!", "isalpha", False],
-        ["٠", "isdecimal", True],  # noqa: RUF001
+        ["Ù ", "isdecimal", True],  # noqa: RUF001
         ["~!", "isdecimal", False],
         ["2", "isdigit", True],
         ["~", "isdigit", False],

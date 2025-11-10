@@ -15,7 +15,7 @@ from trio.testing import Matcher, RaisesGroup
 
 from ... import _core
 from ...testing import wait_all_tasks_blocked
-from .._parking_lot import ParkingLot
+from scripts._parking_lot import ParkingLot
 from .tutil import check_sequence_matches
 
 T = TypeVar("T")

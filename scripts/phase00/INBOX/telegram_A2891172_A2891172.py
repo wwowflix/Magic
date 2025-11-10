@@ -1,6 +1,5 @@
 __all__ = ["LinkPreview", "TelegramPost", "Channel", "TelegramChannelScraper"]
 
-
 import bs4
 import dataclasses
 import datetime
@@ -10,7 +9,6 @@ import snscrape.base
 import snscrape.utils
 import typing
 import urllib.parse
-
 
 _logger = logging.getLogger(__name__)
 _SINGLE_MEDIA_LINK_PATTERN = re.compile(r"^https://t\.me/[^/]+/\d+\?single$")

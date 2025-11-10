@@ -1,4 +1,4 @@
-﻿# trend_scorer.py
+# trend_scorer.py
 def score_trends():
     print("Scoring trends based on metrics...")
     # TODO: Add scoring algorithm

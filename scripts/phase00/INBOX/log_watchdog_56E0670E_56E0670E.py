@@ -21,7 +21,7 @@ def main():
     os.makedirs(ALERTS_DIR, exist_ok=True)
     seen_files = {}
 
-    print(f"🛡️ Starting Log Watchdog, monitoring folder: {LOGS_DIR}")
+    print(f"ðŸ›¡ï¸ Starting Log Watchdog, monitoring folder: {LOGS_DIR}")
     while True:
         for root, _, files in os.walk(LOGS_DIR):
             for file in files:

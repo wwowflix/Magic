@@ -33,7 +33,6 @@ else:
 
 T = TypeVar("T")
 
-
 logger = logging.getLogger("fsspec")
 
 Fetcher = Callable[[int, int], bytes]  # Maps (start, end) to bytes

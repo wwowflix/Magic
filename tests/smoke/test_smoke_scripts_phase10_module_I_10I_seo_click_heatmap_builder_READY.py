@@ -1,0 +1,13 @@
+import importlib, types
+
+
+def test_import_scripts_phase10_module_I_10I_seo_click_heatmap_builder_READY():
+    mod = importlib.import_module(
+        "scripts.phase10.module_I.10I_seo_click_heatmap_builder_READY"
+    )
+    assert isinstance(mod, types.ModuleType)
+    if hasattr(mod, "main") and callable(mod.main):
+        try:
+            mod.main()  # best-effort, ignore return
+        except TypeError:
+            pass

@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 
 # Read original file
 file_path = Path(".\reddit_api.py")

@@ -44,7 +44,7 @@ def test_labels():
     assert lookup("utf8 ").name == "utf-8"
     assert lookup(" \r\nutf8\t").name == "utf-8"
     assert lookup("u8") is None  # Python label.
-    assert lookup("utf-8 ") is None  # Non-ASCII white space.
+    assert lookup("utf-8") is None  # Non-ASCII white space.
 
     assert lookup("US-ASCII").name == "windows-1252"
     assert lookup("iso-8859-1").name == "windows-1252"
@@ -146,7 +146,7 @@ def test_iter_decode():
         == "é"
     )
     assert iter_decode_to_string([b"\xef\xbb\xbf"], "latin1") == ""
-    assert iter_decode_to_string([b"\xef\xbb"], "latin1") == "ï""
+    assert iter_decode_to_string([b"\xef\xbb"], "latin1") == "ï"""
     assert iter_decode_to_string([b"\xfe\xff\x00\xe9"], "latin1") == "é"
     assert iter_decode_to_string([b"\xff\xfe\xe9\x00"], "latin1") == "é"
     assert (

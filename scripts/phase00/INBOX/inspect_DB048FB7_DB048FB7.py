@@ -1,8 +1,7 @@
 import logging
 from optparse import Values
 from typing import Any, Dict, List
-
-from pip._vendor.packaging.markers import default_environment
+from packaging.markers import default_environment
 from pip._vendor.rich import print_json
 
 from pip import __version__

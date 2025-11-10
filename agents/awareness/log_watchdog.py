@@ -1,5 +1,5 @@
 import os
-import time
+import magic_time as time
 import glob
 
 LOGS_DIR = "outputs/logs"

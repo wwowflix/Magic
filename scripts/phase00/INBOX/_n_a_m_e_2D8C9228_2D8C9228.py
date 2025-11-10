@@ -19,17 +19,16 @@ from . import DefaultTable
 import struct
 import logging
 
-
 log = logging.getLogger(__name__)
 
 nameRecordFormat = """
-		>	# big endian
-		platformID:	H
-		platEncID:	H
-		langID:		H
-		nameID:		H
-		length:		H
-		offset:		H
+        >   # big endian
+        platformID: H
+        platEncID:  H
+        langID:     H
+        nameID:     H
+        length:     H
+        offset:     H
 """
 
 nameRecordSize = sstruct.calcsize(nameRecordFormat)
@@ -75,9 +74,9 @@ class table__n_a_m_e(DefaultTable.DefaultTable):
                 continue
             assert len(name.string) == name.length
             # if (name.platEncID, name.platformID) in ((0, 0), (1, 3)):
-            # 	if len(name.string) % 2:
-            # 		print "2-byte string doesn't have even length!"
-            # 		print name.__dict__
+            #   if len(name.string) % 2:
+            #       print "2-byte string doesn't have even length!"
+            #       print name.__dict__
             del name.offset, name.length
             self.names.append(name)
 
@@ -271,7 +270,7 @@ class table__n_a_m_e(DefaultTable.DefaultTable):
         matches the 'names' dictionary, or None if not found.
 
         'names' is a dictionary with the name in multiple languages,
-        such as {'en': 'Pale', 'de': 'Blaß', 'de-CH': 'Blass'}.
+        such as {'en': 'Pale', 'de': 'BlaÃŸ', 'de-CH': 'Blass'}.
         The keys can be arbitrary IETF BCP 47 language codes;
         the values are Unicode strings.
 
@@ -336,7 +335,7 @@ class table__n_a_m_e(DefaultTable.DefaultTable):
         """Add a multilingual name, returning its name ID
 
         'names' is a dictionary with the name in multiple languages,
-        such as {'en': 'Pale', 'de': 'Blaß', 'de-CH': 'Blass'}.
+        such as {'en': 'Pale', 'de': 'BlaÃŸ', 'de-CH': 'Blass'}.
         The keys can be arbitrary IETF BCP 47 language codes;
         the values are Unicode strings.
 
@@ -449,7 +448,7 @@ def _makeMacName(name, nameID, language, font=None):
     create a Macintosh NameRecord that is understood by old applications
     (platform ID 1 and an old-style Macintosh language enum). If this
     is not possible, we create a Unicode NameRecord (platform ID 0)
-    whose language points to the font’s 'ltag' table. The latter
+    whose language points to the font's 'ltag' table. The latter
     can encode any string in any language, but legacy applications
     might not recognize the format (in which case they will ignore
     those names).
@@ -459,7 +458,7 @@ def _makeMacName(name, nameID, language, font=None):
     in that case, the result will be None for names that need to
     be encoded with an 'ltag' table.
 
-    See the section “The language identifier” in Apple’s specification:
+    See the section "The language identifier" in Apple's specification:
     https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
     """
     macLang = _MAC_LANGUAGE_CODES.get(language.lower())
@@ -481,8 +480,8 @@ def _makeMacName(name, nameID, language, font=None):
         ltag = font.tables.get("ltag")
         if ltag is None:
             ltag = font["ltag"] = newTable("ltag")
-        # 0 = Unicode; 4 = “Unicode 2.0 or later semantics (non-BMP characters allowed)”
-        # “The preferred platform-specific code for Unicode would be 3 or 4.”
+        # 0 = Unicode; 4 = "Unicode 2.0 or later semantics (non-BMP characters allowed)"
+        # "The preferred platform-specific code for Unicode would be 3 or 4."
         # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6name.html
         return makeName(name, nameID, 0, 4, ltag.addTag(language))
     else:
@@ -677,12 +676,12 @@ class NameRecord(object):
         )
 
 
-# Windows language ID → IETF BCP-47 language tag
+# Windows language ID â†’ IETF BCP-47 language tag
 #
 # While Microsoft indicates a region/country for all its language
-# IDs, we follow Unicode practice by omitting “most likely subtags”
-# as per Unicode CLDR. For example, English is simply “en” and not
-# “en-Latn” because according to Unicode, the default script
+# IDs, we follow Unicode practice by omitting "most likely subtags"
+# as per Unicode CLDR. For example, English is simply "en" and not
+# "en-Latn" because according to Unicode, the default script
 # for English is Latin.
 #
 # http://www.unicode.org/cldr/charts/latest/supplemental/likely_subtags.html
@@ -865,12 +864,12 @@ _WINDOWS_LANGUAGES = {
     0x280A: "es-PE",
     0x500A: "es-PR",
     # Microsoft has defined two different language codes for
-    # “Spanish with modern sorting” and “Spanish with traditional
-    # sorting”. This makes sense for collation APIs, and it would be
+    # "Spanish with modern sorting" and "Spanish with traditional
+    # sorting". This makes sense for collation APIs, and it would be
     # possible to express this in BCP 47 language tags via Unicode
-    # extensions (eg., “es-u-co-trad” is “Spanish with traditional
-    # sorting”). However, for storing names in fonts, this distinction
-    # does not make sense, so we use “es” in both cases.
+    # extensions (eg., "es-u-co-trad" is "Spanish with traditional
+    # sorting"). However, for storing names in fonts, this distinction
+    # does not make sense, so we use "es" in both cases.
     0x0C0A: "es",
     0x040A: "es",
     0x540A: "es-US",
@@ -901,7 +900,6 @@ _WINDOWS_LANGUAGES = {
     0x0478: "ii",
     0x046A: "yo",
 }
-
 
 _MAC_LANGUAGES = {
     0: "en",
@@ -1025,14 +1023,12 @@ _MAC_LANGUAGES = {
     151: "nn",
 }
 
-
 _WINDOWS_LANGUAGE_CODES = {
     lang.lower(): code for code, lang in _WINDOWS_LANGUAGES.items()
 }
 _MAC_LANGUAGE_CODES = {lang.lower(): code for code, lang in _MAC_LANGUAGES.items()}
 
-
-# MacOS language ID → MacOS script ID
+# MacOS language ID â†’ MacOS script ID
 #
 # Note that the script ID is not sufficient to determine what encoding
 # to use in TrueType files. For some languages, MacOS used a modification
@@ -1041,129 +1037,129 @@ _MAC_LANGUAGE_CODES = {lang.lower(): code for code, lang in _MAC_LANGUAGES.items
 # is a special Icelandic version of the normal Macintosh Roman encoding.
 # As another example, Inuktitut uses an 8-bit encoding for Canadian Aboriginal
 # Syllables but MacOS had run out of available script codes, so this was
-# done as a (pretty radical) “modification” of Ethiopic.
+# done as a (pretty radical) "modification" of Ethiopic.
 #
 # http://unicode.org/Public/MAPPINGS/VENDORS/APPLE/Readme.txt
 _MAC_LANGUAGE_TO_SCRIPT = {
-    0: 0,  # langEnglish → smRoman
-    1: 0,  # langFrench → smRoman
-    2: 0,  # langGerman → smRoman
-    3: 0,  # langItalian → smRoman
-    4: 0,  # langDutch → smRoman
-    5: 0,  # langSwedish → smRoman
-    6: 0,  # langSpanish → smRoman
-    7: 0,  # langDanish → smRoman
-    8: 0,  # langPortuguese → smRoman
-    9: 0,  # langNorwegian → smRoman
-    10: 5,  # langHebrew → smHebrew
-    11: 1,  # langJapanese → smJapanese
-    12: 4,  # langArabic → smArabic
-    13: 0,  # langFinnish → smRoman
-    14: 6,  # langGreek → smGreek
-    15: 0,  # langIcelandic → smRoman (modified)
-    16: 0,  # langMaltese → smRoman
-    17: 0,  # langTurkish → smRoman (modified)
-    18: 0,  # langCroatian → smRoman (modified)
-    19: 2,  # langTradChinese → smTradChinese
-    20: 4,  # langUrdu → smArabic
-    21: 9,  # langHindi → smDevanagari
-    22: 21,  # langThai → smThai
-    23: 3,  # langKorean → smKorean
-    24: 29,  # langLithuanian → smCentralEuroRoman
-    25: 29,  # langPolish → smCentralEuroRoman
-    26: 29,  # langHungarian → smCentralEuroRoman
-    27: 29,  # langEstonian → smCentralEuroRoman
-    28: 29,  # langLatvian → smCentralEuroRoman
-    29: 0,  # langSami → smRoman
-    30: 0,  # langFaroese → smRoman (modified)
-    31: 4,  # langFarsi → smArabic (modified)
-    32: 7,  # langRussian → smCyrillic
-    33: 25,  # langSimpChinese → smSimpChinese
-    34: 0,  # langFlemish → smRoman
-    35: 0,  # langIrishGaelic → smRoman (modified)
-    36: 0,  # langAlbanian → smRoman
-    37: 0,  # langRomanian → smRoman (modified)
-    38: 29,  # langCzech → smCentralEuroRoman
-    39: 29,  # langSlovak → smCentralEuroRoman
-    40: 0,  # langSlovenian → smRoman (modified)
-    41: 5,  # langYiddish → smHebrew
-    42: 7,  # langSerbian → smCyrillic
-    43: 7,  # langMacedonian → smCyrillic
-    44: 7,  # langBulgarian → smCyrillic
-    45: 7,  # langUkrainian → smCyrillic (modified)
-    46: 7,  # langByelorussian → smCyrillic
-    47: 7,  # langUzbek → smCyrillic
-    48: 7,  # langKazakh → smCyrillic
-    49: 7,  # langAzerbaijani → smCyrillic
-    50: 4,  # langAzerbaijanAr → smArabic
-    51: 24,  # langArmenian → smArmenian
-    52: 23,  # langGeorgian → smGeorgian
-    53: 7,  # langMoldavian → smCyrillic
-    54: 7,  # langKirghiz → smCyrillic
-    55: 7,  # langTajiki → smCyrillic
-    56: 7,  # langTurkmen → smCyrillic
-    57: 27,  # langMongolian → smMongolian
-    58: 7,  # langMongolianCyr → smCyrillic
-    59: 4,  # langPashto → smArabic
-    60: 4,  # langKurdish → smArabic
-    61: 4,  # langKashmiri → smArabic
-    62: 4,  # langSindhi → smArabic
-    63: 26,  # langTibetan → smTibetan
-    64: 9,  # langNepali → smDevanagari
-    65: 9,  # langSanskrit → smDevanagari
-    66: 9,  # langMarathi → smDevanagari
-    67: 13,  # langBengali → smBengali
-    68: 13,  # langAssamese → smBengali
-    69: 11,  # langGujarati → smGujarati
-    70: 10,  # langPunjabi → smGurmukhi
-    71: 12,  # langOriya → smOriya
-    72: 17,  # langMalayalam → smMalayalam
-    73: 16,  # langKannada → smKannada
-    74: 14,  # langTamil → smTamil
-    75: 15,  # langTelugu → smTelugu
-    76: 18,  # langSinhalese → smSinhalese
-    77: 19,  # langBurmese → smBurmese
-    78: 20,  # langKhmer → smKhmer
-    79: 22,  # langLao → smLao
-    80: 30,  # langVietnamese → smVietnamese
-    81: 0,  # langIndonesian → smRoman
-    82: 0,  # langTagalog → smRoman
-    83: 0,  # langMalayRoman → smRoman
-    84: 4,  # langMalayArabic → smArabic
-    85: 28,  # langAmharic → smEthiopic
-    86: 28,  # langTigrinya → smEthiopic
-    87: 28,  # langOromo → smEthiopic
-    88: 0,  # langSomali → smRoman
-    89: 0,  # langSwahili → smRoman
-    90: 0,  # langKinyarwanda → smRoman
-    91: 0,  # langRundi → smRoman
-    92: 0,  # langNyanja → smRoman
-    93: 0,  # langMalagasy → smRoman
-    94: 0,  # langEsperanto → smRoman
-    128: 0,  # langWelsh → smRoman (modified)
-    129: 0,  # langBasque → smRoman
-    130: 0,  # langCatalan → smRoman
-    131: 0,  # langLatin → smRoman
-    132: 0,  # langQuechua → smRoman
-    133: 0,  # langGuarani → smRoman
-    134: 0,  # langAymara → smRoman
-    135: 7,  # langTatar → smCyrillic
-    136: 4,  # langUighur → smArabic
-    137: 26,  # langDzongkha → smTibetan
-    138: 0,  # langJavaneseRom → smRoman
-    139: 0,  # langSundaneseRom → smRoman
-    140: 0,  # langGalician → smRoman
-    141: 0,  # langAfrikaans → smRoman
-    142: 0,  # langBreton → smRoman (modified)
-    143: 28,  # langInuktitut → smEthiopic (modified)
-    144: 0,  # langScottishGaelic → smRoman (modified)
-    145: 0,  # langManxGaelic → smRoman (modified)
-    146: 0,  # langIrishGaelicScript → smRoman (modified)
-    147: 0,  # langTongan → smRoman
-    148: 6,  # langGreekAncient → smRoman
-    149: 0,  # langGreenlandic → smRoman
-    150: 0,  # langAzerbaijanRoman → smRoman
-    151: 0,  # langNynorsk → smRoman
+    0: 0,  # langEnglish â†’ smRoman
+    1: 0,  # langFrench â†’ smRoman
+    2: 0,  # langGerman â†’ smRoman
+    3: 0,  # langItalian â†’ smRoman
+    4: 0,  # langDutch â†’ smRoman
+    5: 0,  # langSwedish â†’ smRoman
+    6: 0,  # langSpanish â†’ smRoman
+    7: 0,  # langDanish â†’ smRoman
+    8: 0,  # langPortuguese â†’ smRoman
+    9: 0,  # langNorwegian â†’ smRoman
+    10: 5,  # langHebrew â†’ smHebrew
+    11: 1,  # langJapanese â†’ smJapanese
+    12: 4,  # langArabic â†’ smArabic
+    13: 0,  # langFinnish â†’ smRoman
+    14: 6,  # langGreek â†’ smGreek
+    15: 0,  # langIcelandic â†’ smRoman (modified)
+    16: 0,  # langMaltese â†’ smRoman
+    17: 0,  # langTurkish â†’ smRoman (modified)
+    18: 0,  # langCroatian â†’ smRoman (modified)
+    19: 2,  # langTradChinese â†’ smTradChinese
+    20: 4,  # langUrdu â†’ smArabic
+    21: 9,  # langHindi â†’ smDevanagari
+    22: 21,  # langThai â†’ smThai
+    23: 3,  # langKorean â†’ smKorean
+    24: 29,  # langLithuanian â†’ smCentralEuroRoman
+    25: 29,  # langPolish â†’ smCentralEuroRoman
+    26: 29,  # langHungarian â†’ smCentralEuroRoman
+    27: 29,  # langEstonian â†’ smCentralEuroRoman
+    28: 29,  # langLatvian â†’ smCentralEuroRoman
+    29: 0,  # langSami â†’ smRoman
+    30: 0,  # langFaroese â†’ smRoman (modified)
+    31: 4,  # langFarsi â†’ smArabic (modified)
+    32: 7,  # langRussian â†’ smCyrillic
+    33: 25,  # langSimpChinese â†’ smSimpChinese
+    34: 0,  # langFlemish â†’ smRoman
+    35: 0,  # langIrishGaelic â†’ smRoman (modified)
+    36: 0,  # langAlbanian â†’ smRoman
+    37: 0,  # langRomanian â†’ smRoman (modified)
+    38: 29,  # langCzech â†’ smCentralEuroRoman
+    39: 29,  # langSlovak â†’ smCentralEuroRoman
+    40: 0,  # langSlovenian â†’ smRoman (modified)
+    41: 5,  # langYiddish â†’ smHebrew
+    42: 7,  # langSerbian â†’ smCyrillic
+    43: 7,  # langMacedonian â†’ smCyrillic
+    44: 7,  # langBulgarian â†’ smCyrillic
+    45: 7,  # langUkrainian â†’ smCyrillic (modified)
+    46: 7,  # langByelorussian â†’ smCyrillic
+    47: 7,  # langUzbek â†’ smCyrillic
+    48: 7,  # langKazakh â†’ smCyrillic
+    49: 7,  # langAzerbaijani â†’ smCyrillic
+    50: 4,  # langAzerbaijanAr â†’ smArabic
+    51: 24,  # langArmenian â†’ smArmenian
+    52: 23,  # langGeorgian â†’ smGeorgian
+    53: 7,  # langMoldavian â†’ smCyrillic
+    54: 7,  # langKirghiz â†’ smCyrillic
+    55: 7,  # langTajiki â†’ smCyrillic
+    56: 7,  # langTurkmen â†’ smCyrillic
+    57: 27,  # langMongolian â†’ smMongolian
+    58: 7,  # langMongolianCyr â†’ smCyrillic
+    59: 4,  # langPashto â†’ smArabic
+    60: 4,  # langKurdish â†’ smArabic
+    61: 4,  # langKashmiri â†’ smArabic
+    62: 4,  # langSindhi â†’ smArabic
+    63: 26,  # langTibetan â†’ smTibetan
+    64: 9,  # langNepali â†’ smDevanagari
+    65: 9,  # langSanskrit â†’ smDevanagari
+    66: 9,  # langMarathi â†’ smDevanagari
+    67: 13,  # langBengali â†’ smBengali
+    68: 13,  # langAssamese â†’ smBengali
+    69: 11,  # langGujarati â†’ smGujarati
+    70: 10,  # langPunjabi â†’ smGurmukhi
+    71: 12,  # langOriya â†’ smOriya
+    72: 17,  # langMalayalam â†’ smMalayalam
+    73: 16,  # langKannada â†’ smKannada
+    74: 14,  # langTamil â†’ smTamil
+    75: 15,  # langTelugu â†’ smTelugu
+    76: 18,  # langSinhalese â†’ smSinhalese
+    77: 19,  # langBurmese â†’ smBurmese
+    78: 20,  # langKhmer â†’ smKhmer
+    79: 22,  # langLao â†’ smLao
+    80: 30,  # langVietnamese â†’ smVietnamese
+    81: 0,  # langIndonesian â†’ smRoman
+    82: 0,  # langTagalog â†’ smRoman
+    83: 0,  # langMalayRoman â†’ smRoman
+    84: 4,  # langMalayArabic â†’ smArabic
+    85: 28,  # langAmharic â†’ smEthiopic
+    86: 28,  # langTigrinya â†’ smEthiopic
+    87: 28,  # langOromo â†’ smEthiopic
+    88: 0,  # langSomali â†’ smRoman
+    89: 0,  # langSwahili â†’ smRoman
+    90: 0,  # langKinyarwanda â†’ smRoman
+    91: 0,  # langRundi â†’ smRoman
+    92: 0,  # langNyanja â†’ smRoman
+    93: 0,  # langMalagasy â†’ smRoman
+    94: 0,  # langEsperanto â†’ smRoman
+    128: 0,  # langWelsh â†’ smRoman (modified)
+    129: 0,  # langBasque â†’ smRoman
+    130: 0,  # langCatalan â†’ smRoman
+    131: 0,  # langLatin â†’ smRoman
+    132: 0,  # langQuechua â†’ smRoman
+    133: 0,  # langGuarani â†’ smRoman
+    134: 0,  # langAymara â†’ smRoman
+    135: 7,  # langTatar â†’ smCyrillic
+    136: 4,  # langUighur â†’ smArabic
+    137: 26,  # langDzongkha â†’ smTibetan
+    138: 0,  # langJavaneseRom â†’ smRoman
+    139: 0,  # langSundaneseRom â†’ smRoman
+    140: 0,  # langGalician â†’ smRoman
+    141: 0,  # langAfrikaans â†’ smRoman
+    142: 0,  # langBreton â†’ smRoman (modified)
+    143: 28,  # langInuktitut â†’ smEthiopic (modified)
+    144: 0,  # langScottishGaelic â†’ smRoman (modified)
+    145: 0,  # langManxGaelic â†’ smRoman (modified)
+    146: 0,  # langIrishGaelicScript â†’ smRoman (modified)
+    147: 0,  # langTongan â†’ smRoman
+    148: 6,  # langGreekAncient â†’ smRoman
+    149: 0,  # langGreenlandic â†’ smRoman
+    150: 0,  # langAzerbaijanRoman â†’ smRoman
+    151: 0,  # langNynorsk â†’ smRoman
 }
 
 

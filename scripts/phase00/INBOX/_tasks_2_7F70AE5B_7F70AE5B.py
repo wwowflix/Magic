@@ -5,7 +5,7 @@ from collections.abc import Generator
 from contextlib import contextmanager
 from types import TracebackType
 
-from ..abc._tasks import TaskGroup, TaskStatus
+from scripts.abc._tasks import TaskGroup, TaskStatus
 from ._eventloop import get_async_backend
 
 

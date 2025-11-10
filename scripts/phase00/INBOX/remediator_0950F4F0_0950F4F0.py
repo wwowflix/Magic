@@ -1,6 +1,6 @@
-"""Self-heal helpers used by tests."""
-
 from __future__ import annotations
+
+"""Self-heal helpers used by tests."""
 import os
 import sys
 import subprocess
@@ -66,7 +66,7 @@ def apply_remediation(exc: Exception) -> bool:
     - FileNotFoundError: create a placeholder input and return True
     - ImportError: attempt pip install of a dummy pkg (tests monkeypatch pip_install) and return True
     - UnicodeError: normalize and return True
-    Anything else â†’ False.
+    Anything else Ã¢" ' False.
     """
     msg = str(exc)
     lower = msg.lower()
@@ -88,7 +88,7 @@ def apply_remediation(exc: Exception) -> bool:
         or "importerror" in lower
         or "no module named" in lower
     ):
-        # The tests monkeypatch pip_install â†’ we just need to call it and return True
+        # The tests monkeypatch pip_install Ã¢" ' we just need to call it and return True
         _ = pip_install("missing-dependency")
         return True
 

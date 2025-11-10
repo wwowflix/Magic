@@ -3,7 +3,7 @@
 MAGIC PROJECT - PHASE 11
 Awareness Agent: Log Writer
 
-🔹 Purpose:
+ðŸ”¹ Purpose:
     - Run specified script(s) and log results with timestamps.
     - Store logs in D:\MAGIC\logs\magic_master_log.txt
     - Helps track script execution and errors automatically.
@@ -37,17 +37,17 @@ def write_log(message):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {message}\n")
-    print(f"📝 LOGGED: {message}")
+    print(f"ðŸ“ LOGGED: {message}")
 
 
 def run_and_log(script_path):
     """Execute a Python script and log its output and errors"""
     abs_path = os.path.abspath(script_path)
     if not os.path.exists(abs_path):
-        write_log(f"❌ Target script not found: {abs_path}")
+        write_log(f"âŒ Target script not found: {abs_path}")
         return
 
-    write_log(f"🚀 Starting script: {abs_path}")
+    write_log(f"ðŸš€ Starting script: {abs_path}")
     try:
         result = subprocess.run(
             ["python", abs_path], capture_output=True, text=True, check=False
@@ -55,23 +55,23 @@ def run_and_log(script_path):
         if result.stdout:
             write_log(f"✅ OUTPUT:\n{result.stdout.strip()}")
         if result.stderr:
-            write_log(f"⚠️ ERRORS:\n{result.stderr.strip()}")
+            write_log(f"âš ï¸ ERRORS:\n{result.stderr.strip()}")
     except Exception as e:
-        write_log(f"❌ Failed to run script {abs_path}: {str(e)}")
+        write_log(f"âŒ Failed to run script {abs_path}: {str(e)}")
     finally:
-        write_log(f"🏁 Finished script: {abs_path}\n")
+        write_log(f"ðŸ Finished script: {abs_path}\n")
 
 
 def main():
     ensure_log_dir()
 
     if len(sys.argv) < 2:
-        print("⚠️ Usage: python log_writer_agent.py <script_or_folder_path>")
+        print("âš ï¸ Usage: python log_writer_agent.py <script_or_folder_path>")
         sys.exit(1)
 
     target_path = os.path.normpath(sys.argv[1])
 
-    # If folder given → process all READY scripts
+    # If folder given â†’ process all READY scripts
     if os.path.isdir(target_path):
         for file in sorted(os.listdir(target_path)):
             if file.endswith("_READY.py"):

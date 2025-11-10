@@ -19,7 +19,6 @@ asciiLettersBytes = frozenset([item.encode("ascii") for item in asciiLetters])
 asciiUppercaseBytes = frozenset([item.encode("ascii") for item in asciiUppercase])
 spacesAngleBrackets = spaceCharactersBytes | frozenset([b">", b"<"])
 
-
 invalid_unicode_no_surrogate = "[\u0001-\u0008\u000b\u000e-\u001f\u007f-\u009f\ufdd0-\ufdef\ufffe\uffff\U0001fffe\U0001ffff\U0002fffe\U0002ffff\U0003fffe\U0003ffff\U0004fffe\U0004ffff\U0005fffe\U0005ffff\U0006fffe\U0006ffff\U0007fffe\U0007ffff\U0008fffe\U0008ffff\U0009fffe\U0009ffff\U000afffe\U000affff\U000bfffe\U000bffff\U000cfffe\U000cffff\U000dfffe\U000dffff\U000efffe\U000effff\U000ffffe\U000fffff\U0010fffe\U0010ffff]"  # noqa
 
 if _utils.supports_lone_surrogates:

@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 data hash pandas / numpy objects
 """
-
-from __future__ import annotations
-
 import itertools
 from typing import (
     TYPE_CHECKING,
@@ -42,7 +41,6 @@ if TYPE_CHECKING:
         MultiIndex,
         Series,
     )
-
 
 # 16 byte long hashing key
 _default_hash_key = "0123456789123456"

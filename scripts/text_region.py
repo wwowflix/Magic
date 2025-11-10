@@ -8,7 +8,6 @@ from .image_parsing import preload_image
 from .line_break import MultiLineBreak, FORM_FEED
 from .util import get_scale_factor
 
-
 # Since Python doesn't have "friend classes"...
 # pylint: disable=protected-access
 

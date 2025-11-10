@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, unicode_literals
 import re
 
 from . import base
-from ..constants import rcdataElements, spaceCharacters
+from scripts.constants import rcdataElements, spaceCharacters
 
 spaceCharacters = "".join(spaceCharacters)
 

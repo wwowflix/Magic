@@ -44,7 +44,6 @@ __all__ = [
     "BmpImageFormatter",
 ]
 
-
 # For some unknown reason every font calls it something different
 STYLES = {
     "NORMAL": ["", "Roman", "Book", "Normal", "Regular", "Medium"],

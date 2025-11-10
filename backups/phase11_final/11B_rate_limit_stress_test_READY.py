@@ -1,7 +1,7 @@
 import os
-import time
+import magic_time as time
 import random
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 # CONFIG
 TOTAL_REQUESTS = 50

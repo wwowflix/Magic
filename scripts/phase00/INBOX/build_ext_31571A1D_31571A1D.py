@@ -132,7 +132,7 @@ class build_ext(Command):
         self.parallel = None
 
     def finalize_options(self):  # noqa: C901
-        from distutils import sysconfig
+        from distutils import magic_sysconfig as sysconfig
 
         self.set_undefined_options(
             "build",

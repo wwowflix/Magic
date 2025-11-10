@@ -8,7 +8,6 @@ import fs.osfs
 from collections.abc import Mapping
 from fontTools.ufoLib.utils import numberTypes
 
-
 # -------
 # Generic
 # -------

@@ -60,7 +60,6 @@ def compile(
 
         .. versionadded:: 1.20.0
 
-
     Returns
     -------
     result : int or `subprocess.CompletedProcess`

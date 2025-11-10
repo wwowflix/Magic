@@ -348,7 +348,10 @@ class RequirementCommand(IndexGroupCommand):
         # Mypy into correctly typechecking. Otherwise it would complain the
         # "Resolver" class being redefined.
         if resolver_variant == "2020-resolver":
-            import pip._internal.resolution.resolvelib.resolver
+try:
+    import packaging  # noqa: F401
+except Exception:
+    packaging = None
 
             return pip._internal.resolution.resolvelib.resolver.Resolver(
                 preparer=preparer,
@@ -363,7 +366,10 @@ class RequirementCommand(IndexGroupCommand):
                 upgrade_strategy=upgrade_strategy,
                 py_version_info=py_version_info,
             )
-        import pip._internal.resolution.legacy.resolver
+try:
+    import packaging  # noqa: F401
+except Exception:
+    packaging = None
 
         return pip._internal.resolution.legacy.resolver.Resolver(
             preparer=preparer,

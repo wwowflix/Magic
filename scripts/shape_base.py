@@ -18,7 +18,6 @@ from . import overrides
 from .multiarray import array, asanyarray, normalize_axis_index
 from . import fromnumeric as _from_nx
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
@@ -841,7 +840,6 @@ def block(arrays):
     array([[0]])
     >>> np.block([[b]])                  # atleast_2d(b)
     array([[1]])
-
 
     """
     arrays, list_ndim, result_ndim, final_size = _block_setup(arrays)

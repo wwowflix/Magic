@@ -5,7 +5,6 @@ import time
 from datetime import datetime, timezone
 import calendar
 
-
 epoch_diff = calendar.timegm((1904, 1, 1, 0, 0, 0, 0, 0, 0))
 
 DAYNAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]

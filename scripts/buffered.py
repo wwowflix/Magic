@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from .. import ClosedResourceError, DelimiterNotFound, EndOfStream, IncompleteRead
-from ..abc import AnyByteReceiveStream, ByteReceiveStream
+from scripts.abc import AnyByteReceiveStream, ByteReceiveStream
 
 
 @dataclass(eq=False)

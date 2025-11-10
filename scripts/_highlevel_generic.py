@@ -12,7 +12,6 @@ from .abc import AsyncResource, HalfCloseableStream, ReceiveStream, SendStream
 if TYPE_CHECKING:
     from typing_extensions import TypeGuard
 
-
 SendStreamT = TypeVar("SendStreamT", bound=SendStream)
 ReceiveStreamT = TypeVar("ReceiveStreamT", bound=ReceiveStream)
 

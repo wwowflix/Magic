@@ -807,7 +807,7 @@ class OutputProducer:
                     "GSUB",  # Glyph Substitution table = data for substitution of glyphs for appropriate rendering of scripts
                     "MATH",  # Mathematical typesetting table = specific information necessary for math formula layout
                     "hdmx",  # Horizontal Device Metrics table, stores integer advance widths scaled to particular pixel sizes
-                    #          for OpenType™ fonts with TrueType outlines
+                    #          for OpenTypeâ„¢ fonts with TrueType outlines
                     "meta",  # metadata table
                     "sbix",  # Apple's SBIX table, used for color bitmap glyphs
                     "CBDT",  # Color Bitmap Data Table
@@ -1207,7 +1207,7 @@ class OutputProducer:
     def _add_xmp_metadata(self):
         if not self.fpdf.xmp_metadata:
             return None
-        xpacket = f'<?xpacket begin="ï»¿" id="W5M0MpCehiHzreSzNTczkc9d"?>\n{self.fpdf.xmp_metadata}\n<?xpacket end="w"?>\n'
+        xpacket = f'<?xpacket begin="Ã¯Â»Â¿" id="W5M0MpCehiHzreSzNTczkc9d"?>\n{self.fpdf.xmp_metadata}\n<?xpacket end="w"?>\n'
         pdf_obj = PDFXmpMetadata(xpacket)
         self._add_pdf_obj(pdf_obj)
         return pdf_obj

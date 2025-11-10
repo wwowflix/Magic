@@ -46,6 +46,5 @@ r = trio.run(has_optional, 5)
 trio.run(has_optional, 7, 8)  # type: ignore[arg-type]
 trio.run(has_optional, "hello")  # type: ignore[arg-type]
 
-
 assert_type(trio.run(foo_overloaded, 5), str)
 assert_type(trio.run(foo_overloaded, ""), int)

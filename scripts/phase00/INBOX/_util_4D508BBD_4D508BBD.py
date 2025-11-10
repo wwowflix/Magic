@@ -1,6 +1,6 @@
-# Little utilities we use internally
 from __future__ import annotations
 
+# Little utilities we use internally
 import collections.abc
 import inspect
 import signal
@@ -108,7 +108,7 @@ def coroutine_or_error(
         if _return_value_looks_like_wrong_library(async_fn):
             raise TypeError(
                 "Trio was expecting an async function, but instead it got "
-                f"{async_fn!r} – are you trying to use a library written for "
+                f"{async_fn!r} - are you trying to use a library written for "
                 "asyncio/twisted/tornado or similar? That won't work "
                 "without some sort of compatibility shim.",
             ) from None
@@ -128,7 +128,7 @@ def coroutine_or_error(
         # Give good error for: nursery.start_soon(func_returning_future)
         if _return_value_looks_like_wrong_library(coro):
             raise TypeError(
-                f"Trio got unexpected {coro!r} – are you trying to use a "
+                f"Trio got unexpected {coro!r} - are you trying to use a "
                 "library written for asyncio/twisted/tornado or similar? "
                 "That won't work without some sort of compatibility shim.",
             )

@@ -1,4 +1,4 @@
-﻿import os
+import os
 from datetime import datetime
 
 # === Auto Recover Agent for MAGIC Project ===
@@ -31,13 +31,13 @@ def auto_recover():
                         f.write(
                             "print('✅ Auto-recovered script running successfully')\n"
                         )
-                    log(f"🔄 Recovered missing script: {ready_path}")
+                    log(f"ðŸ”„ Recovered missing script: {ready_path}")
                     recovered += 1
     if recovered == 0:
         log("✅ No missing scripts found to recover.")
 
 
 if __name__ == "__main__":
-    log("🚀 Auto Recover Agent started...")
+    log("ðŸš€ Auto Recover Agent started...")
     auto_recover()
     log("✅ Auto Recover Agent finished successfully.")

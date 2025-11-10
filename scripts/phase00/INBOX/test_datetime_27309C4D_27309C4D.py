@@ -61,7 +61,7 @@ class TestDateTime:
             "s",
             "ms",
             "us",
-            "μs",  # alias for us
+            "Î¼s",  # alias for us
             "ns",
             "ps",
             "fs",
@@ -1976,7 +1976,7 @@ class TestDateTime:
             np.datetime_as_string(np.datetime64(datetime, "ms")),
             "1959-10-13T12:34:56.789",
         )
-        for us in ["us", "μs", b"us"]:  # check non-ascii and bytes too
+        for us in ["us", "Î¼s", b"us"]:  # check non-ascii and bytes too
             assert_equal(
                 np.datetime_as_string(np.datetime64(datetime, us)),
                 "1959-10-13T12:34:56.789012",
@@ -3097,11 +3097,11 @@ class TestDateTimeData:
         assert np.datetime_data(dt.dtype) == ("ms", 5)
 
     def test_non_ascii(self):
-        # μs is normalized to μ
-        dt = np.datetime64("2000", ("μs", 5))
+        # Î¼s is normalized to Î¼
+        dt = np.datetime64("2000", ("Î¼s", 5))
         assert np.datetime_data(dt.dtype) == ("us", 5)
 
-        dt = np.datetime64("2000", "5μs")
+        dt = np.datetime64("2000", "5Î¼s")
         assert np.datetime_data(dt.dtype) == ("us", 5)
 
 

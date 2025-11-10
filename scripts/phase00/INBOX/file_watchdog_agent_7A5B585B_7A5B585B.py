@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MAGIC Project – File Watchdog Agent
+MAGIC Project - File Watchdog Agent
 -----------------------------------
 Purpose:
 - Monitor key MAGIC directories for any file changes
@@ -29,17 +29,17 @@ LOG_FILE = "D:\\MAGIC\\logs\\magic_master_log.txt"
 
 class MagicEventHandler(FileSystemEventHandler):
     def on_created(self, event):
-        self.log_event("🆕 Created", event.src_path)
+        self.log_event("ðŸ†• Created", event.src_path)
 
     def on_deleted(self, event):
-        self.log_event("❌ Deleted", event.src_path)
+        self.log_event("âŒ Deleted", event.src_path)
 
     def on_moved(self, event):
-        self.log_event("📂 Moved", f"{event.src_path} -> {event.dest_path}")
+        self.log_event("ðŸ“‚ Moved", f"{event.src_path} -> {event.dest_path}")
 
     def on_modified(self, event):
         if not event.is_directory:
-            self.log_event("✏️ Modified", event.src_path)
+            self.log_event("âœï¸ Modified", event.src_path)
 
     def log_event(self, action, path):
         log_entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {action}: {path}\n"
@@ -49,7 +49,7 @@ class MagicEventHandler(FileSystemEventHandler):
 
 
 if __name__ == "__main__":
-    print("🔍 MAGIC File Watchdog Agent started...")
+    print("ðŸ” MAGIC File Watchdog Agent started...")
     observer = Observer()
     handler = MagicEventHandler()
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         if os.path.exists(path):
             observer.schedule(handler, path, recursive=True)
         else:
-            print(f"⚠️ Skipping missing path: {path}")
+            print(f"âš ï¸ Skipping missing path: {path}")
 
     observer.start()
     try:

@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Module that contains many useful utilities
 for validating data or function arguments
 """
-
-from __future__ import annotations
-
 from typing import (
     Any,
     Iterable,

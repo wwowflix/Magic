@@ -1,4 +1,4 @@
-import sysconfig
+import magic_sysconfig as sysconfig
 
 import pytest
 

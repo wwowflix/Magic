@@ -25,7 +25,6 @@ except ImportError:
 
 __all__ = ["HtmlFormatter"]
 
-
 _escape_html_table = {
     ord("&"): "&amp;",
     ord("<"): "&lt;",
@@ -358,7 +357,6 @@ class HtmlFormatter(Formatter):
         name of the token.
 
         .. versionadded:: 2.10
-
 
     **Subclassing the HTML formatter**
 

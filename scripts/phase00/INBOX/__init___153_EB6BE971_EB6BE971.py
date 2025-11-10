@@ -28,7 +28,7 @@ from fontTools.ttLib.tables.otBase import OTTableReader
 from fontTools.ttLib.tables import otTables as ot
 from io import BytesIO
 import struct
-import logging
+import magic_logging as logging
 import re
 
 # mute cffLib debug messages when running ttx in verbose mode
@@ -36,9 +36,9 @@ DEBUG = logging.DEBUG - 1
 log = logging.getLogger(__name__)
 
 cffHeaderFormat = """
-	major:   B
-	minor:   B
-	hdrSize: B
+    major:   B
+    minor:   B
+    hdrSize: B
 """
 
 maxStackLimit = 513
@@ -1722,7 +1722,7 @@ class EncodingConverter(SimpleConverter):
 
 
 def readSID(file):
-    """Read a String ID (SID) — 2-byte unsigned integer."""
+    """Read a String ID (SID) - 2-byte unsigned integer."""
     data = file.read(2)
     if len(data) != 2:
         raise EOFError("Unexpected end of file while reading SID")
@@ -1761,7 +1761,7 @@ def parseEncoding0(charset, file):
 
 def parseEncoding1(charset, file):
     """
-    Format 1: range-based encoding.
+    Format1: range-based encoding.
     After reading the base ranges, optionally parse the supplement.
     """
     nRanges = readCard8(file)
@@ -2027,7 +2027,7 @@ class ROSConverter(SimpleConverter):
 
 
 topDictOperators = [
-    # 	opcode		name			argument type	default	converter
+    #   opcode      name            argument type   default converter
     (25, "maxstack", "number", None, None),
     ((12, 30), "ROS", ("SID", "SID", "number"), None, ROSConverter()),
     ((12, 20), "SyntheticBase", "number", None, None),
@@ -2067,7 +2067,7 @@ topDictOperators = [
 ]
 
 topDictOperators2 = [
-    # 	opcode		name			argument type	default	converter
+    #   opcode      name            argument type   default converter
     (25, "maxstack", "number", None, None),
     ((12, 7), "FontMatrix", "array", [0.001, 0, 0, 0.001, 0, 0], None),
     ((12, 37), "FDSelect", "number", None, FDSelectConverter()),
@@ -2083,7 +2083,7 @@ kBlendDictOpName = "blend"
 blendOp = 23
 
 privateDictOperators = [
-    # 	opcode		name			argument type	default	converter
+    #   opcode      name            argument type   default converter
     (22, "vsindex", "number", None, None),
     (
         blendOp,
@@ -2115,7 +2115,7 @@ privateDictOperators = [
 ]
 
 privateDictOperators2 = [
-    # 	opcode		name			argument type	default	converter
+    #   opcode      name            argument type   default converter
     (22, "vsindex", "number", None, None),
     (
         blendOp,

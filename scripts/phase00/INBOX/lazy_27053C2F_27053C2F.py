@@ -8,7 +8,6 @@ except ImportError:  # Python < 3.3
     except ImportError:  # Python 3.0-3.3
         from collections import Mapping as DictMixin
 
-
 # With lazy loading, we might end up with multiple threads triggering
 # it at the same time. We need a lock.
 _fill_lock = RLock()

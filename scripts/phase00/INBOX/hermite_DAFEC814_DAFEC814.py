@@ -246,8 +246,6 @@ def hermline(off, scl):
     """
     Hermite series whose graph is a straight line.
 
-
-
     Parameters
     ----------
     off, scl : scalars
@@ -423,7 +421,6 @@ def hermmulx(c):
 
     Multiply the Hermite series `c` by x, where x is the independent
     variable.
-
 
     Parameters
     ----------
@@ -1546,7 +1543,6 @@ def _normed_hermite_n(x, n):
 
     Compute the value of the normalized Hermite polynomial of degree ``n``
     at the points ``x``.
-
 
     Parameters
     ----------

@@ -1,0 +1,105 @@
+name: MAGIC - Tests + Coverage + Readiness
+
+on:
+  pull_request:
+    branches: [ main, master, develop, "**" ]
+  push:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  test-readiness:
+    name: Tests / Coverage / Readiness
+    runs-on: windows-latest
+
+    env:
+      PYTHON_VERSION: "3.11"
+      PIP_CACHE_DIR: "~\\AppData\\Local\\pip\\Cache"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PIP_CACHE_DIR }}
+          key: pip-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            pip-${{ runner.os }}-${{ env.PYTHON_VERSION }}-
+
+      - name: Install deps
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          if (Test-Path requirements.txt)     { pip install -r requirements.txt }
+          if (Test-Path requirements-dev.txt) { pip install -r requirements-dev.txt }
+          pip install pytest coverage
+
+      - name: Run tests (coverage)
+        shell: pwsh
+        run: |
+          coverage erase
+          coverage run -m pytest -q
+          coverage xml -o coverage.xml
+
+      - name: Run MAGIC status scanner
+        shell: pwsh
+        run: |
+          $Root = "$env:GITHUB_WORKSPACE"
+          $scan = Join-Path $Root "tools/magic_status_scan.ps1"
+          if (-not (Test-Path $scan)) { throw "Scanner not found at $scan" }
+          powershell -NoProfile -ExecutionPolicy Bypass -File $scan -Root $Root
+          Get-Content (Join-Path $Root "outputs/reports/readiness/status_live_latest.json") -Raw |
+            ConvertFrom-Json | Select -ExpandProperty summary | Format-List
+
+      - name: Gate PR by coverage/readiness
+        id: gate
+        shell: pwsh
+        run: |
+          $root = "$env:GITHUB_WORKSPACE"
+          $sum  = (Get-Content (Join-Path $root "outputs/reports/readiness/status_live_latest.json") -Raw | ConvertFrom-Json).summary
+          $cov = [double]$sum.coverage_percent
+          $r47 = [double]$sum.readiness47_percent
+          "coverage_percent=$cov" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "readiness47_percent=$r47" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "Coverage: $cov%"
+          Write-Host "Readiness-47: $r47%"
+          if ($cov -lt 60)  { throw "Coverage $cov% is below required 60%." }
+          if ($r47 -lt 100) { throw "Readiness-47 $r47% is below required 100%." }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: readiness-${{ github.sha }}
+          path: |
+            outputs/reports/readiness/status_live_latest.json
+            outputs/reports/readiness/status_live_latest.tsv
+            coverage.xml
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Job summary
+        if: always()
+        shell: pwsh
+        run: |
+          $root = "$env:GITHUB_WORKSPACE"
+          $sum  = (Get-Content (Join-Path $root "outputs/reports/readiness/status_live_latest.json") -Raw | ConvertFrom-Json).summary
+          $md = @"
+          ## MAGIC CI Summary
+
+          **READY:** $($sum.total_scripts_ready) / $($sum.total_scripts_all)
+          **Implementation:** $($sum.impl_percent)%
+          **Coverage:** $($sum.coverage_percent)%
+          **Readiness-47:** $($sum.readiness47_percent)%
+          **Phases:** $($sum.phase_count) (phase11 modules: $($sum.phase11_modules))
+          **Disk used:** $($sum.disk_used_percent)% (free: $($sum.disk_free_gb) GB)
+
+          Artifacts: status_live_latest.json / status_live_latest.tsv / coverage.xml
+          "@
+          $md | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8

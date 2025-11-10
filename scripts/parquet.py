@@ -1,7 +1,6 @@
-"""parquet compat"""
-
 from __future__ import annotations
 
+"""parquet compat"""
 import io
 import os
 from typing import Any

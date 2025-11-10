@@ -7,7 +7,7 @@ from types import TracebackType
 
 from sniffio import AsyncLibraryNotFoundError
 
-from ..lowlevel import checkpoint
+from scripts.lowlevel import checkpoint
 from ._eventloop import get_async_backend
 from ._exceptions import BusyResourceError
 from ._tasks import CancelScope

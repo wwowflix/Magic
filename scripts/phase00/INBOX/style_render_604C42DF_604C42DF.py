@@ -1070,10 +1070,10 @@ class StylerRenderer:
 
         Using the default ``formatter`` for unspecified columns
 
-        >>> df.style.format({0: '{:.2f}', 1: '£ {:.1f}'}, na_rep='MISS', precision=1)
+        >>> df.style.format({0: '{:.2f}', 1: 'Â£ {:.1f}'}, na_rep='MISS', precision=1)
         ...  # doctest: +SKIP
                  0      1     2
-        0    MISS   £ 1.0     A
+        0    MISS   Â£ 1.0     A
         1    2.00    MISS   3.0
 
         Multiple ``na_rep`` or ``precision`` specifications under the default
@@ -1126,7 +1126,7 @@ class StylerRenderer:
         defining the formatting here.
 
         >>> df = pd.DataFrame({"A": [1, 0, -1]})
-        >>> pseudo_css = "number-format: 0§[Red](0)§-§@;"
+        >>> pseudo_css = "number-format: 0Â§[Red](0)Â§-Â§@;"
         >>> df.style.applymap(lambda v: css).to_excel("formatted_file.xlsx")
         ...  # doctest: +SKIP
 
@@ -1725,9 +1725,9 @@ def _wrap_decimal_thousands(
             if decimal != "." and thousands is not None and thousands != ",":
                 return (
                     formatter(x)
-                    .replace(",", "§_§-")  # rare string to avoid "," <-> "." clash.
+                    .replace(",", "Â§_Â§-")  # rare string to avoid "," <-> "." clash.
                     .replace(".", decimal)
-                    .replace("§_§-", thousands)
+                    .replace("Â§_Â§-", thousands)
                 )
             elif decimal != "." and (thousands is None or thousands == ","):
                 return formatter(x).replace(".", decimal)
@@ -2115,12 +2115,12 @@ def _parse_latex_table_styles(table_styles: CSSStyles, selector: str) -> str | N
 
     Notes
     -----
-    The replacement of "§" with ":" is to avoid the CSS problem where ":" has structural
+    The replacement of "Â§" with ":" is to avoid the CSS problem where ":" has structural
     significance and cannot be used in LaTeX labels, but is often required by them.
     """
     for style in table_styles[::-1]:  # in reverse for most recently applied style
         if style["selector"] == selector:
-            return str(style["props"][0][1]).replace("§", ":")
+            return str(style["props"][0][1]).replace("Â§", ":")
     return None
 
 
@@ -2331,8 +2331,12 @@ def _escape_latex(s):
         Escaped string
     """
     return (
-        s.replace("\\", "ab2§=§8yz")  # rare string for final conversion: avoid \\ clash
-        .replace("ab2§=§8yz ", "ab2§=§8yz\\space ")  # since \backslash gobbles spaces
+        s.replace(
+            "\\", "ab2Â§=Â§8yz"
+        )  # rare string for final conversion: avoid \\ clash
+        .replace(
+            "ab2Â§=Â§8yz ", "ab2Â§=Â§8yz\\space "
+        )  # since \backslash gobbles spaces
         .replace("&", "\\&")
         .replace("%", "\\%")
         .replace("$", "\\$")
@@ -2344,5 +2348,5 @@ def _escape_latex(s):
         .replace("~", "\\textasciitilde ")
         .replace("^ ", "^\\space ")  # since \textasciicircum gobbles spaces
         .replace("^", "\\textasciicircum ")
-        .replace("ab2§=§8yz", "\\textbackslash ")
+        .replace("ab2Â§=Â§8yz", "\\textbackslash ")
     )

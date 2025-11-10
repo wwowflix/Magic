@@ -608,7 +608,6 @@ _default_text_stdin = _make_cached_stream_func(lambda: sys.stdin, get_text_stdin
 _default_text_stdout = _make_cached_stream_func(lambda: sys.stdout, get_text_stdout)
 _default_text_stderr = _make_cached_stream_func(lambda: sys.stderr, get_text_stderr)
 
-
 binary_streams: cabc.Mapping[str, t.Callable[[], t.BinaryIO]] = {
     "stdin": get_binary_stdin,
     "stdout": get_binary_stdout,

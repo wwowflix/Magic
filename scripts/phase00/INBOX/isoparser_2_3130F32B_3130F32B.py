@@ -95,7 +95,6 @@ class isoparser(object):
         00:00 and 24:00 as a representation. The decimal separator can be
         either a dot or a comma.
 
-
         .. caution::
 
             Support for fractional components other than seconds is part of the
@@ -104,9 +103,9 @@ class isoparser(object):
         Supported time zone offset formats are:
 
         - `Z` (UTC)
-        - `±HH:MM`
-        - `±HHMM`
-        - `±HH`
+        - `Â±HH:MM`
+        - `Â±HHMM`
+        - `Â±HH`
 
         Offsets will be represented as :class:`dateutil.tz.tzoffset` objects,
         with the exception of UTC, which will be represented as

@@ -1144,4 +1144,3 @@ static int _cffi_init(void)
 #define _cffi_type(num) ((CTypeDescrObject *)PyList_GET_ITEM(_cffi_types, num))
 
 /**********/
-"""

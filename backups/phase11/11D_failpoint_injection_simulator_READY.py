@@ -1,6 +1,6 @@
 import os
 import random
-import time
+import magic_time as time
 
 # CONFIG
 FAILPOINTS = [

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Code of the config system; not related to fontTools or fonts in particular.
 
@@ -8,9 +10,6 @@ To create your own config system, you need to create an instance of
 ``options`` class variable set to your instance of Options.
 
 """
-
-from __future__ import annotations
-
 import logging
 from dataclasses import dataclass
 from typing import (
@@ -25,7 +24,6 @@ from typing import (
     Set,
     Union,
 )
-
 
 log = logging.getLogger(__name__)
 

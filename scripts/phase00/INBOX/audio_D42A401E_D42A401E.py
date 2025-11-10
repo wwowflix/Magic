@@ -17,7 +17,6 @@ import secrets
 import operator
 from functools import reduce
 
-
 __all__ = ["AudioCaptcha"]
 
 WAVE_SAMPLE_RATE = 8000  # HZ

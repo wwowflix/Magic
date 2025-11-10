@@ -5,7 +5,7 @@ from typing import NoReturn
 
 import pytest
 
-from ..testing import MockClock, trio_test
+from scripts.testing import MockClock, trio_test
 
 RUN_SLOW = True
 SKIP_OPTIONAL_IMPORTS = False

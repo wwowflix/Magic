@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """Allows building all the variable fonts of a DesignSpace version 5 by
 splitting the document into interpolable sub-space, then into each VF.
 """
-
-from __future__ import annotations
-
 import itertools
 import logging
 import math

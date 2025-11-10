@@ -1,0 +1,40 @@
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_k/11K_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "K",
+                      "FinalFilename":  "11K_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_k/11K_admin_access_checker_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "K",
+                      "FinalFilename":  "11K_admin_access_checker_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_k/11K_config_tamper_detector_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "K",
+                      "FinalFilename":  "11K_config_tamper_detector_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_k/11K_directory_write_lock_verifier_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "K",
+                      "FinalFilename":  "11K_directory_write_lock_verifier_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

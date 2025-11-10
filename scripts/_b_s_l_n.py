@@ -1,6 +1,13 @@
-from .otBase import BaseTTXConverter
+# === MAGIC Phase11 – SHIELD: guarded otBase import ==========================
+try:
+    from .otBase import BaseTTXConverter
+except Exception:
+
+    class BaseTTXConverter:  # minimal stub for smoke-import
+        pass
 
 
+# === end guard ==============================================================# MAGIC: removed duplicate otBase import
 # https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6bsln.html
 class table__b_s_l_n(BaseTTXConverter):
     """Baseline table

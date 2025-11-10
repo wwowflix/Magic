@@ -102,7 +102,7 @@ def test_swapcase_mixed_object():
 def test_casefold():
     # GH25405
     expected = Series(["ss", np.nan, "case", "ssd"])
-    s = Series(["ß", np.nan, "case", "ßd"])
+    s = Series(["ÃŸ", np.nan, "case", "ÃŸd"])
     result = s.str.casefold()
 
     tm.assert_series_equal(result, expected)

@@ -1,4 +1,4 @@
-﻿import pandas as pd
+import pandas as pd
 import os
 
 files = [
@@ -11,6 +11,6 @@ for f in files:
     if os.path.exists(f):
         try:
             df = pd.read_csv(f)
-            print(f"\n🧾 {f}: {list(df.columns)}")
+            print(f"\nðŸ§¾ {f}: {list(df.columns)}")
         except Exception as e:
-            print(f"❌ Error reading {f}: {e}")
+            print(f"âŒ Error reading {f}: {e}")

@@ -31,7 +31,6 @@ if TYPE_CHECKING:
         Series,
     )
 
-
 frame_max_cols_sub = dedent(
     """\
     max_cols : int, optional
@@ -40,7 +39,6 @@ frame_max_cols_sub = dedent(
         is used. By default, the setting in
         ``pandas.options.display.max_info_columns`` is used."""
 )
-
 
 show_counts_sub = dedent(
     """\
@@ -58,7 +56,6 @@ null_counts_sub = dedent(
         .. deprecated:: 1.2.0
             Use show_counts instead."""
 )
-
 
 frame_examples_sub = dedent(
     """\
@@ -145,14 +142,12 @@ frame_examples_sub = dedent(
     memory usage: 165.9 MB"""
 )
 
-
 frame_see_also_sub = dedent(
     """\
     DataFrame.describe: Generate descriptive statistics of DataFrame
         columns.
     DataFrame.memory_usage: Memory usage of DataFrame columns."""
 )
-
 
 frame_sub_kwargs = {
     "klass": "DataFrame",
@@ -164,7 +159,6 @@ frame_sub_kwargs = {
     "see_also_sub": frame_see_also_sub,
     "version_added_sub": "",
 }
-
 
 series_examples_sub = dedent(
     """\
@@ -227,13 +221,11 @@ series_examples_sub = dedent(
     memory usage: 55.3 MB"""
 )
 
-
 series_see_also_sub = dedent(
     """\
     Series.describe: Generate descriptive statistics of Series.
     Series.memory_usage: Memory usage of Series."""
 )
-
 
 series_sub_kwargs = {
     "klass": "Series",
@@ -245,7 +237,6 @@ series_sub_kwargs = {
     "see_also_sub": series_see_also_sub,
     "version_added_sub": "\n.. versionadded:: 1.4.0\n",
 }
-
 
 INFO_DOCSTRING = dedent(
     """

@@ -17,7 +17,6 @@ from .syntax import create_dictionary_string as pdf_dict
 from .syntax import create_list_string as pdf_list
 from .syntax import iobj_ref as pdf_ref
 
-
 # cf. https://docs.verapdf.org/validation/pdfa-part1/#rule-653-2
 DEFAULT_ANNOT_FLAGS = (AnnotationFlag.PRINT,)
 

@@ -12,7 +12,6 @@ try:
 except ImportError:
     zipfile = None
 
-
 from distutils.errors import DistutilsExecError
 from distutils.spawn import spawn
 from distutils.dir_util import mkpath

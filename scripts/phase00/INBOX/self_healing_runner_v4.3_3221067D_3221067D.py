@@ -21,7 +21,7 @@ results = []
 for script in scripts:
     script_path = Path(script)
     log_path = logs_dir / f"{script_path.stem}.log"
-    print(f"▶ Running {script}")
+    print(f"â–¶ Running {script}")
 
     try:
         proc = subprocess.run(

@@ -1166,8 +1166,6 @@ def assert_array_less(x, y, err_msg="", verbose=True):
     compared, no assertion is raised if both objects have NaNs in the same
     positions.
 
-
-
     Parameters
     ----------
     x : array_like
@@ -1188,8 +1186,6 @@ def assert_array_less(x, y, err_msg="", verbose=True):
     --------
     assert_array_equal: tests objects for equality
     assert_array_almost_equal: test objects for equality up to precision
-
-
 
     Examples
     --------

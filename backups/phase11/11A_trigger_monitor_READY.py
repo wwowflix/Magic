@@ -1,5 +1,5 @@
 import os
-import time
+import magic_time as time
 
 TRIGGER_FOLDER = "D:/MAGIC/inbox"
 TRIGGER_KEYWORDS = ["emergency", "rebuild", "resync"]

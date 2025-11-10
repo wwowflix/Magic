@@ -62,7 +62,6 @@ if _can_read_reg:
         hkey_mod.HKEY_CLASSES_ROOT,
     )
 
-
 warnings.warn(
     "msvccompiler is deprecated and slated to be removed "
     "in the future. Please discontinue use or file an issue "

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from .._wait_for_object import WaitForSingleObject
+from scripts._wait_for_object import WaitForSingleObject
 
 if TYPE_CHECKING:
     from .. import _subprocess

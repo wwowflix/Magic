@@ -210,7 +210,7 @@ def main_inner(parser, argns):
 
     if argns.V:
         print(
-            "Pygments version %s, (c) 2006-2022 by Georg Brandl, Matthäus "
+            "Pygments version %s, (c) 2006-2022 by Georg Brandl, MatthÃ¤us "
             "Chajdas and contributors." % __version__
         )
         return 0

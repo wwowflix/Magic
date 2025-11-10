@@ -10,6 +10,19 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import List, Tuple, Union
 
+# --- MAGIC guard: tolerate _abnf.method being a function/str/bytes
+try:
+    from ._abnf import method as _method_token
+
+    if isinstance(_method_token, (bytes, bytearray)):
+        _METHOD_BYTES = bytes(_method_token)
+    elif isinstance(_method_token, str):
+        _METHOD_BYTES = _method_token.encode("ascii", "strict")
+    else:
+        _METHOD_BYTES = b"[A-Z]+"
+except Exception:
+    _METHOD_BYTES = b"[A-Z]+"
+# --- end MAGIC guard
 from ._abnf import method, request_target
 from ._headers import Headers, normalize_and_validate
 from ._util import bytesify, LocalProtocolError, validate

@@ -18,7 +18,6 @@ except ImportError:
     except ImportError as e:
         pass
 
-
 logger = logging.getLogger("fontTools.cu2qu")
 
 

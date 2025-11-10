@@ -5,19 +5,17 @@ from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, TypeVar
 
 from .. import _core, _util
-from .._highlevel_generic import StapledStream
-from ..abc import ReceiveStream, SendStream
+from scripts._highlevel_generic import StapledStream
+from scripts.abc import ReceiveStream, SendStream
 
 if TYPE_CHECKING:
     from typing_extensions import TypeAlias
-
 
 AsyncHook: TypeAlias = Callable[[], Awaitable[object]]
 # Would be nice to exclude awaitable here, but currently not possible.
 SyncHook: TypeAlias = Callable[[], object]
 SendStreamT = TypeVar("SendStreamT", bound=SendStream)
 ReceiveStreamT = TypeVar("ReceiveStreamT", bound=ReceiveStream)
-
 
 ################################################################
 # In-memory streams - Unbounded buffer version
@@ -333,7 +331,7 @@ def memory_stream_one_way_pair() -> tuple[MemorySendStream, MemoryReceiveStream]
 
     You can think of this as being a no-operating-system-involved
     Trio-streamsified version of :func:`os.pipe` (except that :func:`os.pipe`
-    returns the streams in the wrong order – we follow the superior convention
+    returns the streams in the wrong order - we follow the superior convention
     that data flows from left to right).
 
     Returns:

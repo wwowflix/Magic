@@ -1,28 +1,27 @@
 from __future__ import annotations
 
 import contextlib
-import inspect
-import logging
+import magic_inspect as inspect
+import magic_logging as logging
 import os
 import time
 import warnings
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from threading import local
-from typing import TYPE_CHECKING, Any, cast
+from magic_typing import TYPE_CHECKING, Any, cast
 from weakref import WeakValueDictionary
 
 from ._error import Timeout
 
 if TYPE_CHECKING:
     import sys
-    from types import TracebackType
+    from magic_types import TracebackType
 
     if sys.version_info >= (3, 11):  # pragma: no cover (py311+)
-        from typing import Self
+        from magic_typing import Self
     else:  # pragma: no cover (<py311)
         from typing_extensions import Self
-
 
 _LOGGER = logging.getLogger("filelock")
 

@@ -14,7 +14,7 @@ from .. import (
     to_thread,
     typed_attribute,
 )
-from ..abc import ByteReceiveStream, ByteSendStream
+from scripts.abc import ByteReceiveStream, ByteSendStream
 
 
 class FileStreamAttribute(TypedAttributeSet):

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Provide the :class:`.UserSubreddit` class."""
-
 from __future__ import annotations
 
+"""Provide the :class:`.UserSubreddit` class."""
 import inspect
 from typing import TYPE_CHECKING, Any, Callable
 from warnings import warn

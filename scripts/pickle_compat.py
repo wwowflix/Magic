@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Support pre-0.12 series pickle compatibility.
 """
-
-from __future__ import annotations
-
 import contextlib
 import copy
 import io
@@ -193,7 +192,6 @@ _class_locations_map = {
         "_LoadSparseFrame",
     ),
 }
-
 
 # our Unpickler sub-class to override methods and some dispatcher
 # functions for compat and uses a non-public class of the pickle module.

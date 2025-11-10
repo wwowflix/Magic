@@ -4,11 +4,9 @@
 import timeit
 import numpy
 
-
 ###############################################################################
 #                               Global variables                              #
 ###############################################################################
-
 
 # Small arrays
 xs = numpy.random.uniform(-1, 1, 6).reshape(2, 3)
@@ -30,14 +28,13 @@ nmxl = numpy.ma.array(xl, mask=maskx)
 nmyl = numpy.ma.array(yl, mask=masky)
 nmzl = numpy.ma.array(zl, mask=maskx)
 
-
 ###############################################################################
 #                                 Functions                                   #
 ###############################################################################
 
 
 def timer(s, v="", nloop=500, nrep=3):
-    units = ["s", "ms", "µs", "ns"]
+    units = ["s", "ms", "Âµs", "ns"]
     scaling = [1, 1e3, 1e6, 1e9]
     print("%s : %-50s : " % (v, s), end=" ")
     varnames = ["%ss,nm%ss,%sl,nm%sl" % tuple(x * 4) for x in "xyz"]

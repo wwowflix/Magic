@@ -13,8 +13,8 @@ try:
 except ImportError:
     from mock import MagicMock, Mock, patch
 
-from ..ansitowin32 import AnsiToWin32, StreamWrapper
-from ..win32 import ENABLE_VIRTUAL_TERMINAL_PROCESSING
+from scripts.ansitowin32 import AnsiToWin32, StreamWrapper
+from scripts.win32 import ENABLE_VIRTUAL_TERMINAL_PROCESSING
 from .utils import osname
 
 

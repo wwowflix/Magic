@@ -40,7 +40,6 @@ import struct
 from typing import Optional
 import logging
 
-
 log = logging.getLogger(__name__)
 istuple = lambda t: isinstance(t, tuple)
 
@@ -2016,7 +2015,7 @@ class CompositeMode(_UInt8Enum):
 
 
 converterMapping = {
-    # type		class
+    # type      class
     "int8": Int8,
     "int16": Short,
     "int32": Long,

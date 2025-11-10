@@ -28,14 +28,12 @@ Here is how to build a minimal TTF:
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-
 def drawTestGlyph(pen):
     pen.moveTo((100, 100))
     pen.lineTo((100, 1000))
     pen.qCurveTo((200, 900), (400, 900), (500, 1000))
     pen.lineTo((500, 100))
     pen.closePath()
-
 
 fb = FontBuilder(1024, isTTF=True)
 fb.setupGlyphOrder([".notdef", ".null", "space", "A", "a"])
@@ -78,14 +76,12 @@ And here's how to build a minimal OTF:
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.t2CharStringPen import T2CharStringPen
 
-
 def drawTestGlyph(pen):
     pen.moveTo((100, 100))
     pen.lineTo((100, 1000))
     pen.curveTo((200, 900), (400, 900), (500, 1000))
     pen.lineTo((500, 100))
     pen.closePath()
-
 
 fb = FontBuilder(1024, isTTF=False)
 fb.setupGlyphOrder([".notdef", ".null", "space", "A", "a"])
@@ -136,7 +132,6 @@ from .ttLib.tables.O_S_2f_2 import Panose
 from .misc.timeTools import timestampNow
 import struct
 from collections import OrderedDict
-
 
 _headDefaults = dict(
     tableVersion=1.0,

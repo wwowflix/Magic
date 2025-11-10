@@ -18,7 +18,6 @@ motivated this module.
 
 __ALL__ = ["ModuleDeprecationWarning", "VisibleDeprecationWarning", "_NoValue"]
 
-
 # Disallow reloading this module so as to preserve the identities of the
 # classes defined here.
 if "_is_loaded" in globals():

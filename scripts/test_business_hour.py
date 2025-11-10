@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Tests for offsets.BusinessHour
 """
-
-from __future__ import annotations
-
 from datetime import (
     datetime,
     time as dt_time,

@@ -25,7 +25,6 @@ combinations of the variables using (inside the comment portion of the inner loo
 This will exclude the pattern where var1 is value1 and var2 is value2 when
 the result is being generated.
 
-
 In the main body each replace will use one entry from the list of named replacements
 
  Note that all #..# forms in a block must have the same number of

@@ -376,7 +376,6 @@ html5_tags = frozenset(
 # These tags aren't standard
 nonstandard_tags = frozenset(["blink", "marquee"])
 
-
 tags = (
     top_level_tags
     | head_tags

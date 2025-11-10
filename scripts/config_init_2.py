@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 """
 This module is imported from the pandas package __init__.py file
 in order to ensure that the core.config options registered here will
@@ -10,8 +12,6 @@ If you need to make sure options are available even before a certain
 module is imported, register them here rather than in the module.
 
 """
-from __future__ import annotations
-
 import os
 from typing import (
     Any,
@@ -447,7 +447,6 @@ data_manager_doc = """
     to be set before pandas is imported).
 """
 
-
 with cf.config_prefix("mode"):
     cf.register_option(
         "data_manager",
@@ -465,7 +464,6 @@ cf.deprecate_option(
     "version. Only the BlockManager will be available.",
 )
 
-
 # TODO better name?
 copy_on_write_doc = """
 : bool
@@ -473,7 +471,6 @@ copy_on_write_doc = """
     unless overridden by the 'PANDAS_COPY_ON_WRITE' environment variable
     (if set to "1" for True, needs to be set before pandas is imported).
 """
-
 
 with cf.config_prefix("mode"):
     cf.register_option(
@@ -489,7 +486,6 @@ with cf.config_prefix("mode"):
         validator=is_one_of_factory([True, False, "warn"]),
     )
 
-
 # user warnings
 chained_assignment = """
 : string
@@ -504,7 +500,6 @@ with cf.config_prefix("mode"):
         chained_assignment,
         validator=is_one_of_factory([None, "warn", "raise"]),
     )
-
 
 string_storage_doc = """
 : string
@@ -534,7 +529,6 @@ with cf.config_prefix("mode"):
         validator=is_valid_string_storage,
     )
 
-
 # Set up the io.excel specific reader configuration.
 reader_engine_doc = """
 : string
@@ -547,7 +541,6 @@ _xlsm_options = ["xlrd", "openpyxl", "calamine"]
 _xlsx_options = ["xlrd", "openpyxl", "calamine"]
 _ods_options = ["odf", "calamine"]
 _xlsb_options = ["pyxlsb", "calamine"]
-
 
 with cf.config_prefix("io.excel.xls"):
     cf.register_option(
@@ -565,7 +558,6 @@ with cf.config_prefix("io.excel.xlsm"):
         validator=is_one_of_factory(_xlsm_options + ["auto"]),
     )
 
-
 with cf.config_prefix("io.excel.xlsx"):
     cf.register_option(
         "reader",
@@ -573,7 +565,6 @@ with cf.config_prefix("io.excel.xlsx"):
         reader_engine_doc.format(ext="xlsx", others=", ".join(_xlsx_options)),
         validator=is_one_of_factory(_xlsx_options + ["auto"]),
     )
-
 
 with cf.config_prefix("io.excel.ods"):
     cf.register_option(
@@ -602,7 +593,6 @@ _xlsm_options = ["openpyxl"]
 _xlsx_options = ["openpyxl", "xlsxwriter"]
 _ods_options = ["odf"]
 
-
 with cf.config_prefix("io.excel.xlsm"):
     cf.register_option(
         "writer",
@@ -610,7 +600,6 @@ with cf.config_prefix("io.excel.xlsm"):
         writer_engine_doc.format(ext="xlsm", others=", ".join(_xlsm_options)),
         validator=str,
     )
-
 
 with cf.config_prefix("io.excel.xlsx"):
     cf.register_option(
@@ -620,7 +609,6 @@ with cf.config_prefix("io.excel.xlsx"):
         validator=str,
     )
 
-
 with cf.config_prefix("io.excel.ods"):
     cf.register_option(
         "writer",
@@ -628,7 +616,6 @@ with cf.config_prefix("io.excel.ods"):
         writer_engine_doc.format(ext="ods", others=", ".join(_ods_options)),
         validator=str,
     )
-
 
 # Set up the io.parquet specific configuration.
 parquet_engine_doc = """
@@ -644,7 +631,6 @@ with cf.config_prefix("io.parquet"):
         parquet_engine_doc,
         validator=is_one_of_factory(["auto", "pyarrow", "fastparquet"]),
     )
-
 
 # Set up the io.sql specific configuration.
 sql_engine_doc = """
@@ -689,7 +675,6 @@ with cf.config_prefix("plotting"):
         doc=plotting_backend_doc,
         validator=register_plotting_backend_cb,
     )
-
 
 register_converter_doc = """
 : bool or 'auto'.
@@ -920,7 +905,6 @@ with cf.config_prefix("styler"):
         styler_environment,
         validator=is_instance_factory([type(None), str]),
     )
-
 
 with cf.config_prefix("future"):
     cf.register_option(

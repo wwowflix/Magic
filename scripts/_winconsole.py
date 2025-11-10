@@ -1,4 +1,6 @@
-# This module is based on the excellent work by Adam Bartoš who
+from __future__ import annotations
+
+# This module is based on the excellent work by Adam BartoÅ¡ who
 # provided a lot of what went into the implementation here in
 # the discussion to issue1602 in the Python bug tracker.
 #
@@ -6,8 +8,6 @@
 # compared to the original patches as we do not need to patch
 # the entire interpreter but just work in our little world of
 # echo and prompt.
-from __future__ import annotations
-
 import collections.abc as cabc
 import io
 import sys

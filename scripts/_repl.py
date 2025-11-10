@@ -86,3 +86,7 @@ def main(original_locals: dict[str, object]) -> None:
 
     console = TrioInteractiveConsole(repl_locals)
     trio.run(run_repl, console)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

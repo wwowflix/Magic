@@ -162,6 +162,5 @@ FUNCTION_LISTING = {
     "debug": r"Logs a debugging message and returns the last argument. For the message to appear in the console, the visualization view must have the appropriate logging level set.",
 }
 
-
 # This maps vega expression function names to the Python name
 NAME_MAP = {"if": "if_"}

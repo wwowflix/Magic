@@ -10,9 +10,7 @@ Formatter for Pango markup output.
 
 from pip._vendor.pygments.formatter import Formatter
 
-
 __all__ = ["PangoMarkupFormatter"]
-
 
 _escape_table = {
     ord("&"): "&amp;",

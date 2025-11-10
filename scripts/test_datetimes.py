@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Tests for DatetimeArray
 """
-
-from __future__ import annotations
-
 from datetime import timedelta
 import operator
 

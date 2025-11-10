@@ -16,8 +16,8 @@ from ._wakeup_socketpair import WakeupSocketpair
 if TYPE_CHECKING:
     from typing_extensions import TypeAlias
 
-    from .._core import Abort, RaiseCancelT
-    from .._file_io import _HasFileNo
+    from scripts._core import Abort, RaiseCancelT
+    from scripts._file_io import _HasFileNo
 
 
 @attrs.define(eq=False)
@@ -28,7 +28,6 @@ class EpollWaiters:
 
 
 assert not TYPE_CHECKING or sys.platform == "linux"
-
 
 EventResult: TypeAlias = "list[tuple[int, int]]"
 
@@ -174,7 +173,7 @@ class _EpollStatistics:
 # all-zeros. So we could still end up with an fd hanging around in the
 # interest set for a long time, even if we're not using it.
 #
-# Fortunately, this isn't a problem, because it's only a weak reference – if
+# Fortunately, this isn't a problem, because it's only a weak reference - if
 # we have a stale fd that's been silenced by EPOLLONESHOT, then it wastes a
 # tiny bit of kernel memory remembering this fd that can never be revived, but
 # when the underlying file object is eventually closed, that memory will be
@@ -359,7 +358,7 @@ class EpollIOManager:
         calls on the given object to immediately wake up and raise
         `~trio.ClosedResourceError`.
 
-        This doesn't actually close the object – you still have to do that
+        This doesn't actually close the object - you still have to do that
         yourself afterwards. Also, you want to be careful to make sure no
         new tasks start waiting on the object in between when you call this
         and when it's actually closed. So to close something properly, you

@@ -19,7 +19,7 @@ from fsspec.registry import register_implementation
 from fsspec.spec import AbstractBufferedFile, AbstractFileSystem
 from fsspec.utils import DEFAULT_BLOCK_SIZE, isfilelike, nullcontext, tokenize
 
-from ..caching import AllBytes
+from scripts.caching import AllBytes
 
 # https://stackoverflow.com/a/15926317/3821154
 ex = re.compile(r"""<(a|A)\s+(?:[^>]*?\s+)?(href|HREF)=["'](?P<url>[^"']+)""")

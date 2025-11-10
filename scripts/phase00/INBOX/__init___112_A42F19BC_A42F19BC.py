@@ -1,8 +1,8 @@
 # coding: utf-8
 
-import logging
+import magic_logging as logging
 import os
-from typing import AnyStr, Optional
+from magic_typing import AnyStr, Optional
 
 from . import utils
 

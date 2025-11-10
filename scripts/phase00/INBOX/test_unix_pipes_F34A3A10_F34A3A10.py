@@ -9,11 +9,11 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .. import _core
-from .._core._tests.tutil import gc_collect_harder, skip_if_fbsd_pipes_broken
-from ..testing import check_one_way_stream, wait_all_tasks_blocked
+from scripts._core._tests.tutil import gc_collect_harder, skip_if_fbsd_pipes_broken
+from scripts.testing import check_one_way_stream, wait_all_tasks_blocked
 
 if TYPE_CHECKING:
-    from .._file_io import _HasFileNo
+    from scripts._file_io import _HasFileNo
 
 posix = os.name == "posix"
 pytestmark = pytest.mark.skipif(not posix, reason="posix only")
@@ -21,10 +21,10 @@ pytestmark = pytest.mark.skipif(not posix, reason="posix only")
 assert not TYPE_CHECKING or sys.platform == "unix"
 
 if posix:
-    from .._unix_pipes import FdStream
+    from scripts._unix_pipes import FdStream
 else:
     with pytest.raises(ImportError):
-        from .._unix_pipes import FdStream
+        from scripts._unix_pipes import FdStream
 
 
 async def make_pipe() -> tuple[FdStream, FdStream]:

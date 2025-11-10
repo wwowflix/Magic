@@ -12,7 +12,7 @@ from logging import getLogger
 from ntlm import ntlm
 
 from .. import HTTPSConnectionPool
-from ..packages.six.moves.http_client import HTTPSConnection
+from scripts.packages.six.moves.http_client import HTTPSConnection
 
 warnings.warn(
     "The 'urllib3.contrib.ntlmpool' module is deprecated and will be removed "

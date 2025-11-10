@@ -707,4 +707,3 @@ cffimod_header = r"""
 # define _cffi_float_complex_t   float _Complex
 # define _cffi_double_complex_t  double _Complex
 #endif
-"""

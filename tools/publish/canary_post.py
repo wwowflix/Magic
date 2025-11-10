@@ -1,1 +1,1 @@
-﻿print("canary publish OK (stub)")
+print("canary publish OK (stub)")

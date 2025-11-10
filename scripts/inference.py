@@ -1,7 +1,6 @@
-"""basic inference routines"""
-
 from __future__ import annotations
 
+"""basic inference routines"""
 from collections import abc
 from numbers import Number
 import re

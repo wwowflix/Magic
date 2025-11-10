@@ -12,7 +12,6 @@ import numpy as np
 
 from .utils import import_nose, suppress_warnings
 
-
 __all__ = [
     "get_package_name",
     "run_module_suite",

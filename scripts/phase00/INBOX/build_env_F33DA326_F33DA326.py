@@ -11,8 +11,8 @@ from types import TracebackType
 from typing import TYPE_CHECKING, Iterable, List, Optional, Set, Tuple, Type, Union
 
 from pip._vendor.certifi import where
-from pip._vendor.packaging.requirements import Requirement
-from pip._vendor.packaging.version import Version
+from packaging.requirements import Requirement
+from packaging.version import Version
 
 from pip import __file__ as pip_location
 from pip._internal.cli.spinners import open_spinner

@@ -25,7 +25,7 @@ from typing import (
 )
 
 from .. import to_thread
-from ..abc import AsyncResource
+from scripts.abc import AsyncResource
 
 if TYPE_CHECKING:
     from types import ModuleType

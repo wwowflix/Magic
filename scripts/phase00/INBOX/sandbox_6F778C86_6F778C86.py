@@ -24,7 +24,6 @@ except NameError:
     _file = None
 _open = open
 
-
 __all__ = [
     "AbstractSandbox",
     "DirectorySandbox",

@@ -16,7 +16,7 @@ keywords = ["ai", "chatgpt", "elon", "future", "python", "machine learning"]
 
 # ✅ Store results in a list of dicts
 results = []
-print("🔍 Fetching YouTube autocomplete suggestions...")
+print("ðŸ” Fetching YouTube autocomplete suggestions...")
 
 for base_keyword in keywords:
     url = f"https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q={base_keyword}"
@@ -34,7 +34,7 @@ for base_keyword in keywords:
                 }
             )
     except Exception as e:
-        print(f"❌ Failed to fetch suggestions for '{base_keyword}': {e}")
+        print(f"âŒ Failed to fetch suggestions for '{base_keyword}': {e}")
 
 # ✅ Convert to DataFrame
 if results:
@@ -44,4 +44,4 @@ if results:
     df.to_csv(output_path, index=False)
     print(f"✅ Saved {len(results)} autocomplete suggestions to {output_path}")
 else:
-    print("⚠️ No suggestions fetched.")
+    print("âš ï¸ No suggestions fetched.")

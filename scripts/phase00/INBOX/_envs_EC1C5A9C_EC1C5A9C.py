@@ -7,8 +7,7 @@ import sys
 import zipfile
 import zipimport
 from typing import Iterator, List, Optional, Sequence, Set, Tuple
-
-from pip._vendor.packaging.utils import NormalizedName, canonicalize_name
+from packaging.utils import NormalizedName, canonicalize_name
 
 from pip._internal.metadata.base import BaseDistribution, BaseEnvironment
 from pip._internal.models.wheel import Wheel

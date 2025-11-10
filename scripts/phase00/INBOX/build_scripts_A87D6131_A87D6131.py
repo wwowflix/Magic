@@ -5,7 +5,7 @@ Implements the Distutils 'build_scripts' command."""
 import os
 import re
 from stat import ST_MODE
-from distutils import sysconfig
+from distutils import magic_sysconfig as sysconfig
 from distutils.core import Command
 from distutils.dep_util import newer
 from distutils.util import convert_path

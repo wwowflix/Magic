@@ -12,7 +12,6 @@ import re
 
 __all__ = ["get_filetype_from_buffer"]
 
-
 modeline_re = re.compile(
     r"""
     (?: vi | vim | ex ) (?: [<=>]? \d* )? :

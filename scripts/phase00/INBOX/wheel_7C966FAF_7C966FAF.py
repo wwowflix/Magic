@@ -18,7 +18,6 @@ from setuptools.extern.packaging.utils import canonicalize_name
 from setuptools.command.egg_info import write_requirements
 from setuptools.archive_util import _unpack_zipfile_obj
 
-
 WHEEL_NAME = re.compile(
     r"""^(?P<project_name>.+?)-(?P<version>\d.*?)
     ((-(?P<build>\d.*?))?-(?P<py_version>.+?)-(?P<abi>.+?)-(?P<platform>.+?)
