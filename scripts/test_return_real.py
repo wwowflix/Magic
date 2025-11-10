@@ -60,12 +60,12 @@ class TestCReturnReal(TestReturnReal):
     module_name = "c_ext_return_real"
     code = """
 python module c_ext_return_real
-usercode \'\'\'
+usercode '''
 float t4(float value) { return value; }
 void s4(float *t4, float value) { *t4 = value; }
 double t8(double value) { return value; }
 void s8(double *t8, double value) { *t8 = value; }
-\'\'\'
+'''
 interface
   function t4(value)
     real*4 intent(c) :: t4,value

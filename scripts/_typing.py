@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Custom type aliases used throughout Beautiful Soup to improve readability.
 
 # Notes on improvements to the type system in newer versions of Python
@@ -194,3 +196,35 @@ _StrainableAttributes: TypeAlias = Dict[str, _StrainableAttribute]
 _OneElement: TypeAlias = Union["PageElement", "Tag", "NavigableString"]
 _AtMostOneElement: TypeAlias = Optional[_OneElement]
 _QueryResults: TypeAlias = "ResultSet[_OneElement]"
+
+# --- MAGIC typing shim ---
+import sys
+from typing import Any, Dict
+
+# Prefer stdlib TypedDict, fall back to typing_extensions
+try:
+    from typing import TypedDict  # py3.8+
+except Exception:  # pragma: no cover
+    from typing_extensions import TypedDict  # type: ignore
+
+
+class PaddingKwds(TypedDict, total=False):
+    left: int
+    right: int
+    top: int
+    bottom: int
+
+
+class RowColKwds(TypedDict, total=False):
+    rows: int
+    cols: int
+
+
+try:
+    __all__
+except NameError:
+    __all__ = []
+for _n in ("PaddingKwds", "RowColKwds"):
+    if _n not in __all__:
+        __all__.append(_n)
+# --- end MAGIC typing shim ---

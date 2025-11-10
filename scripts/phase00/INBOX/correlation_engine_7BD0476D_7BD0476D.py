@@ -16,7 +16,7 @@ output_file = "D:/MAGIC/outputs/trends/correlated_trends.csv"
 
 # ✅ Check files exist
 if not os.path.exists(yt_file) or not os.path.exists(reddit_file):
-    print("❌ One or more input files are missing.")
+    print("âŒ One or more input files are missing.")
     exit(1)
 
 # ✅ Load both datasets

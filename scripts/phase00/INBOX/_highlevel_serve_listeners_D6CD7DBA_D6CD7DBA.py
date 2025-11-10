@@ -23,7 +23,6 @@ SLEEP_TIME = 0.100
 # The logger we use to complain when this happens
 LOGGER = logging.getLogger("trio.serve_listeners")
 
-
 StreamT = TypeVar("StreamT", bound=trio.abc.AsyncResource)
 ListenerT = TypeVar("ListenerT", bound=trio.abc.Listener[Any])  # type: ignore[explicit-any]
 Handler = Callable[[StreamT], Awaitable[object]]
@@ -80,7 +79,7 @@ async def serve_listeners(  # type: ignore[explicit-any]
     .. warning::
 
        If ``handler`` raises an exception, then this function doesn't do
-       anything special to catch it – so by default the exception will
+       anything special to catch it - so by default the exception will
        propagate out and crash your server. If you don't want this, then catch
        exceptions inside your ``handler``, or use a ``handler_nursery`` object
        that responds to exceptions in some other way.
@@ -114,8 +113,8 @@ async def serve_listeners(  # type: ignore[explicit-any]
     Error handling:
 
       Most errors coming from :meth:`~trio.abc.Listener.accept` are allowed to
-      propagate out (crashing the server in the process). However, some errors –
-      those which indicate that the server is temporarily overloaded – are
+      propagate out (crashing the server in the process). However, some errors -
+      those which indicate that the server is temporarily overloaded - are
       handled specially. These are :class:`OSError`\s with one of the following
       errnos:
 

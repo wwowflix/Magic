@@ -1,7 +1,6 @@
-"""Tools for enabling and registering chart themes."""
-
 from __future__ import annotations
 
+"""Tools for enabling and registering chart themes."""
 from typing import TYPE_CHECKING, Any, Final, Literal, get_args
 
 from altair.utils.deprecation import deprecated_static_only
@@ -23,7 +22,6 @@ if TYPE_CHECKING:
         from typing_extensions import TypeAlias
 
     from altair.utils.plugin_registry import PluginEnabler
-
 
 AltairThemes: TypeAlias = Literal["default", "opaque"]
 VEGA_THEMES: list[LiteralString] = list(get_args(VegaThemes))

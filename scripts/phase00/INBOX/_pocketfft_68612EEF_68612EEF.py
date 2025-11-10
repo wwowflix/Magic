@@ -52,7 +52,6 @@ from . import _pocketfft_internal as pfi
 from numpy.core.multiarray import normalize_axis_index
 from numpy.core import overrides
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy.fft"
 )
@@ -616,7 +615,6 @@ def hfft(a, n=None, axis=-1, norm=None):
     >>> np.fft.hfft(signal, 6)  # Input entire signal and truncate
     array([15.,  -4.,   0.,  -1.,   0.,  -4.])
 
-
     >>> signal = np.array([[1, 1.j], [-1.j, 2]])
     >>> np.conj(signal.T) - signal   # check Hermitian symmetry
     array([[ 0.-0.j,  -0.+0.j], # may vary
@@ -926,7 +924,6 @@ def ifftn(a, s=None, axes=None, norm=None):
            [0.+0.j,  0.+0.j,  1.+0.j,  0.+0.j],
            [0.+0.j,  0.+0.j,  0.+0.j,  1.+0.j]])
 
-
     Create and plot an image with band-limited frequency content:
 
     >>> import matplotlib.pyplot as plt
@@ -1016,7 +1013,6 @@ def fft2(a, s=None, axes=(-2, -1), norm=None):
 
     See `fftn` for details and a plotting example, and `numpy.fft` for
     definitions and conventions used.
-
 
     Examples
     --------

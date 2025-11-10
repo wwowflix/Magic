@@ -1,7 +1,6 @@
-"""Public types to ease integrating with `altair`."""
-
 from __future__ import annotations
 
+"""Public types to ease integrating with `altair`."""
 __all__ = [
     "ChannelAngle",
     "ChannelColor",

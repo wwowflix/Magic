@@ -151,13 +151,11 @@ from numpy.testing._private.utils import requires_memory
 
 pi = np.pi
 
-
 suppress_copy_mask_on_assignment = suppress_warnings()
 suppress_copy_mask_on_assignment.filter(
     numpy.ma.core.MaskedArrayFutureWarning,
     "setting an item on a masked array which has a shared mask will not copy",
 )
-
 
 # For parametrized numeric testing
 num_dts = [np.dtype(dt_) for dt_ in "?bhilqBHILQefdgFD"]

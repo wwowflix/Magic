@@ -119,7 +119,6 @@ Options:
   --verbose        Run with extra verbosity.
   -v               Print f2py version ID and exit.
 
-
 numpy.distutils options (only effective with -c):
 
   --fcompiler=         Specify Fortran compiler type by vendor
@@ -720,3 +719,7 @@ def main():
         run_compile()
     else:
         run_main(sys.argv[1:])
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

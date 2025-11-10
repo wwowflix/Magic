@@ -8,8 +8,7 @@ import os.path
 import sys
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, Optional
-
-from pip._vendor.packaging.version import parse as parse_version
+from packaging.version import parse as parse_version
 from pip._vendor.rich.console import Group
 from pip._vendor.rich.markup import escape
 from pip._vendor.rich.text import Text
@@ -29,7 +28,6 @@ from pip._internal.utils.filesystem import adjacent_tmp_file, check_path_owner, 
 from pip._internal.utils.misc import ensure_dir
 
 _DATE_FMT = "%Y-%m-%dT%H:%M:%SZ"
-
 
 logger = logging.getLogger(__name__)
 

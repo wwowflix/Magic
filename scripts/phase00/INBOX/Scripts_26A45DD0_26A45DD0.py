@@ -13,7 +13,7 @@ import sys
 import time
 from zipfile import ZipInfo
 
-from .compat import sysconfig, detect_encoding, ZipFile
+from .compat import magic_sysconfig as sysconfig, detect_encoding, ZipFile
 from .resources import finder
 from .util import (
     FileOperator,
@@ -207,8 +207,8 @@ class ScriptMaker(object):
         # executable = os.path.normcase(executable)
         # N.B. The normalising operation above has been commented out: See
         # issue #124. Although paths in Windows are generally case-insensitive,
-        # they aren't always. For example, a path containing a ẞ (which is a
-        # LATIN CAPITAL LETTER SHARP S - U+1E9E) is normcased to ß (which is a
+        # they aren't always. For example, a path containing a áºž (which is a
+        # LATIN CAPITAL LETTER SHARP S - U+1E9E) is normcased to ÃŸ (which is a
         # LATIN SMALL LETTER SHARP S' - U+00DF). The two are not considered by
         # Windows as equivalent in path names.
 

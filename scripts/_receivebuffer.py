@@ -4,7 +4,6 @@ from typing import List, Optional, Union
 
 __all__ = ["ReceiveBuffer"]
 
-
 # Operations we want to support:
 # - find next \r\n or \r\n\r\n (\n or \n\n are also acceptable),
 #   or wait until there is one

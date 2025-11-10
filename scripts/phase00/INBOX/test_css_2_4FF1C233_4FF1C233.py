@@ -13,7 +13,7 @@ from typing import (
     Type,
 )
 
-from packaging.version import Version
+from magic_packaging.version import Version
 
 from . import (
     SoupTest,

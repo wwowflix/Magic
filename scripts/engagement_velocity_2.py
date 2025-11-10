@@ -1,4 +1,4 @@
-﻿# engagement_velocity.py
+# engagement_velocity.py
 def calculate_engagement_velocity():
     print("Calculating engagement velocity...")
     # TODO: Implement velocity calculation

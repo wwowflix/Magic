@@ -37,15 +37,15 @@ from ._testing import TestRunner as TestRunner
 
 # Re-exported here, for backwards compatibility
 # isort: off
-from .._core._synchronization import (
+from scripts._core._synchronization import (
     CapacityLimiter as CapacityLimiter,
     Condition as Condition,
     Event as Event,
     Lock as Lock,
     Semaphore as Semaphore,
 )
-from .._core._tasks import CancelScope as CancelScope
-from ..from_thread import BlockingPortal as BlockingPortal
+from scripts._core._tasks import CancelScope as CancelScope
+from scripts.from_thread import BlockingPortal as BlockingPortal
 
 # Re-export imports so they look like they live directly in this package
 for __value in list(locals().values()):

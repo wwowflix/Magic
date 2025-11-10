@@ -13,9 +13,7 @@ from .width import optimizeWidths
 from collections import defaultdict
 import logging
 
-
 __all__ = ["convertCFF2ToCFF", "main"]
-
 
 log = logging.getLogger("fontTools.cffLib")
 

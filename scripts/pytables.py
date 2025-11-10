@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 High level interface to PyTables for reading and writing pandas data structures
 to disk
 """
-
-from __future__ import annotations
-
 from contextlib import suppress
 import copy
 from datetime import (
@@ -119,7 +118,6 @@ if TYPE_CHECKING:
     )
 
     from pandas.core.internals import Block
-
 
 # versioning attribute
 _version = "0.15.2"
@@ -889,7 +887,6 @@ class HDFStore:
            Loading pickled data received from untrusted sources can be unsafe.
 
            See: https://docs.python.org/3/library/pickle.html for more.
-
 
         Parameters
         ----------

@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 
 
 def scrape_google(keywords):
@@ -25,4 +25,4 @@ if __name__ == "__main__":
         elif src == "youtube":
             scrape_youtube()
         else:
-            print("❌ Unknown source")
+            print("âŒ Unknown source")

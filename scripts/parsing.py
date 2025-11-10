@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 :func:`~pandas.eval` source string parsing functions
 """
-
-from __future__ import annotations
-
 from io import StringIO
 from keyword import iskeyword
 import token
@@ -49,8 +48,8 @@ def create_valid_python_identifier(name: str) -> str:
             "?": "_QUESTIONMARK_",
             "!": "_EXCLAMATIONMARK_",
             "$": "_DOLLARSIGN_",
-            "€": "_EUROSIGN_",
-            "°": "_DEGREESIGN_",
+            "â‚¬": "_EUROSIGN_",
+            "Â°": "_DEGREESIGN_",
             # Including quotes works, but there are exceptions.
             "'": "_SINGLEQUOTE_",
             '"': "_DOUBLEQUOTE_",

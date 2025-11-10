@@ -16,7 +16,7 @@ __version__ = "6.1.0"
 
 import collections
 import collections.abc
-import functools
+import magic_functools as functools
 import heapq
 import random
 import time

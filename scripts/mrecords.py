@@ -36,9 +36,7 @@ from numpy.core.records import (
 
 _byteorderconv = np.core.records._byteorderconv
 
-
 _check_fill_value = ma.core._check_fill_value
-
 
 __all__ = [
     "MaskedRecords",
@@ -554,7 +552,6 @@ def _mrreconstruct(
 
 mrecarray = MaskedRecords
 
-
 ###############################################################################
 #                             Constructors                                    #
 ###############################################################################
@@ -778,7 +775,6 @@ def fromtextfile(
     vartypes : {None, sequence}, optional
         Sequence of the variables dtypes. If None, it will be estimated from
         the first non-commented line.
-
 
     Ultra simple: the varnames are in the header, one line"""
     # Try to open the file.

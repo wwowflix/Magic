@@ -515,4 +515,3 @@ signal: _PNamespaceSignal = default_namespace.signal
 """Return a :class:`NamedSignal` in :data:`default_namespace` with the given
 ``name``, creating it if required. Repeated calls with the same name return the
 same signal.
-"""

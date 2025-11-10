@@ -1,13 +1,11 @@
 __all__ = ["Post", "User", "WeiboUserScraper"]
 
-
 import dataclasses
 import logging
 import re
 import snscrape.base
 import snscrape.utils
 import typing
-
 
 _logger = logging.getLogger(__name__)
 _userDoesNotExist = object()
@@ -80,7 +78,7 @@ class WeiboUserScraper(snscrape.base.Scraper):
             # Redirect to uid URL
             self._user = int(r.headers["Location"][3:])
             self._isUserId = True
-        elif r.status_code == 200 and '<p class="h5-4con">用户不存在</p>' in r.text:
+        elif r.status_code == 200 and '<p class="h5-4con">ç”¨æˆ·ä¸å­˜åœ¨</p>' in r.text:
             _logger.warning("User does not exist")
             self._user = _userDoesNotExist
         else:

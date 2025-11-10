@@ -2,7 +2,6 @@ import os
 from distutils import log
 import itertools
 
-
 flatten = itertools.chain.from_iterable
 
 

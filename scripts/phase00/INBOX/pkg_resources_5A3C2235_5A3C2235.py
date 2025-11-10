@@ -6,9 +6,9 @@ import zipfile
 from typing import Collection, Iterable, Iterator, List, Mapping, NamedTuple, Optional
 
 from pip._vendor import pkg_resources
-from pip._vendor.packaging.requirements import Requirement
-from pip._vendor.packaging.utils import NormalizedName, canonicalize_name
-from pip._vendor.packaging.version import parse as parse_version
+from packaging.requirements import Requirement
+from packaging.utils import NormalizedName, canonicalize_name
+from packaging.version import parse as parse_version
 
 from pip._internal.exceptions import InvalidWheel, NoneMetadataError, UnsupportedWheel
 from pip._internal.utils.egg_link import egg_link_path_from_location

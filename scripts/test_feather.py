@@ -17,7 +17,6 @@ pytestmark = pytest.mark.filterwarnings(
     "ignore:Passing a BlockManager to DataFrame:DeprecationWarning"
 )
 
-
 pa = pytest.importorskip("pyarrow")
 
 

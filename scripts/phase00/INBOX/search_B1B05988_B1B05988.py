@@ -6,8 +6,7 @@ import xmlrpc.client
 from collections import OrderedDict
 from optparse import Values
 from typing import TYPE_CHECKING, Dict, List, Optional
-
-from pip._vendor.packaging.version import parse as parse_version
+from packaging.version import parse as parse_version
 
 from pip._internal.cli.base_command import Command
 from pip._internal.cli.req_command import SessionCommandMixin

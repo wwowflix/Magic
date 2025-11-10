@@ -1,6 +1,6 @@
-# Utilities for testing
 from __future__ import annotations
 
+# Utilities for testing
 import asyncio
 import gc
 import os

@@ -31,7 +31,6 @@ from numpy.lib.function_base import trim_zeros
 from numpy.lib.type_check import iscomplex, real, imag, mintypecode
 from numpy.linalg import eigvals, lstsq, inv
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
@@ -530,7 +529,6 @@ def polyfit(x, y, deg, rcond=None, full=False, w=None, cov=False):
         this matrix are the variance estimates for each coefficient.  If y
         is a 2-D array, then the covariance matrix for the `k`-th data set
         are in ``V[:,:,k]``
-
 
     Warns
     -----

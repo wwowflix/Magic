@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Generic data algorithms. This module is experimental at the moment and not
 intended for public consumption
 """
-
-from __future__ import annotations
-
 import inspect
 import operator
 from textwrap import dedent

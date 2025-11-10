@@ -43,19 +43,10 @@ from ._util import (  # Import the internal things we need
     Sentinel,
 )
 from ._writers import WRITERS, WritersType
-
 # Everything in __all__ gets re-exported as part of the h11 public API.
 __all__ = ["Connection", "NEED_DATA", "PAUSED"]
-
-
-class NEED_DATA(Sentinel, metaclass=Sentinel):
-    pass
-
-
-class PAUSED(Sentinel, metaclass=Sentinel):
-    pass
-
-
+NEED_DATA = Sentinel("NEED_DATA")
+PAUSED = Sentinel("PAUSED")
 # If we ever have this much buffered without it making a complete parseable
 # event, we error out. The only time we really buffer is when reading the
 # request/response line + headers together, so this is effectively the limit on
@@ -409,7 +400,7 @@ class Connection:
 
     def _extract_next_receive_event(
         self,
-    ) -> Union[Event, Type[NEED_DATA], Type[PAUSED]]:
+    ) -> Union[Event, Sentinel]:
         state = self.their_state
         # We don't pause immediately when they enter DONE, because even in
         # DONE state we can still process a ConnectionClosed() event. But
@@ -435,7 +426,7 @@ class Connection:
             event = NEED_DATA
         return event  # type: ignore[no-any-return]
 
-    def next_event(self) -> Union[Event, Type[NEED_DATA], Type[PAUSED]]:
+    def next_event(self) -> Union[Event, Sentinel]:
         """Parse the next event out of our receive buffer, update our internal
         state, and return it.
 

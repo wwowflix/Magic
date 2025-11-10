@@ -1,8 +1,7 @@
-# The contents of this file are automatically written by
-# tools/generate_schema_wrapper.py. Do not modify directly.
-
 from __future__ import annotations
 
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
 import re
 import sys
 from collections.abc import Mapping, Sequence
@@ -33,7 +32,6 @@ if sys.version_info >= (3, 10):
     from typing import TypeAlias
 else:
     from typing_extensions import TypeAlias
-
 
 __all__ = [
     "AggregateOp_T",
@@ -99,7 +97,6 @@ __all__ = [
     "WindowOnlyOp_T",
     "is_color_hex",
 ]
-
 
 T = TypeVar("T")
 OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))

@@ -26,25 +26,23 @@ from io import BytesIO
 import struct
 import logging
 
-
 log = logging.getLogger(__name__)
 
-
 SVG_format_0 = """
-	>   # big endian
-	version:                  H
-	offsetToSVGDocIndex:      L
-	reserved:                 L
+    >   # big endian
+    version:                  H
+    offsetToSVGDocIndex:      L
+    reserved:                 L
 """
 
 SVG_format_0Size = sstruct.calcsize(SVG_format_0)
 
 doc_index_entry_format_0 = """
-	>   # big endian
-	startGlyphID:             H
-	endGlyphID:               H
-	svgDocOffset:             L
-	svgDocLength:             L
+    >   # big endian
+    startGlyphID:             H
+    endGlyphID:               H
+    svgDocOffset:             L
+    svgDocLength:             L
 """
 
 doc_index_entry_format_0Size = sstruct.calcsize(doc_index_entry_format_0)

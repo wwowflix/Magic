@@ -68,7 +68,7 @@ import weakref
 from pip._vendor import six
 
 from .. import util
-from ..util.ssl_ import PROTOCOL_TLS_CLIENT
+from scripts.util.ssl_ import PROTOCOL_TLS_CLIENT
 from ._securetransport.bindings import CoreFoundation, Security, SecurityConst
 from ._securetransport.low_level import (
     _assert_no_error,
@@ -83,7 +83,7 @@ try:  # Platform-specific: Python 2
     from socket import _fileobject
 except ImportError:  # Platform-specific: Python 3
     _fileobject = None
-    from ..packages.backports.makefile import backport_makefile
+    from scripts.packages.backports.makefile import backport_makefile
 
 __all__ = ["inject_into_urllib3", "extract_from_urllib3"]
 

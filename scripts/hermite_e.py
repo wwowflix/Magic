@@ -422,7 +422,6 @@ def hermemulx(c):
     Multiply the Hermite series `c` by x, where x is the independent
     variable.
 
-
     Parameters
     ----------
     c : array_like
@@ -1538,7 +1537,6 @@ def _normed_hermite_e_n(x, n):
 
     Compute the value of the normalized HermiteE polynomial of degree ``n``
     at the points ``x``.
-
 
     Parameters
     ----------

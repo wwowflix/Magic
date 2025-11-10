@@ -5,8 +5,8 @@ __license__ = "MIT"
 
 from collections import defaultdict
 import re
-from types import ModuleType
-from typing import (
+from magic_types import ModuleType
+from magic_typing import (
     Any,
     cast,
     Dict,

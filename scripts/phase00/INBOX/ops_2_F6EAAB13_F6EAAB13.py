@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Provide classes to perform the groupby aggregate operations.
 
@@ -5,9 +7,6 @@ These are not exposed to the user and provide implementations of the grouping
 operations, primarily in cython. These classes (BaseGrouper and BinGrouper)
 are contained *in* the SeriesGroupBy and DataFrameGroupBy objects.
 """
-
-from __future__ import annotations
-
 import collections
 import functools
 from typing import (

@@ -50,7 +50,6 @@ try:
 except ImportError:
     _HAVE_FASTPARQUET = False
 
-
 # TODO(ArrayManager) fastparquet relies on BlockManager internals
 
 pytestmark = [

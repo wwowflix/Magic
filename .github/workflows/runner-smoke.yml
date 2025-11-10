@@ -1,0 +1,53 @@
+name: Runner Smoke
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        modules: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install runner deps
+        run: |
+          python -m pip install -U pip
+          pip install -r requirements-phase11.txt || true
+      - name: Run module ${{ matrix.modules }}
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+        run: |
+          python tools/self_healing_runner_v5.py --manifest tools/manifests/phase11_module_${{ matrix.modules }}_manifest.json
+      - name: Collect summaries
+        run: python tools/ops/collect_phase11_summaries.py
+      - name: Render counts.md from TSV
+        shell: pwsh
+        run: |
+          $counts = "tools/outputs/summaries/phase11_latest_counts.tsv"
+          $mdOut  = "outputs/reports/phase11_latest_counts.md"
+          $lines  = Get-Content -LiteralPath $counts
+          $hdr    = $lines[0] -split "`t"
+          $body   = $lines | Select-Object -Skip 1 | Where-Object { $_ -match '\S' }
+          $rows   = $body | ConvertFrom-Csv -Delimiter "`t" -Header $hdr
+          $md = @()
+          $md += "| " + ($hdr -join " | ") + " |"
+          $md += "| " + ((@('---') * $hdr.Count) -join " | ") + " |"
+          foreach ($o in $rows) {
+            $row = foreach ($h in $hdr) { $o.$h }
+            $md += "| " + ($row -join " | ") + " |"
+          }
+          New-Item -ItemType Directory -Force (Split-Path -Parent $mdOut) | Out-Null
+          $md | Set-Content -Encoding UTF8 -LiteralPath $mdOut
+
+      - name: Upload counts.md
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase11-latest-counts
+          path: outputs/reports/phase11_latest_counts.md

@@ -22,7 +22,6 @@ __origin__ = "lxml.etree"
 
 tostring = _etree.tostring
 
-
 warnings.warn(
     "defusedxml.lxml is no longer supported and will be removed in a future release.",
     category=DeprecationWarning,

@@ -1,3 +1,9 @@
+try:
+    import selenium.webdriver as _selenium  # type: ignore
+except Exception:
+    class SeleniumOptionalStub:
+        def __getattr__(self, name): raise RuntimeError("Selenium not available")
+    _selenium = SeleniumOptionalStub()
 # The MIT License(MIT)
 #
 # Copyright(c) 2018 Hyperion Gray

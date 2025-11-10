@@ -110,7 +110,6 @@ typedefs["complex_float"] = "typedef struct {float r,i;} complex_float;"
 typedefs["complex_double"] = "typedef struct {double r,i;} complex_double;"
 typedefs["string"] = """typedef char * string;"""
 
-
 ############### CPP macros ####################
 cppmacros[
     "CFUNCSMESS"
@@ -477,7 +476,6 @@ cppmacros[
 #     }
 # """
 
-
 needs["GETSTRFROMPYTUPLE"] = ["STRINGCOPYN", "PRINTPYOBJERR"]
 cppmacros[
     "GETSTRFROMPYTUPLE"
@@ -787,7 +785,6 @@ capi_fail:
 }
 """
 
-
 needs["char_from_pyobj"] = ["int_from_pyobj"]
 cfuncs[
     "char_from_pyobj"
@@ -802,7 +799,6 @@ char_from_pyobj(char* v, PyObject *obj, const char *errmess) {
     return 0;
 }
 """
-
 
 needs["signed_char_from_pyobj"] = ["int_from_pyobj", "signed_char"]
 cfuncs[
@@ -819,7 +815,6 @@ signed_char_from_pyobj(signed_char* v, PyObject *obj, const char *errmess) {
 }
 """
 
-
 needs["short_from_pyobj"] = ["int_from_pyobj"]
 cfuncs[
     "short_from_pyobj"
@@ -834,7 +829,6 @@ short_from_pyobj(short* v, PyObject *obj, const char *errmess) {
     return 0;
 }
 """
-
 
 cfuncs[
     "int_from_pyobj"
@@ -887,7 +881,6 @@ int_from_pyobj(int* v, PyObject *obj, const char *errmess)
 }
 """
 
-
 cfuncs[
     "long_from_pyobj"
 ] = """\
@@ -936,7 +929,6 @@ long_from_pyobj(long* v, PyObject *obj, const char *errmess) {
     return 0;
 }
 """
-
 
 needs["long_long_from_pyobj"] = ["long_long"]
 cfuncs[
@@ -989,7 +981,6 @@ long_long_from_pyobj(long_long* v, PyObject *obj, const char *errmess)
 }
 """
 
-
 needs["long_double_from_pyobj"] = ["double_from_pyobj", "long_double"]
 cfuncs[
     "long_double_from_pyobj"
@@ -1015,7 +1006,6 @@ long_double_from_pyobj(long_double* v, PyObject *obj, const char *errmess)
     return 0;
 }
 """
-
 
 cfuncs[
     "double_from_pyobj"
@@ -1061,7 +1051,6 @@ double_from_pyobj(double* v, PyObject *obj, const char *errmess)
 }
 """
 
-
 needs["float_from_pyobj"] = ["double_from_pyobj"]
 cfuncs[
     "float_from_pyobj"
@@ -1077,7 +1066,6 @@ float_from_pyobj(float* v, PyObject *obj, const char *errmess)
     return 0;
 }
 """
-
 
 needs["complex_long_double_from_pyobj"] = [
     "complex_long_double",
@@ -1110,7 +1098,6 @@ complex_long_double_from_pyobj(complex_long_double* v, PyObject *obj, const char
     return 0;
 }
 """
-
 
 needs["complex_double_from_pyobj"] = ["complex_double"]
 cfuncs[
@@ -1189,7 +1176,6 @@ complex_double_from_pyobj(complex_double* v, PyObject *obj, const char *errmess)
 }
 """
 
-
 needs["complex_float_from_pyobj"] = ["complex_float", "complex_double_from_pyobj"]
 cfuncs[
     "complex_float_from_pyobj"
@@ -1206,7 +1192,6 @@ complex_float_from_pyobj(complex_float* v,PyObject *obj,const char *errmess)
     return 0;
 }
 """
-
 
 needs["try_pyarr_from_char"] = ["pyobj_from_char1", "TRYPYARRAYTEMPLATE"]
 cfuncs["try_pyarr_from_char"] = (
@@ -1264,7 +1249,6 @@ needs["try_pyarr_from_complex_double"] = [
 cfuncs["try_pyarr_from_complex_double"] = (
     "static int try_pyarr_from_complex_double(PyObject* obj,complex_double* v) {\n    TRYCOMPLEXPYARRAYTEMPLATE(double,'D');\n}\n"
 )
-
 
 needs["create_cb_arglist"] = ["CFUNCSMESS", "PRINTPYOBJERR", "MINMAX"]
 # create the list of arguments to be used when calling back to python

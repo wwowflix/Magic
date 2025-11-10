@@ -2,11 +2,9 @@
 
 from fontTools.config import OPTIONS
 from fontTools.misc.loggingTools import deprecateFunction
-import logging
-
+import magic_logging as logging
 
 log = logging.getLogger(__name__)
-
 
 OPTIMIZE_FONT_SPEED = OPTIONS["fontTools.ttLib:OPTIMIZE_FONT_SPEED"]
 

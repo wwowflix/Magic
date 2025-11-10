@@ -14,7 +14,7 @@ input_csv = "D:/MAGIC/outputs/trends/correlated_trends.csv"
 output_json = "D:/MAGIC/outputs/trends/correlated_trends.json"
 
 if not os.path.exists(input_csv):
-    print(f"❌ Input file not found: {input_csv}")
+    print(f"âŒ Input file not found: {input_csv}")
     exit(1)
 
 df = pd.read_csv(input_csv)

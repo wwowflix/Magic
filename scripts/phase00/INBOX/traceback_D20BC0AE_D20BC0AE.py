@@ -49,7 +49,6 @@ def install(
 
     Once installed, any tracebacks will be printed with syntax highlighting and rich formatting.
 
-
     Args:
         console (Optional[Console], optional): Console to write exception to. Default uses internal Console instance.
         width (Optional[int], optional): Width (in characters) of traceback. Defaults to 100.
@@ -508,7 +507,7 @@ class Traceback:
         offset = min(syntax_error.offset - 1, len(syntax_error_text))
         syntax_error_text.stylize("bold underline", offset, offset)
         syntax_error_text += Text.from_markup(
-            "\n" + " " * offset + "[traceback.offset]▲[/]",
+            "\n" + " " * offset + "[traceback.offset]â–²[/]",
             style="pygments.text",
         )
         yield syntax_error_text
@@ -651,7 +650,9 @@ if __name__ == "__main__":  # pragma: no cover
 
     def bar(
         a: Any,
-    ) -> None:  # 这是对亚洲语言支持的测试。面对模棱两可的想法，拒绝猜测的诱惑
+    ) -> (
+        None
+    ):  # è¿™æ˜¯å¯¹äºšæ´²è¯­è¨€æ”¯æŒçš„æµ‹è¯•ã€‚é¢å¯¹æ¨¡æ£±ä¸¤å¯çš„æƒ³æ³•ï¼Œæ‹’ç»çŒœæµ‹çš„è¯±æƒ‘
         one = 1
         print(one / a)
 

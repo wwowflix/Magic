@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 =========
 PointPens
@@ -11,9 +13,6 @@ steps through all the points in a call from glyph.drawPoints().
 This allows the caller to provide more data for each point.
 For instance, whether or not a point is smooth, and its name.
 """
-
-from __future__ import annotations
-
 import math
 from typing import Any, Dict, List, Optional, Tuple
 

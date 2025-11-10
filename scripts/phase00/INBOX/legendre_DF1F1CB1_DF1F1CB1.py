@@ -215,7 +215,6 @@ def leg2poly(c):
     >>> P.leg2poly(range(4))
     array([-1. , -3.5,  3. ,  7.5])
 
-
     """
     from .polynomial import polyadd, polysub, polymulx
 
@@ -255,8 +254,6 @@ legx = np.array([0, 1])
 def legline(off, scl):
     """
     Legendre series whose graph is a straight line.
-
-
 
     Parameters
     ----------
@@ -438,7 +435,6 @@ def legmulx(c):
 
     Multiply the Legendre series `c` by x, where x is the independent
     variable.
-
 
     Parameters
     ----------

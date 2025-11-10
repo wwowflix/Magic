@@ -47,7 +47,6 @@ To retain the current behavior and silence the warning, pass 'sort=True'.
 """
 )
 
-
 __all__ = [
     "Index",
     "MultiIndex",

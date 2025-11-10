@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 SQL-style merge routines
 """
-
-from __future__ import annotations
-
 import copy
 import datetime
 from functools import partial
@@ -2236,7 +2235,7 @@ def _factorize_keys(
     sort : bool, defaults to True
         If True, the encoding is done such that the unique elements in the
         keys are sorted.
-    how : {‘left’, ‘right’, ‘outer’, ‘inner’}, default ‘inner’
+    how : {'left', 'right', 'outer', 'inner'}, default 'inner'
         Type of merge.
 
     Returns

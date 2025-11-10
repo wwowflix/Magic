@@ -32,7 +32,6 @@ def compiler_check_f2pycli():
 # CLI utils and classes #
 #########################
 
-
 PPaths = namedtuple("PPaths", "finp, f90inp, pyf, wrap77, wrap90, cmodf")
 
 

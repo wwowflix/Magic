@@ -11,7 +11,6 @@ if sys.version_info < (3, 7):
 else:
     OrderedDict = dict
 
-
 __all__ = ["Path"]
 
 
@@ -154,11 +153,11 @@ class Path:
     Consider a zip file with this structure::
 
         .
-        ├── a.txt
-        └── b
-            ├── c.txt
-            └── d
-                └── e.txt
+        â”œâ”€â”€ a.txt
+        â””â”€â”€ b
+            â”œâ”€â”€ c.txt
+            â””â”€â”€ d
+                â””â”€â”€ e.txt
 
     >>> data = io.BytesIO()
     >>> zf = zipfile.ZipFile(data, 'w')

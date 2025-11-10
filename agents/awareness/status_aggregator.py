@@ -1,6 +1,6 @@
 import os
 import csv
-import datetime
+import magic_datetime as datetime
 
 SUMMARY_DIR = os.path.join("outputs", "summaries")
 DAILY_STATUS_FILE = os.path.join(SUMMARY_DIR, "daily_status.csv")

@@ -30,10 +30,10 @@ else:
 if TYPE_CHECKING:
     from _typeshed import HasFileno
 
-    from .._core._synchronization import CapacityLimiter, Event, Lock, Semaphore
-    from .._core._tasks import CancelScope
-    from .._core._testing import TaskInfo
-    from ..from_thread import BlockingPortal
+    from scripts._core._synchronization import CapacityLimiter, Event, Lock, Semaphore
+    from scripts._core._tasks import CancelScope
+    from scripts._core._testing import TaskInfo
+    from scripts.from_thread import BlockingPortal
     from ._sockets import (
         ConnectedUDPSocket,
         ConnectedUNIXDatagramSocket,

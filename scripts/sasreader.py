@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Read SAS sas7bdat or xport files.
 """
-
-from __future__ import annotations
-
 from abc import (
     ABCMeta,
     abstractmethod,

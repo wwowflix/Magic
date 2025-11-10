@@ -13,7 +13,6 @@ import logging
 import struct
 import sys
 
-
 # https://www.microsoft.com/typography/otspec/otvarcommonformats.htm
 
 EMBEDDED_PEAK_TUPLE = 0x8000

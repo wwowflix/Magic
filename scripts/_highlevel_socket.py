@@ -1,6 +1,6 @@
-# "High-level" networking interface
 from __future__ import annotations
 
+# "High-level" networking interface
 import errno
 from contextlib import contextmanager, suppress
 from typing import TYPE_CHECKING, overload
@@ -54,7 +54,7 @@ class SocketStream(HalfCloseableStream):
 
     By default for TCP sockets, :class:`SocketStream` enables ``TCP_NODELAY``,
     and (on platforms where it's supported) enables ``TCP_NOTSENT_LOWAT`` with
-    a reasonable buffer size (currently 16 KiB) – see `issue #72
+    a reasonable buffer size (currently 16 KiB) - see `issue #72
     <https://github.com/python-trio/trio/issues/72>`__ for discussion. You can
     of course override these defaults by calling :meth:`setsockopt`.
 

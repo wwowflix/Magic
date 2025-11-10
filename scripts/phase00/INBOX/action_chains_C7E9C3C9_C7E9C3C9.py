@@ -1,3 +1,11 @@
+try:
+    import selenium.webdriver as _selenium  # type: ignore
+except Exception:
+    class SeleniumOptionalStub:
+        def __getattr__(self, name): raise RuntimeError("Selenium not available")
+    _selenium = SeleniumOptionalStub()
+from __future__ import annotations
+
 # Licensed to the Software Freedom Conservancy (SFC) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -15,9 +23,6 @@
 # specific language governing permissions and limitations
 # under the License.
 """The ActionChains implementation."""
-
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Union
 
 from selenium.webdriver.remote.webelement import WebElement

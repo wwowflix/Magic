@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Name": "phase11C",
+    "PhaseNumber": 11,
+    "Module": "C",
+    "Script": "scripts/phase11/module_C/11C_compliance_checker_READY.py"
+  },
+  {
+    "Name": "phase11D",
+    "PhaseNumber": 11,
+    "Module": "D",
+    "Script": "scripts/phase11/module_D/11D_integrity_audit_READY.py"
+  },
+  {
+    "Name": "phase11E",
+    "PhaseNumber": 11,
+    "Module": "E",
+    "Script": "scripts/phase11/module_E/11E_protection_guard_READY.py"
+  }
+]

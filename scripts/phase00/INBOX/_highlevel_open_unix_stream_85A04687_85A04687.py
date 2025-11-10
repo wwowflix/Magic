@@ -17,7 +17,6 @@ class Closable(Protocol):
 
 CloseT = TypeVar("CloseT", bound=Closable)
 
-
 try:
     from trio.socket import AF_UNIX
 

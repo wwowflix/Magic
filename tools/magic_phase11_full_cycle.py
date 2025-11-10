@@ -1,12 +1,44 @@
-import subprocess
-import datetime
+import subprocess  # noqa: I001
+# MAGIC_DYNAMIC_FORCE_LOG_DIR
 import os
+try:
+    _repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    LOG_DIR = os.path.join(_repo_root, 'outputs', 'logs')
+    os.makedirs(LOG_DIR, exist_ok=True)
+except Exception as _e:
+    print('LOG_DIR patch failed:', _e)
+import datetime
+# MAGIC_DYNAMIC_FORCE_LOG_DIR
+import os
+try:
+    _repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    LOG_DIR = os.path.join(_repo_root, 'outputs', 'logs')
+    os.makedirs(LOG_DIR, exist_ok=True)
+except Exception as _e:
+    print('LOG_DIR patch failed:', _e)
+import os
+# MAGIC_DYNAMIC_FORCE_LOG_DIR
+import os
+try:
+    _repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    LOG_DIR = os.path.join(_repo_root, 'outputs', 'logs')
+    os.makedirs(LOG_DIR, exist_ok=True)
+except Exception as _e:
+    print('LOG_DIR patch failed:', _e)
 import sys
+# MAGIC_DYNAMIC_FORCE_LOG_DIR
+import os
+try:
+    _repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    LOG_DIR = os.path.join(_repo_root, 'outputs', 'logs')
+    os.makedirs(LOG_DIR, exist_ok=True)
+except Exception as _e:
+    print('LOG_DIR patch failed:', _e)
 
 # ----------------------------
 # CONFIGURATION
 # ----------------------------
-PROJECT_ROOT = r"D:\MAGIC"
+PROJECT_ROOT = os.getcwd()
 TOOLS_DIR = os.path.join(PROJECT_ROOT, "tools")
 LOG_DIR = os.path.join(PROJECT_ROOT, "outputs", "logs")
 TIMESTAMP = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -22,7 +54,7 @@ NOTION_PATCHER = os.path.join(PROJECT_ROOT, "notion_status_patcher_FIXED.py")
 # ----------------------------
 def run_command(command, step_name):
     """Runs a shell command and logs its output."""
-    print(f"\n▶ {step_name}...")
+    print(f"\nâ–¶ {step_name}...")
     with open(CYCLE_LOG, "a", encoding="utf-8") as log:
         log.write(f"\n=== {step_name} ===\n")
         try:
@@ -34,10 +66,10 @@ def run_command(command, step_name):
                 stderr=subprocess.STDOUT,
             )
             log.write(result.stdout.decode("utf-8", errors="ignore"))
-            print(f"✅ {step_name} completed.")
+            print(f"âœ… {step_name} completed.")
         except subprocess.CalledProcessError as e:
             log.write(e.stdout.decode("utf-8", errors="ignore"))
-            print(f"❌ {step_name} failed. Check log for details.")
+            print(f"âŒ {step_name} failed. Check log for details.")
 
 
 # ----------------------------
@@ -45,32 +77,32 @@ def run_command(command, step_name):
 # ----------------------------
 def main():
     print("=" * 40)
-    print("MAGIC PROJECT – PHASE 11 FULL CYCLE")
+    print("MAGIC PROJECT - PHASE 11 FULL CYCLE")
     print("=" * 40)
     print(f"Log File: {CYCLE_LOG}")
 
     os.makedirs(LOG_DIR, exist_ok=True)
 
-    # 1️⃣ Auto-Heal
+    # 1ï¸âƒ£ Auto-Heal
     run_command(
         f'powershell -ExecutionPolicy Bypass -File "{AUTOHEAL_SCRIPT}"',
         "STEP 1: Auto-Heal Placeholders",
     )
 
-    # 2️⃣ Master Orchestrator
+    # 2ï¸âƒ£ Master Orchestrator
     run_command(
         f'powershell -ExecutionPolicy Bypass -File "{ORCHESTRATOR_SCRIPT}"',
         "STEP 2: Run Master Orchestrator",
     )
 
-    # 3️⃣ Notion Sync
+    # 3ï¸âƒ£ Notion Sync
     run_command(
-        f'"{sys.executable}" "{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker"
+        f'"{sys.executable}"{NOTION_PATCHER}"', "STEP 3: Patch Notion Tracker"
     )
 
     print("\n=============================")
-    print(" ✅ PHASE 11 FULL CYCLE COMPLETED")
-    print(f" 📜 Log saved to: {CYCLE_LOG}")
+    print(" âœ… PHASE 11 FULL CYCLE COMPLETED")
+    print(f" ðŸ“œ Log saved to: {CYCLE_LOG}")
     print("=============================\n")
 
 

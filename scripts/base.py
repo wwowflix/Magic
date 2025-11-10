@@ -6,8 +6,6 @@ __all__ = [
     "EntityUnavailable",
     "Scraper",
 ]
-
-
 import abc
 import copy
 import dataclasses
@@ -24,7 +22,6 @@ import snscrape.version
 import urllib3.connection
 import time
 import warnings
-
 
 _logger = logging.getLogger(__name__)
 

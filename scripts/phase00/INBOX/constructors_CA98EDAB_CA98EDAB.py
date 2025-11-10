@@ -12,10 +12,9 @@ import logging
 import os
 import re
 from typing import Any, Dict, Optional, Set, Tuple, Union
-
-from pip._vendor.packaging.markers import Marker
-from pip._vendor.packaging.requirements import InvalidRequirement, Requirement
-from pip._vendor.packaging.specifiers import Specifier
+from packaging.markers import Marker
+from packaging.requirements import InvalidRequirement, Requirement
+from packaging.specifiers import Specifier
 
 from pip._internal.exceptions import InstallationError
 from pip._internal.models.index import PyPI, TestPyPI

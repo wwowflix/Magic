@@ -473,7 +473,7 @@ def install_cmdstan(
     """
     logger = get_logger()
     try:
-        from ..install_cmdstan import (
+        from scripts.install_cmdstan import (
             InstallationSettings,
             InteractiveSettings,
             run_install,

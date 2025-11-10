@@ -87,11 +87,9 @@ from numpy.core import overrides
 from numpy.lib.twodim_base import triu, eye
 from numpy.linalg import lapack_lite, _umath_linalg
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy.linalg"
 )
-
 
 fortran_int = intc
 
@@ -883,7 +881,6 @@ def qr(a, mode="reduced"):
         be passed using only the first letter for backwards compatibility,
         but all others must be spelled out. See the Notes for more
         explanation.
-
 
     Returns
     -------
@@ -2145,7 +2142,6 @@ def slogdet(a):
     The determinant is computed via LU factorization using the LAPACK
     routine ``z/dgetrf``.
 
-
     Examples
     --------
     The determinant of a 2-D array ``[[a, b], [c, d]]`` is ``ad - bc``:
@@ -2731,7 +2727,6 @@ def multi_dot(arrays, *, out=None):
     Think of `multi_dot` as::
 
         def multi_dot(arrays): return functools.reduce(np.dot, arrays)
-
 
     Parameters
     ----------

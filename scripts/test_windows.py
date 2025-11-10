@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from io import BufferedWriter
 
 if on_windows:
-    from .._windows_cffi import (
+    from scripts._windows_cffi import (
         INVALID_HANDLE_VALUE,
         FileFlags,
         Handle,
@@ -246,7 +246,7 @@ def test_lsp_that_hooks_select_gives_good_error(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     from .. import _io_windows
-    from .._windows_cffi import CData, WSAIoctls, _handle
+    from scripts._windows_cffi import CData, WSAIoctls, _handle
 
     def patched_get_underlying(
         sock: int | CData,
@@ -277,7 +277,7 @@ def test_lsp_that_completely_hides_base_socket_gives_good_error(
     # make sure we get an error rather than an infinite loop.
 
     from .. import _io_windows
-    from .._windows_cffi import CData, WSAIoctls, _handle
+    from scripts._windows_cffi import CData, WSAIoctls, _handle
 
     def patched_get_underlying(
         sock: int | CData,

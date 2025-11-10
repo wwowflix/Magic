@@ -1,14 +1,12 @@
-"""ttLib.tables.ttProgram.py -- Assembler/disassembler for TrueType bytecode programs."""
-
 from __future__ import annotations
 
+"""ttLib.tables.ttProgram.py -- Assembler/disassembler for TrueType bytecode programs."""
 from fontTools.misc.textTools import num2binary, binary2num, readHex, strjoin
 import array
 from io import StringIO
 from typing import List
 import re
 import logging
-
 
 log = logging.getLogger(__name__)
 
@@ -25,7 +23,6 @@ streamInstructions = [
     (0xb0,  'PUSHB',         3,   'PushBytes',               0, -1),    #                          b0, b1,..bn  b0, b1, ...,bn
     (0xb8,  'PUSHW',         3,   'PushWords',               0, -1),    #                           w0,w1,..wn   w0 ,w1, ...wn
 ]
-
 
 # next,    the list of "normal" instructions
 
@@ -512,10 +509,10 @@ class Program(object):
                         mnemonic = "PUSH"
                     nValues = len(values)
                     if nValues == 1:
-                        assembly.append("%s[ ]	/* 1 value pushed */" % mnemonic)
+                        assembly.append("%s[ ]  /* 1 value pushed */" % mnemonic)
                     else:
                         assembly.append(
-                            "%s[ ]	/* %s values pushed */" % (mnemonic, nValues)
+                            "%s[ ]  /* %s values pushed */" % (mnemonic, nValues)
                         )
                     assembly.extend(values)
                 else:
@@ -525,10 +522,10 @@ class Program(object):
                 if argBits:
                     assembly.append(
                         mnemonic
-                        + "[%s]	/* %s */" % (num2binary(op - argoffset, argBits), name)
+                        + "[%s] /* %s */" % (num2binary(op - argoffset, argBits), name)
                     )
                 else:
-                    assembly.append(mnemonic + "[ ]	/* %s */" % name)
+                    assembly.append(mnemonic + "[ ] /* %s */" % name)
                 i = i + 1
         self.assembly = assembly
 

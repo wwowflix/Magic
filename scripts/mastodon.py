@@ -11,7 +11,6 @@ __all__ = [
     "MastodonTootScraper",
 ]
 
-
 import bs4
 import dataclasses
 import datetime
@@ -23,7 +22,6 @@ import snscrape.utils
 import time
 import typing
 import urllib.parse
-
 
 _logger = logging.getLogger(__name__)
 

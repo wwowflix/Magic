@@ -1,11 +1,10 @@
+from __future__ import annotations
+
 """
 Provide basic components for groupby. These definitions
 hold the allowlist of methods that are exposed on the
 SeriesGroupBy and the DataFrameGroupBy objects.
 """
-
-from __future__ import annotations
-
 import dataclasses
 from typing import (
     Hashable,

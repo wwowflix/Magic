@@ -1,6 +1,6 @@
 import datetime
 import os
-from typing import Literal, Optional, Union, Dict
+from magic_typing import Literal, Optional, Union, Dict
 
 import streamlit as st
 import streamlit.components.v1 as components

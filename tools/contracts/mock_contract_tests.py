@@ -1,1 +1,1 @@
-﻿print("contracts OK (placeholder)")
+print("contracts OK (placeholder)")

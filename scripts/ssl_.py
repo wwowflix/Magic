@@ -9,7 +9,7 @@ import typing
 import warnings
 from binascii import unhexlify
 
-from ..exceptions import ProxySchemeUnsupported, SSLError
+from scripts.exceptions import ProxySchemeUnsupported, SSLError
 from .url import _BRACELESS_IPV6_ADDRZ_RE, _IPV4_RE
 
 SSLContext = None
@@ -144,7 +144,6 @@ except ImportError:
     PROTOCOL_TLS_CLIENT = 16  # type: ignore[assignment]
     VERIFY_X509_PARTIAL_CHAIN = 0x80000
     VERIFY_X509_STRICT = 0x20  # type: ignore[assignment]
-
 
 _TYPE_PEER_CERT_RET = typing.Union["_TYPE_PEER_CERT_RET_DICT", bytes, None]
 

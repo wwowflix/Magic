@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 # This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-
 import enum
 import sys
 import types
@@ -28,7 +27,6 @@ DeprecatedIn41 = CryptographyDeprecationWarning
 DeprecatedIn42 = CryptographyDeprecationWarning
 DeprecatedIn43 = CryptographyDeprecationWarning
 DeprecatedIn45 = CryptographyDeprecationWarning
-
 
 # If you're wondering why we don't use `Buffer`, it's because `Buffer` would
 # be more accurately named: Bufferable. It means something which has an

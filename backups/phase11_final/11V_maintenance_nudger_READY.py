@@ -1,4 +1,4 @@
-﻿\"\"\" Placeholder for 11V_maintenance_nudger_READY.py \"\"\"
+\"\"\" Placeholder for 11V_maintenance_nudger_READY.py \"\"\"
 
 def main():
     print("✅ 11V_maintenance_nudger_READY.py placeholder executed successfully.")

@@ -1,16 +1,16 @@
-﻿"""
-save_trends.py 🔽
-Part of Zephyr – Phase 2, Module G (G.2.44)
+"""
+save_trends.py ðŸ”½
+Part of Zephyr - Phase 2, Module G (G.2.44)
 
 ✅ Purpose:
 Save cleaned or raw trend data to CSV format with a timestamped filename.
 Supports any platform (Reddit, Google Trends, TikTok, etc.)
 
-🧠 Inputs:
+ðŸ§  Inputs:
 - List[Dict] or pandas.DataFrame of trend items
 - Platform/source name (e.g. 'reddit', 'google', 'tiktok')
 
-📤 Output:
+ðŸ“¤ Output:
 - File saved under outputs/{platform}_trends_YYYYMMDD_HHMMSS.csv
 """
 
@@ -54,4 +54,4 @@ def save_trends(data, source_name="unknown"):
             )
         print(f"✅ Trends saved to {filepath}")
     except Exception as e:
-        print(f"❌ Error saving trends: {e}")
+        print(f"âŒ Error saving trends: {e}")

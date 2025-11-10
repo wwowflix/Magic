@@ -1,94 +1,56 @@
-"""
-_exceptions.py
-websocket - WebSocket client library for Python
+# -*- coding: utf-8 -*-
+"""Exception shims for scripts package (MAGIC Week 6 Step 6.2)."""
 
-Copyright 2024 engn33r
+__all__ = [
+    "StreamError", "StreamClosed", "StreamConsumed",
+    "WebSocketError", "WebSocketException",
+    "WebSocketProtocolException", "WebSocketConnectionClosedException",
+    "WebSocketBadStatusException", "WebSocketAddressException", "WebSocketTimeoutException","WebSocketProxyException"]
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-"""
-
-
-class WebSocketException(Exception):
-    """
-    WebSocket exception class.
-    """
-
+# Base classes
+class StreamError(Exception):
+    """Base class for stream-related errors."""
     pass
 
-
-class WebSocketProtocolException(WebSocketException):
-    """
-    If the WebSocket protocol is invalid, this exception will be raised.
-    """
-
+class WebSocketError(Exception):
+    """Base class for WebSocket-related errors."""
     pass
 
+# Backwards-compat alias some stacks expect
+WebSocketException = WebSocketError
 
-class WebSocketPayloadException(WebSocketException):
-    """
-    If the WebSocket payload is invalid, this exception will be raised.
-    """
-
+# Stream exceptions used by scripts._content
+class StreamClosed(StreamError):
+    """Operation attempted on a closed stream."""
     pass
 
-
-class WebSocketConnectionClosedException(WebSocketException):
-    """
-    If remote host closed the connection or some network error happened,
-    this exception will be raised.
-    """
-
+class StreamConsumed(StreamError):
+    """Stream has already been consumed."""
     pass
 
-
-class WebSocketTimeoutException(WebSocketException):
-    """
-    WebSocketTimeoutException will be raised at socket timeout during read/write data.
-    """
-
+# WebSocket exceptions used by scripts._core / scripts._app / _handshake
+class WebSocketProtocolException(WebSocketError):
+    """Protocol error in WebSocket handshake/frames."""
     pass
 
-
-class WebSocketProxyException(WebSocketException):
-    """
-    WebSocketProxyException will be raised when proxy error occurred.
-    """
-
+class WebSocketConnectionClosedException(WebSocketError):
+    """Operation attempted on a closed WebSocket connection."""
     pass
-
 
 class WebSocketBadStatusException(WebSocketException):
-    """
-    WebSocketBadStatusException will be raised when we get bad handshake status code.
-    """
-
-    def __init__(
-        self,
-        message: str,
-        status_code: int,
-        status_message=None,
-        resp_headers=None,
-        resp_body=None,
-    ):
-        super().__init__(message)
+    """Server returned an unexpected HTTP status during WebSocket handshake."""
+    def __init__(self, status_code: int, msg: str | None = None):
         self.status_code = status_code
-        self.resp_headers = resp_headers
-        self.resp_body = resp_body
-
+        super().__init__(msg or f"Bad status code: {status_code}")
 
 class WebSocketAddressException(WebSocketException):
-    """
-    If the websocket address info cannot be found, this exception will be raised.
-    """
+    """Failed to resolve or connect to WebSocket host/port."""
+    pass
 
+class WebSocketTimeoutException(WebSocketException):
+    """Operation timed out during WebSocket handshake or IO."""
+    pass
+
+class WebSocketProxyException(WebSocketException):
+    'WebSocket proxy configuration or negotiation error.'
     pass

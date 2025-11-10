@@ -315,7 +315,6 @@ def polymulx(c):
     Multiply the polynomial `c` by x, where x is the independent
     variable.
 
-
     Parameters
     ----------
     c : array_like
@@ -1537,7 +1536,7 @@ class Polynomial(ABCPolyBase):
 
     @classmethod
     def _str_term_unicode(cls, i, arg_str):
-        return f"·{arg_str}{i.translate(cls._superscript_mapping)}"
+        return f"Â·{arg_str}{i.translate(cls._superscript_mapping)}"
 
     @staticmethod
     def _str_term_ascii(i, arg_str):

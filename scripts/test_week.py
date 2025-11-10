@@ -1,12 +1,11 @@
+from __future__ import annotations
+
 """
 Tests for the following offsets:
 - Week
 - WeekOfMonth
 - LastWeekOfMonth
 """
-
-from __future__ import annotations
-
 from datetime import (
     datetime,
     timedelta,

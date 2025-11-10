@@ -1,8 +1,10 @@
 param (
-    [string]$ProjectRoot = "D:\MAGIC",
-    [string]$ManifestPath = "D:\MAGIC\phase_manifest.json"
+    [string]$ProjectRoot = $Root,
+    [string]$ManifestPath = "E:\MAGIC\phase_manifest.json"
 )
 
+
+if (-not \E:\MAGIC) { \E:\MAGIC = (Get-Location).Path }
 Write-Host "Scanning project folders..." -ForegroundColor Cyan
 
 $manifest = @()
@@ -27,7 +29,7 @@ $manifest | ConvertTo-Json -Depth 5 | Out-File $ManifestPath -Encoding utf8
 
 Write-Host "Manifest saved to $ManifestPath" -ForegroundColor Green
 
-# Create placeholder files for missing scripts (phase 0–18, modules A–Z)
+# Create placeholder files for missing scripts (phase 0â€“18, modules Aâ€“Z)
 $allPhases = 0..18
 $allModules = @()
 65..90 | ForEach-Object { $allModules += [char]$_ }

@@ -90,7 +90,7 @@ from .filter import (
     ElementFilter,
     SoupStrainer,
 )
-from typing import (
+from magic_typing import (
     Any,
     cast,
     Counter as CounterType,

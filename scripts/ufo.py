@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 """Converts cubic bezier curves to quadratic splines.
 
 Conversion is performed such that the quadratic splines keep the same end-curve
@@ -37,7 +36,6 @@ from .errors import (
     IncompatibleFontsError,
 )
 
-
 __all__ = ["fonts_to_quadratic", "font_to_quadratic"]
 
 # The default approximation error below is a relative value (1/1000 of the EM square).
@@ -47,7 +45,6 @@ DEFAULT_MAX_ERR = 0.001
 CURVE_TYPE_LIB_KEY = "com.github.googlei18n.cu2qu.curve_type"
 
 logger = logging.getLogger(__name__)
-
 
 _zip = zip
 

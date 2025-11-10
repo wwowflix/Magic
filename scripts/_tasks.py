@@ -12,7 +12,7 @@ else:
     from typing_extensions import TypeVarTuple, Unpack
 
 if TYPE_CHECKING:
-    from .._core._tasks import CancelScope
+    from scripts._core._tasks import CancelScope
 
 T_Retval = TypeVar("T_Retval")
 T_contra = TypeVar("T_contra", contravariant=True)
@@ -98,4 +98,4 @@ class TaskGroup(metaclass=ABCMeta):
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
     ) -> bool | None:
-        """Exit the task group context waiting for all tasks to finish."""
+        """Exit the task group context waiting for all tasks to finish.

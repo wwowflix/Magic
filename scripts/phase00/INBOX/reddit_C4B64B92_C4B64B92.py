@@ -7,7 +7,6 @@ __all__ = [
     "RedditSubmissionScraper",
 ]
 
-
 import dataclasses
 import datetime
 import logging
@@ -19,9 +18,7 @@ import string
 import time
 import typing
 
-
 _logger = logging.getLogger(__name__)
-
 
 # Most of these fields should never be None, but due to broken data, they sometimes are anyway...
 

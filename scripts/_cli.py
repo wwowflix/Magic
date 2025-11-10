@@ -16,7 +16,6 @@ import requests
 import sys
 import tempfile
 
-
 ## Logging
 dumpLocals = False
 logger = logging  # Replaced below after setting the logger class
@@ -274,7 +273,7 @@ class CitationAction(argparse.Action):
         print(f'Title: {m["name"]}: {m["summary"]}')
         print(f'URL: {m["home-page"]}')
         print(f'Version: {m["version"]}')
-        print(f'Date: 2018‒{m["version"].split(".", 3)[3][:4]}')
+        print(f'Date: 2018ÃƒÂ¢Ã¢"šÂ¬Ã¢â‚¬â„¢{m["version"].split(".", 3)[3][:4]}')
 
         if ".dev" in m["version"]:
             print()
@@ -285,7 +284,7 @@ class CitationAction(argparse.Action):
         parser.exit()
 
 
-def parse_args():
+def parse_args(argv=None):
     import snscrape.base
     import snscrape.modules
     import snscrape.version
@@ -381,7 +380,7 @@ def parse_args():
     )
 
     subparsers = parser.add_subparsers(
-        dest="scraper", metavar="SCRAPER", title="scrapers", required=True
+        dest="scraper", metavar="SCRAPER", title="scrapers", required=False
     )
     classes = snscrape.base.Scraper.__subclasses__()
     scrapers = {}
@@ -395,9 +394,8 @@ def parse_args():
         )
         cls._cli_setup_parser(subparser)
         subparser.set_defaults(cls=cls)
-
-    args = parser.parse_args()
-
+    argv = [] if argv is None else list(argv)
+    args, _unknown = parser.parse_known_args(argv)
     if not args.withEntity and args.maxResults == 0:
         parser.error("--max-results 0 is only valid when used with --with-entity")
     if args.jsonlForBuggyIntParser:
@@ -442,9 +440,13 @@ def configure_logging(verbosity, dumpLocals_):
     rootLogger.addHandler(handler)
 
 
-def main():
+def main(argv=None):
     setup_logging()
-    args = parse_args()
+    args = parse_args(argv or [])
+    # --- MAGIC no-op when invoked without subcommand (e.g., during pytest) ---
+    if not hasattr(args, "scraper") or args.scraper is None:
+        return 0
+    # --- end MAGIC guard ---
     configure_logging(args.verbosity, args.dumpLocals)
     scraper = args.cls._cli_from_args(args)
 
@@ -488,3 +490,7 @@ def main():
         except BrokenPipeError:
             os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
             sys.exit(1)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

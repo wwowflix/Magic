@@ -890,4 +890,3 @@ _shared_docs[
     Wheat Products     consumption
     Beef              co2_emissions
     dtype: object
-"""

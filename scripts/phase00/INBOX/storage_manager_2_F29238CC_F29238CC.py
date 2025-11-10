@@ -14,7 +14,7 @@ class StorageManager:
             print(f"✅ Created folder: {path}")
             logging.info(f"Created folder: {path}")
         else:
-            print(f"ℹ️ Folder already exists: {path}")
+            print(f"â„¹ï¸ Folder already exists: {path}")
             logging.info(f"Folder already exists: {path}")
 
 

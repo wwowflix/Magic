@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 ANOMALY_LOG_PATH = r"D:\MAGIC\logs\anomaly_flags.log"
 SCRIPTS_FOLDER = r"D:\MAGIC\scripts\phase11"

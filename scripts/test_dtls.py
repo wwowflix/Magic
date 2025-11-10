@@ -16,13 +16,12 @@ try:
 except ImportError as error:
     skip_if_optional_else_raise(error)
 
-
 import trio
 import trio.testing
 from trio import DTLSChannel, DTLSEndpoint
 from trio.testing._fake_net import FakeNet, UDPPacket
 
-from .._core._tests.tutil import binds_ipv6, gc_collect_harder, slow
+from scripts._core._tests.tutil import binds_ipv6, gc_collect_harder, slow
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -35,7 +34,6 @@ server_cert.configure_cert(server_ctx)
 
 client_ctx = SSL.Context(SSL.DTLS_METHOD)
 ca.configure_trust(client_ctx)
-
 
 parametrize_ipv6 = pytest.mark.parametrize(
     "ipv6",

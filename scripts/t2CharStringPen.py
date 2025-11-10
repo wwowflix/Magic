@@ -1,8 +1,7 @@
-# Copyright (c) 2009 Type Supply LLC
-# Author: Tal Leming
-
 from __future__ import annotations
 
+# Copyright (c) 2009 Type Supply LLC
+# Author: Tal Leming
 from typing import Any, Dict, List, Tuple
 
 from fontTools.cffLib.specializer import commandsToProgram, specializeCommands

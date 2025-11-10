@@ -78,16 +78,16 @@ def test_read_jsonl_unicode_chars():
     # \" == RIGHT DOUBLE QUOTATION MARK
 
     # simulate file handle
-    json = '{"a": "foo”", "b": "bar"}\n{"a": "foo", "b": "bar"}\n'
+    json = '{"a": "foo"", "b": "bar"}\n{"a": "foo", "b": "bar"}\n'
     json = StringIO(json)
     result = read_json(json, lines=True)
-    expected = DataFrame([["foo\"", "bar"], ["foo", "bar"]], columns=["a", "b"])
+    expected = DataFrame([['foo"', "bar"], ["foo", "bar"]], columns=["a", "b"])
     tm.assert_frame_equal(result, expected)
 
     # simulate string
-    json = '{"a": "foo”", "b": "bar"}\n{"a": "foo", "b": "bar"}\n'
+    json = '{"a": "foo"", "b": "bar"}\n{"a": "foo", "b": "bar"}\n'
     result = read_json(StringIO(json), lines=True)
-    expected = DataFrame([["foo\"", "bar"], ["foo", "bar"]], columns=["a", "b"])
+    expected = DataFrame([['foo"', "bar"], ["foo", "bar"]], columns=["a", "b"])
     tm.assert_frame_equal(result, expected)
 
 
@@ -258,15 +258,7 @@ def test_readjson_chunks_multiple_empty_lines(chunksize):
 
     {"A":1,"B":4}
 
-
-
     {"A":2,"B":5}
-
-
-
-
-
-
 
     {"A":3,"B":6}
     """
@@ -290,10 +282,10 @@ def test_readjson_unicode(request, monkeypatch, engine):
     with tm.ensure_clean("test.json") as path:
         monkeypatch.setattr("locale.getpreferredencoding", lambda do_setlocale: "cp949")
         with open(path, "w", encoding="utf-8") as f:
-            f.write('{"£©µÀÆÖÞßéöÿ":["АБВГДабвгд가"]}')
+            f.write('{"Â£Â©ÂµÃ€Ã†Ã–ÃžÃŸÃ©Ã¶Ã¿":["ÐÐ‘Ð’Ð“Ð”Ð°Ð±Ð²Ð³Ð´ê°€"]}')
 
         result = read_json(path, engine=engine)
-        expected = DataFrame({"£©µÀÆÖÞßéöÿ": ["АБВГДабвгд가"]})
+        expected = DataFrame({"Â£Â©ÂµÃ€Ã†Ã–ÃžÃŸÃ©Ã¶Ã¿": ["ÐÐ‘Ð’Ð“Ð”Ð°Ð±Ð²Ð³Ð´ê°€"]})
         tm.assert_frame_equal(result, expected)
 
 

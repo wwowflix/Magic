@@ -1,18 +1,17 @@
+from __future__ import annotations
+
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
 """Tools for creating transform & filter expressions with a python syntax."""
-
-from __future__ import annotations
-
 import sys
-from typing import TYPE_CHECKING, Any
+from magic_typing import TYPE_CHECKING, Any
 
 from altair.expr.core import ConstExpression, FunctionExpression
 from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
 
 if sys.version_info >= (3, 12):
-    from typing import override
+    from magic_typing import override
 else:
     from typing_extensions import override
 
@@ -1271,7 +1270,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         The optional ``align`` argument indicates what part of the string should be truncated:
         ``'left'`` (the beginning), ``'center'``, or ``'right'`` (the end). By default, the
         ``'right'`` end of the string is truncated. The optional ``ellipsis`` argument indicates the
-        string to use to indicate truncated content; by default the ellipsis character ``…``
+        string to use to indicate truncated content; by default the ellipsis character ``"¦``
         (``\\.\.\.``) is used.
         """
         return FunctionExpression("truncate", (string, length, align, ellipsis))
@@ -1901,9 +1900,9 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         """
         Returns the projected planar bounding box (typically in pixels) for the specified GeoJSON ``feature``, according to the named ``projection``.
 
-        The bounding box is represented by a two-dimensional array: [[*x₀*, *y₀*], [*x₁*, *y₁*]],
-        where *x₀* is the minimum x-coordinate, *y₀* is the minimum y-coordinate, *x₁* is the
-        maximum x-coordinate, and *y₁* is the maximum y-coordinate. If the ``projection`` argument
+        The bounding box is represented by a two-dimensional array: [[*xâ‚€*, *yâ‚€*], [*xâ‚*, *yâ‚*]],
+        where *xâ‚€* is the minimum x-coordinate, *yâ‚€* is the minimum y-coordinate, *xâ‚* is the
+        maximum x-coordinate, and *yâ‚* is the maximum y-coordinate. If the ``projection`` argument
         is ``null``, computes the spherical bounding box using unprojected longitude, latitude
         coordinates. The optional ``group`` argument takes a scenegraph group mark item to indicate
         the specific scope in which to look up the projection. Uses d3-geo's `geoBounds`_ and

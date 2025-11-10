@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 # SPDX-License-Identifier: MIT
 # SPDX-FileCopyrightText: 2021 Taneli Hukkinen
 # Licensed to PSF under a Contributor Agreement.
-
-from __future__ import annotations
-
 from collections.abc import Iterable
 import string
 from types import MappingProxyType

@@ -18,7 +18,6 @@ from nose.util import src
 from .nosetester import get_package_name
 from .utils import KnownFailureException
 
-
 # Some of the classes in this module begin with 'Numpy' to clearly distinguish
 # them from the plethora of very similar names from nose/unittest/doctest
 

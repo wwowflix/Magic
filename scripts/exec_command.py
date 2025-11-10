@@ -206,7 +206,6 @@ def exec_command(
     use_tee : {bool, None}, optional
         If True use tee. Default None (True)
 
-
     Returns
     -------
     res : str

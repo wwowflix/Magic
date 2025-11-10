@@ -41,7 +41,6 @@ from pandas.tseries.offsets import (
 
 tick_classes = [Hour, Minute, Second, Milli, Micro, Nano]
 
-
 # ---------------------------------------------------------------------
 
 

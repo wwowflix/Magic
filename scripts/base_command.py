@@ -214,3 +214,7 @@ class Command(CommandContextMixIn):
             return run(options, args)
         finally:
             self.handle_pip_version_check(options)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

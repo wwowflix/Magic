@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Module for formatting output data into CSV files.
 """
-
-from __future__ import annotations
-
 import csv as csvlib
 import os
 from typing import (

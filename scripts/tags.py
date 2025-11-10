@@ -35,7 +35,6 @@ INTERPRETER_SHORT_NAMES: Dict[str, str] = {
     "jython": "jy",
 }
 
-
 _32_BIT_INTERPRETER = sys.maxsize <= 2**32
 
 

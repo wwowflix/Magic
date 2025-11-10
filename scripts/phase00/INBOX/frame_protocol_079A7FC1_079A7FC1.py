@@ -14,7 +14,6 @@ from typing import Generator, List, NamedTuple, Optional, Tuple, TYPE_CHECKING, 
 if TYPE_CHECKING:
     from .extensions import Extension  # pragma: no cover
 
-
 _XOR_TABLE = [bytes(a ^ b for a in range(256)) for b in range(256)]
 
 
@@ -190,7 +189,6 @@ LOCAL_ONLY_CLOSE_REASONS = (
     CloseReason.TLS_HANDSHAKE_FAILED,
 )
 
-
 # RFC 6455, Section 7.4.2 - Status Code Ranges
 MIN_CLOSE_REASON = 1000
 MIN_PROTOCOL_CLOSE_REASON = 1000
@@ -200,7 +198,6 @@ MAX_LIBRARY_CLOSE_REASON = 3999
 MIN_PRIVATE_CLOSE_REASON = 4000
 MAX_PRIVATE_CLOSE_REASON = 4999
 MAX_CLOSE_REASON = 4999
-
 
 NULL_MASK = struct.pack("!I", 0)
 

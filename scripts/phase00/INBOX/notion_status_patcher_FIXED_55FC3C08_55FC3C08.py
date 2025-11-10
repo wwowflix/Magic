@@ -17,4 +17,4 @@ if os.path.exists(log_path):
                 error_count += 1
 
 print(f"✅ Found {pass_count} passing scripts, {error_count} with errors.")
-print("🎯 Notion sync complete.")
+print("ðŸŽ¯ Notion sync complete.")

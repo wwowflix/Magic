@@ -4,7 +4,7 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Generic, TypeVar
 
-from ..abc import (
+from scripts.abc import (
     ByteReceiveStream,
     ByteSendStream,
     ByteStream,

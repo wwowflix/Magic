@@ -1,12 +1,11 @@
+from __future__ import annotations
+
 """
 Tests for the following offsets:
 - CustomBusinessMonthBase
 - CustomBusinessMonthBegin
 - CustomBusinessMonthEnd
 """
-
-from __future__ import annotations
-
 from datetime import (
     date,
     datetime,

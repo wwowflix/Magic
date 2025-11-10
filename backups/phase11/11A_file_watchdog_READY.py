@@ -1,6 +1,6 @@
 import os
-import time
-import logging
+import magic_time as time
+import magic_logging as logging
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 

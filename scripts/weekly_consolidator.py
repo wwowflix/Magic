@@ -16,7 +16,7 @@ timestamp = datetime.utcnow().strftime("%Y-%m-%d")
 output_csv = os.path.join(history_folder, f"{timestamp}.csv")
 
 if not os.path.exists(input_csv):
-    print(f"❌ Input file not found: {input_csv}")
+    print(f"âŒ Input file not found: {input_csv}")
     exit(1)
 
 if not os.path.exists(history_folder):

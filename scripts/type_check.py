@@ -25,11 +25,9 @@ from numpy.core.overrides import set_module
 from numpy.core import overrides
 from .ufunclike import isneginf, isposinf
 
-
 array_function_dispatch = functools.partial(
     overrides.array_function_dispatch, module="numpy"
 )
-
 
 _typecodes_by_elsize = "GDFgdfQqLlIiHhBb?"
 
@@ -461,8 +459,6 @@ def nan_to_num(x, copy=True, nan=0.0, posinf=None, neginf=None):
         small (or negative) number.
 
         .. versionadded:: 1.17
-
-
 
     Returns
     -------

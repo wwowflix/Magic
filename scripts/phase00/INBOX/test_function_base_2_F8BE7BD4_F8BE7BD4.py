@@ -9,7 +9,6 @@ import hypothesis
 from hypothesis.extra.numpy import arrays
 import hypothesis.strategies as st
 
-
 import numpy as np
 from numpy import ma
 from numpy.testing import (

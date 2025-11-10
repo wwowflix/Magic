@@ -4,7 +4,7 @@ import math
 from typing import TypeVar
 from warnings import warn
 
-from ..streams.memory import (
+from scripts.streams.memory import (
     MemoryObjectReceiveStream,
     MemoryObjectSendStream,
     MemoryObjectStreamState,

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 """This is a file that wraps calls to `pyright --verifytypes`, achieving two things:
 1. give an error if docstrings are missing.
     pyright will give a number of missing docstrings, and error messages, but not exit with a non-zero value.
@@ -7,8 +9,6 @@
 
 If this check is giving you false alarms, you can ignore them by adding logic to `has_docstring_at_runtime`, in the main loop in `check_type`, or by updating the json file.
 """
-from __future__ import annotations
-
 # this file is not run as part of the tests, instead it's run standalone from check.sh
 import argparse
 import json

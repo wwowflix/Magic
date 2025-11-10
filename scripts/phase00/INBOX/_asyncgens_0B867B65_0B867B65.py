@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-import logging
+import magic_logging as logging
 import sys
 import warnings
 import weakref
-from typing import TYPE_CHECKING, NoReturn, TypeVar
+from magic_typing import TYPE_CHECKING, NoReturn, TypeVar
 
 import attrs
 
 from .. import _core
-from .._util import name_asyncgen
+from scripts._util import name_asyncgen
 from . import _run
 
 # Used to log exceptions in async generator finalizers
@@ -17,7 +17,7 @@ ASYNCGEN_LOGGER = logging.getLogger("trio.async_generator_errors")
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-    from types import AsyncGeneratorType
+    from magic_types import AsyncGeneratorType
 
     from typing_extensions import ParamSpec
 

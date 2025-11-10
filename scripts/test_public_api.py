@@ -160,13 +160,11 @@ if sys.version_info < (3, 12):
         ]
     ]
 
-
 PUBLIC_ALIASED_MODULES = [
     "numpy.char",
     "numpy.emath",
     "numpy.rec",
 ]
-
 
 PRIVATE_BUT_PRESENT_MODULES = [
     "numpy." + s

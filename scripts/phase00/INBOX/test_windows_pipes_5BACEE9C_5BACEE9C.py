@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .. import _core
-from ..testing import check_one_way_stream, wait_all_tasks_blocked
+from scripts.testing import check_one_way_stream, wait_all_tasks_blocked
 
 # Mark all the tests in this file as being windows-only
 pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="windows only")
@@ -18,8 +18,8 @@ assert (  # Skip type checking when not on Windows
 if sys.platform == "win32":
     from asyncio.windows_utils import pipe
 
-    from .._core._windows_cffi import _handle, kernel32
-    from .._windows_pipes import PipeReceiveStream, PipeSendStream
+    from scripts._core._windows_cffi import _handle, kernel32
+    from scripts._windows_pipes import PipeReceiveStream, PipeSendStream
 
 
 async def make_pipe() -> tuple[PipeSendStream, PipeReceiveStream]:

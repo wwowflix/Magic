@@ -5,9 +5,8 @@ import os.path
 import re
 import shutil
 from typing import Callable, Iterable, List, Optional, Tuple
-
-from pip._vendor.packaging.utils import canonicalize_name, canonicalize_version
-from pip._vendor.packaging.version import InvalidVersion, Version
+from packaging.utils import canonicalize_name, canonicalize_version
+from packaging.version import InvalidVersion, Version
 
 from pip._internal.cache import WheelCache
 from pip._internal.exceptions import InvalidWheelFilename, UnsupportedWheel

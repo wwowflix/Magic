@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Functions for implementing 'astype' methods according to pandas conventions,
 particularly ones that differ from numpy.
 """
-
-from __future__ import annotations
-
 import inspect
 from typing import (
     TYPE_CHECKING,
@@ -47,7 +46,6 @@ if TYPE_CHECKING:
         DatetimeArray,
         ExtensionArray,
     )
-
 
 _dtype_obj = np.dtype(object)
 

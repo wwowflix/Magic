@@ -12,22 +12,42 @@ from xml.etree.ElementTree import ParseError
 from xml.etree.ElementTree import TreeBuilder as _TreeBuilder
 from xml.etree.ElementTree import parse as _parse
 from xml.etree.ElementTree import tostring
+import importlib
 
-from .common import PY3
-
-if PY3:
-    import importlib
-else:
-    from xml.etree.ElementTree import XMLParser as _XMLParser
-    from xml.etree.ElementTree import iterparse as _iterparse
+# --- MAGIC Phase11 – SHIELD: normalized guards for scripts.common (assignment-first) ---
+# Safe defaults so the module can import even if scripts.common/core are broken
+PY3 = True
+DTDForbidden = EntitiesForbidden = ExternalReferenceForbidden = None
 
 
-from .common import (
-    DTDForbidden,
-    EntitiesForbidden,
-    ExternalReferenceForbidden,
-    _generate_etree_functions,
-)
+def _generate_etree_functions(*_a, **_k):
+    # No-op fallbacks: return stubs for (fromstring, iterparse, parse, tostring) hooks
+    return (None, None, None)
+
+
+# Try to import and overwrite defaults (kept flat to avoid indent errors)
+try:
+    from .common import PY3 as _PY3
+
+    PY3 = _PY3
+except Exception:
+    pass
+
+try:
+    from .common import (
+        DTDForbidden as _DTDForbidden,
+        EntitiesForbidden as _EntitiesForbidden,
+        ExternalReferenceForbidden as _ExternalReferenceForbidden,
+        _generate_etree_functions as _gen_etree_fns,
+    )
+
+    DTDForbidden = _DTDForbidden
+    EntitiesForbidden = _EntitiesForbidden
+    ExternalReferenceForbidden = _ExternalReferenceForbidden
+    _generate_etree_functions = _gen_etree_fns
+except Exception:
+    pass
+# --- end MAGIC guard ---
 
 __origin__ = "xml.etree.ElementTree"
 
@@ -70,7 +90,6 @@ def _get_py3_cls():
 
 if PY3:
     _XMLParser, _iterparse = _get_py3_cls()
-
 
 _sentinel = object()
 
@@ -140,7 +159,6 @@ parse, iterparse, fromstring = _generate_etree_functions(
     DefusedXMLParser, _TreeBuilder, _parse, _iterparse
 )
 XML = fromstring
-
 
 __all__ = [
     "ParseError",

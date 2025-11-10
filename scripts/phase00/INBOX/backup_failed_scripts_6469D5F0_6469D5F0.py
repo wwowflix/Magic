@@ -9,7 +9,7 @@ BACKUP_DIR = "backups/failed"
 def read_failures(summary_path):
     failures = []
     if not os.path.exists(summary_path):
-        print(f"❌ Summary file not found: {summary_path}")
+        print(f"âŒ Summary file not found: {summary_path}")
         return failures
 
     with open(summary_path, "r", encoding="utf-8") as f:
@@ -29,7 +29,7 @@ def find_script_path(phase, module, script):
 
 def backup_script(script_path):
     if not os.path.exists(script_path):
-        print(f"⚠️ Script not found: {script_path}")
+        print(f"âš ï¸ Script not found: {script_path}")
         return
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -39,11 +39,11 @@ def backup_script(script_path):
     destination = os.path.join(backup_subdir, script_name)
 
     shutil.copy2(script_path, destination)
-    print(f"📦 Backed up: {script_path} → {destination}")
+    print(f"ðŸ“¦ Backed up: {script_path} â†’ {destination}")
 
 
 def main():
-    print("🔍 Scanning for failed scripts...")
+    print("ðŸ” Scanning for failed scripts...")
     failed_entries = read_failures(SUMMARY_PATH)
 
     if not failed_entries:
@@ -54,7 +54,7 @@ def main():
         script_path = find_script_path(phase, module, script)
         backup_script(script_path)
 
-    print(f"\n🗃️ Backup complete. All failed scripts stored in '{BACKUP_DIR}'.")
+    print(f"\nðŸ—ƒï¸ Backup complete. All failed scripts stored in '{BACKUP_DIR}'.")
 
 
 if __name__ == "__main__":

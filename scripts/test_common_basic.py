@@ -604,7 +604,6 @@ def test_empty_lines(all_parsers, sep, skip_blank_lines, exp_data, request):
 A,B,C
 1,2.,4.
 
-
 5.,NaN,10.0
 
 -70,.4,1
@@ -686,7 +685,9 @@ def test_sub_character(all_parsers, csv_dir_path):
     tm.assert_frame_equal(result, expected)
 
 
-@pytest.mark.parametrize("filename", ["sé-es-vé.csv", "ru-sй.csv", "中文文件名.csv"])
+@pytest.mark.parametrize(
+    "filename", ["sÃ©-es-vÃ©.csv", "ru-sÐ¹.csv", "ä¸­æ–‡æ–‡ä»¶å.csv"]
+)
 def test_filename_with_special_chars(all_parsers, filename):
     # see gh-15086.
     parser = all_parsers
