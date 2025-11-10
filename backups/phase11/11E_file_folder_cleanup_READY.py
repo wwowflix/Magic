@@ -1,5 +1,5 @@
 import os
-import time
+import magic_time as time
 
 # CONFIG
 TARGET_DIRS = ["outputs/logs", "outputs/tmp", "outputs/cache"]

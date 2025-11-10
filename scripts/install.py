@@ -86,9 +86,7 @@ if HAS_USER_SITE:
         "data": "{userbase}",
     }
 
-
 INSTALL_SCHEMES.update(fw.schemes)
-
 
 # The keys to an installation scheme; if any new types of files are to be
 # installed, be sure to add an entry to every installation scheme above,

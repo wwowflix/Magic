@@ -5,7 +5,7 @@
 import logging
 import platform
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 from importlib.machinery import EXTENSION_SUFFIXES
 from typing import (
     Dict,
@@ -34,7 +34,6 @@ INTERPRETER_SHORT_NAMES: Dict[str, str] = {
     "ironpython": "ip",
     "jython": "jy",
 }
-
 
 _32_BIT_INTERPRETER = sys.maxsize <= 2**32
 

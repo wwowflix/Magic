@@ -2,9 +2,8 @@ import functools
 import logging
 import re
 from typing import NewType, Optional, Tuple, cast
-
-from pip._vendor.packaging import specifiers, version
-from pip._vendor.packaging.requirements import Requirement
+from packaging import specifiers, version
+from packaging.requirements import Requirement
 
 NormalizedExtra = NewType("NormalizedExtra", str)
 

@@ -8,7 +8,6 @@ the module.
 import warnings
 import functools
 
-
 numberTypes = (int, float)
 
 

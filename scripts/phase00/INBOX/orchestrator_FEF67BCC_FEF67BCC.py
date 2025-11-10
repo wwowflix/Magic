@@ -1,4 +1,4 @@
-﻿# orchestrator.py
+# orchestrator.py
 
 import logging
 from vault_manager import VaultManager
@@ -30,7 +30,7 @@ def load_api_key_from_vault():
     # For now, we simulate decrypting:
     encrypted_key = vault.encrypt("super_secret_api_key")
     decrypted_key = vault.decrypt(encrypted_key)
-    print("🔐 Decrypted API Key:", decrypted_key)
+    print("ðŸ” Decrypted API Key:", decrypted_key)
     return decrypted_key
 
 

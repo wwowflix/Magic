@@ -1,4 +1,4 @@
-import abc
+import importlib.abc as abc
 import builtins
 import collections
 import collections.abc

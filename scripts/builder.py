@@ -39,7 +39,6 @@
 The ``E`` Element factory for generating XML documents.
 """
 
-
 import lxml.etree as ET
 
 _QName = ET.QName

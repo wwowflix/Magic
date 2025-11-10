@@ -33,7 +33,6 @@ from .ElementTree import (
 
 __origin__ = "xml.etree.cElementTree"
 
-
 warnings.warn(
     "defusedxml.cElementTree is deprecated, import from defusedxml.ElementTree instead.",
     category=DeprecationWarning,

@@ -44,7 +44,6 @@ if TYPE_CHECKING:
 Scope: TypeAlias = tuple[int, ...]
 FacetMapping: TypeAlias = dict[tuple[str, Scope], tuple[str, Scope]]
 
-
 # For the transformed_data functionality, the chart classes in the values
 # can be considered equivalent to the chart class in the key.
 _chart_class_mapping = {

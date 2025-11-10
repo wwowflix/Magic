@@ -10,7 +10,7 @@ import trio
 import trio.testing
 from trio.socket import AF_INET, IPPROTO_TCP, SOCK_STREAM
 
-from .._highlevel_ssl_helpers import (
+from scripts._highlevel_ssl_helpers import (
     open_ssl_over_tcp_listeners,
     open_ssl_over_tcp_stream,
     serve_ssl_over_tcp,
@@ -25,8 +25,8 @@ if TYPE_CHECKING:
 
     from trio.abc import Stream
 
-    from .._highlevel_socket import SocketListener
-    from .._ssl import SSLListener
+    from scripts._highlevel_socket import SocketListener
+    from scripts._ssl import SSLListener
 
 
 async def echo_handler(stream: Stream) -> None:

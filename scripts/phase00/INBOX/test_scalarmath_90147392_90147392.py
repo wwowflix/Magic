@@ -72,7 +72,6 @@ binary_operators_for_scalar_ints = binary_operators_for_scalars + [
     operator.and_,
 ]
 
-
 # This compares scalarmath against ufuncs.
 
 

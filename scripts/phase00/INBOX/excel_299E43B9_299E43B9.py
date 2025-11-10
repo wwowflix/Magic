@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Utilities for conversion to writer-agnostic Excel representation.
 """
-
-from __future__ import annotations
-
 from functools import (
     lru_cache,
     reduce,
@@ -362,7 +361,7 @@ class CSSToExcelConverter:
 
     def build_number_format(self, props: Mapping[str, str]) -> dict[str, str | None]:
         fc = props.get("number-format")
-        fc = fc.replace("§", ";") if isinstance(fc, str) else fc
+        fc = fc.replace("Â§", ";") if isinstance(fc, str) else fc
         return {"format_code": fc}
 
     def build_font(

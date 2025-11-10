@@ -1,6 +1,5 @@
 __all__ = ["popCount", "bit_count", "bit_indices"]
 
-
 try:
     bit_count = int.bit_count
 except AttributeError:

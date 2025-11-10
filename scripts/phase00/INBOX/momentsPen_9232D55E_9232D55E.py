@@ -7,7 +7,6 @@ except (AttributeError, ImportError):
     from fontTools.misc import cython
 COMPILED = cython.compiled
 
-
 __all__ = ["MomentsPen"]
 
 

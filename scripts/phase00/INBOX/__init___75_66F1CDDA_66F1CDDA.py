@@ -19,14 +19,12 @@ if is_numpy_dev or not np_version_under1p22:
 else:
     np_percentile_argname = "interpolation"
 
-
 if _nlv < Version(_min_numpy_ver):
     raise ImportError(
         f"this version of pandas is incompatible with numpy < {_min_numpy_ver}\n"
         f"your numpy version is {_np_version}.\n"
         f"Please upgrade numpy to >= {_min_numpy_ver} to use this pandas version"
     )
-
 
 __all__ = [
     "np",

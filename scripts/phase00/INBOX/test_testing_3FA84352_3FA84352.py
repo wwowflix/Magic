@@ -9,12 +9,12 @@ import pytest
 from trio.testing import RaisesGroup
 
 from .. import _core, sleep, socket as tsocket
-from .._core._tests.tutil import can_bind_ipv6
-from .._highlevel_generic import StapledStream, aclose_forcefully
-from .._highlevel_socket import SocketListener
-from ..testing import *
-from ..testing._check_streams import _assert_raises
-from ..testing._memory_streams import _UnboundedByteQueue
+from scripts._core._tests.tutil import can_bind_ipv6
+from scripts._highlevel_generic import StapledStream, aclose_forcefully
+from scripts._highlevel_socket import SocketListener
+from scripts.testing import *
+from scripts.testing._check_streams import _assert_raises
+from scripts.testing._memory_streams import _UnboundedByteQueue
 
 if TYPE_CHECKING:
     from trio import Nursery

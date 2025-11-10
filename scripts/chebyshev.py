@@ -17,7 +17,6 @@ Classes
 
    Chebyshev
 
-
 Constants
 ---------
 
@@ -688,7 +687,6 @@ def chebmulx(c):
 
     Multiply the polynomial `c` by x, where x is the independent
     variable.
-
 
     Parameters
     ----------

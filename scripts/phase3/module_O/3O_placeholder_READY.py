@@ -1,2 +1,2 @@
-﻿# Placeholder script for Phase 3 Module O
+# Placeholder script for Phase 3 Module O
 print("Phase 3 Module O placeholder executed")

@@ -403,7 +403,6 @@ class FishComplete(ShellComplete):
 
 ShellCompleteType = t.TypeVar("ShellCompleteType", bound="type[ShellComplete]")
 
-
 _available_shells: dict[str, type[ShellComplete]] = {
     "bash": BashComplete,
     "fish": FishComplete,

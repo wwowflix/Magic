@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Provide the Redditors class."""
-
 from __future__ import annotations
 
+"""Provide the Redditors class."""
 from itertools import islice
 from types import SimpleNamespace
 from typing import TYPE_CHECKING, Iterable, Iterator
 
 import prawcore
 
-from ..const import API_PATH
+from scripts.const import API_PATH
 from .base import PRAWBase
 from .listing.generator import ListingGenerator
 from .util import stream_generator

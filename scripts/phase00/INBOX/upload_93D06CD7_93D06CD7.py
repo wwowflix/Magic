@@ -16,7 +16,6 @@ from distutils.core import PyPIRCCommand
 from distutils.spawn import spawn
 from distutils import log
 
-
 # PyPI Warehouse supports MD5, SHA256, and Blake2 (blake2-256)
 # https://bugs.python.org/issue40698
 _FILE_CONTENT_DIGESTS = {

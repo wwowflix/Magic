@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Internal module for formatting output data in csv, html, xml,
 and latex files. This module also applies to display formatting.
 """
-
-from __future__ import annotations
-
 from contextlib import contextmanager
 from csv import (
     QUOTE_NONE,
@@ -118,7 +117,6 @@ if TYPE_CHECKING:
         DataFrame,
         Series,
     )
-
 
 common_docstring: Final = """
         Parameters
@@ -1079,7 +1077,7 @@ class DataFrameRenderer:
             String, path object (implementing ``os.PathLike[str]``), or file-like
             object implementing a string ``write()`` function. If None, the result is
             returned as a string.
-        encoding : str, default “utf-8”
+        encoding : str, default "utf-8"
             Set character encoding.
         classes : str or list-like
             classes to include in the `class` attribute of the opening
@@ -1126,7 +1124,7 @@ class DataFrameRenderer:
             String, path object (implementing ``os.PathLike[str]``), or file-like
             object implementing a string ``write()`` function. If None, the result is
             returned as a string.
-        encoding: str, default “utf-8”
+        encoding: str, default "utf-8"
             Set character encoding.
         line_width : int, optional
             Width to wrap a line in characters.

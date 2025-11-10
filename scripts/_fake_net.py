@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # This should eventually be cleaned up and become public, but for right now I'm just
 # implementing enough to test DTLS.
 
@@ -5,9 +7,6 @@
 # - user-defined routers
 # - TCP
 # - UDP broadcast
-
-from __future__ import annotations
-
 import contextlib
 import errno
 import ipaddress

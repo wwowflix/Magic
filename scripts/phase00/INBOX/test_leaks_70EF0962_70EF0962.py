@@ -11,7 +11,6 @@ import time
 import weakref
 import threading
 
-
 import greenlet
 from . import TestCase
 from . import PY314

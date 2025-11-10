@@ -19,7 +19,7 @@ import http.client
 import urllib.parse
 import warnings
 
-from .._importlib import metadata
+from scripts._importlib import metadata
 from .. import SetuptoolsDeprecationWarning
 
 from .upload import upload

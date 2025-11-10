@@ -90,7 +90,6 @@ class tzutc(datetime.tzinfo):
         :param dt:
             A :py:class:`datetime.datetime`, naive or time zone aware.
 
-
         :return:
             Returns ``True`` if ambiguous, ``False`` otherwise.
 
@@ -250,7 +249,6 @@ class tzlocal(_tzinfo):
 
         :param dt:
             A :py:class:`datetime.datetime`, naive or time zone aware.
-
 
         :return:
             Returns ``True`` if ambiguous, ``False`` otherwise.
@@ -433,7 +431,6 @@ class tzfile(_tzinfo):
         (e.g. ``'America/New_York'``), you should call
         :func:`dateutil.tz.gettz` with the zone identifier.
 
-
     **Examples:**
 
     Using the US Eastern time zone as an example, we can see that a ``tzfile``
@@ -455,7 +452,6 @@ class tzfile(_tzinfo):
 
         >>> print(datetime(2016, 7, 7, tzinfo=NYC))     # EDT
         2016-07-07 00:00:00-04:00
-
 
     The ``tzfile`` structure contains a fully history of the time zone,
     so historical dates will also have the right offsets. For example, before
@@ -800,7 +796,6 @@ class tzfile(_tzinfo):
         :param dt:
             A :py:class:`datetime.datetime`, naive or time zone aware.
 
-
         :return:
             Returns ``True`` if ambiguous, ``False`` otherwise.
 
@@ -940,7 +935,6 @@ class tzrange(tzrangebase):
         that this should point to the first time in the *standard* zone, so if
         a transition occurs at 2AM in the DST zone and the clocks are set back
         1 hour to 1AM, set the ``hours`` parameter to +1.
-
 
     **Examples:**
 
@@ -1576,7 +1570,6 @@ def __get_gettz():
 
             In addition to improving performance, this ensures that
             `"same zone" semantics`_ are used for datetimes in the same zone.
-
 
         .. _`TZ variable`:
             https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html

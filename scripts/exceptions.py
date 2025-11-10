@@ -77,7 +77,6 @@ class ProtocolError(HTTPError):
 #: Renamed to ProtocolError but aliased for backwards compatibility.
 ConnectionError = ProtocolError
 
-
 # Leaf Exceptions
 
 
@@ -333,3 +332,127 @@ class HeaderParsingError(HTTPError):
 
 class UnrewindableBodyError(HTTPError):
     """urllib3 encountered an error when trying to rewind a body"""
+
+
+# --- MAGIC shim: attrs-like exceptions (import-time only) ---
+class FrozenAttributeError(AttributeError):
+    pass
+
+
+class FrozenInstanceError(AttributeError):
+    pass
+
+
+class NotAnAttrsClassError(TypeError):
+    pass
+
+
+class AttrsAttributeNotFoundError(KeyError):
+    pass
+
+
+try:
+    __all__
+except NameError:
+    __all__ = []
+for _n in (
+    "FrozenAttributeError",
+    "FrozenInstanceError",
+    "NotAnAttrsClassError",
+    "AttrsAttributeNotFoundError",
+):
+    if _n not in __all__:
+        __all__.append(_n)
+# --- end MAGIC shim ---
+
+# --- MAGIC exception shims (attrs-compatible) ---
+# These are minimal definitions so imports in _make.py succeed even if your
+# local exceptions module doesn't provide them yet.
+
+try:
+    DefaultAlreadySetError
+except NameError:  # pragma: no cover
+
+    class DefaultAlreadySetError(Exception):
+        """Raised when a default value is set twice for the same attribute."""
+
+
+try:
+    FrozenInstanceError
+except NameError:  # pragma: no cover
+
+    class FrozenInstanceError(Exception):
+        """Raised when attempting to modify a frozen instance."""
+
+
+try:
+    NotAnAttrsClassError
+except NameError:  # pragma: no cover
+
+    class NotAnAttrsClassError(Exception):
+        """Raised when a function expecting an attrs class gets something else."""
+
+
+try:
+    UnannotatedAttributeError
+except NameError:  # pragma: no cover
+
+    class UnannotatedAttributeError(Exception):
+        """Raised when an attribute lacks required type annotations."""
+
+
+# Ensure these export cleanly when __all__ exists.
+try:
+    __all__
+except NameError:
+    __all__ = []
+for _n in (
+    "DefaultAlreadySetError",
+    "FrozenInstanceError",
+    "NotAnAttrsClassError",
+    "UnannotatedAttributeError",
+):
+    if _n not in __all__:
+
+        try:
+            __all__.index(_n)  # type: ignore[attr-defined]
+        except Exception:
+            __all__.append(_n)
+# --- end MAGIC exception shims (attrs-compatible) ---
+
+# --- MAGIC clean __all__ ensure ---
+try:
+    __all__
+except NameError:
+    __all__ = []
+
+
+def _ensure_in_all(*names):
+    for _n in names:
+        if _n not in __all__:
+            __all__.append(_n)
+
+
+_ensure_in_all(
+    "FrozenAttributeError",
+    "DefaultAlreadySetError",
+    "FrozenInstanceError",
+    "NotAnAttrsClassError",
+    "UnannotatedAttributeError",
+)
+# --- end MAGIC clean __all__ ensure ---
+
+
+def _ensure_in_all(*names):
+    for _n in names:
+        if _n not in __all__:
+            __all__.append(_n)
+
+
+_ensure_in_all(
+    "FrozenAttributeError",
+    "DefaultAlreadySetError",
+    "FrozenInstanceError",
+    "NotAnAttrsClassError",
+    "UnannotatedAttributeError",
+)

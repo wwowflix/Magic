@@ -41,7 +41,6 @@ import os
 from pathlib import Path
 import io
 
-
 try:
     import pickle5 as pickle
 except ImportError:

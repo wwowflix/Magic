@@ -22,13 +22,12 @@ import trio.testing
 from trio._tests.pytest_plugin import RUN_SLOW, skip_if_optional_else_raise
 
 from .. import _core, _util
-from .._core._tests.tutil import slow
+from scripts._core._tests.tutil import slow
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
 mypy_cache_updated = False
-
 
 try:  # If installed, check both versions of this class.
     from typing_extensions import Protocol as Protocol_ext

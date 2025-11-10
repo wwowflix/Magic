@@ -6,7 +6,6 @@ from collections.abc import Mapping, Callable
 import warnings
 from logging import PercentStyle
 
-
 # default logging level used by Timer class
 TIME_LEVEL = logging.DEBUG
 
@@ -25,7 +24,6 @@ class LevelFormatter(logging.Formatter):
     Formatter class which optionally takes a dict of logging levels to
     format strings, allowing to customise the log records appearance for
     specific levels.
-
 
     Attributes:
             fmt: A dictionary mapping logging levels to format strings.

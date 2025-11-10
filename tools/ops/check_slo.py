@@ -1,1 +1,1 @@
-﻿print("SLO OK")
+print("SLO OK")

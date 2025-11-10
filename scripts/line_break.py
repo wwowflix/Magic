@@ -21,8 +21,7 @@ HYPHEN = "\u002d"
 SPACE = " "
 BREAKING_SPACE_SYMBOLS = [
     " ",
-    "\",  # | ZERO WIDTH SPACE
-    "\u2000",  # | EN QUAD
+    '",  # | ZERO WIDTH SPACE' "\u2000",  # | EN QUAD
     "\u2001",  # | EM QUAD
     "\u2002",  # | EN SPACE
     "\u2003",  # | EM SPACE
@@ -232,7 +231,7 @@ class Fragment:
             char_spacing *= self.font_stretching * 0.01
         if self.char_spacing != 0:
             # initial_cs must be False if the fragment is located at the
-            # beginning of a text object, because the first char won't get spaced.
+            # beginning of a text object, because the first char won't get spaced.'
             if initial_cs:
                 w += char_spacing * char_len
             else:
@@ -280,7 +279,7 @@ class Fragment:
             # occurrence of the single-byte character code 32 in a string when using
             # a simple font or a composite font that defines code 32 as a single-byte code.
             # It shall not apply to occurrences of the byte value 32 in multiple-byte codes.
-            # FPDF uses 2 bytes per character (UTF-16-BE encoding) so the "Tw" operator doesn't work
+            # FPDF uses 2 bytes per character (UTF-16-BE encoding) so the "Tw" operator doesn't work'
             # As a workaround, we do word spacing using an adjustment before each space.
             # Determine the index of the space character (" ") in the current
             # subset and split words whenever this mapping code is found
@@ -341,7 +340,7 @@ class Fragment:
             if word_spacing and ti["mapped_char"] == space_mapped_code:
                 pos_x += word_spacing
 
-            # if only moving "x" we don't need to move the text matrix
+            # if only moving "x" we don't need to move the text matrix'
             if ti["force_positioning"] or (
                 word_spacing and ti["mapped_char"] == space_mapped_code
             ):
@@ -523,7 +522,7 @@ class CurrentLine:
             )
 
         # characters are expected to be grouped into fragments by font and
-        # character attributes. If the last existing fragment doesn't match
+        # character attributes. If the last existing fragment doesn't match'
         # the properties of the pending character -> add a new fragment.
         elif isinstance(
             original_fragment, Fragment
@@ -718,7 +717,7 @@ class MultiLineBreak:
             max_width -= self.first_line_indent
 
         if self.skip_leading_spaces:
-            # write_html() with TextColumns uses this, since it can't know in
+            # write_html() with TextColumns uses this, since it can't know in'
             # advance where the lines will be broken.
             while self.fragment_index < len(self.fragments):
                 if self.character_index >= len(

@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import socket
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Generic, TypeVar
+from magic_typing import TYPE_CHECKING, Generic, TypeVar
 
 import trio
 
 if TYPE_CHECKING:
-    from types import TracebackType
+    from magic_types import TracebackType
 
     from typing_extensions import Self
 
@@ -191,7 +191,7 @@ class HostnameResolver(ABC):
 
         Any required IDNA encoding is handled before calling this function;
         your implementation can assume that it will never see U-labels like
-        ``"café.com"``, and only needs to handle A-labels like
+        ``"cafÃ©.com"``, and only needs to handle A-labels like
         ``b"xn--caf-dma.com"``."""  # spellchecker:disable-line
 
     @abstractmethod
@@ -519,7 +519,7 @@ class HalfCloseableStream(Stream):
           "channels" on top of a single encrypted connection. A Trio
           implementation of SSH could expose these channels as
           :class:`HalfCloseableStream` objects, and calling :meth:`send_eof`
-          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 §5.3
+          would send an ``SSH_MSG_CHANNEL_EOF`` request (see `RFC 4254 Â§5.3
           <https://tools.ietf.org/html/rfc4254#section-5.3>`__).
 
         * On an SSL/TLS-encrypted connection, the protocol doesn't provide any
@@ -594,7 +594,7 @@ class Listener(AsyncResource, Generic[T_resource]):
         because for listeners there is no general condition of "the
         network/remote peer broke the connection" that can be handled in a
         generic way, like there is for streams. Other errors *can* occur and
-        be raised from :meth:`accept` – for example, if you run out of file
+        be raised from :meth:`accept` - for example, if you run out of file
         descriptors then you might get an :class:`OSError` with its errno set
         to ``EMFILE``.
 

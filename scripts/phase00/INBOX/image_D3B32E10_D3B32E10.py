@@ -1,12 +1,12 @@
 # coding: utf-8
+from __future__ import annotations
+
 """
 captcha.image
 ~~~~~~~~~~~~~
 
 Generate Image CAPTCHAs, just the normal image CAPTCHAs you are using.
 """
-
-from __future__ import annotations
 import os
 import secrets
 import typing as t
@@ -17,7 +17,6 @@ from PIL.ImageFont import FreeTypeFont, truetype
 from io import BytesIO
 
 __all__ = ["ImageCaptcha"]
-
 
 ColorTuple = t.Union[t.Tuple[int, int, int], t.Tuple[int, int, int, int]]
 

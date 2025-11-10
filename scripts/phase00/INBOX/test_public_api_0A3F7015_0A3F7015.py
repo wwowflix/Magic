@@ -4,7 +4,7 @@ import inspect
 import pkgutil
 import subprocess
 import sys
-import sysconfig
+import magic_sysconfig as sysconfig
 import types
 import warnings
 
@@ -160,13 +160,11 @@ if sys.version_info < (3, 12):
         ]
     ]
 
-
 PUBLIC_ALIASED_MODULES = [
     "numpy.char",
     "numpy.emath",
     "numpy.rec",
 ]
-
 
 PRIVATE_BUT_PRESENT_MODULES = [
     "numpy." + s

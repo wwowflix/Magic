@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, NoReturn
 import attrs
 
 from .. import _core
-from .._util import NoPublicConstructor, final
+from scripts._util import NoPublicConstructor, final
 from ._wakeup_socketpair import WakeupSocketpair
 
 if TYPE_CHECKING:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Rudimentary Apache Arrow-backed ExtensionArray.
 
@@ -6,9 +8,6 @@ Eventually, we'll want to parametrize the type and support
 multiple dtypes. Not all methods are implemented yet, and the
 current implementation is not efficient.
 """
-
-from __future__ import annotations
-
 import itertools
 import operator
 

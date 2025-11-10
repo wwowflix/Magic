@@ -1,4 +1,4 @@
-﻿"""A collection of modules for iterating through different kinds of
+"""A collection of modules for iterating through different kinds of
 tree, generating tokens identical to those produced by the tokenizer
 module.
 
@@ -164,4 +164,3 @@ def pprint(walker):
             raise ValueError("Unknown token type, %s" % type)
 
     return "\n".join(output)
-

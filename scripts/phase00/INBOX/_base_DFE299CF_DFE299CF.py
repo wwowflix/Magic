@@ -630,7 +630,6 @@ class BaseExcelReader(metaclass=abc.ABCMeta):
         If nrows specified, find the number of rows needed from the
         file, otherwise return None.
 
-
         Parameters
         ----------
         header : int, list of int, or None
@@ -1352,14 +1351,14 @@ class ExcelWriter(metaclass=abc.ABCMeta):
     @property
     def date_format(self) -> str:
         """
-        Format string for dates written into Excel files (e.g. ‘YYYY-MM-DD’).
+        Format string for dates written into Excel files (e.g. 'YYYY-MM-DD').
         """
         return self._date_format
 
     @property
     def datetime_format(self) -> str:
         """
-        Format string for dates written into Excel files (e.g. ‘YYYY-MM-DD’).
+        Format string for dates written into Excel files (e.g. 'YYYY-MM-DD').
         """
         return self._datetime_format
 

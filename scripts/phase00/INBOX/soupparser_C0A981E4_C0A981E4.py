@@ -306,9 +306,7 @@ try:
 except ImportError:
     from htmlentitydefs import name2codepoint
 
-
 handle_entities = re.compile(r"&(\w+);").sub
-
 
 try:
     unichr

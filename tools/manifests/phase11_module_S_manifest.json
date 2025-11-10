@@ -1,0 +1,40 @@
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_s/11S_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "S",
+                      "FinalFilename":  "11S_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_s/11S_ai_risk_classifier_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "S",
+                      "FinalFilename":  "11S_ai_risk_classifier_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_s/11S_mitigation_suggestion_engine_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "S",
+                      "FinalFilename":  "11S_mitigation_suggestion_engine_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_s/11S_risk_score_dashboard_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "S",
+                      "FinalFilename":  "11S_risk_score_dashboard_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

@@ -2,7 +2,6 @@
 # It contains system_info results at the time of building this package.
 __all__ = ["get_info", "show"]
 
-
 import os
 import sys
 

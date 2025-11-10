@@ -1,0 +1,94 @@
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_ai_decision_watchdog_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_ai_decision_watchdog_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_broken_link_embed_fixer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_broken_link_embed_fixer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_central_config_migration_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_central_config_migration_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_cost_overflow_stopper_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_cost_overflow_stopper_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_fallback_agent_builder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_fallback_agent_builder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_modularize_orchestration_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_modularize_orchestration_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_rate_limit_guard_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_rate_limit_guard_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_regression_test_runner_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_regression_test_runner_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_i/11I_system_wide_retry_limiter_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "I",
+                      "FinalFilename":  "11I_system_wide_retry_limiter_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

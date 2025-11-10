@@ -47,7 +47,7 @@ def test_deprecation_warning_run() -> None:
 
 def test_deprecation_warning_start_guest_run() -> None:
     # "The simplest possible "host" loop."
-    from .._core._tests.test_guest_mode import trivial_guest_run
+    from scripts._core._tests.test_guest_mode import trivial_guest_run
 
     async def trio_return(in_host: object) -> str:
         await trio.lowlevel.checkpoint()

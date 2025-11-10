@@ -40,7 +40,6 @@ from pandas.core.arrays.masked import (
 if TYPE_CHECKING:
     import pyarrow
 
-
 T = TypeVar("T", bound="NumericArray")
 
 

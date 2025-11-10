@@ -1,6 +1,6 @@
-"""CSS matcher."""
-
 from __future__ import annotations
+
+"""CSS matcher."""
 from datetime import datetime
 from . import util
 import re

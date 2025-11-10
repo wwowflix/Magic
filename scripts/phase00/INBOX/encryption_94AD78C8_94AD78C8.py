@@ -31,7 +31,6 @@ try:
 except ImportError as error:
     import_error = error
 
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -511,7 +510,7 @@ class StandardSecurityHandler:
 
     def generate_perms_rev6(self) -> None:
         """
-        7.6.4.4.9 Algorithm 10: Computing the encryption dictionary’s Perms (permissions) value
+        7.6.4.4.9 Algorithm 10: Computing the encryption dictionary's Perms (permissions) value
         (Security handlers of revision 6) of the ISO 32000-2:2020
         """
         perms64b = 0xFFFFFFFF00000000 | self.access_permission

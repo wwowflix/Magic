@@ -71,4 +71,4 @@ with open(patch_file_path, newline="", encoding="utf-8") as csvfile:
             add_to_notion(row)
             print(f"✅ Added: {row['Filename']}")
         except Exception as e:
-            print(f"❌ Failed to add: {row.get('Filename', 'Unknown')} → {e}")
+            print(f"âŒ Failed to add: {row.get('Filename', 'Unknown')} â†’ {e}")

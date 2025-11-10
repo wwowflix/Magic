@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 """
 Tests of pandas.tseries.offsets
 """
-
-from __future__ import annotations
-
 from datetime import (
     datetime,
     timedelta,

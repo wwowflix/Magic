@@ -10,14 +10,14 @@ NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 if not NOTION_TOKEN or not NOTION_DATABASE_ID:
     raise ValueError(
-        "❌ Please set NOTION_TOKEN and NOTION_DATABASE_ID in your .env file."
+        "âŒ Please set NOTION_TOKEN and NOTION_DATABASE_ID in your .env file."
     )
 
 notion = Client(auth=NOTION_TOKEN)
 
 
 def fetch_database_rows():
-    print("🔍 Fetching entries from Notion...")
+    print("ðŸ” Fetching entries from Notion...")
     results = []
     next_cursor = None
 
@@ -55,13 +55,13 @@ def delete_duplicates(rows):
         print("✅ No duplicates found!")
         return
 
-    print(f"⚠️ Found {len(duplicates)} duplicate filenames. Deleting extras...")
+    print(f"âš ï¸ Found {len(duplicates)} duplicate filenames. Deleting extras...")
 
     for filename, ids in duplicates.items():
         # Keep the first and delete the rest
         for page_id in ids[1:]:
             notion.pages.update(page_id=page_id, archived=True)
-            print(f"🗑️ Archived duplicate: {filename} → {page_id}")
+            print(f"ðŸ—‘ï¸ Archived duplicate: {filename} â†’ {page_id}")
 
 
 if __name__ == "__main__":

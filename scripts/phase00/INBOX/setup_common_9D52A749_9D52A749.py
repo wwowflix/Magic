@@ -6,7 +6,6 @@ import textwrap
 
 from numpy.distutils.misc_util import mingw32
 
-
 # -------------------
 # Versioning support
 # -------------------
@@ -160,7 +159,6 @@ OPTIONAL_STDFUNCS = [
     "backtrace",
     "madvise",
 ]
-
 
 OPTIONAL_HEADERS = [
     # sse headers only enabled automatically on amd64/x32 builds

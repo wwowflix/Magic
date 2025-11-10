@@ -15,8 +15,8 @@ from typing import (
 )
 
 from .. import to_thread
-from .._core._fileio import AsyncFile
-from ..lowlevel import checkpoint_if_cancelled
+from scripts._core._fileio import AsyncFile
+from scripts.lowlevel import checkpoint_if_cancelled
 
 if TYPE_CHECKING:
     from _typeshed import OpenBinaryMode, OpenTextMode, ReadableBuffer, WriteableBuffer

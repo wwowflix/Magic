@@ -1,0 +1,47 @@
+﻿name: scan-status
+on:
+  push:
+    branches: [ main, feat/**, chore/** ]
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Run marker + summarize
+        run: |
+          LATEST=$(ls -1t outputs/reports/magic_full_status_scan_*.tsv | head -n1)
+          python tools/scan/magic_import_fail_mark.py "$LATEST" outputs/reports/magic_full_status_scan_with_fail.tsv
+          python tools/status/summarize.py --in outputs/reports/magic_full_status_scan_with_fail.tsv --out outputs/reports/status_live_latest.tsv
+
+      - name: Rebuild fail list and AST diag
+        run: |
+          awk -F'\t' 'NR>1 && $0 ~ /\tFAIL$/ {print $1}' outputs/reports/magic_full_status_scan_with_fail.tsv > outputs/reports/_fail_paths.txt || true
+          python tools/scan/diag_fail_set.py
+
+      - name: Enforce zero FAILs
+        run: |
+          FAILS=$(awk -F'\t' 'NR>1 && $0 ~ /\tFAIL$/ {c++} END{print c+0}' outputs/reports/magic_full_status_scan_with_fail.tsv)
+          echo "FAILS=$FAILS"
+          test "$FAILS" -eq 0 || (echo "Found $FAILS FAIL rows" && exit 1)
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scan-status
+          path: |
+            outputs/reports/status_live_latest.tsv
+            outputs/reports/magic_full_status_scan_with_fail.tsv
+            outputs/reports/_fail_paths.txt

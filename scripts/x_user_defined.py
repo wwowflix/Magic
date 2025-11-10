@@ -15,7 +15,6 @@ from __future__ import unicode_literals
 
 import codecs
 
-
 ### Codec APIs
 
 
@@ -57,7 +56,6 @@ codec_info = codecs.CodecInfo(
     streamreader=StreamReader,
     streamwriter=StreamWriter,
 )
-
 
 ### Decoding Table
 

@@ -1,7 +1,11 @@
+﻿# Resolve repo root (prefer git, fallback to script folder's parent)
+$RepoRoot = (& git rev-parse --show-toplevel 2>$null).Trim()
+if (-not $RepoRoot) { $RepoRoot = Split-Path -Parent $PSScriptRoot }
+Set-Location -LiteralPath $RepoRoot
 # test_all_zephyr.ps1
 
 # 1. Patch trends_scraper.py for BOM-safe JSON loading
-$pyFile = "D:\MAGIC\scripts\trends_scraper.py"
+$pyFile = "${RepoRoot}\scripts\trends_scraper.py"
 $backup = "$pyFile.bak"
 
 if (-not (Test-Path $backup)) {
@@ -34,7 +38,7 @@ Write-Host ""
 Write-Host "Running all Zephyr tests..." -ForegroundColor Cyan
 
 # 3. Execute each test
-Push-Location "D:\MAGIC\scripts"
+Push-Location "${RepoRoot}\scripts"
 
 foreach ($t in $tests) {
     Write-Host ""

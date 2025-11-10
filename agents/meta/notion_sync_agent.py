@@ -1,7 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
-from datetime import datetime, timezone
+from magic_datetime import magic_datetime as datetime, timezone
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 

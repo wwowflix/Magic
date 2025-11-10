@@ -11,28 +11,27 @@ from fontTools.misc.arrayTools import intRect, unionRect
 from . import DefaultTable
 import logging
 
-
 log = logging.getLogger(__name__)
 
 headFormat = """
-		>	# big endian
-		tableVersion:       16.16F
-		fontRevision:       16.16F
-		checkSumAdjustment: I
-		magicNumber:        I
-		flags:              H
-		unitsPerEm:         H
-		created:            Q
-		modified:           Q
-		xMin:               h
-		yMin:               h
-		xMax:               h
-		yMax:               h
-		macStyle:           H
-		lowestRecPPEM:      H
-		fontDirectionHint:  h
-		indexToLocFormat:   h
-		glyphDataFormat:    h
+        >   # big endian
+        tableVersion:       16.16F
+        fontRevision:       16.16F
+        checkSumAdjustment: I
+        magicNumber:        I
+        flags:              H
+        unitsPerEm:         H
+        created:            Q
+        modified:           Q
+        xMin:               h
+        yMin:               h
+        xMax:               h
+        yMax:               h
+        macStyle:           H
+        lowestRecPPEM:      H
+        fontDirectionHint:  h
+        indexToLocFormat:   h
+        glyphDataFormat:    h
 """
 
 

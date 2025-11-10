@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Module for using pyOpenSSL as a TLS backend. This module was relevant before
 the standard library ``ssl`` module supported SNI, but now that we've dropped
@@ -37,9 +39,6 @@ like this:
 .. _cryptography: https://cryptography.io
 .. _idna: https://github.com/kjd/idna
 """
-
-from __future__ import annotations
-
 import OpenSSL.SSL  # type: ignore[import-untyped]
 from cryptography import x509
 
@@ -63,7 +62,6 @@ from .. import util
 if typing.TYPE_CHECKING:
     from OpenSSL.crypto import X509  # type: ignore[import-untyped]
 
-
 __all__ = ["inject_into_urllib3", "extract_from_urllib3"]
 
 # Map from urllib3 to PyOpenSSL compatible parameter-values.
@@ -78,7 +76,6 @@ if hasattr(ssl, "PROTOCOL_TLSv1_1") and hasattr(OpenSSL.SSL, "TLSv1_1_METHOD"):
 
 if hasattr(ssl, "PROTOCOL_TLSv1_2") and hasattr(OpenSSL.SSL, "TLSv1_2_METHOD"):
     _openssl_versions[ssl.PROTOCOL_TLSv1_2] = OpenSSL.SSL.TLSv1_2_METHOD
-
 
 _stdlib_to_openssl_verify = {
     ssl.CERT_NONE: OpenSSL.SSL.VERIFY_NONE,
@@ -131,7 +128,6 @@ _openssl_to_ssl_maximum_version: dict[int, int] = {
 SSL_WRITE_BLOCKSIZE = 16384
 
 orig_util_SSLContext = util.ssl_.SSLContext
-
 
 log = logging.getLogger(__name__)
 

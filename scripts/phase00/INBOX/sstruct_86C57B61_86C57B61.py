@@ -187,20 +187,20 @@ def getformat(fmt, keep_pad_byte=False):
 
 def _test():
     fmt = """
-		# comments are allowed
-		>  # big endian (see documentation for struct)
-		# empty lines are allowed:
+        # comments are allowed
+        >  # big endian (see documentation for struct)
+        # empty lines are allowed:
 
-		ashort: h
-		along: l
-		abyte: b	# a byte
-		achar: c
-		astr: 5s
-		afloat: f; adouble: d	# multiple "statements" are allowed
-		afixed: 16.16F
-		abool: ?
-		apad: x
-	"""
+        ashort: h
+        along: l
+        abyte: b    # a byte
+        achar: c
+        astr: 5s
+        afloat: f; adouble: d   # multiple "statements" are allowed
+        afixed: 16.16F
+        abool: ?
+        apad: x
+    """
 
     print("size:", calcsize(fmt))
 

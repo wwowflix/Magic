@@ -97,14 +97,14 @@ def print_new_cast_table(*, can_cast=True, legacy=False, flags=False):
         4: ".",  # unsafe casting
     }
     flags_table = {
-        0: "▗",
-        7: "█",
-        1: "▚",
-        2: "▐",
-        4: "▄",
-        3: "▜",
-        5: "▙",
-        6: "▟",
+        0: "â–—",
+        7: "â–ˆ",
+        1: "â–š",
+        2: "â–",
+        4: "â–„",
+        3: "â–œ",
+        5: "â–™",
+        6: "â–Ÿ",
     }
 
     cast_info = namedtuple("cast_info", ["can_cast", "legacy", "flags"])

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Affine 2D transformation matrix class.
 
 The Transform class implements various transformation matrix operations,
@@ -51,16 +53,11 @@ translate, rotation, scale, skew, and transformation-center components.
         [(50.0, 100.0), (50.550167336042726, 100.60135501775433), (105.01673360427253, 160.13550177543362)]
         >>>
 """
-
-from __future__ import annotations
-
 import math
 from typing import NamedTuple
 from dataclasses import dataclass
 
-
 __all__ = ["Transform", "Identity", "Offset", "Scale", "DecomposedTransform"]
-
 
 _EPSILON = 1e-15
 _ONE_EPSILON = 1 - _EPSILON

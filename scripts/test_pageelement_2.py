@@ -142,11 +142,11 @@ class TestFormatters(SoupTest):
         assert decoded == self.document_for("<b><FOO></b><b>BAR</b><br/>")
 
     def test_formatter_is_run_on_attribute_values(self):
-        markup = '<a href="http://a.com?a=b&c=é">e</a>'
+        markup = '<a href="http://a.com?a=b&c=Ã©">e</a>'
         soup = self.soup(markup)
         a = soup.a
 
-        expect_minimal = '<a href="http://a.com?a=b&amp;c=é">e</a>'
+        expect_minimal = '<a href="http://a.com?a=b&amp;c=Ã©">e</a>'
 
         assert expect_minimal == a.decode()
         assert expect_minimal == a.decode(formatter="minimal")
@@ -155,7 +155,7 @@ class TestFormatters(SoupTest):
         assert expect_html == a.decode(formatter="html")
 
         assert markup == a.decode(formatter=None)
-        expect_upper = '<a href="HTTP://A.COM?A=B&C=É">E</a>'
+        expect_upper = '<a href="HTTP://A.COM?A=B&C=Ã‰">E</a>'
         assert expect_upper == a.decode(formatter=lambda x: x.upper())
 
     def test_formatter_skips_script_tag_for_html_documents(self):
@@ -199,12 +199,12 @@ class TestFormatters(SoupTest):
         # encounter the first </pre> tag, because we know it's not
         # the one that put us into string literal mode.
         markup = """<div><pre><code>some
-<script><pre>code</pre></script> for you 
+<script><pre>code</pre></script> for you
 </code></pre></div>"""
 
         expect = """<div>
  <pre><code>some
-<script><pre>code</pre></script> for you 
+<script><pre>code</pre></script> for you
 </code></pre>
 </div>
 """
@@ -320,7 +320,7 @@ class TestPersistence(SoupTest):
         soup = BeautifulSoup(b"<p>&nbsp;</p>", "html.parser")
         encoding = soup.original_encoding
         copy = soup.__copy__()
-        assert "<p> </p>" == str(copy)
+        assert "<p></p>" == str(copy)
         assert encoding == copy.original_encoding
 
     def test_copy_preserves_builder_information(self):

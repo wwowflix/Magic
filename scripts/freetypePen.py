@@ -68,7 +68,7 @@ class FreeTypePen(BasePen):
             from fontTools.pens.transformPen import TransformPen
             from fontTools.misc.transform import Offset
 
-            en1, en2, ar, ja = 'Typesetting', 'Jeff', 'صف الحروف', 'たいぷせっと'
+            en1, en2, ar, ja = 'Typesetting', 'Jeff', 'ØµÙ Ø§Ù„Ø­Ø±ÙˆÙ', 'ãŸã„ã·ã›ã£ã¨'
             for text, font_path, direction, typo_ascender, typo_descender, vhea_ascender, vhea_descender, contain, features in (
                 (en1, 'NotoSans-Regular.ttf',       'ltr', 2189, -600, None, None, False, {"kern": True, "liga": True}),
                 (en2, 'NotoSans-Regular.ttf',       'ltr', 2189, -600, None, None, True,  {"kern": True, "liga": True}),
@@ -185,7 +185,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -276,7 +276,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -327,7 +327,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -380,7 +380,7 @@ class FreeTypePen(BasePen):
             cropped. If you pass ``0`` to both ``width`` and ``height`` and set
             ``contain`` to ``True``, it expands to the bounding box while
             maintaining the origin of the contours, meaning that LSB will be
-            maintained but RSB won’t. The difference between the two becomes
+            maintained but RSB won't. The difference between the two becomes
             more obvious when rotate or skew transformation is applied.
 
         Example:
@@ -420,7 +420,7 @@ class FreeTypePen(BasePen):
 
     @property
     def cbox(self):
-        """Returns an outline's ‘control box’.
+        """Returns an outline's 'control box'.
 
         Returns:
             A tuple of ``(xMin, yMin, xMax, yMax)``.

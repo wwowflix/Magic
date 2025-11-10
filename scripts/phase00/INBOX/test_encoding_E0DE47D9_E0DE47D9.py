@@ -26,17 +26,15 @@ pytestmark = pytest.mark.filterwarnings(
 
 skip_pyarrow = pytest.mark.usefixtures("pyarrow_skip")
 
-
 def test_bytes_io_input(all_parsers):
     encoding = "cp1255"
     parser = all_parsers
 
-    data = BytesIO("שלום:1234\n562:123".encode(encoding))
+    data = BytesIO("×©×œ×•×:1234\n562:123".encode(encoding))
     result = parser.read_csv(data, sep=":", encoding=encoding)
 
-    expected = DataFrame([[562, 123]], columns=["שלום", "1234"])
+    expected = DataFrame([[562, 123]], columns=["×©×œ×•×", "1234"])
     tm.assert_frame_equal(result, expected)
-
 
 @skip_pyarrow  # CSV parse error: Empty CSV file or block
 def test_read_csv_unicode(all_parsers):
@@ -46,7 +44,6 @@ def test_read_csv_unicode(all_parsers):
     result = parser.read_csv(data, sep=";", encoding="utf-8", header=None)
     expected = DataFrame([["\u0141aski, Jan", 1]])
     tm.assert_frame_equal(result, expected)
-
 
 @skip_pyarrow
 @pytest.mark.parametrize("sep", [",", "\t"])
@@ -76,13 +73,11 @@ A,B,C
             expected = parser.read_csv(bytes_buffer, encoding=utf8, **kwargs)
         tm.assert_frame_equal(result, expected)
 
-
 def test_utf16_example(all_parsers, csv_dir_path):
     path = os.path.join(csv_dir_path, "utf16_ex.txt")
     parser = all_parsers
     result = parser.read_csv(path, encoding="utf-16", sep="\t")
     assert len(result) == 50
-
 
 def test_unicode_encoding(all_parsers, csv_dir_path):
     path = os.path.join(csv_dir_path, "unicode_series.csv")
@@ -94,7 +89,6 @@ def test_unicode_encoding(all_parsers, csv_dir_path):
 
     expected = "\xc1 k\xf6ldum klaka (Cold Fever) (1994)"
     assert got == expected
-
 
 @pytest.mark.parametrize(
     "data,kwargs,expected",
@@ -136,7 +130,6 @@ def test_utf8_bom(all_parsers, data, kwargs, expected, request):
     result = parser.read_csv(_encode_data_with_bom(data), encoding=utf8, **kwargs)
     tm.assert_frame_equal(result, expected)
 
-
 def test_read_csv_utf_aliases(all_parsers, utf_value, encoding_fmt):
     # see gh-13549
     expected = DataFrame({"mb_num": [4.8], "multibyte": ["test"]})
@@ -147,7 +140,6 @@ def test_read_csv_utf_aliases(all_parsers, utf_value, encoding_fmt):
 
     result = parser.read_csv(BytesIO(data), encoding=encoding)
     tm.assert_frame_equal(result, expected)
-
 
 @pytest.mark.parametrize(
     "file_path,encoding",
@@ -180,7 +172,6 @@ def test_binary_mode_file_buffers(all_parsers, file_path, encoding, datapath):
         assert not fb.closed
     tm.assert_frame_equal(expected, result)
 
-
 @pytest.mark.parametrize("pass_encoding", [True, False])
 def test_encoding_temp_file(all_parsers, utf_value, encoding_fmt, pass_encoding):
     # see gh-24130
@@ -200,14 +191,13 @@ def test_encoding_temp_file(all_parsers, utf_value, encoding_fmt, pass_encoding)
         result = parser.read_csv(f, encoding=encoding if pass_encoding else None)
         tm.assert_frame_equal(result, expected)
 
-
 def test_encoding_named_temp_file(all_parsers):
     # see gh-31819
     parser = all_parsers
     encoding = "shift-jis"
 
-    title = "てすと"
-    data = "こむ"
+    title = "ã¦ã™ã¨"
+    data = "ã“ã‚€"
 
     expected = DataFrame({title: [data]})
 
@@ -220,23 +210,21 @@ def test_encoding_named_temp_file(all_parsers):
         tm.assert_frame_equal(result, expected)
         assert not f.closed
 
-
 @pytest.mark.parametrize(
     "encoding", ["utf-8", "utf-16", "utf-16-be", "utf-16-le", "utf-32"]
 )
 def test_parse_encoded_special_characters(encoding):
     # GH16218 Verify parsing of data with encoded special characters
     # Data contains a Unicode 'FULLWIDTH COLON' (U+FF1A) at position (0,"a")
-    data = "a\tb\n：foo\t0\nbar\t1\nbaz\t2"  # noqa: RUF001
+    data = "a\tb\nï¼šfoo\t0\nbar\t1\nbaz\t2"  # noqa: RUF001
     encoded_data = BytesIO(data.encode(encoding))
     result = read_csv(encoded_data, delimiter="\t", encoding=encoding)
 
     expected = DataFrame(
-        data=[["：foo", 0], ["bar", 1], ["baz", 2]],  # noqa: RUF001
+        data=[["ï¼šfoo", 0], ["bar", 1], ["baz", 2]],  # noqa: RUF001
         columns=["a", "b"],
     )
     tm.assert_frame_equal(result, expected)
-
 
 @pytest.mark.parametrize("encoding", ["utf-8", None, "utf-16", "cp1255", "latin-1"])
 def test_encoding_memory_map(all_parsers, encoding):
@@ -261,7 +249,6 @@ def test_encoding_memory_map(all_parsers, encoding):
         df = parser.read_csv(file, encoding=encoding, memory_map=True)
     tm.assert_frame_equal(df, expected)
 
-
 def test_chunk_splits_multibyte_char(all_parsers):
     """
     Chunk splits a multibyte character with memory_map=True
@@ -272,9 +259,9 @@ def test_chunk_splits_multibyte_char(all_parsers):
     # DEFAULT_CHUNKSIZE = 262144, defined in parsers.pyx
     df = DataFrame(data=["a" * 127] * 2048)
 
-    # Put two-bytes utf-8 encoded character "ą" at the end of chunk
-    # utf-8 encoding of "ą" is b'\xc4\x85'
-    df.iloc[2047] = "a" * 127 + "ą"
+    # Put two-bytes utf-8 encoded character "Ä…" at the end of chunk
+    # utf-8 encoding of "Ä…" is b'\xc4\x85'
+    df.iloc[2047] = "a" * 127 + "Ä…"
     with tm.ensure_clean("bug-gh43540.csv") as fname:
         df.to_csv(fname, index=False, header=False, encoding="utf-8")
 
@@ -286,7 +273,6 @@ def test_chunk_splits_multibyte_char(all_parsers):
 
         dfr = parser.read_csv(fname, header=None, memory_map=True)
     tm.assert_frame_equal(dfr, df)
-
 
 def test_readcsv_memmap_utf8(all_parsers):
     """
@@ -320,7 +306,6 @@ def test_readcsv_memmap_utf8(all_parsers):
 
         dfr = parser.read_csv(fname, header=None, memory_map=True, encoding="utf-8")
     tm.assert_frame_equal(df, dfr)
-
 
 @pytest.mark.usefixtures("pyarrow_xfail")
 @pytest.mark.parametrize("mode", ["w+b", "w+t"])

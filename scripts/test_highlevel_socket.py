@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .. import _core, socket as tsocket
-from .._highlevel_socket import *
-from ..testing import (
+from scripts._highlevel_socket import *
+from scripts.testing import (
     assert_checkpoints,
     check_half_closeable_stream,
     wait_all_tasks_blocked,
@@ -90,7 +90,7 @@ async def test_SocketStream_send_all() -> None:
             # - on CPython, the refcount GC generally cleans up memoryviews
             #   for us even if we're sloppy.
             # - on PyPy3, at least as of 5.7.0, the memoryview code and the
-            #   bytearray code conspire so that resizing never fails – if
+            #   bytearray code conspire so that resizing never fails - if
             #   resizing forces the bytearray's internal buffer to move, then
             #   all memoryview references are automagically updated (!!).
             #   See:

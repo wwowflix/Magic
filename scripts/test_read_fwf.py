@@ -186,9 +186,9 @@ A   B     C            D            E
 
 
 def test_bytes_io_input():
-    data = BytesIO("שלום\nשלום".encode())  # noqa: RUF001
+    data = BytesIO("×©×œ×•×\n×©×œ×•×".encode())  # noqa: RUF001
     result = read_fwf(data, widths=[2, 2], encoding="utf8")
-    expected = DataFrame([["של", "ום"]], columns=["של", "ום"])
+    expected = DataFrame([["×©×œ", "×•×"]], columns=["×©×œ", "×•×"])
     tm.assert_frame_equal(result, expected)
 
 
@@ -372,7 +372,6 @@ A         B            C            D
 201158    360.242940   149.910199   11950.7
 201159    444.953632   166.985655   11788.4
 
-
 201162    502.953953   173.237159   12468.3
 
 """
@@ -391,7 +390,6 @@ A         B            C            D
 A         B            C            D
 201158    360.242940   149.910199   11950.7
 201159    444.953632   166.985655   11788.4
-
 
 201162    502.953953   173.237159   12468.3
 """
@@ -553,9 +551,9 @@ col1~~~~~col2  col3++++++++++++++++++col4
 
 def test_variable_width_unicode():
     data = """
-שלום שלום
-ום   שלל
-של   ום
+×©×œ×•× ×©×œ×•×
+×•×   ×©×œ×œ
+×©×œ   ×•×
 """.strip(
         "\r\n"
     )
@@ -720,7 +718,7 @@ def test_encoding_mmap(memory_map):
     """
     encoding = "iso8859_1"
     with tm.ensure_clean() as path:
-        Path(path).write_bytes(" 1 A Ä 2\n".encode(encoding))
+        Path(path).write_bytes(" 1 A Ã„ 2\n".encode(encoding))
         df = read_fwf(
             path,
             header=None,
@@ -728,7 +726,7 @@ def test_encoding_mmap(memory_map):
             encoding=encoding,
             memory_map=memory_map,
         )
-    df_reference = DataFrame([[1, "A", "Ä", 2]])
+    df_reference = DataFrame([[1, "A", "Ã„", 2]])
     tm.assert_frame_equal(df, df_reference)
 
 

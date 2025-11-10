@@ -285,7 +285,6 @@ class Prompt(PromptBase[str]):
     Example:
         >>> name = Prompt.ask("Enter your name")
 
-
     """
 
     response_type = str

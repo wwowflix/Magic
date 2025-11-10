@@ -1,0 +1,14 @@
+{
+  "exclude_paths": [
+    "scripts/",
+    "venv/",
+    "configs/",
+    "tools/",
+    ".git/",
+    "outputs/metrics/",
+    "outputs/reports/",
+    "outputs/bundles/",
+    "flow_export/",
+    "sync/"
+  ]
+}

@@ -3,7 +3,6 @@
 import ast
 import string
 
-
 # alias kept for backward compatibility
 safeEval = ast.literal_eval
 

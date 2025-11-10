@@ -14,7 +14,6 @@ META_HEADER_FORMAT = """
     numDataMaps: L
 """
 
-
 DATA_MAP_FORMAT = """
     > # big endian
     tag:         4s

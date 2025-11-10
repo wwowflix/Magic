@@ -87,7 +87,6 @@ CoreFoundation = load_cdll(
     "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
 )
 
-
 Boolean = c_bool
 CFIndex = c_long
 CFStringEncoding = c_uint32
@@ -131,7 +130,6 @@ SecTrustOptionFlags = c_uint32
 SSLProtocolSide = c_uint32
 SSLConnectionType = c_uint32
 SSLSessionOption = c_uint32
-
 
 try:
     Security.SecItemImport.argtypes = [

@@ -268,7 +268,7 @@ def start_thread_soon(
 
     Because worker threads are cached and reused for multiple calls, neither
     function should mutate thread-level state, like `threading.local` objects
-    – or if they do, they should be careful to revert their changes before
+    - or if they do, they should be careful to revert their changes before
     returning.
 
     Note:

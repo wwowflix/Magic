@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 DataFrame
 ---------
@@ -8,9 +10,6 @@ Similar to its R counterpart, data.frame, except providing automatic data
 alignment and a host of useful data manipulation methods having to do with the
 labeling information
 """
-
-from __future__ import annotations
-
 import collections
 from collections import abc
 import datetime
@@ -467,7 +466,6 @@ ValueError: columns overlap but no suffix specified:
 2   bar      7
 3   bar      8
 """
-
 
 # -----------------------------------------------------------------------
 # DataFrame class
@@ -6579,7 +6577,7 @@ class DataFrame(NDFrame, OpsMixin):
         inplace : bool, default False
             Whether to modify the DataFrame rather than creating a new one.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -6997,7 +6995,7 @@ class DataFrame(NDFrame, OpsMixin):
             If True and sorting by level and index is multilevel, sort by other
             levels too (in order) after sorting by specified level.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.0.0
 
@@ -7092,7 +7090,7 @@ class DataFrame(NDFrame, OpsMixin):
         ascending : bool, default False
             Sort in ascending order.
         dropna : bool, default True
-            Don’t include counts of rows that contain NA values.
+            Don't include counts of rows that contain NA values.
 
             .. versionadded:: 1.3.0
 
@@ -8903,7 +8901,7 @@ Parrot 2  Parrot       24.0
                 Multi-column explode
 
         ignore_index : bool, default False
-            If True, the resulting index will be labeled 0, 1, …, n - 1.
+            If True, the resulting index will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.1.0
 
@@ -9542,7 +9540,7 @@ Parrot 2  Parrot       24.0
         func : callable
             Python function, returns a single value from a single value.
         na_action : {None, 'ignore'}, default None
-            If ‘ignore’, propagate NaN values, without passing them to func.
+            If 'ignore', propagate NaN values, without passing them to func.
 
             .. versionadded:: 1.2
 
@@ -9637,7 +9635,7 @@ Parrot 2  Parrot       24.0
         other : DataFrame or Series/dict-like object, or list of these
             The data to append.
         ignore_index : bool, default False
-            If True, the resulting axis will be labeled 0, 1, …, n - 1.
+            If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
         verify_integrity : bool, default False
             If True, raise ValueError on creating index with duplicates.
         sort : bool, default False

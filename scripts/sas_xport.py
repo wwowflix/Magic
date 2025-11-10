@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Read a SAS XPort format file into a Pandas DataFrame.
 
@@ -7,9 +9,6 @@ The file format is defined here:
 
 https://support.sas.com/content/dam/SAS/support/en/technical-papers/record-layout-of-a-sas-version-5-or-6-data-set-in-sas-transport-xport-format.pdf
 """
-
-from __future__ import annotations
-
 from collections import abc
 from datetime import datetime
 import struct
@@ -65,7 +64,6 @@ _fieldkeys = [
     "_",
 ]
 
-
 _base_params_doc = """\
 Parameters
 ----------
@@ -87,7 +85,6 @@ format : str
 _iterator_doc = """\
 iterator : bool, default False
     Return XportReader object for reading file incrementally."""
-
 
 _read_sas_doc = f"""Read a SAS file into a DataFrame.
 

@@ -12,7 +12,7 @@ import smbclient
 import smbprotocol.exceptions
 
 from .. import AbstractFileSystem
-from ..utils import infer_storage_options
+from scripts.utils import infer_storage_options
 
 # ! pylint: disable=bad-continuation
 

@@ -4,7 +4,7 @@ from functools import partial, wraps
 from typing import TYPE_CHECKING, TypeVar
 
 from .. import _core
-from ..abc import Clock, Instrument
+from scripts.abc import Clock, Instrument
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from typing_extensions import ParamSpec
 
     ArgsT = ParamSpec("ArgsT")
-
 
 RetT = TypeVar("RetT")
 

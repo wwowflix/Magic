@@ -1,1 +1,1 @@
-﻿print("quota OK (stub)")
+print("quota OK (stub)")

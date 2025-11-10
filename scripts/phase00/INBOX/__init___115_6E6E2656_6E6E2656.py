@@ -2,7 +2,7 @@
 
 import glob
 import os
-from typing import Any, Dict, List, Optional, Union
+from magic_typing import Any, Dict, List, Optional, Union
 
 from cmdstanpy.cmdstan_args import (
     CmdStanArgs,

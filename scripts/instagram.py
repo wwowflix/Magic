@@ -6,7 +6,6 @@ __all__ = [
     "InstagramLocationScraper",
 ]
 
-
 import dataclasses
 import datetime
 import hashlib
@@ -16,7 +15,6 @@ import re
 import snscrape.base
 import snscrape.utils
 import typing
-
 
 _logger = logging.getLogger(__name__)
 

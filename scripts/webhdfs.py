@@ -11,8 +11,8 @@ from urllib.parse import quote
 
 import requests
 
-from ..spec import AbstractBufferedFile, AbstractFileSystem
-from ..utils import infer_storage_options, tokenize
+from scripts.spec import AbstractBufferedFile, AbstractFileSystem
+from scripts.utils import infer_storage_options, tokenize
 
 logger = logging.getLogger("webhdfs")
 

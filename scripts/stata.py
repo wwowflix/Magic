@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Module contains tools for processing Stata files into DataFrames
 
@@ -9,9 +11,6 @@ a once again improved version.
 You can find more information on http://presbrey.mit.edu/PyDTA and
 https://www.statsmodels.org/devel/
 """
-
-from __future__ import annotations
-
 from collections import abc
 import datetime
 from io import BytesIO
@@ -220,9 +219,7 @@ path_or_buf : path (string), buffer or path object
 {_reader_notes}
 """
 
-
 _date_formats = ["%tc", "%tC", "%td", "%d", "%tw", "%tm", "%tq", "%th", "%ty"]
-
 
 stata_epoch: Final = datetime.datetime(1960, 1, 1)
 
@@ -509,19 +506,16 @@ characters.  Column '{0}' does not satisfy this restriction. Use the
 'version=117' parameter to write the newer (Stata 13 and later) format.
 """
 
-
 precision_loss_doc: Final = """
 Column converted from {0} to {1}, and some data are outside of the lossless
 conversion range. This may result in a loss of precision in the saved data.
 """
-
 
 value_label_mismatch_doc: Final = """
 Stata value labels (pandas categories) must be strings. Column {0} contains
 non-string labels which will be converted to strings.  Please check that the
 Stata data file created has not lost information due to duplicate labels.
 """
-
 
 invalid_name_doc: Final = """
 Not all pandas column names were valid Stata variable names.
@@ -533,7 +527,6 @@ If this is not what you expect, please make sure you have Stata-compliant
 column names in your DataFrame (strings only, max 32 characters, only
 alphanumerics and underscores, no Stata reserved words)
 """
-
 
 categorical_conversion_warning: Final = """
 One or more series with value labels are not fully labeled. Reading this
@@ -3577,7 +3570,7 @@ class StataWriterUTF8(StataWriter117):
     Using Unicode data and column names
 
     >>> from pandas.io.stata import StataWriterUTF8
-    >>> data = pd.DataFrame([[1.0, 1, 'ᴬ']], columns=['a', 'β', 'ĉ'])
+    >>> data = pd.DataFrame([[1.0, 1, 'á´¬']], columns=['a', 'Î²', 'Ä‰'])
     >>> writer = StataWriterUTF8('./data_file.dta', data)
     >>> writer.write_file()
 
@@ -3588,7 +3581,7 @@ class StataWriterUTF8(StataWriter117):
 
     Or with long strings stored in strl format
 
-    >>> data = pd.DataFrame([['ᴀ relatively long ŝtring'], [''], ['']],
+    >>> data = pd.DataFrame([['á´€ relatively long Åtring'], [''], ['']],
     ...                     columns=['strls'])
     >>> writer = StataWriterUTF8('./data_file_with_long_strings.dta', data,
     ...                          convert_strl=['strls'])
@@ -3672,7 +3665,7 @@ class StataWriterUTF8(StataWriter117):
                     and c != "_"
                 )
                 or 128 <= ord(c) < 192
-                or c in {"×", "÷"}
+                or c in {"Ã—", "Ã·"}
             ):
                 name = name.replace(c, "_")
 

@@ -1,6 +1,5 @@
 import re
 
-
 SPLIT_RE = re.compile(r"[\.\[\]]+")
 
 
@@ -48,4 +47,3 @@ class JsonSchemaValueException(JsonSchemaException):
 class JsonSchemaDefinitionException(JsonSchemaException):
     """
     Exception raised by generator of validation function.
-    """

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Integration code for CSS selectors using `Soup Sieve <https://facelessuser.github.io/soupsieve/>`_ (pypi: ``soupsieve``).
 
 Acquire a `CSS` object through the `element.Tag.css` attribute of
@@ -11,9 +13,6 @@ selected against, since the `CSS` object is permanently scoped to that
 `element.Tag`.
 
 """
-
-from __future__ import annotations
-
 from types import ModuleType
 from typing import (
     Any,

@@ -131,12 +131,11 @@ import dataclasses
 from contextlib import contextmanager
 from copy import deepcopy
 from enum import IntEnum
-import logging
+import magic_logging as logging
 import os
 import re
-from typing import Dict, Iterable, Mapping, Optional, Sequence, Tuple, Union
+from magic_typing import Dict, Iterable, Mapping, Optional, Sequence, Tuple, Union
 import warnings
-
 
 log = logging.getLogger("fontTools.varLib.instancer")
 

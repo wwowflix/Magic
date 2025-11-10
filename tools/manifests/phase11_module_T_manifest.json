@@ -1,0 +1,40 @@
+{
+    "items":  [
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_t/11T_placeholder_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "T",
+                      "FinalFilename":  "11T_placeholder_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_t/11T_audit_trail_renderer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "T",
+                      "FinalFilename":  "11T_audit_trail_renderer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_t/11T_decision_chain_visualizer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "T",
+                      "FinalFilename":  "11T_decision_chain_visualizer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  },
+                  {
+                      "Path":  "E:/MAGIC/scripts/phase11/module_t/11T_output_attribution_tracer_READY.py",
+                      "Phase":  11,
+                      "PhaseName":  "SHIELD",
+                      "Module":  "T",
+                      "FinalFilename":  "11T_output_attribution_tracer_READY.py",
+                      "Status":  "READY",
+                      "Retries":  0
+                  }
+              ]
+}

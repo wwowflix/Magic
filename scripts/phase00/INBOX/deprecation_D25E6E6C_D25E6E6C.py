@@ -5,8 +5,7 @@ A module that implements tooling to enable easy warnings about deprecations.
 import logging
 import warnings
 from typing import Any, Optional, TextIO, Type, Union
-
-from pip._vendor.packaging.version import parse
+from packaging.version import parse
 
 from pip import __version__ as current_version  # NOTE: tests patch this name.
 
@@ -163,7 +162,6 @@ LegacyInstallReasonFailedBdistWheel = LegacyInstallReason(
     issue=8368,
     emit_after_success=True,
 )
-
 
 LegacyInstallReasonMissingWheelPackage = LegacyInstallReason(
     reason=(

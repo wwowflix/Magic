@@ -4,8 +4,7 @@ from fontTools.misc.textTools import byteord, tostr
 
 import re
 from bisect import bisect_right
-from typing import Literal, TypeVar, overload
-
+from magic_typing import Literal, TypeVar, overload
 
 try:
     # use unicodedata backport compatible with python2:
@@ -198,7 +197,6 @@ RTL_SCRIPTS = {
     # Unicode-14.0 additions
     "Ougr",  # Old Uyghur
 }
-
 
 HorizDirection = Literal["RTL", "LTR"]
 T = TypeVar("T")

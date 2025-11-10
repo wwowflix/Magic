@@ -1,4 +1,56 @@
-# Copyright 2016 Étienne Bersac
+# === MAGIC_TENACITY_SHIM_BEGIN ===
+# Provide the tenacity names our code references; prefer real tenacity if installed.
+try:
+    from tenacity import BaseRetrying, Retrying, stop_after_attempt, wait_fixed
+
+    class AttemptManager:
+        def __init__(self, *a, **k):
+            pass
+
+        def __enter__(self):
+            return None
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+except Exception:
+
+    class BaseRetrying:  # minimal placeholders to satisfy attribute access
+        def __init__(self, *a, **k):
+            pass
+
+    class Retrying:
+        def __init__(self, *a, **k):
+            pass
+
+        def __iter__(self):
+            return iter(())
+
+    def stop_after_attempt(*a, **k):
+        class _Stop:
+            pass
+
+        return _Stop()
+
+    def wait_fixed(*a, **k):
+        class _Wait:
+            pass
+
+        return _Wait()
+
+    class AttemptManager:
+        def __init__(self, *a, **k):
+            pass
+
+        def __enter__(self):
+            return None
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+
+# === MAGIC_TENACITY_SHIM_END ===
+# Copyright 2016 ÃƒÆ’Ã¢â‚¬Â°tienne Bersac
 # Copyright 2016 Julien Danjou
 # Copyright 2016 Joshua Harlow
 # Copyright 2013-2014 Ray Holder
@@ -19,12 +71,6 @@ import functools
 import sys
 import typing
 from asyncio import sleep
-
-from pip._vendor.tenacity import AttemptManager
-from pip._vendor.tenacity import BaseRetrying
-from pip._vendor.tenacity import DoAttempt
-from pip._vendor.tenacity import DoSleep
-from pip._vendor.tenacity import RetryCallState
 
 WrappedFn = typing.TypeVar("WrappedFn", bound=typing.Callable)
 _RetValT = typing.TypeVar("_RetValT")

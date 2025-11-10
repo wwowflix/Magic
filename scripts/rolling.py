@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Provide a generic structure to support window functions,
 similar to how we have a Groupby object.
 """
-
-from __future__ import annotations
-
 import copy
 from datetime import timedelta
 from functools import partial

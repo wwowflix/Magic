@@ -8,7 +8,7 @@ BACKUP_BASE = "backups"
 
 def backup_file(file_path):
     if not os.path.isfile(file_path):
-        print(f"⚠️ File not found: {file_path}")
+        print(f"âš ï¸ File not found: {file_path}")
         return False
 
     # Create backups folder if missing

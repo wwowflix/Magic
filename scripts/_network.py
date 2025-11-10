@@ -1,5 +1,5 @@
 from .. import socket as tsocket
-from .._highlevel_socket import SocketListener, SocketStream
+from scripts._highlevel_socket import SocketListener, SocketStream
 
 
 async def open_stream_to_socket_listener(

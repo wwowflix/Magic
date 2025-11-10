@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 """
 Provide user facing operators for doing the split part of the
 split-apply-combine paradigm.
 """
-
-from __future__ import annotations
-
 from typing import (
     TYPE_CHECKING,
     Any,

@@ -141,13 +141,13 @@ class TestFuzz(object):
     @pytest.mark.parametrize(
         "filename",
         [
-            # b"""ÿ<!DOCTyPEV PUBLIC'''Ð'"""
+            # b"""Ã¿<!DOCTyPEV PUBLIC'''Ã'"""
             "clusterfuzz-testcase-minimized-bs4_fuzzer-4818336571064320",
             # b')<a><math><TR><a><mI><a><p><a>'
             "clusterfuzz-testcase-minimized-bs4_fuzzer-4999465949331456",
             # b'-<math><sElect><mi><sElect><sElect>'
             "clusterfuzz-testcase-minimized-bs4_fuzzer-5843991618256896",
-            # b'ñ<table><svg><html>'
+            # b'Ã±<table><svg><html>'
             "clusterfuzz-testcase-minimized-bs4_fuzzer-6241471367348224",
             # <TABLE>, some ^@ characters, some <math> tags.
             "clusterfuzz-testcase-minimized-bs4_fuzzer-6600557255327744",

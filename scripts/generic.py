@@ -1,6 +1,6 @@
-# pyright: reportPropertyTypeMismatch=false
 from __future__ import annotations
 
+# pyright: reportPropertyTypeMismatch=false
 import collections
 from datetime import timedelta
 import functools
@@ -191,7 +191,6 @@ if TYPE_CHECKING:
 
     from pandas.io.pytables import HDFStore
 
-
 # goal is to be able to define the docs close to function, while still being
 # able to share
 _shared_docs = {**_shared_docs}
@@ -210,7 +209,6 @@ _shared_doc_kwargs = {
     This differs from updating with ``.loc`` or ``.iloc``, which require
     you to specify a location to update with some value.""",
 }
-
 
 bool_t = bool  # Need alias because NDFrame has def bool:
 
@@ -4800,7 +4798,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
              Puts NaNs at the beginning if `first`; `last` puts NaNs at the
              end.
         ignore_index : bool, default False
-             If True, the resulting axis will be labeled 0, 1, …, n - 1.
+             If True, the resulting axis will be labeled 0, 1, "¦, n - 1.
 
              .. versionadded:: 1.0.0
 
@@ -5370,7 +5368,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
             Keep labels from axis for which "like in label == True".
         regex : str (regular expression)
             Keep labels from axis for which re.search(regex, label) == True.
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default None
+        axis : {0 or 'index', 1 or 'columns', None}, default None
             The axis to filter on, expressed either as an index (int)
             or axis name (str). By default this is the info axis, 'columns' for
             DataFrame. For `Series` this parameter is unused and defaults to `None`.
@@ -5655,11 +5653,11 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
 
                 np.random.Generator objects now accepted
 
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default None
+        axis : {0 or 'index', 1 or 'columns', None}, default None
             Axis to sample. Accepts axis number or name. Default is stat axis
             for given data type. For `Series` this parameter is unused and defaults to `None`.
         ignore_index : bool, default False
-            If True, the resulting index will be labeled 0, 1, …, n - 1.
+            If True, the resulting index will be labeled 0, 1, "¦, n - 1.
 
             .. versionadded:: 1.3.0
 
@@ -10234,7 +10232,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
         freq : DateOffset, timedelta, or str, default None
             Increment to use from the tseries module
             or time rule expressed as a string (e.g. 'EOM').
-        axis : {0 or ‘index’, 1 or ‘columns’, None}, default 0
+        axis : {0 or 'index', 1 or 'columns', None}, default 0
             Corresponds to the axis that contains the Index.
             For `Series` this parameter is unused and defaults to 0.
 

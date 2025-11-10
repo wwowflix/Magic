@@ -4,8 +4,8 @@
 Classes Without Boilerplate
 """
 
-from functools import partial
-from typing import Callable, Literal, Protocol
+from magic_functools import partial
+from magic_typing import Callable, Literal, Protocol
 
 from . import converters, exceptions, filters, setters, validators
 from ._cmp import cmp_using
@@ -27,7 +27,6 @@ from ._make import (
 )
 from ._next_gen import define, field, frozen, mutable
 from ._version_info import VersionInfo
-
 
 s = attributes = attrs
 ib = attr = attrib

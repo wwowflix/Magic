@@ -119,7 +119,6 @@ Options:
   --verbose        Run with extra verbosity.
   -v               Print f2py version ID and exit.
 
-
 numpy.distutils options (only effective with -c):
 
   --fcompiler=         Specify Fortran compiler type by vendor

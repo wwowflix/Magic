@@ -1,7 +1,6 @@
-"""Test cases for .boxplot method"""
-
 from __future__ import annotations
 
+"""Test cases for .boxplot method"""
 import itertools
 import string
 

@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 # Define the log directory and anomaly log output path
 LOG_DIR = "logs"

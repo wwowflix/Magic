@@ -1,7 +1,6 @@
-"""Magic functions for rendering vega-lite specifications."""
-
 from __future__ import annotations
 
+"""Magic functions for rendering vega-lite specifications."""
 import json
 import warnings
 from importlib.util import find_spec
@@ -19,7 +18,6 @@ RENDERERS = {
         "5": vegalite_v5.VegaLite,
     },
 }
-
 
 TRANSFORMERS = {
     "vega-lite": {

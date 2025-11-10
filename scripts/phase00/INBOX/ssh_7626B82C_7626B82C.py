@@ -1,9 +1,8 @@
+from __future__ import annotations
+
 # This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-
-from __future__ import annotations
-
 import binascii
 import enum
 import os
@@ -570,9 +569,9 @@ class _SSHFormatSKEd25519:
     """
     The format of a sk-ssh-ed25519@openssh.com public key is:
 
-        string		"sk-ssh-ed25519@openssh.com"
-        string		public key
-        string		application (user-specified, but typically "ssh:")
+        string      "sk-ssh-ed25519@openssh.com"
+        string      public key
+        string      application (user-specified, but typically "ssh:")
     """
 
     def load_public(
@@ -593,10 +592,10 @@ class _SSHFormatSKECDSA:
     """
     The format of a sk-ecdsa-sha2-nistp256@openssh.com public key is:
 
-        string		"sk-ecdsa-sha2-nistp256@openssh.com"
-        string		curve name
-        ec_point	Q
-        string		application (user-specified, but typically "ssh:")
+        string      "sk-ecdsa-sha2-nistp256@openssh.com"
+        string      curve name
+        ec_point    Q
+        string      application (user-specified, but typically "ssh:")
     """
 
     def load_public(
@@ -1170,7 +1169,6 @@ SSHCertPrivateKeyTypes = typing.Union[
     rsa.RSAPrivateKey,
     ed25519.Ed25519PrivateKey,
 ]
-
 
 # This is an undocumented limit enforced in the openssh codebase for sshd and
 # ssh-keygen, but it is undefined in the ssh certificates spec.

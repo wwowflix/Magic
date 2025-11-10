@@ -7,7 +7,6 @@ import numpy.core.fromnumeric as fromnumeric
 
 from numpy.testing import build_err_msg
 
-
 pi = np.pi
 
 

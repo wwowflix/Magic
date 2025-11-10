@@ -163,9 +163,9 @@ def set_default_printstyle(style):
     >>> c = np.polynomial.Chebyshev([1, 2, 3])
     >>> np.polynomial.set_default_printstyle('unicode')
     >>> print(p)
-    1.0 + 2.0·x¹ + 3.0·x²
+    1.0 + 2.0Â·xÂ¹ + 3.0Â·xÂ²
     >>> print(c)
-    1.0 + 2.0·T₁(x) + 3.0·T₂(x)
+    1.0 + 2.0Â·Tâ‚(x) + 3.0Â·Tâ‚‚(x)
     >>> np.polynomial.set_default_printstyle('ascii')
     >>> print(p)
     1.0 + 2.0 x**1 + 3.0 x**2
@@ -173,7 +173,7 @@ def set_default_printstyle(style):
     1.0 + 2.0 T_1(x) + 3.0 T_2(x)
     >>> # Formatting supercedes all class/package-level defaults
     >>> print(f"{p:unicode}")
-    1.0 + 2.0·x¹ + 3.0·x²
+    1.0 + 2.0Â·xÂ¹ + 3.0Â·xÂ²
     """
     if style not in ("unicode", "ascii"):
         raise ValueError(

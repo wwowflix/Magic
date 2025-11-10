@@ -35,4 +35,4 @@ if __name__ == "__main__":
                 )
             print(f"✅ Created: {placeholder_path}")
         else:
-            print(f"⚠️ Already exists: {placeholder_path}")
+            print(f"âš ï¸ Already exists: {placeholder_path}")

@@ -1,7 +1,7 @@
 import os
-import time
+import magic_time as time
 import hashlib
-from datetime import datetime
+from magic_datetime import magic_datetime as datetime
 
 WATCH_DIRS = ["inbox", "scripts"]
 STATE_FILE = "agents/awareness/script_tracker_state.json"

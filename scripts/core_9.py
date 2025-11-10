@@ -3133,3 +3133,7 @@ def __getattr__(name: str) -> object:
         return _MultiCommand
 
     raise AttributeError(name)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
