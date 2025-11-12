@@ -8,18 +8,26 @@ except ImportError:
         compiled = False
 
         def cfunc(self, func):
+            # decorator no-op
             return func
 
-        def cclass(self, func):
-            return func
+        def cclass(self, cls):
+            # decorator no-op
+            return cls
 
         def declare(self, _, value):
+            # emulate cython.declare(type, value) -> value
             return value
 
-        def __getattr__(self, type_name):
-            return "object"
+        def __getattr__(self, name):
+            # For decorators like @cython.final, @cython.cfunc, etc.,
+            # return an identity decorator so they don't break at runtime.
+            def decorator(obj):
+                return obj
+            return decorator
 
     cython = fake_cython()
+
 
 try:
     from . import _difflib as difflib
