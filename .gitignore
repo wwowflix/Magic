@@ -205,3 +205,12 @@ scripts/_compat_numpy.py
 
 /buildctx/
 /buildctx_min/
+
+# ---- MAGIC ignore block (managed) ----
+# MAGIC bulk artifacts
+backups/**
+outputs/reports/**
+outputs/status/**
+*.zip
+*.tar
+# ---- end MAGIC ignore block ----
