@@ -1,103 +1,52 @@
+﻿"""MAGIC-compatible common helpers.
+
+This shim only provides tiny utilities needed for tests; it's safe to
+import even if the original attrs/_common module is not present.
+"""
+
+from __future__ import annotations
+
 import os
+import sys
 import pathlib
 import tempfile
-import functools
-import contextlib
-import types
-import importlib
-
-from typing import Union
-
-from ._compat import wrap_spec
-
-Package = Union[types.ModuleType, str]
+import importlib.util
+from contextlib import contextmanager
 
 
-def files(package):
-    # type: (Package) -> Traversable
+def wrap_spec(spec):
+    """Identity wrapper used in MAGIC environment.
+
+    The original implementation tweaks importlib specs; for MAGIC we just
+    return the spec unchanged so callers can still call this safely.
     """
-    Get a Traversable resource from a package
+    return spec
+
+
+@contextmanager
+def temporary_directory(prefix: str = "magic_"):
+    """Yield a temporary directory as a pathlib.Path.
+
+    Directory is removed automatically when the context exits.
     """
-    return from_package(get_package(package))
+    with tempfile.TemporaryDirectory(prefix=prefix) as tmp:
+        yield pathlib.Path(tmp)
 
 
-def get_resource_reader(package):
-    # type: (types.ModuleType) -> Optional[ResourceReader]
-    """
-    Return the package's loader if it's a ResourceReader.
-    """
-    # We can't use
-    # a issubclass() check here because apparently abc.'s __subclasscheck__()
-    # hook wants to create a weak reference to the object, but
-    # zipimport.zipimporter does not support weak references, resulting in a
-    # TypeError.  That seems terrible.
-    spec = package.__spec__
-    reader = getattr(spec.loader, "get_resource_reader", None)  # type: ignore
-    if reader is None:
-        return None
-    return reader(spec.name)  # type: ignore
+def import_module_from_path(path: str | os.PathLike, module_name: str | None = None):
+    """Minimal helper to import a module from a filesystem path."""
+    path = os.fspath(path)
+    if module_name is None:
+        module_name = pathlib.Path(path).stem
+
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load module {module_name!r} from {path!r}")
+
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
-def resolve(cand):
-    # type: (Package) -> types.ModuleType
-    return cand if isinstance(cand, types.ModuleType) else importlib.import_module(cand)
-
-
-def get_package(package):
-    # type: (Package) -> types.ModuleType
-    """Take a package name or module object and return the module.
-
-    Raise an exception if the resolved module is not a package.
-    """
-    resolved = resolve(package)
-    if wrap_spec(resolved).submodule_search_locations is None:
-        raise TypeError(f"{package!r} is not a package")
-    return resolved
-
-
-def from_package(package):
-    """
-    Return a Traversable object for the given package.
-
-    """
-    spec = wrap_spec(package)
-    reader = spec.loader.get_resource_reader(spec.name)
-    return reader.files()
-
-
-@contextlib.contextmanager
-def _tempfile(reader, suffix=""):
-    # Not using tempfile.NamedTemporaryFile as it leads to deeper 'try'
-    # blocks due to the need to close the temporary file to work on Windows
-    # properly.
-    fd, raw_path = tempfile.mkstemp(suffix=suffix)
-    try:
-        try:
-            os.write(fd, reader())
-        finally:
-            os.close(fd)
-        del reader
-        yield pathlib.Path(raw_path)
-    finally:
-        try:
-            os.remove(raw_path)
-        except FileNotFoundError:
-            pass
-
-
-@functools.singledispatch
-def as_file(path):
-    """
-    Given a Traversable object, return that object as a
-    path on the local file system in a context manager.
-    """
-    return _tempfile(path.read_bytes, suffix=path.name)
-
-
-@as_file.register(pathlib.Path)
-@contextlib.contextmanager
-def _(path):
-    """
-    Degenerate behavior for pathlib.Path objects.
-    """
-    yield path
+__all__ = ["wrap_spec", "temporary_directory", "import_module_from_path"]
