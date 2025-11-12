@@ -1,0 +1,5 @@
+﻿{
+  "webhook_url": "https://hooks.slack.com/services/T000/B000/REPLACE",
+  "channel": "#magic-alerts",
+  "enabled": false
+}

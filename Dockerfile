@@ -1,4 +1,4 @@
-# Base Python image
+﻿# Base Python image
 FROM python:3.11-slim
 
 # Avoid Python buffering / .pyc files
@@ -24,6 +24,8 @@ RUN pip install --upgrade pip \
 
 # Now copy the rest of the repo
 COPY . .
-
+COPY tools/ tools/
 # Default command: run Phase 11 tests
 CMD ["python", "-m", "pytest", "-q", "tests/phase11"]
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD python tools/healthcheck.py
