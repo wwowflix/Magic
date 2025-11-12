@@ -202,3 +202,6 @@ outputs/logs/
 scripts/_compat_numpy.py
 
 scripts/_compat_numpy.py
+
+/buildctx/
+/buildctx_min/

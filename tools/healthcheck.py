@@ -1,10 +1,8 @@
-﻿import json,sys,os
-# Minimal health probe: ensure a few critical paths exist
+﻿import json, sys, os
 OK = True
 reasons = []
 for p in ["scripts", "tools", "outputs", "requirements.lock.txt"]:
     if not os.path.exists(p):
         OK = False; reasons.append(f"missing:{p}")
-result = {"healthy": OK, "reasons": reasons}
-print(json.dumps(result))
+print(json.dumps({"healthy": OK, "reasons": reasons}))
 sys.exit(0 if OK else 1)
