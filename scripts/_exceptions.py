@@ -1,56 +1,59 @@
-# -*- coding: utf-8 -*-
-"""Exception shims for scripts package (MAGIC Week 6 Step 6.2)."""
+﻿"""
+MAGIC-safe shim for scripts._exceptions.
 
-__all__ = [
-    "StreamError", "StreamClosed", "StreamConsumed",
-    "WebSocketError", "WebSocketException",
-    "WebSocketProtocolException", "WebSocketConnectionClosedException",
-    "WebSocketBadStatusException", "WebSocketAddressException", "WebSocketTimeoutException","WebSocketProxyException"]
+Provides minimal exception types required by other scripts modules:
 
-# Base classes
-class StreamError(Exception):
-    """Base class for stream-related errors."""
-    pass
+- Cancelled
+- RunFinishedError
+- TrioInternalError
+- WebSocketProtocolException
+- WebSocketConnectionClosedException
+- WebSocketException
+- WebSocketBadStatusException
 
-class WebSocketError(Exception):
-    """Base class for WebSocket-related errors."""
-    pass
+These are intentionally simple and side-effect free. They exist so that
+imports from scripts._run, scripts._core, scripts._handshake, and related
+modules succeed during MAGIC tests.
+"""
 
-# Backwards-compat alias some stacks expect
-WebSocketException = WebSocketError
+from __future__ import annotations
 
-# Stream exceptions used by scripts._content
-class StreamClosed(StreamError):
-    """Operation attempted on a closed stream."""
-    pass
 
-class StreamConsumed(StreamError):
-    """Stream has already been consumed."""
-    pass
+class TrioInternalError(Exception):
+    """Internal error in the runtime."""
 
-# WebSocket exceptions used by scripts._core / scripts._app / _handshake
-class WebSocketProtocolException(WebSocketError):
-    """Protocol error in WebSocket handshake/frames."""
-    pass
 
-class WebSocketConnectionClosedException(WebSocketError):
-    """Operation attempted on a closed WebSocket connection."""
-    pass
+class RunFinishedError(Exception):
+    """Raised when an operation is attempted on a finished run loop."""
+
+
+class WebSocketProtocolException(Exception):
+    """Generic WebSocket protocol error placeholder."""
+
+
+class WebSocketConnectionClosedException(Exception):
+    """Raised when a WebSocket connection is already closed."""
+
+
+class WebSocketException(Exception):
+    """Base WebSocket exception placeholder."""
+
 
 class WebSocketBadStatusException(WebSocketException):
-    """Server returned an unexpected HTTP status during WebSocket handshake."""
-    def __init__(self, status_code: int, msg: str | None = None):
-        self.status_code = status_code
-        super().__init__(msg or f"Bad status code: {status_code}")
+    """Raised when an HTTP handshake returns an unacceptable status code."""
 
-class WebSocketAddressException(WebSocketException):
-    """Failed to resolve or connect to WebSocket host/port."""
+
+class Cancelled(BaseException):
+    """Cancellation signal placeholder."""
     pass
 
-class WebSocketTimeoutException(WebSocketException):
-    """Operation timed out during WebSocket handshake or IO."""
-    pass
 
-class WebSocketProxyException(WebSocketException):
-    'WebSocket proxy configuration or negotiation error.'
-    pass
+__all__ = [
+    "Cancelled",
+    "RunFinishedError",
+    "TrioInternalError",
+    "WebSocketProtocolException",
+    "WebSocketConnectionClosedException",
+    "WebSocketException",
+    "WebSocketBadStatusException",
+]
