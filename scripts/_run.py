@@ -5,7 +5,7 @@ except NameError:
     class AsyncGenerators:  # minimal no-op to satisfy attrs.Factory
         def __init__(self) -> None:
             pass
-from __future__ import annotations
+
 
 # MAGIC_ASYNCGENS_LAZY_IMPORT
 from typing import TYPE_CHECKING
@@ -26,7 +26,7 @@ try:
     from . import _core  # preferred relative
 except Exception:
     import importlib
-
+from __future__ import annotations
     _core = importlib.import_module("scripts._core")
 # END MAGIC_RUN_GUARD_BLOCK
 import enum
