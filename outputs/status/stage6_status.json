@@ -1,9 +1,0 @@
-﻿{
-  "stage": "6-cleanup-snapshot",
-  "cleanup_script": "tools/ops/cleanup_repo.ps1",
-  "snapshot_manifest": "docs/audit/week11_snapshot.md",
-  "snapshot_log": "outputs/logs/week11_snapshot_20251110_112913.txt",
-  "backup_root": "E:\\MAGIC\\backups",
-  "last_pass_commit": "7dd121ceeb7c32369f47c5afe2247453e1ff801b",
-  "last_pass_time": "2025-11-10T11:33:56.9750648+05:30"
-}
