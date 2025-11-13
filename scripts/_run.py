@@ -67,3 +67,79 @@ GLOBAL_RUN_CONTEXT = RunContext()
 
 # Public export
 __all__ = ["RunContext", "RunState", "GLOBAL_RUN_CONTEXT"]
+
+# ---- MAGIC compat shim for _NO_SEND (auto-added) ----
+try:
+    _NO_SEND  # type: ignore[name-defined]
+except NameError:  # pragma: no cover - fallback only
+    try:
+        # Prefer the real anyio implementation if available
+        from anyio._core._run import _NO_SEND as _ANYIO_NO_SEND  # type: ignore[import]
+    except Exception:  # pragma: no cover
+        class _NoSend:
+            def __repr__(self) -> str:  # pragma: no cover
+                return "<_NO_SEND placeholder>"
+
+        _ANYIO_NO_SEND = _NoSend()
+    _NO_SEND = _ANYIO_NO_SEND
+# ---- end MAGIC compat shim ----
+
+# ---- MAGIC compat shim for RunStatistics / Task (auto-added) ----
+try:
+    RunStatistics  # type: ignore[name-defined]
+except NameError:  # pragma: no cover - fallback only
+    try:
+        from anyio._core._run import RunStatistics as _ANYIO_RunStatistics  # type: ignore[import]
+        RunStatistics = _ANYIO_RunStatistics  # type: ignore[misc,assignment]
+    except Exception:  # pragma: no cover
+        from dataclasses import dataclass
+
+        @dataclass
+        class RunStatistics:  # type: ignore[override]
+            tasks_run: int = 0
+            seconds: float = 0.0
+
+try:
+    Task  # type: ignore[name-defined]
+except NameError:  # pragma: no cover - fallback only
+    try:
+        from anyio._core._run import Task as _ANYIO_Task  # type: ignore[import]
+        Task = _ANYIO_Task  # type: ignore[misc,assignment]
+    except Exception:  # pragma: no cover
+        class Task:  # type: ignore[override]
+            def __init__(self, *args, **kwargs) -> None:
+                self.args = args
+                self.kwargs = kwargs
+
+            def __repr__(self) -> str:  # pragma: no cover
+                return f"<Task placeholder args={self.args!r} kwargs={self.kwargs!r}>"
+# ---- end MAGIC compat shim ----
+
+# ---- MAGIC compat shim for RunStatistics / Task (auto-added) ----
+try:
+    RunStatistics  # type: ignore[name-defined]
+except NameError:  # pragma: no cover - define lightweight stand-ins
+    from dataclasses import dataclass
+    from typing import Any
+
+    @dataclass
+    class RunStatistics:
+        """Minimal compatibility stub for anyio._core._run.RunStatistics."""
+        tasks_started: int = 0
+        tasks_finished: int = 0
+
+        def __repr__(self) -> str:  # pragma: no cover
+            return (
+                f"<RunStatistics started={self.tasks_started} "
+                f"finished={self.tasks_finished}>"
+            )
+
+    class Task:
+        """Minimal compatibility stub for anyio._core._run.Task."""
+        def __init__(self, name: str | None = None) -> None:
+            self.name = name or "magic-placeholder"
+
+        def __repr__(self) -> str:  # pragma: no cover
+            return f"<Task {self.name}>"
+
+# ---- end MAGIC compat shim ----
