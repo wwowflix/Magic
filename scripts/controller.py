@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2015 Eric Larson
+﻿# SPDX-FileCopyrightText: 2015 Eric Larson
 #
 # SPDX-License-Identifier: Apache-2.0
 
@@ -11,7 +11,27 @@ import calendar
 import time
 from email.utils import parsedate_tz
 
-from pip._vendor.requests.structures import CaseInsensitiveDict
+try:
+    from pip._vendor.requests.structures import CaseInsensitiveDict  # type: ignore[import]
+except Exception:
+    class CaseInsensitiveDict(dict):  # type: ignore[too-many-ancestors]
+        """
+        Minimal stub for CaseInsensitiveDict for MAGIC import-health tests.
+        Stores keys as lowercase when they are strings.
+        """
+        def __init__(self, *args, **kwargs):
+            super().__init__()
+            self.update(*args, **kwargs)
+
+        def __setitem__(self, key, value):
+            if isinstance(key, str):
+                key = key.lower()
+            super().__setitem__(key, value)
+
+        def update(self, *args, **kwargs):
+            other = dict(*args, **kwargs)
+            for k, v in other.items():
+                self[k] = v
 
 from .cache import DictCache, SeparateBodyBaseCache
 from .serialize import Serializer

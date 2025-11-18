@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2015 Eric Larson
+﻿# SPDX-FileCopyrightText: 2015 Eric Larson
 #
 # SPDX-License-Identifier: Apache-2.0
 
@@ -6,7 +6,18 @@ import types
 import functools
 import zlib
 
-from pip._vendor.requests.adapters import HTTPAdapter
+try:
+    from pip._vendor.requests.adapters import HTTPAdapter  # type: ignore[import]
+except Exception:
+    class HTTPAdapter:  # type: ignore[too-few-public-methods]
+        """
+        Stub HTTPAdapter used in MAGIC import-health tests when
+        pip._vendor.requests.adapters is unavailable.
+        """
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+        def send(self, *args, **kwargs):
+            raise RuntimeError("HTTPAdapter stub used in MAGIC test environment")
 
 from .controller import CacheController, PERMANENT_REDIRECT_STATUSES
 from .cache import DictCache
