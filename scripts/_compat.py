@@ -1,4 +1,4 @@
-﻿"""MAGIC-compatible compatibility helpers.
+"""MAGIC-compatible compatibility helpers.
 
 Minimal shim; only defines pieces needed by MAGIC smoke tests.
 """
@@ -29,3 +29,11 @@ class _NonClosingTextIOWrapper(io.TextIOWrapper):
 
 
 __all__ = ["_NonClosingTextIOWrapper"]
+
+# ---- MAGIC shim: Protocol ----
+try:
+    from typing import Protocol  # type: ignore[attr-defined]
+except Exception:  # pragma: no cover
+    class Protocol(object):  # minimal fallback for runtime checks
+        pass
+# ---- end MAGIC shim: Protocol ----

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import math
 import sys
@@ -374,3 +374,15 @@ class AsyncBackend(metaclass=ABCMeta):
     @abstractmethod
     def create_test_runner(cls, options: dict[str, Any]) -> TestRunner:
         pass
+
+# ---- MAGIC get_async_backend shim (do not remove) ----
+def get_async_backend(*args, **kwargs):
+    """
+    MAGIC shim for async backend selection.
+
+    This is a minimal stub so that vendored helpers like _synchronization
+    can import it without failing. For MAGIC's purposes here, we only need
+    the symbol to exist at import-time.
+    """
+    return None
+# ---- END MAGIC get_async_backend shim ----

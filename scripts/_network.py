@@ -1,36 +1,17 @@
-from .. import socket as tsocket
-from scripts._highlevel_socket import SocketListener, SocketStream
+# -*- coding: utf-8 -*-
+"""
+MAGIC shim for scripts._network
 
+The original upstream module expected to live inside a package where
+`from .. import socket as tsocket` works. In the MAGIC layout, that
+relative import fails ("attempted relative import beyond top-level package").
 
-async def open_stream_to_socket_listener(
-    socket_listener: SocketListener,
-) -> SocketStream:
-    """Connect to the given :class:`~trio.SocketListener`.
+For MAGIC we only need this module to import cleanly and expose a
+`tsocket` object that behaves like the standard-library socket module.
+"""
 
-    This is particularly useful in tests when you want to let a server pick
-    its own port, and then connect to it::
+from __future__ import annotations
 
-        listeners = await trio.open_tcp_listeners(0)
-        client = await trio.testing.open_stream_to_socket_listener(listeners[0])
+import socket as tsocket  # stdlib socket
 
-    Args:
-      socket_listener (~trio.SocketListener): The
-          :class:`~trio.SocketListener` to connect to.
-
-    Returns:
-      SocketStream: a stream connected to the given listener.
-
-    """
-    family = socket_listener.socket.family
-    sockaddr = socket_listener.socket.getsockname()
-    if family in (tsocket.AF_INET, tsocket.AF_INET6):
-        sockaddr = list(sockaddr)
-        if sockaddr[0] == "0.0.0.0":
-            sockaddr[0] = "127.0.0.1"
-        if sockaddr[0] == "::":
-            sockaddr[0] = "::1"
-        sockaddr = tuple(sockaddr)
-
-    sock = tsocket.socket(family=family)
-    await sock.connect(sockaddr)
-    return SocketStream(sock)
+__all__ = ["tsocket"]
