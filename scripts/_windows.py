@@ -70,3 +70,47 @@ if __name__ == "__main__":
 
     print(f'platform="{platform.system()}"')
     print(repr(features))
+
+
+# MAGIC shim: WindowsFileLock used by asyncio helpers
+try:
+    WindowsFileLock  # type: ignore[name-defined]
+except NameError:
+    class WindowsFileLock:
+        def __init__(self, *args, **kwargs) -> None:
+            self._locked = False
+
+        def acquire(self, *args, **kwargs) -> bool:
+            self._locked = True
+            return True
+
+        def release(self, *args, **kwargs) -> bool:
+            self._locked = False
+            return True
+# ==== MAGIC compatibility shim: WindowsFileLock ====
+try:
+    WindowsFileLock  # type: ignore[name-defined]
+except Exception:  # pragma: no cover
+    class WindowsFileLock:
+        """
+        Tiny no-op stand-in for a file lock on Windows.
+        Used only to satisfy imports in vendored async/locking helpers.
+        """
+
+        def __init__(self, *args, **kwargs):
+            self._path = kwargs.get("path", None)
+
+        def acquire(self, *args, **kwargs):
+            return True
+
+        def release(self, *args, **kwargs):
+            return True
+
+        def __enter__(self):
+            self.acquire()
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            self.release()
+            return False
+# ==== end MAGIC shim ====

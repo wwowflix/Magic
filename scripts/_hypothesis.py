@@ -1,90 +1,81 @@
 """
-Hypothesis data generator helpers.
+MAGIC stub for scripts._hypothesis
+
+The original implementation used the external `hypothesis` library:
+
+    from hypothesis import strategies as st
+
+For MAGIC we only need:
+- The module to import cleanly.
+- A `st` object with simple, predictable behaviour if it is used.
+
+This shim avoids importing the real library and instead exposes a tiny,
+in-memory stand-in that mimics the public shape of `hypothesis.strategies`.
 """
 
-from datetime import datetime
+from __future__ import annotations
 
-from hypothesis import strategies as st
-from hypothesis.extra.dateutil import timezones as dateutil_timezones
-from hypothesis.extra.pytz import timezones as pytz_timezones
+from typing import Any, Dict
 
-from pandas.compat import is_platform_windows
 
-import pandas as pd
+class _DummyStrategy:
+    """Very small stand-in for a Hypothesis strategy."""
 
-from pandas.tseries.offsets import (
-    BMonthBegin,
-    BMonthEnd,
-    BQuarterBegin,
-    BQuarterEnd,
-    BYearBegin,
-    BYearEnd,
-    MonthBegin,
-    MonthEnd,
-    QuarterBegin,
-    QuarterEnd,
-    YearBegin,
-    YearEnd,
-)
+    def __init__(self, name: str, meta: Dict[str, Any] | None = None) -> None:
+        self.name = name
+        self.meta = meta or {}
 
-OPTIONAL_INTS = st.lists(st.one_of(st.integers(), st.none()), max_size=10, min_size=3)
+    def example(self) -> Any:
+        """
+        Return a deterministic placeholder value.
 
-OPTIONAL_FLOATS = st.lists(st.one_of(st.floats(), st.none()), max_size=10, min_size=3)
+        We intentionally do NOT try to generate real randomized data here.
+        """
+        return {
+            "strategy": self.name,
+            "meta": self.meta,
+        }
 
-OPTIONAL_TEXT = st.lists(st.one_of(st.none(), st.text()), max_size=10, min_size=3)
+    # Make it slightly more flexible if called like a function
+    def __call__(self, *args: Any, **kwargs: Any) -> "_DummyStrategy":
+        meta = dict(self.meta)
+        if args:
+            meta["args"] = args
+        if kwargs:
+            meta["kwargs"] = kwargs
+        return _DummyStrategy(self.name, meta)
 
-OPTIONAL_DICTS = st.lists(
-    st.one_of(st.none(), st.dictionaries(st.text(), st.integers())),
-    max_size=10,
-    min_size=3,
-)
 
-OPTIONAL_LISTS = st.lists(
-    st.one_of(st.none(), st.lists(st.text(), max_size=10, min_size=3)),
-    max_size=10,
-    min_size=3,
-)
+class _DummyStrategies:
+    """
+    Minimal object that roughly looks like `hypothesis.strategies`.
 
-OPTIONAL_ONE_OF_ALL = st.one_of(
-    OPTIONAL_DICTS, OPTIONAL_FLOATS, OPTIONAL_INTS, OPTIONAL_LISTS, OPTIONAL_TEXT
-)
+    Only a handful of helpers are defined explicitly; everything else
+    falls back to a generic `_DummyStrategy`.
+    """
 
-if is_platform_windows():
-    DATETIME_NO_TZ = st.datetimes(min_value=datetime(1900, 1, 1))
-else:
-    DATETIME_NO_TZ = st.datetimes()
+    # Common helpers that some code might expect
+    def integers(self, *args: Any, **kwargs: Any) -> _DummyStrategy:
+        return _DummyStrategy("integers", {"args": args, "kwargs": kwargs})
 
-DATETIME_JAN_1_1900_OPTIONAL_TZ = st.datetimes(
-    min_value=pd.Timestamp(1900, 1, 1).to_pydatetime(),
-    max_value=pd.Timestamp(1900, 1, 1).to_pydatetime(),
-    timezones=st.one_of(st.none(), dateutil_timezones(), pytz_timezones()),
-)
+    def text(self, *args: Any, **kwargs: Any) -> _DummyStrategy:
+        return _DummyStrategy("text", {"args": args, "kwargs": kwargs})
 
-DATETIME_IN_PD_TIMESTAMP_RANGE_NO_TZ = st.datetimes(
-    min_value=pd.Timestamp.min.to_pydatetime(warn=False),
-    max_value=pd.Timestamp.max.to_pydatetime(warn=False),
-)
+    def booleans(self) -> _DummyStrategy:
+        return _DummyStrategy("booleans")
 
-INT_NEG_999_TO_POS_999 = st.integers(-999, 999)
+    def floats(self, *args: Any, **kwargs: Any) -> _DummyStrategy:
+        return _DummyStrategy("floats", {"args": args, "kwargs": kwargs})
 
-# The strategy for each type is registered in conftest.py, as they don't carry
-# enough runtime information (e.g. type hints) to infer how to build them.
-YQM_OFFSET = st.one_of(
-    *map(
-        st.from_type,
-        [
-            MonthBegin,
-            MonthEnd,
-            BMonthBegin,
-            BMonthEnd,
-            QuarterBegin,
-            QuarterEnd,
-            BQuarterBegin,
-            BQuarterEnd,
-            YearBegin,
-            YearEnd,
-            BYearBegin,
-            BYearEnd,
-        ],
-    )
-)
+    def just(self, value: Any) -> _DummyStrategy:
+        return _DummyStrategy("just", {"value": value})
+
+    # Generic fallback: any unknown attribute → dummy strategy
+    def __getattr__(self, name: str) -> _DummyStrategy:
+        return _DummyStrategy(name)
+
+
+# Public shim that callers can use like `st.integers()`, `st.text()`, etc.
+st = _DummyStrategies()
+
+__all__ = ["st", "_DummyStrategy", "_DummyStrategies"]

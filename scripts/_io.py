@@ -21,7 +21,23 @@ from pandas.compat import get_lzma_file
 from pandas.compat._optional import import_optional_dependency
 
 import pandas as pd
-from pandas._testing._random import rands
+# MAGIC shim: provide a local fallback for pandas._testing._random.rands
+try:  # pragma: no cover - best effort
+    from pandas._testing._random import rands  # type: ignore[attr-defined]
+except Exception:
+    def rands(n: int, *args: Any, **kwargs: Any) -> str:
+        """
+        Lightweight fallback for pandas._testing._random.rands.
+
+        Generates a random ASCII string of length `n`. The extra *args / **kwargs
+        are accepted for compatibility but ignored.
+        """
+        import random
+        import string
+
+        alphabet = string.ascii_letters
+        return "".join(random.choice(alphabet) for _ in range(n))
+
 from pandas._testing.contexts import ensure_clean
 
 from pandas.io.common import urlopen

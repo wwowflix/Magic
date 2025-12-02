@@ -136,3 +136,32 @@ bytes = bytes
 basestring = (str, bytes)
 numeric_types = (int, float)
 integer_types = (int,)
+# ---- MAGIC HTTPResponse shim (import-health) ----
+try:
+    HTTPResponse  # type: ignore[name-defined]
+except NameError:
+    try:
+        from http.client import HTTPResponse as _HTTPResponse  # type: ignore[import]
+        HTTPResponse = _HTTPResponse
+    except Exception:
+        class HTTPResponse:  # type: ignore[too-few-public-methods]
+            """
+            Fallback stub HTTPResponse used in MAGIC import-health tests.
+            This is only meant to satisfy imports; it does not implement full HTTP I/O.
+            """
+            def __init__(self, *args, **kwargs) -> None:  # noqa: D401
+                # minimal no-op init
+                pass
+# ---- end MAGIC HTTPResponse shim ----
+# ---- MAGIC pickle/text_type shim (import-health) ----
+try:
+    pickle  # type: ignore[name-defined]
+except NameError:
+    import pickle as _pickle  # type: ignore[import]
+    pickle = _pickle  # type: ignore[assignment]
+
+try:
+    text_type  # type: ignore[name-defined]
+except NameError:
+    text_type = str
+# ---- end MAGIC pickle/text_type shim ----

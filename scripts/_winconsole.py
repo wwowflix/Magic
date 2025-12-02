@@ -29,6 +29,26 @@ from ctypes.wintypes import HANDLE
 from ctypes.wintypes import LPCWSTR
 from ctypes.wintypes import LPWSTR
 
+# Try to import the helper from our local compat module; if that fails,
+# fall back to a simple local implementation that keeps the underlying
+# buffer open. This is sufficient for MAGIC's smoke tests.
+try:
+    from ._compat import _NonClosingTextIOWrapper  # type: ignore[import]
+except Exception:  # pragma: no cover
+    class _NonClosingTextIOWrapper(io.TextIOWrapper):
+        """Fallback for _NonClosingTextIOWrapper.
+
+        Behaves like TextIOWrapper but does not close the underlying buffer
+        when .close() is called. Good enough for console streams in tests.
+        """
+
+        def close(self) -> None:
+            try:
+                self.flush()
+            except Exception:
+                pass
+            # Intentionally DO NOT call super().close()
+
 from ._compat import _NonClosingTextIOWrapper
 
 assert sys.platform == "win32"

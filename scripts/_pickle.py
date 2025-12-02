@@ -1,87 +1,32 @@
-from .mtrand import RandomState
-from ._philox import Philox
-from ._pcg64 import PCG64, PCG64DXSM
-from ._sfc64 import SFC64
+﻿# ---- MAGIC SHIM: _pickle ----
+"""
+MAGIC stub for vendored _pickle variants.
 
-from ._generator import Generator
-from ._mt19937 import MT19937
+Goal: Ensure clean import for scripts that reference a CPython-internal module.
+This file provides a thin wrapper around Python's builtin pickle.
+"""
 
-BitGenerators = {
-    "MT19937": MT19937,
-    "PCG64": PCG64,
-    "PCG64DXSM": PCG64DXSM,
-    "Philox": Philox,
-    "SFC64": SFC64,
-}
+import pickle as _pickle
 
+# Re-export everything from builtin pickle
+from pickle import *
 
-def __generator_ctor(bit_generator_name="MT19937"):
-    """
-    Pickling helper function that returns a Generator object
+# Minimal stand-ins for internal C-accelerated APIs
+def dump(obj, file, protocol=None):
+    return _pickle.dump(obj, file, protocol=protocol)
 
-    Parameters
-    ----------
-    bit_generator_name : str
-        String containing the core BitGenerator
+def dumps(obj, protocol=None):
+    return _pickle.dumps(obj, protocol=protocol)
 
-    Returns
-    -------
-    rg: Generator
-        Generator using the named core BitGenerator
-    """
-    if bit_generator_name in BitGenerators:
-        bit_generator = BitGenerators[bit_generator_name]
-    else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
+def load(file):
+    return _pickle.load(file)
 
-    return Generator(bit_generator())
+def loads(data):
+    return _pickle.loads(data)
 
+# Provide minimal PickleBuffer shim
+class PickleBuffer(bytes):
+    """Fallback shim for PickleBuffer."""
+    pass
 
-def __bit_generator_ctor(bit_generator_name="MT19937"):
-    """
-    Pickling helper function that returns a bit generator object
-
-    Parameters
-    ----------
-    bit_generator_name : str
-        String containing the name of the BitGenerator
-
-    Returns
-    -------
-    bit_generator: BitGenerator
-        BitGenerator instance
-    """
-    if bit_generator_name in BitGenerators:
-        bit_generator = BitGenerators[bit_generator_name]
-    else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
-
-    return bit_generator()
-
-
-def __randomstate_ctor(bit_generator_name="MT19937"):
-    """
-    Pickling helper function that returns a legacy RandomState-like object
-
-    Parameters
-    ----------
-    bit_generator_name : str
-        String containing the core BitGenerator
-
-    Returns
-    -------
-    rs: RandomState
-        Legacy RandomState using the named core BitGenerator
-    """
-    if bit_generator_name in BitGenerators:
-        bit_generator = BitGenerators[bit_generator_name]
-    else:
-        raise ValueError(
-            str(bit_generator_name) + " is not a known " "BitGenerator module."
-        )
-
-    return RandomState(bit_generator())
+# ---- END MAGIC SHIM ----

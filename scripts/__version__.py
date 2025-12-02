@@ -12,3 +12,10 @@ __author_email__ = "me@kennethreitz.org"
 __license__ = "Apache-2.0"
 __copyright__ = "Copyright Kenneth Reitz"
 __cake__ = "\u2728 \U0001f370 \u2728"
+
+
+# MAGIC shim: ensure a simple "version" attribute exists
+try:
+    version  # type: ignore[name-defined]
+except NameError:
+    version = "0.0.0"

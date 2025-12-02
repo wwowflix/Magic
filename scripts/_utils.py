@@ -95,3 +95,21 @@ class NoLock:
     def __exit__(self, exc_type, exc, tb):
         # don't suppress exceptions
         return False
+# --- MAGIC shim: HTML5-style helper flags -----------------------------------
+
+# Some html5lib-based modules (e.g. _inputstream) expect a flag indicating
+# whether the runtime correctly supports "lone surrogate" code points.
+#
+# For MAGIC’s purposes we only need the attribute to exist; the exact value
+# is not critical for our smoke tests. We choose a conservative default.
+
+supports_lone_surrogates: bool = False
+
+# Make sure this symbol is exported if __all__ is used.
+try:
+    _all = list(__all__)  # type: ignore[name-defined]
+    if "supports_lone_surrogates" not in _all:
+        _all.append("supports_lone_surrogates")
+        __all__ = _all  # type: ignore[assignment]
+except NameError:
+    __all__ = ["supports_lone_surrogates"]

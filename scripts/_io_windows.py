@@ -16,9 +16,13 @@ from typing import (
 import attrs
 from outcome import Value
 
-from .. import _core
+from . import _core
 from ._io_common import wake_all
-from ._run import _public
+try:  # MAGIC shim: _public decorator for Windows IO backend
+    from ._run import _public  # type: ignore[attr-defined]
+except Exception:  # pragma: no cover - fallback
+    def _public(fn):
+        return fn
 from ._windows_cffi import (
     INVALID_HANDLE_VALUE,
     AFDPollFlags,
