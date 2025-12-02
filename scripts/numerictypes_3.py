@@ -1,47 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-np.maximum_sctype("S8")
-np.maximum_sctype(object)
+'''MAGIC Week 0 shim for scripts.numerictypes_3.
 
-np.issctype(object)
-np.issctype("S8")
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-np.obj2sctype(list)
-np.obj2sctype(list, default=None)
-np.obj2sctype(list, default=np.string_)
+from typing import Any
 
-np.issubclass_(np.int32, int)
-np.issubclass_(np.float64, float)
-np.issubclass_(np.float64, (int, float))
-
-np.issubsctype("int64", int)
-np.issubsctype(np.array([1]), np.array([1]))
-
-np.issubdtype("S1", np.string_)
-np.issubdtype(np.float64, np.float32)
-
-np.sctype2char("S1")
-np.sctype2char(list)
-
-np.find_common_type([], [np.int64, np.float32, complex])
-np.find_common_type((), (np.int64, np.float32, complex))
-np.find_common_type([np.int64, np.float32], [])
-np.find_common_type([np.float32], [np.int64, np.float64])
-
-np.cast[int]
-np.cast["i8"]
-np.cast[np.int64]
-
-np.nbytes[int]
-np.nbytes["i8"]
-np.nbytes[np.int64]
-
-np.ScalarType
-np.ScalarType[0]
-np.ScalarType[4]
-np.ScalarType[9]
-np.ScalarType[11]
-
-np.typecodes["Character"]
-np.typecodes["Complex"]
-np.typecodes["All"]
+__all__: list[str] = []

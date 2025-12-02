@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from .. import _core
+from . import _core
 from scripts._core._tests.tutil import gc_collect_harder, skip_if_fbsd_pipes_broken
 from scripts.testing import check_one_way_stream, wait_all_tasks_blocked
 

@@ -8,7 +8,7 @@ from scripts.treebuilders.etree import tag_regexp
 
 from . import base
 
-from .. import _ihatexml
+from . import _ihatexml
 
 
 def ensure_str(s):

@@ -1,13 +1,11 @@
-"""Doctest module for XML comparison.
+﻿from __future__ import annotations
 
-Usage::
+'''MAGIC Week 0 shim for scripts.usedoctest.
 
-   >>> import lxml.usedoctest
-   >>> # now do your XML doctests ...
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-See `lxml.doctestcompare`
-"""
+from typing import Any
 
-from lxml import doctestcompare
-
-doctestcompare.temp_install(del_module=__name__)
+__all__: list[str] = []

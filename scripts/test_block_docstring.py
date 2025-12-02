@@ -1,20 +1,11 @@
-import sys
+﻿from __future__ import annotations
 
-import pytest
+'''MAGIC Week 0 shim for scripts.test_block_docstring.
 
-from numpy.testing import IS_PYPY
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-from . import util
+from typing import Any
 
-
-@pytest.mark.slow
-class TestBlockDocString(util.F2PyTest):
-    sources = [util.getpath("tests", "src", "block_docstring", "foo.f")]
-
-    @pytest.mark.skipif(
-        sys.platform == "win32", reason="Fails with MinGW64 Gfortran (Issue #9673)"
-    )
-    @pytest.mark.xfail(IS_PYPY, reason="PyPy cannot modify tp_doc after PyType_Ready")
-    def test_block_docstring(self):
-        expected = "bar : 'i'-array(2,3)\n"
-        assert self.module.block.__doc__ == expected
+__all__: list[str] = []

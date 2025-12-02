@@ -1,19 +1,11 @@
-"""
-Shim for _umath_tests to allow a deprecation period for the new name.
+﻿from __future__ import annotations
 
-"""
+'''MAGIC Week 0 shim for scripts.umath_tests.
 
-import warnings
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-# 2018-04-04, numpy 1.15.0
-warnings.warn(
-    (
-        "numpy.core.umath_tests is an internal NumPy "
-        "module and should not be imported. It will "
-        "be removed in a future NumPy release."
-    ),
-    category=DeprecationWarning,
-    stacklevel=2,
-)
+from typing import Any
 
-from ._umath_tests import *
+__all__: list[str] = []

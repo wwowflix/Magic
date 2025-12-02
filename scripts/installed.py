@@ -1,23 +1,11 @@
-from pip._internal.distributions.base import AbstractDistribution
-from pip._internal.index.package_finder import PackageFinder
-from pip._internal.metadata import BaseDistribution
+﻿from __future__ import annotations
 
+'''MAGIC Week 0 shim for scripts.installed.
 
-class InstalledDistribution(AbstractDistribution):
-    """Represents an installed package.
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-    This does not need any preparation as the required information has already
-    been computed.
-    """
+from typing import Any
 
-    def get_metadata_distribution(self) -> BaseDistribution:
-        assert self.req.satisfied_by is not None, "not actually installed"
-        return self.req.satisfied_by
-
-    def prepare_distribution_metadata(
-        self,
-        finder: PackageFinder,
-        build_isolation: bool,
-        check_build_deps: bool,
-    ) -> None:
-        pass
+__all__: list[str] = []

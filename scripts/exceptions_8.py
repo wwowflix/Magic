@@ -1,49 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-# This file is dual licensed under the terms of the Apache License, Version
-# 2.0, and the BSD License. See the LICENSE file in the root of this repository
-# for complete details.
-import typing
+'''MAGIC Week 0 shim for scripts.exceptions_8.
 
-from cryptography.hazmat.bindings._rust import exceptions as rust_exceptions
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-if typing.TYPE_CHECKING:
-    from cryptography.hazmat.bindings._rust import openssl as rust_openssl
+from typing import Any
 
-_Reasons = rust_exceptions._Reasons
-
-
-class UnsupportedAlgorithm(Exception):
-    def __init__(self, message: str, reason: _Reasons | None = None) -> None:
-        super().__init__(message)
-        self._reason = reason
-
-
-class AlreadyFinalized(Exception):
-    pass
-
-
-class AlreadyUpdated(Exception):
-    pass
-
-
-class NotYetFinalized(Exception):
-    pass
-
-
-class InvalidTag(Exception):
-    pass
-
-
-class InvalidSignature(Exception):
-    pass
-
-
-class InternalError(Exception):
-    def __init__(self, msg: str, err_code: list[rust_openssl.OpenSSLError]) -> None:
-        super().__init__(msg)
-        self.err_code = err_code
-
-
-class InvalidKey(Exception):
-    pass
+__all__: list[str] = []

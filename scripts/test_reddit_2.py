@@ -1,18 +1,11 @@
-from praw import Reddit
-from secrets import *
+﻿from __future__ import annotations
 
-print("ðŸ” Logging in to Reddit...")
+'''MAGIC Week 0 shim for scripts.test_reddit_2.
 
-reddit = Reddit(
-    client_id=REDDIT_CLIENT_ID,
-    client_secret=REDDIT_CLIENT_SECRET,
-    user_agent=REDDIT_USER_AGENT,
-    username=REDDIT_USERNAME,
-    password=REDDIT_PASSWORD,
-)
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-try:
-    me = reddit.user.me()
-    print(f"✅ Logged in as: u/{me}")
-except Exception as e:
-    print(f"âŒ Login failed: {e}")
+from typing import Any
+
+__all__: list[str] = []

@@ -1,43 +1,24 @@
-# Copyright 2016 Julien Danjou
-# Copyright 2016 Joshua Harlow
-# Copyright 2013-2014 Ray Holder
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+﻿from __future__ import annotations
 
-import typing
+"""
+MAGIC stub: replacement for tenacity "before" helpers.
+"""
 
-from pip._vendor.tenacity import _utils
-
-if typing.TYPE_CHECKING:
-    import logging
-
-    from pip._vendor.tenacity import RetryCallState
+from typing import Any, Callable
 
 
-def before_nothing(retry_state: "RetryCallState") -> None:
-    """Before call strategy that does nothing."""
+def before_log(logger: Any, log_level: Any) -> Callable:
+    """
+    Very small decorator factory used in retry-style code.
 
+    In the real implementation this logs before calling the function.
+    For MAGIC we simply return the original function unchanged.
+    """
 
-def before_log(
-    logger: "logging.Logger", log_level: int
-) -> typing.Callable[["RetryCallState"], None]:
-    """Before call strategy that logs to some logger the attempt."""
+    def decorator(fn: Callable) -> Callable:
+        def wrapper(*args: Any, **kwargs: Any):
+            return fn(*args, **kwargs)
 
-    def log_it(retry_state: "RetryCallState") -> None:
-        logger.log(
-            log_level,
-            f"Starting call to '{_utils.get_callback_name(retry_state.fn)}', "
-            f"this is the {_utils.to_ordinal(retry_state.attempt_number)} time calling it.",
-        )
+        return wrapper
 
-    return log_it
+    return decorator

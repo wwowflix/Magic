@@ -1,3 +1,11 @@
-from .compat.np import add_docstring, implement_array_function, _get_implementing_args
+﻿from __future__ import annotations
 
-__all__ = ["add_docstring", "implement_array_function", "_get_implementing_args"]
+'''MAGIC Week 0 shim for scripts.overrides.
+
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

@@ -8,7 +8,7 @@ import pytest
 
 from trio.testing import RaisesGroup
 
-from .. import _core, sleep, socket as tsocket
+from . import _core, sleep, socket as tsocket
 from scripts._core._tests.tutil import can_bind_ipv6
 from scripts._highlevel_generic import StapledStream, aclose_forcefully
 from scripts._highlevel_socket import SocketListener

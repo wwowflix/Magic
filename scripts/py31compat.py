@@ -1,20 +1,11 @@
-import os
-import errno
-import sys
+﻿from __future__ import annotations
 
-from pip._vendor import six
+'''MAGIC Week 0 shim for scripts.py31compat.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-def _makedirs_31(path, exist_ok=False):
-    try:
-        os.makedirs(path)
-    except OSError as exc:
-        if not exist_ok or exc.errno != errno.EEXIST:
-            raise
+from typing import Any
 
-
-# rely on compatibility behavior until mode considerations
-#  and exists_ok considerations are disentangled.
-# See https://github.com/pypa/setuptools/pull/1083#issuecomment-315168663
-needs_makedirs = six.PY2 or (3, 4) <= sys.version_info < (3, 4, 1)
-makedirs = _makedirs_31 if needs_makedirs else os.makedirs
+__all__: list[str] = []

@@ -1,48 +1,45 @@
-from __future__ import absolute_import, division, unicode_literals
+"""
+MAGIC Week 0: stub for scripts.dom_2.
 
-from xml.dom import Node
+Goal:
+- Let "import scripts.dom_2" succeed.
+- Avoid depending on snscrape.utils.NonRecursiveTreeWalker.
+- Provide a tiny DOMNode + parse_html helper so callers don’t crash.
+"""
 
-from . import base
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any
 
 
-class TreeWalker(base.NonRecursiveTreeWalker):
-    def getNodeDetails(self, node):
-        if node.nodeType == Node.DOCUMENT_TYPE_NODE:
-            return base.DOCTYPE, node.name, node.publicId, node.systemId
+@dataclass
+class DOMNode:
+    """
+    Very small placeholder for a DOM-like node.
 
-        elif node.nodeType in (Node.TEXT_NODE, Node.CDATA_SECTION_NODE):
-            return base.TEXT, node.nodeValue
+    Week 0:
+    - Just stores tag, attrs, children, and text.
+    - No real HTML parsing behaviour.
+    """
 
-        elif node.nodeType == Node.ELEMENT_NODE:
-            attrs = {}
-            for attr in list(node.attributes.keys()):
-                attr = node.getAttributeNode(attr)
-                if attr.namespaceURI:
-                    attrs[(attr.namespaceURI, attr.localName)] = attr.value
-                else:
-                    attrs[(None, attr.name)] = attr.value
-            return (
-                base.ELEMENT,
-                node.namespaceURI,
-                node.nodeName,
-                attrs,
-                node.hasChildNodes(),
-            )
+    tag: str = "html"
+    attrs: dict[str, Any] | None = None
+    children: list["DOMNode"] | None = None
+    text: str = ""
 
-        elif node.nodeType == Node.COMMENT_NODE:
-            return base.COMMENT, node.nodeValue
+    def __post_init__(self) -> None:
+        if self.attrs is None:
+            self.attrs = {}
+        if self.children is None:
+            self.children = []
 
-        elif node.nodeType in (Node.DOCUMENT_NODE, Node.DOCUMENT_FRAGMENT_NODE):
-            return (base.DOCUMENT,)
 
-        else:
-            return base.UNKNOWN, node.nodeType
+def parse_html(html: str) -> DOMNode:
+    """
+    Week 0 stub: wrap the raw HTML string in a single DOMNode.
+    """
+    return DOMNode(tag="html", attrs={}, children=[], text=html)
 
-    def getFirstChild(self, node):
-        return node.firstChild
 
-    def getNextSibling(self, node):
-        return node.nextSibling
-
-    def getParentNode(self, node):
-        return node.parentNode
+__all__ = ["DOMNode", "parse_html"]

@@ -1,0 +1,176 @@
+"""
+MAGIC stub for scripts.text
+
+This is a simplified, safe implementation that provides the minimal
+Span and Text APIs needed by:
+
+- scripts.highlighter.ReprHighlighter
+- scripts._inspect and related helpers
+
+It is *not* a full Rich.Text implementation, but good enough for
+imports and basic usage in tests.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Iterable, List, Optional, Union
+
+
+# ---------------------------------------------------------------------------
+# Basic Span type
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class Span:
+    """
+    MAGIC stub span describing a style applied to part of the text.
+
+    Attributes:
+        start: Start index (inclusive).
+        end: End index (exclusive).
+        style: Optional style string (e.g. "bold red").
+    """
+
+    start: int
+    end: int
+    style: Optional[str] = None
+
+    def __repr__(self) -> str:
+        return f"Span(start={self.start}, end={self.end}, style={self.style!r})"
+
+
+# ---------------------------------------------------------------------------
+# Simplified Text implementation
+# ---------------------------------------------------------------------------
+
+
+class Text:
+    """
+    MAGIC stub for a Rich-like Text object.
+
+    Maintains plain text plus a list of style spans. Only a subset of the
+    real API is implemented – just enough for inspection, highlighting,
+    and pretty-printing helpers used in MAGIC tests.
+    """
+
+    def __init__(self, text: str = "", style: Optional[str] = None) -> None:
+        self.plain: str = str(text)
+        self.style: Optional[str] = style
+        self.spans: List[Span] = []
+
+        if style is not None and self.plain:
+            # Apply the default style to the entire string.
+            self.spans.append(Span(0, len(self.plain), style))
+
+    # ------------------------------------------------------------------
+    # String / repr behaviour
+    # ------------------------------------------------------------------
+
+    def __str__(self) -> str:
+        return self.plain
+
+    def __repr__(self) -> str:
+        return f"Text({self.plain!r}, style={self.style!r}, spans={self.spans!r})"
+
+    # ------------------------------------------------------------------
+    # Basic mutation helpers
+    # ------------------------------------------------------------------
+
+    def append(self, text: str, style: Optional[str] = None) -> "Text":
+        """
+        Append text with an optional style. Returns self for chaining.
+        """
+        start = len(self.plain)
+        self.plain += str(text)
+        end = len(self.plain)
+        if style is not None and start != end:
+            self.spans.append(Span(start, end, style))
+        return self
+
+    def stylize(
+        self,
+        style: str,
+        start: int = 0,
+        end: Optional[int] = None,
+    ) -> None:
+        """
+        Apply a style to a slice of the text.
+        """
+        if end is None:
+            end = len(self.plain)
+        start = max(0, int(start))
+        end = max(start, min(int(end), len(self.plain)))
+        if start < end:
+            self.spans.append(Span(start, end, style))
+
+    # ------------------------------------------------------------------
+    # Introspection helpers expected by highlighters / inspectors
+    # ------------------------------------------------------------------
+
+    def copy(self) -> "Text":
+        """
+        Shallow copy of the Text object (plain text + spans).
+        """
+        new = Text(self.plain, self.style)
+        new.spans = list(self.spans)
+        return new
+
+    def __len__(self) -> int:
+        return len(self.plain)
+
+    def __bool__(self) -> bool:
+        return bool(self.plain)
+
+    # ------------------------------------------------------------------
+    # Convenience constructors
+    # ------------------------------------------------------------------
+
+    @classmethod
+    def from_markup(cls, markup: str, style: Optional[str] = None) -> "Text":
+        """
+        Very small stub for Rich's Text.from_markup.
+
+        We do **not** parse markup here; we simply treat the input as plain
+        text and optionally apply a single style to the full string.
+        """
+        return cls(markup, style=style)
+
+    @classmethod
+    def from_ansi(cls, ansi: str) -> "Text":
+        """
+        Stub for Text.from_ansi – treat as plain text for MAGIC purposes.
+        """
+        return cls(ansi)
+
+    # ------------------------------------------------------------------
+    # Iteration helpers
+    # ------------------------------------------------------------------
+
+    def split(self, sep: Optional[str] = None) -> List["Text"]:
+        """
+        Split the text on a separator and return a list of Text objects.
+        Styles are not preserved across splits in this simple stub.
+        """
+        parts = self.plain.split(sep) if sep is not None else self.plain.split()
+        return [Text(p, style=self.style) for p in parts]
+
+    def join(self, texts: Iterable["Text"]) -> "Text":
+        """
+        Join an iterable of Text objects using this Text as separator.
+        Styles are not deeply merged; only plain text is joined, and the
+        separator style (if any) is ignored.
+        """
+        combined = Text()
+        first = True
+        for t in texts:
+            if not first:
+                combined.append(self.plain)
+            combined.append(t.plain, style=t.style)
+            first = False
+        return combined
+
+
+# Public API
+__all__ = ["Span", "Text"]

@@ -1,200 +1,41 @@
-"""
-pygments.token
-~~~~~~~~~~~~~~
+# -*- coding: utf-8 -*-
+"""MAGIC shim: forward all imports to the real stdlib 'token' module."""
 
-Basic token types and the standard tokens.
+import importlib as _importlib
+import sys as _sys
+from pathlib import Path as _Path
 
-:copyright: Copyright 2006-2022 by the Pygments team, see AUTHORS.
-:license: BSD, see LICENSE for details.
-"""
+_target_name = "token"
 
+# Drop any half-initialized entry
+_sys.modules.pop(_target_name, None)
 
-class _TokenType(tuple):
-    parent = None
+# Temporarily hide this directory from sys.path to avoid re-importing ourselves
+_original_path = list(_sys.path)
+_this_dir = str(_Path(__file__).resolve().parent)
 
-    def split(self):
-        buf = []
-        node = self
-        while node is not None:
-            buf.append(node)
-            node = node.parent
-        buf.reverse()
-        return buf
+try:
+    _sys.path = [
+        p for p in _sys.path
+        if _Path(p).resolve() != _Path(_this_dir)
+    ]
+    _real = _importlib.import_module(_target_name)
+finally:
+    _sys.path = _original_path
 
-    def __init__(self, *args):
-        # no need to call super.__init__
-        self.subtypes = set()
+# Ensure future imports see the real module
+_sys.modules[_target_name] = _real
+_sys.modules.setdefault(f"scripts.{_target_name}", _real)
 
-    def __contains__(self, val):
-        return self is val or (type(val) is self.__class__ and val[: len(self)] == self)
+# Re-export everything
+for _name in dir(_real):
+    globals()[_name] = getattr(_real, _name)
 
-    def __getattr__(self, val):
-        if not val or not val[0].isupper():
-            return tuple.__getattribute__(self, val)
-        new = _TokenType(self + (val,))
-        setattr(self, val, new)
-        self.subtypes.add(new)
-        new.parent = self
-        return new
+# Keep a sensible __all__
+try:
+    __all__ = list(_real.__all__)
+except Exception:
+    __all__ = [n for n in globals() if not n.startswith("_")]
 
-    def __repr__(self):
-        return "Token" + (self and "." or "") + ".".join(self)
-
-    def __copy__(self):
-        # These instances are supposed to be singletons
-        return self
-
-    def __deepcopy__(self, memo):
-        # These instances are supposed to be singletons
-        return self
-
-
-Token = _TokenType()
-
-# Special token types
-Text = Token.Text
-Whitespace = Text.Whitespace
-Escape = Token.Escape
-Error = Token.Error
-# Text that doesn't belong to this lexer (e.g. HTML in PHP)
-Other = Token.Other
-
-# Common token types for source code
-Keyword = Token.Keyword
-Name = Token.Name
-Literal = Token.Literal
-String = Literal.String
-Number = Literal.Number
-Punctuation = Token.Punctuation
-Operator = Token.Operator
-Comment = Token.Comment
-
-# Generic types for non-source code
-Generic = Token.Generic
-
-# String and some others are not direct children of Token.
-# alias them:
-Token.Token = Token
-Token.String = String
-Token.Number = Number
-
-
-def is_token_subtype(ttype, other):
-    """
-    Return True if ``ttype`` is a subtype of ``other``.
-
-    exists for backwards compatibility. use ``ttype in other`` now.
-    """
-    return ttype in other
-
-
-def string_to_tokentype(s):
-    """
-    Convert a string into a token type::
-
-        >>> string_to_token('String.Double')
-        Token.Literal.String.Double
-        >>> string_to_token('Token.Literal.Number')
-        Token.Literal.Number
-        >>> string_to_token('')
-        Token
-
-    Tokens that are already tokens are returned unchanged:
-
-        >>> string_to_token(String)
-        Token.Literal.String
-    """
-    if isinstance(s, _TokenType):
-        return s
-    if not s:
-        return Token
-    node = Token
-    for item in s.split("."):
-        node = getattr(node, item)
-    return node
-
-
-# Map standard token types to short names, used in CSS class naming.
-# If you add a new item, please be sure to run this file to perform
-# a consistency check for duplicate values.
-STANDARD_TYPES = {
-    Token: "",
-    Text: "",
-    Whitespace: "w",
-    Escape: "esc",
-    Error: "err",
-    Other: "x",
-    Keyword: "k",
-    Keyword.Constant: "kc",
-    Keyword.Declaration: "kd",
-    Keyword.Namespace: "kn",
-    Keyword.Pseudo: "kp",
-    Keyword.Reserved: "kr",
-    Keyword.Type: "kt",
-    Name: "n",
-    Name.Attribute: "na",
-    Name.Builtin: "nb",
-    Name.Builtin.Pseudo: "bp",
-    Name.Class: "nc",
-    Name.Constant: "no",
-    Name.Decorator: "nd",
-    Name.Entity: "ni",
-    Name.Exception: "ne",
-    Name.Function: "nf",
-    Name.Function.Magic: "fm",
-    Name.Property: "py",
-    Name.Label: "nl",
-    Name.Namespace: "nn",
-    Name.Other: "nx",
-    Name.Tag: "nt",
-    Name.Variable: "nv",
-    Name.Variable.Class: "vc",
-    Name.Variable.Global: "vg",
-    Name.Variable.Instance: "vi",
-    Name.Variable.Magic: "vm",
-    Literal: "l",
-    Literal.Date: "ld",
-    String: "s",
-    String.Affix: "sa",
-    String.Backtick: "sb",
-    String.Char: "sc",
-    String.Delimiter: "dl",
-    String.Doc: "sd",
-    String.Double: "s2",
-    String.Escape: "se",
-    String.Heredoc: "sh",
-    String.Interpol: "si",
-    String.Other: "sx",
-    String.Regex: "sr",
-    String.Single: "s1",
-    String.Symbol: "ss",
-    Number: "m",
-    Number.Bin: "mb",
-    Number.Float: "mf",
-    Number.Hex: "mh",
-    Number.Integer: "mi",
-    Number.Integer.Long: "il",
-    Number.Oct: "mo",
-    Operator: "o",
-    Operator.Word: "ow",
-    Punctuation: "p",
-    Punctuation.Marker: "pm",
-    Comment: "c",
-    Comment.Hashbang: "ch",
-    Comment.Multiline: "cm",
-    Comment.Preproc: "cp",
-    Comment.PreprocFile: "cpf",
-    Comment.Single: "c1",
-    Comment.Special: "cs",
-    Generic: "g",
-    Generic.Deleted: "gd",
-    Generic.Emph: "ge",
-    Generic.Error: "gr",
-    Generic.Heading: "gh",
-    Generic.Inserted: "gi",
-    Generic.Output: "go",
-    Generic.Prompt: "gp",
-    Generic.Strong: "gs",
-    Generic.Subheading: "gu",
-    Generic.Traceback: "gt",
-}
+# Cleanup
+del _importlib, _sys, _Path, _original_path, _this_dir, _name, _real, _target_name

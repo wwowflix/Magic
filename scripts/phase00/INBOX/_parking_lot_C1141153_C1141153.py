@@ -79,7 +79,7 @@ from typing import TYPE_CHECKING
 import attrs
 import outcome
 
-from .. import _core
+from . import _core
 from scripts._util import final
 
 if TYPE_CHECKING:

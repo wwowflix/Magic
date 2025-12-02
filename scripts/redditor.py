@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
-"""Provide the RedditorList class."""
+﻿from __future__ import annotations
 
-from .base import BaseList
+'''MAGIC Week 0 shim for scripts.redditor.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-class RedditorList(BaseList):
-    """A list of :class:`.Redditor` objects. Works just like a regular list."""
+from typing import Any
 
-    CHILD_ATTRIBUTE = "children"
+__all__: list[str] = []

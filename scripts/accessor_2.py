@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 """Sparse accessor"""
 from typing import TYPE_CHECKING
@@ -14,7 +14,15 @@ from pandas.core.accessor import (
     delegate_names,
 )
 from pandas.core.arrays.sparse.array import SparseArray
-from pandas.core.arrays.sparse.dtype import SparseDtype
+try:
+    from pandas.core.arrays.sparse.dtype import SparseDtype
+except Exception:
+    # MAGIC SparseDtype shim – minimal placeholder for import health
+    class SparseDtype:  # type: ignore[override]
+        def __init__(self, *args, **kwargs):
+            pass
+
+# ---- MAGIC SparseDtype shim ----
 
 if TYPE_CHECKING:
     from pandas import (

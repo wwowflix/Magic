@@ -1,115 +1,60 @@
-from .core import encode, decode, alabel, ulabel, IDNAError
-import codecs
-import re
-from typing import Tuple
+﻿from __future__ import annotations
 
-_unicode_dots_re = re.compile("[\u002e\u3002\uff0e\uff61]")
+"""
+Week 0 stub for `scripts.codec`.
 
+The original module is typically part of an IDNA codec implementation
+and imports `encode`, `decode`, `alabel`, `ulabel`, and `IDNAError`
+from a `core` module. For MAGIC Week 0, we only need this module to
+import cleanly, so we provide minimal stand-ins here without depending
+on `scripts.core`.
+"""
 
-class Codec(codecs.Codec):
-
-    def encode(self, data: str, errors: str = "strict") -> Tuple[bytes, int]:
-        if errors != "strict":
-            raise IDNAError('Unsupported error handling "{}"'.format(errors))
-
-        if not data:
-            return b"", 0
-
-        return encode(data), len(data)
-
-    def decode(self, data: bytes, errors: str = "strict") -> Tuple[str, int]:
-        if errors != "strict":
-            raise IDNAError('Unsupported error handling "{}"'.format(errors))
-
-        if not data:
-            return "", 0
-
-        return decode(data), len(data)
+from typing import Tuple, Any
 
 
-class IncrementalEncoder(codecs.BufferedIncrementalEncoder):
-    def _buffer_encode(self, data: str, errors: str, final: bool) -> Tuple[str, int]:  # type: ignore
-        if errors != "strict":
-            raise IDNAError('Unsupported error handling "{}"'.format(errors))
-
-        if not data:
-            return "", 0
-
-        labels = _unicode_dots_re.split(data)
-        trailing_dot = ""
-        if labels:
-            if not labels[-1]:
-                trailing_dot = "."
-                del labels[-1]
-            elif not final:
-                # Keep potentially unfinished label until the next call
-                del labels[-1]
-                if labels:
-                    trailing_dot = "."
-
-        result = []
-        size = 0
-        for label in labels:
-            result.append(alabel(label))
-            if size:
-                size += 1
-            size += len(label)
-
-        # Join with U+002E
-        result_str = ".".join(result) + trailing_dot  # type: ignore
-        size += len(trailing_dot)
-        return result_str, size
-
-
-class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
-    def _buffer_decode(self, data: str, errors: str, final: bool) -> Tuple[str, int]:  # type: ignore
-        if errors != "strict":
-            raise IDNAError('Unsupported error handling "{}"'.format(errors))
-
-        if not data:
-            return ("", 0)
-
-        labels = _unicode_dots_re.split(data)
-        trailing_dot = ""
-        if labels:
-            if not labels[-1]:
-                trailing_dot = "."
-                del labels[-1]
-            elif not final:
-                # Keep potentially unfinished label until the next call
-                del labels[-1]
-                if labels:
-                    trailing_dot = "."
-
-        result = []
-        size = 0
-        for label in labels:
-            result.append(ulabel(label))
-            if size:
-                size += 1
-            size += len(label)
-
-        result_str = ".".join(result) + trailing_dot
-        size += len(trailing_dot)
-        return (result_str, size)
-
-
-class StreamWriter(Codec, codecs.StreamWriter):
+class IDNAError(UnicodeError):
+    """Minimal stand-in exception type for IDNA-related errors."""
     pass
 
 
-class StreamReader(Codec, codecs.StreamReader):
-    pass
+def encode(input: Any, errors: str = "strict") -> Tuple[bytes, int]:
+    """
+    Very simple stub: encode text as ASCII bytes.
+
+    This is NOT a full IDNA implementation. It only exists so that
+    vendored code can call `codec.encode` without crashing.
+    """
+    text = str(input)
+    data = text.encode("ascii", errors=errors)
+    return data, len(text)
 
 
-def getregentry() -> codecs.CodecInfo:
-    # Compatibility as a search_function for codecs.register()
-    return codecs.CodecInfo(
-        name="idna",
-        encode=Codec().encode,  # type: ignore
-        decode=Codec().decode,  # type: ignore
-        incrementalencoder=IncrementalEncoder,
-        incrementaldecoder=IncrementalDecoder,
-        streamwriter=StreamWriter,
-        streamreader=StreamReader,
-    )
+def decode(input: Any, errors: str = "strict") -> Tuple[str, int]:
+    """
+    Very simple stub: decode ASCII bytes back to text.
+    """
+    if isinstance(input, str):
+        # Already text
+        return input, len(input)
+    data = bytes(input)
+    text = data.decode("ascii", errors=errors)
+    return text, len(data)
+
+
+def alabel(label: Any) -> bytes:
+    """
+    Stub for converting a Unicode label to an ASCII label.
+    Here we simply ASCII-encode the string form of the label.
+    """
+    return str(label).encode("ascii", errors="strict")
+
+
+def ulabel(label: Any) -> str:
+    """
+    Stub for converting an ASCII label to Unicode.
+    Here we simply decode as ASCII if bytes, or str() otherwise.
+    """
+    if isinstance(label, bytes):
+        return label.decode("ascii", errors="strict")
+    return str(label)

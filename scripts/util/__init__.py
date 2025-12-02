@@ -64,6 +64,16 @@ except NameError:  # pragma: no cover
         """Return the string prefixed with a backslash."""
         return "\\" + s
 
+    def escape_parens(value: Any) -> str:
+        """
+        MAGIC shim: escape literal parentheses for regex usage.
+
+        Turns "(" into "\\(" and ")" into "\\)". This is enough for
+        scripts.drawing and similar helpers that need safe patterns.
+        """
+        text = str(value)
+        return text.replace("(", r"\(").replace(")", r"\)")
+
     def _flatten(iterable: Iterable[Any]):
         """
         Simple recursive flattener for nested iterables (lists/tuples/sets).
@@ -178,9 +188,11 @@ except Exception:  # very old or weird Python
 
 cached_property = _MAGIC_cached_property  # re-export
 
+
 def get_cache_base():
     """MAGIC shim: return a writable base directory for cache usage."""
     return _MAGIC_tempfile.gettempdir()
+
 
 class Cache:
     """Minimal Cache stub for distlib.resources.
@@ -199,6 +211,7 @@ class Cache:
     def __repr__(self) -> str:
         return f"<Cache base_dir={self.base_dir!r} name={self.name!r}>"
 
+
 # ==== end MAGIC shim ====
 
 
@@ -209,6 +222,7 @@ try:
     import sysconfig as _MAGIC_sysconfig2
 except Exception:
     _MAGIC_sysconfig2 = None
+
 
 class FileOperator:
     """Minimal FileOperator stub for Scripts module.
@@ -222,17 +236,21 @@ class FileOperator:
         # Real distlib does file operations; we no-op here.
         return None
 
+
 def get_export_entry(spec: str):
     """MAGIC shim: return export spec unchanged."""
     return spec
+
 
 def convert_path(path: str) -> str:
     """Convert forward slashes to OS-specific separators."""
     return path.replace("/", _MAGIC_os2.sep)
 
+
 def get_executable() -> str:
     """Return current Python executable path."""
     return _MAGIC_sys2.executable
+
 
 def get_platform() -> str:
     """Return a reasonable platform tag."""
@@ -243,12 +261,15 @@ def get_platform() -> str:
             pass
     return _MAGIC_sys2.platform
 
+
 def in_venv() -> bool:
     """Detect if running inside a virtualenv."""
     return (
         hasattr(_MAGIC_sys2, "base_prefix")
         and _MAGIC_sys2.base_prefix != _MAGIC_sys2.prefix
     )
+
+
 # ==== end MAGIC shim: extra distlib util symbols ====
 
 # ---- auto-added by MAGIC CDP util shim ----
@@ -300,3 +321,40 @@ except Exception:
     from typing import Any, Dict as _Dict  # type: ignore[import]
     T_JSON_DICT = _Dict[str, Any]  # type: ignore[valid-type]
 # ---- end MAGIC CDP util shim ----
+
+# -----------------------------------------------------------------------------
+# MAGIC Week 0: lightweight SelectorSyntaxError for CSS parser
+# -----------------------------------------------------------------------------
+class SelectorSyntaxError(Exception):
+    """
+    MAGIC Week 0 placeholder for soupsieve's SelectorSyntaxError.
+
+    The real implementation will carry richer context, but for now we only
+    need a distinct exception type so css_parser and friends can import it.
+    """
+    pass
+
+
+# -----------------------------------------------------------------------------
+# MAGIC Week 0: minimal debug flag for CSS parser
+# -----------------------------------------------------------------------------
+# In the real soupsieve.util, DEBUG is a bitmask. For Week 0 we only need
+# it to exist so expressions like `self.flags & util.DEBUG` are valid.
+DEBUG = 0
+
+
+# === MAGIC Week 0 util.lower shim ===
+def lower(value):
+    """
+    Week 0 shim for soupsieve-style util.lower.
+
+    Accepts any value, converts to string, and returns .lower().
+
+    This is only here so css_parser can import and call util.lower
+    without pulling in the original soupsieve.util dependency.
+    """
+    try:
+        return str(value).lower()
+    except Exception:
+        # Be ultra-defensive; never raise at import time.
+        return ""

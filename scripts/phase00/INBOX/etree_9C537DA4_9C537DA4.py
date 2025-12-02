@@ -9,7 +9,7 @@ import re
 from copy import copy
 
 from . import base
-from .. import _ihatexml
+from . import _ihatexml
 from .. import constants
 from scripts.constants import namespaces
 from scripts._utils import moduleFactoryFactory

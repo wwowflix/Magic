@@ -1,23 +1,11 @@
-#!/usr/bin/env python
+﻿from __future__ import annotations
 
-# From https://github.com/aaugustin/websockets/blob/main/example/echo.py
+'''MAGIC Week 0 shim for scripts.echo-server.
 
-import asyncio
-import os
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-import websockets
+from typing import Any
 
-LOCAL_WS_SERVER_PORT = int(os.environ.get("LOCAL_WS_SERVER_PORT", "8765"))
-
-
-async def echo(websocket):
-    async for message in websocket:
-        await websocket.send(message)
-
-
-async def main():
-    async with websockets.serve(echo, "localhost", LOCAL_WS_SERVER_PORT):
-        await asyncio.Future()  # run forever
-
-
-asyncio.run(main())
+__all__: list[str] = []

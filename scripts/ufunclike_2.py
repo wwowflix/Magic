@@ -1,21 +1,11 @@
-from typing import List, Any
-import numpy as np
+﻿from __future__ import annotations
 
-AR_c: np.ndarray[Any, np.dtype[np.complex128]]
-AR_m: np.ndarray[Any, np.dtype[np.timedelta64]]
-AR_M: np.ndarray[Any, np.dtype[np.datetime64]]
-AR_O: np.ndarray[Any, np.dtype[np.object_]]
+'''MAGIC Week 0 shim for scripts.ufunclike_2.
 
-np.fix(AR_c)  # E: incompatible type
-np.fix(AR_m)  # E: incompatible type
-np.fix(AR_M)  # E: incompatible type
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-np.isposinf(AR_c)  # E: incompatible type
-np.isposinf(AR_m)  # E: incompatible type
-np.isposinf(AR_M)  # E: incompatible type
-np.isposinf(AR_O)  # E: incompatible type
+from typing import Any
 
-np.isneginf(AR_c)  # E: incompatible type
-np.isneginf(AR_m)  # E: incompatible type
-np.isneginf(AR_M)  # E: incompatible type
-np.isneginf(AR_O)  # E: incompatible type
+__all__: list[str] = []

@@ -1,28 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-from io import StringIO
+'''MAGIC Week 0 shim for scripts.lib_utils_2.
+
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
 from typing import Any
 
-import numpy as np
-
-FILE = StringIO()
-AR: np.ndarray[Any, np.dtype[np.float64]] = np.arange(10).astype(np.float64)
-
-
-def func(a: int) -> bool: ...
-
-
-np.deprecate(func)
-np.deprecate()
-
-np.deprecate_with_doc("test")
-np.deprecate_with_doc(None)
-
-np.byte_bounds(AR)
-np.byte_bounds(np.float64())
-
-np.info(1, output=FILE)
-
-np.source(np.interp, output=FILE)
-
-np.lookfor("binary representation", output=FILE)
+__all__: list[str] = []

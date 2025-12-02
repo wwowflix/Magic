@@ -1,48 +1,11 @@
-import praw
+﻿from __future__ import annotations
 
-CLIENT_ID = "E5gkpBqsI6_szr6Cv9KqeQ"
-CLIENT_SECRET = "YWiL0a28T2KIWCoxfOltNeUL5a4IXw"
-USER_AGENT = "MAGICZephyr/0.1 by u/AffectionateRoom6084"
+'''MAGIC Week 0 shim for scripts.reddit_api_3.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-def fetch_reddit_trends(subreddits):
-    try:
-        reddit = praw.Reddit(
-            client_id=CLIENT_ID,
-            client_secret=CLIENT_SECRET,
-            user_agent=USER_AGENT,
-            check_for_async=False,
-            read_only=True,
-        )
+from typing import Any
 
-        print("✅ Connected to Reddit API")
-
-        posts = []
-        for subreddit_name in subreddits:
-            print(f"ðŸ” Fetching: {subreddit_name}")
-            subreddit = reddit.subreddit(subreddit_name)
-            for post in subreddit.hot(limit=3):
-                posts.append(
-                    {
-                        "subreddit": subreddit_name,
-                        "title": post.title,
-                        "score": post.score,
-                        "url": post.url,
-                    }
-                )
-        return posts
-    except Exception as e:
-        print(f"âŒ Error fetching Reddit data: {e}")
-        return []
-
-
-if __name__ == "__main__":
-    subreddits = ["technology", "machinelearning", "AI"]
-    for sub in subreddits:
-        try:
-            print(f"\nðŸŒ Checking: {sub}")
-            results = fetch_reddit_trends([sub])
-            for post in results:
-                print(f"ðŸ“Œ {post['title']} ({post['score']} pts)")
-        except Exception as e:
-            print(f"âŒ Failed for {sub}: {e}")
+__all__: list[str] = []

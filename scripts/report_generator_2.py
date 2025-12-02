@@ -1,28 +1,11 @@
-# -*- coding: utf-8 -*-
-import pandas as pd
-from fpdf import FPDF
-import streamlit as st
+﻿from __future__ import annotations
 
-st.title("?? PDF Report Generator")
+'''MAGIC Week 0 shim for scripts.report_generator_2.
 
-try:
-    df = pd.read_csv("outputs/google_trends.csv")
-except FileNotFoundError:
-    st.error("CSV not found!")
-    st.stop()
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-st.dataframe(df.head())
+from typing import Any
 
-if st.button("Generate PDF Report"):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Trend Report", ln=True, align="C")
-
-    for i, row in df.head(10).iterrows():
-        pdf.cell(
-            200, 10, txt=f"{row['date']} - {row['keyword']} - {row['value']}", ln=True
-        )
-
-    pdf.output("trend_report.pdf")
-    st.success("[OK] PDF saved: trend_report.pdf")
+__all__: list[str] = []

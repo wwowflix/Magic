@@ -454,3 +454,47 @@ __all__ = [
     "range_scan",
     "cut_sequence_chunks",
 ]
+
+
+# MAGIC shim: parse_dict_header for requests-style code
+try:
+    parse_dict_header  # type: ignore[name-defined]
+except NameError:
+    def parse_dict_header(value: str) -> dict[str, str]:
+        """
+        Very small stub of requests/werkzeug parse_dict_header.
+        Accepts 'k=v; k2=v2' and returns a dict.
+        """
+        result: dict[str, str] = {}
+        if not value:
+            return result
+        parts = [p.strip() for p in value.split(";") if p.strip()]
+        for part in parts:
+            if "=" in part:
+                k, v = part.split("=", 1)
+                result[k.strip()] = v.strip().strip('"')
+        return result
+# ==== MAGIC compatibility shim: parse_dict_header ====
+try:
+    parse_dict_header  # type: ignore[name-defined]
+except Exception:  # pragma: no cover
+    def parse_dict_header(value):
+        """
+        Very small stub for parse_dict_header used by HTTP/requests-style code.
+
+        Accepts strings like:
+            "k1=v1; k2=v2"
+        and returns a dict. Good enough for vendored modules that only care
+        about shape, not exact RFC behavior.
+        """
+        result = {}
+        if not isinstance(value, str):
+            return result
+        for part in value.split(";"):
+            part = part.strip()
+            if not part or "=" not in part:
+                continue
+            k, v = part.split("=", 1)
+            result[k.strip()] = v.strip()
+        return result
+# ==== end MAGIC shim ====

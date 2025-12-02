@@ -165,3 +165,24 @@ try:
 except NameError:
     text_type = str
 # ---- end MAGIC pickle/text_type shim ----
+
+# ======================================================================
+# MAGIC Week 0 additions – simple compatibility shims
+#
+# Some vendored distlib-style modules expect the following names:
+# - StringIO
+# - string_types
+# - text_type
+#
+# For Python 3 only, these can be defined in a very small, safe way.
+# ======================================================================
+
+try:
+    from io import StringIO  # type: ignore[assignment]
+except ImportError:  # pragma: no cover
+    from StringIO import StringIO  # type: ignore[no-redef,import-not-found]
+
+
+# In Python 3, all text strings are `str`.
+string_types = (str,)
+text_type = str

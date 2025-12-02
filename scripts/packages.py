@@ -1,23 +1,45 @@
+﻿"""
+MAGIC Week 0 – shim for `scripts.packages`
+
+Goal:
+- Make vendored imports like:
+    from scripts.packages import six
+    from scripts.packages.six.moves import queue
+  work without pulling any real network logic.
+
+We simply delegate to the real `six` from site-packages if available,
+and register an alias module `scripts.packages.six`.
+"""
+
+from __future__ import annotations
+
 import sys
+import types
 
-from .compat import chardet
+try:
+    import six as _real_six  # type: ignore[import]
+except Exception:
+    # Minimal fallback if `six` isn't installed (enough for our imports).
+    class _MiniSix(types.SimpleNamespace):  # type: ignore[misc]
+        PY2 = False
+        PY3 = True
 
-# This code exists for backwards compatibility reasons.
-# I don't like it either. Just look the other way. :)
+    _real_six = _MiniSix()  # type: ignore[assignment]
 
-for package in ("urllib3", "idna"):
-    locals()[package] = __import__(package)
-    # This traversal is apparently necessary such that the identities are
-    # preserved (requests.packages.urllib3.* is urllib3.*)
-    for mod in list(sys.modules):
-        if mod == package or mod.startswith(f"{package}."):
-            sys.modules[f"requests.packages.{mod}"] = sys.modules[mod]
+# Expose as attribute on this module
+six = _real_six
 
-if chardet is not None:
-    target = chardet.__name__
-    for mod in list(sys.modules):
-        if mod == target or mod.startswith(f"{target}."):
-            imported_mod = sys.modules[mod]
-            sys.modules[f"requests.packages.{mod}"] = imported_mod
-            mod = mod.replace(target, "chardet")
-            sys.modules[f"requests.packages.{mod}"] = imported_mod
+# Also register `scripts.packages.six` as a real module in sys.modules
+_module_name = __name__ + ".six"  # "scripts.packages.six"
+
+if _module_name not in sys.modules:
+    six_module = types.ModuleType(_module_name)
+    for _name in dir(_real_six):
+        try:
+            setattr(six_module, _name, getattr(_real_six, _name))
+        except Exception:
+            # Best-effort copy; we only really care about `.moves`
+            pass
+    sys.modules[_module_name] = six_module
+
+__all__ = ["six"]

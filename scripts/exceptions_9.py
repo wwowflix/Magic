@@ -1,17 +1,11 @@
-"""
-fsspec user-defined exception classes
-"""
+﻿from __future__ import annotations
 
-import asyncio
+'''MAGIC Week 0 shim for scripts.exceptions_9.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-class BlocksizeMismatchError(ValueError):
-    """
-    Raised when a cached file is opened with a different blocksize than it was
-    written with
-    """
+from typing import Any
 
-
-class FSTimeoutError(asyncio.TimeoutError):
-    """
-    Raised when a fsspec function timed out occurs
+__all__: list[str] = []

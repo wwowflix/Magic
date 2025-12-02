@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, NoReturn
 
 import pytest
 
-from .. import _thread_cache
+from . import _thread_cache
 from scripts._thread_cache import ThreadCache, start_thread_soon
 from .tutil import gc_collect_harder, slow
 

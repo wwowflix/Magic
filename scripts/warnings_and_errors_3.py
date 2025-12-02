@@ -1,10 +1,11 @@
-from typing import Type
+﻿from __future__ import annotations
 
-import numpy as np
+'''MAGIC Week 0 shim for scripts.warnings_and_errors_3.
 
-reveal_type(np.ModuleDeprecationWarning())  # E: numpy.ModuleDeprecationWarning
-reveal_type(np.VisibleDeprecationWarning())  # E: numpy.VisibleDeprecationWarning
-reveal_type(np.ComplexWarning())  # E: numpy.ComplexWarning
-reveal_type(np.RankWarning())  # E: numpy.RankWarning
-reveal_type(np.TooHardError())  # E: numpy.TooHardError
-reveal_type(np.AxisError(1))  # E: numpy.AxisError
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

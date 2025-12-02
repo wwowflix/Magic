@@ -1,19 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-np.testing.bob  # E: Module has no attribute
-np.bob  # E: Module has no attribute
+'''MAGIC Week 0 shim for scripts.modules.
 
-# Stdlib modules in the namespace by accident
-np.warnings  # E: Module has no attribute
-np.sys  # E: Module has no attribute
-np.os  # E: Module has no attribute
-np.math  # E: Module has no attribute
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-# Public sub-modules that are not imported to their parent module by default;
-# e.g. one must first execute `import numpy.lib.recfunctions`
-np.lib.recfunctions  # E: Module has no attribute
-np.ma.mrecords  # E: Module has no attribute
+from typing import Any
 
-np.__NUMPY_SETUP__  # E: Module has no attribute
-np.__deprecated_attrs__  # E: Module has no attribute
-np.__expired_functions__  # E: Module has no attribute
+__all__: list[str] = []

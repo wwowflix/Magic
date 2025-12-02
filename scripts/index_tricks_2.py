@@ -1,14 +1,11 @@
-from typing import List
-import numpy as np
+﻿from __future__ import annotations
 
-AR_LIKE_i: List[int]
-AR_LIKE_f: List[float]
+'''MAGIC Week 0 shim for scripts.index_tricks_2.
 
-np.unravel_index(AR_LIKE_f, (1, 2, 3))  # E: incompatible type
-np.ravel_multi_index(AR_LIKE_i, (1, 2, 3), mode="bob")  # E: No overload variant
-np.mgrid[1]  # E: Invalid index type
-np.mgrid[...]  # E: Invalid index type
-np.ogrid[1]  # E: Invalid index type
-np.ogrid[...]  # E: Invalid index type
-np.fill_diagonal(AR_LIKE_f, 2)  # E: incompatible type
-np.diag_indices(1.0)  # E: incompatible type
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

@@ -1,19 +1,33 @@
-﻿venv/
-.git/
-.github/
+﻿# MAGIC .dockerignore
+
+# Python virtualenv
+venv/
+
+# Git metadata
+.git
+.gitignore
+
+# Python cache
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+**/__pycache__/
+*.py[cod]
+
+# Test + local tooling (not needed inside image for now)
+tests/
+htmlcov/
+.coverage
+
+# Outputs / logs / temp
 outputs/
-backups/
-node_modules/
-*.zip
-*.tar
-*.tar.gz
+logs/
+dist/
+build/
 *.log
-.DS_Store
+*.tmp
+
+# IDE / OS junk
+.vscode/
+.idea/
+*.swp
 Thumbs.db
+Desktop.ini

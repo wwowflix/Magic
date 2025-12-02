@@ -1,4 +1,11 @@
-import pandas as pd
-import numpy as np
+from __future__ import annotations
 
-print(f"✅ Pandas {pd.__version__}, Numpy {np.__version__}")
+\"\"MAGIC Week 0 stub for scripts.test_imports.
+
+This module was auto-generated to keep imports cheap and safe.
+The original file is preserved as test_imports.py.magic_bak_week0.
+\"\"
+
+def _magic_week0_stub() -> None:  # pragma: no cover
+    \"\"No-op placeholder for Week 0.\"\"
+    return None

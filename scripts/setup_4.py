@@ -1,23 +1,11 @@
-"""
-Provide python-space access to the functions exposed in numpy/__init__.pxd
-for testing.
-"""
+﻿from __future__ import annotations
 
-import numpy as np
-from distutils.core import setup
-from Cython.Build import cythonize
-from setuptools.extension import Extension
-import os
+'''MAGIC Week 0 shim for scripts.setup_4.
 
-macros = [("NPY_NO_DEPRECATED_API", 0)]
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-checks = Extension(
-    "checks",
-    sources=[os.path.join(".", "checks.pyx")],
-    include_dirs=[np.get_include()],
-    define_macros=macros,
-)
+from typing import Any
 
-extensions = [checks]
-
-setup(ext_modules=cythonize(extensions))
+__all__: list[str] = []

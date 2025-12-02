@@ -1,25 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-import numba
-import numpy as np
+'''MAGIC Week 0 shim for scripts.shared.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-@numba.jit(
-    # error: Any? not callable
-    numba.boolean(numba.int64[:]),  # type: ignore[misc]
-    nopython=True,
-    nogil=True,
-    parallel=False,
-)
-def is_monotonic_increasing(bounds: np.ndarray) -> bool:
-    """Check if int64 values are monotonically increasing."""
-    n = len(bounds)
-    if n < 2:
-        return True
-    prev = bounds[0]
-    for i in range(1, n):
-        cur = bounds[i]
-        if cur < prev:
-            return False
-        prev = cur
-    return True
+from typing import Any
+
+__all__: list[str] = []

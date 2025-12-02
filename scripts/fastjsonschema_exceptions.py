@@ -1,49 +1,40 @@
-import re
+﻿from __future__ import annotations
 
-SPLIT_RE = re.compile(r"[\.\[\]]+")
+"""
+MAGIC Week 0 shim for scripts.fastjsonschema_exceptions.
 
+Goal
+----
+- Provide the exception classes that scripts.error_reporting expects:
+    * JsonSchemaException
+    * JsonSchemaValueException
+    * JsonSchemaDefinitionException
+- Keep behaviour very small and import-safe.
+"""
 
-class JsonSchemaException(ValueError):
+class JsonSchemaException(Exception):
     """
-    Base exception of ``fastjsonschema`` library.
+    Base exception for JSON schema related errors.
     """
-
-
-class JsonSchemaValueException(JsonSchemaException):
-    """
-    Exception raised by validation function. Available properties:
-
-     * ``message`` containing human-readable information what is wrong (e.g. ``data.property[index] must be smaller than or equal to 42``),
-     * invalid ``value`` (e.g. ``60``),
-     * ``name`` of a path in the data structure (e.g. ``data.property[index]``),
-     * ``path`` as an array in the data structure (e.g. ``['data', 'property', 'index']``),
-     * the whole ``definition`` which the ``value`` has to fulfil (e.g. ``{'type': 'number', 'maximum': 42}``),
-     * ``rule`` which the ``value`` is breaking (e.g. ``maximum``)
-     * and ``rule_definition`` (e.g. ``42``).
-
-    .. versionchanged:: 2.14.0
-        Added all extra properties.
-    """
-
-    def __init__(self, message, value=None, name=None, definition=None, rule=None):
-        super().__init__(message)
-        self.message = message
-        self.value = value
-        self.name = name
-        self.definition = definition
-        self.rule = rule
-
-    @property
-    def path(self):
-        return [item for item in SPLIT_RE.split(self.name) if item != ""]
-
-    @property
-    def rule_definition(self):
-        if not self.rule or not self.definition:
-            return None
-        return self.definition.get(self.rule)
+    pass
 
 
 class JsonSchemaDefinitionException(JsonSchemaException):
     """
-    Exception raised by generator of validation function.
+    Raised for errors in the JSON schema *definition* itself.
+    """
+    pass
+
+
+class JsonSchemaValueException(JsonSchemaException):
+    """
+    Raised when a value does not conform to the JSON schema.
+    """
+    pass
+
+
+__all__ = [
+    "JsonSchemaException",
+    "JsonSchemaDefinitionException",
+    "JsonSchemaValueException",
+]

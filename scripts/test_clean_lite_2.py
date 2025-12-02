@@ -1,14 +1,11 @@
-import pandas as pd
-import snscrape.modules.twitter as sntwitter
+﻿from __future__ import annotations
 
-print("✅ Pandas version:", pd.__version__)
-print("✅ snscrape test:")
+'''MAGIC Week 0 shim for scripts.test_clean_lite_2.
 
-query = "AI lang:en"
-tweets = []
-for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-    tweets.append(tweet.content)
-    if i > 2:
-        break
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-print("✅ Sample tweet:", tweets[0][:80])
+from typing import Any
+
+__all__: list[str] = []

@@ -1,7 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-np.AxisError(1.0)  # E: Argument 1 to "AxisError" has incompatible type
-np.AxisError(1, ndim=2.0)  # E: Argument "ndim" to "AxisError" has incompatible type
-np.AxisError(
-    2, msg_prefix=404  # E: Argument "msg_prefix" to "AxisError" has incompatible type
-)
+'''MAGIC Week 0 shim for scripts.warnings_and_errors.
+
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

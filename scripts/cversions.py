@@ -1,14 +1,11 @@
-"""Simple script to compute the api hash of the current API.
+﻿from __future__ import annotations
 
-The API has is defined by numpy_api_order and ufunc_api_order.
+'''MAGIC Week 0 shim for scripts.cversions.
 
-"""
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-from os.path import dirname
+from typing import Any
 
-from code_generators.genapi import fullapi_hash
-from code_generators.numpy_api import full_api
-
-if __name__ == "__main__":
-    curdir = dirname(__file__)
-    print(fullapi_hash(full_api))
+__all__: list[str] = []

@@ -1,4 +1,4 @@
-# actions.py
+﻿# actions.py
 
 from .exceptions import ParseException
 from .util import col
@@ -205,3 +205,14 @@ removeQuotes = remove_quotes
 withAttribute = with_attribute
 withClass = with_class
 matchOnlyAtCol = match_only_at_col
+
+# ---- MAGIC Action shim ----
+class Action:
+    """MAGIC shim: very small stand-in used by annotations."""
+    def __init__(self, name=None, payload=None):
+        self.name = name
+        self.payload = payload
+
+    def __repr__(self) -> str:
+        return f"Action(name={self.name!r}, payload={self.payload!r})"
+# ---- end MAGIC Action shim ----

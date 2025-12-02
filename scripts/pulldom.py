@@ -1,40 +1,11 @@
-# defusedxml
-#
-# Copyright (c) 2013 by Christian Heimes <christian@python.org>
-# Licensed to PSF under a Contributor Agreement.
-# See https://www.python.org/psf/license for licensing details.
-"""Defused xml.dom.pulldom"""
-from __future__ import print_function, absolute_import
+﻿from __future__ import annotations
 
-from xml.dom.pulldom import parse as _parse
-from xml.dom.pulldom import parseString as _parseString
-from .sax import make_parser
+'''MAGIC Week 0 shim for scripts.pulldom.
 
-__origin__ = "xml.dom.pulldom"
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
+from typing import Any
 
-def parse(
-    stream_or_string,
-    parser=None,
-    bufsize=None,
-    forbid_dtd=False,
-    forbid_entities=True,
-    forbid_external=True,
-):
-    if parser is None:
-        parser = make_parser()
-        parser.forbid_dtd = forbid_dtd
-        parser.forbid_entities = forbid_entities
-        parser.forbid_external = forbid_external
-    return _parse(stream_or_string, parser, bufsize)
-
-
-def parseString(
-    string, parser=None, forbid_dtd=False, forbid_entities=True, forbid_external=True
-):
-    if parser is None:
-        parser = make_parser()
-        parser.forbid_dtd = forbid_dtd
-        parser.forbid_entities = forbid_entities
-        parser.forbid_external = forbid_external
-    return _parseString(string, parser)
+__all__: list[str] = []

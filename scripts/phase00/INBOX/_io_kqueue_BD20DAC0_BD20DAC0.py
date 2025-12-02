@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Literal
 import attrs
 import outcome
 
-from .. import _core
+from . import _core
 from ._run import _public
 from ._wakeup_socketpair import WakeupSocketpair
 

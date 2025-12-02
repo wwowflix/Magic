@@ -1,36 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-# This file is dual licensed under the terms of the Apache License, Version
-# 2.0, and the BSD License. See the LICENSE file in the root of this repository
-# for complete details.
-from cryptography.hazmat._oid import (
-    AttributeOID,
-    AuthorityInformationAccessOID,
-    CertificatePoliciesOID,
-    CRLEntryExtensionOID,
-    ExtendedKeyUsageOID,
-    ExtensionOID,
-    NameOID,
-    ObjectIdentifier,
-    OCSPExtensionOID,
-    OtherNameFormOID,
-    PublicKeyAlgorithmOID,
-    SignatureAlgorithmOID,
-    SubjectInformationAccessOID,
-)
+'''MAGIC Week 0 shim for scripts.oid.
 
-__all__ = [
-    "AttributeOID",
-    "AuthorityInformationAccessOID",
-    "CRLEntryExtensionOID",
-    "CertificatePoliciesOID",
-    "ExtendedKeyUsageOID",
-    "ExtensionOID",
-    "NameOID",
-    "OCSPExtensionOID",
-    "ObjectIdentifier",
-    "OtherNameFormOID",
-    "PublicKeyAlgorithmOID",
-    "SignatureAlgorithmOID",
-    "SubjectInformationAccessOID",
-]
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

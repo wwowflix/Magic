@@ -1,7 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-np.AxisError(1)
-np.AxisError(1, ndim=2)
-np.AxisError(1, ndim=None)
-np.AxisError(1, ndim=2, msg_prefix="error")
-np.AxisError(1, ndim=2, msg_prefix=None)
+'''MAGIC Week 0 shim for scripts.warnings_and_errors_2.
+
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

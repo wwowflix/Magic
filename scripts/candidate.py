@@ -1,34 +1,24 @@
-from pip._vendor.packaging.version import parse as parse_version
+﻿from __future__ import annotations
 
-from pip._internal.models.link import Link
-from pip._internal.utils.models import KeyBasedCompareMixin
+"""
+MAGIC stub: replacement for pip's InstallationCandidate helper.
+
+The original module depended on `pip._vendor.packaging.version`.
+For MAGIC Week 0 we only need:
+
+- imports to succeed
+- a simple data holder for a candidate (name, version, link)
+"""
+
+from dataclasses import dataclass
+from typing import Any
 
 
-class InstallationCandidate(KeyBasedCompareMixin):
-    """Represents a potential "candidate" for installation."""
+@dataclass(frozen=True)
+class InstallationCandidate:
+    name: str
+    version: str
+    link: Any | None = None
 
-    __slots__ = ["name", "version", "link"]
-
-    def __init__(self, name: str, version: str, link: Link) -> None:
-        self.name = name
-        self.version = parse_version(version)
-        self.link = link
-
-        super().__init__(
-            key=(self.name, self.version, self.link),
-            defining_class=InstallationCandidate,
-        )
-
-    def __repr__(self) -> str:
-        return "<InstallationCandidate({!r}, {!r}, {!r})>".format(
-            self.name,
-            self.version,
-            self.link,
-        )
-
-    def __str__(self) -> str:
-        return "{!r} candidate (version {} at {})".format(
-            self.name,
-            self.version,
-            self.link,
-        )
+    def __str__(self) -> str:  # pragma: no cover
+        return f"{self.name}=={self.version}"

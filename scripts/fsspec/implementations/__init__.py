@@ -1,0 +1,1 @@
+﻿# MAGIC shim implementations package

@@ -26,7 +26,7 @@ from . import base
 from scripts.constants import DataLossWarning
 from .. import constants
 from . import etree as etree_builders
-from .. import _ihatexml
+from . import _ihatexml
 
 import lxml.etree as etree
 from six import PY3, binary_type

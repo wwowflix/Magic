@@ -1,8 +1,11 @@
-import streamlit as st
+﻿from __future__ import annotations
 
-st.title("[OK] Streamlit Test App")
+'''MAGIC Week 0 shim for scripts.test_streamlit.
 
-st.write("If you see this message, Streamlit is working great!")
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-x = st.slider("Select a value", 0, 100, 25)
-st.write("You selected:", x)
+from typing import Any
+
+__all__: list[str] = []

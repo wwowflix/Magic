@@ -4,7 +4,7 @@ import os
 import sys
 from typing import TYPE_CHECKING
 
-from .. import _core, _subprocess
+from . import _core, _subprocess
 from scripts._sync import CapacityLimiter, Event
 from scripts._threads import to_thread_run_sync
 

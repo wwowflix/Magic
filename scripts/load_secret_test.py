@@ -1,15 +1,11 @@
-from vault_manager import VaultManager
+﻿from __future__ import annotations
 
+'''MAGIC Week 0 shim for scripts.load_secret_test.
 
-def main():
-    vault = VaultManager()
-    api_key = vault.load_secret("OPENAI_API_KEY")
-    if api_key:
-        print("[OK] Loaded API key successfully:")
-        print(api_key)
-    else:
-        print("? API key not found. Please save it first.")
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
+from typing import Any
 
-if __name__ == "__main__":
-    main()
+__all__: list[str] = []

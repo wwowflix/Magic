@@ -8,7 +8,7 @@ import pytest
 
 from trio.testing import Matcher, RaisesGroup
 
-from .. import _core
+from . import _core
 from scripts._core._parking_lot import GLOBAL_PARKING_LOT_BREAKER
 from scripts._sync import *
 from scripts._timeouts import sleep_forever
