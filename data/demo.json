@@ -1,0 +1,18 @@
+[
+  {
+    "module_id": "DF001",
+    "name": "Demo Data Module",
+    "category": "data_flow",
+    "phase": 2,
+    "enabled": true,
+    "tags": ["demo", "week1"]
+  },
+  {
+    "id": "DF002",
+    "title": "Legacy Name Style",
+    "type": "data_flow",
+    "phase": "2",
+    "keywords": "legacy,alt-format",
+    "enabled": false
+  }
+]
