@@ -1,0 +1,112 @@
+[
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF101",
+    "name": "Auto Data Module 101",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF102",
+    "name": "Auto Data Module 102",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF103",
+    "name": "Auto Data Module 103",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF104",
+    "name": "Auto Data Module 104",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF105",
+    "name": "Auto Data Module 105",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI101",
+    "name": "Auto AI Module 101",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI102",
+    "name": "Auto AI Module 102",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI103",
+    "name": "Auto AI Module 103",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI104",
+    "name": "Auto AI Module 104",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI105",
+    "name": "Auto AI Module 105",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  }
+]
