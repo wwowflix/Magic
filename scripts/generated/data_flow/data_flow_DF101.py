@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Any, Dict
 from scripts.data_flow_mvp import DataModule
 
-
 def build_module() -> DataModule:
     '''Return a configured DataModule instance for DF101.'''
     return DataModule(
@@ -16,7 +15,6 @@ def build_module() -> DataModule:
         enabled=True,
         tags=["week1", "auto"],
     )
-
 
 def as_dict() -> Dict[str, Any]:
     '''Return this module definition as a plain dict.'''
