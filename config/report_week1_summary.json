@@ -1,0 +1,8 @@
+{
+  "by_category": {
+    "ai_flow": 5,
+    "data_flow": 5
+  },
+  "enabled_modules": 10,
+  "total_modules": 10
+}
