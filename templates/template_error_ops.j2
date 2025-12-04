@@ -1,0 +1,29 @@
+{# MAGIC Week 1 – Error Module Template (W1D4-2)
+   This is a Jinja-style template used by the future auto-writer
+   to generate error modules bound to ErrorReport + MagicError.
+#}
+
+from __future__ import annotations
+
+from typing import Any, Dict
+from scripts.error_flow_mvp import MagicError, ErrorReport, log_error
+
+
+class {{ class_name }}(MagicError):
+    """
+    Auto-generated error for {{ error_code }}.
+
+    {{ docstring }}
+    """
+    pass
+
+
+def build_error_report(context: Dict[str, Any] | None = None) -> ErrorReport:
+    """
+    Build a standardised ErrorReport for {{ error_code }}.
+    """
+    exc = {{ class_name }}("{{ default_message }}")
+    ctx: Dict[str, Any] = dict(context or {})
+    ctx.setdefault("error_code", "{{ error_code }}")
+    ctx.setdefault("severity", "{{ severity }}")
+    return log_error(exc, kind="{{ kind }}", context=ctx)
