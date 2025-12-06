@@ -1,52 +1,117 @@
-﻿# MAGIC Week 1 – Spine Runner (W1D3-3)
-# Runs all Week-1 smoketests together as a single sanity check.
-
-Set-StrictMode -Version Latest
-Set-Location E:\MAGIC
-
-Write-Host ""
-Write-Host "===== MAGIC Week 1 – Spine Runner (W1D3-3) =====" -ForegroundColor Cyan
-Write-Host "Running all Week-1 smoketests..." -ForegroundColor Cyan
-
-$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
-
-$tests = $tests = @(
-  # Data flows
-  "tests/smoke/test_data_smoke.py",
-  "tests/smoke/test_data_generated_smoke.py",
-
-  # AI flows
-  "tests/smoke/test_ai_flow_mvp.py",
-  "tests/smoke/test_ai_generated_smoke.py",
-
-  # Registry + manifest
-  "tests/smoke/test_flow_registry.py",
-  "tests/smoke/test_flow_manifest.py",
-
-  # Error flows (new)
-  "tests/smoke/test_error_flow_mvp.py",
-  "tests/smoke/test_error_template_smoke.py",
-  "tests/smoke/test_error_generated_smoke.py"
+﻿param(
+    [string]$Python = "python"
 )
 
+# ---------------------------------------------------------------------------
+# Locate repo root relative to this script (tools/ops  tools  repo root)
+# ---------------------------------------------------------------------------
+$scriptDir = $PSScriptRoot
+$toolsDir  = Split-Path $scriptDir -Parent
+$repoRoot  = Split-Path $toolsDir -Parent
 
-$pytestArgs = @()
-$pytestArgs += $tests
-$pytestArgs += "-q"
+Set-Location $repoRoot
+
+$manifestPath = Join-Path $repoRoot "config\flow_manifest_week1.json"
+$summaryPath  = Join-Path $repoRoot "config\report_week1_summary.json"
+
+if (-not (Test-Path $manifestPath)) {
+    Write-Host "Week-1: manifest not found at $manifestPath" -ForegroundColor Red
+    exit 1
+}
+
+# ---------------------------------------------------------------------------
+# Load manifest
+# ---------------------------------------------------------------------------
+$raw = Get-Content -LiteralPath $manifestPath -Raw
+$flows = $raw | ConvertFrom-Json
+
+if ($flows -isnot [System.Collections.IEnumerable]) {
+    $flows = @($flows)
+}
+
+$results = @()
+
+# ---------------------------------------------------------------------------
+# Run each enabled flow
+# ---------------------------------------------------------------------------
+foreach ($flow in $flows) {
+    if (-not $flow.enabled) {
+        continue
+    }
+
+    $id        = $flow.id
+    $scriptRel = $flow.script
+    $category  = $flow.category
+
+    $scriptPath = Join-Path $repoRoot $scriptRel
+
+    if (-not (Test-Path $scriptPath)) {
+        Write-Host "[$id] MISSING script: $scriptPath" -ForegroundColor Red
+        $results += [pscustomobject]@{
+            id          = $id
+            script      = $scriptRel
+            category    = $category
+            status      = "missing"
+            duration_ms = 0
+            error       = "Script not found"
+        }
+        continue
+    }
+
+    Write-Host "[$id] Running $scriptRel ..." -ForegroundColor Cyan
+
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $status = "ok"
+    $errorMsg = $null
+
+    try {
+        & $Python $scriptPath
+        $exitCode = $LASTEXITCODE
+        if ($exitCode -ne 0) {
+            $status = "fail"
+            $errorMsg = "Exit code $exitCode"
+        }
+    }
+    catch {
+        $status = "fail"
+        $errorMsg = $_.Exception.Message
+    }
+    finally {
+        $sw.Stop()
+    }
+
+    Write-Host "[$id] status=$status, duration=${($sw.ElapsedMilliseconds)}ms"
+
+    $results += [pscustomobject]@{
+        id          = $id
+        script      = $scriptRel
+        category    = $category
+        status      = $status
+        duration_ms = $sw.ElapsedMilliseconds
+        error       = $errorMsg
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Build summary JSON
+# ---------------------------------------------------------------------------
+$total = $results.Count
+$ok    = ($results | Where-Object { $_.status -eq "ok" }).Count
+$fail  = ($results | Where-Object { $_.status -eq "fail" }).Count
+$missing = ($results | Where-Object { $_.status -eq "missing" }).Count
+
+$summary = [pscustomobject]@{
+    total_flows = $total
+    successful  = $ok
+    failed      = $fail
+    missing     = $missing
+    last_run    = (Get-Date).ToString("o")
+    flows       = $results
+}
+
+$summaryJson = $summary | ConvertTo-Json -Depth 6
+$summaryJson | Set-Content -LiteralPath $summaryPath -Encoding UTF8
 
 Write-Host ""
-Write-Host ">>> Running:" ($pytestArgs -join " ") "`n"
-
-pytest @pytestArgs
-$exit = $LASTEXITCODE
-
-Write-Host ""
-
-if ($exit -eq 0) {
-    Write-Host ">>> Week-1 Spine Runner PASSED — all smoketests green. " -ForegroundColor Green
-    exit 0
-}
-else {
-    Write-Host ">>> Week-1 Spine Runner FAILED — see failure above. " -ForegroundColor Red
-    exit $exit
-}
+Write-Host "Week-1 summary: total=$total, ok=$ok, failed=$fail, missing=$missing" -ForegroundColor Green
+Write-Host "Summary written to $summaryPath"
