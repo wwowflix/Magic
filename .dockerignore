@@ -1,33 +1,39 @@
-﻿# MAGIC .dockerignore
-
-# Python virtualenv
+﻿# Ignore local environment & tooling
 venv/
+.git/
+.github/
+.idea/
+.vscode/
+*.code-workspace
 
-# Git metadata
-.git
-.gitignore
-
-# Python cache
-__pycache__/
+# Caches & compiled files
 **/__pycache__/
-*.py[cod]
-
-# Test + local tooling (not needed inside image for now)
-tests/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.tox/
+.cache/
 htmlcov/
-.coverage
-
-# Outputs / logs / temp
-outputs/
-logs/
 dist/
 build/
-*.log
-*.tmp
 
-# IDE / OS junk
-.vscode/
-.idea/
-*.swp
+# Local outputs / logs / backups
+outputs/
+logs/
+backups/
+.backups/
+reports/
+coverage/
+tmp/
+temp/
+
+# OS/filesystem junk
+.DS_Store
 Thumbs.db
-Desktop.ini
+
+# Not needed for container baseline
+tests/
+notebooks/
+docs/
+*.ipynb
