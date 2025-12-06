@@ -1,20 +1,16 @@
-﻿# Use official slim Python image
-FROM python:3.13-slim
+﻿FROM python:3.13-slim
 
-# Set working directory inside the container
 WORKDIR /MAGIC
 
-# Copy everything from your project folder into the container
+# Copy project files into the image
 COPY . .
 
-# Pip settings to be more forgiving on slow / flaky networks
-ENV PIP_DEFAULT_TIMEOUT=600 \
-    PIP_RETRIES=10 \
-    PIP_NO_CACHE_DIR=1
+# Make pip more robust inside Docker
+ENV PIP_DEFAULT_TIMEOUT=300 \
+    PIP_RETRIES=5
 
-# Install dependencies (best-effort)
-RUN python -m pip install --upgrade pip && \
-    python -m pip install --no-cache-dir -r requirements.lock.txt || true
+# Install only the slim dependency set for Docker
+RUN python -m pip install --no-cache-dir -r requirements.docker.txt
 
-# Default command (you can adjust later if you like)
-CMD ["python", "-m", "pytest", "-q", "tests/smoke"]
+# Default command: just show Python version so container does something harmless by default
+CMD ["python", "--version"]
