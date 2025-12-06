@@ -10,14 +10,25 @@ Write-Host "Running all Week-1 smoketests..." -ForegroundColor Cyan
 
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
 
-$tests = @(
-    "tests/smoke/test_data_smoke.py",
-    "tests/smoke/test_data_generated_smoke.py",
-    "tests/smoke/test_ai_flow_mvp.py",
-    "tests/smoke/test_ai_generated_smoke.py",
-    "tests/smoke/test_flow_registry.py",
-    "tests/smoke/test_flow_manifest.py"
+$tests = $tests = @(
+  # Data flows
+  "tests/smoke/test_data_smoke.py",
+  "tests/smoke/test_data_generated_smoke.py",
+
+  # AI flows
+  "tests/smoke/test_ai_flow_mvp.py",
+  "tests/smoke/test_ai_generated_smoke.py",
+
+  # Registry + manifest
+  "tests/smoke/test_flow_registry.py",
+  "tests/smoke/test_flow_manifest.py",
+
+  # Error flows (new)
+  "tests/smoke/test_error_flow_mvp.py",
+  "tests/smoke/test_error_template_smoke.py",
+  "tests/smoke/test_error_generated_smoke.py"
 )
+
 
 $pytestArgs = @()
 $pytestArgs += $tests
