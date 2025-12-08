@@ -1,82 +1,112 @@
-﻿[
-    {
-        "id":  "data-mvp",
-        "script":  "tools/mvp/data_flow_mvp.py",
-        "category":  "data",
-        "enabled":  true
-    },
-    {
-        "id":  "ai-mvp",
-        "script":  "tools/mvp/ai_flow_mvp.py",
-        "category":  "ai",
-        "enabled":  true
-    },
-    {
-        "id":  "file-mvp",
-        "script":  "tools/mvp/file_flow_mvp.py",
-        "category":  "file",
-        "enabled":  true
-    },
-    {
-        "id":  "error-mvp",
-        "script":  "tools/mvp/error_mvp.py",
-        "category":  "error",
-        "enabled":  true
-    },
-    {
-        "id":  "reporting-mvp",
-        "script":  "tools/mvp/reporting_mvp.py",
-        "category":  "reporting",
-        "enabled":  true
-    },
-    {
-        "id":  "DF101",
-        "script":  "tools/mvp/data_flow_DF101.py",
-        "category":  "data"
-    },
-    {
-        "id":  "DF102",
-        "script":  "tools/mvp/data_flow_DF102.py",
-        "category":  "data"
-    },
-    {
-        "id":  "DF103",
-        "script":  "tools/mvp/data_flow_DF103.py",
-        "category":  "data"
-    },
-    {
-        "id":  "DF104",
-        "script":  "tools/mvp/data_flow_DF104.py",
-        "category":  "data"
-    },
-    {
-        "id":  "DF105",
-        "script":  "tools/mvp/data_flow_DF105.py",
-        "category":  "data"
-    },
-    {
-        "id":  "AI101",
-        "script":  "tools/mvp/ai_flow_AI101.py",
-        "category":  "ai"
-    },
-    {
-        "id":  "AI102",
-        "script":  "tools/mvp/ai_flow_AI102.py",
-        "category":  "ai"
-    },
-    {
-        "id":  "AI103",
-        "script":  "tools/mvp/ai_flow_AI103.py",
-        "category":  "ai"
-    },
-    {
-        "id":  "AI104",
-        "script":  "tools/mvp/ai_flow_AI104.py",
-        "category":  "ai"
-    },
-    {
-        "id":  "AI105",
-        "script":  "tools/mvp/ai_flow_AI105.py",
-        "category":  "ai"
-    }
+[
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF101",
+    "name": "Auto Data Module 101",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF102",
+    "name": "Auto Data Module 102",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF103",
+    "name": "Auto Data Module 103",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF104",
+    "name": "Auto Data Module 104",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "data_flow",
+    "enabled": true,
+    "module_id": "DF105",
+    "name": "Auto Data Module 105",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI101",
+    "name": "Auto AI Module 101",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI102",
+    "name": "Auto AI Module 102",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI103",
+    "name": "Auto AI Module 103",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI104",
+    "name": "Auto AI Module 104",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  },
+  {
+    "category": "ai_flow",
+    "enabled": true,
+    "module_id": "AI105",
+    "name": "Auto AI Module 105",
+    "phase": 2,
+    "tags": [
+      "week1",
+      "auto"
+    ]
+  }
 ]
