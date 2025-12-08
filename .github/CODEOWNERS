@@ -1,3 +1,14 @@
 * @wwowflix
 /scripts/phase11/ @wwowflix
 /tools/ @wwowflix
+# Default owner – you own everything
+*                               @wwowflix
+
+# Core Python code
+/scripts/                        @wwowflix
+/tools/                          @wwowflix
+/tests/                          @wwowflix
+
+# Docs + config
+/docs/                           @wwowflix
+/config/                         @wwowflix
