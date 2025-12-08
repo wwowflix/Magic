@@ -2,7 +2,7 @@
 &gt;       mod = importlib.import_module("scripts._diffcommand")
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tests\smoke\test_smoke_scripts__diffcommand.py:5: 
+tests\smoke\test_smoke_scripts__diffcommand.py:5:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 C:\Users\HP\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
     return _bootstrap._gcd_import(name[level:], package, level)
@@ -24,32 +24,32 @@ scripts\_diffcommand.py:5: in &lt;module&gt;
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     # cython: language_level=3
-    
+
     try:
         import cython
     except ImportError:
-    
+
         class fake_cython:
             compiled = False
-    
+
             def cfunc(self, func):
                 return func
-    
+
             def cclass(self, func):
                 return func
-    
+
             def declare(self, _, value):
                 return value
-    
+
             def __getattr__(self, type_name):
                 return "object"
-    
+
         cython = fake_cython()
-    
+
     try:
         from . import _difflib as difflib
         import inspect
-    
+
         if inspect.isfunction(difflib.get_close_matches):
             raise ImportError(
                 "Embedded difflib is not compiled to a fast binary, using the stdlib instead."
@@ -57,28 +57,28 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         from cython.cimports.lxml.html._difflib import SequenceMatcher
     except ImportError:
         import difflib
-    
+
         if not cython.compiled:
             from difflib import SequenceMatcher
-    
+
     import itertools
     import functools
     import operator
     import re
-    
+
     from lxml import etree
     from lxml.html import fragment_fromstring
     from . import defs
-    
+
     __all__ = ["html_annotate", "htmldiff"]
-    
+
     group_by_first_item = functools.partial(itertools.groupby, key=operator.itemgetter(0))
-    
+
     ############################################################
     ## Annotation
     ############################################################
-    
-    
+
+
     @cython.cfunc
     def html_escape(
         text: str, _escapes: tuple = ("&amp;amp;", "&amp;lt;", "&amp;gt;", "&amp;quot;", "&amp;#x27;")
@@ -93,40 +93,40 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             replace[2] |= ch == "&gt;"
             replace[3] |= ch == '"'
             replace[4] |= ch == "'"
-    
+
         for i in range(5):
             if replace[i]:
                 text = text.replace("&amp;&lt;&gt;\"'"[i], _escapes[i])
-    
+
         return text
-    
-    
+
+
     if not cython.compiled:
         from html import escape as html_escape
-    
-    
+
+
     def default_markup(text, version):
         return '&lt;span title="%s"&gt;%s&lt;/span&gt;' % (html_escape(version), text)
-    
-    
+
+
     def html_annotate(doclist, markup=default_markup):
         """
         doclist should be ordered from oldest to newest, like::
-    
+
             &gt;&gt;&gt; version1 = 'Hello World'
             &gt;&gt;&gt; version2 = 'Goodbye World'
             &gt;&gt;&gt; print(html_annotate([(version1, 'version 1'),
             ...                      (version2, 'version 2')]))
             &lt;span title="version 2"&gt;Goodbye&lt;/span&gt; &lt;span title="version 1"&gt;World&lt;/span&gt;
-    
+
         The documents must be *fragments* (str/UTF8 or unicode), not
         complete documents
-    
+
         The markup argument is a function to markup the spans of words.
         This function is called like markup('Hello', 'version 2'), and
         returns HTML.  The first argument is text and never includes any
         markup.  The default uses a span with a title:
-    
+
             &gt;&gt;&gt; print(default_markup('Some Text', 'by Joe'))
             &lt;span title="by Joe"&gt;Some Text&lt;/span&gt;
         """
@@ -140,37 +140,37 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         for tokens in tokenlist[1:]:
             html_annotate_merge_annotations(cur_tokens, tokens)
             cur_tokens = tokens
-    
+
         # After we've tracked all the tokens, we can combine spans of text
         # that are adjacent and have the same annotation
         cur_tokens = compress_tokens(cur_tokens)
         # And finally add markup
         result = markup_serialize_tokens(cur_tokens, markup)
         return "".join(result).strip()
-    
-    
+
+
     def tokenize_annotated(doc, annotation):
         """Tokenize a document and add an annotation attribute to each token"""
         tokens = tokenize(doc, include_hrefs=False)
         for tok in tokens:
             tok.annotation = annotation
         return tokens
-    
-    
+
+
     def html_annotate_merge_annotations(tokens_old, tokens_new):
         """Merge the annotations from tokens_old into tokens_new, when the
         tokens in the new document already existed in the old document.
         """
         s = InsensitiveSequenceMatcher(a=tokens_old, b=tokens_new)
         commands = s.get_opcodes()
-    
+
         for command, i1, i2, j1, j2 in commands:
             if command == "equal":
                 eq_old = tokens_old[i1:i2]
                 eq_new = tokens_new[j1:j2]
                 copy_annotations(eq_old, eq_new)
-    
-    
+
+
     def copy_annotations(src, dest):
         """
         Copy annotations from the tokens listed in src to the tokens in dest
@@ -178,8 +178,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         assert len(src) == len(dest)
         for src_tok, dest_tok in zip(src, dest):
             dest_tok.annotation = src_tok.annotation
-    
-    
+
+
     def compress_tokens(tokens):
         """
         Combine adjacent tokens when there is no HTML between the tokens,
@@ -196,8 +196,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             else:
                 result.append(tok)
         return result
-    
-    
+
+
     @cython.cfunc
     def compress_merge_back(tokens: list, tok):
         """Merge tok into the last element of tokens (modifying the list of
@@ -215,8 +215,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             )
             merged.annotation = last.annotation
             tokens[-1] = merged
-    
-    
+
+
     def markup_serialize_tokens(tokens, markup_func):
         """
         Serialize the list of tokens into a list of text chunks, calling
@@ -228,23 +228,23 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             html = markup_func(html, token.annotation) + token.trailing_whitespace
             yield html
             yield from token.post_tags
-    
-    
+
+
     ############################################################
     ## HTML Diffs
     ############################################################
-    
-    
+
+
     def htmldiff(old_html, new_html):
         ## FIXME: this should take parsed documents too, and use their body
         ## or other content.
         """Do a diff of the old and new document.  The documents are HTML
         *fragments* (str/UTF8 or unicode), they are not complete documents
         (i.e., no &lt;html&gt; tag).
-    
+
         Returns HTML with &lt;ins&gt; and &lt;del&gt; tags added around the
         appropriate text.
-    
+
         Markup is generally ignored, with the markup from new_html
         preserved, and possibly some markup from old_html (though it is
         considered acceptable to lose some of the old markup).  Only the
@@ -261,8 +261,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             print(exc)
             result = ""
         return fixup_ins_del_tags(result)
-    
-    
+
+
     def htmldiff_tokens(html1_tokens, html2_tokens):
         """Does a diff on the tokens themselves, returning a list of text
         chunks (not tokens).
@@ -293,16 +293,16 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             if command == "delete" or command == "replace":
                 del_tokens = expand_tokens(html1_tokens[i1:i2])
                 merge_delete(del_tokens, result)
-    
+
         # If deletes were inserted directly as &lt;del&gt; then we'd have an
         # invalid document at this point.  Instead we put in special
         # markers, and when the complete diffed document has been created
         # we try to move the deletes around and resolve any problems.
         cleanup_delete(result)
-    
+
         return result
-    
-    
+
+
     def expand_tokens(tokens, equal=False):
         """Given a list of tokens, return a generator of the chunks of
         text for the data in the tokens.
@@ -312,20 +312,20 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             if not equal or not token.hide_when_equal:
                 yield token.html() + token.trailing_whitespace
             yield from token.post_tags
-    
-    
+
+
     def merge_insert(ins_chunks, doc: list):
         """doc is the already-handled document (as a list of text chunks);
         here we add &lt;ins&gt;ins_chunks&lt;/ins&gt; to the end of that."""
         # Though we don't throw away unbalanced start/end tags
         # (we assume there is accompanying markup later or earlier in the
         # document), we only put &lt;ins&gt; around the balanced portion.
-    
+
         # Legacy note: We make a choice here. Originally, we merged all sequences of
         # unbalanced tags together into separate start and end tag groups. Now, we look at
         # each sequence separately, leading to more fine-grained diffs but different
         # tag structure than before.
-    
+
         item: tuple
         for balanced, marked_chunks in group_by_first_item(mark_unbalanced(ins_chunks)):
             chunks = [item[1] for item in marked_chunks]
@@ -342,16 +342,16 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             else:
                 # unmatched start or end
                 doc.extend(chunks)
-    
-    
+
+
     @cython.cfunc
     def tag_name_of_chunk(chunk: str) -&gt; str:
         i: cython.Py_ssize_t
         ch: cython.Py_UCS4
-    
+
         if chunk[0] != "&lt;":
             return ""
-    
+
         start_pos = 1
         for i, ch in enumerate(chunk):
             if ch == "/":
@@ -360,49 +360,49 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 return chunk[start_pos:i]
             elif ch.isspace():
                 return chunk[start_pos:i]
-    
+
         return chunk[start_pos:]
-    
-    
+
+
     if not cython.compiled:
         # Avoid performance regression in Python due to string iteration.
         def tag_name_of_chunk(chunk: str) -&gt; str:
             return chunk.split(None, 1)[0].strip("&lt;&gt;/")
-    
-    
+
+
     # These are sentinels to represent the start and end of a &lt;del&gt;
     # segment, until we do the cleanup phase to turn them into proper
     # markup:
     class DEL_START:
         pass
-    
-    
+
+
     class DEL_END:
         pass
-    
-    
+
+
     def merge_delete(del_chunks, doc: list):
         """Adds the text chunks in del_chunks to the document doc (another
         list of text chunks) with marker to show it is a delete.
         cleanup_delete later resolves these markers into &lt;del&gt; tags."""
-    
+
         doc.append(DEL_START)
         doc.extend(del_chunks)
         doc.append(DEL_END)
-    
-    
+
+
     def cleanup_delete(chunks: list):
         """Cleans up any DEL_START/DEL_END markers in the document, replacing
         them with &lt;del&gt;&lt;/del&gt;.  To do this while keeping the document
         valid, it may need to drop some tags (either start or end tags).
-    
+
         It may also move the del into adjacent tags to try to move it to a
         similar location where it was originally located (e.g., moving a
         delete into preceding &lt;div&gt; tag, if the del looks like (DEL_START,
         'Text&lt;/div&gt;', DEL_END)
         """
         chunk_count = len(chunks)
-    
+
         i: cython.Py_ssize_t
         del_start: cython.Py_ssize_t
         del_end: cython.Py_ssize_t
@@ -413,7 +413,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         pos: cython.Py_ssize_t
         start_pos: cython.Py_ssize_t
         chunk: str
-    
+
         start_pos = 0
         while 1:
             # Find a pending DEL_START/DEL_END, splitting the document
@@ -426,11 +426,11 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 break
             else:
                 del_end = chunks.index(DEL_END, del_start + 1)
-    
+
             shift_end_left = shift_start_right = 0
             unbalanced_start = unbalanced_end = 0
             deleted_chunks = mark_unbalanced(chunks[del_start + 1 : del_end])
-    
+
             # For unbalanced start tags at the beginning, find matching (non-deleted)
             # end tags after the current DEL_END and move the start tag outside.
             for balanced, del_chunk in deleted_chunks:
@@ -455,7 +455,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                         break
                     # Exclude start tag to balance the end tag.
                     shift_start_right += 1
-    
+
             # For unbalanced end tags at the end, find matching (non-deleted)
             # start tags before the currend DEL_START and move the end tag outside.
             for balanced, del_chunk in reversed(deleted_chunks):
@@ -479,10 +479,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                         break
                     # Exclude end tag to balance the start tag.
                     shift_end_left += 1
-    
+
             """
             # This is what we do below in loops, spelled out using slicing and list copying:
-    
+
             chunks[del_start - shift_end_left : del_end + shift_start_right + 1] = [
                 *chunks[del_start + 1: del_start + shift_start_right + 1],
                 '&lt;del&gt;',
@@ -490,11 +490,11 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 '&lt;/del&gt; ',
                 *chunks[del_end - shift_end_left: del_end],
             ]
-    
+
             new_del_end = del_end - 2 * shift_end_left
             assert chunks[new_del_end] == '&lt;/del&gt; '
             del_end = new_del_end
-    
+
             if new_del_start &gt; 0 and not chunks[new_del_start - 1].endswith(' '):
                 # Fix up case where the word before us didn't have a trailing space.
                 chunks[new_del_start - 1] += ' '
@@ -528,26 +528,26 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             # Adjust the length of the processed part in 'chunks'.
             del chunks[pos : del_end + shift_start_right + 1]
             start_pos = pos
-    
-    
+
+
     @cython.cfunc
     def mark_unbalanced(chunks) -&gt; list:
         tag_stack = []
         marked = []
-    
+
         chunk: str
         parents: list
-    
+
         for chunk in chunks:
             if not chunk.startswith("&lt;"):
                 marked.append(("b", chunk))
                 continue
-    
+
             name = tag_name_of_chunk(chunk)
             if name in empty_tags:
                 marked.append(("b", chunk))
                 continue
-    
+
             if chunk[1] == "/":
                 # closing tag found, unwind tag stack
                 while tag_stack:
@@ -565,7 +565,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                         parents.append(("us", start_chunk))
                         parents.extend(marked)
                         marked = parents
-    
+
                 if chunk is not None:
                     # unmatched end tag left after clearing the stack
                     marked.append(("ue", chunk))
@@ -573,17 +573,17 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 # new start tag found
                 tag_stack.append((name, chunk, marked))
                 marked = []
-    
+
         # add any unbalanced start tags
         while tag_stack:
             _, start_chunk, parents = tag_stack.pop()
             parents.append(("us", start_chunk))
             parents.extend(marked)
             marked = parents
-    
+
         return marked
-    
-    
+
+
     class token(str):
         """Represents a diffable token, generally a word that is displayed to
         the user.  Opening tags are attached to this token when they are
@@ -591,25 +591,25 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         (post_tags).  Some exceptions occur when there are empty tags
         adjacent to a word, so there may be close tags in pre_tags, or
         open tags in post_tags.
-    
+
         We also keep track of whether the word was originally followed by
         whitespace, even though we do not want to treat the word as
         equivalent to a similar word that does not have a trailing
         space."""
-    
+
         # When this is true, the token will be eliminated from the
         # displayed diff if no change has occurred:
         hide_when_equal = False
-    
+
         def __new__(cls, text, pre_tags=None, post_tags=None, trailing_whitespace=""):
             obj = str.__new__(cls, text)
-    
+
             obj.pre_tags = pre_tags if pre_tags is not None else []
             obj.post_tags = post_tags if post_tags is not None else []
             obj.trailing_whitespace = trailing_whitespace
-    
+
             return obj
-    
+
         def __repr__(self):
             return "token(%s, %r, %r, %r)" % (
                 str.__repr__(self),
@@ -617,16 +617,16 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 self.post_tags,
                 self.trailing_whitespace,
             )
-    
+
         def html(self):
             return str(self)
-    
-    
+
+
     class tag_token(token):
         """Represents a token that is actually a tag.  Currently this is just
         the &lt;img&gt; tag, which takes up visible space just like a word but
         is only represented in a document by a tag."""
-    
+
         def __new__(
             cls, tag, data, html_repr, pre_tags=None, post_tags=None, trailing_whitespace=""
         ):
@@ -641,7 +641,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             obj.data = data
             obj.html_repr = html_repr
             return obj
-    
+
         def __repr__(self):
             return (
                 "tag_token(%s, %s, html_repr=%s, post_tags=%r, pre_tags=%r, trailing_whitespace=%r)"
@@ -654,34 +654,34 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                     self.trailing_whitespace,
                 )
             )
-    
+
         def html(self):
             return self.html_repr
-    
-    
+
+
     class href_token(token):
         """Represents the href in an anchor tag.  Unlike other words, we only
         show the href when it changes."""
-    
+
         hide_when_equal = True
-    
+
         def html(self):
             return " Link: %s" % self
-    
-    
+
+
     def tokenize(html, include_hrefs=True):
         """
         Parse the given HTML and returns token objects (words with attached tags).
-    
+
         This parses only the content of a page; anything in the head is
         ignored, and the &lt;head&gt; and &lt;body&gt; elements are themselves
         optional.  The content is then parsed by lxml, which ensures the
         validity of the resulting parsed document (though lxml may make
         incorrect guesses when the markup is particular bad).
-    
+
         &lt;ins&gt; and &lt;del&gt; tags are also eliminated from the document, as
         that gets confusing.
-    
+
         If include_hrefs is true, then the href attribute of &lt;a&gt; tags is
         included as a special kind of diffable token."""
         if etree.iselement(html):
@@ -692,13 +692,13 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         chunks = flatten_el(body_el, skip_tag=True, include_hrefs=include_hrefs)
         # Finally re-joining them into token objects:
         return fixup_chunks(chunks)
-    
-    
+
+
     def parse_html(html, cleanup=True):
         """
         Parses an HTML fragment, returning an lxml element.  Note that the HTML will be
         wrapped in a &lt;div&gt; tag that was not in the original document.
-    
+
         If cleanup is true, make sure there's no &lt;head&gt; or &lt;body&gt;, and get
         rid of any &lt;ins&gt; and &lt;del&gt; tags.
         """
@@ -706,13 +706,13 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             # This removes any extra markup or structure like &lt;head&gt;:
             html = cleanup_html(html)
         return fragment_fromstring(html, create_parent=True)
-    
-    
+
+
     _search_body = re.compile(r"&lt;body.*?&gt;", re.I | re.S).search
     _search_end_body = re.compile(r"&lt;/body.*?&gt;", re.I | re.S).search
     _replace_ins_del = re.compile(r"&lt;/?(ins|del).*?&gt;", re.I | re.S).sub
-    
-    
+
+
     def cleanup_html(html):
         """This 'cleans' the HTML, meaning that any page structure is removed
         (only the contents of &lt;body&gt; are used, if there is any &lt;body).
@@ -725,16 +725,16 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             html = html[: match.start()]
         html = _replace_ins_del("", html)
         return html
-    
-    
+
+
     def split_trailing_whitespace(word):
         """
         This function takes a word, such as 'test\n\n' and returns ('test','\n\n')
         """
         stripped_length = len(word.rstrip())
         return word[0:stripped_length], word[stripped_length:]
-    
-    
+
+
     def fixup_chunks(chunks):
         """
         This function takes a list of chunks and produces a list of tokens.
@@ -756,14 +756,14 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                     )
                     tag_accum = []
                     result.append(cur_word)
-    
+
                 elif chunk[0] == "href":
                     href = chunk[1]
                     cur_word = href_token(href, pre_tags=tag_accum, trailing_whitespace=" ")
                     tag_accum = []
                     result.append(cur_word)
                 continue
-    
+
             if is_word(chunk):
                 chunk, trailing_whitespace = split_trailing_whitespace(chunk)
                 cur_word = token(
@@ -771,10 +771,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                 )
                 tag_accum = []
                 result.append(cur_word)
-    
+
             elif is_start_tag(chunk):
                 tag_accum.append(chunk)
-    
+
             elif is_end_tag(chunk):
                 if tag_accum:
                     tag_accum.append(chunk)
@@ -790,18 +790,18 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                     cur_word.post_tags.append(chunk)
             else:
                 assert False
-    
+
         if not result:
             return [token("", pre_tags=tag_accum)]
         else:
             result[-1].post_tags.extend(tag_accum)
-    
+
         return result
-    
-    
+
+
     # All the tags in HTML that don't require end tags:
     empty_tags = cython.declare(frozenset, defs.empty_tags)
-    
+
     block_level_tags = cython.declare(
         frozenset,
         frozenset(
@@ -833,7 +833,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             ]
         ),
     )
-    
+
     block_level_container_tags = cython.declare(
         frozenset,
         frozenset(
@@ -851,17 +851,17 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             ]
         ),
     )
-    
+
     any_block_level_tag = cython.declare(
         tuple, tuple(sorted(block_level_tags | block_level_container_tags))
     )
-    
-    
+
+
     def flatten_el(el, include_hrefs, skip_tag=False):
         """Takes an lxml element el, and generates all the text chunks for
         that tag.  Each start tag is a chunk, each word is a chunk, and each
         end tag is a chunk.
-    
+
         If skip_tag is true, then the outermost container tag is
         not returned (just its contents)."""
         if not skip_tag:
@@ -883,24 +883,24 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             end_words = split_words(el.tail)
             for word in end_words:
                 yield html_escape(word)
-    
-    
+
+
     _find_words = re.compile(r"\S+(?:\s+|$)", re.U).findall
-    
-    
+
+
     def split_words(text):
         """Splits some text into words. Includes trailing whitespace
         on each word when appropriate."""
         if not text or not text.strip():
             return []
-    
+
         words = _find_words(text)
         return words
-    
-    
+
+
     _has_start_whitespace = re.compile(r"^[ \t\n\r]").match
-    
-    
+
+
     def start_tag(el):
         """
         The text representation of the start tag for a tag.
@@ -909,28 +909,28 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             [f' {name}="{html_escape(value)}"' for name, value in el.attrib.items()]
         )
         return f"&lt;{el.tag}{attributes}&gt;"
-    
-    
+
+
     def end_tag(el):
         """The text representation of an end tag for a tag.  Includes
         trailing whitespace when appropriate."""
         tail = el.tail
         extra = " " if tail and _has_start_whitespace(tail) else ""
         return f"&lt;/{el.tag}&gt;{extra}"
-    
-    
+
+
     def is_word(tok):
         return not tok.startswith("&lt;")
-    
-    
+
+
     def is_end_tag(tok):
         return tok.startswith("&lt;/")
-    
-    
+
+
     def is_start_tag(tok):
         return tok.startswith("&lt;") and not tok.startswith("&lt;/")
-    
-    
+
+
     def fixup_ins_del_tags(html):
         """Given an html string, move any &lt;ins&gt; or &lt;del&gt; tags inside of any
         block-level elements, e.g. transform &lt;ins&gt;&lt;p&gt;word&lt;/p&gt;&lt;/ins&gt; to
@@ -939,12 +939,12 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         _fixup_ins_del_tags(doc)
         html = serialize_html_fragment(doc, skip_outer=True)
         return html
-    
-    
+
+
     def serialize_html_fragment(el, skip_outer=False):
         """Serialize a single lxml element as HTML.  The serialized form
         includes the elements tail.
-    
+
         If skip_outer is true, then don't serialize the outermost tag
         """
         assert not isinstance(
@@ -959,8 +959,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             return html.strip()
         else:
             return html
-    
-    
+
+
     @cython.cfunc
     def _fixup_ins_del_tags(doc):
         """fixup_ins_del_tags that works on an lxml document in-place"""
@@ -970,16 +970,16 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             _move_el_inside_block(el, tag=el.tag)
             el.drop_tag()
             # _merge_element_contents(el)
-    
-    
+
+
     @cython.cfunc
     def _contains_block_level_tag(el):
         """True if the element contains any block-level elements, like &lt;p&gt;, &lt;td&gt;, etc."""
         for el in el.iter(*any_block_level_tag):
             return True
         return False
-    
-    
+
+
     @cython.cfunc
     def _move_el_inside_block(el, tag):
         """helper for _fixup_ins_del_tags; actually takes the &lt;ins&gt; etc tags
@@ -996,7 +996,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             children_tag.extend(iter(el))
             el[:] = [children_tag]
             return
-    
+
         for child in list(el):
             if _contains_block_level_tag(child):
                 _move_el_inside_block(child, tag)
@@ -1014,8 +1014,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             text_tag.text = el.text
             el.text = None
             el.insert(0, text_tag)
-    
-    
+
+
     def _merge_element_contents(el):
         """
         Removes an element, but merges its contents into its place, e.g.,
@@ -1038,8 +1038,8 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             else:
                 previous.tail = (previous.tail or "") + text
         parent[index : index + 1] = el.getchildren()
-    
-    
+
+
 &gt;   @cython.final
      ^^^^^^^^^^^^
 E   TypeError: 'str' object is not callable

@@ -1,4 +1,4 @@
-﻿"""
+"""
 Minimal shim for wordcloud.WordCloud for Week 0 import tests.
 
 This is only to satisfy imports in scripts.charts_2 without
