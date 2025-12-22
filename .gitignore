@@ -223,3 +223,17 @@ _quarantine_shadowing/
 *.magic_bak*
 cleanup_odd_files.ps1
 tools/find_selenium_poisoner.py
+# --- local-only / generated ---
+tools/reports/
+review/
+_quarantine_shadowing/
+
+# --- generated smoke + probe artifacts ---
+smoke_*.txt
+smoke_last_run.txt
+smoke_failed_tests.txt
+probe_*.py
+missing_modules.txt
+
+# --- patch backups ---
+*.magic_bak*
