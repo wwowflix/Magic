@@ -1,21 +1,14 @@
-from pathlib import Path
-import numpy as np
+"""
+MAGIC Week 0: stub for datasource_2.
 
-path1: Path
-path2: str
+Goal:
+- Let "import scripts.datasource_2" succeed.
+- Re-export DataSource from scripts.datasource.
+- Avoid calling DataSource(...) at import time.
+"""
 
-d1 = np.DataSource(path1)
-d2 = np.DataSource(path2)
-d3 = np.DataSource(None)
+from __future__ import annotations
 
-reveal_type(d1.abspath("..."))  # E: str
-reveal_type(d2.abspath("..."))  # E: str
-reveal_type(d3.abspath("..."))  # E: str
+from .datasource import DataSource
 
-reveal_type(d1.exists("..."))  # E: bool
-reveal_type(d2.exists("..."))  # E: bool
-reveal_type(d3.exists("..."))  # E: bool
-
-reveal_type(d1.open("...", "r"))  # E: IO[Any]
-reveal_type(d2.open("...", encoding="utf8"))  # E: IO[Any]
-reveal_type(d3.open("...", newline="/n"))  # E: IO[Any]
+__all__ = ["DataSource"]

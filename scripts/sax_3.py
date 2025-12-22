@@ -1,59 +1,11 @@
-# defusedxml
-#
-# Copyright (c) 2013 by Christian Heimes <christian@python.org>
-# Licensed to PSF under a Contributor Agreement.
-# See https://www.python.org/psf/license for licensing details.
-"""Defused xml.sax"""
-from __future__ import print_function, absolute_import
+﻿from __future__ import annotations
 
-from xml.sax import InputSource as _InputSource
-from xml.sax import ErrorHandler as _ErrorHandler
+'''MAGIC Week 0 shim for scripts.sax_3.
 
-from . import expatreader
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-__origin__ = "xml.sax"
+from typing import Any
 
-
-def parse(
-    source,
-    handler,
-    errorHandler=_ErrorHandler(),
-    forbid_dtd=False,
-    forbid_entities=True,
-    forbid_external=True,
-):
-    parser = make_parser()
-    parser.setContentHandler(handler)
-    parser.setErrorHandler(errorHandler)
-    parser.forbid_dtd = forbid_dtd
-    parser.forbid_entities = forbid_entities
-    parser.forbid_external = forbid_external
-    parser.parse(source)
-
-
-def parseString(
-    string,
-    handler,
-    errorHandler=_ErrorHandler(),
-    forbid_dtd=False,
-    forbid_entities=True,
-    forbid_external=True,
-):
-    from io import BytesIO
-
-    if errorHandler is None:
-        errorHandler = _ErrorHandler()
-    parser = make_parser()
-    parser.setContentHandler(handler)
-    parser.setErrorHandler(errorHandler)
-    parser.forbid_dtd = forbid_dtd
-    parser.forbid_entities = forbid_entities
-    parser.forbid_external = forbid_external
-
-    inpsrc = _InputSource()
-    inpsrc.setByteStream(BytesIO(string))
-    parser.parse(inpsrc)
-
-
-def make_parser(parser_list=[]):
-    return expatreader.create_parser()
+__all__: list[str] = []

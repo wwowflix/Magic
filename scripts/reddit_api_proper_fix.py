@@ -1,17 +1,11 @@
-from pathlib import Path
+﻿from __future__ import annotations
 
-# Read original file
-file_path = Path(".\reddit_api.py")
-content = file_path.read_text(encoding="utf-8")
+'''MAGIC Week 0 shim for scripts.reddit_api_proper_fix.
 
-# Fix indentation
-fixed_content = content.replace(
-    "if subreddit_list is None:    subreddits =",
-    "if subreddit_list is None:\n    subreddits =",
-)
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-# Write fixed file
-fixed_path = Path(".\reddit_api_proper_fix.py")
-fixed_path.write_text(fixed_content, encoding="utf-8")
+from typing import Any
 
-print("✅ Reddit script fixed and saved as reddit_api_proper_fix.py")
+__all__: list[str] = []

@@ -1,35 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-nd = np.array([[1, 2], [3, 4]])
+'''MAGIC Week 0 shim for scripts.ndarray_shape_manipulation_2.
 
-# reshape
-reveal_type(nd.reshape())  # E: numpy.ndarray
-reveal_type(nd.reshape(4))  # E: numpy.ndarray
-reveal_type(nd.reshape(2, 2))  # E: numpy.ndarray
-reveal_type(nd.reshape((2, 2)))  # E: numpy.ndarray
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-reveal_type(nd.reshape((2, 2), order="C"))  # E: numpy.ndarray
-reveal_type(nd.reshape(4, order="C"))  # E: numpy.ndarray
+from typing import Any
 
-# resize does not return a value
-
-# transpose
-reveal_type(nd.transpose())  # E: numpy.ndarray
-reveal_type(nd.transpose(1, 0))  # E: numpy.ndarray
-reveal_type(nd.transpose((1, 0)))  # E: numpy.ndarray
-
-# swapaxes
-reveal_type(nd.swapaxes(0, 1))  # E: numpy.ndarray
-
-# flatten
-reveal_type(nd.flatten())  # E: numpy.ndarray
-reveal_type(nd.flatten("C"))  # E: numpy.ndarray
-
-# ravel
-reveal_type(nd.ravel())  # E: numpy.ndarray
-reveal_type(nd.ravel("C"))  # E: numpy.ndarray
-
-# squeeze
-reveal_type(nd.squeeze())  # E: numpy.ndarray
-reveal_type(nd.squeeze(0))  # E: numpy.ndarray
-reveal_type(nd.squeeze((0, 2)))  # E: numpy.ndarray
+__all__: list[str] = []

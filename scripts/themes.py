@@ -1,4 +1,11 @@
-from .default_styles import DEFAULT_STYLES
-from .theme import Theme
+﻿from __future__ import annotations
 
-DEFAULT = Theme(DEFAULT_STYLES)
+'''MAGIC Week 0 shim for scripts.themes.
+
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

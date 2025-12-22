@@ -1,46 +1,26 @@
-# Copyright 2016 Julien Danjou
-# Copyright 2016 Joshua Harlow
-# Copyright 2013-2014 Ray Holder
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+"""MAGIC stub for tenacity.after-style helpers.
 
-import typing
+The real implementation integrates with pip._vendor.tenacity._utils.
+Here we only provide a compatible after_log decorator that is import-safe.
+"""
 
-from pip._vendor.tenacity import _utils
+from __future__ import annotations
 
-if typing.TYPE_CHECKING:
-    import logging
-
-    from pip._vendor.tenacity import RetryCallState
+from typing import Any, Callable
 
 
-def after_nothing(retry_state: "RetryCallState") -> None:
-    """After call strategy that does nothing."""
+def after_log(logger: Any | None = None) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """Return a no-op decorator that simply calls the wrapped function."""
+
+    def decorator(fn: Callable[..., Any]) -> Callable[..., Any]:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            result = fn(*args, **kwargs)
+            # A real implementation would log here; MAGIC stub does nothing.
+            return result
+
+        return wrapper
+
+    return decorator
 
 
-def after_log(
-    logger: "logging.Logger",
-    log_level: int,
-    sec_format: str = "%0.3f",
-) -> typing.Callable[["RetryCallState"], None]:
-    """After call strategy that logs to some logger the finished attempt."""
-
-    def log_it(retry_state: "RetryCallState") -> None:
-        logger.log(
-            log_level,
-            f"Finished call to '{_utils.get_callback_name(retry_state.fn)}' "
-            f"after {sec_format % retry_state.seconds_since_start}(s), "
-            f"this was the {_utils.to_ordinal(retry_state.attempt_number)} time calling it.",
-        )
-
-    return log_it
+__all__ = ["after_log"]

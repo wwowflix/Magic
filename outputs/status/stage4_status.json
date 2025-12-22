@@ -1,7 +1,0 @@
-﻿{
-  "stage": "4-docker-health",
-  "image": "magic-health:latest",
-  "test_command": "docker run --rm -e PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 magic-health python -m pytest -q tests/smoke -k \"phase11 and _ok\"",
-  "last_pass_commit": "672a48ffe99c1035c199dd9ea801e0c9d115aa03",
-  "last_pass_time": "2025-11-10T09:05:10.8633200+05:30"
-}

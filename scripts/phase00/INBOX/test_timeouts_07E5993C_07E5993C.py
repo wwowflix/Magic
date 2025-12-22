@@ -8,7 +8,7 @@ import pytest
 
 import trio
 
-from .. import _core
+from . import _core
 from scripts._core._tests.tutil import slow
 from scripts._timeouts import (
     TooSlowError,

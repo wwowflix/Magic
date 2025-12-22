@@ -1,59 +1,41 @@
-"""xmlrpclib.Transport implementation"""
+# -*- coding: utf-8 -*-
+"""MAGIC shim: forward all imports to the real stdlib 'xmlrpc' module."""
 
-import logging
-import urllib.parse
-import xmlrpc.client
-from typing import TYPE_CHECKING, Tuple
+import importlib as _importlib
+import sys as _sys
+from pathlib import Path as _Path
 
-from pip._internal.exceptions import NetworkConnectionError
-from pip._internal.network.session import PipSession
-from pip._internal.network.utils import raise_for_status
+_target_name = "xmlrpc"
 
-if TYPE_CHECKING:
-    from xmlrpc.client import _HostType, _Marshallable
+# Drop any half-initialized entry
+_sys.modules.pop(_target_name, None)
 
-logger = logging.getLogger(__name__)
+# Temporarily hide this directory from sys.path to avoid re-importing ourselves
+_original_path = list(_sys.path)
+_this_dir = str(_Path(__file__).resolve().parent)
 
+try:
+    _sys.path = [
+        p for p in _sys.path
+        if _Path(p).resolve() != _Path(_this_dir)
+    ]
+    _real = _importlib.import_module(_target_name)
+finally:
+    _sys.path = _original_path
 
-class PipXmlrpcTransport(xmlrpc.client.Transport):
-    """Provide a `xmlrpclib.Transport` implementation via a `PipSession`
-    object.
-    """
+# Ensure future imports see the real module
+_sys.modules[_target_name] = _real
+_sys.modules.setdefault(f"scripts.{_target_name}", _real)
 
-    def __init__(
-        self, index_url: str, session: PipSession, use_datetime: bool = False
-    ) -> None:
-        super().__init__(use_datetime)
-        index_parts = urllib.parse.urlparse(index_url)
-        self._scheme = index_parts.scheme
-        self._session = session
+# Re-export everything
+for _name in dir(_real):
+    globals()[_name] = getattr(_real, _name)
 
-    def request(
-        self,
-        host: "_HostType",
-        handler: str,
-        request_body: bytes,
-        verbose: bool = False,
-    ) -> Tuple["_Marshallable", ...]:
-        assert isinstance(host, str)
-        parts = (self._scheme, host, handler, None, None, None)
-        url = urllib.parse.urlunparse(parts)
-        try:
-            headers = {"Content-Type": "text/xml"}
-            response = self._session.post(
-                url,
-                data=request_body,
-                headers=headers,
-                stream=True,
-            )
-            raise_for_status(response)
-            self.verbose = verbose
-            return self.parse_response(response.raw)
-        except NetworkConnectionError as exc:
-            assert exc.response
-            logger.critical(
-                "HTTP error %s while getting %s",
-                exc.response.status_code,
-                url,
-            )
-            raise
+# Keep a sensible __all__
+try:
+    __all__ = list(_real.__all__)
+except Exception:
+    __all__ = [n for n in globals() if not n.startswith("_")]
+
+# Cleanup
+del _importlib, _sys, _Path, _original_path, _this_dir, _name, _real, _target_name

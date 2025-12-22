@@ -19,14 +19,32 @@ from typing import Any, NamedTuple, TypeVar
 # We need to import _compat itself in addition to the _compat members to avoid
 # having the thread-local in the globals here.
 from . import _compat, _config, setters
-from ._compat import (
-    PY_3_10_PLUS,
-    PY_3_11_PLUS,
-    PY_3_13_PLUS,
-    _AnnotationExtractor,
-    _get_annotations,
-    get_generic_base,
-)
+try:
+    from ._compat import (
+        PY_3_10_PLUS,
+        PY_3_11_PLUS,
+        PY_3_13_PLUS,
+        _AnnotationExtractor,
+        _get_annotations,
+        get_generic_base,
+    )
+except Exception:  # MAGIC shim: fallback when these names are missing
+    PY_3_10_PLUS = False
+    PY_3_11_PLUS = False
+    PY_3_13_PLUS = False
+
+    class _AnnotationExtractor:  # type: ignore[override]
+        def __init__(self, *args, **kwargs) -> None:
+            pass
+
+        def get_type_hints(self, obj):
+            return {}
+
+    def _get_annotations(obj):
+        return {}
+
+    def get_generic_base(cls):
+        return None
 from .exceptions import (
     DefaultAlreadySetError,
     FrozenInstanceError,

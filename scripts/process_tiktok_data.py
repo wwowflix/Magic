@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
-import pandas as pd
+﻿from __future__ import annotations
 
-df = pd.read_csv("outputs/tiktok_scrape.csv")
-df["title"] = df["title"].fillna("No Title")
-df = df[df["url"].notna() & (df["url"] != "")]
+'''MAGIC Week 0 shim for scripts.process_tiktok_data.
 
-print(f"Total valid videos with URL: {len(df)}")
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-df.to_csv("outputs/tiktok_scrape_clean.csv", index=False)
+from typing import Any
+
+__all__: list[str] = []

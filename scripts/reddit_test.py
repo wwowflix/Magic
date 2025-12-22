@@ -1,16 +1,11 @@
-# -*- coding: utf-8 -*-
-import praw
-from vault_manager import load_secret
+﻿from __future__ import annotations
 
-client_id = load_secret("REDDIT_CLIENT_ID")
-client_secret = load_secret("REDDIT_CLIENT_SECRET")
-user_agent = load_secret("REDDIT_USER_AGENT")
+'''MAGIC Week 0 shim for scripts.reddit_test.
 
-reddit = praw.Reddit(
-    client_id=client_id, client_secret=client_secret, user_agent=user_agent
-)
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-print("ðŸ”Ž Reddit read_only:", reddit.read_only)
+from typing import Any
 
-for submission in reddit.subreddit("python").hot(limit=3):
-    print(f"✅ {submission.title} | Score: {submission.score}")
+__all__: list[str] = []

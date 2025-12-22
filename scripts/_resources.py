@@ -1,33 +1,26 @@
+"""MAGIC shim for trio._resources-like module."""
+
 from __future__ import annotations
 
 from abc import ABCMeta, abstractmethod
 from types import TracebackType
-from typing import TypeVar
-
-T = TypeVar("T")
+from typing import Optional, Type
 
 
 class AsyncResource(metaclass=ABCMeta):
-    """
-    Abstract base class for all closeable asynchronous resources.
+    """Minimal asynchronous resource interface used in MAGIC tests."""
 
-    Works as an asynchronous context manager which returns the instance itself on enter,
-    and calls :meth:`aclose` on exit.
-    """
+    @abstractmethod
+    async def aclose(self) -> None:  # pragma: no cover - trivial shim
+        """Close the resource."""
 
-    __slots__ = ()
-
-    async def __aenter__(self: T) -> T:
+    async def __aenter__(self):
         return self
 
     async def __aexit__(
         self,
-        exc_type: type[BaseException] | None,
-        exc_val: BaseException | None,
-        exc_tb: TracebackType | None,
+        exc_type: Optional[Type[BaseException]],
+        exc: Optional[BaseException],
+        tb: Optional[TracebackType],
     ) -> None:
         await self.aclose()
-
-    @abstractmethod
-    async def aclose(self) -> None:
-        """Close the resource.

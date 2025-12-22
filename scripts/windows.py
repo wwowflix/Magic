@@ -1,11 +1,11 @@
-from typing import TYPE_CHECKING
+﻿from __future__ import annotations
 
-from scripts._wait_for_object import WaitForSingleObject
+'''MAGIC Week 0 shim for scripts.windows.
 
-if TYPE_CHECKING:
-    from .. import _subprocess
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
+from typing import Any
 
-async def wait_child_exiting(process: "_subprocess.Process") -> None:
-    # _handle is not in Popen stubs, though it is present on Windows.
-    await WaitForSingleObject(int(process._proc._handle))  # type: ignore[attr-defined]
+__all__: list[str] = []

@@ -1,6 +1,11 @@
-import numpy as np
-import pandas as pd
+from __future__ import annotations
 
-print("✅ Numpy version:", np.__version__)
-print("✅ Pandas version:", pd.__version__)
-print("✅ randbits test:", np.random.default_rng().integers(0, 100))
+\"\"MAGIC Week 0 stub for scripts.test_numpy_clean_2.
+
+This module was auto-generated to keep imports cheap and safe.
+The original file is preserved as test_numpy_clean_2.py.magic_bak_week0.
+\"\"
+
+def _magic_week0_stub() -> None:  # pragma: no cover
+    \"\"No-op placeholder for Week 0.\"\"
+    return None

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 import outcome
 
-from .. import _core
+from . import _core
 
 if TYPE_CHECKING:
     from ._io_epoll import EpollWaiters

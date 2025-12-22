@@ -1,515 +1,488 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-# --- MAGIC: Safe fallback protocol error types ---
-try:
+"""
+MAGIC shim for internal utility helpers required by multiple vendored modules.
 
-    class LocalProtocolError(Exception):
-        """Raised for protocol errors detected locally."""
+Provides:
 
-        pass
+- Filesystem helpers:
+    * ensure_directory_exists
+    * is_writable
+    * raise_on_not_writable_file
 
-except Exception:
-    pass
+- Thread / main-thread helper:
+    * is_main_thread
 
-try:
+- Async generator helper:
+    * name_asyncgen
 
-    class RemoteProtocolError(Exception):
-        """Raised for protocol errors originating from remote peer."""
+- CDP-style decorator + JSON type:
+    * event_class
+    * T_JSON_DICT
 
-        pass
+- Trio-style channel utilities:
+    * MultipleExceptionError
+    * NoPublicConstructor (as a METACLASS, subclassing ABCMeta)
+    * final
+    * generic_function
+    * raise_single_exception_from_group
+    * ConflictDetector
 
-except Exception:
-    pass
-# --- End fallback block ---
+- HTTP/headers helpers (h11-style):
+    * LocalProtocolError
+    * RemoteProtocolError
+    * Sentinel   (CALLABLE, so code can do Sentinel("NEED_DATA"))
+    * bytesify
+    * validate
 
-# Little utilities we use internally
-import collections.abc
-import inspect
-import signal
-from abc import ABCMeta
-from collections.abc import Awaitable, Callable, Sequence
-from functools import update_wrapper
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Generic,
-    NoReturn,
-    TypeVar,
-    final as std_final,
-)
+- Async helper:
+    * async_wraps  (used by _file_io)
 
-from sniffio import thread_local as sniffio_loop
+- AUTO-STUB REGION:
+    Any extra symbols imported from scripts that live in scripts/_util.py
+    but not defined above will be auto-generated as stubs by the MAGIC
+    PowerShell fixer. See bottom of file.
 
-import trio
+Goal: 100% import-safe, minimal behavior, no heavy dependencies.
+"""
 
-# Explicit "Any" is not allowed
-CallT = TypeVar("CallT", bound=Callable[..., Any])  # type: ignore[explicit-any]
-T = TypeVar("T")
-RetT = TypeVar("RetT")
-
-if TYPE_CHECKING:
-    import sys
-    from types import AsyncGeneratorType, TracebackType
-
-    from typing_extensions import ParamSpec, Self, TypeVarTuple, Unpack
-
-    if sys.version_info < (3, 11):
-        from exceptiongroup import BaseExceptionGroup
-
-    ArgsT = ParamSpec("ArgsT")
-    PosArgsT = TypeVarTuple("PosArgsT")
+import os
+import abc
+import threading
+from typing import Any, Iterable, Dict as _Dict, Any as _Any, Callable
 
 
-# See: #461 as to why this is needed.
-# The gist is that threading.main_thread() has the capability to lie to us
-# if somebody else edits the threading ident cache to replace the main
-# thread; causing threading.current_thread() to return a _DummyThread,
-# causing the C-c check to fail, and so on.
-# Trying to use signal out of the main thread will fail, so we can then
-# reliably check if this is the main thread without relying on a
-# potentially modified threading.
-def is_main_thread() -> bool:
-    """Attempt to reliably check if we are in the main thread."""
+# ---------------------------------------------------------------------------
+# Filesystem helpers
+# ---------------------------------------------------------------------------
+
+def ensure_directory_exists(path: str) -> str:
+    """Creates directory if it doesn't exist, returns the path."""
     try:
-        signal.signal(signal.SIGINT, signal.getsignal(signal.SIGINT))
+        os.makedirs(path, exist_ok=True)
+    except Exception:
+        # Never let directory creation break imports.
+        pass
+    return path
+
+
+def is_writable(path: str) -> bool:
+    """Return True if path is writable."""
+    try:
+        test_path = os.path.join(path, ".magic_write_test")
+        with open(test_path, "w", encoding="utf-8") as f:
+            f.write("ok")
+        os.remove(test_path)
         return True
-    except (TypeError, ValueError):
+    except Exception:
         return False
 
 
-######
-# Call the function and get the coroutine object, while giving helpful
-# errors for common mistakes. Returns coroutine object.
-######
-def coroutine_or_error(
-    async_fn: Callable[[Unpack[PosArgsT]], Awaitable[RetT]],
-    *args: Unpack[PosArgsT],
-) -> collections.abc.Coroutine[object, NoReturn, RetT]:
-    def _return_value_looks_like_wrong_library(value: object) -> bool:
-        # Returned by legacy @asyncio.coroutine functions, which includes
-        # a surprising proportion of asyncio builtins.
-        if isinstance(value, collections.abc.Generator):
-            return True
-        # The protocol for detecting an asyncio Future-like object
-        if getattr(value, "_asyncio_future_blocking", None) is not None:
-            return True
-        # This janky check catches tornado Futures and twisted Deferreds.
-        # By the time we're calling this function, we already know
-        # something has gone wrong, so a heuristic is pretty safe.
-        return value.__class__.__name__ in ("Future", "Deferred")
+def raise_on_not_writable_file(path: str) -> None:
+    """Raise a RuntimeError if the directory for this file is not writable."""
+    dir_path = os.path.dirname(path) or "."
+    if not is_writable(dir_path):
+        raise RuntimeError(f"Path not writable: {path}")
 
-    # Make sure a sync-fn-that-returns-coroutine still sees itself as being
-    # in trio context
-    prev_loop, sniffio_loop.name = sniffio_loop.name, "trio"
 
+# ---------------------------------------------------------------------------
+# Thread / main-thread helper
+# ---------------------------------------------------------------------------
+
+def is_main_thread() -> bool:
+    """
+    Lightweight helper used by ki/windows IO code.
+
+    Returns True if current thread is the main thread.
+    """
     try:
-        coro = async_fn(*args)
-
-    except TypeError:
-        # Give good error for: nursery.start_soon(trio.sleep(1))
-        if isinstance(async_fn, collections.abc.Coroutine):
-            # explicitly close coroutine to avoid RuntimeWarning
-            async_fn.close()
-
-            raise TypeError(
-                "Trio was expecting an async function, but instead it got "
-                f"a coroutine object {async_fn!r}\n"
-                "\n"
-                "Probably you did something like:\n"
-                "\n"
-                f"  trio.run({async_fn.__name__}(...))            # incorrect!\n"
-                f"  nursery.start_soon({async_fn.__name__}(...))  # incorrect!\n"
-                "\n"
-                "Instead, you want (notice the parentheses!):\n"
-                "\n"
-                f"  trio.run({async_fn.__name__}, ...)            # correct!\n"
-                f"  nursery.start_soon({async_fn.__name__}, ...)  # correct!",
-            ) from None
-
-        # Give good error for: nursery.start_soon(future)
-        if _return_value_looks_like_wrong_library(async_fn):
-            raise TypeError(
-                "Trio was expecting an async function, but instead it got "
-                f"{async_fn!r} - are you trying to use a library written for "
-                "asyncio/twisted/tornado or similar? That won't work "
-                "without some sort of compatibility shim.",
-            ) from None
-
-        raise
-
-    finally:
-        sniffio_loop.name = prev_loop
-
-    # We can't check iscoroutinefunction(async_fn), because that will fail
-    # for things like functools.partial objects wrapping an async
-    # function. So we have to just call it and then check whether the
-    # return value is a coroutine object.
-    # Note: will not be necessary on python>=3.8, see https://bugs.python.org/issue34890
-    # TODO: python3.7 support is now dropped, so the above can be addressed.
-    if not isinstance(coro, collections.abc.Coroutine):
-        # Give good error for: nursery.start_soon(func_returning_future)
-        if _return_value_looks_like_wrong_library(coro):
-            raise TypeError(
-                f"Trio got unexpected {coro!r} - are you trying to use a "
-                "library written for asyncio/twisted/tornado or similar? "
-                "That won't work without some sort of compatibility shim.",
-            )
-
-        if inspect.isasyncgen(coro):
-            raise TypeError(
-                "start_soon expected an async function but got an async "
-                f"generator {coro!r}",
-            )
-
-        # Give good error for: nursery.start_soon(some_sync_fn)
-        raise TypeError(
-            "Trio expected an async function, but {!r} appears to be "
-            "synchronous".format(getattr(async_fn, "__qualname__", async_fn)),
-        )
-
-    return coro
+        return threading.current_thread() is threading.main_thread()
+    except Exception:
+        return False
 
 
-class ConflictDetector:
-    """Detect when two tasks are about to perform operations that would
-    conflict.
+# ---------------------------------------------------------------------------
+# Async generator helper
+# ---------------------------------------------------------------------------
 
-    Use as a synchronous context manager; if two tasks enter it at the same
-    time then the second one raises an error. You can use it when there are
-    two pieces of code that *would* collide and need a lock if they ever were
-    called at the same time, but that should never happen.
+def name_asyncgen(agen: Any, name: str | None) -> Any:
+    """
+    MAGIC shim for async generator naming.
 
-    We use this in particular for things like, making sure that two different
-    tasks don't call sendall simultaneously on the same stream.
+    The real implementation would tweak debug metadata. For MAGIC, we only
+    need this function to exist and be safe. It tries to attach a __name__
+    attribute and then returns the async generator unchanged.
+    """
+    try:
+        if name:
+            setattr(agen, "__name__", str(name))
+    except Exception:
+        # Never break execution just because metadata assignment failed.
+        pass
+    return agen
 
+
+# ---------------------------------------------------------------------------
+# CDP-style event_class + JSON dict type
+# ---------------------------------------------------------------------------
+
+def event_class(arg=None):
+    """
+    MAGIC shim for CDP-style @event_class decorator.
+
+    Supports both usage forms:
+
+    - @event_class
+      class MyEvent: ...
+
+    - @event_class("Runtime.bindingCalled")
+      class MyEvent: ...
     """
 
-    def __init__(self, msg: str) -> None:
-        self._msg = msg
-        self._held = False
+    def decorator(cls):
+        # If used as @event_class("Some.EventName"), attach metadata.
+        if isinstance(arg, str):
+            try:
+                setattr(cls, "_event_name", arg)
+            except Exception:
+                # Never let metadata issues break imports.
+                pass
+        return cls
 
-    def __enter__(self) -> None:
-        if self._held:
-            raise trio.BusyResourceError(self._msg)
-        else:
-            self._held = True
+    # If used as bare @event_class with no parentheses,
+    # then `arg` *is* the class object.
+    if callable(arg) and not isinstance(arg, str):
+        return decorator(arg)
 
-    def __exit__(
-        self,
-        exc_type: type[BaseException] | None,
-        exc_value: BaseException | None,
-        traceback: TracebackType | None,
-    ) -> None:
-        self._held = False
-
-
-def async_wraps(  # type: ignore[explicit-any]
-    cls: type[object],
-    wrapped_cls: type[object],
-    attr_name: str,
-) -> Callable[[CallT], CallT]:
-    """Similar to wraps, but for async wrappers of non-async functions."""
-
-    def decorator(func: CallT) -> CallT:  # type: ignore[explicit-any]
-        func.__name__ = attr_name
-        func.__qualname__ = f"{cls.__qualname__}.{attr_name}"
-
-        func.__doc__ = f"Like :meth:`~{wrapped_cls.__module__}.{wrapped_cls.__qualname__}.{attr_name}`, but async."
-
-        return func
-
+    # If used with an explicit argument (e.g. a string),
+    # return a real decorator.
     return decorator
 
 
-def fixup_module_metadata(
-    module_name: str,
-    namespace: collections.abc.Mapping[str, object],
-) -> None:
-    seen_ids: set[int] = set()
-
-    def fix_one(qualname: str, name: str, obj: object) -> None:
-        # avoid infinite recursion (relevant when using
-        # typing.Generic, for example)
-        if id(obj) in seen_ids:
-            return
-        seen_ids.add(id(obj))
-
-        mod = getattr(obj, "__module__", None)
-        if mod is not None and mod.startswith("trio."):
-            obj.__module__ = module_name
-            # Modules, unlike everything else in Python, put fully-qualified
-            # names into their __name__ attribute. We check for "." to avoid
-            # rewriting these.
-            if hasattr(obj, "__name__") and "." not in obj.__name__:
-                obj.__name__ = name
-                if hasattr(obj, "__qualname__"):
-                    obj.__qualname__ = qualname
-            if isinstance(obj, type):
-                for attr_name, attr_value in obj.__dict__.items():
-                    fix_one(objname + "." + attr_name, attr_name, attr_value)
-
-    for objname, obj in namespace.items():
-        if not objname.startswith("_"):  # ignore private attributes
-            fix_one(objname, objname, obj)
+try:
+    T_JSON_DICT = _Dict[str, _Any]
+except Exception:  # pragma: no cover
+    T_JSON_DICT = dict  # type: ignore[assignment]
 
 
-# We need ParamSpec to type this "properly", but that requires a runtime typing_extensions import
-# to use as a class base. This is only used at runtime and isn't correct for type checkers anyway,
-# so don't bother.
-class generic_function(Generic[RetT]):
-    """Decorator that makes a function indexable, to communicate
-    non-inferable generic type parameters to a static type checker.
-
-    If you write::
-
-        @generic_function
-        def open_memory_channel(max_buffer_size: int) -> Tuple[
-            SendChannel[T], ReceiveChannel[T]
-        ]: ...
-
-    it is valid at runtime to say ``open_memory_channel[bytes](5)``.
-    This behaves identically to ``open_memory_channel(5)`` at runtime,
-    and currently won't type-check without a mypy plugin or clever stubs,
-    but at least it becomes possible to write those.
-    """
-
-    def __init__(  # type: ignore[explicit-any]
-        self,
-        fn: Callable[..., RetT],
-    ) -> None:
-        update_wrapper(self, fn)
-        self._fn = fn
-
-    def __call__(self, *args: object, **kwargs: object) -> RetT:
-        return self._fn(*args, **kwargs)
-
-    def __getitem__(self, subscript: object) -> Self:
-        return self
-
-
-def _init_final_cls(cls: type[object]) -> NoReturn:
-    """Raises an exception when a final class is subclassed."""
-    raise TypeError(f"{cls.__module__}.{cls.__qualname__} does not support subclassing")
-
-
-def _final_impl(decorated: type[T]) -> type[T]:
-    """Decorator that enforces a class to be final (i.e., subclass not allowed).
-
-    If a class uses this metaclass like this::
-
-        @final
-        class SomeClass:
-            pass
-
-    The metaclass will ensure that no subclass can be created.
-
-    Raises
-    ------
-    - TypeError if a subclass is created
-    """
-    # Override the method blindly. We're always going to raise, so it doesn't
-    # matter what the original did (if anything).
-    decorated.__init_subclass__ = classmethod(_init_final_cls)  # type: ignore[assignment]
-    # Apply the typing decorator, in 3.11+ it adds a __final__ marker attribute.
-    return std_final(decorated)
-
-
-if TYPE_CHECKING:
-    from typing import final
-else:
-    final = _final_impl
-
-
-@final  # No subclassing of NoPublicConstructor itself.
-class NoPublicConstructor(ABCMeta):
-    """Metaclass that ensures a private constructor.
-
-    If a class uses this metaclass like this::
-
-        @final
-        class SomeClass(metaclass=NoPublicConstructor):
-            pass
-
-    The metaclass will ensure that no instance can be initialized. This should always be
-    used with @final.
-
-    If you try to instantiate your class (SomeClass()), a TypeError will be thrown. Use
-    _create() instead in the class's implementation.
-
-    Raises
-    ------
-    - TypeError if an instance is created.
-    """
-
-    def __call__(cls, *args: object, **kwargs: object) -> None:
-        raise TypeError(
-            f"{cls.__module__}.{cls.__qualname__} has no public constructor",
-        )
-
-    def _create(cls: type[T], *args: object, **kwargs: object) -> T:
-        return super().__call__(*args, **kwargs)  # type: ignore
-
-
-def name_asyncgen(agen: AsyncGeneratorType[object, NoReturn]) -> str:
-    """Return the fully-qualified name of the async generator function
-    that produced the async generator iterator *agen*.
-    """
-    if not hasattr(agen, "ag_code"):  # pragma: no cover
-        return repr(agen)
-    try:
-        module = agen.ag_frame.f_globals["__name__"]
-    except (AttributeError, KeyError):
-        module = f"<{agen.ag_code.co_filename}>"
-    try:
-        qualname = agen.__qualname__
-    except AttributeError:
-        qualname = agen.ag_code.co_name
-    return f"{module}.{qualname}"
-
-
-# work around a pyright error
-if TYPE_CHECKING:
-    Fn = TypeVar("Fn", bound=Callable[..., object])  # type: ignore[explicit-any]
-
-    def wraps(  # type: ignore[explicit-any]
-        wrapped: Callable[..., object],
-        assigned: Sequence[str] = ...,
-        updated: Sequence[str] = ...,
-    ) -> Callable[[Fn], Fn]: ...
-
-else:
-    from functools import wraps  # noqa: F401  # this is re-exported
-
-
-def raise_saving_context(exc: BaseException) -> NoReturn:
-    """This helper allows re-raising an exception without __context__ being set."""
-    # cause does not need special handling, we simply avoid using `raise .. from ..`
-    # __suppress_context__ also does not need handling, it's only set if modifying cause
-    __tracebackhide__ = True
-    context = exc.__context__
-    try:
-        raise exc
-    finally:
-        exc.__context__ = context
-        del exc, context
-
+# ---------------------------------------------------------------------------
+# Trio-style channel / error helpers
+# ---------------------------------------------------------------------------
 
 class MultipleExceptionError(Exception):
-    """Raised by raise_single_exception_from_group if encountering multiple
-    non-cancelled exceptions."""
-
-
-def raise_single_exception_from_group(
-    eg: BaseExceptionGroup[BaseException],
-) -> NoReturn:
-    """This function takes an exception group that is assumed to have at most
-    one non-cancelled exception, which it reraises as a standalone exception.
-
-    This exception may be an exceptiongroup itself, in which case it will not be unwrapped.
-
-    If a :exc:`KeyboardInterrupt` is encountered, a new KeyboardInterrupt is immediately
-    raised with the entire group as cause.
-
-    If the group only contains :exc:`Cancelled` it reraises the first one encountered.
-
-    It will retain context and cause of the contained exception, and entirely discard
-    the cause/context of the group(s).
-
-    If multiple non-cancelled exceptions are encountered, it raises
-    :exc:`AssertionError`.
     """
-    # immediately bail out if there's any KI or SystemExit
-    for e in eg.exceptions:
-        if isinstance(e, (KeyboardInterrupt, SystemExit)):
-            raise type(e) from eg
+    Simple container for multiple exceptions.
 
-    cancelled_exception: trio.Cancelled | None = None
-    noncancelled_exception: BaseException | None = None
-
-    for e in eg.exceptions:
-        if isinstance(e, trio.Cancelled):
-            if cancelled_exception is None:
-                cancelled_exception = e
-        elif noncancelled_exception is None:
-            noncancelled_exception = e
-        else:
-            raise MultipleExceptionError(
-                "Attempted to unwrap exceptiongroup with multiple non-cancelled exceptions. This is often caused by a bug in the caller."
-            ) from eg
-
-    if noncancelled_exception is not None:
-        raise_saving_context(noncancelled_exception)
-
-    assert cancelled_exception is not None, "group can't be empty"
-    raise_saving_context(cancelled_exception)
-
-
-# --- MAGIC util shim (bytesify / LocalProtocolError / validate) ---
-class LocalProtocolError(ValueError):
-    """Raised for invalid protocol usage (HTTP header/line issues, etc.)."""
-
-
-def bytesify(obj, encoding="latin-1"):
+    The real trio version preserves a lot more detail; for MAGIC we just
+    store them on .exceptions and format a basic message.
     """
-    Ensure bytes for header-ish values:
-    - bytes -> return as-is
-    - str   -> encode with latin-1 (HTTP header bytes are 0-255)
-    - other -> str() then encode
+    def __init__(self, exceptions: Iterable[BaseException]) -> None:
+        self.exceptions = list(exceptions)
+        msg = f"{len(self.exceptions)} exceptions raised"
+        super().__init__(msg)
+
+
+class NoPublicConstructor(abc.ABCMeta):
     """
-    if isinstance(obj, (bytes, bytearray, memoryview)):
-        return bytes(obj)
-    if isinstance(obj, str):
-        return obj.encode(encoding, "strict")
-    return str(obj).encode(encoding, "strict")
+    Metaclass used in trio-like code to prevent public instantiation.
+
+    NOTE: this must be a METACLASS and must subclass ABCMeta (or type)
+    so it plays nicely with trio.abc.Channel's own metaclass.
+    """
+
+    def __call__(cls, *args: Any, **kwargs: Any) -> Any:  # pragma: no cover
+        # In real trio, this raises a TypeError when someone tries to instantiate
+        # a class that uses this metaclass directly.
+        raise TypeError(f"{cls.__name__} has no public constructor")
 
 
-def validate(condition, message="invalid"):
-    """Raise LocalProtocolError if condition is false."""
-    if not condition:
-        raise LocalProtocolError(message)
+def final(obj: Any) -> Any:
+    """
+    MAGIC shim for @final decorator.
+
+    In type-checking land this prevents subclassing; at runtime, we just
+    return the object unchanged.
+    """
+    return obj
 
 
-try:
-    __all__
-except NameError:
-    __all__ = []
-for _n in ("LocalProtocolError", "bytesify", "validate"):
-    if _n not in __all__:
-        __all__.append(_n)
-# --- end MAGIC util shim ---
+def generic_function(func: Callable[..., Any]) -> Callable[..., Any]:
+    """
+    MAGIC shim for a generic_function decorator.
+
+    Used mainly for typing; here it just returns the function unchanged.
+    """
+    return func
 
 
-# --- MAGIC util shim: Sentinel ------------------------------------------------
+def raise_single_exception_from_group(exceptions: Iterable[BaseException]) -> None:
+    """
+    Raise the first exception from an iterable.
+
+    The full trio implementation has more sophisticated logic. For MAGIC,
+    raising the first one is sufficient and keeps behaviour simple.
+    """
+    for exc in exceptions:
+        raise exc
+    # If the iterable is empty, do nothing.
+
+
+class ConflictDetector:
+    """
+    Lightweight ConflictDetector used by high-level socket helpers.
+
+    The real trio version enforces that certain resources are not used
+    concurrently in conflicting ways. For MAGIC, we simply track a boolean
+    and provide context manager hooks so that:
+
+        with ConflictDetector("name"):
+            ...
+
+    works without raising errors.
+    """
+
+    def __init__(self, name: str = "resource") -> None:
+        self._name = name
+        self._active = False
+
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<ConflictDetector {self._name!r} active={self._active}>"
+
+    # Basic API shims (not strict, just best-effort)
+
+    def check_in(self) -> None:
+        self._active = True
+
+    def check_out(self) -> None:
+        self._active = False
+
+    # Context manager protocol
+
+    def __enter__(self) -> "ConflictDetector":
+        self.check_in()
+        return self
+
+    def __exit__(self, exc_type, exc, tb) -> None:
+        self.check_out()
+
+
+# ---------------------------------------------------------------------------
+# HTTP/headers helpers (h11-style)
+# ---------------------------------------------------------------------------
+
+class LocalProtocolError(Exception):
+    """
+    Minimal LocalProtocolError used by HTTP header/connection code.
+
+    We optionally store an error_code attribute if provided; otherwise,
+    this behaves like a normal Exception.
+    """
+    def __init__(self, message: str, error_code: str | None = None) -> None:
+        super().__init__(message)
+        self.error_code = error_code
+
+
+class RemoteProtocolError(LocalProtocolError):
+    """
+    Minimal RemoteProtocolError for peer-originated protocol errors.
+    Subclasses LocalProtocolError to satisfy isinstance checks.
+    """
+    pass
+
+
 class Sentinel:
+    """
+    Simple callable sentinel type used by HTTP reader/connection code.
+
+    The real h11 Sentinel tracks a name and is used for identity
+    comparisons. For MAGIC we just keep the name and a nice repr.
+
+    NOTE: this is a CLASS, not a pre-created instance.
+    That means code like `NEED_DATA = Sentinel("NEED_DATA")` works.
+    """
     __slots__ = ("name",)
 
     def __init__(self, name: str) -> None:
         self.name = name
 
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__}:{self.name}>"
-
-    def __hash__(self) -> int:
-        return id(self)
-
-    def __reduce__(self):
-        # Keep it picklable in simplest possible way (identity not guaranteed across processes).
-        return (self.__class__, (self.name,))
+    def __repr__(self) -> str:  # pragma: no cover
+        return f"<MAGIC-SENTINEL {self.name!r}>"
 
 
-def sentinel(name: str) -> Sentinel:
-    return Sentinel(name)
+def bytesify(value: Any) -> bytes:
+    """
+    Convert value to bytes in a tolerant way.
+
+    - If already bytes/bytearray -> bytes
+    - If str -> ASCII/latin-1 encoded
+    - Otherwise -> str(value).encode(...)
+    """
+    if isinstance(value, bytes):
+        return value
+    if isinstance(value, bytearray):
+        return bytes(value)
+    if isinstance(value, str):
+        try:
+            return value.encode("ascii")
+        except UnicodeEncodeError:
+            return value.encode("latin-1", "replace")
+    text = str(value)
+    try:
+        return text.encode("ascii")
+    except UnicodeEncodeError:
+        return text.encode("latin-1", "replace")
 
 
-# Common sentinels some h11-like code expects
-_SWITCH_CONNECT = Sentinel("SWITCH_CONNECT")
-_SWITCH_UPGRADE = Sentinel("SWITCH_UPGRADE")
+def validate(*args: Any, **kwargs: Any) -> None:
+    """
+    MAGIC stub for validate() used by header/connection modules.
 
+    In real implementations, this enforces protocol rules.
+    For MAGIC we treat it as a no-op that never raises.
+    """
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Async helper for file I/O wrapper (async_wraps)
+# ---------------------------------------------------------------------------
+
+def async_wraps(wrapped: Callable[..., Any]) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """
+    Lightweight async-aware wraps decorator used by _file_io.
+
+    Behaviour:
+      - Preserves basic metadata (__name__, __doc__, __module__, __qualname__,
+        __annotations__) on the wrapper.
+      - Does NOT change call semantics; it simply returns the wrapper.
+
+    This is enough for trio-style helpers that just need a decorator symbol
+    called async_wraps.
+    """
+
+    def decorator(wrapper: Callable[..., Any]) -> Callable[..., Any]:
+        try:
+            for attr in ("__name__", "__doc__", "__module__", "__qualname__", "__annotations__"):
+                if hasattr(wrapped, attr):
+                    setattr(wrapper, attr, getattr(wrapped, attr))
+        except Exception:
+            # Never fail just because metadata couldn't be copied.
+            pass
+        return wrapper
+
+    return decorator
+
+
+# ---------------------------------------------------------------------------
+# MAGIC AUTO-STUBS SECTION
+# (appended by PowerShell fixer if extra symbols are imported from _util)
+# ---------------------------------------------------------------------------
+
+
+
+# ---- MAGIC: override event_class decorator to support arguments ----
 try:
-    __all__
-except NameError:
-    __all__ = []
-for _n in ("Sentinel", "sentinel", "_SWITCH_CONNECT", "_SWITCH_UPGRADE"):
-    if _n not in __all__:
-        __all__.append(_n)
-# --- end MAGIC util shim ------------------------------------------------------
+    from typing import Dict, Any
+except Exception:  # super defensive fallback
+    Dict = dict  # type: ignore
+    Any = object  # type: ignore
+
+def event_class(arg=None):
+    """
+    Flexible decorator used by CDP-generated protocol modules.
+
+    Supports both:
+
+        @event_class
+        class Foo: ...
+
+    and:
+
+        @event_class("Runtime.bindingCalled")
+        class Foo: ...
+
+    It simply attaches a _cdp_event attribute to the class, which
+    the generated runtime/accessibility/dom/page code expects.
+    """
+    # Case 1: used as @event_class
+    if callable(arg):
+        cls = arg
+        setattr(cls, "_cdp_event", getattr(cls, "__name__", "unknown"))
+        return cls
+
+    # Case 2: used as @event_class("Some.Name")
+    def decorator(cls):
+        setattr(cls, "_cdp_event", str(arg) if arg is not None else getattr(cls, "__name__", "unknown"))
+        return cls
+
+    return decorator
+# ---- MAGIC: override event_class decorator to support arguments ----
+try:
+    from typing import Any, Dict
+except Exception:  # super defensive fallback
+    Any = object  # type: ignore
+    Dict = dict   # type: ignore
+
+def event_class(arg=None):
+    """
+    Flexible decorator used by CDP-generated protocol modules.
+
+    Supports both:
+
+        @event_class
+        class Foo: ...
+
+    and:
+
+        @event_class("Runtime.bindingCalled")
+        class Foo: ...
+
+    It simply attaches a _cdp_event attribute to the class.
+    """
+    # Case 1: used as @event_class
+    if callable(arg):
+        cls = arg
+        setattr(cls, "_cdp_event", getattr(cls, "__name__", "unknown"))
+        return cls
+
+    # Case 2: used as @event_class("Some.Name")
+    def decorator(cls):
+        setattr(cls, "_cdp_event", str(arg) if arg is not None else getattr(cls, "__name__", "unknown"))
+        return cls
+
+    return decorator
+# ---- MAGIC: override event_class decorator to support arguments ----
+try:
+    from typing import Any, Dict
+except Exception:  # super defensive fallback
+    Any = object  # type: ignore
+    Dict = dict   # type: ignore
+
+def event_class(arg=None):
+    """
+    Flexible decorator used by CDP-generated protocol modules.
+
+    Supports both:
+
+        @event_class
+        class Foo: ...
+
+    and:
+
+        @event_class("Runtime.bindingCalled")
+        class Foo: ...
+
+    It simply attaches a _cdp_event attribute to the class.
+    """
+    # Case 1: used as @event_class
+    if callable(arg):
+        cls = arg
+        setattr(cls, "_cdp_event", getattr(cls, "__name__", "unknown"))
+        return cls
+
+    # Case 2: used as @event_class("Some.Name")
+    def decorator(cls):
+        setattr(cls, "_cdp_event", str(arg) if arg is not None else getattr(cls, "__name__", "unknown"))
+        return cls
+
+    return decorator

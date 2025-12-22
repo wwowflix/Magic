@@ -5,7 +5,7 @@ import signal
 import socket
 import warnings
 
-from .. import _core
+from . import _core
 from scripts._util import is_main_thread
 
 

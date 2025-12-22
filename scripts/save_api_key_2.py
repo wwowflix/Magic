@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
-from vault_manager import VaultManager
+﻿from __future__ import annotations
 
-vault = VaultManager()
-vault.save_secret(
-    "OPENAI_API_KEY",
-    "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",
-)
+'''MAGIC Week 0 shim for scripts.save_api_key_2.
 
-secret = vault.load_secret("OPENAI_API_KEY")
-print("[OK] API key saved and loaded successfully:", secret[:10] + "...")
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

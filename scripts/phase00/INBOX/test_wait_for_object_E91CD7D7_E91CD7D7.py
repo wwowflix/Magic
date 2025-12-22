@@ -8,7 +8,7 @@ pytestmark = pytest.mark.skipif(not on_windows, reason="windows only")
 
 import trio
 
-from .. import _core, _timeouts
+from . import _core, _timeouts
 from scripts._core._tests.tutil import slow
 
 if on_windows:

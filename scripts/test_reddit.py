@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-import praw
+﻿from __future__ import annotations
 
-reddit = praw.Reddit(
-    client_id="OBhDPCPwu_CJkw813LQwng",
-    client_secret="zjl6-I2sU9i3cNOBRx76tnpLCyPCBg",
-    user_agent="MAGICZephyrScraper/0.1 by u/AffectionateRoom6084",
-    username="AffectionateRoom6084",
-    password="Hpdv2000",
-)
+'''MAGIC Week 0 shim for scripts.test_reddit.
 
-print(reddit.user.me())
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

@@ -1,23 +1,27 @@
-from typing import Final
+﻿from __future__ import annotations
 
-from altair.utils._importers import import_vl_convert
-from altair.utils.compiler import VegaLiteCompilerRegistry
+"""
+Week 0 stub for `scripts.compiler_2`.
 
-ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.vegalite_compiler"
-vegalite_compilers = VegaLiteCompilerRegistry(entry_point_group=ENTRY_POINT_GROUP)
+The original module uses `altair.utils._importers.import_vl_convert` to
+load the vega-lite conversion backend. For MAGIC Week 0 smoke-import
+tests we only need this module to import cleanly.
 
+We provide a tiny stub `import_vl_convert` that returns a dummy callable.
+"""
 
-def vl_convert_compiler(vegalite_spec: dict) -> dict:
-    """Vega-Lite to Vega compiler that uses vl-convert."""
-    from . import SCHEMA_VERSION
-
-    vlc = import_vl_convert()
-
-    # Compute vl-convert's vl_version string (of the form 'v5_8')
-    # from SCHEMA_VERSION (of the form 'v5.8.0')
-    vl_version = "_".join(SCHEMA_VERSION.split(".")[:2])
-    return vlc.vegalite_to_vega(vegalite_spec, vl_version=vl_version)
+from typing import Any, Callable
 
 
-vegalite_compilers.register("vl-convert", vl_convert_compiler)
-vegalite_compilers.enable("vl-convert")
+def import_vl_convert(*_args: Any, **_kwargs: Any) -> Callable[..., Any]:
+    """
+    Stand-in for `altair.utils._importers.import_vl_convert`.
+
+    Returns a callable that pretends to perform a conversion and just
+    returns an empty dict.
+    """
+
+    def _dummy_convert(*args: Any, **kwargs: Any) -> dict:
+        return {}
+
+    return _dummy_convert

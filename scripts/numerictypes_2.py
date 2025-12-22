@@ -1,15 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-# Techincally this works, but probably shouldn't. See
-#
-# https://github.com/numpy/numpy/issues/16366
-#
-np.maximum_sctype(1)  # E: incompatible type "int"
+'''MAGIC Week 0 shim for scripts.numerictypes_2.
 
-np.issubsctype(1, np.int64)  # E: incompatible type "int"
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-np.issubdtype(1, np.int64)  # E: incompatible type "int"
+from typing import Any
 
-np.find_common_type(
-    np.int64, np.int64
-)  # E: incompatible type "Type[signedinteger[Any]]"
+__all__: list[str] = []

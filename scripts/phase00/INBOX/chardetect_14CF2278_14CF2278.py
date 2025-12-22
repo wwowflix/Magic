@@ -16,7 +16,7 @@ import argparse
 import sys
 from typing import Iterable, List, Optional
 
-from .. import __version__
+from . import __version__
 from scripts.universaldetector import UniversalDetector
 
 

@@ -2,7 +2,7 @@ regular = "hi"
 
 import sys
 
-from .. import _deprecate
+from . import _deprecate
 
 _deprecate.deprecate_attributes(
     __name__,

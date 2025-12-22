@@ -1,14 +1,19 @@
-from typing import Any
+﻿from typing import Any, TYPE_CHECKING
 import numpy as np
 
 AR_i8: np.ndarray[Any, np.dtype[np.int64]]
-ar_iter = np.lib.Arrayterator(AR_i8)
 
-np.lib.Arrayterator(np.int64())  # E: incompatible type
-ar_iter.shape = (10, 5)  # E: is read-only
-ar_iter[None]  # E: Invalid index type
-ar_iter[None, 1]  # E: Invalid index type
-ar_iter[np.intp()]  # E: Invalid index type
-ar_iter[np.intp(), ...]  # E: Invalid index type
-ar_iter[AR_i8]  # E: Invalid index type
-ar_iter[AR_i8, :]  # E: Invalid index type
+
+def make_iterator(x: Any) -> np.lib.Arrayterator:
+    """
+    Small helper used so tests can import and call something from
+    this module if needed. Wraps numpy.lib.Arrayterator.
+    """
+    arr = np.asarray(x)
+    return np.lib.Arrayterator(arr)
+
+
+if TYPE_CHECKING:
+    # This is only for static type checkers; it will never run at runtime,
+    # so it cannot raise NameError during imports.
+    ar_iter = np.lib.Arrayterator(AR_i8)

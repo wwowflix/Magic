@@ -1,21 +1,11 @@
-from typing import TypeVar, Union
-import numpy as np
-import numpy.typing as npt
+﻿from __future__ import annotations
 
-T1 = TypeVar("T1", bound=npt.NBitBase)
-T2 = TypeVar("T2", bound=npt.NBitBase)
+'''MAGIC Week 0 shim for scripts.nbit_base_example.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-def add(a: np.floating[T1], b: np.integer[T2]) -> np.floating[Union[T1, T2]]:
-    return a + b
+from typing import Any
 
-
-i8: np.int64
-i4: np.int32
-f8: np.float64
-f4: np.float32
-
-reveal_type(add(f8, i8))  # E: {float64}
-reveal_type(add(f4, i8))  # E: {float64}
-reveal_type(add(f8, i4))  # E: {float64}
-reveal_type(add(f4, i4))  # E: {float32}
+__all__: list[str] = []

@@ -202,3 +202,38 @@ outputs/logs/
 scripts/_compat_numpy.py
 
 scripts/_compat_numpy.py
+
+/buildctx/
+/buildctx_min/
+
+# ---- MAGIC ignore block (managed) ----
+# MAGIC bulk artifacts
+backups/**
+outputs/reports/**
+outputs/status/**
+*.zip
+*.tar
+# ---- end MAGIC ignore block ----
+# --- local-only / generated ---
+tools/reports/
+review/
+_quarantine_shadowing/
+
+# --- patch backups ---
+*.magic_bak*
+cleanup_odd_files.ps1
+tools/find_selenium_poisoner.py
+# --- local-only / generated ---
+tools/reports/
+review/
+_quarantine_shadowing/
+
+# --- generated smoke + probe artifacts ---
+smoke_*.txt
+smoke_last_run.txt
+smoke_failed_tests.txt
+probe_*.py
+missing_modules.txt
+
+# --- patch backups ---
+*.magic_bak*

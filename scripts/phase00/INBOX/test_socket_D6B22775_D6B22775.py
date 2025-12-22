@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING, Union, cast
 import attrs
 import pytest
 
-from .. import _core, socket as tsocket
+from . import _core, socket as tsocket
 from scripts._core._tests.tutil import binds_ipv6, can_create_ipv6, creates_ipv6, slow
 from scripts._socket import (
     _NUMERIC_ONLY,
@@ -1049,9 +1049,9 @@ async def test_send_recv_variants() -> None:
 
 
 async def test_idna(monkeygai: MonkeypatchedGAI) -> None:
-    # This is the encoding for "faÃƒÅ¸.de", which uses one of the characters that
+    # This is the encoding for "faÃƒÆ’Ã…Â¸.de", which uses one of the characters that
     # IDNA 2003 handles incorrectly:
-    monkeygai.set("ok faÃƒÅ¸.de", b"xn--fa-hia.de", 80)
+    monkeygai.set("ok faÃƒÆ’Ã…Â¸.de", b"xn--fa-hia.de", 80)
     monkeygai.set("ok ::1", "::1", 80, flags=_NUMERIC_ONLY)
     monkeygai.set("ok ::1", b"::1", 80, flags=_NUMERIC_ONLY)
     # Some things that should not reach the underlying socket.getaddrinfo:
@@ -1061,9 +1061,9 @@ async def test_idna(monkeygai: MonkeypatchedGAI) -> None:
 
     assert await tsocket.getaddrinfo("::1", 80) == "ok ::1"
     assert await tsocket.getaddrinfo(b"::1", 80) == "ok ::1"
-    assert await tsocket.getaddrinfo("faÃƒÅ¸.de", 80) == "ok faÃƒÅ¸.de"
-    assert await tsocket.getaddrinfo("xn--fa-hia.de", 80) == "ok faÃƒÅ¸.de"
-    assert await tsocket.getaddrinfo(b"xn--fa-hia.de", 80) == "ok faÃƒÅ¸.de"
+    assert await tsocket.getaddrinfo("faÃƒÆ’Ã…Â¸.de", 80) == "ok faÃƒÆ’Ã…Â¸.de"
+    assert await tsocket.getaddrinfo("xn--fa-hia.de", 80) == "ok faÃƒÆ’Ã…Â¸.de"
+    assert await tsocket.getaddrinfo(b"xn--fa-hia.de", 80) == "ok faÃƒÆ’Ã…Â¸.de"
 
 
 async def test_getprotobyname() -> None:
@@ -1115,7 +1115,7 @@ async def test_custom_hostname_resolver(monkeygai: MonkeypatchedGAI) -> None:
         )
 
     # IDNA encoding is handled before calling the special object
-    got = await tsocket.getaddrinfo("fÃƒÂ¶ÃƒÂ¶", "foo")
+    got = await tsocket.getaddrinfo("fÃƒÆ’Ã‚Â¶ÃƒÆ’Ã‚Â¶", "foo")
     expected = ("custom_gai", b"xn--f-1gaa", "foo", 0, 0, 0, 0)
     assert got == expected
 

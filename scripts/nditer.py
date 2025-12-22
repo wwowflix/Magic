@@ -1,19 +1,11 @@
-import copy
-import numpy as np
+﻿from __future__ import annotations
 
-nditer_obj: np.nditer
+'''MAGIC Week 0 shim for scripts.nditer.
 
-with nditer_obj as context:
-    reveal_type(context)  # E: numpy.nditer
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-reveal_type(len(nditer_obj))  # E: builtins.int
-reveal_type(copy.copy(nditer_obj))  # E: numpy.nditer
-reveal_type(next(nditer_obj))  # E: Any
-reveal_type(iter(nditer_obj))  # E: typing.Iterator[Any]
-reveal_type(nditer_obj[1])  # E: Any
-reveal_type(nditer_obj[1:5])  # E: Any
+from typing import Any
 
-nditer_obj[1] = 1
-nditer_obj[1:5] = 1
-del nditer_obj[1]
-del nditer_obj[1:5]
+__all__: list[str] = []

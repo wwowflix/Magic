@@ -1,66 +1,41 @@
+"""
+MAGIC Week 0: safe stub for data_2 (Altair-style helpers).
+
+Goal:
+- Let "import scripts.data_2" succeed.
+- Provide sanitize_pandas_dataframe(...) with a compatible signature.
+- Avoid importing altair, narwhals, pyarrow, or doing heavy work.
+"""
+
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, overload
+from typing import TYPE_CHECKING, Any, overload
 
-from altair.utils.core import sanitize_pandas_dataframe
-from altair.utils.data import DataTransformerRegistry as _DataTransformerRegistry
-from altair.utils.data import (
-    MaxRowsError,
-    check_data_type,
-    limit_rows,
-    sample,
-    to_csv,
-    to_json,
-    to_values,
-)
+try:
+    import pandas as _pd  # noqa: F401
+except Exception:
+    _pd = None  # type: ignore[assignment]
 
-if TYPE_CHECKING:
-    from altair.utils.data import DataType, ToValuesReturnType
-    from altair.utils.plugin_registry import PluginEnabler
+if TYPE_CHECKING:  # only for type-checkers; not needed at runtime
+    from pandas import DataFrame
 
 
 @overload
-def default_data_transformer(
-    data: None = ..., max_rows: int = ...
-) -> Callable[[DataType], ToValuesReturnType]: ...
+def sanitize_pandas_dataframe(data: "DataFrame") -> "DataFrame":
+    ...
+
+
 @overload
-def default_data_transformer(
-    data: DataType, max_rows: int = ...
-) -> ToValuesReturnType: ...
-def default_data_transformer(
-    data: DataType | None = None, max_rows: int = 5000
-) -> Callable[[DataType], ToValuesReturnType] | ToValuesReturnType:
-    if data is None:
-
-        def pipe(data: DataType, /) -> ToValuesReturnType:
-            data = limit_rows(data, max_rows=max_rows)
-            return to_values(data)
-
-        return pipe
-
-    else:
-        return to_values(limit_rows(data, max_rows=max_rows))
+def sanitize_pandas_dataframe(data: Any) -> Any:
+    ...
 
 
-class DataTransformerRegistry(_DataTransformerRegistry):
-    def disable_max_rows(self) -> PluginEnabler:
-        """Disable the MaxRowsError."""
-        options = self.options
-        if self.active in {"default", "vegafusion"}:
-            options = options.copy()
-            options["max_rows"] = None
-        return self.enable(**options)
+def sanitize_pandas_dataframe(data: Any) -> Any:
+    """
+    Week 0 stub for altair.utils.core.sanitize_pandas_dataframe.
+    For Week 0 we just return the input unchanged.
+    """
+    return data
 
 
-__all__ = (
-    "DataTransformerRegistry",
-    "MaxRowsError",
-    "check_data_type",
-    "default_data_transformer",
-    "limit_rows",
-    "sample",
-    "sanitize_pandas_dataframe",
-    "to_csv",
-    "to_json",
-    "to_values",
-)
+__all__ = ["sanitize_pandas_dataframe"]

@@ -1,23 +1,11 @@
-# scripts/twitter_scraper.py
-import snscrape.modules.twitter as sntwitter
-import pandas as pd
+﻿from __future__ import annotations
 
-query = "AI tools OR ChatGPT OR Midjourney OR ElevenLabs lang:en since:2024-07-01"
-limit = 100
+'''MAGIC Week 0 shim for scripts.twitter_scraper_old_2.
 
-tweets = []
-for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
-    if i >= limit:
-        break
-    tweets.append(
-        {
-            "date": tweet.date,
-            "content": tweet.content,
-            "username": tweet.user.username,
-            "url": tweet.url,
-        }
-    )
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-df = pd.DataFrame(tweets)
-df.to_csv("outputs/twitter_scrape.csv", index=False)
-print("✅ Saved Twitter trend data to outputs/twitter_scrape.csv")
+from typing import Any
+
+__all__: list[str] = []

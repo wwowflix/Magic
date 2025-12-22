@@ -378,7 +378,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from contextlib import AbstractContextManager
 
-    from .. import _core
+    from . import _core
     from scripts._file_io import _HasFileNo
     from ._traps import Abort, RaiseCancelT
 """

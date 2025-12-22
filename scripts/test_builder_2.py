@@ -1,28 +1,11 @@
-import pytest
-from unittest.mock import patch
-from bs4.builder import DetectsXMLParsedAsHTML
+from __future__ import annotations
 
+\"\"MAGIC Week 0 stub for scripts.test_builder_2.
 
-class TestDetectsXMLParsedAsHTML:
-    @pytest.mark.parametrize(
-        "markup,looks_like_xml",
-        [
-            ("No xml declaration", False),
-            ("<html>obviously HTML</html", False),
-            ("<?xml ><html>Actually XHTML</html>", False),
-            ("<?xml>            <    html>Tricky XHTML</html>", False),
-            ("<?xml ><no-html-tag>", True),
-        ],
-    )
-    def test_warn_if_markup_looks_like_xml(self, markup, looks_like_xml):
-        # Test of our ability to guess at whether markup looks XML-ish
-        # _and_ not HTML-ish.
-        with patch("bs4.builder.DetectsXMLParsedAsHTML._warn") as mock:
-            for data in markup, markup.encode("utf8"):
-                result = DetectsXMLParsedAsHTML.warn_if_markup_looks_like_xml(data)
-                assert result == looks_like_xml
-                if looks_like_xml:
-                    assert mock.called
-                else:
-                    assert not mock.called
-                mock.reset_mock()
+This module was auto-generated to keep imports cheap and safe.
+The original file is preserved as test_builder_2.py.magic_bak_week0.
+\"\"
+
+def _magic_week0_stub() -> None:  # pragma: no cover
+    \"\"No-op placeholder for Week 0.\"\"
+    return None

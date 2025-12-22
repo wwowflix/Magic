@@ -1,3 +1,13 @@
-line-length = 100
-target-version = "py311"
-select = ["E","F","W","I"]
+﻿[lint]
+select = ["E", "F", "W", "I"]
+
+exclude = [
+    "tools/fixers/",
+    "tools/scan/",
+    "tools/diagnostics/",
+    "tools/hooks/",
+]
+
+[format]
+quote-style = "double"
+line-ending = "lf"

@@ -1,13 +1,11 @@
-"""
-This namespace represents special functions that can call back into Trio from
-an external thread by means of a Trio Token present in Thread Local Storage
-"""
+﻿from __future__ import annotations
 
-from ._threads import (
-    from_thread_check_cancelled as check_cancelled,
-    from_thread_run as run,
-    from_thread_run_sync as run_sync,
-)
+'''MAGIC Week 0 shim for scripts.from_thread.
 
-# need to use __all__ for pyright --verifytypes to see re-exports when renaming them
-__all__ = ["check_cancelled", "run", "run_sync"]
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

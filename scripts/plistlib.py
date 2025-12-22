@@ -1,47 +1,41 @@
-"""DEPRECATED - This module is kept here only as a backward compatibility shim
-for the old `ufoLib.plistlib` module, which was moved to :class:`fontTools.misc.plistlib`.
-Please use the latter instead.
-"""
+# -*- coding: utf-8 -*-
+"""MAGIC shim: forward all imports to the real stdlib 'plistlib' module."""
 
-from fontTools.misc.plistlib import dump, dumps, load, loads
-from fontTools.misc.textTools import tobytes
+import importlib as _importlib
+import sys as _sys
+from pathlib import Path as _Path
 
-# The following functions were part of the old py2-like ufoLib.plistlib API.
-# They are kept only for backward compatiblity.
-from fontTools.ufoLib.utils import deprecated
+_target_name = "plistlib"
 
+# Drop any half-initialized entry
+_sys.modules.pop(_target_name, None)
 
-@deprecated("Use 'fontTools.misc.plistlib.load' instead")
-def readPlist(path_or_file):
-    did_open = False
-    if isinstance(path_or_file, str):
-        path_or_file = open(path_or_file, "rb")
-        did_open = True
-    try:
-        return load(path_or_file, use_builtin_types=False)
-    finally:
-        if did_open:
-            path_or_file.close()
+# Temporarily hide this directory from sys.path to avoid re-importing ourselves
+_original_path = list(_sys.path)
+_this_dir = str(_Path(__file__).resolve().parent)
 
+try:
+    _sys.path = [
+        p for p in _sys.path
+        if _Path(p).resolve() != _Path(_this_dir)
+    ]
+    _real = _importlib.import_module(_target_name)
+finally:
+    _sys.path = _original_path
 
-@deprecated("Use 'fontTools.misc.plistlib.dump' instead")
-def writePlist(value, path_or_file):
-    did_open = False
-    if isinstance(path_or_file, str):
-        path_or_file = open(path_or_file, "wb")
-        did_open = True
-    try:
-        dump(value, path_or_file, use_builtin_types=False)
-    finally:
-        if did_open:
-            path_or_file.close()
+# Ensure future imports see the real module
+_sys.modules[_target_name] = _real
+_sys.modules.setdefault(f"scripts.{_target_name}", _real)
 
+# Re-export everything
+for _name in dir(_real):
+    globals()[_name] = getattr(_real, _name)
 
-@deprecated("Use 'fontTools.misc.plistlib.loads' instead")
-def readPlistFromString(data):
-    return loads(tobytes(data, encoding="utf-8"), use_builtin_types=False)
+# Keep a sensible __all__
+try:
+    __all__ = list(_real.__all__)
+except Exception:
+    __all__ = [n for n in globals() if not n.startswith("_")]
 
-
-@deprecated("Use 'fontTools.misc.plistlib.dumps' instead")
-def writePlistToString(value):
-    return dumps(value, use_builtin_types=False)
+# Cleanup
+del _importlib, _sys, _Path, _original_path, _this_dir, _name, _real, _target_name

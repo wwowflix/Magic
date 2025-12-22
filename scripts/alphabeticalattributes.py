@@ -1,29 +1,22 @@
-from __future__ import absolute_import, division, unicode_literals
+"""MAGIC stub for snscrape alphabeticalattributes filter.
 
-from . import base
+The real module integrates with snscrape.utils.Filter; here we just expose
+a minimal Filter class so imports succeed.
+"""
 
-from collections import OrderedDict
+from __future__ import annotations
+
+import logging
 
 
-def _attr_key(attr):
-    """Return an appropriate key for an attribute for sorting
+class Filter(logging.Filter):
+    """Minimal logging.Filter stand-in used by MAGIC.
 
-    Attributes have a namespace that can be either ``None`` or a string. We
-    can't compare the two because they're different types, so we convert
-    ``None`` to an empty string first.
-
+    Always returns True so it never drops log records.
     """
-    return (attr[0][0] or ""), attr[0][1]
+
+    def filter(self, record: logging.LogRecord) -> bool:  # pragma: no cover
+        return True
 
 
-class Filter(base.Filter):
-    """Alphabetizes attributes for elements"""
-
-    def __iter__(self):
-        for token in base.Filter.__iter__(self):
-            if token["type"] in ("StartTag", "EmptyTag"):
-                attrs = OrderedDict()
-                for name, value in sorted(token["data"].items(), key=_attr_key):
-                    attrs[name] = value
-                token["data"] = attrs
-            yield token
+__all__ = ["Filter"]

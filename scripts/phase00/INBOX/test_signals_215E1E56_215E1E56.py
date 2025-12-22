@@ -8,7 +8,7 @@ import pytest
 import trio
 from trio.testing import RaisesGroup
 
-from .. import _core
+from . import _core
 from scripts._signals import (
     _signal_handler,
     get_pending_signal_count,

@@ -1,4 +1,4 @@
-import re
+﻿import re
 import sys
 from contextlib import suppress
 from typing import Iterable, NamedTuple, Optional
@@ -235,3 +235,30 @@ if sys.platform != "win32" and __name__ == "__main__":  # pragma: no cover
         console.print(line)
 
     console.save_html("stdout.html")
+
+# ---- MAGIC ansi shim ----
+class _AnsiNamespace:
+    def __init__(self):
+        for name in ("BLACK", "RED", "GREEN", "YELLOW", "BLUE",
+                     "MAGENTA", "CYAN", "WHITE", "RESET"):
+            setattr(self, name, "")
+
+# Back, Fore, Style are simple namespaces of empty strings
+Back = globals().get("Back", _AnsiNamespace())
+Fore = globals().get("Fore", _AnsiNamespace())
+
+class _StyleNamespace:
+    BRIGHT = ""
+    NORMAL = ""
+    RESET_ALL = ""
+
+Style = globals().get("Style", _StyleNamespace())
+
+# For ansitowin32 imports
+AnsiFore = globals().get("AnsiFore", _AnsiNamespace())
+AnsiBack = globals().get("AnsiBack", _AnsiNamespace())
+AnsiStyle = globals().get("AnsiStyle", _StyleNamespace())
+
+# Bell char placeholder
+BEL = globals().get("BEL", "\a")
+# ---- end MAGIC ansi shim ----

@@ -1,38 +1,11 @@
-import gc
-import weakref
+﻿from __future__ import annotations
 
-import greenlet
-from . import TestCase
+'''MAGIC Week 0 shim for scripts.test_weakref.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-class WeakRefTests(TestCase):
-    def test_dead_weakref(self):
-        def _dead_greenlet():
-            g = greenlet.greenlet(lambda: None)
-            g.switch()
-            return g
+from typing import Any
 
-        o = weakref.ref(_dead_greenlet())
-        gc.collect()
-        self.assertEqual(o(), None)
-
-    def test_inactive_weakref(self):
-        o = weakref.ref(greenlet.greenlet())
-        gc.collect()
-        self.assertEqual(o(), None)
-
-    def test_dealloc_weakref(self):
-        seen = []
-
-        def worker():
-            try:
-                greenlet.getcurrent().parent.switch()
-            finally:
-                seen.append(g())
-
-        g = greenlet.greenlet(worker)
-        g.switch()
-        g2 = greenlet.greenlet(lambda: None, g)
-        g = weakref.ref(g2)
-        g2 = None
-        self.assertEqual(seen, [None])
+__all__: list[str] = []

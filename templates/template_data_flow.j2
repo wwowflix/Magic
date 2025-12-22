@@ -1,0 +1,50 @@
+﻿{#
+  MAGIC Week 1 – Data Flow Module Template (W1D1-2)
+
+  This Jinja2 template is used by the AI Auto-Writer / generators to
+  create individual data flow modules that are compatible with
+  scripts.data_flow_mvp.DataModule and the Week-1 smoketests.
+#}
+from __future__ import annotations
+
+"""
+MAGIC Auto-Generated Data Flow Module
+
+Generated from: template_data_flow.j2
+Week: 1
+Stage: 2.1 – Data Flow MVP
+
+Module metadata:
+- module_id: {{ module_id }}
+- name: {{ name }}
+- phase: {{ phase | default(2) }}
+"""
+
+from typing import Any, Dict, List
+from scripts.data_flow_mvp import DataModule
+
+
+def build_module() -> DataModule:
+    """
+    Factory function returning a configured DataModule instance.
+
+    This keeps all "what this module is" data in one place so your
+    orchestrators / registries can introspect without importing heavy deps.
+    """
+    return DataModule(
+        module_id="{{ module_id }}",
+        name="{{ name }}",
+        category="{{ category | default('data_flow') }}",
+        phase={{ phase | default(2) }},
+        enabled={{ enabled | default(true) }},
+        tags={{ tags | default(['week1', 'auto']) }},
+    )
+
+
+def as_dict() -> Dict[str, Any]:
+    """
+    Convenience helper: return the module definition as a plain dict.
+    Useful for registries, dashboards, and JSON exports.
+    """
+    mod = build_module()
+    return mod.to_dict()

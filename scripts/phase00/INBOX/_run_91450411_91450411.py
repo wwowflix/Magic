@@ -29,7 +29,7 @@ from outcome import Error, Outcome, Value, capture
 from sniffio import thread_local as sniffio_library
 from sortedcontainers import SortedDict
 
-from .. import _core
+from . import _core
 from scripts._abc import Clock, Instrument
 from scripts._deprecate import warn_deprecated
 from scripts._util import NoPublicConstructor, coroutine_or_error, final

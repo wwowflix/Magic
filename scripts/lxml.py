@@ -1,162 +1,101 @@
-# defusedxml
-#
-# Copyright (c) 2013 by Christian Heimes <christian@python.org>
-# Licensed to PSF under a Contributor Agreement.
-# See https://www.python.org/psf/license for licensing details.
-"""DEPRECATED Example code for lxml.etree protection
+﻿from __future__ import annotations
 
-The code has NO protection against decompression bombs.
 """
-from __future__ import print_function, absolute_import
+MAGIC Week 0 stub for the `lxml` package.
 
-import threading
-import warnings
+Goals:
+- Allow `from lxml import etree, html` to succeed for vendored scripts like ElementInclude / ElementSoup.
+- Avoid importing any real lxml C extensions or causing circular imports.
+- Provide a minimal `etree` namespace (Element, SubElement, fromstring, tostring).
+- Provide a minimal `html` namespace with fromstring/tostring/document_fromstring.
+- Provide etree.LxmlSyntaxError so ElementInclude can subclass it.
 
-from lxml import etree as _etree
+This is enough for smoke imports during Week 0.
+"""
 
-from .common import DTDForbidden, EntitiesForbidden, NotSupportedError
-
-LXML3 = _etree.LXML_VERSION[0] >= 3
-
-__origin__ = "lxml.etree"
-
-tostring = _etree.tostring
-
-warnings.warn(
-    "defusedxml.lxml is no longer supported and will be removed in a future release.",
-    category=DeprecationWarning,
-    stacklevel=2,
-)
+from typing import Any, Optional
 
 
-class RestrictedElement(_etree.ElementBase):
-    """A restricted Element class that filters out instances of some classes"""
-
-    __slots__ = ()
-    # blacklist = (etree._Entity, etree._ProcessingInstruction, etree._Comment)
-    blacklist = _etree._Entity
-
-    def _filter(self, iterator):
-        blacklist = self.blacklist
-        for child in iterator:
-            if isinstance(child, blacklist):
-                continue
-            yield child
-
-    def __iter__(self):
-        iterator = super(RestrictedElement, self).__iter__()
-        return self._filter(iterator)
-
-    def iterchildren(self, tag=None, reversed=False):
-        iterator = super(RestrictedElement, self).iterchildren(
-            tag=tag, reversed=reversed
-        )
-        return self._filter(iterator)
-
-    def iter(self, tag=None, *tags):
-        iterator = super(RestrictedElement, self).iter(tag=tag, *tags)
-        return self._filter(iterator)
-
-    def iterdescendants(self, tag=None, *tags):
-        iterator = super(RestrictedElement, self).iterdescendants(tag=tag, *tags)
-        return self._filter(iterator)
-
-    def itersiblings(self, tag=None, preceding=False):
-        iterator = super(RestrictedElement, self).itersiblings(
-            tag=tag, preceding=preceding
-        )
-        return self._filter(iterator)
-
-    def getchildren(self):
-        iterator = super(RestrictedElement, self).__iter__()
-        return list(self._filter(iterator))
-
-    def getiterator(self, tag=None):
-        iterator = super(RestrictedElement, self).getiterator(tag)
-        return self._filter(iterator)
-
-
-class GlobalParserTLS(threading.local):
-    """Thread local context for custom parser instances"""
-
-    parser_config = {
-        "resolve_entities": False,
-        # 'remove_comments': True,
-        # 'remove_pis': True,
-    }
-
-    element_class = RestrictedElement
-
-    def createDefaultParser(self):
-        parser = _etree.XMLParser(**self.parser_config)
-        element_class = self.element_class
-        if self.element_class is not None:
-            lookup = _etree.ElementDefaultClassLookup(element=element_class)
-            parser.set_element_class_lookup(lookup)
-        return parser
-
-    def setDefaultParser(self, parser):
-        self._default_parser = parser
-
-    def getDefaultParser(self):
-        parser = getattr(self, "_default_parser", None)
-        if parser is None:
-            parser = self.createDefaultParser()
-            self.setDefaultParser(parser)
-        return parser
-
-
-_parser_tls = GlobalParserTLS()
-getDefaultParser = _parser_tls.getDefaultParser
-
-
-def check_docinfo(elementtree, forbid_dtd=False, forbid_entities=True):
-    """Check docinfo of an element tree for DTD and entity declarations
-
-    The check for entity declarations needs lxml 3 or newer. lxml 2.x does
-    not support dtd.iterentities().
+class LxmlSyntaxError(Exception):
     """
-    docinfo = elementtree.docinfo
-    if docinfo.doctype:
-        if forbid_dtd:
-            raise DTDForbidden(docinfo.doctype, docinfo.system_url, docinfo.public_id)
-        if forbid_entities and not LXML3:
-            # lxml < 3 has no iterentities()
-            raise NotSupportedError(
-                "Unable to check for entity declarations " "in lxml 2.x"
-            )
+    MAGIC Week 0 stub for lxml.etree.LxmlSyntaxError.
 
-    if forbid_entities:
-        for dtd in docinfo.internalDTD, docinfo.externalDTD:
-            if dtd is None:
-                continue
-            for entity in dtd.iterentities():
-                raise EntitiesForbidden(
-                    entity.name, entity.content, None, None, None, None
-                )
+    No special behavior – it just has to exist as an exception type.
+    """
 
 
-def parse(source, parser=None, base_url=None, forbid_dtd=False, forbid_entities=True):
-    if parser is None:
-        parser = getDefaultParser()
-    elementtree = _etree.parse(source, parser, base_url=base_url)
-    check_docinfo(elementtree, forbid_dtd, forbid_entities)
-    return elementtree
+class _DummyElement:
+    """Very small stand-in for an XML Element node."""
+
+    def __init__(self, tag: str = "dummy", text: Optional[str] = None, **attrs: Any) -> None:
+        self.tag = tag
+        self.text = text
+        self.attrib = dict(attrs)
+        self.children: list["_DummyElement"] = []
+
+    def append(self, elem: "_DummyElement") -> None:
+        self.children.append(elem)
+
+    def __repr__(self) -> str:
+        return f"<_DummyElement tag={self.tag!r}>"
 
 
-def fromstring(
-    text, parser=None, base_url=None, forbid_dtd=False, forbid_entities=True
-):
-    if parser is None:
-        parser = getDefaultParser()
-    rootelement = _etree.fromstring(text, parser, base_url=base_url)
-    elementtree = rootelement.getroottree()
-    check_docinfo(elementtree, forbid_dtd, forbid_entities)
-    return rootelement
+def _element(tag: str, text: Optional[str] = None, **attrs: Any) -> _DummyElement:
+    return _DummyElement(tag=tag, text=text, **attrs)
 
 
-XML = fromstring
+def _subelement(parent: _DummyElement, tag: str, text: Optional[str] = None, **attrs: Any) -> _DummyElement:
+    elem = _DummyElement(tag=tag, text=text, **attrs)
+    parent.append(elem)
+    return elem
 
 
-def iterparse(*args, **kwargs):
-    raise NotSupportedError("defused lxml.etree.iterparse not available")
+def _fromstring(data: str, *args: Any, **kwargs: Any) -> _DummyElement:
+    # Minimal parser: ignore actual XML, just wrap into a dummy element.
+    return _DummyElement(tag="root", text=data)
+
+
+def _tostring(elem: _DummyElement, *args: Any, **kwargs: Any) -> bytes:
+    # Minimal serializer: just return a placeholder representation.
+    return f"<{elem.tag}>...</{elem.tag}>".encode("utf-8")
+
+
+class _EtreeNamespace:
+    """Namespace object mimicking lxml.etree with a tiny surface."""
+
+    Element = staticmethod(_element)
+    SubElement = staticmethod(_subelement)
+    fromstring = staticmethod(_fromstring)
+    tostring = staticmethod(_tostring)
+
+    # Types / aliases some code may expect
+    _Element = _DummyElement
+    LxmlSyntaxError = LxmlSyntaxError
+
+
+class _HtmlNamespace:
+    """
+    Tiny stand-in for lxml.html.
+
+    soupparser does: `from lxml import etree, html`
+    It typically calls html.fromstring / html.tostring / html.document_fromstring.
+    We provide minimal versions that just use _DummyElement.
+    """
+
+    def fromstring(self, data: str, *args: Any, **kwargs: Any) -> _DummyElement:
+        # Pretend we parsed an HTML document.
+        return _DummyElement(tag="html", text=data)
+
+    def document_fromstring(self, data: str, *args: Any, **kwargs: Any) -> _DummyElement:
+        # Same idea as fromstring, but named differently.
+        return _DummyElement(tag="html", text=data)
+
+    def tostring(self, elem: _DummyElement, *args: Any, **kwargs: Any) -> bytes:
+        return _tostring(elem, *args, **kwargs)
+
+
+# What `from lxml import etree, html` should see.
+etree = _EtreeNamespace()
+html = _HtmlNamespace()
+
+__all__ = ["etree", "html", "_DummyElement", "LxmlSyntaxError"]

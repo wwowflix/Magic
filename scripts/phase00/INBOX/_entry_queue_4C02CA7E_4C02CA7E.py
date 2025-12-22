@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, NoReturn
 
 import attrs
 
-from .. import _core
+from . import _core
 from scripts._util import NoPublicConstructor, final
 from ._wakeup_socketpair import WakeupSocketpair
 

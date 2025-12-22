@@ -1,15 +1,29 @@
-from pathlib import Path
-import numpy as np
+"""
+MAGIC Week 0: stub for NumPy DataSource examples.
 
-path: Path
-d1: np.DataSource
+Goal:
+- Let "import scripts.datasource" succeed.
+- Avoid using np.DataSource (removed in NumPy 2.0).
+- Do NOT touch real filesystem or network.
+"""
 
-d1.abspath(path)  # E: incompatible type
-d1.abspath(b"...")  # E: incompatible type
+from __future__ import annotations
+from typing import Any
 
-d1.exists(path)  # E: incompatible type
-d1.exists(b"...")  # E: incompatible type
 
-d1.open(path, "r")  # E: incompatible type
-d1.open(b"...", encoding="utf8")  # E: incompatible type
-d1.open(None, newline="/n")  # E: incompatible type
+class DataSource:
+    """
+    Minimal placeholder for numpy.lib.npyio.DataSource.
+
+    We accept any arguments but do not perform any I/O.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self.args = args
+        self.kwargs = kwargs
+
+    def open(self, *args: Any, **kwargs: Any) -> Any:
+        raise RuntimeError("DataSource stub – no real I/O in MAGIC Week 0")
+
+
+__all__ = ["DataSource"]

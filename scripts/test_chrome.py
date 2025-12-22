@@ -1,12 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+﻿from __future__ import annotations
 
-service = Service(r"D:\MAGIC\scripts\chromedriver-win64\chromedriver.exe")
-options = webdriver.ChromeOptions()
-# Uncomment next line to run headless (no browser window)
-# options.add_argument("--headless=new")
+'''MAGIC Week 0 shim for scripts.test_chrome.
 
-driver = webdriver.Chrome(service=service, options=options)
-driver.get("https://www.google.com")
-print("Page title is:", driver.title)
-driver.quit()
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

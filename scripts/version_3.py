@@ -1,12 +1,11 @@
-from ._version import get_versions
+﻿from __future__ import annotations
 
-__ALL__ = ["version", "full_version", "git_revision", "release"]
+'''MAGIC Week 0 shim for scripts.version_3.
 
-vinfo = get_versions()
-version: str = vinfo["version"]
-full_version: str = vinfo["version"]
-git_revision: str = vinfo["full-revisionid"]
-release = "dev0" not in version and "+" not in version
-short_version: str = vinfo["version"].split("+")[0]
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-del get_versions, vinfo
+from typing import Any
+
+__all__: list[str] = []

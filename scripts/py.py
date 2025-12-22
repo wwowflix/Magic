@@ -1,67 +1,51 @@
-from __future__ import absolute_import, division, unicode_literals
-from six import text_type
+﻿from __future__ import annotations
 
-from bisect import bisect_left
+"""
+MAGIC Week 0 shim for the third-party `py` package.
 
-from ._base import Trie as ABCTrie
+Why:
+- Your project has `scripts/py.py`, which shadows the real `py` package
+  that pytest and its compat layer expect.
+- This shim finds the real `py` package in site-packages (excluding the
+  `scripts/` directory) and re-exports all of its public attributes.
+
+Result:
+- `import py` and any code using pytest internals see exactly the real
+  package API, not this shim's file-level implementation.
+"""
+
+from types import ModuleType
+import importlib.util
+import importlib.machinery
+import importlib.machinery
+import os as _os
+import sys as _sys
 
 
-class Trie(ABCTrie):
-    def __init__(self, data):
-        if not all(isinstance(x, text_type) for x in data.keys()):
-            raise TypeError("All keys must be strings")
+# Directory of this shim (E:\MAGIC\scripts)
+_here = _os.path.dirname(__file__)
 
-        self._data = data
-        self._keys = sorted(data.keys())
-        self._cachestr = ""
-        self._cachepoints = (0, len(data))
+# Build a search path that excludes the scripts directory, so that
+# PathFinder finds the real site-packages `py` instead of this file.
+_search_paths = [
+    p
+    for p in _sys.path
+    if _os.path.abspath(p) != _os.path.abspath(_here)
+]
 
-    def __contains__(self, key):
-        return key in self._data
+_spec = importlib.machinery.PathFinder.find_spec("py", _search_paths)
+if _spec is None or _spec.loader is None:
+    raise ImportError("Cannot locate real third-party 'py' package outside scripts/")
 
-    def __len__(self):
-        return len(self._data)
+_real = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_real)  # type: ignore[arg-type]
 
-    def __iter__(self):
-        return iter(self._data)
+# Re-export everything public from the real package into this module.
+for name in dir(_real):
+    if not name.startswith("_"):
+        globals()[name] = getattr(_real, name)
 
-    def __getitem__(self, key):
-        return self._data[key]
+# Also expose the real module object if needed.
+_real_py: ModuleType = _real
 
-    def keys(self, prefix=None):
-        if prefix is None or prefix == "" or not self._keys:
-            return set(self._keys)
-
-        if prefix.startswith(self._cachestr):
-            lo, hi = self._cachepoints
-            start = i = bisect_left(self._keys, prefix, lo, hi)
-        else:
-            start = i = bisect_left(self._keys, prefix)
-
-        keys = set()
-        if start == len(self._keys):
-            return keys
-
-        while self._keys[i].startswith(prefix):
-            keys.add(self._keys[i])
-            i += 1
-
-        self._cachestr = prefix
-        self._cachepoints = (start, i)
-
-        return keys
-
-    def has_keys_with_prefix(self, prefix):
-        if prefix in self._data:
-            return True
-
-        if prefix.startswith(self._cachestr):
-            lo, hi = self._cachepoints
-            i = bisect_left(self._keys, prefix, lo, hi)
-        else:
-            i = bisect_left(self._keys, prefix)
-
-        if i == len(self._keys):
-            return False
-
-        return self._keys[i].startswith(prefix)
+__all__ = [name for name in globals() if not name.startswith("_")]

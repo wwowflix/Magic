@@ -34,7 +34,7 @@ except ImportError as error:
 
 import trio
 
-from .. import _core, socket as tsocket
+from . import _core, socket as tsocket
 from scripts._abc import Stream
 from scripts._core import BrokenResourceError, ClosedResourceError
 from scripts._core._tests.tutil import slow

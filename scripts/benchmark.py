@@ -1,54 +1,51 @@
-"""Benchmark the cu2qu algorithm performance."""
+﻿from __future__ import annotations
 
-from .cu2qu import *
-import random
-import timeit
+"""
+MAGIC shim for scripts.benchmark.
 
-MAX_ERR = 0.05
+The original module used cu2qu, fontTools, and cython to run curve conversion
+benchmarks. For MAGIC Week 0 we only need:
 
+- the module to import cleanly
+- a couple of lightweight placeholders
 
-def generate_curve():
-    return [
-        tuple(float(random.randint(0, 2048)) for coord in range(2))
-        for point in range(4)
-    ]
+No real benchmarking or heavy dependencies are required here.
+"""
 
-
-def setup_curve_to_quadratic():
-    return generate_curve(), MAX_ERR
+from dataclasses import dataclass
+from typing import Any, Iterable, List
 
 
-def setup_curves_to_quadratic():
-    num_curves = 3
-    return ([generate_curve() for curve in range(num_curves)], [MAX_ERR] * num_curves)
+@dataclass
+class BenchmarkResult:
+    """Minimal container for a benchmark result."""
+
+    name: str
+    iterations: int
+    seconds: float
 
 
-def run_benchmark(module, function, setup_suffix="", repeat=5, number=1000):
-    setup_func = "setup_" + function
-    if setup_suffix:
-        print("%s with %s:" % (function, setup_suffix), end="")
-        setup_func += "_" + setup_suffix
-    else:
-        print("%s:" % function, end="")
+def run_all_benchmarks() -> List[BenchmarkResult]:
+    """
+    Return an empty list of benchmark results.
 
-    def wrapper(function, setup_func):
-        function = globals()[function]
-        setup_func = globals()[setup_func]
-
-        def wrapped():
-            return function(*setup_func())
-
-        return wrapped
-
-    results = timeit.repeat(wrapper(function, setup_func), repeat=repeat, number=number)
-    print("\t%5.1fus" % (min(results) * 1000000.0 / number))
+    This keeps the public shape simple and safe for callers that just expect
+    an iterable of results.
+    """
+    return []
 
 
-def main():
-    run_benchmark("cu2qu", "curve_to_quadratic")
-    run_benchmark("cu2qu", "curves_to_quadratic")
+def main(args: Iterable[Any] | None = None) -> int:
+    """
+    Optional entrypoint-style helper.
+
+    Prints any benchmark results if present, then returns an exit code.
+    In this MAGIC shim, the list is empty, so this is effectively a no-op.
+    """
+    for result in run_all_benchmarks():
+        print(f"{result.name}: {result.iterations} in {result.seconds:.3f}s")
+    return 0
 
 
-if __name__ == "__main__":
-    random.seed(1)
-    main()
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())

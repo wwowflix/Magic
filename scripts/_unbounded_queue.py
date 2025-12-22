@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 
 import attrs
 
-from .. import _core
+from . import _core
 from scripts._deprecate import deprecated
 from scripts._util import final
 

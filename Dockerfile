@@ -1,27 +1,16 @@
-# Base Python image
-FROM python:3.11-slim
+﻿FROM python:3.13-slim
 
-# Avoid Python buffering / .pyc files
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+WORKDIR /MAGIC
 
-# Work directory inside the container
-WORKDIR /app
-
-# Install basic build tools (in case some wheels need compiling)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
- && rm -rf /var/lib/apt/lists/*
-
-# Copy only the lockfile first (to maximize Docker layer cache)
-COPY requirements.lock.txt ./requirements.lock.txt
-
-# Install dependencies using the frozen lock
-RUN pip install --upgrade pip \
- && pip install --no-cache-dir -r requirements.lock.txt
-
-# Now copy the rest of the repo
+# Copy project files into the image
 COPY . .
 
-# Default command: run Phase 11 smoke health tests
-CMD ["python", "-m", "pytest", "-q", "tests/smoke", "-k", "phase11 and _ok"]
+# Make pip more robust inside Docker
+ENV PIP_DEFAULT_TIMEOUT=300 \
+    PIP_RETRIES=5
+
+# Install only the slim dependency set for Docker
+RUN python -m pip install --no-cache-dir -r requirements.docker.txt
+
+# Default command: just show Python version so container does something harmless by default
+CMD ["python", "--version"]

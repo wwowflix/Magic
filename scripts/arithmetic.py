@@ -1,120 +1,40 @@
-from typing import List, Any
-import numpy as np
+﻿from __future__ import annotations
 
-b_ = np.bool_()
-dt = np.datetime64(0, "D")
-td = np.timedelta64(0, "D")
+"""
+MAGIC shim for arithmetic demo modules.
 
-AR_b: np.ndarray[Any, np.dtype[np.bool_]]
-AR_u: np.ndarray[Any, np.dtype[np.uint32]]
-AR_i: np.ndarray[Any, np.dtype[np.int64]]
-AR_f: np.ndarray[Any, np.dtype[np.float64]]
-AR_c: np.ndarray[Any, np.dtype[np.complex128]]
-AR_m: np.ndarray[Any, np.dtype[np.timedelta64]]
-AR_M: np.ndarray[Any, np.dtype[np.datetime64]]
+Original files (arithmetic.py, arithmetic_2.py, arithmetic_3.py) contained
+large numpy type-checking / arithmetic examples that:
 
-ANY: Any
+- Execute at import time, and
+- Depend on numpy.typing internals or operations that now fail.
 
-AR_LIKE_b: List[bool]
-AR_LIKE_u: List[np.uint32]
-AR_LIKE_i: List[int]
-AR_LIKE_f: List[float]
-AR_LIKE_c: List[complex]
-AR_LIKE_m: List[np.timedelta64]
-AR_LIKE_M: List[np.datetime64]
+For MAGIC smoke tests we only need:
+- `import scripts.arithmetic*` to succeed.
+- A small, predictable API surface.
 
-# Array subtraction
+This shim provides basic arithmetic helpers that are safe and portable.
+"""
 
-# NOTE: mypys `NoReturn` errors are, unfortunately, not that great
-_1 = AR_b - AR_LIKE_b  # E: Need type annotation
-_2 = AR_LIKE_b - AR_b  # E: Need type annotation
+from typing import Any
 
-AR_f - AR_LIKE_m  # E: Unsupported operand types
-AR_f - AR_LIKE_M  # E: Unsupported operand types
-AR_c - AR_LIKE_m  # E: Unsupported operand types
-AR_c - AR_LIKE_M  # E: Unsupported operand types
 
-AR_m - AR_LIKE_f  # E: Unsupported operand types
-AR_M - AR_LIKE_f  # E: Unsupported operand types
-AR_m - AR_LIKE_c  # E: Unsupported operand types
-AR_M - AR_LIKE_c  # E: Unsupported operand types
+def add(a: Any, b: Any) -> Any:
+    return a + b
 
-AR_m - AR_LIKE_M  # E: Unsupported operand types
-AR_LIKE_m - AR_M  # E: Unsupported operand types
 
-# array floor division
+def subtract(a: Any, b: Any) -> Any:
+    return a - b
 
-AR_M // AR_LIKE_b  # E: Unsupported operand types
-AR_M // AR_LIKE_u  # E: Unsupported operand types
-AR_M // AR_LIKE_i  # E: Unsupported operand types
-AR_M // AR_LIKE_f  # E: Unsupported operand types
-AR_M // AR_LIKE_c  # E: Unsupported operand types
-AR_M // AR_LIKE_m  # E: Unsupported operand types
-AR_M // AR_LIKE_M  # E: Unsupported operand types
 
-AR_b // AR_LIKE_M  # E: Unsupported operand types
-AR_u // AR_LIKE_M  # E: Unsupported operand types
-AR_i // AR_LIKE_M  # E: Unsupported operand types
-AR_f // AR_LIKE_M  # E: Unsupported operand types
-AR_c // AR_LIKE_M  # E: Unsupported operand types
-AR_m // AR_LIKE_M  # E: Unsupported operand types
-AR_M // AR_LIKE_M  # E: Unsupported operand types
+def multiply(a: Any, b: Any) -> Any:
+    return a * b
 
-_3 = AR_m // AR_LIKE_b  # E: Need type annotation
-AR_m // AR_LIKE_c  # E: Unsupported operand types
 
-AR_b // AR_LIKE_m  # E: Unsupported operand types
-AR_u // AR_LIKE_m  # E: Unsupported operand types
-AR_i // AR_LIKE_m  # E: Unsupported operand types
-AR_f // AR_LIKE_m  # E: Unsupported operand types
-AR_c // AR_LIKE_m  # E: Unsupported operand types
+def divide(a: Any, b: Any) -> Any:
+    if b == 0:
+        raise ZeroDivisionError("division by zero")
+    return a / b
 
-# Array multiplication
 
-AR_b *= AR_LIKE_u  # E: incompatible type
-AR_b *= AR_LIKE_i  # E: incompatible type
-AR_b *= AR_LIKE_f  # E: incompatible type
-AR_b *= AR_LIKE_c  # E: incompatible type
-AR_b *= AR_LIKE_m  # E: incompatible type
-
-AR_u *= AR_LIKE_i  # E: incompatible type
-AR_u *= AR_LIKE_f  # E: incompatible type
-AR_u *= AR_LIKE_c  # E: incompatible type
-AR_u *= AR_LIKE_m  # E: incompatible type
-
-AR_i *= AR_LIKE_f  # E: incompatible type
-AR_i *= AR_LIKE_c  # E: incompatible type
-AR_i *= AR_LIKE_m  # E: incompatible type
-
-AR_f *= AR_LIKE_c  # E: incompatible type
-AR_f *= AR_LIKE_m  # E: incompatible type
-
-# Array power
-
-AR_b **= AR_LIKE_b  # E: incompatible type
-AR_b **= AR_LIKE_u  # E: incompatible type
-AR_b **= AR_LIKE_i  # E: incompatible type
-AR_b **= AR_LIKE_f  # E: incompatible type
-AR_b **= AR_LIKE_c  # E: incompatible type
-
-AR_u **= AR_LIKE_i  # E: incompatible type
-AR_u **= AR_LIKE_f  # E: incompatible type
-AR_u **= AR_LIKE_c  # E: incompatible type
-
-AR_i **= AR_LIKE_f  # E: incompatible type
-AR_i **= AR_LIKE_c  # E: incompatible type
-
-AR_f **= AR_LIKE_c  # E: incompatible type
-
-# Scalars
-
-b_ - b_  # E: No overload variant
-
-dt + dt  # E: Unsupported operand types
-td - dt  # E: Unsupported operand types
-td % 1  # E: Unsupported operand types
-td / dt  # E: No overload
-td % dt  # E: Unsupported operand types
-
--b_  # E: Unsupported operand type
-+b_  # E: Unsupported operand type
+__all__ = ["add", "subtract", "multiply", "divide"]

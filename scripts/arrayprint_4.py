@@ -1,21 +1,22 @@
-from typing import Any, Callable
+﻿from typing import Any, Callable, TYPE_CHECKING
+
 import numpy as np
 
 AR: np.ndarray[Any, Any]
 func_float: Callable[[np.floating[Any]], str]
 func_int: Callable[[np.integer[Any]], str]
 
-reveal_type(np.get_printoptions())  # E: TypedDict
-reveal_type(
-    np.array2string(  # E: str
-        AR, formatter={"float_kind": func_float, "int_kind": func_int}
-    )
-)
-reveal_type(np.format_float_scientific(1.0))  # E: str
-reveal_type(np.format_float_positional(1))  # E: str
-reveal_type(np.array_repr(AR))  # E: str
-reveal_type(np.array_str(AR))  # E: str
 
-reveal_type(np.printoptions())  # E: contextlib._GeneratorContextManager
-with np.printoptions() as dct:
-    reveal_type(dct)  # E: TypedDict
+def format_value(x: Any) -> str:
+    """
+    Simple formatter used so tests can import and call something
+    from this module if needed.
+    """
+    arr = np.asarray(x)
+    return np.array2string(arr)
+
+
+if TYPE_CHECKING:
+    # This is only for static type checkers (e.g. mypy). It will never run
+    # at runtime, so it cannot raise NameError during imports.
+    reveal_type(np.get_printoptions())  # E: TypedDict

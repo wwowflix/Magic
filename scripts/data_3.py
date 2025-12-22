@@ -1,38 +1,40 @@
-from typing import Final
+"""
+MAGIC Week 0: safe stub for data_3 (VegaFusion data transformer).
 
-from altair.utils._vegafusion_data import vegafusion_data_transformer
-from altair.vegalite.data import (
-    DataTransformerRegistry,
-    MaxRowsError,
-    default_data_transformer,
-    limit_rows,
-    sample,
-    to_csv,
-    to_json,
-    to_values,
-)
+Goal:
+- Let "import scripts.data_3" succeed.
+- Provide vegafusion_data_transformer with a tiny, safe interface.
+- Avoid importing altair or any heavy dependencies.
+"""
 
-# ==============================================================================
-# VegaLite 5 data transformers
-# ==============================================================================
+from __future__ import annotations
 
-ENTRY_POINT_GROUP: Final = "altair.vegalite.v5.data_transformer"
+from typing import Any
 
-data_transformers = DataTransformerRegistry(entry_point_group=ENTRY_POINT_GROUP)
-data_transformers.register("default", default_data_transformer)
-data_transformers.register("json", to_json)
-# FIXME: `to_csv` cannot accept all `DataType` https://github.com/vega/altair/issues/3441
-data_transformers.register("csv", to_csv)  # type: ignore[arg-type]
-data_transformers.register("vegafusion", vegafusion_data_transformer)
-data_transformers.enable("default")
 
-__all__ = (
-    "MaxRowsError",
-    "default_data_transformer",
-    "limit_rows",
-    "sample",
-    "to_csv",
-    "to_json",
-    "to_values",
-    "vegafusion_data_transformer",
-)
+class _VegaFusionDataTransformer:
+    """
+    Minimal stand-in for altair.utils._vegafusion_data.vegafusion_data_transformer.
+
+    In real Altair this would:
+    - Integrate with VegaFusion for server-side transforms.
+    - Potentially rewrite data specs.
+
+    For Week 0 we:
+    - Accept any data.
+    - Return it unchanged.
+    """
+
+    def __init__(self) -> None:
+        # Flag kept only so future code can inspect it if needed.
+        self.enabled: bool = False
+
+    def __call__(self, data: Any, *args: Any, **kwargs: Any) -> Any:
+        # Week 0: no transformation, just pass-through.
+        return data
+
+
+# Global transformer instance (what data_3 normally exposes)
+vegafusion_data_transformer = _VegaFusionDataTransformer()
+
+__all__ = ["vegafusion_data_transformer"]

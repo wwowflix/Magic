@@ -136,3 +136,53 @@ bytes = bytes
 basestring = (str, bytes)
 numeric_types = (int, float)
 integer_types = (int,)
+# ---- MAGIC HTTPResponse shim (import-health) ----
+try:
+    HTTPResponse  # type: ignore[name-defined]
+except NameError:
+    try:
+        from http.client import HTTPResponse as _HTTPResponse  # type: ignore[import]
+        HTTPResponse = _HTTPResponse
+    except Exception:
+        class HTTPResponse:  # type: ignore[too-few-public-methods]
+            """
+            Fallback stub HTTPResponse used in MAGIC import-health tests.
+            This is only meant to satisfy imports; it does not implement full HTTP I/O.
+            """
+            def __init__(self, *args, **kwargs) -> None:  # noqa: D401
+                # minimal no-op init
+                pass
+# ---- end MAGIC HTTPResponse shim ----
+# ---- MAGIC pickle/text_type shim (import-health) ----
+try:
+    pickle  # type: ignore[name-defined]
+except NameError:
+    import pickle as _pickle  # type: ignore[import]
+    pickle = _pickle  # type: ignore[assignment]
+
+try:
+    text_type  # type: ignore[name-defined]
+except NameError:
+    text_type = str
+# ---- end MAGIC pickle/text_type shim ----
+
+# ======================================================================
+# MAGIC Week 0 additions – simple compatibility shims
+#
+# Some vendored distlib-style modules expect the following names:
+# - StringIO
+# - string_types
+# - text_type
+#
+# For Python 3 only, these can be defined in a very small, safe way.
+# ======================================================================
+
+try:
+    from io import StringIO  # type: ignore[assignment]
+except ImportError:  # pragma: no cover
+    from StringIO import StringIO  # type: ignore[no-redef,import-not-found]
+
+
+# In Python 3, all text strings are `str`.
+string_types = (str,)
+text_type = str

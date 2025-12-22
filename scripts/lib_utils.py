@@ -1,13 +1,11 @@
-import numpy as np
+﻿from __future__ import annotations
 
-np.deprecate(1)  # E: No overload variant
+'''MAGIC Week 0 shim for scripts.lib_utils.
 
-np.deprecate_with_doc(1)  # E: incompatible type
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-np.byte_bounds(1)  # E: incompatible type
+from typing import Any
 
-np.who(1)  # E: incompatible type
-
-np.lookfor(None)  # E: incompatible type
-
-np.safe_eval(None)  # E: incompatible type
+__all__: list[str] = []

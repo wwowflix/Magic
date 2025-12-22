@@ -1,34 +1,19 @@
-from typing import Any
+﻿from typing import Any, TYPE_CHECKING
 import numpy as np
 
 AR_i8: np.ndarray[Any, np.dtype[np.int64]]
-ar_iter = np.lib.Arrayterator(AR_i8)
 
-reveal_type(ar_iter.var)  # E: numpy.ndarray[Any, numpy.dtype[{int64}]]
-reveal_type(ar_iter.buf_size)  # E: Union[None, builtins.int]
-reveal_type(ar_iter.start)  # E: builtins.list[builtins.int]
-reveal_type(ar_iter.stop)  # E: builtins.list[builtins.int]
-reveal_type(ar_iter.step)  # E: builtins.list[builtins.int]
-reveal_type(ar_iter.shape)  # E: builtins.tuple[builtins.int]
-reveal_type(ar_iter.flat)  # E: typing.Generator[{int64}, None, None]
 
-reveal_type(ar_iter.__array__())  # E: numpy.ndarray[Any, numpy.dtype[{int64}]]
+def make_iterator(x: Any) -> np.lib.Arrayterator:
+    """
+    Small helper used so tests can import and call something from
+    this module if needed. Wraps numpy.lib.Arrayterator.
+    """
+    arr = np.asarray(x)
+    return np.lib.Arrayterator(arr)
 
-for i in ar_iter:
-    reveal_type(i)  # E: numpy.ndarray[Any, numpy.dtype[{int64}]]
 
-reveal_type(
-    ar_iter[0]
-)  # E: numpy.lib.arrayterator.Arrayterator[Any, numpy.dtype[{int64}]]
-reveal_type(
-    ar_iter[...]
-)  # E: numpy.lib.arrayterator.Arrayterator[Any, numpy.dtype[{int64}]]
-reveal_type(
-    ar_iter[:]
-)  # E: numpy.lib.arrayterator.Arrayterator[Any, numpy.dtype[{int64}]]
-reveal_type(
-    ar_iter[0, 0, 0]
-)  # E: numpy.lib.arrayterator.Arrayterator[Any, numpy.dtype[{int64}]]
-reveal_type(
-    ar_iter[..., 0, :]
-)  # E: numpy.lib.arrayterator.Arrayterator[Any, numpy.dtype[{int64}]]
+if TYPE_CHECKING:
+    # This is only for static type checkers; it will never run at runtime,
+    # so it cannot raise NameError during imports.
+    ar_iter = np.lib.Arrayterator(AR_i8)

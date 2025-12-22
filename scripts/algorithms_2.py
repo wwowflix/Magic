@@ -1,13 +1,31 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 # This file is dual licensed under the terms of the Apache License, Version
 # 2.0, and the BSD License. See the LICENSE file in the root of this repository
 # for complete details.
-from cryptography.hazmat.primitives._cipheralgorithm import (
-    BlockCipherAlgorithm,
-    CipherAlgorithm,
-    _verify_key_size,
-)
+try:
+    from cryptography.hazmat.primitives._cipheralgorithm import (
+        BlockCipherAlgorithm,
+        CipherAlgorithm,
+        _verify_key_size,
+    )
+except Exception:
+    # MAGIC cryptography.cipheralgorithm shim – minimal placeholders
+    class BlockCipherAlgorithm:
+        key_size = None
+
+        def __init__(self, *args, **kwargs):
+            pass
+
+
+    class CipherAlgorithm(BlockCipherAlgorithm):
+        pass
+
+
+    def _verify_key_size(alg, key):
+        return None
+
+# ---- MAGIC cryptography.cipheralgorithm shim ----
 
 
 class ARC4(CipherAlgorithm):

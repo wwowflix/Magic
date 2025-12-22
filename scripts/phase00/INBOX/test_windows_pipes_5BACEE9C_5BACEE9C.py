@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from .. import _core
+from . import _core
 from scripts.testing import check_one_way_stream, wait_all_tasks_blocked
 
 # Mark all the tests in this file as being windows-only

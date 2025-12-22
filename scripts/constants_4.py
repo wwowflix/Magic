@@ -1,6 +1,12 @@
+"""
+MAGIC – Week 0 stub for constants_4.
+
+Original module hit NumPy 2.0 deprecations (np.Inf, etc.).
+For Week 0, we only need the module to import cleanly.
+"""
+
 import numpy as np
 
-np.Inf = np.Inf  # E: Cannot assign to final
-np.ALLOW_THREADS = np.ALLOW_THREADS  # E: Cannot assign to final
-np.little_endian = np.little_endian  # E: Cannot assign to final
-np.UFUNC_PYVALS_NAME = np.UFUNC_PYVALS_NAME  # E: Cannot assign to final
+Inf = np.inf  # basic alias in case anything touches it
+
+__all__ = ["Inf"]

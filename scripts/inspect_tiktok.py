@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
-from TikTokApi import TikTokApi
-import asyncio
-import pprint
+﻿from __future__ import annotations
 
+'''MAGIC Week 0 shim for scripts.inspect_tiktok.
 
-async def main():
-    api = TikTokApi()
-    await api.create_sessions()
-    trending = api.trending()
-    async for video in trending.videos():
-        data = video.as_dict  # raw dict of all fields
-        pprint.pprint(data)  # pretty-print it
-        break  # just the first one
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
+from typing import Any
 
-asyncio.run(main())
+__all__: list[str] = []

@@ -1,9 +1,9 @@
-import importlib, types
+﻿import importlib, types
 
 
 def test_import_scripts__github_workflows__github_workflows_placeholder_READY():
     mod = importlib.import_module(
-        "scripts..github.workflows..github_workflows_placeholder_READY"
+        "scripts._github_workflows_placeholder_READY"
     )
     assert isinstance(mod, types.ModuleType)
     if hasattr(mod, "main") and callable(mod.main):

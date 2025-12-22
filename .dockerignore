@@ -1,7 +1,39 @@
-.git
-venv
-outputs
-__pycache__
-*.log
-*.tsv
-*.json
+﻿# Ignore local environment & tooling
+venv/
+.git/
+.github/
+.idea/
+.vscode/
+*.code-workspace
+
+# Caches & compiled files
+**/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.tox/
+.cache/
+htmlcov/
+dist/
+build/
+
+# Local outputs / logs / backups
+outputs/
+logs/
+backups/
+.backups/
+reports/
+coverage/
+tmp/
+temp/
+
+# OS/filesystem junk
+.DS_Store
+Thumbs.db
+
+# Not needed for container baseline
+tests/
+notebooks/
+docs/
+*.ipynb

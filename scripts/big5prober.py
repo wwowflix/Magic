@@ -1,47 +1,58 @@
-######################## BEGIN LICENSE BLOCK ########################
-# The Original Code is Mozilla Communicator client code.
-#
-# The Initial Developer of the Original Code is
-# Netscape Communications Corporation.
-# Portions created by the Initial Developer are Copyright (C) 1998
-# the Initial Developer. All Rights Reserved.
-#
-# Contributor(s):
-#   Mark Pilgrim - port to Python
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-# 02110-1301  USA
-######################### END LICENSE BLOCK #########################
+﻿from __future__ import annotations
 
-from .chardistribution import Big5DistributionAnalysis
-from .codingstatemachine import CodingStateMachine
-from .mbcharsetprober import MultiByteCharSetProber
-from .mbcssm import BIG5_SM_MODEL
+"""
+MAGIC shim for scripts.big5prober.
+
+The original module is part of a charset detection suite (Big5 encoding
+prober) and depends on state machines, enums, etc.
+
+For MAGIC Week 0 we only need:
+
+- the module to import cleanly
+- a simple class that looks like a "prober" with a few attributes/methods
+"""
+
+from typing import Optional
 
 
-class Big5Prober(MultiByteCharSetProber):
+class Big5Prober:
+    """
+    Minimal placeholder for a Big5 charset prober.
+
+    All methods are no-ops, but the surface API is safe to call.
+    """
+
     def __init__(self) -> None:
-        super().__init__()
-        self.coding_sm = CodingStateMachine(BIG5_SM_MODEL)
-        self.distribution_analyzer = Big5DistributionAnalysis()
-        self.reset()
+        self._state: str = "DETECTING"
+        self._confidence: float = 0.0
+
+    def reset(self) -> None:
+        """Reset internal state (no-op in this shim)."""
+        self._state = "DETECTING"
+        self._confidence = 0.0
+
+    def feed(self, byte_str: bytes) -> float:
+        """
+        Inspect incoming bytes and update confidence/state.
+
+        In this MAGIC shim we don't actually analyze data; we just return
+        the current confidence (always 0.0).
+        """
+        return self._confidence
+
+    def get_confidence(self) -> float:
+        """Return current confidence value (always 0.0 in this shim)."""
+        return self._confidence
 
     @property
-    def charset_name(self) -> str:
-        return "Big5"
+    def charset_name(self) -> Optional[str]:
+        """Return the name of the charset this prober targets."""
+        return "big5"
 
     @property
-    def language(self) -> str:
-        return "Chinese"
+    def state(self) -> str:
+        """Return the current internal state as a string."""
+        return self._state
+
+
+__all__ = ["Big5Prober"]

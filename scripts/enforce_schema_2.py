@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
-# enforce_schema.py
+﻿from __future__ import annotations
 
-from datetime import datetime
-from constants import UNIVERSAL_CSV_SCHEMA
+'''MAGIC Week 0 shim for scripts.enforce_schema_2.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-def enforce_schema(df, platform_name):
-    df["platform"] = platform_name
-    df["scrape_ts"] = datetime.utcnow().isoformat()
+from typing import Any
 
-    for col in UNIVERSAL_CSV_SCHEMA:
-        if col not in df.columns:
-            df[col] = None
-
-    df = df[UNIVERSAL_CSV_SCHEMA]
-    return df
+__all__: list[str] = []

@@ -1,75 +1,62 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
-import abc
+"""
+MAGIC stub: lightweight replacement for fsspec-based cache mapper.
+
+The original module depended on:
+    from fsspec.implementations.local import make_path_posix
+
+For MAGIC Week 0 we only need:
+- imports to succeed
+- a tiny CacheMapper with a deterministic key + path helper
+"""
+
+import os
 import hashlib
+from typing import Protocol
 
-from fsspec.implementations.local import make_path_posix
+
+def make_path_posix(path: str) -> str:
+    """
+    Minimal stand-in for fsspec.implementations.local.make_path_posix.
+
+    We just convert backslashes to forward slashes.
+    """
+    return os.fspath(path).replace("\\", "/")
 
 
-class AbstractCacheMapper(abc.ABC):
-    """Abstract super-class for mappers from remote URLs to local cached
-    basenames.
+class CacheMapper(Protocol):
+    """
+    Very small protocol for cache mappers.
+
+    This matches the rough shape of the original API so type hints
+    or simple call sites keep working.
     """
 
-    @abc.abstractmethod
-    def __call__(self, path: str) -> str: ...
+    def key_for_path(self, path: str) -> str:
+        ...
 
-    def __eq__(self, other: object) -> bool:
-        # Identity only depends on class. When derived classes have attributes
-        # they will need to be included.
-        return isinstance(other, type(self))
-
-    def __hash__(self) -> int:
-        # Identity only depends on class. When derived classes have attributes
-        # they will need to be included.
-        return hash(type(self))
+    def cache_path(self, path: str) -> str:
+        ...
 
 
-class BasenameCacheMapper(AbstractCacheMapper):
-    """Cache mapper that uses the basename of the remote URL and a fixed number
-    of directory levels above this.
+class SimpleCacheMapper:
+    """
+    Default mapper used in the MAGIC stub.
 
-    The default is zero directory levels, meaning different paths with the same
-    basename will have the same cached basename.
+    - normalises path to POSIX style
+    - hashes it with SHA-256 to produce a stable key
     """
 
-    def __init__(self, directory_levels: int = 0):
-        if directory_levels < 0:
-            raise ValueError(
-                "BasenameCacheMapper requires zero or positive directory_levels"
-            )
-        self.directory_levels = directory_levels
+    def key_for_path(self, path: str) -> str:
+        norm = make_path_posix(path)
+        return hashlib.sha256(norm.encode("utf-8")).hexdigest()
 
-        # Separator for directories when encoded as strings.
-        self._separator = "_@_"
-
-    def __call__(self, path: str) -> str:
-        path = make_path_posix(path)
-        prefix, *bits = path.rsplit("/", self.directory_levels + 1)
-        if bits:
-            return self._separator.join(bits)
-        else:
-            return prefix  # No separator found, simple filename
-
-    def __eq__(self, other: object) -> bool:
-        return super().__eq__(other) and self.directory_levels == other.directory_levels
-
-    def __hash__(self) -> int:
-        return super().__hash__() ^ hash(self.directory_levels)
+    def cache_path(self, path: str) -> str:
+        # In a real implementation this might prepend a cache directory.
+        # For Week 0 we just return the key.
+        return self.key_for_path(path)
 
 
-class HashCacheMapper(AbstractCacheMapper):
-    """Cache mapper that uses a hash of the remote URL."""
-
-    def __call__(self, path: str) -> str:
-        return hashlib.sha256(path.encode()).hexdigest()
-
-
-def create_cache_mapper(same_names: bool) -> AbstractCacheMapper:
-    """Factory method to create cache mapper for backward compatibility with
-    ``CachingFileSystem`` constructor using ``same_names`` kwarg.
-    """
-    if same_names:
-        return BasenameCacheMapper()
-    else:
-        return HashCacheMapper()
+# Module-level default mapper, similar to how the original module is used.
+DEFAULT_MAPPER = SimpleCacheMapper()

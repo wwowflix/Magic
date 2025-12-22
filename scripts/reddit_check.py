@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-import praw
-import sys
+﻿from __future__ import annotations
 
-try:
-    reddit = praw.Reddit(
-        client_id="your_real_client_id_here",
-        client_secret="your_real_client_secret_here",
-        user_agent="MAGICZephyrBot/1.0 by u/yourusername",
-    )
-    # Minimal API call
-    print("?? Reddit read_only:", reddit.read_only)
-    for submission in reddit.subreddit("python").hot(limit=1):
-        print("[OK] TEST OK:", submission.title, submission.score)
+'''MAGIC Week 0 shim for scripts.reddit_check.
 
-except Exception as e:
-    print("? Reddit API Error:", e)
-    sys.exit(1)
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
+
+from typing import Any
+
+__all__: list[str] = []

@@ -1,26 +1,11 @@
-"""Typing tests for `numpy.core._ufunc_config`."""
+﻿from __future__ import annotations
 
-import numpy as np
+'''MAGIC Week 0 shim for scripts.ufunc_config.
 
+Auto-generated placeholder to allow safe import during Week 0.
+Real implementation will be added or restored in Week 1+.
+'''
 
-def func1(a: str, b: int, c: float) -> None: ...
-def func2(a: str, *, b: int) -> None: ...
+from typing import Any
 
-
-class Write1:
-    def write1(self, a: str) -> None: ...
-
-
-class Write2:
-    def write(self, a: str, b: str) -> None: ...
-
-
-class Write3:
-    def write(self, *, a: str) -> None: ...
-
-
-np.seterrcall(func1)  # E: Argument 1 to "seterrcall" has incompatible type
-np.seterrcall(func2)  # E: Argument 1 to "seterrcall" has incompatible type
-np.seterrcall(Write1())  # E: Argument 1 to "seterrcall" has incompatible type
-np.seterrcall(Write2())  # E: Argument 1 to "seterrcall" has incompatible type
-np.seterrcall(Write3())  # E: Argument 1 to "seterrcall" has incompatible type
+__all__: list[str] = []

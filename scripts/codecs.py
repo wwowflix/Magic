@@ -1,136 +1,41 @@
-"""Extend the Python codecs module with a few encodings that are used in OpenType (name table)
-but missing from Python.  See https://github.com/fonttools/fonttools/issues/236 for details.
-"""
+# -*- coding: utf-8 -*-
+"""MAGIC shim: forward all imports to the real stdlib 'codecs' module."""
 
-import codecs
-import encodings
+import importlib as _importlib
+import sys as _sys
+from pathlib import Path as _Path
 
+_target_name = "codecs"
 
-class ExtendCodec(codecs.Codec):
-    def __init__(self, name, base_encoding, mapping):
-        self.name = name
-        self.base_encoding = base_encoding
-        self.mapping = mapping
-        self.reverse = {v: k for k, v in mapping.items()}
-        self.max_len = max(len(v) for v in mapping.values())
-        self.info = codecs.CodecInfo(
-            name=self.name, encode=self.encode, decode=self.decode
-        )
-        codecs.register_error(name, self.error)
+# Drop any half-initialized entry
+_sys.modules.pop(_target_name, None)
 
-    def _map(self, mapper, output_type, exc_type, input, errors):
-        base_error_handler = codecs.lookup_error(errors)
-        length = len(input)
-        out = output_type()
-        while input:
-            # first try to use self.error as the error handler
-            try:
-                part = mapper(input, self.base_encoding, errors=self.name)
-                out += part
-                break  # All converted
-            except exc_type as e:
-                # else convert the correct part, handle error as requested and continue
-                out += mapper(input[: e.start], self.base_encoding, self.name)
-                replacement, pos = base_error_handler(e)
-                out += replacement
-                input = input[pos:]
-        return out, length
+# Temporarily hide this directory from sys.path to avoid re-importing ourselves
+_original_path = list(_sys.path)
+_this_dir = str(_Path(__file__).resolve().parent)
 
-    def encode(self, input, errors="strict"):
-        return self._map(codecs.encode, bytes, UnicodeEncodeError, input, errors)
+try:
+    _sys.path = [
+        p for p in _sys.path
+        if _Path(p).resolve() != _Path(_this_dir)
+    ]
+    _real = _importlib.import_module(_target_name)
+finally:
+    _sys.path = _original_path
 
-    def decode(self, input, errors="strict"):
-        return self._map(codecs.decode, str, UnicodeDecodeError, input, errors)
+# Ensure future imports see the real module
+_sys.modules[_target_name] = _real
+_sys.modules.setdefault(f"scripts.{_target_name}", _real)
 
-    def error(self, e):
-        if isinstance(e, UnicodeDecodeError):
-            for end in range(e.start + 1, e.end + 1):
-                s = e.object[e.start : end]
-                if s in self.mapping:
-                    return self.mapping[s], end
-        elif isinstance(e, UnicodeEncodeError):
-            for end in range(e.start + 1, e.start + self.max_len + 1):
-                s = e.object[e.start : end]
-                if s in self.reverse:
-                    return self.reverse[s], end
-        e.encoding = self.name
-        raise e
+# Re-export everything
+for _name in dir(_real):
+    globals()[_name] = getattr(_real, _name)
 
+# Keep a sensible __all__
+try:
+    __all__ = list(_real.__all__)
+except Exception:
+    __all__ = [n for n in globals() if not n.startswith("_")]
 
-_extended_encodings = {
-    "x_mac_japanese_ttx": (
-        "shift_jis",
-        {
-            b"\xfc": chr(0x007C),
-            b"\x7e": chr(0x007E),
-            b"\x80": chr(0x005C),
-            b"\xa0": chr(0x00A0),
-            b"\xfd": chr(0x00A9),
-            b"\xfe": chr(0x2122),
-            b"\xff": chr(0x2026),
-        },
-    ),
-    "x_mac_trad_chinese_ttx": (
-        "big5",
-        {
-            b"\x80": chr(0x005C),
-            b"\xa0": chr(0x00A0),
-            b"\xfd": chr(0x00A9),
-            b"\xfe": chr(0x2122),
-            b"\xff": chr(0x2026),
-        },
-    ),
-    "x_mac_korean_ttx": (
-        "euc_kr",
-        {
-            b"\x80": chr(0x00A0),
-            b"\x81": chr(0x20A9),
-            b"\x82": chr(0x2014),
-            b"\x83": chr(0x00A9),
-            b"\xfe": chr(0x2122),
-            b"\xff": chr(0x2026),
-        },
-    ),
-    "x_mac_simp_chinese_ttx": (
-        "gb2312",
-        {
-            b"\x80": chr(0x00FC),
-            b"\xa0": chr(0x00A0),
-            b"\xfd": chr(0x00A9),
-            b"\xfe": chr(0x2122),
-            b"\xff": chr(0x2026),
-        },
-    ),
-}
-
-_cache = {}
-
-
-def search_function(name):
-    name = encodings.normalize_encoding(name)  # Rather undocumented...
-    if name in _extended_encodings:
-        if name not in _cache:
-            base_encoding, mapping = _extended_encodings[name]
-            assert name[-4:] == "_ttx"
-            # Python 2 didn't have any of the encodings that we are implementing
-            # in this file.  Python 3 added aliases for the East Asian ones, mapping
-            # them "temporarily" to the same base encoding as us, with a comment
-            # suggesting that full implementation will appear some time later.
-            # As such, try the Python version of the x_mac_... first, if that is found,
-            # use *that* as our base encoding.  This would make our encoding upgrade
-            # to the full encoding when and if Python finally implements that.
-            # http://bugs.python.org/issue24041
-            base_encodings = [name[:-4], base_encoding]
-            for base_encoding in base_encodings:
-                try:
-                    codecs.lookup(base_encoding)
-                except LookupError:
-                    continue
-                _cache[name] = ExtendCodec(name, base_encoding, mapping)
-                break
-        return _cache[name].info
-
-    return None
-
-
-codecs.register(search_function)
+# Cleanup
+del _importlib, _sys, _Path, _original_path, _this_dir, _name, _real, _target_name

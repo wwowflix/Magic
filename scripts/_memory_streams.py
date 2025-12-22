@@ -4,7 +4,7 @@ import operator
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, TypeVar
 
-from .. import _core, _util
+from . import _core, _util
 from scripts._highlevel_generic import StapledStream
 from scripts.abc import ReceiveStream, SendStream
 

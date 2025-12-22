@@ -89,3 +89,32 @@ if "hypothesis.internal.observability" not in sys.modules:
     mo._WROTE_TO = set()
 
 import tests.auto_shims  # magic import shims
+
+# ---- auto-added by MAGIC helper ----
+import os, sqlite3
+import pytest
+
+@pytest.fixture
+def tmp_db_path(tmp_path):
+    """Return a temp SQLite database file path and ensure it exists.
+    Also create a minimal 'trends' table if your collector expects it.
+    """
+    db = tmp_path / "trends.db"
+    con = sqlite3.connect(db)
+    try:
+        con.execute("CREATE TABLE IF NOT EXISTS trends (id INTEGER PRIMARY KEY, ts TEXT, name TEXT, value REAL)")
+        con.commit()
+    finally:
+        con.close()
+    return str(db)
+
+@pytest.fixture
+def tmp_db_url(tmp_db_path):
+    return f"sqlite:///{tmp_db_path}"
+
+@pytest.fixture
+def magic_test_env(monkeypatch, tmp_path, tmp_db_path):
+    monkeypatch.setenv("MAGIC_DB_URL", f"sqlite:///{tmp_db_path}")
+    monkeypatch.setenv("MAGIC_OUTPUTS_DIR", str(tmp_path))
+    return tmp_path
+# ---- end MAGIC helper ----

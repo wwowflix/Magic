@@ -8,7 +8,7 @@ from magic_typing import TYPE_CHECKING, NoReturn, TypeVar
 
 import attrs
 
-from .. import _core
+from . import _core
 from scripts._util import name_asyncgen
 from . import _run
 

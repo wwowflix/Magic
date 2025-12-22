@@ -1,14 +1,30 @@
-# This file is dual licensed under the terms of the Apache License, Version
-# 2.0, and the BSD License. See the LICENSE file in the root of this repository
-# for complete details.
+﻿from __future__ import annotations
 
-from cryptography.hazmat.bindings._rust import openssl as rust_openssl
+"""
+MAGIC stub: lightweight replacement for a cryptography backend variant.
 
-load_pem_private_key = rust_openssl.keys.load_pem_private_key
-load_der_private_key = rust_openssl.keys.load_der_private_key
+The original base_10 module imported from
+`cryptography.hazmat.bindings._rust` and provided an OpenSSL backend.
 
-load_pem_public_key = rust_openssl.keys.load_pem_public_key
-load_der_public_key = rust_openssl.keys.load_der_public_key
+For MAGIC we only need:
+- safe imports
+- a dummy backend object
+- get_backend() for call sites that expect it
+"""
 
-load_pem_parameters = rust_openssl.dh.from_pem_parameters
-load_der_parameters = rust_openssl.dh.from_der_parameters
+try:
+    # If our main backend shim exists, reuse it so behavior is consistent.
+    from .backend import BACKEND as BACKEND, get_backend as get_backend  # type: ignore[attr-defined]
+except Exception:
+    # Fallback: define a local dummy backend.
+    class DummyBackend:
+        """Very small placeholder backend."""
+
+        def __repr__(self) -> str:  # pragma: no cover
+            return "MAGIC-DummyBackend(base_10)"
+
+    BACKEND = DummyBackend()
+
+    def get_backend():
+        """Return the dummy backend."""
+        return BACKEND

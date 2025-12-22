@@ -3,7 +3,7 @@ from __future__ import annotations
 from functools import partial, wraps
 from typing import TYPE_CHECKING, TypeVar
 
-from .. import _core
+from . import _core
 from scripts.abc import Clock, Instrument
 
 if TYPE_CHECKING:
