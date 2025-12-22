@@ -214,3 +214,12 @@ outputs/status/**
 *.zip
 *.tar
 # ---- end MAGIC ignore block ----
+# --- local-only / generated ---
+tools/reports/
+review/
+_quarantine_shadowing/
+
+# --- patch backups ---
+*.magic_bak*
+cleanup_odd_files.ps1
+tools/find_selenium_poisoner.py
