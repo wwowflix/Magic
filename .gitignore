@@ -202,3 +202,20 @@ outputs/logs/
 scripts/_compat_numpy.py
 
 scripts/_compat_numpy.py
+# --- local-only / generated ---
+review/
+_quarantine_shadowing/
+buildctx/
+buildctx_min/
+magic_context.tar
+
+# --- tools / probes ---
+tools/find_selenium_poisoner.py
+
+# --- reports ---
+tools/reports/
+smoke_last_run.txt
+
+
+# local helper scripts
+cleanup_odd_files.ps1
