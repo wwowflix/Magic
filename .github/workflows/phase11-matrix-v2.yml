@@ -1,9 +1,12 @@
-name: Phase 11 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Matrix (Guards)
+name: "Phase 11 Ã¢â‚¬â€ Smokes + Guards (Matrix) Ã¢â‚¬â€ Guards v2"
 
 on:
   pull_request:
     branches: [ main, prod-release ]
+    paths-ignore:
+      - '**'
   workflow_dispatch:
+
 
 permissions:
   contents: read
@@ -110,3 +113,4 @@ jobs:
           retention-days: 7
 
 # ci-nudge: 2025-11-08T02:13:06
+    if: github.event_name != 'pull_request'
