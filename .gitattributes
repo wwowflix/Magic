@@ -1,7 +1,7 @@
 ﻿# Normalize text files to LF in repo, keep tools stable across OS
 * text=auto eol=lf
 
-# PowerShell scripts - keep LF in repo (Windows will still run them fine)
+# PowerShell scripts - keep LF in repo
 *.ps1 text eol=lf
 *.psm1 text eol=lf
 *.psd1 text eol=lf
