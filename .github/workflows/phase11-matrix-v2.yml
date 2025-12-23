@@ -3,7 +3,10 @@
 on:
   pull_request:
     branches: [ main, prod-release ]
+    paths-ignore:
+      - '**'
   workflow_dispatch:
+
 
 permissions:
   contents: read
