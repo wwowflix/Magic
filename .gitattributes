@@ -1,5 +1,16 @@
-* text=auto
-*.py text eol=lf
-*.ps1 text eol=crlf
-*.sh text eol=lf
+﻿# Normalize text files to LF in repo, keep tools stable across OS
+* text=auto eol=lf
+
+# PowerShell scripts - keep LF in repo (Windows will still run them fine)
+*.ps1 text eol=lf
+*.psm1 text eol=lf
+*.psd1 text eol=lf
+
+# Config / docs
+*.txt text eol=lf
+*.md  text eol=lf
 *.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
