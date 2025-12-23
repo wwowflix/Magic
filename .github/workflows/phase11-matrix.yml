@@ -1,4 +1,4 @@
-﻿name: "Phase 11 — Smokes + Guards (Matrix) — Guards"
+name: "Phase 11 â€” Smokes + Guards (Matrix) â€” Guards"
 
 on:
   pull_request:
@@ -13,8 +13,6 @@ permissions:
 jobs:
   phase11-orchestrator:
     name: Orchestrator (pre-guards)
-    if: ${{ !startsWith(github.head_ref, 'week2-') }}
-
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -70,8 +68,6 @@ jobs:
 
   phase11-guards:
     name: Guard (${{ matrix.module }})
-    if: ${{ !startsWith(github.head_ref, 'week2-') }}
-
     needs: phase11-orchestrator
     runs-on: windows-latest
     strategy:
@@ -116,5 +112,4 @@ jobs:
           retention-days: 7
 
 # ci-nudge: 2025-11-08T02:13:06
-    if: github.event_name != 'pull_request'
     if: github.event_name != 'pull_request'
